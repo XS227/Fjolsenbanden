@@ -1,6 +1,6 @@
 import React from "react";
-import FjolsenbandenPortalShort from "@/components/FjolsenbandenPortalShort";
+import FjolsenbandenHome from "@/components/FjolsenbandenHome";
 
 export default function HomePage() {
-  return <FjolsenbandenPortalShort />;
+  return <FjolsenbandenHome />;
 }
