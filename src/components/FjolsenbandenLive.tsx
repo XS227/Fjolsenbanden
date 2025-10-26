@@ -38,6 +38,61 @@ export default function FjolsenbandenLive() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [unmuted, setUnmuted] = useState(false);
   const [countdown, setCountdown] = useState(60);
+  const [statusLoading, setStatusLoading] = useState(true);
+  const [statusError, setStatusError] = useState<string | null>(null);
+  const [liveStatus, setLiveStatus] = useState<{
+    live: boolean;
+    title: string;
+    viewers: number;
+    started_at: string | null;
+  } | null>(null);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    const fetchStatus = async () => {
+      try {
+        const response = await fetch("/api/live-status");
+        if (!response.ok) {
+          throw new Error(`Request failed with status ${response.status}`);
+        }
+
+        const payload = (await response.json()) as {
+          live: boolean;
+          title: string;
+          viewers: number;
+          started_at: string | null;
+        };
+
+        if (isMounted) {
+          setLiveStatus(payload);
+          setStatusError(null);
+        }
+      } catch (error) {
+        if (isMounted) {
+          const message = error instanceof Error ? error.message : "Kunne ikke hente live-status";
+          setStatusError(message);
+        }
+      } finally {
+        if (isMounted) {
+          setStatusLoading(false);
+        }
+      }
+    };
+
+    fetchStatus();
+    const interval = setInterval(fetchStatus, 60_000);
+
+    return () => {
+      isMounted = false;
+      clearInterval(interval);
+    };
+  }, []);
+
+  const isLive = liveStatus?.live ?? false;
+  const formattedViewers = new Intl.NumberFormat("no-NO").format(liveStatus?.viewers ?? 0);
+  const showLiveUi = !statusLoading && !statusError && isLive;
+  const showOfflineUi = !statusLoading && !statusError && !isLive;
 
   useEffect(() => {
     if (!unmuted && countdown > 0) {
@@ -92,13 +147,20 @@ export default function FjolsenbandenLive() {
       <main className="max-w-6xl mx-auto px-4 py-12 grid lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2 space-y-4 relative">
           <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-white/10">
-            <motion.div
-              className="absolute top-3 left-3 bg-rose-500 text-xs px-3 py-1 rounded-full font-semibold"
-              animate={{ opacity: [1, 0.5, 1] }}
-              transition={{ duration: 1.2, repeat: Infinity }}
-            >
-              🔴 LIVE
-            </motion.div>
+            {showLiveUi ? (
+              <motion.div
+                className="absolute top-3 left-3 bg-rose-500 text-xs px-3 py-1 rounded-full font-semibold"
+                animate={{ opacity: [1, 0.5, 1] }}
+                transition={{ duration: 1.2, repeat: Infinity }}
+              >
+                🔴 LIVE
+              </motion.div>
+            ) : null}
+            {showOfflineUi ? (
+              <div className="absolute top-3 left-3 bg-zinc-900/80 text-xs px-3 py-1 rounded-full font-semibold text-zinc-100">
+                ⚪ OFFLINE
+              </div>
+            ) : null}
 
             <iframe
               src={`https://player.twitch.tv/?channel=fjolsenbanden&parent=localhost&muted=${!unmuted}`}
@@ -107,7 +169,19 @@ export default function FjolsenbandenLive() {
               className="w-full aspect-video"
             />
 
-            {!unmuted && (
+            {showOfflineUi && (
+              <div className="absolute inset-0 bg-black/80 grid place-items-center text-center p-6">
+                <div>
+                  <Twitch className="mx-auto mb-3 h-12 w-12 text-cyan-400" />
+                  <p className="mb-1 text-lg font-semibold">Fjolsenbanden er ikke live akkurat nå</p>
+                  <p className="text-sm text-zinc-300">
+                    Følg oss på Twitch for å få beskjed når vi går live igjen.
+                  </p>
+                </div>
+              </div>
+            )}
+
+            {showLiveUi && !unmuted && (
               <div className="absolute inset-0 bg-black/70 grid place-items-center text-center p-6">
                 <div>
                   <Play className="h-12 w-12 mx-auto mb-3 text-cyan-400" />
@@ -123,6 +197,29 @@ export default function FjolsenbandenLive() {
                 </div>
               </div>
             )}
+            <div className="border-t border-white/10 bg-black/60 px-4 py-3 text-sm text-zinc-200">
+              {statusError ? (
+                <p className="text-rose-300">Kunne ikke hente Twitch-status: {statusError}</p>
+              ) : statusLoading ? (
+                <p>Laster live-status …</p>
+              ) : (
+                <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
+                  <div>
+                    <p className="font-semibold">{liveStatus?.title ?? "Fjolsenbanden"}</p>
+                    <p className="text-xs text-zinc-300">
+                      {isLive
+                        ? "Vi er live – bli med i chatten!"
+                        : "Vi er offline akkurat nå, men nye streams kommer snart."}
+                    </p>
+                  </div>
+                  {showLiveUi ? (
+                    <span className="rounded-full border border-white/20 px-3 py-1 text-xs text-white">
+                      👁️ {formattedViewers} seere
+                    </span>
+                  ) : null}
+                </div>
+              )}
+            </div>
           </div>
 
           <div className="flex flex-wrap justify-center gap-4 mt-4">
