@@ -1,16 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
+import { Menu, X } from "lucide-react";
+
+import LiveChat from "@/components/LiveChat";
+import LivePlayer from "@/components/LivePlayer";
+import PlatformButtons from "@/components/PlatformButtons";
 import {
-  Facebook,
-  Menu,
-  MessageCircle,
-  Play,
-  Smartphone,
-  Twitch,
-  X,
-  Youtube,
-} from "lucide-react";
+  aggregateLiveStatus,
+  AggregatedLiveStatus,
+  LivePlatform,
+  PlatformStatus,
+} from "@/lib/liveStatus";
+import { Facebook, Menu, Play, Smartphone, Twitch, X, Youtube } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import LiveChat from "./LiveChat";
 
 interface PlatformButtonProps {
   icon: React.ReactNode;
@@ -18,125 +21,104 @@ interface PlatformButtonProps {
   href: string;
 }
 
-function PlatformButton({ icon, label, href }: PlatformButtonProps) {
-  return (
-    <motion.a
-      href={href}
-      target="_blank"
-      rel="noopener noreferrer"
-      whileHover={{ scale: 1.05, y: -2 }}
-      whileTap={{ scale: 0.97 }}
-      className="flex items-center gap-2 bg-white/10 hover:bg-white/20 px-4 py-2 rounded-full border border-white/10 transition"
-    >
-      {icon}
-      <span className="text-sm">{label}</span>
-    </motion.a>
-  );
-}
+const NAV_LINKS = ["Hjem", "Premier", "Foreldre", "Sponsorer", "Kontakt"] as const;
+const TWITCH_CHANNEL = "fjolsenbanden";
+const YOUTUBE_CHANNEL_ID = "@fjolsenbanden";
+const REFRESH_INTERVAL_MS = 60_000;
 
 export default function FjolsenbandenLive() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [unmuted, setUnmuted] = useState(false);
-  const [countdown, setCountdown] = useState(60);
-  const [statusLoading, setStatusLoading] = useState(true);
+  const [statusData, setStatusData] = useState<AggregatedLiveStatus | null>(null);
   const [statusError, setStatusError] = useState<string | null>(null);
-  const [liveStatus, setLiveStatus] = useState<{
-    live: boolean;
-    title: string;
-    viewers: number;
-    started_at: string | null;
-  } | null>(null);
 
   useEffect(() => {
     let isMounted = true;
 
-    const fetchStatus = async () => {
+    async function loadStatus() {
       try {
-        const response = await fetch("/api/live-status");
-        if (!response.ok) {
-          throw new Error(`Request failed with status ${response.status}`);
-        }
-
-        const payload = (await response.json()) as {
-          live: boolean;
-          title: string;
-          viewers: number;
-          started_at: string | null;
-        };
+        const data = await aggregateLiveStatus({
+          config: {
+            twitch: { channel: TWITCH_CHANNEL },
+            youtube: { channelId: YOUTUBE_CHANNEL_ID },
+          },
+        });
 
         if (isMounted) {
-          setLiveStatus(payload);
+          setStatusData(data);
           setStatusError(null);
         }
       } catch (error) {
         if (isMounted) {
-          const message = error instanceof Error ? error.message : "Kunne ikke hente live-status";
-          setStatusError(message);
-        }
-      } finally {
-        if (isMounted) {
-          setStatusLoading(false);
+          setStatusError(
+            error instanceof Error ? error.message : "Klarte ikke å hente live-status."
+          );
         }
       }
-    };
+    }
 
-    fetchStatus();
-    const interval = setInterval(fetchStatus, 60_000);
+    loadStatus();
+
+    const intervalId =
+      typeof window !== "undefined"
+        ? window.setInterval(() => {
+            void loadStatus();
+          }, REFRESH_INTERVAL_MS)
+        : undefined;
 
     return () => {
       isMounted = false;
-      clearInterval(interval);
+      if (intervalId) {
+        window.clearInterval(intervalId);
+      }
     };
   }, []);
 
-  const isLive = liveStatus?.live ?? false;
-  const formattedViewers = new Intl.NumberFormat("no-NO").format(liveStatus?.viewers ?? 0);
-  const showLiveUi = !statusLoading && !statusError && isLive;
-  const showOfflineUi = !statusLoading && !statusError && !isLive;
+  const statusMap = useMemo(() => {
+    const map: Partial<Record<LivePlatform, PlatformStatus>> = {};
+    statusData?.statuses.forEach((status) => {
+      map[status.platform] = status;
+    });
+    return map;
+  }, [statusData]);
 
-  useEffect(() => {
-    if (!unmuted && countdown > 0) {
-      const timer = setTimeout(() => setCountdown((prev) => prev - 1), 1000);
-      return () => clearTimeout(timer);
-    }
-
-    return undefined;
-  }, [countdown, unmuted]);
-
-  useEffect(() => {
-    if (unmuted) {
-      setCountdown(0);
-    }
-  }, [unmuted]);
+  const twitchStatus = statusMap.twitch;
+  const lastUpdated = statusData?.updatedAt
+    ? new Date(statusData.updatedAt).toLocaleTimeString("nb-NO", {
+        hour: "2-digit",
+        minute: "2-digit",
+      })
+    : null;
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#0d0d1a] to-[#1a1a2e] text-white relative overflow-hidden">
+    <div className="relative min-h-screen overflow-hidden bg-gradient-to-b from-[#0d0d1a] to-[#1a1a2e] text-white">
       <motion.div
         className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(0,207,255,0.15),transparent_70%)]"
         animate={{ opacity: [0.7, 0.9, 0.7] }}
         transition={{ duration: 8, repeat: Infinity }}
       />
 
-      <header className="flex justify-between items-center px-6 py-4 backdrop-blur border-b border-white/10 sticky top-0 z-50">
+      <header className="sticky top-0 z-50 flex items-center justify-between border-b border-white/10 bg-black/30 px-6 py-4 backdrop-blur">
         <div className="flex items-center gap-3">
-          <div className="h-10 w-10 bg-cyan-400 text-black font-extrabold rounded-xl grid place-items-center">
-            FB
-          </div>
-          <h1 className="font-bold text-lg">Fjolsenbanden</h1>
+          <div className="grid h-10 w-10 place-items-center rounded-xl bg-cyan-400 font-extrabold text-black">FB</div>
+          <h1 className="text-lg font-bold">Fjolsenbanden</h1>
         </div>
 
-        <button onClick={() => setMenuOpen((open) => !open)} className="md:hidden p-2" aria-label="Toggle menu">
+        <button
+          onClick={() => setMenuOpen((open) => !open)}
+          className="p-2 md:hidden"
+          aria-label="Toggle menu"
+        >
           {menuOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
 
         <nav
-          className={`absolute md:static top-16 right-0 md:flex bg-[#0d0d1a]/90 md:bg-transparent p-4 md:p-0 rounded-xl md:rounded-none shadow-xl md:shadow-none transition-all ${
+          className={`absolute right-0 top-16 rounded-xl border border-white/10 bg-[#0d0d1a]/90 p-4 shadow-xl transition-all md:static md:flex md:border-none md:bg-transparent md:p-0 md:shadow-none ${
             menuOpen ? "block" : "hidden md:flex"
           }`}
         >
-          <ul className="flex flex-col md:flex-row gap-4 text-sm font-medium">
-            {["Hjem", "Premier", "Foreldre", "Sponsorer", "Kontakt"].map((item) => (
-              <li key={item} className="hover:text-cyan-300 cursor-pointer">
+          <ul className="flex flex-col gap-4 text-sm font-medium md:flex-row">
+            {NAV_LINKS.map((item) => (
+              <li key={item} className="cursor-pointer hover:text-cyan-300">
                 {item}
               </li>
             ))}
@@ -144,135 +126,35 @@ export default function FjolsenbandenLive() {
         </nav>
       </header>
 
-      <main className="max-w-6xl mx-auto px-4 py-12 grid lg:grid-cols-3 gap-8">
-        <div className="lg:col-span-2 space-y-4 relative">
-          <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-white/10">
-            {showLiveUi ? (
-              <motion.div
-                className="absolute top-3 left-3 bg-rose-500 text-xs px-3 py-1 rounded-full font-semibold"
-                animate={{ opacity: [1, 0.5, 1] }}
-                transition={{ duration: 1.2, repeat: Infinity }}
-              >
-                🔴 LIVE
-              </motion.div>
-            ) : null}
-            {showOfflineUi ? (
-              <div className="absolute top-3 left-3 bg-zinc-900/80 text-xs px-3 py-1 rounded-full font-semibold text-zinc-100">
-                ⚪ OFFLINE
-              </div>
-            ) : null}
+      <main className="relative mx-auto grid max-w-6xl gap-8 px-4 py-12 lg:grid-cols-3">
+        <div className="relative space-y-4 lg:col-span-2">
+          <LivePlayer channel={TWITCH_CHANNEL} status={twitchStatus} />
 
-            <iframe
-              src={`https://player.twitch.tv/?channel=fjolsenbanden&parent=localhost&muted=${!unmuted}`}
-              title="Twitch Player"
-              allowFullScreen
-              className="w-full aspect-video"
-            />
-
-            {showOfflineUi && (
-              <div className="absolute inset-0 bg-black/80 grid place-items-center text-center p-6">
-                <div>
-                  <Twitch className="mx-auto mb-3 h-12 w-12 text-cyan-400" />
-                  <p className="mb-1 text-lg font-semibold">Fjolsenbanden er ikke live akkurat nå</p>
-                  <p className="text-sm text-zinc-300">
-                    Følg oss på Twitch for å få beskjed når vi går live igjen.
-                  </p>
-                </div>
-              </div>
-            )}
-
-            {showLiveUi && !unmuted && (
-              <div className="absolute inset-0 bg-black/70 grid place-items-center text-center p-6">
-                <div>
-                  <Play className="h-12 w-12 mx-auto mb-3 text-cyan-400" />
-                  <p className="text-sm text-zinc-300 mb-4">
-                    1-minutt forhåndsvisning – {countdown}s igjen
-                  </p>
-                  <Button
-                    onClick={() => setUnmuted(true)}
-                    className="rounded-full px-6 py-4 text-base"
-                  >
-                    Se full stream
-                  </Button>
-                </div>
-              </div>
-            )}
-            <div className="border-t border-white/10 bg-black/60 px-4 py-3 text-sm text-zinc-200">
-              {statusError ? (
-                <p className="text-rose-300">Kunne ikke hente Twitch-status: {statusError}</p>
-              ) : statusLoading ? (
-                <p>Laster live-status …</p>
-              ) : (
-                <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
-                  <div>
-                    <p className="font-semibold">{liveStatus?.title ?? "Fjolsenbanden"}</p>
-                    <p className="text-xs text-zinc-300">
-                      {isLive
-                        ? "Vi er live – bli med i chatten!"
-                        : "Vi er offline akkurat nå, men nye streams kommer snart."}
-                    </p>
-                  </div>
-                  {showLiveUi ? (
-                    <span className="rounded-full border border-white/20 px-3 py-1 text-xs text-white">
-                      👁️ {formattedViewers} seere
-                    </span>
-                  ) : null}
-                </div>
-              )}
+          <div className="flex flex-wrap items-center justify-between gap-3 text-xs text-zinc-300">
+            <div className="flex items-center gap-2">
+              <span className="inline-flex rounded-full bg-white/10 px-3 py-1 text-[11px] uppercase tracking-wide text-white/80">
+                {twitchStatus?.isLive ? "Vi er live nå" : "Streamen er offline"}
+              </span>
+              {typeof twitchStatus?.viewers === "number" ? (
+                <span>{twitchStatus.viewers.toLocaleString()} seere følger med</span>
+              ) : null}
+            </div>
+            <div className="flex items-center gap-3">
+              {statusError ? <span className="text-rose-300">{statusError}</span> : null}
+              {lastUpdated ? <span>Sist oppdatert {lastUpdated}</span> : null}
             </div>
           </div>
 
-          <div className="flex flex-wrap justify-center gap-4 mt-4">
-            <PlatformButton
-              icon={<Youtube className="h-5 w-5 text-red-500" />}
-              label="Se på YouTube"
-              href="https://youtube.com/@fjolsenbanden"
-            />
-            <PlatformButton
-              icon={<Twitch className="h-5 w-5 text-purple-500" />}
-              label="Se på Twitch"
-              href="https://twitch.tv/fjolsenbanden"
-            />
-            <PlatformButton
-              icon={<Smartphone className="h-5 w-5 text-pink-400" />}
-              label="Se på TikTok"
-              href="https://tiktok.com/@fjolsenbanden"
-            />
-            <PlatformButton
-              icon={<Facebook className="h-5 w-5 text-blue-500" />}
-              label="Se på Facebook Gaming"
-              href="https://facebook.com/fjolsenbanden"
-            />
-          </div>
+          <PlatformButtons statusMap={statusMap} />
         </div>
 
-        <div className="rounded-2xl bg-white/5 border border-white/10 p-4 flex flex-col">
-          <h3 className="flex items-center gap-2 text-cyan-300 font-semibold mb-2">
-            <MessageCircle className="h-4 w-4" /> Live chat
-          </h3>
-          <div className="flex-1 overflow-y-auto space-y-2 text-sm text-zinc-300">
-            {[
-              { user: "Lina", msg: "Haha, den bossen var vilt!" },
-              { user: "Jonas", msg: "Gleder meg til premie-trekningen 🔥" },
-              { user: "Sara", msg: "Hei fra TikTok 😎" },
-              { user: "Marius", msg: "Bra lyd i dag!" },
-            ].map((chat) => (
-              <div key={chat.user} className="bg-white/5 rounded-lg px-3 py-2">
-                <span className="text-cyan-300 font-semibold">{chat.user}</span>: {chat.msg}
-              </div>
-            ))}
-          </div>
-          <div className="mt-3">
-            <input
-              type="text"
-              placeholder="Skriv en kommentar..."
-              className="w-full rounded-lg bg-white/10 border border-white/20 px-3 py-2 text-sm outline-none focus:ring-1 focus:ring-cyan-400"
-            />
-          </div>
+        <div className="lg:col-span-1">
+          <LiveChat />
         </div>
+        <LiveChat />
       </main>
 
-      <footer className="text-center text-xs text-zinc-400 py-6 border-t border-white/10">
+      <footer className="border-t border-white/10 py-6 text-center text-xs text-zinc-400">
         © {new Date().getFullYear()} Fjolsenbanden – Stream. Spill. Vinn.
       </footer>
     </div>

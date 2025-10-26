@@ -1,121 +1,130 @@
-const TWITCH_TOKEN_ENDPOINT = "https://id.twitch.tv/oauth2/token";
-const TWITCH_STREAMS_ENDPOINT = "https://api.twitch.tv/helix/streams";
+import { fetchTwitchLiveStatus, TwitchCredentials } from "./twitch";
+import { fetchYoutubeLiveStatus, YoutubeCredentials } from "./youtube";
 
-interface TwitchTokenResponse {
-  access_token: string;
-  expires_in: number;
-  token_type: string;
+export type LivePlatform = "twitch" | "youtube";
+
+export interface PlatformStatus {
+  platform: LivePlatform;
+  isLive: boolean;
+  title?: string;
+  viewers?: number;
+  url: string;
+  thumbnailUrl?: string | null;
+  startedAt?: string | null;
+  note?: string;
+  error?: string;
 }
 
-export interface TwitchStream {
-  id: string;
-  user_id: string;
-  user_login: string;
-  user_name: string;
-  game_id: string;
-  type: string;
-  title: string;
-  viewer_count: number;
-  started_at: string;
-  language: string;
-  thumbnail_url: string;
+export interface AggregatedLiveStatus {
+  updatedAt: string;
+  statuses: PlatformStatus[];
 }
 
-interface TwitchStreamsResponse {
-  data: TwitchStream[];
-}
-
-interface CachedToken {
-  token: string;
-  expiresAt: number;
-}
-
-let cachedToken: CachedToken | null = null;
-
-function getClientId(): string {
-  const clientId = process.env.TWITCH_CLIENT_ID;
-  if (!clientId) {
-    throw new Error("Missing Twitch client id. Set TWITCH_CLIENT_ID in environment variables.");
-  }
-  return clientId;
-}
-
-function getClientSecret(): string {
-  const clientSecret = process.env.TWITCH_CLIENT_SECRET;
-  if (!clientSecret) {
-    throw new Error("Missing Twitch client secret. Set TWITCH_CLIENT_SECRET in environment variables.");
-  }
-  return clientSecret;
-}
-
-async function requestNewToken(): Promise<CachedToken> {
-  const body = new URLSearchParams({
-    client_id: getClientId(),
-    client_secret: getClientSecret(),
-    grant_type: "client_credentials",
-  });
-
-  const response = await fetch(TWITCH_TOKEN_ENDPOINT, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
-    },
-    body: body.toString(),
-  });
-
-  if (!response.ok) {
-    const message = await response.text();
-    throw new Error(`Failed to retrieve Twitch token: ${response.status} ${message}`);
-  }
-
-  const payload = (await response.json()) as TwitchTokenResponse;
-  const expiresAt = Date.now() + payload.expires_in * 1000 - 60_000;
-  return {
-    token: payload.access_token,
-    expiresAt,
+export interface LiveStatusConfig {
+  twitch?: {
+    channel: string;
+    credentials?: Partial<TwitchCredentials>;
+  };
+  youtube?: {
+    channelId: string;
+    credentials?: Partial<YoutubeCredentials>;
   };
 }
 
-async function getAppAccessToken(forceRefresh = false): Promise<string> {
-  if (!forceRefresh && cachedToken && cachedToken.expiresAt > Date.now()) {
-    return cachedToken.token;
-  }
-
-  cachedToken = await requestNewToken();
-  return cachedToken.token;
+export interface AggregateLiveStatusOptions {
+  fetcher?: typeof fetch;
+  config?: LiveStatusConfig;
 }
 
-async function fetchStreamData(channel: string, token: string): Promise<Response> {
-  const url = new URL(TWITCH_STREAMS_ENDPOINT);
-  url.searchParams.set("user_login", channel);
+const DEFAULT_CONFIG: LiveStatusConfig = {
+  twitch: {
+    channel: "fjolsenbanden",
+  },
+};
 
-  return fetch(url.toString(), {
-    headers: {
-      "Client-Id": getClientId(),
-      Authorization: `Bearer ${token}`,
-    },
-  });
+function mergeConfig(config?: LiveStatusConfig): LiveStatusConfig {
+  if (!config) {
+    return DEFAULT_CONFIG;
+  }
+
+  return {
+    twitch: config.twitch ?? DEFAULT_CONFIG.twitch,
+    youtube: config.youtube,
+  };
 }
 
-export async function getTwitchStatus(channel: string): Promise<TwitchStream | null> {
-  if (!channel) {
-    throw new Error("Channel login is required to query Twitch status.");
+export async function aggregateLiveStatus(
+  options: AggregateLiveStatusOptions = {}
+): Promise<AggregatedLiveStatus> {
+  const { fetcher = fetch, config } = options;
+  const resolvedConfig = mergeConfig(config);
+  const statuses: PlatformStatus[] = [];
+
+  const twitchConfig = resolvedConfig.twitch;
+  if (twitchConfig?.channel) {
+    try {
+      const twitchStatus = await fetchTwitchLiveStatus(
+        twitchConfig.channel,
+        {
+          clientId: twitchConfig.credentials?.clientId ?? "",
+          accessToken: twitchConfig.credentials?.accessToken ?? "",
+        },
+        fetcher
+      );
+
+      statuses.push({
+        platform: "twitch",
+        isLive: twitchStatus.isLive,
+        title: twitchStatus.title,
+        viewers: twitchStatus.viewers,
+        startedAt: twitchStatus.startedAt ?? null,
+        thumbnailUrl: twitchStatus.thumbnailUrl ?? null,
+        url: twitchStatus.url,
+        note: twitchStatus.gameName ? `Spiller ${twitchStatus.gameName}` : undefined,
+      });
+    } catch (error) {
+      statuses.push({
+        platform: "twitch",
+        isLive: false,
+        url: `https://twitch.tv/${twitchConfig.channel}`,
+        error: error instanceof Error ? error.message : "Ukjent feil mot Twitch",
+      });
+    }
   }
 
-  const token = await getAppAccessToken();
-  let response = await fetchStreamData(channel, token);
+  const youtubeConfig = resolvedConfig.youtube;
+  if (youtubeConfig?.channelId) {
+    try {
+      const youtubeStatus = await fetchYoutubeLiveStatus(
+        youtubeConfig.channelId,
+        {
+          apiKey: youtubeConfig.credentials?.apiKey ?? "",
+        },
+        fetcher
+      );
 
-  if (response.status === 401) {
-    cachedToken = null;
-    const refreshedToken = await getAppAccessToken(true);
-    response = await fetchStreamData(channel, refreshedToken);
+      statuses.push({
+        platform: "youtube",
+        isLive: youtubeStatus.isLive,
+        title: youtubeStatus.title,
+        viewers: youtubeStatus.viewers,
+        startedAt: youtubeStatus.scheduledStartTime ?? null,
+        thumbnailUrl: youtubeStatus.thumbnailUrl ?? null,
+        url: youtubeStatus.url,
+        note: youtubeStatus.description,
+      });
+    } catch (error) {
+      statuses.push({
+        platform: "youtube",
+        isLive: false,
+        url: `https://www.youtube.com/channel/${youtubeConfig.channelId}`,
+        error: error instanceof Error ? error.message : "Ukjent feil mot YouTube",
+      });
+    }
   }
 
-  if (!response.ok) {
-    const message = await response.text();
-    throw new Error(`Failed to fetch Twitch status: ${response.status} ${message}`);
-  }
-
-  const payload = (await response.json()) as TwitchStreamsResponse;
-  return payload.data.length > 0 ? payload.data[0] : null;
+  return {
+    updatedAt: new Date().toISOString(),
+    statuses,
+  };
 }
