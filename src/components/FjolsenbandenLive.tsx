@@ -11,6 +11,15 @@ import {
   LivePlatform,
   PlatformStatus,
 } from "@/lib/liveStatus";
+import { Facebook, Menu, Play, Smartphone, Twitch, X, Youtube } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import LiveChat from "./LiveChat";
+
+interface PlatformButtonProps {
+  icon: React.ReactNode;
+  label: string;
+  href: string;
+}
 
 const NAV_LINKS = ["Hjem", "Premier", "Foreldre", "Sponsorer", "Kontakt"] as const;
 const TWITCH_CHANNEL = "fjolsenbanden";
@@ -142,6 +151,7 @@ export default function FjolsenbandenLive() {
         <div className="lg:col-span-1">
           <LiveChat />
         </div>
+        <LiveChat />
       </main>
 
       <footer className="border-t border-white/10 py-6 text-center text-xs text-zinc-400">
