@@ -1,7 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import type { ReactNode } from "react";
+import { type ReactNode, useEffect, useState } from "react";
 import {
   Facebook,
   Gift,
@@ -182,6 +181,7 @@ export default function FjolsenbandenHome() {
           onClick={() => setMenuOpen((prev: boolean) => !prev)}
           className="rounded-md p-2 transition hover:bg-white/10 md:hidden"
           aria-label="Toggle navigation"
+          aria-expanded={menuOpen}
         >
           {menuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
         </button>
@@ -287,9 +287,7 @@ export default function FjolsenbandenHome() {
             </div>
             <div className="flex flex-wrap justify-center gap-4">
               {platformLinks.map(({ icon, label, href }) => (
-                <React.Fragment key={label}>
-                  <PlatformButton icon={icon} label={label} href={href} />
-                </React.Fragment>
+                <PlatformButton key={label} icon={icon} label={label} href={href} />
               ))}
             </div>
           </div>
@@ -321,9 +319,7 @@ export default function FjolsenbandenHome() {
         </p>
         <div className="mx-auto grid max-w-7xl gap-8 md:grid-cols-3">
           {membershipTiers.map(({ title, price, color, features }) => (
-            <React.Fragment key={title}>
-              <MembershipCard title={title} price={price} color={color} features={features} />
-            </React.Fragment>
+            <MembershipCard key={title} title={title} price={price} color={color} features={features} />
           ))}
         </div>
       </section>
@@ -335,9 +331,7 @@ export default function FjolsenbandenHome() {
         </p>
         <div className="mx-auto grid max-w-5xl gap-6 sm:grid-cols-2 md:grid-cols-4">
           {stats.map(({ title, value }) => (
-            <React.Fragment key={title}>
-              <StatCard title={title} value={value} Icon={Users} />
-            </React.Fragment>
+            <StatCard key={title} title={title} value={value} Icon={Users} />
           ))}
         </div>
       </section>
@@ -349,9 +343,7 @@ export default function FjolsenbandenHome() {
         </p>
         <div className="mx-auto mb-10 grid max-w-7xl gap-8 md:grid-cols-3">
           {prizes.map(({ brand, item }) => (
-            <React.Fragment key={brand}>
-              <PrizeCard brand={brand} item={item} />
-            </React.Fragment>
+            <PrizeCard key={brand} brand={brand} item={item} />
           ))}
         </div>
         <div id="sponsorer" className="flex flex-wrap justify-center gap-6">
@@ -404,7 +396,7 @@ function PlatformButton({ icon, label, href }: { icon: ReactNode; label: string;
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className="flex transform items-center gap-2 rounded-full border border-white/10 bg-white/10 px-4 py-2 text-sm transition duration-200 hover:-translate-y-1 hover:bg-white/20 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-[#00CFFF] active:scale-95"
+      className="flex items-center gap-2 rounded-full border border-white/10 bg-white/10 px-4 py-2 text-sm transition duration-200 hover:-translate-y-1 hover:bg-white/20 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-[#00CFFF] active:scale-95"
     >
       {icon}
       <span>{label}</span>
