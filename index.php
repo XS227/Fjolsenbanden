@@ -1,5 +1,6 @@
 <?php
 $navLinks = [
+    ['href' => '#oppdateringer', 'label' => 'Oppdateringer'],
     ['href' => '#medlem', 'label' => 'Medlemskap'],
     ['href' => '#premier', 'label' => 'Premier'],
     ['href' => '#aktiviteter', 'label' => 'Aktiviteter'],
@@ -91,6 +92,21 @@ $carePillars = [
     'Vipps-verifisering av foreldre',
     'Sertifiserte trygge moderatorer',
     'Positiv chat og venneskole',
+];
+
+$latestUpdate = [
+    'date' => 'Mai 2024',
+    'title' => 'Lansering av Fjolsenbanden Quest-board',
+    'summary' => 'Vi introduserer ukentlige quester og nye familievennlige turneringer slik at både spillere og foreldre får tydelig oversikt.',
+    'highlights' => [
+        'Ukentlige quester med digitale badges og premier',
+        'Foreldrepanel med tidsplan og aktivitetsvarsler',
+        'Utvidet trygghetsgaranti med verifiserte veiledere',
+    ],
+    'cta' => [
+        'href' => 'idex.html',
+        'label' => 'Les hele oppdateringen',
+    ],
 ];
 ?>
 <!DOCTYPE html>
@@ -268,6 +284,50 @@ $carePillars = [
               <div class="mt-2 text-sm font-semibold text-slate-700"><?= htmlspecialchars($stat['label']) ?></div>
             </div>
           <?php endforeach; ?>
+        </div>
+      </section>
+
+      <section id="oppdateringer" class="py-16">
+        <div class="rounded-3xl border border-white/60 bg-white/80 p-10 shadow-xl">
+          <span class="inline-flex items-center gap-2 rounded-full bg-[#FF7AD9]/10 px-4 py-2 text-xs font-semibold uppercase tracking-wide text-[#FF7AD9]">
+            <span aria-hidden>🌟</span>
+            Ny oppdatering <?= htmlspecialchars($latestUpdate['date']) ?>
+          </span>
+          <div class="mt-6 grid gap-8 md:grid-cols-[1.2fr_1fr] md:items-center">
+            <div class="space-y-4">
+              <h2 class="text-3xl font-extrabold text-slate-800">
+                <?= htmlspecialchars($latestUpdate['title']) ?>
+              </h2>
+              <p class="text-base text-slate-600">
+                <?= htmlspecialchars($latestUpdate['summary']) ?>
+              </p>
+              <ul class="space-y-2 text-sm text-slate-600">
+                <?php foreach ($latestUpdate['highlights'] as $highlight): ?>
+                  <li class="flex items-start gap-3">
+                    <span class="mt-1 text-[#FF7AD9]">✔</span>
+                    <span><?= htmlspecialchars($highlight) ?></span>
+                  </li>
+                <?php endforeach; ?>
+              </ul>
+              <a
+                class="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#34D399] to-[#22D3EE] px-6 py-3 text-sm font-semibold text-white shadow transition hover:from-[#22C55E] hover:to-[#0EA5E9]"
+                href="<?= htmlspecialchars($latestUpdate['cta']['href']) ?>"
+              >
+                <?= htmlspecialchars($latestUpdate['cta']['label']) ?>
+                <span aria-hidden>→</span>
+              </a>
+            </div>
+            <div class="rounded-3xl bg-gradient-to-br from-[#FFF5F7] via-[#E0EAFF] to-[#F8F9FF] p-6 text-sm text-slate-600 shadow-inner">
+              <h3 class="text-lg font-semibold text-slate-800">Hvorfor dette er viktig</h3>
+              <p class="mt-3">
+                Quest-boardet gjør det lettere for foreldre å se hva som skjer denne uken, samtidig som barna får tydelige mål med
+                premier og heiarop. Alt er koblet til Vipps-innloggingen for trygghet.
+              </p>
+              <p class="mt-3">
+                Besøk oppdateringssiden for å se hele veikartet og få tips til hvordan familien kan delta i vårens eventyr.
+              </p>
+            </div>
+          </div>
         </div>
       </section>
 
