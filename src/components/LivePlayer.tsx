@@ -10,6 +10,7 @@ export interface LivePlayerProps {
   parentDomain?: string;
   status?: PlatformStatus;
   previewDuration?: number;
+  demoUrl?: string;
 }
 
 function resolveParentDomain(parentDomain?: string): string {
@@ -29,6 +30,7 @@ export function LivePlayer({
   parentDomain,
   status,
   previewDuration = 60,
+  demoUrl,
 }: LivePlayerProps) {
   const [countdown, setCountdown] = useState(previewDuration);
   const [unmuted, setUnmuted] = useState(false);
@@ -102,6 +104,19 @@ export function LivePlayer({
             <Button onClick={() => setUnmuted(true)} className="rounded-full px-6 py-4 text-base">
               Se full stream
             </Button>
+            {demoUrl ? (
+              <Button
+                variant="outline"
+                className="mt-3 rounded-full px-6 py-3 text-sm"
+                onClick={() => {
+                  if (typeof window !== "undefined") {
+                    window.open(demoUrl, "_blank", "noopener,noreferrer");
+                  }
+                }}
+              >
+                Åpne demo-stream
+              </Button>
+            ) : null}
           </div>
         </div>
       ) : null}

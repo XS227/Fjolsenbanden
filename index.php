@@ -218,8 +218,13 @@ $latestUpdate = [
             <a class="rounded-full bg-gradient-to-r from-[#34D399] to-[#22D3EE] px-6 py-3 text-sm font-semibold text-white shadow-md transition hover:from-[#22C55E] hover:to-[#0EA5E9]" href="#medlem">
               Meld inn barn
             </a>
-            <a class="rounded-full border border-[#FF7AD9]/30 bg-white px-6 py-3 text-sm font-semibold text-[#FF7AD9] shadow-sm transition hover:border-[#FF7AD9]" href="#aktiviteter">
-              Se neste stream
+            <a
+              class="rounded-full border border-[#FF7AD9]/30 bg-white px-6 py-3 text-sm font-semibold text-[#FF7AD9] shadow-sm transition hover:border-[#FF7AD9]"
+              href="https://player.twitch.tv/?channel=fjolsenbanden"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Se demo stream
             </a>
           </div>
           <div class="grid gap-3 sm:grid-cols-3">

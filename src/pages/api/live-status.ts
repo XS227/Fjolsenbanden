@@ -1,4 +1,4 @@
-import { getTwitchStatus } from "@/lib/liveStatus";
+import { getTwitchStatus } from "@/lib/twitch";
 
 type ApiResponse = {
   status: (code: number) => ApiResponse;

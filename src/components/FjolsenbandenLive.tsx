@@ -5,21 +5,13 @@ import { Menu, X } from "lucide-react";
 import LiveChat from "@/components/LiveChat";
 import LivePlayer from "@/components/LivePlayer";
 import PlatformButtons from "@/components/PlatformButtons";
+import { DEMO_STREAM_URL } from "@/lib/demoStream";
 import {
   aggregateLiveStatus,
   AggregatedLiveStatus,
   LivePlatform,
   PlatformStatus,
 } from "@/lib/liveStatus";
-import { Facebook, Menu, Play, Smartphone, Twitch, X, Youtube } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import LiveChat from "./LiveChat";
-
-interface PlatformButtonProps {
-  icon: React.ReactNode;
-  label: string;
-  href: string;
-}
 
 const NAV_LINKS = ["Hjem", "Premier", "Foreldre", "Sponsorer", "Kontakt"] as const;
 const TWITCH_CHANNEL = "fjolsenbanden";
@@ -128,7 +120,11 @@ export default function FjolsenbandenLive() {
 
       <main className="relative mx-auto grid max-w-6xl gap-8 px-4 py-12 lg:grid-cols-3">
         <div className="relative space-y-4 lg:col-span-2">
-          <LivePlayer channel={TWITCH_CHANNEL} status={twitchStatus} />
+          <LivePlayer
+            channel={TWITCH_CHANNEL}
+            status={twitchStatus}
+            demoUrl={DEMO_STREAM_URL}
+          />
 
           <div className="flex flex-wrap items-center justify-between gap-3 text-xs text-zinc-300">
             <div className="flex items-center gap-2">
@@ -146,12 +142,26 @@ export default function FjolsenbandenLive() {
           </div>
 
           <PlatformButtons statusMap={statusMap} />
+
+          <div className="rounded-2xl border border-white/10 bg-white/5 p-4 text-sm text-zinc-300">
+            <p className="font-semibold text-white">Vil du teste livestream-opplevelsen?</p>
+            <p className="mt-1">
+              Åpne <a
+                href={DEMO_STREAM_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-cyan-300 underline-offset-2 hover:underline"
+              >
+                demo-streamen i nytt vindu
+              </a>{" "}
+              for å verifisere avspilleren når hovedkanalen er offline.
+            </p>
+          </div>
         </div>
 
         <div className="lg:col-span-1">
           <LiveChat />
         </div>
-        <LiveChat />
       </main>
 
       <footer className="border-t border-white/10 py-6 text-center text-xs text-zinc-400">
