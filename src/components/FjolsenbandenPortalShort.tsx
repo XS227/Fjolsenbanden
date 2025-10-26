@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Check, Trophy, Shield, Star, PlayCircle, Menu, X } from "lucide-react";
+import { DEMO_STREAM_URL } from "@/lib/demoStream";
 
 type LevelAccent = "cyan" | "amber";
 
@@ -123,8 +124,16 @@ export default function FjolsenbandenPortalShort() {
         </p>
         <div className="mt-6 flex justify-center gap-3">
           <Button className="rounded-full px-6 py-4 text-base">Meld inn barn</Button>
-          <Button className="rounded-full px-6 py-4 text-base" variant="outline">
-            Se neste stream
+          <Button
+            className="rounded-full px-6 py-4 text-base"
+            variant="outline"
+            onClick={() => {
+              if (typeof window !== "undefined") {
+                window.open(DEMO_STREAM_URL, "_blank", "noopener,noreferrer");
+              }
+            }}
+          >
+            Se demo stream
           </Button>
         </div>
         <div className="mt-6 flex flex-wrap justify-center gap-3 text-sm text-zinc-600">

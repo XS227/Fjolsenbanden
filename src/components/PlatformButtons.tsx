@@ -1,15 +1,16 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { Facebook, Smartphone, Twitch, Youtube } from "lucide-react";
+import { Facebook, PlayCircle, Smartphone, Twitch, Youtube } from "lucide-react";
 
 import type { LivePlatform, PlatformStatus } from "@/lib/liveStatus";
+import { DEMO_STREAM_URL } from "@/lib/demoStream";
 
 export interface PlatformButtonsProps {
   statusMap?: Partial<Record<LivePlatform, PlatformStatus>>;
 }
 
 interface PlatformLinkConfig {
-  id: "twitch" | "youtube" | "tiktok" | "facebook";
+  id: "twitch" | "youtube" | "tiktok" | "facebook" | "demo";
   label: string;
   href: string;
   icon: React.ReactNode;
@@ -40,6 +41,12 @@ const PLATFORM_LINKS: PlatformLinkConfig[] = [
     href: "https://facebook.com/fjolsenbanden",
     icon: <Facebook className="h-5 w-5 text-blue-500" />,
   },
+  {
+    id: "demo",
+    label: "Åpne demo-stream",
+    href: DEMO_STREAM_URL,
+    icon: <PlayCircle className="h-5 w-5 text-cyan-300" />,
+  },
 ];
 
 function getLiveBadge(status?: PlatformStatus) {
@@ -60,7 +67,8 @@ export function PlatformButtons({ statusMap }: PlatformButtonsProps) {
   return (
     <div className="mt-4 flex flex-wrap justify-center gap-4">
       {PLATFORM_LINKS.map((platform) => {
-        const status = statusMap?.[platform.id as LivePlatform];
+        const status =
+          platform.id === "demo" ? undefined : statusMap?.[platform.id as LivePlatform];
 
         return (
           <motion.a

@@ -85,9 +85,13 @@ export async function fetchTwitchLiveStatus(
     gameName: stream.game_name ?? undefined,
     viewers: stream.viewer_count ?? undefined,
     startedAt: stream.started_at ?? undefined,
-    thumbnailUrl: stream.thumbnail_url?.replace("{width}", "1920").replace("{height}", "1080"),
+    thumbnailUrl: stream.thumbnail_url
+      ?.replace("{width}", "1920")
+      .replace("{height}", "1080"),
     url: `https://twitch.tv/${normalisedChannel}`,
   };
+}
+
 export interface TwitchStreamData {
   id: string;
   user_id: string;
@@ -113,9 +117,12 @@ export async function getTwitchStatus(channel: string): Promise<TwitchStreamData
     throw new Error("Missing Twitch API credentials. Set TWITCH_CLIENT_ID and TWITCH_OAUTH_TOKEN.");
   }
 
-  const res = await fetch(`https://api.twitch.tv/helix/streams?user_login=${encodeURIComponent(channel)}`, {
-    headers: { "Client-ID": clientId, Authorization: `Bearer ${token}` },
-  });
+  const res = await fetch(
+    `${TWITCH_API_BASE}/streams?user_login=${encodeURIComponent(channel)}`,
+    {
+      headers: { "Client-ID": clientId, Authorization: `Bearer ${token}` },
+    }
+  );
 
   if (!res.ok) {
     const errorBody = await res.text();
