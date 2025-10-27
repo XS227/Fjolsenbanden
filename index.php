@@ -132,14 +132,11 @@ $latestUpdate = [
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;700;800;900&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;600;700;800;900&display=swap" rel="stylesheet" />
     <style>
       body {
         font-family: 'Nunito', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      }
-      .blob {
-        filter: blur(90px);
-        opacity: 0.5;
+        background-color: #0e0b1a;
       }
     </style>
   </head>
@@ -462,64 +459,73 @@ $latestUpdate = [
       © <?= date('Y') ?> Fjolsenbanden – Et trygt community for unge spillere.
     </footer>
 
-    <div class="fixed inset-x-0 bottom-0 z-40 border-t border-white/60 bg-white/90 backdrop-blur md:hidden">
-      <div class="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
-        <a href="#top" class="flex items-center gap-2" data-menu-close>
-          <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-[#FF87F3] to-[#FFC46C] text-sm font-extrabold text-white">FB</div>
-          <span class="text-xs font-semibold uppercase tracking-widest text-[#FF7AD9]">Fjolsenbanden</span>
-        </a>
-        <div class="flex items-center gap-2">
-          <a class="inline-flex h-10 items-center justify-center rounded-full bg-gradient-to-r from-[#FF7AD9] to-[#FF9B6A] px-4 text-xs font-bold text-white shadow-md transition hover:from-[#FF87F3] hover:to-[#FFB86C]" href="#foreldre" data-menu-close>
-            Vipps
-          </a>
-          <button
-            type="button"
-            class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[#FF7AD9]/30 bg-white text-[#FF7AD9] shadow-sm transition hover:border-[#FF7AD9]"
-            aria-controls="mobile-menu-panel"
-            aria-expanded="false"
-            data-menu-toggle
-          >
-            <span class="sr-only">Åpne meny</span>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5">
-              <path d="M4 7.5h16M4 12h16M4 16.5h16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
-            </svg>
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <script>
-      document.addEventListener('DOMContentLoaded', () => {
-        const menuPanel = document.getElementById('mobile-menu-panel');
-        if (!menuPanel) return;
-
-        const toggleButtons = document.querySelectorAll('[data-menu-toggle]');
-        const setMenuState = (open) => {
-          menuPanel.classList.toggle('hidden', !open);
-          document.body.classList.toggle('overflow-hidden', open);
-          toggleButtons.forEach((btn) => btn.setAttribute('aria-expanded', open ? 'true' : 'false'));
-        };
-
-        toggleButtons.forEach((btn) => {
-          btn.addEventListener('click', () => {
-            const isHidden = menuPanel.classList.contains('hidden');
-            setMenuState(isHidden);
-          });
-        });
-
-        document.addEventListener('click', (event) => {
-          const closeTarget = event.target.closest('[data-menu-close]');
-          if (closeTarget && !menuPanel.classList.contains('hidden')) {
-            setMenuState(false);
-          }
-        });
-
-        document.addEventListener('keydown', (event) => {
-          if (event.key === 'Escape' && !menuPanel.classList.contains('hidden')) {
-            setMenuState(false);
-          }
-        });
+(function () {
+  var navToggle = document.querySelector('[data-nav-toggle]');
+  var navMenu = document.querySelector('[data-nav-menu]');
+  if (navToggle && navMenu) {
+    navToggle.addEventListener('click', function () {
+      var isOpen = navMenu.classList.contains('flex');
+      navMenu.classList.toggle('flex', !isOpen);
+      navMenu.classList.toggle('hidden', isOpen);
+      navToggle.setAttribute('aria-expanded', String(!isOpen));
+    });
+    document.querySelectorAll('[data-nav-close]').forEach(function (link) {
+      link.addEventListener('click', function () {
+        navMenu.classList.remove('flex');
+        navMenu.classList.add('hidden');
+        navToggle.setAttribute('aria-expanded', 'false');
       });
+    });
+  }
+
+  document.querySelectorAll('[data-scroll-to]').forEach(function (button) {
+    button.addEventListener('click', function (event) {
+      var target = button.getAttribute('data-scroll-to');
+      if (!target) {
+        return;
+      }
+      var anchor = document.querySelector(target);
+      if (!anchor) {
+        return;
+      }
+      event.preventDefault();
+      anchor.scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+
+  var overlay = document.querySelector('[data-preview-overlay]');
+  var frame = document.querySelector('[data-preview-frame]');
+  var timer = document.querySelector('[data-preview-timer]');
+  var unmuteButton = document.querySelector('[data-video-unmute]');
+  if (overlay && frame && timer && unmuteButton) {
+    var remaining = parseInt(timer.textContent || '60', 10) || 60;
+    var interval = window.setInterval(function () {
+      remaining = Math.max(remaining - 1, 0);
+      timer.textContent = String(remaining);
+      if (remaining === 0) {
+        window.clearInterval(interval);
+      }
+    }, 1000);
+
+    var enableSound = function () {
+      overlay.remove();
+      window.clearInterval(interval);
+      try {
+        var url = new URL(frame.src);
+        url.searchParams.set('muted', 'false');
+        frame.src = url.toString();
+      } catch (error) {
+        frame.src = frame.src.replace('muted=true', 'muted=false');
+      }
+    };
+
+    unmuteButton.addEventListener('click', function (event) {
+      event.preventDefault();
+      enableSound();
+    });
+  }
+})();
+
     </script>
   </body>
 </html>

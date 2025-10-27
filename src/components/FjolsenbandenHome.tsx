@@ -206,6 +206,7 @@ export default function FjolsenbandenHome() {
         </ul>
         <button
           type="button"
+          data-nav-toggle
           onClick={() => setMenuOpen((prev: boolean) => !prev)}
           className="rounded-md p-2 transition hover:bg-white/10 md:hidden"
           aria-label="Toggle navigation"
@@ -213,21 +214,25 @@ export default function FjolsenbandenHome() {
         >
           {menuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
         </button>
-        {menuOpen ? (
-          <ul className="absolute right-4 top-full mt-2 flex flex-col gap-3 rounded-xl border border-white/10 bg-[#1f2940] p-4 text-sm shadow-lg transition md:hidden">
-            {navLinks.map((link) => (
-              <li key={link.name}>
-                <a
-                  href={link.href}
-                  className="block rounded-md px-4 py-2 transition hover:bg-white/10"
-                  onClick={() => setMenuOpen(false)}
-                >
-                  {link.name}
-                </a>
-              </li>
-            ))}
-          </ul>
-        ) : null}
+        <ul
+          data-nav-menu
+          className={`absolute right-4 top-full mt-2 ${
+            menuOpen ? "flex" : "hidden"
+          } flex-col gap-3 rounded-xl border border-white/10 bg-[#1f2940] p-4 text-sm shadow-lg transition md:hidden`}
+        >
+          {navLinks.map((link) => (
+            <li key={link.name}>
+              <a
+                href={link.href}
+                className="block rounded-md px-4 py-2 transition hover:bg-white/10"
+                data-nav-close
+                onClick={() => setMenuOpen(false)}
+              >
+                {link.name}
+              </a>
+            </li>
+          ))}
+        </ul>
       </nav>
 
       <section className="mt-6 space-y-6 px-6 text-center">
@@ -242,6 +247,7 @@ export default function FjolsenbandenHome() {
           <Button
             size="lg"
             className="rounded-full bg-[#00CFFF] px-6 text-black hover:bg-[#00bcd4]"
+            data-scroll-to="#medlemskap"
             onClick={() => scrollToAnchor("#medlemskap")}
           >
             Meld inn barn
@@ -250,6 +256,7 @@ export default function FjolsenbandenHome() {
             size="lg"
             variant="outline"
             className="rounded-full border-white/20 px-6 hover:bg-white/10"
+            data-scroll-to="#live"
             onClick={() => scrollToAnchor("#live")}
           >
             Se neste stream
@@ -270,18 +277,29 @@ export default function FjolsenbandenHome() {
                 🔴 LIVE
               </span>
               <iframe
+                data-preview-frame
                 src={`https://player.twitch.tv/?channel=fjolsenbanden&parent=fjolsenbanden.setaei.com&muted=${!unmuted}`}
                 title="Fjolsenbanden Twitch Player"
                 allowFullScreen
                 className="aspect-video w-full bg-black"
               />
               {!unmuted ? (
-                <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 bg-black/70 p-6 text-center">
+                <div
+                  data-preview-overlay
+                  className="absolute inset-0 flex flex-col items-center justify-center gap-4 bg-black/70 p-6 text-center"
+                >
                   <Play className="h-12 w-12 text-[#00CFFF]" />
-                  <p className="text-sm text-zinc-300">1-minutt forhåndsvisning – {previewCountdown}s igjen</p>
+                  <p className="text-sm text-zinc-300">
+                    1-minutt forhåndsvisning –
+                    <span data-preview-timer className="ml-1">
+                      {previewCountdown}
+                    </span>
+                    s igjen
+                  </p>
                   <Button
                     size="lg"
                     className="rounded-full bg-[#00CFFF] px-6 text-black hover:bg-[#00bcd4]"
+                    data-video-unmute
                     onClick={() => setUnmuted(true)}
                   >
                     Se full stream
