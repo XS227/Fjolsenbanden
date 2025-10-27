@@ -6,7 +6,7 @@ $navLinks = [
     ['href' => 'index.php#aktiviteter', 'label' => 'Aktiviteter'],
     ['href' => 'index.php#foreldre', 'label' => 'Foreldre'],
     ['href' => 'index.php#community', 'label' => 'Community'],
-    ['href' => 'index.php#giles', 'label' => 'Giles'],
+    ['href' => 'index.php#tor-martin', 'label' => 'Tor Martin'],
     ['href' => 'index.php#sponsor', 'label' => 'Sponsorer'],
 ];
 ?>

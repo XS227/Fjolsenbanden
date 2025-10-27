@@ -58,7 +58,7 @@ const navLinks = [
   { name: "Live", href: "#live" },
   { name: "Premier", href: "#premier" },
   { name: "Medlemskap", href: "#medlemskap" },
-  { name: "Giles", href: "#giles" },
+  { name: "Tor Martin", href: "#tor-martin" },
   { name: "Foreldre", href: "#foreldre" },
   { name: "Sponsorer", href: "#sponsorer" },
 ] as const;
@@ -130,17 +130,17 @@ const demoChat = [
 ] as const;
 
 const hostSpotlight: HostSpotlight = {
-  name: "Giles",
+  name: "Tor Martin",
   role: "Game Master & trygghetsvert",
   description:
-    "Giles leder de familievennlige streamene våre med et våkent blikk på både chat og spillflyt. Han sørger for at alle føler seg sett, og at konkurransene holder et positivt tempo for alle aldre.",
+    "Tor Martin leder de familievennlige streamene våre med et våkent blikk på både chat og spillflyt. Han sørger for at alle føler seg sett, og at konkurransene holder et positivt tempo for alle aldre.",
   highlights: [
     "Sertifisert barne- og ungdomsarbeider med fokus på digital trygghet",
     "Planlegger ukentlige quester og koordinere premier sammen med partnere",
     "Moderator på Discord med null-toleranse for toksisk oppførsel",
   ],
   funFact:
-    "Favorittspill: Kreative Minecraft-bygg og co-op eventyr. Giles er også kjent for å droppe random high-fives i chatten!",
+    "Favorittspill: Kreative Minecraft-bygg og co-op eventyr. Tor Martin er også kjent for å droppe random high-fives i chatten!",
   quote:
     "Jeg vil at alle skal føle seg velkommen – både spillere, foreldre og de som er helt nye i gaming.",
 };
@@ -404,7 +404,7 @@ export default function FjolsenbandenHome() {
         </div>
       </section>
 
-      <section id="giles" className="mt-20 px-6">
+      <section id="tor-martin" className="mt-20 px-6">
         <div className="mx-auto grid max-w-6xl gap-8 lg:grid-cols-[1.7fr_1fr]">
           <div className="space-y-6 rounded-3xl border border-white/10 bg-[#161f33]/90 p-8 shadow-2xl">
             <div className="inline-flex items-center gap-2 rounded-full bg-cyan-500/10 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-cyan-300">
@@ -432,14 +432,14 @@ export default function FjolsenbandenHome() {
           <Card className="flex flex-col justify-between rounded-3xl border border-white/10 bg-[#101727]/90 text-left">
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-cyan-300">
-                <Quote className="h-5 w-5" /> Giles sier
+                <Quote className="h-5 w-5" /> Tor Martin sier
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-6 text-zinc-200">
               <p className="text-lg italic">“{hostSpotlight.quote}”</p>
               <div className="rounded-2xl border border-white/10 bg-white/5 p-4 text-sm text-zinc-300">
                 <p>
-                  Si hei til Giles i chatten under neste stream – han svarer alltid på spørsmål og kan tipse om hvilke quester som passer for
+                  Si hei til Tor Martin i chatten under neste stream – han svarer alltid på spørsmål og kan tipse om hvilke quester som passer for
                   både nye og erfarne medlemmer.
                 </p>
               </div>
