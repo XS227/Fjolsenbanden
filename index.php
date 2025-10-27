@@ -6,6 +6,7 @@ $navLinks = [
     ['href' => '#aktiviteter', 'label' => 'Aktiviteter'],
     ['href' => '#foreldre', 'label' => 'Foreldre'],
     ['href' => '#community', 'label' => 'Community'],
+    ['href' => '#giles', 'label' => 'Giles'],
     ['href' => '#sponsor', 'label' => 'Sponsorer'],
 ];
 
@@ -92,6 +93,19 @@ $carePillars = [
     'Vipps-verifisering av foreldre',
     'Sertifiserte trygge moderatorer',
     'Positiv chat og venneskole',
+];
+
+$hostSpotlight = [
+    'name' => 'Giles',
+    'role' => 'Game Master & trygghetsvert',
+    'description' => 'Giles leder de familievennlige streamene våre med et våkent blikk på både chat og spillflyt. Han sørger for at alle føler seg sett, og at konkurransene holder et positivt tempo for alle aldre.',
+    'highlights' => [
+        'Sertifisert barne- og ungdomsarbeider med fokus på digital trygghet',
+        'Planlegger ukentlige quester og koordinerer premier med partnere',
+        'Moderator på Discord med null-toleranse for toksisk oppførsel',
+    ],
+    'funFact' => 'Favorittspill: Kreative Minecraft-bygg og co-op eventyr. Giles er også kjent for å dele random high-fives i chatten!',
+    'quote' => 'Jeg vil at alle skal føle seg velkommen – både spillere, foreldre og de som er helt nye i gaming.',
 ];
 
 $latestUpdate = [
@@ -291,6 +305,55 @@ $latestUpdate = [
               <div class="mt-2 text-sm text-slate-700"><?= htmlspecialchars($prize['item']) ?></div>
             </div>
           <?php endforeach; ?>
+        </div>
+      </section>
+
+      <section id="giles" class="py-16">
+        <div class="grid gap-8 lg:grid-cols-[1.7fr_1fr]">
+          <div class="rounded-3xl border border-[#22D3EE]/20 bg-gradient-to-br from-[#111C2F] via-[#0F1A2B] to-[#0B1320] p-8 text-white shadow-2xl">
+            <span class="inline-flex items-center gap-2 rounded-full bg-cyan-500/10 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-cyan-300">
+              <span aria-hidden>✨</span>
+              Ukens spotlight
+            </span>
+            <div class="mt-4 space-y-2">
+              <h2 class="text-3xl font-extrabold">Møt <?= htmlspecialchars($hostSpotlight['name']) ?></h2>
+              <p class="text-sm uppercase tracking-widest text-cyan-300"><?= htmlspecialchars($hostSpotlight['role']) ?></p>
+            </div>
+            <p class="mt-4 text-base text-slate-200">
+              <?= htmlspecialchars($hostSpotlight['description']) ?>
+            </p>
+            <ul class="mt-6 space-y-3 text-sm text-slate-200">
+              <?php foreach ($hostSpotlight['highlights'] as $highlight): ?>
+                <li class="flex items-start gap-3">
+                  <span class="mt-1 text-cyan-300">✨</span>
+                  <span><?= htmlspecialchars($highlight) ?></span>
+                </li>
+              <?php endforeach; ?>
+            </ul>
+            <div class="mt-6 rounded-2xl border border-cyan-500/30 bg-cyan-500/10 p-4 text-sm text-slate-100">
+              <strong class="block text-cyan-200">Fun fact</strong>
+              <p class="mt-2 text-slate-100">
+                <?= htmlspecialchars($hostSpotlight['funFact']) ?>
+              </p>
+            </div>
+          </div>
+
+          <div class="flex flex-col justify-between rounded-3xl border border-white/10 bg-white/80 p-8 shadow-xl">
+            <div>
+              <div class="flex items-center gap-2 text-sm font-semibold uppercase tracking-wide text-[#FF7AD9]">
+                <span aria-hidden>❝</span>
+                Giles sier
+              </div>
+              <p class="mt-4 text-lg font-semibold text-slate-700">
+                “<?= htmlspecialchars($hostSpotlight['quote']) ?>”
+              </p>
+            </div>
+            <div class="mt-6 rounded-2xl border border-[#FF7AD9]/20 bg-gradient-to-br from-[#FFF5F7] via-[#F6F7FF] to-[#ECFEFF] p-5 text-sm text-slate-600">
+              <p>
+                Si hei til Giles i chatten under neste stream – han svarer alltid på spørsmål og tipser om hvilke quester som passer for hele familien.
+              </p>
+            </div>
+          </div>
         </div>
       </section>
 
