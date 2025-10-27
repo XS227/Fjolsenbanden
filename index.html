@@ -97,51 +97,100 @@
 <div class="relative">
 <div class="absolute -inset-6 rounded-3xl blur-2xl" style="background:conic-gradient(from 120deg, #13A0F9, #FF2F9C);opacity:0.28">
 </div>
-<div class="relative aspect-video overflow-hidden rounded-3xl border border-white/15 bg-black/50 shadow-2xl">
-<div class="absolute left-3 top-3 px-3 py-1 text-[11px] font-semibold" style="background:#FF2F9C;color:#000;border-radius:999px;box-shadow:0 0 24px #FF2F9C7a">🔴 LIVE</div>
-<img src="/assets/mascot.svg" alt="Fjolsenbanden maskot" class="absolute bottom-4 right-4 w-28 opacity-90 sm:w-36"/>
-<div class="grid h-full w-full place-items-center text-zinc-300">
-<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-play h-12 w-12" style="color:#13A0F9">
-<polygon points="6 3 20 12 6 21 6 3">
-</polygon>
-</svg>
-<p class="mt-2 text-xs opacity-80">1‑min forhåndsvisning – Twitch/YouTube</p>
-</div>
-</div>
-<div class="mt-4 flex flex-wrap gap-3">
-<button class="flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-sm">
-<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-twitch h-4 w-4 text-purple-400">
-<path d="M21 2H3v16h5v4l4-4h5l4-4V2zm-10 9V7m5 4V7">
-</path>
-</svg>
-<span>Se på Twitch</span>
-</button>
-<button class="flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-sm">
-<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-youtube h-4 w-4 text-red-500">
-<path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17">
-</path>
-<path d="m10 15 5-3-5-3z">
-</path>
-</svg>
-<span>Se på YouTube</span>
-</button>
-<button class="flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-sm">
-<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-smartphone h-4 w-4 text-pink-300">
-<rect width="14" height="20" x="5" y="2" rx="2" ry="2">
-</rect>
-<path d="M12 18h.01">
-</path>
-</svg>
-<span>Se på TikTok</span>
-</button>
-<button class="flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-sm">
-<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-facebook h-4 w-4 text-blue-500">
-<path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z">
-</path>
-</svg>
-<span>Facebook Gaming</span>
-</button>
-</div>
+        <div class="relative aspect-video overflow-hidden rounded-3xl border border-white/15 bg-black/50 shadow-2xl">
+          <span class="absolute left-3 top-3 rounded-full px-3 py-1 text-[11px] font-semibold" style="background:#FF2F9C;color:#000;box-shadow:0 0 24px #FF2F9C7a">🔴 LIVE</span>
+          <iframe
+            data-preview-frame
+            src="https://player.twitch.tv/?channel=fjolsenbanden&parent=fjolsenbanden.setaei.com&muted=true"
+            title="Fjolsenbanden Twitch Player"
+            allowfullscreen
+            class="h-full w-full"
+          ></iframe>
+          <div
+            data-preview-overlay
+            class="absolute inset-0 flex flex-col items-center justify-center gap-4 bg-black/80 p-6 text-center"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="lucide lucide-play h-12 w-12"
+              style="color:#13A0F9"
+            >
+              <polygon points="6 3 20 12 6 21 6 3"></polygon>
+            </svg>
+            <p class="text-xs text-zinc-100 sm:text-sm">
+              1‑min forhåndsvisning –<span data-preview-timer class="ml-1">60</span>s igjen
+            </p>
+            <button
+              type="button"
+              data-video-unmute
+              class="inline-flex items-center justify-center rounded-full bg-[#13A0F9] px-6 py-2 text-sm font-semibold text-black shadow-lg transition hover:bg-[#0ea5e9]"
+            >
+              Se full stream
+            </button>
+            <div class="flex flex-wrap items-center justify-center gap-2 text-xs text-zinc-300">
+              <span class="text-zinc-200">eller fortsett på</span>
+              <a href="https://www.twitch.tv/fjolsenbanden" target="_blank" rel="noopener noreferrer" class="font-medium text-[#13A0F9] hover:underline">Twitch</a>
+              <span class="hidden sm:inline">|</span>
+              <a href="https://youtube.com/@fjolsenbanden" target="_blank" rel="noopener noreferrer" class="font-medium text-[#13A0F9] hover:underline">YouTube</a>
+            </div>
+          </div>
+        </div>
+        <div class="mt-4 flex flex-wrap gap-3">
+          <a
+            href="https://www.twitch.tv/fjolsenbanden"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-sm transition hover:bg-white/15"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-twitch h-4 w-4 text-purple-400">
+              <path d="M21 2H3v16h5v4l4-4h5l4-4V2zm-10 9V7m5 4V7"></path>
+            </svg>
+            <span>Se på Twitch</span>
+          </a>
+          <a
+            href="https://youtube.com/@fjolsenbanden"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-sm transition hover:bg-white/15"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-youtube h-4 w-4 text-red-500">
+              <path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17"></path>
+              <path d="m10 15 5-3-5-3z"></path>
+            </svg>
+            <span>Se på YouTube</span>
+          </a>
+          <a
+            href="https://www.tiktok.com/@fjolsenbanden"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-sm transition hover:bg-white/15"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-smartphone h-4 w-4 text-pink-300">
+              <rect width="14" height="20" x="5" y="2" rx="2" ry="2"></rect>
+              <path d="M12 18h.01"></path>
+            </svg>
+            <span>Se på TikTok</span>
+          </a>
+          <a
+            href="https://www.facebook.com/fjolsenbanden"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-sm transition hover:bg-white/15"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-facebook h-4 w-4 text-blue-500">
+              <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+            </svg>
+            <span>Facebook Gaming</span>
+          </a>
+        </div>
 </div>
 </div>
 </section>
@@ -410,6 +459,45 @@
 </div>
 <div class="pb-8 text-center text-xs text-zinc-500">© 2025 Fjolsenbanden</div>
 </footer>
+    <script>
+      (function () {
+        var overlay = document.querySelector('[data-preview-overlay]');
+        var frame = document.querySelector('[data-preview-frame]');
+        var timer = document.querySelector('[data-preview-timer]');
+        var unmuteButton = document.querySelector('[data-video-unmute]');
+
+        if (!overlay || !frame || !timer || !unmuteButton) {
+          return;
+        }
+
+        var remaining = parseInt(timer.textContent || '60', 10) || 60;
+        var interval = window.setInterval(function () {
+          remaining = Math.max(remaining - 1, 0);
+          timer.textContent = String(remaining);
+          if (remaining === 0) {
+            window.clearInterval(interval);
+          }
+        }, 1000);
+
+        var enableSound = function () {
+          overlay.remove();
+          window.clearInterval(interval);
+
+          try {
+            var url = new URL(frame.src);
+            url.searchParams.set('muted', 'false');
+            frame.src = url.toString();
+          } catch (error) {
+            frame.src = frame.src.replace('muted=true', 'muted=false');
+          }
+        };
+
+        unmuteButton.addEventListener('click', function (event) {
+          event.preventDefault();
+          enableSound();
+        });
+      })();
+    </script>
 </div>
   </body>
 </html>
