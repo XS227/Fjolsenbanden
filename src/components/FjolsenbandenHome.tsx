@@ -7,8 +7,10 @@ import {
   Menu,
   MessageCircle,
   Play,
+  Quote,
   ShieldCheck,
   Smartphone,
+  Sparkles,
   Trophy,
   Twitch,
   Users,
@@ -42,11 +44,21 @@ type Prize = {
   item: string;
 };
 
+type HostSpotlight = {
+  name: string;
+  role: string;
+  description: string;
+  highlights: readonly string[];
+  funFact: string;
+  quote: string;
+};
+
 const navLinks = [
   { name: "Hjem", href: "#" },
   { name: "Live", href: "#live" },
   { name: "Premier", href: "#premier" },
   { name: "Medlemskap", href: "#medlemskap" },
+  { name: "Giles", href: "#giles" },
   { name: "Foreldre", href: "#foreldre" },
   { name: "Sponsorer", href: "#sponsorer" },
 ] as const;
@@ -117,6 +129,22 @@ const demoChat = [
   { user: "Marius", message: "Bra lyd i dag!" },
 ] as const;
 
+const hostSpotlight: HostSpotlight = {
+  name: "Giles",
+  role: "Game Master & trygghetsvert",
+  description:
+    "Giles leder de familievennlige streamene våre med et våkent blikk på både chat og spillflyt. Han sørger for at alle føler seg sett, og at konkurransene holder et positivt tempo for alle aldre.",
+  highlights: [
+    "Sertifisert barne- og ungdomsarbeider med fokus på digital trygghet",
+    "Planlegger ukentlige quester og koordinere premier sammen med partnere",
+    "Moderator på Discord med null-toleranse for toksisk oppførsel",
+  ],
+  funFact:
+    "Favorittspill: Kreative Minecraft-bygg og co-op eventyr. Giles er også kjent for å droppe random high-fives i chatten!",
+  quote:
+    "Jeg vil at alle skal føle seg velkommen – både spillere, foreldre og de som er helt nye i gaming.",
+};
+
 export default function FjolsenbandenHome() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [unmuted, setUnmuted] = useState(false);
@@ -178,6 +206,7 @@ export default function FjolsenbandenHome() {
         </ul>
         <button
           type="button"
+          data-nav-toggle
           onClick={() => setMenuOpen((prev: boolean) => !prev)}
           className="rounded-md p-2 transition hover:bg-white/10 md:hidden"
           aria-label="Toggle navigation"
@@ -185,21 +214,25 @@ export default function FjolsenbandenHome() {
         >
           {menuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
         </button>
-        {menuOpen ? (
-          <ul className="absolute right-4 top-full mt-2 flex flex-col gap-3 rounded-xl border border-white/10 bg-[#1f2940] p-4 text-sm shadow-lg transition md:hidden">
-            {navLinks.map((link) => (
-              <li key={link.name}>
-                <a
-                  href={link.href}
-                  className="block rounded-md px-4 py-2 transition hover:bg-white/10"
-                  onClick={() => setMenuOpen(false)}
-                >
-                  {link.name}
-                </a>
-              </li>
-            ))}
-          </ul>
-        ) : null}
+        <ul
+          data-nav-menu
+          className={`absolute right-4 top-full mt-2 ${
+            menuOpen ? "flex" : "hidden"
+          } flex-col gap-3 rounded-xl border border-white/10 bg-[#1f2940] p-4 text-sm shadow-lg transition md:hidden`}
+        >
+          {navLinks.map((link) => (
+            <li key={link.name}>
+              <a
+                href={link.href}
+                className="block rounded-md px-4 py-2 transition hover:bg-white/10"
+                data-nav-close
+                onClick={() => setMenuOpen(false)}
+              >
+                {link.name}
+              </a>
+            </li>
+          ))}
+        </ul>
       </nav>
 
       <section className="mt-6 space-y-6 px-6 text-center">
@@ -214,6 +247,7 @@ export default function FjolsenbandenHome() {
           <Button
             size="lg"
             className="rounded-full bg-[#00CFFF] px-6 text-black hover:bg-[#00bcd4]"
+            data-scroll-to="#medlemskap"
             onClick={() => scrollToAnchor("#medlemskap")}
           >
             Meld inn barn
@@ -222,6 +256,7 @@ export default function FjolsenbandenHome() {
             size="lg"
             variant="outline"
             className="rounded-full border-white/20 px-6 hover:bg-white/10"
+            data-scroll-to="#live"
             onClick={() => scrollToAnchor("#live")}
           >
             Se neste stream
@@ -242,18 +277,29 @@ export default function FjolsenbandenHome() {
                 🔴 LIVE
               </span>
               <iframe
+                data-preview-frame
                 src={`https://player.twitch.tv/?channel=fjolsenbanden&parent=fjolsenbanden.setaei.com&muted=${!unmuted}`}
                 title="Fjolsenbanden Twitch Player"
                 allowFullScreen
                 className="aspect-video w-full bg-black"
               />
               {!unmuted ? (
-                <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 bg-black/70 p-6 text-center">
+                <div
+                  data-preview-overlay
+                  className="absolute inset-0 flex flex-col items-center justify-center gap-4 bg-black/70 p-6 text-center"
+                >
                   <Play className="h-12 w-12 text-[#00CFFF]" />
-                  <p className="text-sm text-zinc-300">1-minutt forhåndsvisning – {previewCountdown}s igjen</p>
+                  <p className="text-sm text-zinc-300">
+                    1-minutt forhåndsvisning –
+                    <span data-preview-timer className="ml-1">
+                      {previewCountdown}
+                    </span>
+                    s igjen
+                  </p>
                   <Button
                     size="lg"
                     className="rounded-full bg-[#00CFFF] px-6 text-black hover:bg-[#00bcd4]"
+                    data-video-unmute
                     onClick={() => setUnmuted(true)}
                   >
                     Se full stream
@@ -355,6 +401,50 @@ export default function FjolsenbandenHome() {
               {name}
             </span>
           ))}
+        </div>
+      </section>
+
+      <section id="giles" className="mt-20 px-6">
+        <div className="mx-auto grid max-w-6xl gap-8 lg:grid-cols-[1.7fr_1fr]">
+          <div className="space-y-6 rounded-3xl border border-white/10 bg-[#161f33]/90 p-8 shadow-2xl">
+            <div className="inline-flex items-center gap-2 rounded-full bg-cyan-500/10 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-cyan-300">
+              <Sparkles className="h-4 w-4" /> Ukens spotlight
+            </div>
+            <div className="space-y-2">
+              <h2 className="text-3xl font-bold text-white">Møt {hostSpotlight.name}</h2>
+              <p className="text-sm uppercase tracking-wide text-cyan-300">{hostSpotlight.role}</p>
+            </div>
+            <p className="max-w-3xl text-base text-zinc-300">{hostSpotlight.description}</p>
+            <ul className="space-y-3 text-sm text-zinc-300">
+              {hostSpotlight.highlights.map((item) => (
+                <li key={item} className="flex items-start gap-3">
+                  <Sparkles className="mt-0.5 h-4 w-4 flex-shrink-0 text-cyan-300" />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+            <div className="rounded-2xl border border-cyan-500/20 bg-cyan-500/10 p-4 text-sm text-cyan-100">
+              <strong className="block text-cyan-200">Fun fact</strong>
+              <p className="mt-2 text-zinc-100">{hostSpotlight.funFact}</p>
+            </div>
+          </div>
+
+          <Card className="flex flex-col justify-between rounded-3xl border border-white/10 bg-[#101727]/90 text-left">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2 text-cyan-300">
+                <Quote className="h-5 w-5" /> Giles sier
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-6 text-zinc-200">
+              <p className="text-lg italic">“{hostSpotlight.quote}”</p>
+              <div className="rounded-2xl border border-white/10 bg-white/5 p-4 text-sm text-zinc-300">
+                <p>
+                  Si hei til Giles i chatten under neste stream – han svarer alltid på spørsmål og kan tipse om hvilke quester som passer for
+                  både nye og erfarne medlemmer.
+                </p>
+              </div>
+            </CardContent>
+          </Card>
         </div>
       </section>
 

@@ -1,0 +1,187 @@
+import fs from "node:fs";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+import { createRequire } from "node:module";
+import React from "react";
+import ReactDOMServer from "react-dom/server";
+import ts from "typescript";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const projectRoot = path.resolve(__dirname, "..");
+const moduleCache = new Map();
+
+function resolveWithExtensions(targetPath) {
+  const attempts = ["", ".tsx", ".ts", ".jsx", ".js", "/index.tsx", "/index.ts"];
+  for (const suffix of attempts) {
+    const candidate = `${targetPath}${suffix}`;
+    if (fs.existsSync(candidate) && fs.statSync(candidate).isFile()) {
+      return candidate;
+    }
+  }
+  throw new Error(`Unable to resolve module at ${targetPath}`);
+}
+
+function loadTsModule(entryPath) {
+  const resolvedPath = resolveWithExtensions(entryPath);
+  if (moduleCache.has(resolvedPath)) {
+    return moduleCache.get(resolvedPath).exports;
+  }
+
+  const source = fs.readFileSync(resolvedPath, "utf8");
+  const transpiled = ts.transpileModule(source, {
+    compilerOptions: {
+      module: ts.ModuleKind.CommonJS,
+      jsx: ts.JsxEmit.ReactJSX,
+      esModuleInterop: true,
+      target: ts.ScriptTarget.ES2019,
+      moduleResolution: ts.ModuleResolutionKind.NodeJs,
+    },
+    fileName: resolvedPath,
+  });
+
+  const module = { exports: {} };
+  moduleCache.set(resolvedPath, module);
+
+  const localRequire = createRequire(resolvedPath);
+  const requireFn = (specifier) => {
+    if (specifier.startsWith("@/")) {
+      const target = path.join(projectRoot, "src", specifier.slice(2));
+      return loadTsModule(target);
+    }
+
+    if (specifier.startsWith("./") || specifier.startsWith("../")) {
+      const target = path.resolve(path.dirname(resolvedPath), specifier);
+      return loadTsModule(target);
+    }
+
+    return localRequire(specifier);
+  };
+
+  const wrapper = new Function(
+    "require",
+    "module",
+    "exports",
+    "__filename",
+    "__dirname",
+    transpiled.outputText
+  );
+
+  wrapper(requireFn, module, module.exports, resolvedPath, path.dirname(resolvedPath));
+
+  return module.exports;
+}
+
+const componentModule = loadTsModule(path.join(projectRoot, "src/components/FjolsenbandenHome"));
+const FjolsenbandenHome = componentModule.default ?? componentModule;
+
+const markup = ReactDOMServer.renderToStaticMarkup(
+  React.createElement(
+    "div",
+    { id: "fjolsenbanden-home", className: "min-h-screen" },
+    React.createElement(FjolsenbandenHome)
+  )
+);
+const prettyMarkup = markup.replace(/></g, ">\n<");
+
+const interactionScript = `
+(function () {
+  var navToggle = document.querySelector('[data-nav-toggle]');
+  var navMenu = document.querySelector('[data-nav-menu]');
+  if (navToggle && navMenu) {
+    navToggle.addEventListener('click', function () {
+      var isOpen = navMenu.classList.contains('flex');
+      navMenu.classList.toggle('flex', !isOpen);
+      navMenu.classList.toggle('hidden', isOpen);
+      navToggle.setAttribute('aria-expanded', String(!isOpen));
+    });
+    document.querySelectorAll('[data-nav-close]').forEach(function (link) {
+      link.addEventListener('click', function () {
+        navMenu.classList.remove('flex');
+        navMenu.classList.add('hidden');
+        navToggle.setAttribute('aria-expanded', 'false');
+      });
+    });
+  }
+
+  document.querySelectorAll('[data-scroll-to]').forEach(function (button) {
+    button.addEventListener('click', function (event) {
+      var target = button.getAttribute('data-scroll-to');
+      if (!target) {
+        return;
+      }
+      var anchor = document.querySelector(target);
+      if (!anchor) {
+        return;
+      }
+      event.preventDefault();
+      anchor.scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+
+  var overlay = document.querySelector('[data-preview-overlay]');
+  var frame = document.querySelector('[data-preview-frame]');
+  var timer = document.querySelector('[data-preview-timer]');
+  var unmuteButton = document.querySelector('[data-video-unmute]');
+  if (overlay && frame && timer && unmuteButton) {
+    var remaining = parseInt(timer.textContent || '60', 10) || 60;
+    var interval = window.setInterval(function () {
+      remaining = Math.max(remaining - 1, 0);
+      timer.textContent = String(remaining);
+      if (remaining === 0) {
+        window.clearInterval(interval);
+      }
+    }, 1000);
+
+    var enableSound = function () {
+      overlay.remove();
+      window.clearInterval(interval);
+      try {
+        var url = new URL(frame.src);
+        url.searchParams.set('muted', 'false');
+        frame.src = url.toString();
+      } catch (error) {
+        frame.src = frame.src.replace('muted=true', 'muted=false');
+      }
+    };
+
+    unmuteButton.addEventListener('click', function (event) {
+      event.preventDefault();
+      enableSound();
+    });
+  }
+})();
+`;
+
+const phpTemplate = `<?php
+// This file is automatically generated by scripts/sync-index-php.mjs. Do not edit directly.
+?>
+<!DOCTYPE html>
+<html lang="no">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fjolsenbanden – Fargerikt gaming-community</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;600;700;800;900&display=swap" rel="stylesheet" />
+    <style>
+      body {
+        font-family: 'Nunito', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        background-color: #0e0b1a;
+      }
+    </style>
+  </head>
+  <body class="text-white">
+    ${prettyMarkup}
+    <script>
+${interactionScript}
+    </script>
+  </body>
+</html>
+`;
+
+const outputPath = path.join(projectRoot, "index.php");
+fs.writeFileSync(outputPath, phpTemplate, "utf8");
+console.log(`Updated ${path.relative(projectRoot, outputPath)} from React component.`);
