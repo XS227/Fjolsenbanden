@@ -1,26 +1,26 @@
 <svg width="160" height="48" viewBox="0 0 160 48" fill="none" xmlns="http://www.w3.org/2000/svg">
   <rect x="2" y="2" width="156" height="44" rx="22" fill="#041149" stroke="#13A0F9" stroke-width="4"/>
   <g filter="url(#glow)">
-    <path d="M28 34C21.4 34 16 28.6 16 22C16 15.4 21.4 10 28 10C34.6 10 40 15.4 40 22C40 28.6 34.6 34 28 34Z" fill="#0B1230"/>
-    <path d="M22 22C22 18.7 24.7 16 28 16C31.3 16 34 18.7 34 22V28H22V22Z" fill="#13A0F9"/>
-    <path d="M34 22C34 18.7 36.7 16 40 16C43.3 16 46 18.7 46 22V28H34V22Z" fill="#FF2F9C"/>
-    <circle cx="25" cy="20.5" r="2.5" fill="white"/>
-    <circle cx="32" cy="20.5" r="2.5" fill="white"/>
-    <rect x="24" y="26" width="8" height="4" rx="2" fill="white"/>
+    <path d="M28 34C21.3726 34 16 28.6274 16 22C16 15.3726 21.3726 10 28 10C34.6274 10 40 15.3726 40 22C40 28.6274 34.6274 34 28 34Z" fill="#0B1230"/>
+    <path d="M22 22C22 18.6863 24.6863 16 28 16C31.3137 16 34 18.6863 34 22V28H22V22Z" fill="#13A0F9"/>
+    <path d="M34 22C34 18.6863 36.6863 16 40 16C43.3137 16 46 18.6863 46 22V28H34V22Z" fill="#FF2F9C"/>
+    <circle cx="24.5" cy="20.5" r="2.5" fill="white"/>
+    <circle cx="31.5" cy="20.5" r="2.5" fill="white"/>
+    <rect x="23" y="26" width="9" height="4" rx="2" fill="white"/>
   </g>
   <text
     x="56"
     y="30"
     fill="white"
-    font-family="'Luckiest Guy', 'Impact', sans-serif"
-    font-size="18"
-    letter-spacing="0.04em"
+    font-family="'Impact', 'Arial Black', 'Segoe UI', sans-serif"
+    font-size="20"
+    letter-spacing="0.08em"
   >
     FJOLSENBANDEN
   </text>
   <defs>
-    <filter id="glow" x="10" y="8" width="40" height="30" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-      <feGaussianBlur stdDeviation="2.5" result="blur"/>
+    <filter id="glow" x="12" y="8" width="38" height="30" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feGaussianBlur stdDeviation="2" result="blur"/>
       <feBlend in="SourceGraphic" in2="blur" mode="screen"/>
     </filter>
   </defs>

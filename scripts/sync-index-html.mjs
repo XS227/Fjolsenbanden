@@ -136,8 +136,8 @@ const htmlDocument = `<!DOCTYPE html>
       }
       body {
         margin: 0;
-        font-family: "Segoe UI", "Inter", system-ui, -apple-system, Roboto, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
-        background: #041149;
+        font-family: "Inter", "Segoe UI", system-ui, -apple-system, Roboto, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+        background: #020824;
       }
     </style>
   </head>
