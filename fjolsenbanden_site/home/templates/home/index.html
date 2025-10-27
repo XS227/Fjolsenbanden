@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -5,28 +6,199 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Fjølsenbanden</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="{% static 'home/styles.css' %}" />
   </head>
   <body>
-    <header>
-      <h1>Welcome to Fjølsenbanden</h1>
-      <p>A lightweight Django site replacing the previous PHP implementation.</p>
+    <header class="header">
+      <nav class="navbar">
+        <div class="logo">
+          <div class="logo__mark">FB</div>
+          <span class="logo__text">Fjølsenbanden</span>
+        </div>
+        <div class="navbar__links">
+          <a href="#features">Features</a>
+          <a href="#roadmap">Roadmap</a>
+          <a href="#get-started">Get started</a>
+        </div>
+      </nav>
     </header>
+
     <main>
-      <section>
-        <h2>Getting started</h2>
-        <p>
-          Run <code>python manage.py runserver</code> to start the local development server and
-          visit <code>http://127.0.0.1:8000/</code> to see this page.
-        </p>
+      <section class="hero">
+        <div class="hero__content">
+          <h1>Modern Django foundations for the Fjølsenbanden community</h1>
+          <p>
+            The classic PHP site has been reimagined with Django, delivering a clean, secure,
+            and extendable foundation. Explore a refreshed development experience backed by the
+            Python ecosystem.
+          </p>
+          <div class="hero__actions">
+            <a class="button button--primary" href="#get-started">Launch locally</a>
+            <a class="button button--secondary" href="https://docs.djangoproject.com/" target="_blank" rel="noreferrer">
+              Django docs
+            </a>
+          </div>
+        </div>
+        <aside class="hero__card">
+          <h2>Why Django?</h2>
+          <div class="hero__stats">
+            <div class="stat">
+              <div class="stat__icon">⚡</div>
+              <div class="stat__content">
+                <span>Rapid development</span>
+                <strong>Reusable apps & batteries included</strong>
+              </div>
+            </div>
+            <div class="stat">
+              <div class="stat__icon">🔒</div>
+              <div class="stat__content">
+                <span>Security first</span>
+                <strong>Protections against common web threats</strong>
+              </div>
+            </div>
+            <div class="stat">
+              <div class="stat__icon">🌍</div>
+              <div class="stat__content">
+                <span>Global community</span>
+                <strong>Thousands of packages and tutorials</strong>
+              </div>
+            </div>
+          </div>
+        </aside>
       </section>
-      <section>
-        <h2>About</h2>
-        <p>
-          This project uses Django to provide a clean foundation for building out the rest of the
-          Fjølsenbanden website. Modify this template or add new apps to continue development.
-        </p>
+
+      <section id="features" class="section">
+        <div class="section__inner">
+          <div class="section__heading">
+            <span>Core features</span>
+            <h2>A flexible platform ready for new ideas</h2>
+            <p>
+              Start from a well-organized Django project with clear separation of concerns and a
+              friendly developer experience.
+            </p>
+          </div>
+          <div class="features">
+            <article class="feature-card">
+              <h3>Clean project structure</h3>
+              <p>
+                Logical apps, namespaced URLs, and modern settings keep the codebase maintainable
+                as the site grows.
+              </p>
+            </article>
+            <article class="feature-card">
+              <h3>Templating with components</h3>
+              <p>
+                Django templates power dynamic pages while remaining accessible to designers and
+                content editors.
+              </p>
+            </article>
+            <article class="feature-card">
+              <h3>Static asset pipeline</h3>
+              <p>
+                Easily extend the styling with static files, pre-processors, or tailwind—Django is
+                ready for your preferred workflow.
+              </p>
+            </article>
+            <article class="feature-card">
+              <h3>Extensible authentication</h3>
+              <p>
+                Built-in auth, permissions, and admin tooling make it simple to create member-only
+                experiences or dashboards.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="roadmap" class="section">
+        <div class="section__inner">
+          <div class="section__heading">
+            <span>Roadmap</span>
+            <h2>How to evolve the new site</h2>
+            <p>
+              Map out the next steps for launching a polished presence for Fjølsenbanden. Each
+              milestone builds on the strong Django foundations.
+            </p>
+          </div>
+          <div class="timeline">
+            <div class="timeline__item">
+              <h3>1. Define content</h3>
+              <p>
+                Gather the stories, events, and history that make the group unique. Translate the
+                old pages into a content plan.
+              </p>
+            </div>
+            <div class="timeline__item">
+              <h3>2. Build experiences</h3>
+              <p>
+                Create dedicated apps for news, events, and archives. Use Django’s ORM and admin to
+                manage data.
+              </p>
+            </div>
+            <div class="timeline__item">
+              <h3>3. Launch & iterate</h3>
+              <p>
+                Deploy the site, invite feedback, and iterate quickly thanks to reusable templates
+                and modular apps.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="get-started" class="section">
+        <div class="section__inner">
+          <div class="section__heading">
+            <span>Get started</span>
+            <h2>Spin up the project locally</h2>
+            <p>
+              Follow these commands to run the development server and view the landing page:
+            </p>
+          </div>
+          <div class="features">
+            <article class="feature-card">
+              <h3>Install dependencies</h3>
+              <p><code>pip install -r requirements.txt</code></p>
+            </article>
+            <article class="feature-card">
+              <h3>Apply migrations</h3>
+              <p><code>python manage.py migrate</code></p>
+            </article>
+            <article class="feature-card">
+              <h3>Start the server</h3>
+              <p>
+                <code>python manage.py runserver</code> and visit
+                <code>http://127.0.0.1:8000/</code>
+              </p>
+            </article>
+          </div>
+        </div>
       </section>
     </main>
+
+    <footer class="footer">
+      <div class="footer__inner">
+        <div class="footer__brand">
+          <h3>Fjølsenbanden</h3>
+          <p>
+            A refreshed online presence for the Fjølsenbanden community—powered by Django and built
+            for storytelling.
+          </p>
+        </div>
+        <div class="footer__links">
+          <a href="#features">Features</a>
+          <a href="#roadmap">Roadmap</a>
+          <a href="#get-started">Get started</a>
+          <a href="https://www.djangoproject.com/" target="_blank" rel="noreferrer">Django project</a>
+        </div>
+      </div>
+      <p class="footer__note">Crafted with ♥ for developers and community historians alike.</p>
+    </footer>
   </body>
 </html>
