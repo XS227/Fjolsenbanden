@@ -303,6 +303,8 @@ export default function FjolsenbandenHome() {
   const [paymentInitiated, setPaymentInitiated] = useState(false);
   const [profileDraft, setProfileDraft] = useState<ProfileFormValues>(createDefaultProfileDraft());
   const [profileSubmitted, setProfileSubmitted] = useState(false);
+  const [ctaVisible, setCtaVisible] = useState(false);
+  const [ctaDocked, setCtaDocked] = useState(false);
 
   type ContactFormEvent = {
     preventDefault: () => void;
@@ -349,6 +351,28 @@ export default function FjolsenbandenHome() {
 
     return () => window.clearTimeout(timer);
   }, [previewCountdown, unmuted]);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollY = window.scrollY;
+      const viewportHeight = window.innerHeight;
+      const documentHeight = document.body.scrollHeight;
+      const distanceFromBottom = documentHeight - (scrollY + viewportHeight);
+
+      setCtaVisible(scrollY > 320);
+      setCtaDocked(distanceFromBottom < 280);
+    };
+
+    handleScroll();
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("resize", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleScroll);
+    };
+  }, []);
 
   useEffect(() => {
     if (vippsFlow !== "minor") {
@@ -523,6 +547,7 @@ export default function FjolsenbandenHome() {
   const resolvedName = (vippsUser?.name ?? "").trim();
   const [firstName, ...remainingNameParts] = resolvedName ? resolvedName.split(/\s+/) : [""];
   const lastName = remainingNameParts.join(" ");
+  const shouldShowStickyCta = ctaVisible && !ctaDocked;
 
   return (
     <div className="relative min-h-screen overflow-x-hidden bg-gradient-to-b from-[#131A49] via-[#0B163F] to-[#050B24] text-white">
@@ -951,8 +976,12 @@ export default function FjolsenbandenHome() {
         </div>
       </footer>
 
-      <div className="fixed inset-x-0 bottom-0 z-40 border-t border-white/10 bg-[#080f2a]/95 px-4 py-3 backdrop-blur">
-        <div className="mx-auto flex max-w-5xl flex-col items-center justify-between gap-3 text-center text-sm text-zinc-200 sm:flex-row sm:text-left">
+      <div
+        className={`pointer-events-none fixed inset-x-0 bottom-0 z-40 px-4 transform transition-all duration-500 ease-out ${
+          shouldShowStickyCta ? "translate-y-0 opacity-100" : "translate-y-full opacity-0"
+        }`}
+      >
+        <div className="pointer-events-auto mx-auto flex max-w-5xl flex-col items-center justify-between gap-3 rounded-3xl border border-white/10 bg-[#080f2a]/95 px-5 py-4 shadow-[0_24px_64px_rgba(8,15,42,0.55)] backdrop-blur text-center text-sm text-zinc-200 sm:flex-row sm:text-left">
           <div className="flex flex-col items-center gap-1 sm:items-start">
             <span className="font-medium text-white">Klar for å bli med i FjOlsenbanden?</span>
             <span className="text-xs text-zinc-400">© {new Date().getFullYear()} Fjolsenbanden</span>
