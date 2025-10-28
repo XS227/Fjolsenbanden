@@ -859,7 +859,7 @@ export default function FjolsenbandenHome() {
             <a href="#kontakt">Kontakt oss</a>
           </Button>
         </div>
-        <div id="sponsorer" className="mt-10 flex flex-wrap justify-center gap-6">
+        <div id="sponsorer" className="mt-6 flex flex-wrap justify-center gap-6">
           {sponsors.map(({ name, logoUrl }) => (
             <div
               key={name}
@@ -868,9 +868,8 @@ export default function FjolsenbandenHome() {
               <img
                 src={logoUrl}
                 alt={name}
-                className="h-full w-full object-contain"
+                className="h-full w-full object-contain filter brightness-0 invert"
                 loading="lazy"
-                style={{ filter: "brightness(0) invert(1)" }}
               />
             </div>
           ))}
