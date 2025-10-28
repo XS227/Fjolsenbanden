@@ -24,6 +24,40 @@
         font-family: "Inter", "Segoe UI", system-ui, -apple-system, Roboto, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
         background: #131a49;
       }
+      .section-shell {
+        padding-left: clamp(1.25rem, 4vw, 3.5rem);
+        padding-right: clamp(1.25rem, 4vw, 3.5rem);
+      }
+      .heading-clamp {
+        font-size: clamp(2.35rem, 6vw, 3.75rem);
+        line-height: 1.1;
+        letter-spacing: -0.01em;
+      }
+      .lead-clamp {
+        font-size: clamp(1.05rem, 2.75vw, 1.25rem);
+        line-height: 1.6;
+      }
+      img {
+        max-width: 100%;
+        height: auto;
+      }
+      img[data-retina] {
+        image-rendering: -webkit-optimize-contrast;
+      }
+      @media (max-width: 768px) {
+        #live [data-preview-overlay] {
+          padding: clamp(1.5rem, 6vw, 2rem) !important;
+        }
+        #live .rounded-2xl {
+          border-radius: clamp(1.25rem, 4vw, 1.75rem);
+        }
+      }
+      @media (max-width: 640px) {
+        nav ul#nav-menu {
+          right: clamp(1rem, 4vw, 1.5rem);
+          width: min(18rem, 90vw);
+        }
+      }
     </style>
   </head>
   <body>
@@ -33,16 +67,22 @@
         style="background:radial-gradient(circle at 18% 12%, rgba(19,160,249,0.3), transparent 55%), radial-gradient(circle at 80% 0%, rgba(255,47,156,0.18), transparent 50%)"
       ></div>
       <div class="relative">
-        <nav class="flex items-center justify-between px-6 py-4">
+        <nav class="section-shell flex items-center justify-between py-4">
           <a class="flex items-center gap-3" href="#" aria-label="Fjolsenbanden hjem">
             <img
               src="https://yt3.googleusercontent.com/JDzOGDpzoZ-j6r2NGC-LboiPeK3qGmZqwSRTxgSvvMTmUbySUUGLm80RXmZtcbrAgKYacqTYzAs=s160-c-k-c0x00ffffff-no-rj"
+              srcset="https://yt3.googleusercontent.com/JDzOGDpzoZ-j6r2NGC-LboiPeK3qGmZqwSRTxgSvvMTmUbySUUGLm80RXmZtcbrAgKYacqTYzAs=s160-c-k-c0x00ffffff-no-rj 1x, https://yt3.googleusercontent.com/JDzOGDpzoZ-j6r2NGC-LboiPeK3qGmZqwSRTxgSvvMTmUbySUUGLm80RXmZtcbrAgKYacqTYzAs=s320-c-k-c0x00ffffff-no-rj 2x"
+              width="64"
+              height="64"
               alt="Fjolsenbanden logo"
               class="h-10 w-10 rounded-xl object-cover"
+              data-retina
+              loading="lazy"
+              decoding="async"
             />
             <span class="hidden text-lg font-semibold sm:block">Fjolsenbanden</span>
           </a>
-          <ul class="hidden gap-6 text-sm font-medium md:flex">
+          <ul class="hidden flex-1 items-center justify-center gap-6 text-sm font-medium md:flex">
             <li><a class="transition-colors duration-150 hover:text-[#13A0F9]" href="#">Hjem</a></li>
             <li><a class="transition-colors duration-150 hover:text-[#13A0F9]" href="#live">Live</a></li>
             <li><a class="transition-colors duration-150 hover:text-[#13A0F9]" href="#medlemskap">Medlemskap</a></li>
@@ -50,15 +90,29 @@
             <li><a class="transition-colors duration-150 hover:text-[#13A0F9]" href="#sponsorer">Samarbeid</a></li>
             <li><a class="transition-colors duration-150 hover:text-[#13A0F9]" href="#kontakt">Kontakt</a></li>
           </ul>
-          <button class="rounded-md p-2 transition hover:bg-white/10 md:hidden" aria-label="Åpne meny" id="nav-toggle">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <line x1="4" x2="20" y1="12" y2="12"></line>
-              <line x1="4" x2="20" y1="6" y2="6"></line>
-              <line x1="4" x2="20" y1="18" y2="18"></line>
-            </svg>
-          </button>
+          <div class="flex items-center gap-3 md:ml-4">
+            <a
+              href="/admin"
+              class="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-white/15 bg-white/10 text-white shadow-sm transition duration-150 hover:-translate-y-0.5 hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-[#13A0F9]"
+              aria-label="Admin-innlogging"
+              title="Admin-innlogging"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5">
+                <path d="M12 12a5 5 0 1 0-5-5 5 5 0 0 0 5 5Z"></path>
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <path d="M15.5 10.5 18 13l3.5-3.5"></path>
+              </svg>
+            </a>
+            <button class="rounded-md p-2 transition hover:bg-white/10 md:hidden" aria-label="Åpne meny" id="nav-toggle">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="4" x2="20" y1="12" y2="12"></line>
+                <line x1="4" x2="20" y1="6" y2="6"></line>
+                <line x1="4" x2="20" y1="18" y2="18"></line>
+              </svg>
+            </button>
+          </div>
           <ul
-            class="absolute right-6 top-full mt-2 hidden flex-col gap-3 rounded-xl border border-white/10 bg-[#1f2940] p-4 text-sm shadow-lg md:hidden"
+            class="absolute right-4 top-full mt-2 hidden flex-col gap-3 rounded-xl border border-white/10 bg-[#1f2940] p-4 text-sm shadow-lg md:hidden sm:right-6"
             id="nav-menu"
           >
             <li><a class="block rounded-md px-4 py-2 transition hover:bg-white/10" href="#">Hjem</a></li>
@@ -67,18 +121,24 @@
             <li><a class="block rounded-md px-4 py-2 transition hover:bg-white/10" href="#premier">Premier</a></li>
             <li><a class="block rounded-md px-4 py-2 transition hover:bg-white/10" href="#sponsorer">Samarbeid</a></li>
             <li><a class="block rounded-md px-4 py-2 transition hover:bg-white/10" href="#kontakt">Kontakt</a></li>
+            <li>
+              <a class="flex items-center gap-2 rounded-md px-4 py-2 transition hover:bg-white/10" href="/admin">
+                <span aria-hidden="true">🔐</span>
+                <span>Admin-innlogging</span>
+              </a>
+            </li>
           </ul>
         </nav>
 
         <main class="relative z-10 pb-40">
-        <section id="community" class="mt-6 px-6">
+        <section id="community" class="section-shell mt-6">
           <div class="mx-auto grid max-w-6xl gap-10 lg:grid-cols-2 lg:items-start">
             <div class="space-y-6">
               <div class="space-y-4 text-center lg:text-left">
-                <h1 class="text-4xl font-extrabold sm:text-5xl">
+                <h1 class="heading-clamp text-4xl font-extrabold sm:text-5xl">
                   Velkommen til <span class="text-[#13A0F9]">FjOlsenbanden</span>
                 </h1>
-                <p class="text-base text-zinc-300 sm:text-lg">
+                <p class="lead-clamp text-base text-zinc-300 sm:text-lg">
                   Norges mest inkluderende gaming-community for hele familien.
                 </p>
               </div>
@@ -178,7 +238,7 @@
           </div>
         </section>
 
-        <section id="live" class="relative mt-12 px-6">
+        <section id="live" class="section-shell relative mt-12">
           <div class="mx-auto grid max-w-7xl items-start gap-8 lg:grid-cols-3">
             <div class="space-y-4 lg:col-span-2">
               <div class="relative overflow-hidden rounded-2xl border border-white/10 shadow-2xl">
@@ -253,9 +313,9 @@
           </div>
         </section>
 
-        <section id="medlemskap" class="mt-20 px-6 text-center">
+        <section id="medlemskap" class="section-shell mt-20 text-center">
           <h2 class="mb-4 text-3xl font-bold">Velg medlemskap</h2>
-          <p class="mx-auto mb-8 max-w-2xl text-zinc-300">Bli med i konkurranser, streams og fellesskapet vårt på noen få klikk.</p>
+          <p class="lead-clamp mx-auto mb-8 max-w-2xl text-zinc-300">Bli med i konkurranser, streams og fellesskapet vårt på noen få klikk.</p>
           <div class="mx-auto grid max-w-7xl gap-8 md:grid-cols-3">
             <div class="rounded-2xl border border-white/10 bg-[#1f2940] p-6 shadow-lg transition-transform hover:-translate-y-1">
               <div class="mb-4 flex items-center gap-2 text-white"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6"><polyline points="20 12 20 22 4 22 4 12"></polyline><rect width="16" height="6" x="4" y="6"></rect><path d="M18 6V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v2"></path></svg>Gratis</div>
@@ -312,13 +372,13 @@
           </div>
         </section>
 
-        <section id="premier" class="mt-20 px-6 text-center">
+        <section id="premier" class="section-shell mt-20 text-center">
           <h2 class="mb-4 text-3xl font-bold">Samarbeidspartnere</h2>
-          <p class="mx-auto max-w-3xl text-zinc-300">Vi har allerede hatt samarbeid med flere kjente merkevarer.</p>
-          <p class="mx-auto mt-6 max-w-2xl text-zinc-300">
+          <p class="lead-clamp mx-auto max-w-3xl text-zinc-300">Vi har allerede hatt samarbeid med flere kjente merkevarer.</p>
+          <p class="lead-clamp mx-auto mt-6 max-w-2xl text-zinc-300">
             Ønsker du å synliggjøre din merkevare for vårt engasjerte og voksende gaming-publikum?
           </p>
-          <p class="mx-auto mt-2 max-w-2xl text-zinc-300">Ta kontakt for samarbeid!</p>
+          <p class="lead-clamp mx-auto mt-2 max-w-2xl text-zinc-300">Ta kontakt for samarbeid!</p>
           <div class="mt-8 flex justify-center">
             <a
               class="rounded-full bg-gradient-to-r from-[#13A0F9] to-[#FF2F9C] px-8 py-3 font-semibold text-white shadow-[0_16px_28px_rgba(19,160,249,0.35)] transition hover:from-[#0d8bd6] hover:to-[#e12585]"
@@ -363,11 +423,11 @@
         </div>
       </section>
 
-      <section id="tilbud" class="mt-20 px-6">
+      <section id="tilbud" class="section-shell mt-20">
         <div class="mx-auto max-w-6xl space-y-6 rounded-3xl border border-white/10 bg-white/5 p-8 text-center shadow-[0_24px_48px_rgba(6,14,35,0.45)]">
           <div class="space-y-3">
             <h2 class="text-3xl font-bold text-white">Andre tilbud</h2>
-            <p class="text-lg text-zinc-200">FjOlsenbanden tilbyr mer enn bare streaming!</p>
+            <p class="lead-clamp text-lg text-zinc-200">FjOlsenbanden tilbyr mer enn bare streaming!</p>
           </div>
           <div class="grid gap-6 text-left sm:grid-cols-2">
             <div class="flex h-full flex-col gap-4 rounded-2xl border border-white/10 bg-[#101a33]/80 p-6 shadow-[0_16px_32px_rgba(6,14,35,0.45)]">
@@ -409,7 +469,7 @@
         </div>
       </section>
 
-      <section id="kontakt" class="mt-20 px-6">
+      <section id="kontakt" class="section-shell mt-20">
         <div class="mx-auto max-w-5xl space-y-6 rounded-3xl border border-white/10 bg-[#161f33]/90 p-8 text-center shadow-2xl">
           <h2 class="text-3xl font-bold">Kontakt oss</h2>
             <p class="text-zinc-300">
@@ -738,6 +798,13 @@
       if (toggle && menu) {
         toggle.addEventListener("click", () => {
           menu.classList.toggle("hidden");
+        });
+      }
+      if (menu) {
+        menu.querySelectorAll("a").forEach((link) => {
+          link.addEventListener("click", () => {
+            menu.classList.add("hidden");
+          });
         });
       }
 
