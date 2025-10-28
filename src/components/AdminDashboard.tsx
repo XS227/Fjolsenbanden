@@ -7,6 +7,9 @@ import {
   BarChart3,
   CalendarCheck,
   Crown,
+  Loader2,
+  Lock,
+  LogOut,
   MessageCircle,
   Plus,
   ShieldCheck,
@@ -20,6 +23,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { StatsPoint, useAdminState } from "@/lib/admin-state";
+import { useAdminAuth } from "@/lib/admin-auth";
 
 const brandBackground = "radial-gradient(circle at 15% 15%, rgba(64,172,255,0.3), transparent 55%), #03091b";
 
@@ -57,6 +61,20 @@ const emptyNewPlayer = (): NewPlayerState => ({
 });
 
 export default function AdminDashboard() {
+  const auth = useAdminAuth();
+
+  if (!auth.state.isAuthenticated) {
+    return <AdminLoginView auth={auth} />;
+  }
+
+  return <AdminDashboardContent auth={auth} />;
+}
+
+interface DashboardContentProps {
+  auth: ReturnType<typeof useAdminAuth>;
+}
+
+function AdminDashboardContent({ auth }: DashboardContentProps) {
   const { state, updateSiteSettings, addPlayer, removePlayer } = useAdminState();
   const { siteSettings, players, statsHistory } = state;
 
@@ -112,10 +130,12 @@ export default function AdminDashboard() {
     setNewPlayer(emptyNewPlayer());
   };
 
+  const lastLogin = auth.state.lastLoginAt ? formatDateTime(auth.state.lastLoginAt) : null;
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 text-slate-100">
       <div className="mx-auto flex w-full max-w-6xl flex-col gap-10 px-6 py-12">
-        <header className="flex flex-col justify-between gap-6 lg:flex-row lg:items-center">
+        <header className="flex flex-col justify-between gap-6 lg:flex-row lg:items-start">
           <div className="space-y-3">
             <p className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-4 py-1 text-sm font-medium text-emerald-200">
               <ShieldCheck className="h-4 w-4" /> Intern oversikt
@@ -126,13 +146,26 @@ export default function AdminDashboard() {
               lagres lokalt i nettleseren slik at du kan jobbe trygt før publisering.
             </p>
           </div>
-          <div className="flex flex-wrap gap-3">
-            <Button className="bg-white/10 text-white hover:bg-white/20">
-              <ArrowUpRight className="mr-2 h-4 w-4" /> Eksporter CSV
-            </Button>
-            <Button variant="outline" className="border-white/20 bg-white/5 text-white hover:bg-white/15">
-              <MessageCircle className="mr-2 h-4 w-4" /> Del status
-            </Button>
+          <div className="flex flex-col items-end gap-4">
+            <div className="flex flex-wrap items-center justify-end gap-3">
+              <span className="inline-flex items-center gap-2 rounded-full border border-emerald-400/40 bg-emerald-400/10 px-3 py-1 text-xs font-medium text-emerald-100">
+                <Lock className="h-3.5 w-3.5" /> Innlogget som administrator
+              </span>
+              <Button className="bg-white/10 text-white hover:bg-white/20" type="button">
+                <ArrowUpRight className="mr-2 h-4 w-4" /> Eksporter CSV
+              </Button>
+              <Button variant="outline" className="border-white/20 bg-white/5 text-white hover:bg-white/15" type="button">
+                <MessageCircle className="mr-2 h-4 w-4" /> Del status
+              </Button>
+              <Button
+                variant="outline"
+                className="border-white/20 bg-white/5 text-white hover:bg-white/15"
+                onClick={auth.logout}
+              >
+                <LogOut className="mr-2 h-4 w-4" /> Logg ut
+              </Button>
+            </div>
+            {lastLogin ? <p className="text-xs text-slate-400">Sist verifisert {lastLogin}</p> : null}
           </div>
         </header>
 
@@ -290,8 +323,7 @@ export default function AdminDashboard() {
                 <BarChart3 className="h-5 w-5 text-cyan-300" /> Medlemsutvikling
               </CardTitle>
               <p className="text-sm text-slate-300">
-                Følg utviklingen i communityet. Grafen viser total medlemmer, mens tabellen under gir rask innsikt i aktiviteter
-                per måned.
+                Følg utviklingen i communityet. Grafen viser total medlemmer, mens tabellen under gir rask innsikt i aktiviteter per måned.
               </p>
             </CardHeader>
             <CardContent>
@@ -414,12 +446,10 @@ export default function AdminDashboard() {
               </CardHeader>
               <CardContent className="space-y-3 text-sm text-emerald-50/90">
                 <p className="leading-relaxed">
-                  Del logoen direkte med sponsorer, og bruk slagordet i overlay for livestreams. Trenger dere flere forslag til
-                  tekst? Test ulike varianter og lagre favorittene lokalt før dere publiserer.
+                  Del logoen direkte med sponsorer, og bruk slagordet i overlay for livestreams. Trenger dere flere forslag til tekst? Test ulike varianter og lagre favorittene lokalt før dere publiserer.
                 </p>
                 <p className="text-xs text-emerald-100/80">
-                  Endringene blir liggende i nettleseren din. Når du er fornøyd, kan du eksportere oppsettet og dele med resten
-                  av teamet.
+                  Endringene blir liggende i nettleseren din. Når du er fornøyd, kan du eksportere oppsettet og dele med resten av teamet.
                 </p>
               </CardContent>
             </Card>
@@ -493,10 +523,7 @@ export default function AdminDashboard() {
                         >
                           Fjern
                         </Button>
-                        <Button
-                          className="bg-cyan-500 text-cyan-950 hover:bg-cyan-400"
-                          asChild
-                        >
+                        <Button className="bg-cyan-500 text-cyan-950 hover:bg-cyan-400" asChild>
                           <a href={`/players/${player.slug}`}>
                             <ArrowUpRight className="mr-2 h-4 w-4" /> Åpne profil
                           </a>
@@ -516,26 +543,26 @@ export default function AdminDashboard() {
             <Card className="border-white/10 bg-gradient-to-br from-cyan-500/10 via-indigo-500/10 to-slate-900/40 text-white">
               <CardHeader className="pb-4">
                 <CardTitle className="flex items-center gap-2 text-white">
-                  <Plus className="h-5 w-5 text-cyan-200" /> Ny spiller
+                  <Plus className="h-5 w-5 text-cyan-300" /> Legg til ny spiller
                 </CardTitle>
-                <p className="text-sm text-slate-200/80">
-                  Fyll ut kort informasjon. Profilen opprettes straks og får sin egen side.
+                <p className="text-sm text-slate-300">
+                  Fyll inn detaljene under for å opprette en ny profil i Fjolsenbanden.
                 </p>
               </CardHeader>
               <CardContent>
                 <form className="space-y-4" onSubmit={handleAddPlayer}>
                   <div className="space-y-2">
                     <Label htmlFor="gamerTag" className="text-slate-200">
-                      Spillernavn
+                      Gamertag
                     </Label>
                     <Input
                       id="gamerTag"
                       name="gamerTag"
-                      required
                       value={newPlayer.gamerTag}
                       onChange={(event) => setNewPlayer((state) => ({ ...state, gamerTag: event.target.value }))}
-                      placeholder="F.eks. FjolsKid"
+                      placeholder="FjolseFar"
                       className="bg-slate-950/40 text-white placeholder:text-slate-400"
+                      required
                     />
                   </div>
                   <div className="grid gap-4 sm:grid-cols-2">
@@ -548,7 +575,7 @@ export default function AdminDashboard() {
                         name="realName"
                         value={newPlayer.realName}
                         onChange={(event) => setNewPlayer((state) => ({ ...state, realName: event.target.value }))}
-                        placeholder="Frivillig"
+                        placeholder="Marius Fjolsen"
                         className="bg-slate-950/40 text-white placeholder:text-slate-400"
                       />
                     </div>
@@ -561,7 +588,7 @@ export default function AdminDashboard() {
                         name="mainGame"
                         value={newPlayer.mainGame}
                         onChange={(event) => setNewPlayer((state) => ({ ...state, mainGame: event.target.value }))}
-                        placeholder="F.eks. Mario Kart"
+                        placeholder="Mario Kart 8 Deluxe"
                         className="bg-slate-950/40 text-white placeholder:text-slate-400"
                       />
                     </div>
@@ -576,7 +603,7 @@ export default function AdminDashboard() {
                       rows={3}
                       value={newPlayer.bio}
                       onChange={(event) => setNewPlayer((state) => ({ ...state, bio: event.target.value }))}
-                      placeholder="Presenter spilleren kort"
+                      placeholder="Hva gjør spilleren unik?"
                       className="bg-slate-950/40 text-white placeholder:text-slate-400"
                     />
                   </div>
@@ -590,13 +617,13 @@ export default function AdminDashboard() {
                       rows={2}
                       value={newPlayer.achievements}
                       onChange={(event) => setNewPlayer((state) => ({ ...state, achievements: event.target.value }))}
-                      placeholder="Vant sommerturneringen, Ledet foreldrekveld"
+                      placeholder="Arrangerte familieligaen 2023, Vant høstturneringen"
                       className="bg-slate-950/40 text-white placeholder:text-slate-400"
                     />
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="avatarUrl" className="text-slate-200">
-                      Profilbilde-URL
+                      Avatar-URL
                     </Label>
                     <Input
                       id="avatarUrl"
@@ -610,15 +637,15 @@ export default function AdminDashboard() {
                   <div className="grid gap-4 sm:grid-cols-2">
                     <div className="space-y-2">
                       <Label htmlFor="joinDate" className="text-slate-200">
-                        Startdato
+                        Bli-med-dato
                       </Label>
                       <Input
                         id="joinDate"
-                        name="joinDate"
                         type="date"
+                        name="joinDate"
                         value={newPlayer.joinDate}
                         onChange={(event) => setNewPlayer((state) => ({ ...state, joinDate: event.target.value }))}
-                        className="bg-slate-950/40 text-white"
+                        className="bg-slate-950/40 text-white placeholder:text-slate-400"
                       />
                     </div>
                     <div className="space-y-2">
@@ -645,7 +672,7 @@ export default function AdminDashboard() {
                         name="youtube"
                         value={newPlayer.youtube}
                         onChange={(event) => setNewPlayer((state) => ({ ...state, youtube: event.target.value }))}
-                        placeholder="https://youtube.com/..."
+                        placeholder="https://youtube.com/@..."
                         className="bg-slate-950/40 text-white placeholder:text-slate-400"
                       />
                     </div>
@@ -674,6 +701,100 @@ export default function AdminDashboard() {
       </div>
     </div>
   );
+}
+
+interface AdminLoginProps {
+  auth: ReturnType<typeof useAdminAuth>;
+}
+
+function AdminLoginView({ auth }: AdminLoginProps) {
+  const [passcode, setPasscode] = useState("");
+  const [error, setError] = useState<string | null>(null);
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setError(null);
+    const result = await auth.login(passcode);
+    if (!result.success) {
+      setError(result.error ?? "Kunne ikke logge inn.");
+      return;
+    }
+    setPasscode("");
+  };
+
+  return (
+    <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 text-slate-100">
+      <div className="mx-auto flex w-full max-w-md flex-col gap-6 px-6 py-20">
+        <Card className="border-white/10 bg-white/5 text-white">
+          <CardHeader className="space-y-3 text-center">
+            <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-emerald-500/10 text-emerald-200">
+              <Lock className="h-5 w-5" />
+            </div>
+            <CardTitle className="text-2xl text-white">Admininnlogging</CardTitle>
+            <p className="text-sm text-slate-300">
+              Oppgi tilgangskoden som deles med administratorteamet for å åpne kontrollpanelet.
+            </p>
+          </CardHeader>
+          <CardContent>
+            <form className="space-y-4" onSubmit={handleSubmit}>
+              <div className="space-y-2">
+                <Label htmlFor="passcode" className="text-slate-200">
+                  Tilgangskode
+                </Label>
+                <Input
+                  id="passcode"
+                  name="passcode"
+                  type="password"
+                  autoComplete="current-password"
+                  value={passcode}
+                  onChange={(event) => setPasscode(event.target.value)}
+                  placeholder="Skriv inn koden"
+                  className="bg-slate-950/40 text-white placeholder:text-slate-400"
+                  disabled={auth.isVerifying}
+                  required
+                />
+              </div>
+              {error ? (
+                <p className="text-sm text-rose-300">{error}</p>
+              ) : (
+                <p className="text-xs text-slate-400">{auth.hint}</p>
+              )}
+              <Button
+                type="submit"
+                className="w-full bg-emerald-500 text-emerald-950 hover:bg-emerald-400"
+                disabled={auth.isVerifying}
+              >
+                {auth.isVerifying ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Verifiserer…
+                  </>
+                ) : (
+                  "Logg inn"
+                )}
+              </Button>
+            </form>
+          </CardContent>
+        </Card>
+        <p className="text-center text-xs text-slate-500">
+          Endringene du gjør etter innlogging lagres lokalt i nettleseren inntil du publiserer dem.
+        </p>
+      </div>
+    </div>
+  );
+}
+
+function formatDateTime(input: string): string {
+  if (!input) {
+    return "";
+  }
+  try {
+    return new Date(input).toLocaleString("no-NO", {
+      dateStyle: "medium",
+      timeStyle: "short",
+    });
+  } catch (error) {
+    return input;
+  }
 }
 
 function computeGrowth(history: StatsPoint[]): number {

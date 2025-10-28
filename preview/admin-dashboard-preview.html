@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="no">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Adminpanel – Fjolsenbanden</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 text-slate-100">
+    <div class="mx-auto flex w-full max-w-6xl flex-col gap-10 px-6 py-12">
+      <header class="flex flex-col justify-between gap-6 lg:flex-row lg:items-start">
+        <div class="space-y-3">
+          <p class="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-4 py-1 text-sm font-medium text-emerald-200">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /></svg>
+            Intern oversikt
+          </p>
+          <h1 class="text-3xl font-semibold tracking-tight text-white sm:text-4xl">Adminpanel for Fjolsenbanden</h1>
+          <p class="max-w-2xl text-base text-slate-300">
+            Oppdater profileringen, legg til nye spillere og følg med på vekst direkte fra ett samlet kontrollrom.
+          </p>
+        </div>
+        <div class="flex flex-col items-end gap-4">
+          <div class="flex flex-wrap items-center justify-end gap-3">
+            <span class="inline-flex items-center gap-2 rounded-full border border-emerald-400/40 bg-emerald-400/10 px-3 py-1 text-xs font-medium text-emerald-100">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 5h16M4 12h16M4 19h16" /></svg>
+              Innlogget som administrator
+            </span>
+            <button class="inline-flex items-center gap-2 rounded-lg bg-white/10 px-4 py-2 text-sm text-white shadow-sm transition hover:bg-white/20">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 7h10M7 12h4" /><path d="M17 17l-2 2 2 2" /><path d="M21 17h-4v4" /></svg>
+              Eksporter CSV
+            </button>
+            <button class="inline-flex items-center gap-2 rounded-lg border border-white/20 bg-white/5 px-4 py-2 text-sm text-white shadow-sm transition hover:bg-white/15">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" /></svg>
+              Del status
+            </button>
+            <button class="inline-flex items-center gap-2 rounded-lg border border-white/20 bg-white/5 px-4 py-2 text-sm text-white shadow-sm transition hover:bg-white/15">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V9" /><path d="M16 3h3a2 2 0 0 1 2 2v12" /><path d="M12 17l-4-4 4-4" /><path d="M7 13h14" /></svg>
+              Logg ut
+            </button>
+          </div>
+          <p class="text-xs text-slate-400">Sist verifisert 25. oktober kl. 14:12</p>
+        </div>
+      </header>
+
+      <section class="grid gap-6 lg:grid-cols-[1.2fr,1fr]">
+        <div class="rounded-3xl border border-white/10 bg-white/5 p-6 text-white shadow-xl">
+          <div class="space-y-5">
+            <div>
+              <h2 class="text-lg font-semibold text-white">Oppdater logo og tekst</h2>
+              <p class="text-sm text-slate-300">Tilpass hvordan Fjolsenbanden presenteres utad.</p>
+            </div>
+            <div class="space-y-2">
+              <label class="text-sm text-slate-200">Logo-URL</label>
+              <input class="w-full rounded-lg border border-white/10 bg-slate-950/40 px-3 py-2 text-sm text-white placeholder:text-slate-400" value="/assets/logo.svg" />
+            </div>
+            <div class="space-y-2">
+              <label class="text-sm text-slate-200">Hovedtittel</label>
+              <input class="w-full rounded-lg border border-white/10 bg-slate-950/40 px-3 py-2 text-sm text-white placeholder:text-slate-400" value="FJOLSENBANDEN" />
+            </div>
+            <div class="space-y-2">
+              <label class="text-sm text-slate-200">Ingress / slagord</label>
+              <textarea class="h-24 w-full rounded-lg border border-white/10 bg-slate-950/40 px-3 py-2 text-sm text-white placeholder:text-slate-400">Spillglede for hele familien – trygge streams, turneringer og premier.</textarea>
+            </div>
+            <div class="space-y-2">
+              <label class="text-sm text-slate-200">Aktuell melding</label>
+              <textarea class="h-20 w-full rounded-lg border border-white/10 bg-slate-950/40 px-3 py-2 text-sm text-white placeholder:text-slate-400">Neste livesending starter 20:00 med co-op i Mario Kart og premier fra Lenovo!</textarea>
+            </div>
+            <div class="flex items-center justify-between gap-3">
+              <p class="text-xs text-slate-400">Lagres lokalt når du klikker «Publiser endringer».</p>
+              <button class="rounded-lg bg-emerald-500 px-4 py-2 text-sm font-semibold text-emerald-950 shadow hover:bg-emerald-400">Lagre endringer</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="rounded-3xl border border-white/10 bg-gradient-to-br from-indigo-900/80 via-indigo-950 to-slate-950 p-6 text-white shadow-xl">
+          <div class="flex items-center justify-between text-sm text-indigo-200">
+            <h2 class="text-base font-semibold text-white">Forhåndsvisning</h2>
+            <span>Oppdatert i sanntid</span>
+          </div>
+          <div class="mt-6 overflow-hidden rounded-2xl border border-white/10" style="background: radial-gradient(circle at 15% 15%, rgba(64,172,255,0.3), transparent 55%), #03091b;">
+            <div class="flex flex-col gap-6 p-6">
+              <div class="flex items-center gap-4">
+                <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-white/10">
+                  <span class="text-lg font-semibold tracking-wide">FB</span>
+                </div>
+                <div>
+                  <p class="text-xs uppercase tracking-wide text-slate-300">Brand hero</p>
+                  <p class="text-lg font-semibold text-white">Førsteinntrykket ute på nettsiden</p>
+                </div>
+              </div>
+              <div class="space-y-3">
+                <h3 class="text-3xl font-black tracking-tight text-white">FJOLSENBANDEN</h3>
+                <p class="text-sm text-slate-200">Spillglede for hele familien – trygge streams, turneringer og premier.</p>
+              </div>
+              <div class="flex flex-wrap gap-3">
+                <button class="rounded-full bg-emerald-500 px-5 py-2 text-sm font-semibold text-emerald-950 shadow-lg">Bli med på neste stream</button>
+                <button class="rounded-full border border-white/30 bg-white/10 px-5 py-2 text-sm text-white transition hover:bg-white/20">Les medlemsguiden</button>
+              </div>
+            </div>
+            <div class="border-t border-white/10 bg-white/5 px-6 py-4 text-xs text-slate-200">
+              <span class="font-semibold text-white">Nyhet:</span> Neste livesending starter 20:00 med co-op i Mario Kart og premier fra Lenovo!
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </body>
+</html>
