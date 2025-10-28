@@ -19,7 +19,6 @@ import {
   Mic,
   Phone,
   Play,
-  Link as LinkIcon,
   Rocket,
   ShieldCheck,
   Smartphone,
@@ -123,11 +122,6 @@ const platformLinks: readonly PlatformLink[] = [
     label: "Discord",
     href: "https://discord.gg/fjolsenbanden",
   },
-  {
-    icon: <LinkIcon className="h-5 w-5" aria-hidden="true" />,
-    label: "Linktree",
-    href: "https://linktr.ee/fjolsenbanden",
-  },
 ] as const;
 
 const socialLinks: readonly PlatformLink[] = [
@@ -155,11 +149,6 @@ const socialLinks: readonly PlatformLink[] = [
     icon: <Instagram className="h-4 w-4" aria-hidden="true" />,
     label: "Instagram",
     href: "https://www.instagram.com/fjolsenbanden",
-  },
-  {
-    icon: <LinkIcon className="h-4 w-4" aria-hidden="true" />,
-    label: "Linktree",
-    href: "https://linktr.ee/fjolsenbanden",
   },
 ] as const;
 
