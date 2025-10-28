@@ -3,7 +3,7 @@
 import React, { useMemo, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import {
-  Facebook,
+  Instagram,
   Menu,
   Play,
   ShieldCheck,
@@ -237,7 +237,7 @@ export default function FjolsenbandenBrandMock() {
                 <Pill icon={<Twitch className="h-4 w-4" />} label="Twitch" accent="rgba(145,70,255,0.22)" />
                 <Pill icon={<Youtube className="h-4 w-4" />} label="YouTube" accent="rgba(255,82,82,0.22)" />
                 <Pill icon={<Smartphone className="h-4 w-4" />} label="TikTok" accent="rgba(255,122,255,0.18)" />
-                <Pill icon={<Facebook className="h-4 w-4" />} label="Facebook Gaming" accent="rgba(67,97,238,0.18)" />
+                <Pill icon={<Instagram className="h-4 w-4" />} label="Instagram" accent="rgba(67,97,238,0.18)" />
               </div>
             </div>
           </div>
@@ -496,7 +496,12 @@ function PrizeCard({ prize }: { prize: Prize }) {
         transition={prefersReducedMotion ? undefined : { repeat: Infinity, duration: 8, ease: "easeInOut" }}
       />
       <div className="relative rounded-xl bg-gradient-to-br from-white/15 via-white/5 to-white/0 p-4">
-        <img src={prize.image} alt={`${prize.brand} premie`} className="mx-auto h-24 w-auto" />
+        <img
+          src={prize.image}
+          alt={`${prize.brand} premie`}
+          className="mx-auto h-24 w-auto"
+          style={{ filter: "brightness(0) invert(1)" }}
+        />
       </div>
       <div className="mt-4 text-xs uppercase tracking-[0.28em] text-white/60">Partner</div>
       <div className="mt-1 text-lg font-semibold text-white">{prize.brand}</div>
