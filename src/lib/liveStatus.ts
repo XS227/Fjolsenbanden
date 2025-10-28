@@ -38,7 +38,7 @@ export interface AggregateLiveStatusOptions {
 
 const DEFAULT_CONFIG: LiveStatusConfig = {
   twitch: {
-    channel: "fjolsenbanden",
+    channel: "FjOlsenFN",
   },
 };
 
