@@ -23,6 +23,7 @@ import {
   X,
   Youtube,
   GraduationCap,
+  UserCog,
 } from "lucide-react";
 
 type PlatformLink = {
@@ -79,11 +80,6 @@ const platformLinks: readonly PlatformLink[] = [
     label: "TikTok",
     href: "https://www.tiktok.com/@fjolsenbanden",
     icon: <Video className="h-5 w-5" aria-hidden="true" />,
-  },
-  {
-    label: "YouTube",
-    href: "https://youtube.com/@fjolsenbanden",
-    icon: <Youtube className="h-5 w-5" aria-hidden="true" />,
   },
   {
     icon: <Facebook className="h-4 w-4 text-blue-500" />,
@@ -350,12 +346,14 @@ export default function FjolsenbandenHome() {
       />
 
       <nav className="relative z-50 flex items-center justify-between px-6 py-4">
-        <div className="flex items-center gap-2">
-          <div className="grid h-10 w-10 place-content-center rounded-xl bg-gradient-to-br from-[#13A0F9] to-[#FF2F9C] font-bold text-black">
-            FB
-          </div>
+        <a className="flex items-center gap-3" href="#" aria-label="Fjolsenbanden hjem">
+          <img
+            src="https://yt3.googleusercontent.com/JDzOGDpzoZ-j6r2NGC-LboiPeK3qGmZqwSRTxgSvvMTmUbySUUGLm80RXmZtcbrAgKYacqTYzAs=s160-c-k-c0x00ffffff-no-rj"
+            alt="Fjolsenbanden logo"
+            className="h-10 w-10 rounded-xl object-cover"
+          />
           <span className="hidden text-lg font-semibold sm:block">Fjolsenbanden</span>
-        </div>
+        </a>
         <ul className="hidden gap-6 text-sm font-medium md:flex">
           {navLinks.map((link) => (
             <li key={link.name}>
@@ -649,9 +647,6 @@ export default function FjolsenbandenHome() {
         <p className="mx-auto max-w-3xl text-zinc-300">
           Vi har allerede hatt samarbeid med flere kjente merkevarer.
         </p>
-        <p className="mx-auto mt-4 max-w-3xl text-sm uppercase tracking-wide text-zinc-400">
-          LOGOER: Lenovo – Samsung – Philips – Komplett.no
-        </p>
         <p className="mx-auto mt-6 max-w-2xl text-zinc-300">
           Ønsker du å synliggjøre din merkevare for vårt engasjerte og voksende gaming-publikum?
         </p>
@@ -759,16 +754,20 @@ export default function FjolsenbandenHome() {
           <span>© {new Date().getFullYear()} Fjolsenbanden. Alle rettigheter reservert.</span>
           <a
             href="/admin"
-            className="font-medium text-zinc-300 transition hover:text-white"
+            className="flex items-center gap-2 font-medium text-zinc-300 transition hover:text-white"
           >
-            Admin
+            <UserCog className="h-4 w-4" aria-hidden="true" />
+            <span>Admin</span>
           </a>
         </div>
       </footer>
 
       <div className="fixed inset-x-0 bottom-0 z-40 border-t border-white/10 bg-[#080f2a]/95 px-4 py-3 backdrop-blur">
         <div className="mx-auto flex max-w-5xl flex-col items-center justify-between gap-3 text-center text-sm text-zinc-200 sm:flex-row sm:text-left">
-          <span className="font-medium text-white">Klar for å bli med i FjOlsenbanden?</span>
+          <div className="flex flex-col items-center gap-1 sm:items-start">
+            <span className="font-medium text-white">Klar for å bli med i FjOlsenbanden?</span>
+            <span className="text-xs text-zinc-400">© {new Date().getFullYear()} Fjolsenbanden</span>
+          </div>
           <Button
             size="lg"
             className="w-full rounded-full bg-gradient-to-r from-[#13A0F9] to-[#FF2F9C] px-8 font-semibold text-white shadow-[0_16px_32px_rgba(19,160,249,0.35)] transition hover:from-[#0d8bd6] hover:to-[#e12585] sm:w-auto"
@@ -1039,15 +1038,6 @@ export default function FjolsenbandenHome() {
                 </div>
               ) : null}
 
-              <div className="rounded-3xl border border-white/10 bg-white/5 p-5 text-xs text-zinc-300">
-                <p className="mb-2 font-semibold text-white">Teknisk oversikt</p>
-                <ul className="list-disc space-y-1 pl-4">
-                  <li>Vipps Login callback: <code className="rounded bg-black/40 px-2 py-1">GET /auth/callback</code></li>
-                  <li>Start betaling eller forespørsel: <code className="rounded bg-black/40 px-2 py-1">POST /payment/initiate</code></li>
-                  <li>Håndter bekreftelse fra Vipps: <code className="rounded bg-black/40 px-2 py-1">POST /payment/confirm</code></li>
-                  <li>Lagre felt i databasen: <code className="rounded bg-black/40 px-2 py-1">user_id, dob, parent_phone, vipps_status</code></li>
-                </ul>
-              </div>
             </div>
           </div>
         </div>
