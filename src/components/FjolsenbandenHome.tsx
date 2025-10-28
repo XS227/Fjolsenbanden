@@ -1,6 +1,8 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
+import type { ReactNode } from "react";
+import type { LucideIcon } from "lucide-react";
 import {
   ArrowRight,
   Box,
@@ -9,22 +11,28 @@ import {
   CreditCard,
   Facebook,
   Gift,
+  GraduationCap,
   Lock,
+  Megaphone,
   Menu,
   MessageCircle,
   Mic,
   Phone,
   Play,
+  Rocket,
   ShieldCheck,
   Smartphone,
+  Sparkles,
   Trophy,
   Twitch,
+  Users,
   Video,
   X,
   Youtube,
-  GraduationCap,
   UserCog,
 } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 type PlatformLink = {
   icon: ReactNode;
@@ -53,6 +61,31 @@ type VippsUser = {
 };
 
 type VippsFlow = "minor" | "adult" | null;
+
+type FavoriteGame =
+  | "Fortnite"
+  | "Minecraft"
+  | "Rocket League"
+  | "EA FC 24"
+  | "Valorant"
+  | "Roblox";
+
+type ProfileFormValues = {
+  twitch: string;
+  youtube: string;
+  tiktok: string;
+  discord: string;
+  gamertag: string;
+  favoriteGames: FavoriteGame[];
+  showOnLeaderboards: boolean;
+  parentName: string;
+  parentPhone: string;
+  parentConsent: boolean;
+  address: string;
+  postalCode: string;
+  acceptPrivacy: boolean;
+  acceptRules: boolean;
+};
 
 const navLinks = [
   { name: "Hjem", href: "#" },
@@ -184,16 +217,37 @@ const offerings: readonly Offering[] = [
   },
 ] as const;
 
-const registrationForms = {
-  under18: "https://docs.google.com/forms/d/e/1FAIpQLScqgnf92CTsQ2TLg8viDBMllbUUGcDPW8uG48yXSYFVYGdRSw/viewform",
-  over18: "https://docs.google.com/forms/d/e/1FAIpQLSc9pIGhLF4impGUQhxBMZUbfp7mQOaraYxEL7VrsTRkbD9EgA/viewform",
-} as const;
-
 const createDefaultVippsUser = (): VippsUser => ({
   name: "FjOlsen Fan",
   dateOfBirth: "2005-05-17",
   phoneNumber: "+47 987 65 432",
   email: "fjolsenfan@example.com",
+});
+
+const favoriteGameOptions: readonly FavoriteGame[] = [
+  "Fortnite",
+  "Minecraft",
+  "Rocket League",
+  "EA FC 24",
+  "Valorant",
+  "Roblox",
+];
+
+const createDefaultProfileDraft = (): ProfileFormValues => ({
+  twitch: "",
+  youtube: "",
+  tiktok: "",
+  discord: "",
+  gamertag: "",
+  favoriteGames: [],
+  showOnLeaderboards: false,
+  parentName: "",
+  parentPhone: "",
+  parentConsent: false,
+  address: "",
+  postalCode: "",
+  acceptPrivacy: false,
+  acceptRules: false,
 });
 
 const demoChat = [
@@ -216,6 +270,8 @@ export default function FjolsenbandenHome() {
   const [parentPhone, setParentPhone] = useState("");
   const [approvalSent, setApprovalSent] = useState(false);
   const [paymentInitiated, setPaymentInitiated] = useState(false);
+  const [profileDraft, setProfileDraft] = useState<ProfileFormValues>(createDefaultProfileDraft());
+  const [profileSubmitted, setProfileSubmitted] = useState(false);
 
   type ContactFormEvent = {
     preventDefault: () => void;
@@ -263,6 +319,44 @@ export default function FjolsenbandenHome() {
     return () => window.clearTimeout(timer);
   }, [previewCountdown, unmuted]);
 
+  useEffect(() => {
+    if (vippsFlow !== "minor") {
+      setProfileDraft((previous) => {
+        if (
+          !previous.parentName &&
+          !previous.parentPhone &&
+          !previous.parentConsent &&
+          !previous.address &&
+          !previous.postalCode
+        ) {
+          return previous;
+        }
+
+        return {
+          ...previous,
+          parentName: "",
+          parentPhone: "",
+          parentConsent: false,
+          address: "",
+          postalCode: "",
+        };
+      });
+      return;
+    }
+
+    if (!parentPhone) {
+      return;
+    }
+
+    setProfileDraft((previous) => {
+      if (previous.parentPhone) {
+        return previous;
+      }
+
+      return { ...previous, parentPhone };
+    });
+  }, [parentPhone, vippsFlow]);
+
   const calculateAge = (dateOfBirth: string) => {
     if (!dateOfBirth) {
       return 0;
@@ -294,6 +388,8 @@ export default function FjolsenbandenHome() {
     setParentPhone("");
     setApprovalSent(false);
     setPaymentInitiated(false);
+    setProfileDraft(createDefaultProfileDraft());
+    setProfileSubmitted(false);
   };
 
   const closeRegistration = () => {
@@ -333,7 +429,69 @@ export default function FjolsenbandenHome() {
     setPaymentInitiated(true);
   };
 
+  const handleProfileFieldChange = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    field: keyof ProfileFormValues,
+  ) => {
+    const value = event.currentTarget.value;
+    setProfileDraft((previous) => ({ ...previous, [field]: value }));
+  };
+
+  const handleProfileCheckboxChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+    field: keyof ProfileFormValues,
+  ) => {
+    const checked = event.currentTarget.checked;
+    setProfileDraft((previous) => ({ ...previous, [field]: checked }));
+  };
+
+  const handleFavoriteGameToggle = (
+    event: React.ChangeEvent<HTMLInputElement>,
+    game: FavoriteGame,
+  ) => {
+    const checked = event.currentTarget.checked;
+    setProfileDraft((previous) => {
+      const current = new Set(previous.favoriteGames);
+
+      if (checked) {
+        current.add(game);
+      } else {
+        current.delete(game);
+      }
+
+      return {
+        ...previous,
+        favoriteGames: favoriteGameOptions.filter((option) => current.has(option)),
+      };
+    });
+  };
+
+  const handleProfileSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    if (!vippsUser) {
+      return;
+    }
+
+    const payload = {
+      vippsUser,
+      profile: profileDraft,
+      flow: vippsFlow,
+      isMinor: vippsFlow === "minor",
+    };
+
+    console.log("Submit Vipps profile", payload);
+    setProfileSubmitted(true);
+  };
+
   const resolvedAge = vippsUser ? calculateAge(vippsUser.dateOfBirth) : null;
+  const isMinor = vippsFlow === "minor";
+  const showProfileForm = Boolean(
+    vippsUser && ((isMinor && approvalSent) || (!isMinor && paymentInitiated)),
+  );
+  const resolvedName = (vippsUser?.name ?? "").trim();
+  const [firstName, ...remainingNameParts] = resolvedName ? resolvedName.split(/\s+/) : [""];
+  const lastName = remainingNameParts.join(" ");
 
   return (
     <div className="relative min-h-screen overflow-x-hidden bg-gradient-to-b from-[#131A49] via-[#0B163F] to-[#050B24] text-white">
@@ -1006,35 +1164,318 @@ export default function FjolsenbandenHome() {
                 </div>
               ) : null}
 
-              {vippsUser && ((vippsFlow === "minor" && approvalSent) || (vippsFlow === "adult" && paymentInitiated)) ? (
-                <div className="space-y-3 rounded-3xl border border-[#13A0F9]/40 bg-[#0f1a32]/90 p-5">
+              {showProfileForm ? (
+                <div className="space-y-4 rounded-3xl border border-[#13A0F9]/40 bg-[#0f1a32]/90 p-5">
                   <div className="flex items-center gap-3">
                     <span className="grid h-10 w-10 place-content-center rounded-2xl bg-gradient-to-br from-[#13A0F9] to-[#FF2F9C] text-white">
                       3
                     </span>
                     <div>
                       <p className="text-sm font-semibold text-white">Fullfør registrering</p>
-                      <p className="text-xs text-zinc-300">
-                        Send inn skjemaet slik at vi kan lagre medlemskapet ditt med riktig alder og kontaktinformasjon.
-                      </p>
+                      <p className="text-xs text-zinc-300">Suppler profilfeltene vi trenger ut over Vipps-data, og bekreft nødvendige samtykker.</p>
                     </div>
                   </div>
-                  <Button
-                    asChild
-                    className="flex w-full items-center justify-center gap-2 rounded-full bg-white/10 px-6 py-3 font-semibold text-white transition hover:bg-white/20"
-                  >
-                    <a
-                      href={vippsFlow === "minor" ? registrationForms.under18 : registrationForms.over18}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      Åpne registreringsskjema
-                      <ArrowRight className="h-4 w-4" />
-                    </a>
-                  </Button>
-                  <p className="text-xs text-zinc-400">
-                    Skjemaet fanger opp samtykke (for foresatte) eller kvittering fra Vipps Checkout. Husk å lagre Vipps-ID ({vippsUser.phoneNumber}) og status i databasen.
-                  </p>
+
+                  {profileSubmitted ? (
+                    <div className="space-y-3 rounded-2xl bg-white/5 p-4 text-sm text-zinc-200">
+                      <div className="flex items-center gap-2 text-[#4ade80]">
+                        <CheckCircle2 className="h-5 w-5" /> Profilen er lagret
+                      </div>
+                      <p>Takk! Vi har registrert valgene dine og kan aktivere medlemskapet. Vipps-ID {vippsUser.phoneNumber} er knyttet til denne profilen.</p>
+                    </div>
+                  ) : (
+                    <form className="space-y-6" onSubmit={handleProfileSubmit}>
+                      <div className="grid gap-4 md:grid-cols-2">
+                        <div>
+                          <label className="mb-1 block text-xs font-semibold uppercase tracking-wide text-zinc-300" htmlFor="vipps-first-name">
+                            Fornavn
+                          </label>
+                          <input
+                            id="vipps-first-name"
+                            name="vipps-first-name"
+                            value={firstName}
+                            readOnly
+                            aria-readonly="true"
+                            className="w-full rounded-xl border border-white/15 bg-white/5 px-4 py-2 text-sm text-white opacity-90"
+                          />
+                        </div>
+                        <div>
+                          <label className="mb-1 block text-xs font-semibold uppercase tracking-wide text-zinc-300" htmlFor="vipps-last-name">
+                            Etternavn
+                          </label>
+                          <input
+                            id="vipps-last-name"
+                            name="vipps-last-name"
+                            value={lastName}
+                            readOnly
+                            aria-readonly="true"
+                            className="w-full rounded-xl border border-white/15 bg-white/5 px-4 py-2 text-sm text-white opacity-90"
+                          />
+                        </div>
+                        <div>
+                          <label className="mb-1 block text-xs font-semibold uppercase tracking-wide text-zinc-300" htmlFor="vipps-email-confirm">
+                            E-post
+                          </label>
+                          <input
+                            id="vipps-email-confirm"
+                            name="vipps-email-confirm"
+                            type="email"
+                            value={vippsUser.email}
+                            readOnly
+                            aria-readonly="true"
+                            className="w-full rounded-xl border border-white/15 bg-white/5 px-4 py-2 text-sm text-white opacity-90"
+                          />
+                        </div>
+                        <div>
+                          <label className="mb-1 block text-xs font-semibold uppercase tracking-wide text-zinc-300" htmlFor="vipps-phone-confirm">
+                            Mobil
+                          </label>
+                          <input
+                            id="vipps-phone-confirm"
+                            name="vipps-phone-confirm"
+                            type="tel"
+                            value={vippsUser.phoneNumber}
+                            readOnly
+                            aria-readonly="true"
+                            className="w-full rounded-xl border border-white/15 bg-white/5 px-4 py-2 text-sm text-white opacity-90"
+                          />
+                        </div>
+                        <div className="md:col-span-2 md:max-w-xs">
+                          <label className="mb-1 block text-xs font-semibold uppercase tracking-wide text-zinc-300" htmlFor="vipps-dob-confirm">
+                            Fødselsdato
+                          </label>
+                          <input
+                            id="vipps-dob-confirm"
+                            name="vipps-dob-confirm"
+                            type="date"
+                            value={vippsUser.dateOfBirth}
+                            readOnly
+                            aria-readonly="true"
+                            className="w-full rounded-xl border border-white/15 bg-white/5 px-4 py-2 text-sm text-white opacity-90"
+                          />
+                        </div>
+                        <div className="md:col-span-2 flex items-center gap-2 rounded-xl bg-white/5 px-4 py-3 text-xs text-zinc-300">
+                          <ShieldCheck className="h-4 w-4 text-[#13A0F9]" />
+                          Data hentet automatisk via Vipps Login
+                        </div>
+                      </div>
+
+                      <div className="space-y-4">
+                        <h4 className="text-xs font-semibold uppercase tracking-wide text-zinc-300">Profilfelt (valgfritt)</h4>
+                        <div className="grid gap-4 md:grid-cols-2">
+                          <div>
+                            <label className="mb-1 block text-xs font-semibold uppercase tracking-wide text-zinc-300" htmlFor="profile-twitch">
+                              Twitch-brukernavn
+                            </label>
+                            <input
+                              id="profile-twitch"
+                              name="profile-twitch"
+                              placeholder="fjolsenFN"
+                              value={profileDraft.twitch}
+                              onChange={(event) => handleProfileFieldChange(event, "twitch")}
+                              className="w-full rounded-xl border border-white/15 bg-white/5 px-4 py-2 text-sm text-white placeholder:text-zinc-500 focus:outline-none focus:ring-2 focus:ring-[#13A0F9]"
+                            />
+                          </div>
+                          <div>
+                            <label className="mb-1 block text-xs font-semibold uppercase tracking-wide text-zinc-300" htmlFor="profile-youtube">
+                              YouTube-kanal / URL
+                            </label>
+                            <input
+                              id="profile-youtube"
+                              name="profile-youtube"
+                              type="url"
+                              placeholder="https://youtube.com/@..."
+                              value={profileDraft.youtube}
+                              onChange={(event) => handleProfileFieldChange(event, "youtube")}
+                              className="w-full rounded-xl border border-white/15 bg-white/5 px-4 py-2 text-sm text-white placeholder:text-zinc-500 focus:outline-none focus:ring-2 focus:ring-[#13A0F9]"
+                            />
+                          </div>
+                          <div>
+                            <label className="mb-1 block text-xs font-semibold uppercase tracking-wide text-zinc-300" htmlFor="profile-tiktok">
+                              TikTok-brukernavn
+                            </label>
+                            <input
+                              id="profile-tiktok"
+                              name="profile-tiktok"
+                              placeholder="@fjolsen"
+                              value={profileDraft.tiktok}
+                              onChange={(event) => handleProfileFieldChange(event, "tiktok")}
+                              className="w-full rounded-xl border border-white/15 bg-white/5 px-4 py-2 text-sm text-white placeholder:text-zinc-500 focus:outline-none focus:ring-2 focus:ring-[#13A0F9]"
+                            />
+                          </div>
+                          <div>
+                            <label className="mb-1 block text-xs font-semibold uppercase tracking-wide text-zinc-300" htmlFor="profile-discord">
+                              Discord-tag
+                            </label>
+                            <input
+                              id="profile-discord"
+                              name="profile-discord"
+                              placeholder="@brukernavn"
+                              value={profileDraft.discord}
+                              onChange={(event) => handleProfileFieldChange(event, "discord")}
+                              className="w-full rounded-xl border border-white/15 bg-white/5 px-4 py-2 text-sm text-white placeholder:text-zinc-500 focus:outline-none focus:ring-2 focus:ring-[#13A0F9]"
+                            />
+                          </div>
+                          <div className="md:col-span-2">
+                            <label className="mb-1 block text-xs font-semibold uppercase tracking-wide text-zinc-300" htmlFor="profile-gamertag">
+                              Epic / PSN / Xbox gamertag
+                            </label>
+                            <input
+                              id="profile-gamertag"
+                              name="profile-gamertag"
+                              placeholder="Spillernavn"
+                              value={profileDraft.gamertag}
+                              onChange={(event) => handleProfileFieldChange(event, "gamertag")}
+                              className="w-full rounded-xl border border-white/15 bg-white/5 px-4 py-2 text-sm text-white placeholder:text-zinc-500 focus:outline-none focus:ring-2 focus:ring-[#13A0F9]"
+                            />
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="space-y-3 rounded-2xl border border-white/10 bg-white/5 p-4">
+                        <p className="text-xs font-semibold uppercase tracking-wide text-zinc-300">Favorittspill</p>
+                        <div className="grid gap-2 sm:grid-cols-2">
+                          {favoriteGameOptions.map((game) => (
+                            <label key={game} className="flex items-center gap-2 text-sm text-zinc-200">
+                              <input
+                                type="checkbox"
+                                name="favorite-games"
+                                value={game}
+                                checked={profileDraft.favoriteGames.includes(game)}
+                                onChange={(event) => handleFavoriteGameToggle(event, game)}
+                                className="h-4 w-4 rounded border-white/30 bg-white/10 text-[#13A0F9] focus:outline-none focus:ring-2 focus:ring-[#13A0F9]"
+                              />
+                              <span>{game}</span>
+                            </label>
+                          ))}
+                        </div>
+                        <p className="text-xs text-zinc-400">Velg spillene du helst vil representere i turneringer og innhold.</p>
+                      </div>
+
+                      <label className="flex items-start gap-3 text-sm text-zinc-200">
+                        <input
+                          type="checkbox"
+                          name="profile-leaderboard"
+                          checked={profileDraft.showOnLeaderboards}
+                          onChange={(event) => handleProfileCheckboxChange(event, "showOnLeaderboards")}
+                          className="mt-1 h-4 w-4 rounded border-white/30 bg-white/10 text-[#13A0F9] focus:outline-none focus:ring-2 focus:ring-[#13A0F9]"
+                        />
+                        <span>Vis brukernavn i leaderboard og klipp</span>
+                      </label>
+
+                      {isMinor ? (
+                        <div className="space-y-4 rounded-2xl border border-white/15 bg-white/5 p-4">
+                          <p className="text-xs font-semibold uppercase tracking-wide text-zinc-300">Foreldresamtykke</p>
+                          <div className="grid gap-4 md:grid-cols-2">
+                            <div>
+                              <label className="mb-1 block text-xs font-semibold uppercase tracking-wide text-zinc-300" htmlFor="guardian-name">
+                                Forelders navn
+                              </label>
+                              <input
+                                id="guardian-name"
+                                name="guardian-name"
+                                required
+                                placeholder="Navn på forelder/verge"
+                                value={profileDraft.parentName}
+                                onChange={(event) => handleProfileFieldChange(event, "parentName")}
+                                className="w-full rounded-xl border border-white/15 bg-white/5 px-4 py-2 text-sm text-white placeholder:text-zinc-500 focus:outline-none focus:ring-2 focus:ring-[#13A0F9]"
+                              />
+                            </div>
+                            <div>
+                              <label className="mb-1 block text-xs font-semibold uppercase tracking-wide text-zinc-300" htmlFor="guardian-phone-confirm">
+                                Forelders mobil (Vipps)
+                              </label>
+                              <input
+                                id="guardian-phone-confirm"
+                                name="guardian-phone-confirm"
+                                required
+                                inputMode="tel"
+                                pattern="^\d{8}$"
+                                placeholder="8 sifre"
+                                value={profileDraft.parentPhone}
+                                onChange={(event) => handleProfileFieldChange(event, "parentPhone")}
+                                className="w-full rounded-xl border border-white/15 bg-white/5 px-4 py-2 text-sm text-white placeholder:text-zinc-500 focus:outline-none focus:ring-2 focus:ring-[#13A0F9]"
+                              />
+                              <p className="mt-1 text-xs text-zinc-400">Nummeret må matche Vipps-forespørselen som ble sendt.</p>
+                            </div>
+                            <div>
+                              <label className="mb-1 block text-xs font-semibold uppercase tracking-wide text-zinc-300" htmlFor="guardian-address">
+                                Adresse (valgfritt)
+                              </label>
+                              <input
+                                id="guardian-address"
+                                name="guardian-address"
+                                placeholder="Gateadresse"
+                                value={profileDraft.address}
+                                onChange={(event) => handleProfileFieldChange(event, "address")}
+                                className="w-full rounded-xl border border-white/15 bg-white/5 px-4 py-2 text-sm text-white placeholder:text-zinc-500 focus:outline-none focus:ring-2 focus:ring-[#13A0F9]"
+                              />
+                            </div>
+                            <div>
+                              <label className="mb-1 block text-xs font-semibold uppercase tracking-wide text-zinc-300" htmlFor="guardian-postal">
+                                Postnummer (valgfritt)
+                              </label>
+                              <input
+                                id="guardian-postal"
+                                name="guardian-postal"
+                                inputMode="numeric"
+                                pattern="^\d{4}$"
+                                placeholder="0000"
+                                value={profileDraft.postalCode}
+                                onChange={(event) => handleProfileFieldChange(event, "postalCode")}
+                                className="w-full rounded-xl border border-white/15 bg-white/5 px-4 py-2 text-sm text-white placeholder:text-zinc-500 focus:outline-none focus:ring-2 focus:ring-[#13A0F9]"
+                              />
+                            </div>
+                          </div>
+                          <label className="flex items-start gap-3 text-sm text-zinc-200">
+                            <input
+                              type="checkbox"
+                              name="guardian-consent"
+                              required
+                              checked={profileDraft.parentConsent}
+                              onChange={(event) => handleProfileCheckboxChange(event, "parentConsent")}
+                              className="mt-1 h-4 w-4 rounded border-white/30 bg-white/10 text-[#13A0F9] focus:outline-none focus:ring-2 focus:ring-[#13A0F9]"
+                            />
+                            <span>Jeg er forelder/verge og godkjenner medlemskap/abonnement</span>
+                          </label>
+                        </div>
+                      ) : null}
+
+                      <div className="space-y-3 text-sm text-zinc-200">
+                        <label className="flex items-start gap-3">
+                          <input
+                            type="checkbox"
+                            name="profile-privacy"
+                            required
+                            checked={profileDraft.acceptPrivacy}
+                            onChange={(event) => handleProfileCheckboxChange(event, "acceptPrivacy")}
+                            className="mt-1 h-4 w-4 rounded border-white/30 bg-white/10 text-[#13A0F9] focus:outline-none focus:ring-2 focus:ring-[#13A0F9]"
+                          />
+                          <span>
+                            Jeg samtykker til behandling av data iht. <a className="text-[#13A0F9] underline" href="/personvern" target="_blank" rel="noopener noreferrer">personvernerklæringen</a>
+                          </span>
+                        </label>
+                        <label className="flex items-start gap-3">
+                          <input
+                            type="checkbox"
+                            name="profile-rules"
+                            required
+                            checked={profileDraft.acceptRules}
+                            onChange={(event) => handleProfileCheckboxChange(event, "acceptRules")}
+                            className="mt-1 h-4 w-4 rounded border-white/30 bg-white/10 text-[#13A0F9] focus:outline-none focus:ring-2 focus:ring-[#13A0F9]"
+                          />
+                          <span>
+                            Jeg godtar <a className="text-[#13A0F9] underline" href="/konkurranseregler" target="_blank" rel="noopener noreferrer">konkurranseregler og premier-vilkår</a>
+                          </span>
+                        </label>
+                      </div>
+
+                      <Button type="submit" className="flex w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#13A0F9] to-[#FF2F9C] px-6 py-3 font-semibold text-white shadow-[0_16px_32px_rgba(19,160,249,0.35)] transition hover:from-[#0d8bd6] hover:to-[#e12585]">
+                        Lagre profil
+                        <ArrowRight className="h-4 w-4" />
+                      </Button>
+                    </form>
+                  )}
                 </div>
               ) : null}
 
