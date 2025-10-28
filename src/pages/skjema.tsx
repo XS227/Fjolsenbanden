@@ -12,6 +12,7 @@ import {
   PartyPopper,
   Sparkles,
   Star,
+  MessageCircle,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -188,6 +189,7 @@ export default function MotivasjonsSkjemaPage() {
   const [currentQuestIndex, setCurrentQuestIndex] = useState(0);
   const [formData, setFormData] = useState<FormData>(initialFormData);
   const [showVippsModal, setShowVippsModal] = useState(false);
+  const [vippsModalStep, setVippsModalStep] = useState(0);
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [validationMessage, setValidationMessage] = useState<string | null>(null);
 
@@ -255,16 +257,86 @@ export default function MotivasjonsSkjemaPage() {
       return;
     }
 
+    setVippsModalStep(0);
     setShowVippsModal(true);
   };
 
   const handleVippsComplete = () => {
     setShowVippsModal(false);
     setFormSubmitted(true);
+    setVippsModalStep(0);
   };
 
   const handleVippsCancel = () => {
     setShowVippsModal(false);
+    setVippsModalStep(0);
+  };
+
+  const vippsModalSlides = useMemo(
+    () => [
+      {
+        id: "intro",
+        title: "Steg 1: Vipps-varsel på vei",
+        description:
+          formData.parentName && formData.parentPhone
+            ? `Vi sender en Vipps-popup til ${formData.parentName} på ${formData.parentPhone}. Be dem sjekke mobilen sin.`
+            : "Vi sender en Vipps-popup til foresatte. Be dem sjekke mobilen sin.",
+        content: (
+          <ul className="mt-4 space-y-2 text-sm text-zinc-600">
+            <li className="flex items-start gap-3">
+              <Sparkles className="mt-1 h-4 w-4 text-[#FF5B24]" aria-hidden="true" />
+              <span>Vipps ber dem bekrefte at de godkjenner innmeldingen.</span>
+            </li>
+            <li className="flex items-start gap-3">
+              <Sparkles className="mt-1 h-4 w-4 text-[#FF5B24]" aria-hidden="true" />
+              <span>De kan trygt se over navn, nummer og beskjed fra deg.</span>
+            </li>
+          </ul>
+        ),
+      },
+      {
+        id: "message",
+        title: "Steg 2: Beskjeden din",
+        description: "Dette er teksten som vises i Vipps-popupen. Les over at alt ser riktig ut.",
+        content: (
+          <div className="mt-4 rounded-2xl bg-zinc-100 px-5 py-4 text-sm text-zinc-700">
+            <p>
+              Din beskjed:
+              <span className="ml-2 font-semibold text-zinc-900">
+                “{formData.parentCheerMessage || "Ingen beskjed fylt inn enda"}”
+              </span>
+            </p>
+            <p className="mt-2 text-xs uppercase tracking-[0.24em] text-zinc-500">Sendes direkte i Vipps-notatet</p>
+          </div>
+        ),
+      },
+      {
+        id: "confirm",
+        title: "Steg 3: Klar til å starte",
+        description: "Når foresatte trykker godkjenn i Vipps er du klar. Trykk på knappen under for å sende popupen.",
+        content: (
+          <div className="mt-4 grid gap-3 text-sm text-zinc-600">
+            <div className="flex items-start gap-3">
+              <CheckCircle2 className="mt-0.5 h-5 w-5 text-emerald-500" aria-hidden="true" />
+              <span>Du får beskjed i chatten når bekreftelsen er gjennomført.</span>
+            </div>
+            <div className="flex items-start gap-3">
+              <MessageCircle className="mt-0.5 h-5 w-5 text-[#13A0F9]" aria-hidden="true" />
+              <span>Gi dem et hint om at Vipps-varslet kommer nå – det gjør prosessen raskere.</span>
+            </div>
+          </div>
+        ),
+      },
+    ],
+    [formData.parentCheerMessage, formData.parentName, formData.parentPhone]
+  );
+
+  const handleVippsNextStep = () => {
+    setVippsModalStep((previous) => Math.min(previous + 1, vippsModalSlides.length - 1));
+  };
+
+  const handleVippsPreviousStep = () => {
+    setVippsModalStep((previous) => Math.max(previous - 1, 0));
   };
 
   const handleReset = () => {
@@ -556,21 +628,39 @@ export default function MotivasjonsSkjemaPage() {
               <div>
                 <h2 className="text-2xl font-semibold">Vipps-popup klar!</h2>
                 <p className="mt-1 text-sm text-zinc-600">
-                  Vi viser snart en Vipps-popup til {formData.parentName}. Der ser de beskjed fra deg og bekrefter med sitt
-                  Vipps-nummer ({formData.parentPhone}). Når de sier «JA!», er du offisielt på laget.
+                  Følg de tre stegene under for å sende Vipps-popupen til {formData.parentName || "foresatte"}. Hver slide forklarer
+                  hva som skjer.
                 </p>
               </div>
             </div>
 
-            <div className="mt-6 rounded-2xl bg-zinc-100 px-5 py-4 text-sm text-zinc-700">
-              <p>
-                Din beskjed:
-                <span className="ml-2 font-semibold text-zinc-900">“{formData.parentCheerMessage}”</span>
-              </p>
-              <p className="mt-2 text-xs uppercase tracking-[0.24em] text-zinc-500">Sendes direkte i Vipps-notatet</p>
+            <div className="mt-8 overflow-hidden">
+              <div
+                className="flex transition-transform duration-500"
+                style={{ transform: `translateX(-${vippsModalStep * 100}%)` }}
+              >
+                {vippsModalSlides.map((slide) => (
+                  <div key={slide.id} className="min-w-full flex-shrink-0">
+                    <h3 className="text-lg font-semibold text-zinc-900">{slide.title}</h3>
+                    <p className="mt-2 text-sm text-zinc-600">{slide.description}</p>
+                    {slide.content}
+                  </div>
+                ))}
+              </div>
             </div>
 
-            <div className="mt-8 flex flex-wrap justify-end gap-3">
+            <div className="mt-6 flex justify-center gap-2">
+              {vippsModalSlides.map((slide, index) => (
+                <span
+                  key={slide.id}
+                  className={`h-2.5 w-2.5 rounded-full transition ${
+                    index === vippsModalStep ? "bg-[#FF5B24]" : "bg-zinc-200"
+                  }`}
+                />
+              ))}
+            </div>
+
+            <div className="mt-8 flex flex-wrap items-center justify-between gap-3">
               <Button
                 type="button"
                 variant="outline"
@@ -579,14 +669,36 @@ export default function MotivasjonsSkjemaPage() {
               >
                 Avbryt
               </Button>
-              <Button
-                type="button"
-                className="rounded-2xl px-6 text-sm text-white"
-                style={{ backgroundColor: vippsBrandColor }}
-                onClick={handleVippsComplete}
-              >
-                Start Vipps-popup
-              </Button>
+              <div className="flex flex-wrap justify-end gap-3">
+                {vippsModalStep > 0 ? (
+                  <Button
+                    type="button"
+                    variant="outline"
+                    className="rounded-2xl border-zinc-200 px-5 text-sm text-zinc-700 hover:bg-zinc-100"
+                    onClick={handleVippsPreviousStep}
+                  >
+                    Forrige steg
+                  </Button>
+                ) : null}
+                {vippsModalStep < vippsModalSlides.length - 1 ? (
+                  <Button
+                    type="button"
+                    className="rounded-2xl bg-[#13A0F9] px-6 text-sm text-white hover:bg-[#1090df]"
+                    onClick={handleVippsNextStep}
+                  >
+                    Neste steg
+                  </Button>
+                ) : (
+                  <Button
+                    type="button"
+                    className="rounded-2xl px-6 text-sm text-white"
+                    style={{ backgroundColor: vippsBrandColor }}
+                    onClick={handleVippsComplete}
+                  >
+                    Start Vipps-popup
+                  </Button>
+                )}
+              </div>
             </div>
           </div>
         </div>
