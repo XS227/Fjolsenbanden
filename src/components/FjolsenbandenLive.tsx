@@ -14,7 +14,7 @@ import {
 } from "@/lib/liveStatus";
 
 const NAV_LINKS = ["Hjem", "Premier", "Foreldre", "Sponsorer", "Kontakt"] as const;
-const TWITCH_CHANNEL = "fjolsenbanden";
+const TWITCH_CHANNEL = "FjOlsenFN";
 const YOUTUBE_CHANNEL_ID = "@fjolsenbanden";
 const REFRESH_INTERVAL_MS = 60_000;
 

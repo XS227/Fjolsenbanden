@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { Discord, Instagram, PlayCircle, Smartphone, Twitch, Youtube } from "lucide-react";
+import { Discord, Instagram, Link as LinkIcon, PlayCircle, Smartphone, Twitch, Youtube } from "lucide-react";
 
 import type { LivePlatform, PlatformStatus } from "@/lib/liveStatus";
 import { DEMO_STREAM_URL } from "@/lib/demoStream";
@@ -10,7 +10,7 @@ export interface PlatformButtonsProps {
 }
 
 interface PlatformLinkConfig {
-  id: "twitch" | "youtube" | "tiktok" | "instagram" | "discord" | "demo";
+  id: "twitch" | "youtube" | "tiktok" | "instagram" | "discord" | "linktree" | "demo";
   label: string;
   href: string;
   icon: React.ReactNode;
@@ -28,7 +28,7 @@ const PLATFORM_LINKS: PlatformLinkConfig[] = [
   {
     id: "twitch",
     label: "Se på Twitch",
-    href: "https://twitch.tv/fjolsenbanden",
+    href: "https://twitch.tv/FjOlsenFN",
     icon: <Twitch className="h-5 w-5" />,
     livePlatform: "twitch",
   },
@@ -49,6 +49,12 @@ const PLATFORM_LINKS: PlatformLinkConfig[] = [
     label: "Bli med i Discord",
     href: "https://discord.gg/fjolsenbanden",
     icon: <Discord className="h-5 w-5" />,
+  },
+  {
+    id: "linktree",
+    label: "Alle lenker",
+    href: "https://linktr.ee/fjolsenbanden",
+    icon: <LinkIcon className="h-5 w-5" />,
   },
   {
     id: "demo",

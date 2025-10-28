@@ -9,7 +9,7 @@ type ApiRequest = Record<string, unknown>;
 
 export default async function handler(_req: ApiRequest, res: ApiResponse): Promise<void> {
   try {
-    const status = await getTwitchStatus("fjolsenbanden");
+    const status = await getTwitchStatus("FjOlsenFN");
     res.status(200).json({
       live: Boolean(status),
       title: status?.title ?? "Offline",

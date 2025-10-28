@@ -19,6 +19,7 @@ import {
   Mic,
   Phone,
   Play,
+  Link as LinkIcon,
   Rocket,
   ShieldCheck,
   Smartphone,
@@ -100,7 +101,7 @@ const platformLinks: readonly PlatformLink[] = [
   {
     icon: <Twitch className="h-5 w-5" aria-hidden="true" />,
     label: "Twitch",
-    href: "https://www.twitch.tv/fjolsenbanden",
+    href: "https://www.twitch.tv/FjOlsenFN",
   },
   {
     icon: <Youtube className="h-5 w-5" aria-hidden="true" />,
@@ -122,6 +123,11 @@ const platformLinks: readonly PlatformLink[] = [
     label: "Discord",
     href: "https://discord.gg/fjolsenbanden",
   },
+  {
+    icon: <LinkIcon className="h-5 w-5" aria-hidden="true" />,
+    label: "Linktree",
+    href: "https://linktr.ee/fjolsenbanden",
+  },
 ] as const;
 
 const socialLinks: readonly PlatformLink[] = [
@@ -133,7 +139,7 @@ const socialLinks: readonly PlatformLink[] = [
   {
     icon: <Twitch className="h-4 w-4" aria-hidden="true" />,
     label: "Twitch",
-    href: "https://www.twitch.tv/fjolsenbanden",
+    href: "https://www.twitch.tv/FjOlsenFN",
   },
   {
     icon: <Youtube className="h-4 w-4" aria-hidden="true" />,
@@ -149,6 +155,11 @@ const socialLinks: readonly PlatformLink[] = [
     icon: <Instagram className="h-4 w-4" aria-hidden="true" />,
     label: "Instagram",
     href: "https://www.instagram.com/fjolsenbanden",
+  },
+  {
+    icon: <LinkIcon className="h-4 w-4" aria-hidden="true" />,
+    label: "Linktree",
+    href: "https://linktr.ee/fjolsenbanden",
   },
 ] as const;
 
@@ -767,7 +778,7 @@ export default function FjolsenbandenHome() {
                     <span>
                       eller fortsett på
                       <a
-                        href="https://www.twitch.tv/fjolsenbanden"
+                        href="https://www.twitch.tv/FjOlsenFN"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="ml-1 text-[#13A0F9]"
