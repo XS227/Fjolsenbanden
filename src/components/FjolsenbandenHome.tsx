@@ -1,6 +1,6 @@
 "use client";
 
-import { type ReactNode, useEffect, useState } from "react";
+import React from "react";
 import {
   ArrowRight,
   Box,
@@ -25,9 +25,6 @@ import {
   GraduationCap,
   UserCog,
 } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import type { LucideIcon } from "lucide-react";
 
 type PlatformLink = {
   icon: ReactNode;
@@ -71,6 +68,7 @@ const platformLinks: readonly PlatformLink[] = [
     icon: <Twitch className="h-4 w-4 text-purple-500" />,
     label: "Twitch",
     href: "https://www.twitch.tv/fjolsenbanden",
+    icon: <Twitch className="h-5 w-5" aria-hidden="true" />,
   },
   {
     icon: <Youtube className="h-4 w-4 text-red-500" />,
@@ -81,6 +79,7 @@ const platformLinks: readonly PlatformLink[] = [
     icon: <Smartphone className="h-4 w-4 text-pink-500" />,
     label: "TikTok",
     href: "https://www.tiktok.com/@fjolsenbanden",
+    icon: <Video className="h-5 w-5" aria-hidden="true" />,
   },
   {
     icon: <Facebook className="h-4 w-4 text-blue-500" />,
@@ -89,24 +88,44 @@ const platformLinks: readonly PlatformLink[] = [
   },
 ] as const;
 
-const membershipTiers: readonly MembershipTier[] = [
+const stats = [
+  { label: "Discord", value: "2 500+" },
+  { label: "Twitch", value: "3 200+" },
+  { label: "TikTok", value: "4 200+" },
+] as const;
+
+const partners = ["Lenovo", "Samsung", "Philips", "Komplett.no"] as const;
+
+const offerCards = [
   {
-    title: "Gratis",
-    price: "0 kr/mnd",
-    color: "green",
-    features: ["Tilgang til Discord", "Ukentlige streams", "Felles events"],
+    icon: <Megaphone className="h-6 w-6 text-cyan-300" aria-hidden="true" />,
+    title: "Foredrag",
+    description:
+      "FjOlsen besøker skoler, idrettslag og e-sportklubber for å snakke om streaming, gaming-kultur og nettvett.",
   },
   {
-    title: "Premie",
-    price: "49 kr/mnd",
-    color: "cyan",
-    features: ["Alle Gratis-tilbud", "Deltakelse i premier", "Eksklusive quests"],
+    icon: <Trophy className="h-6 w-6 text-emerald-300" aria-hidden="true" />,
+    title: "Events",
+    description:
+      "Vi arrangerer gaming-konkurranser for bedrifter, skoler og klubber – både digitalt og fysisk.",
   },
   {
-    title: "Sponsor",
-    price: "299 kr/mnd",
-    color: "amber",
-    features: ["Alle Premie-tilbud", "Merkevare-synlighet", "VIP support", "Egne events"],
+    icon: <Sparkles className="h-6 w-6 text-pink-300" aria-hidden="true" />,
+    title: "Unboxing",
+    description:
+      "Profesjonelle unboxing-videoer som kan brukes i markedsføring og deles med communityet vårt.",
+  },
+  {
+    icon: <Rocket className="h-6 w-6 text-purple-300" aria-hidden="true" />,
+    title: "Streamer for hire",
+    description:
+      "Co-streams, produktlanseringer og kampanjer der FjOlsen løfter budskapet ditt til tusenvis av følgere.",
+  },
+  {
+    icon: <Users className="h-6 w-6 text-sky-300" aria-hidden="true" />,
+    title: "Coaching",
+    description:
+      "1-til-1 coaching med Norges dyktigste Fortnite-spillere – fokus på strategi, samarbeid og trygg nettkultur.",
   },
 ] as const;
 
@@ -319,7 +338,7 @@ export default function FjolsenbandenHome() {
   return (
     <div className="relative min-h-screen overflow-x-hidden bg-gradient-to-b from-[#131A49] via-[#0B163F] to-[#050B24] text-white">
       <div
-        className="pointer-events-none absolute inset-0"
+        className="pointer-events-none fixed inset-0 -z-10 opacity-60"
         style={{
           background:
             "radial-gradient(circle at 18% 12%, rgba(19,160,249,0.3), transparent 55%), radial-gradient(circle at 80% 0%, rgba(255,47,156,0.18), transparent 50%)",
@@ -341,34 +360,11 @@ export default function FjolsenbandenHome() {
               <a className="transition-colors duration-150 hover:text-[#13A0F9]" href={link.href}>
                 {link.name}
               </a>
-            </li>
-          ))}
-        </ul>
-        <button
-          type="button"
-          data-nav-toggle
-          onClick={() => setMenuOpen((prev: boolean) => !prev)}
-          className="rounded-md p-2 transition hover:bg-white/10 md:hidden"
-          aria-label="Toggle navigation"
-          aria-expanded={menuOpen}
-        >
-          {menuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-        </button>
-        <ul
-          data-nav-menu
-          className={`absolute right-4 top-full mt-2 ${
-            menuOpen ? "flex" : "hidden"
-          } flex-col gap-3 rounded-xl border border-white/10 bg-[#1f2940] p-4 text-sm shadow-lg transition md:hidden`}
-        >
-          {navLinks.map((link) => (
-            <li key={link.name}>
               <a
-                href={link.href}
-                className="block rounded-md px-4 py-2 transition hover:bg-white/10"
-                data-nav-close
-                onClick={() => setMenuOpen(false)}
+                href="#bli-medlem"
+                className="inline-flex items-center gap-2 rounded-full border border-white/20 px-6 py-3 font-semibold text-white transition hover:border-white/40 hover:bg-white/10"
               >
-                {link.name}
+                Bli medlem
               </a>
             </li>
           ))}
@@ -429,26 +425,138 @@ export default function FjolsenbandenHome() {
             </div>
           </div>
         </div>
-      </section>
+      </header>
 
-      <section id="live" className="relative mt-12 px-6">
-        <div className="mx-auto grid max-w-7xl items-start gap-8 lg:grid-cols-3">
-          <div className="space-y-4 lg:col-span-2">
-            <div className="relative overflow-hidden rounded-2xl border border-white/10 shadow-2xl">
-              <span className="absolute left-3 top-3 rounded-full bg-rose-500 px-4 py-1 text-xs font-semibold text-white shadow animate-pulse">
-                🔴 LIVE
-              </span>
+      <main className="space-y-28 pb-24">
+        <section id="hva-er" className="px-6">
+          <div className="mx-auto grid max-w-6xl gap-12 lg:grid-cols-2 lg:items-center">
+            <div className="space-y-6">
+              <h2 className="text-3xl font-bold sm:text-4xl">🎮 Hva er FjOlsenbanden?</h2>
+              <p className="text-lg text-slate-200">
+                FjOlsenbanden er et raskt voksende gaming-community med over 2&nbsp;500 medlemmer på Discord, 3&nbsp;200+ følgere på
+                Twitch og 4&nbsp;200+ på TikTok. Her møtes barn, ungdom og foreldre for å game trygt sammen.
+              </p>
+              <p className="text-lg text-slate-200">
+                Målet vårt er enkelt: å skape et inkluderende miljø der alle kan spille uten hets, mobbing eller negativ adferd.
+                FjOlsen legger ned mange timer hver uke på konkurranser, turneringer og aktiviteter – alltid med fellesskap og
+                spilleglede i sentrum.
+              </p>
+              <div className="rounded-3xl border border-white/10 bg-white/5 p-6 shadow-lg">
+                <p className="text-base text-slate-200">
+                  🎥 Se videoen til høyre for å møte FjOlsen og bli kjent med communityet!
+                </p>
+              </div>
+            </div>
+            <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-black/60 shadow-2xl">
               <iframe
-                data-preview-frame
-                src={`https://player.twitch.tv/?channel=fjolsenbanden&parent=fjolsenbanden.setaei.com&muted=${!unmuted}`}
-                title="Fjolsenbanden Twitch Player"
+                width="100%"
+                height="315"
+                src="https://www.youtube.com/embed/P01NkLOA39A?si=LYD3IVf5SSZrehsJ"
+                title="Møt FjOlsen"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerPolicy="strict-origin-when-cross-origin"
                 allowFullScreen
-                className="aspect-video w-full bg-black"
+                className="h-full min-h-[280px] w-full"
               />
-              {!unmuted ? (
+            </div>
+          </div>
+        </section>
+
+        <section id="live" className="px-6">
+          <div className="mx-auto grid max-w-6xl gap-12 rounded-[2.5rem] border border-white/5 bg-gradient-to-br from-[#121a4b]/80 via-[#10153b]/80 to-[#0c122d]/80 p-12 shadow-2xl lg:grid-cols-[1.1fr_0.9fr]">
+            <div className="space-y-6">
+              <h2 className="text-3xl font-bold sm:text-4xl">📈 Følg FjOlsenbanden</h2>
+              <p className="text-lg text-slate-200">
+                Totalt over 10&nbsp;000 følgere på tvers av alle plattformer! Finn oss der du liker å se gaming-innhold – og bli en del av et hyggelig og støttende fellesskap.
+              </p>
+              <div className="grid gap-4 sm:grid-cols-3">
+                {stats.map((stat) => (
+                  <div key={stat.label} className="rounded-2xl border border-white/10 bg-white/5 p-4 text-center">
+                    <p className="text-2xl font-bold text-cyan-300">{stat.value}</p>
+                    <p className="text-sm text-slate-300">{stat.label}</p>
+                  </div>
+                ))}
+              </div>
+              <div className="flex flex-wrap gap-3">
+                {socialLinks.map((link) => (
+                  <a
+                    key={link.label}
+                    href={link.href}
+                    className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-sm font-medium transition hover:bg-white/20"
+                    rel="noreferrer"
+                    target="_blank"
+                  >
+                    {link.icon}
+                    <span>{link.label}</span>
+                  </a>
+                ))}
+              </div>
+              <div className="rounded-3xl border border-white/10 bg-white/5 p-6 text-sm text-slate-200">
+                🎥 Se FjOlsen LIVE! Til venstre: Stream-vindu. Til høyre: Chat-feed. 👉 Følg oss her: TikTok · YouTube · Instagram · Twitch
+              </div>
+            </div>
+            <div className="grid gap-4 lg:grid-cols-2">
+              <div className="relative col-span-2 overflow-hidden rounded-2xl border border-white/10 bg-black/70 p-6">
+                <span className="inline-flex items-center gap-2 rounded-full bg-rose-500/20 px-3 py-1 text-xs font-semibold text-rose-200">
+                  🔴 Live preview
+                </span>
+                <p className="mt-4 text-sm text-slate-300">
+                  Stream-vindu – se FjOlsen ta communityet gjennom nye utfordringer og konkurranser.
+                </p>
+              </div>
+              <div className="rounded-2xl border border-white/10 bg-black/60 p-6">
+                <p className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-400">Chat</p>
+                <ul className="mt-4 space-y-3 text-sm text-slate-200">
+                  <li>💬 Lina: «Haha, den bossen var vilt!»</li>
+                  <li>💬 Jonas: «Gleder meg til premie-trekningen 🔥»</li>
+                  <li>💬 Sara: «Hei fra TikTok 😎»</li>
+                  <li>💬 Marius: «Bra lyd i dag!»</li>
+                </ul>
+              </div>
+              <div className="rounded-2xl border border-white/10 bg-black/60 p-6">
+                <p className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-400">Fellesskap</p>
+                <p className="mt-4 text-sm text-slate-200">
+                  Vi holder chatten trygg med dedikerte moderatorer og tydelige regler mot hets, mobbing og negativ adferd.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="bli-medlem" className="px-6">
+          <div className="mx-auto max-w-6xl rounded-[2.5rem] border border-white/10 bg-white/5 p-12 shadow-2xl">
+            <h2 className="text-3xl font-bold sm:text-4xl">💬 Bli medlem</h2>
+            <p className="mt-4 text-lg text-slate-200">
+              Det er gratis å bli med i FjOlsenbanden! Alle kan delta i konkurranser, men for å vinne premier må du være registrert medlem.
+            </p>
+            <div className="mt-8 flex flex-wrap gap-4">
+              <a
+                href="https://www.fjolsenbanden.no/medlem/under-18"
+                className="inline-flex items-center gap-3 rounded-2xl bg-indigo-500 px-6 py-4 text-lg font-semibold text-white shadow-[0_12px_30px_rgba(99,102,241,0.45)] transition hover:bg-indigo-400"
+              >
+                🔵 Under 18 år
+              </a>
+              <a
+                href="https://www.fjolsenbanden.no/medlem/over-18"
+                className="inline-flex items-center gap-3 rounded-2xl bg-emerald-500 px-6 py-4 text-lg font-semibold text-white shadow-[0_12px_30px_rgba(16,185,129,0.45)] transition hover:bg-emerald-400"
+              >
+                🟢 Over 18 år
+              </a>
+            </div>
+          </div>
+        </section>
+
+        <section id="samarbeid" className="px-6">
+          <div className="mx-auto max-w-6xl space-y-8">
+            <h2 className="text-3xl font-bold sm:text-4xl">🤝 Samarbeidspartnere</h2>
+            <p className="text-lg text-slate-200">
+              Vi har allerede samarbeidet med flere kjente merkevarer – og vi er alltid på utkikk etter nye partnere som ønsker synlighet mot et engasjert gaming-publikum.
+            </p>
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+              {partners.map((partner) => (
                 <div
-                  data-preview-overlay
-                  className="absolute inset-0 flex flex-col items-center justify-center gap-4 bg-black/70 p-6 text-center"
+                  key={partner}
+                  className="flex items-center justify-center rounded-2xl border border-white/10 bg-white/5 px-6 py-8 text-lg font-semibold tracking-wide text-slate-200"
                 >
                   <Play className="h-12 w-12 text-[#13A0F9]" />
                   <p className="text-sm text-zinc-300">
