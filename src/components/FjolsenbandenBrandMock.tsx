@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useAdminState } from "@/lib/admin-state";
 
 const BRAND = {
   midnight: "#020824",
@@ -61,6 +62,8 @@ const PRIZES = [
 export default function FjolsenbandenBrandMock() {
   const [menu, setMenu] = useState(false);
   const prefersReducedMotion = useReducedMotion();
+  const { state } = useAdminState();
+  const { siteSettings } = state;
 
   const navItems = useMemo(
     () => ["Live", "Premier", "Medlemskap", "Foreldre", "Community", "Sponsorer"],
@@ -85,7 +88,11 @@ export default function FjolsenbandenBrandMock() {
       >
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4">
           <div className="flex items-center gap-3">
-            <img src="/assets/logo.svg" alt="Fjolsenbanden" className="hidden h-8 sm:block" />
+            <img
+              src={siteSettings.logoUrl || "/assets/logo.svg"}
+              alt={siteSettings.heroTitle || "Fjolsenbanden"}
+              className="hidden h-8 sm:block"
+            />
             <div
               className="grid h-10 w-10 place-items-center rounded-xl font-black sm:hidden"
               style={{ background: BRAND.blue, color: BRAND.navy }}
@@ -146,10 +153,11 @@ export default function FjolsenbandenBrandMock() {
                   textShadow: "0 10px 32px rgba(11,21,60,0.6)",
                 }}
               >
-                FJOLSENBANDEN
+                {siteSettings.heroTitle || "FJOLSENBANDEN"}
               </h1>
               <p className="mt-4 max-w-xl text-base text-zinc-100 sm:text-lg">
-                Spillglede for hele familien. Trygge streams, turneringer og premier – foreldre verifiserer med Vipps.
+                {siteSettings.heroTagline ||
+                  "Spillglede for hele familien. Trygge streams, turneringer og premier – foreldre verifiserer med Vipps."}
               </p>
               <div className="mt-6 flex flex-wrap gap-3">
                 <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }}>
@@ -175,7 +183,7 @@ export default function FjolsenbandenBrandMock() {
                   </Button>
                 </motion.div>
               </div>
-              <div className="mt-6 grid grid-cols-3 gap-4 text-xs">
+              <div className="mt-6 grid grid-cols-1 gap-4 text-xs sm:grid-cols-3">
                 <Stat num="3.2k" label="Twitch" />
                 <Stat num="4.2k" label="YouTube" />
                 <Stat num="2.5k" label="Discord" />
@@ -217,6 +225,12 @@ export default function FjolsenbandenBrandMock() {
                 <div className="grid h-full w-full place-items-center text-zinc-300">
                   <Play className="h-12 w-12" style={{ color: BRAND.blue }} />
                   <p className="mt-2 text-xs opacity-80">1‑min forhåndsvisning – Twitch/YouTube</p>
+                </div>
+                <div className="absolute bottom-5 left-5 right-5 space-y-2 rounded-2xl border border-white/10 bg-black/60 p-4 text-left text-sm text-zinc-100 shadow-xl">
+                  <div className="flex items-center gap-2 text-xs uppercase tracking-wide text-emerald-200">
+                    <ShieldCheck className="h-4 w-4" /> Familievennlig oppdatering
+                  </div>
+                  <p>{siteSettings.announcement || "Neste livesending starter 20:00 med co-op og premier fra Lenovo."}</p>
                 </div>
               </div>
               <div className="mt-4 flex flex-wrap gap-3">
