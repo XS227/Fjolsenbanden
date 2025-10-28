@@ -7,7 +7,10 @@
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="/favicon.svg" />
     <meta property="og:title" content="Fjolsenbanden – Spillglede for hele familien" />
-    <meta property="og:description" content="Trygge streams, premier og Vipps-verifisering i et familievennlig gaming-community." />
+    <meta
+      property="og:description"
+      content="Trygge streams, premier og Vipps-verifisering i et familievennlig gaming-community."
+    />
     <meta property="og:image" content="/og-image.svg" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:image" content="/og-image.svg" />
@@ -19,568 +22,931 @@
       body {
         margin: 0;
         font-family: "Inter", "Segoe UI", system-ui, -apple-system, Roboto, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
-        background: #020824;
+        background: #131a49;
       }
     </style>
   </head>
   <body>
-    <div class="min-h-screen text-white" style="background:radial-gradient(circle at 18% -12%, #9BD9FF22, transparent 55%), #020824;font-family:&quot;Inter&quot;, &quot;Segoe UI&quot;, system-ui, -apple-system, Roboto, Ubuntu, Cantarell, &quot;Helvetica Neue&quot;, sans-serif">
-<header class="sticky top-0 z-50 border-b border-white/10 backdrop-blur" style="background:rgba(3, 12, 42, 0.82)">
-<div class="mx-auto flex h-16 max-w-7xl items-center justify-between px-4">
-<div class="flex items-center gap-3">
-<img src="/assets/logo.svg" alt="Fjolsenbanden" class="hidden h-8 sm:block"/>
-<div class="grid h-10 w-10 place-items-center rounded-xl font-black sm:hidden" style="background:#13A0F9;color:#041149">FB</div>
-</div>
-<nav class="hidden items-center gap-6 text-sm md:flex">
-<a href="#live" class="transition hover:text-white/80">Live</a>
-<a href="#premier" class="transition hover:text-white/80">Premier</a>
-<a href="#medlemskap" class="transition hover:text-white/80">Medlemskap</a>
-<a href="#foreldre" class="transition hover:text-white/80">Foreldre</a>
-<a href="#community" class="transition hover:text-white/80">Community</a>
-<a href="#sponsorer" class="transition hover:text-white/80">Sponsorer</a>
-</nav>
-<div class="flex items-center gap-3">
-<button type="button" class="inline-flex items-center justify-center font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-60 bg-zinc-900 text-white hover:bg-zinc-800 focus-visible:ring-zinc-900 h-10 px-4 text-sm rounded-xl group flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold text-white shadow-[0_14px_34px_rgba(255,90,0,0.45)] transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/60 hidden text-sm md:inline-flex" style="background:#FF5A00;font-family:&quot;Inter&quot;, &quot;Segoe UI&quot;, system-ui, -apple-system, sans-serif">
-<svg aria-hidden="true" viewBox="0 0 72 24" class="h-4" fill="currentColor" role="img" focusable="false">
-<path d="M7.64 18.22c-3.55 0-6.16-2.52-6.16-6.2 0-3.64 2.61-6.18 6.16-6.18 2.02 0 3.41.84 4.28 1.98l-2.12 1.6c-.48-.62-1.17-1.04-2.16-1.04-1.68 0-2.91 1.36-2.91 3.64 0 2.3 1.23 3.66 2.91 3.66.99 0 1.7-.43 2.18-1.07l2.12 1.6c-.89 1.16-2.3 2.01-4.32 2.01Zm8.77-.18h-2.86V1.78h2.86v16.26Zm8.33.23c-3.48 0-5.91-2.61-5.91-6.22 0-3.61 2.43-6.22 5.91-6.22 3.47 0 5.89 2.61 5.89 6.22 0 3.61-2.42 6.22-5.89 6.22Zm0-2.55c1.77 0 3.03-1.43 3.03-3.67 0-2.24-1.26-3.67-3.03-3.67-1.78 0-3.05 1.43-3.05 3.67 0 2.24 1.27 3.67 3.05 3.67Zm11.68 2.55c-3.47 0-5.91-2.61-5.91-6.22 0-3.61 2.44-6.22 5.91-6.22 3.48 0 5.9 2.61 5.9 6.22 0 3.61-2.42 6.22-5.9 6.22Zm0-2.55c1.78 0 3.04-1.43 3.04-3.67 0-2.24-1.26-3.67-3.04-3.67-1.77 0-3.04 1.43-3.04 3.67 0 2.24 1.27 3.67 3.04 3.67Zm12.14 2.3c-2.18 0-3.9-.75-5.13-2.07l1.73-1.95c.93.93 2.1 1.43 3.36 1.43 1.12 0 1.78-.41 1.78-1.07 0-.66-.51-.91-2.18-1.29-2.62-.6-4.5-1.23-4.5-3.67 0-2.18 1.84-3.57 4.53-3.57 2 0 3.53.63 4.73 1.78l-1.7 1.92c-.95-.82-2-.1-3.07-.1-1.01 0-1.56.39-1.56.98 0 .68.55.93 2.2 1.31 2.61.61 4.48 1.3 4.48 3.65 0 2.35-1.91 3.65-4.67 3.65Zm8.52-.1c-1.5 0-2.96-.52-4.02-1.41l1.17-2.26c.87.7 1.88 1.07 2.91 1.07 1.04 0 1.68-.39 1.68-1.14 0-.72-.48-1.07-1.96-1.47-2.52-.64-3.59-1.6-3.59-3.42 0-2.04 1.63-3.42 3.99-3.42 1.45 0 2.67.46 3.65 1.21l-1.12 2.26c-.81-.6-1.62-.93-2.5-.93-.99 0-1.58.43-1.58 1.07 0 .7.5 1.01 2 1.41 2.38.62 3.54 1.56 3.54 3.47 0 2.08-1.7 3.56-4.17 3.56Z">
-</path>
-</svg>
-<span class="tracking-wide">Logg inn med Vipps</span>
-</button>
-<button class="md:hidden" aria-label="Åpne meny" aria-expanded="false" aria-controls="mobilmeny">
-<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-menu">
-<line x1="4" x2="20" y1="12" y2="12">
-</line>
-<line x1="4" x2="20" y1="6" y2="6">
-</line>
-<line x1="4" x2="20" y1="18" y2="18">
-</line>
-</svg>
-</button>
-</div>
-</div>
-</header>
-<main>
-<section class="px-4 py-12" id="live" style="background:linear-gradient(160deg, #041149 0%, #020824 100%)">
-<div class="mx-auto grid max-w-7xl items-center gap-10 lg:grid-cols-2">
-<div>
-<h1 class="text-4xl font-black leading-tight sm:text-6xl" style="font-family:&quot;Luckiest Guy&quot;, &quot;Inter&quot;, sans-serif;letter-spacing:0.05em;text-shadow:0 10px 32px rgba(11,21,60,0.6)">FJOLSENBANDEN</h1>
-<p class="mt-4 max-w-xl text-base text-zinc-100 sm:text-lg">Spillglede for hele familien. Trygge streams, turneringer og premier – foreldre verifiserer med Vipps.</p>
-<div class="mt-6 flex flex-wrap gap-3">
-<div>
-<button type="button" class="inline-flex items-center justify-center font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-60 bg-zinc-900 text-white hover:bg-zinc-800 focus-visible:ring-zinc-900 h-10 px-4 text-sm rounded-xl rounded-full px-6 py-6 text-base font-semibold text-white shadow-lg" style="background:linear-gradient(120deg, #13A0F9 0%, #6827FF 100%);box-shadow:0 20px 38px #13A0F945">Se neste stream</button>
-</div>
-<div>
-<button type="button" class="inline-flex items-center justify-center font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-60 bg-zinc-900 text-white hover:bg-zinc-800 focus-visible:ring-zinc-900 h-10 px-4 text-sm rounded-xl rounded-full px-6 py-6 text-base font-semibold text-white shadow-lg" style="background:linear-gradient(120deg, #FF2F9C 0%, #13A0F9 100%);box-shadow:0 20px 38px #FF2F9C35">Meld inn barn</button>
-</div>
-</div>
-<div class="mt-6 grid grid-cols-3 gap-4 text-xs">
-<div class="rounded-xl border border-white/10 bg-white/10 p-4 text-center text-white">
-<div class="text-2xl font-extrabold" style="color:#13A0F9">3.2k</div>
-<div class="text-xs text-zinc-100">Twitch</div>
-</div>
-<div class="rounded-xl border border-white/10 bg-white/10 p-4 text-center text-white">
-<div class="text-2xl font-extrabold" style="color:#13A0F9">4.2k</div>
-<div class="text-xs text-zinc-100">YouTube</div>
-</div>
-<div class="rounded-xl border border-white/10 bg-white/10 p-4 text-center text-white">
-<div class="text-2xl font-extrabold" style="color:#13A0F9">2.5k</div>
-<div class="text-xs text-zinc-100">Discord</div>
-</div>
-</div>
-</div>
-<div class="relative">
-<div class="absolute -inset-6 rounded-3xl blur-2xl" style="background:conic-gradient(from 120deg, #13A0F9, #FF2F9C);opacity:0.28">
-</div>
-        <div class="relative aspect-video overflow-hidden rounded-3xl border border-white/15 bg-black/50 shadow-2xl">
-          <span class="absolute left-3 top-3 rounded-full px-3 py-1 text-[11px] font-semibold" style="background:#FF2F9C;color:#000;box-shadow:0 0 24px #FF2F9C7a">🔴 LIVE</span>
-          <iframe
-            data-preview-frame
-            src="https://player.twitch.tv/?channel=fjolsenbanden&parent=fjolsenbanden.setaei.com&muted=true"
-            title="Fjolsenbanden Twitch Player"
-            allowfullscreen
-            class="h-full w-full"
-          ></iframe>
-          <div
-            data-preview-overlay
-            class="absolute inset-0 flex flex-col items-center justify-center gap-4 bg-black/80 p-6 text-center"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="lucide lucide-play h-12 w-12"
-              style="color:#13A0F9"
-            >
-              <polygon points="6 3 20 12 6 21 6 3"></polygon>
+    <div class="relative min-h-screen overflow-x-hidden bg-gradient-to-b from-[#131A49] via-[#0B163F] to-[#050B24] text-white">
+      <div
+        class="pointer-events-none absolute inset-0"
+        style="background:radial-gradient(circle at 18% 12%, rgba(19,160,249,0.3), transparent 55%), radial-gradient(circle at 80% 0%, rgba(255,47,156,0.18), transparent 50%)"
+      ></div>
+      <div class="relative">
+        <nav class="flex items-center justify-between px-6 py-4">
+          <div class="flex items-center gap-2">
+            <div class="grid h-10 w-10 place-content-center rounded-xl bg-gradient-to-br from-[#13A0F9] to-[#FF2F9C] font-bold text-black">
+              FB
+            </div>
+            <span class="hidden text-lg font-semibold sm:block">Fjolsenbanden</span>
+          </div>
+          <ul class="hidden gap-6 text-sm font-medium md:flex">
+            <li><a class="transition-colors duration-150 hover:text-[#13A0F9]" href="#">Hjem</a></li>
+            <li><a class="transition-colors duration-150 hover:text-[#13A0F9]" href="#live">Live</a></li>
+            <li><a class="transition-colors duration-150 hover:text-[#13A0F9]" href="#medlemskap">Medlemskap</a></li>
+            <li><a class="transition-colors duration-150 hover:text-[#13A0F9]" href="#premier">Premier</a></li>
+            <li><a class="transition-colors duration-150 hover:text-[#13A0F9]" href="#sponsorer">Samarbeid</a></li>
+            <li><a class="transition-colors duration-150 hover:text-[#13A0F9]" href="#kontakt">Kontakt</a></li>
+          </ul>
+          <button class="rounded-md p-2 transition hover:bg-white/10 md:hidden" aria-label="Åpne meny" id="nav-toggle">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="4" x2="20" y1="12" y2="12"></line>
+              <line x1="4" x2="20" y1="6" y2="6"></line>
+              <line x1="4" x2="20" y1="18" y2="18"></line>
             </svg>
-            <p class="text-xs text-zinc-100 sm:text-sm">
-              1‑min forhåndsvisning –<span data-preview-timer class="ml-1">60</span>s igjen
-            </p>
-            <button
-              type="button"
-              data-video-unmute
-              class="inline-flex items-center justify-center rounded-full bg-[#13A0F9] px-6 py-2 text-sm font-semibold text-black shadow-lg transition hover:bg-[#0ea5e9]"
+          </button>
+          <ul
+            class="absolute right-6 top-full mt-2 hidden flex-col gap-3 rounded-xl border border-white/10 bg-[#1f2940] p-4 text-sm shadow-lg md:hidden"
+            id="nav-menu"
+          >
+            <li><a class="block rounded-md px-4 py-2 transition hover:bg-white/10" href="#">Hjem</a></li>
+            <li><a class="block rounded-md px-4 py-2 transition hover:bg-white/10" href="#live">Live</a></li>
+            <li><a class="block rounded-md px-4 py-2 transition hover:bg-white/10" href="#medlemskap">Medlemskap</a></li>
+            <li><a class="block rounded-md px-4 py-2 transition hover:bg-white/10" href="#premier">Premier</a></li>
+            <li><a class="block rounded-md px-4 py-2 transition hover:bg-white/10" href="#sponsorer">Samarbeid</a></li>
+            <li><a class="block rounded-md px-4 py-2 transition hover:bg-white/10" href="#kontakt">Kontakt</a></li>
+          </ul>
+        </nav>
+
+        <main class="relative z-10 pb-40">
+        <section id="community" class="mt-6 px-6">
+          <div class="mx-auto grid max-w-6xl gap-10 lg:grid-cols-2 lg:items-start">
+            <div class="space-y-6">
+              <div class="space-y-4 text-center lg:text-left">
+                <h1 class="text-4xl font-extrabold sm:text-5xl">
+                  Velkommen til <span class="text-[#13A0F9]">FjOlsenbanden</span>
+                </h1>
+                <p class="text-base text-zinc-300 sm:text-lg">
+                  Norges mest inkluderende gaming-community for hele familien.
+                </p>
+              </div>
+              <div class="space-y-4 rounded-3xl border border-white/10 bg-white/5 p-6 text-left shadow-[0_18px_42px_rgba(12,21,45,0.45)]">
+                <h2 class="text-xl font-semibold text-[#13A0F9]">🎮 Hva er FjOlsenbanden?</h2>
+                <p class="text-sm leading-relaxed text-zinc-200 sm:text-base">
+                  FjOlsenbanden er et raskt voksende gaming-community med over 2500 medlemmer på Discord, 3200+ følgere på Twitch og 4200+ på TikTok – både barn, ungdom og foreldre!
+                </p>
+                <p class="text-sm leading-relaxed text-zinc-200 sm:text-base">
+                  <span class="font-semibold text-white">Målet vårt er enkelt:</span><br class="hidden sm:block" />Å skape et trygt, positivt og inkluderende miljø der alle kan game uten hets, mobbing eller negativ adferd.
+                </p>
+                <p class="text-sm leading-relaxed text-zinc-200 sm:text-base">
+                  FjOlsen bruker mange timer hver uke på å arrangere konkurranser, turneringer og aktiviteter for medlemmene – alltid med fellesskap, spilleglede og respekt i sentrum.
+                </p>
+              </div>
+            </div>
+            <div class="flex w-full max-w-xl flex-col items-center gap-6 lg:items-start">
+              <div class="relative w-full overflow-hidden rounded-3xl border border-white/10 shadow-[0_28px_60px_rgba(7,12,28,0.6)]">
+                <iframe
+                  class="aspect-video w-full"
+                  width="560"
+                  height="315"
+                  src="https://www.youtube.com/embed/qaHsJWL4xpM?si=gXrmtGxiH5k7Ft80"
+                  title="YouTube video player"
+                  frameborder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  referrerpolicy="strict-origin-when-cross-origin"
+                  allowfullscreen
+                ></iframe>
+              </div>
+              <div class="w-full rounded-3xl border border-white/10 bg-[#101c37]/80 p-5 shadow-[0_18px_42px_rgba(12,21,45,0.45)]">
+                <div class="mb-3 flex items-center gap-2 text-sm font-semibold uppercase tracking-wide text-white/80">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-[#13A0F9]"><path d="M12 15l-3-3m0 0l3-3m-3 3h8"></path><path d="M5 19V5"></path><path d="M19 5v14"></path></svg>
+                  Følg FjOlsenbanden
+                </div>
+                <div class="flex flex-wrap justify-center gap-2 sm:justify-start">
+                  <a
+                    href="https://www.twitch.tv/fjolsenbanden"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="flex items-center gap-2 rounded-full border border-white/10 bg-white/10 px-3 py-1.5 text-xs font-medium uppercase tracking-wide text-white/90 transition duration-200 hover:-translate-y-0.5 hover:bg-white/20 hover:text-white focus:outline-none focus:ring-2 focus:ring-[#13A0F9]"
+                  >
+                    <span class="text-white/90">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-purple-400">
+                        <path d="M21 2H3v16h5v4l4-4h5l4-4V2zm-10 9V7m5 4V7"></path>
+                      </svg>
+                    </span>
+                    <span>Twitch</span>
+                  </a>
+                  <a
+                    href="https://youtube.com/@fjolsenbanden"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="flex items-center gap-2 rounded-full border border-white/10 bg-white/10 px-3 py-1.5 text-xs font-medium uppercase tracking-wide text-white/90 transition duration-200 hover:-translate-y-0.5 hover:bg-white/20 hover:text-white focus:outline-none focus:ring-2 focus:ring-[#13A0F9]"
+                  >
+                    <span class="text-white/90">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-red-500">
+                        <path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17"></path>
+                        <path d="m10 15 5-3-5-3z"></path>
+                      </svg>
+                    </span>
+                    <span>YouTube</span>
+                  </a>
+                  <a
+                    href="https://www.tiktok.com/@fjolsenbanden"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="flex items-center gap-2 rounded-full border border-white/10 bg-white/10 px-3 py-1.5 text-xs font-medium uppercase tracking-wide text-white/90 transition duration-200 hover:-translate-y-0.5 hover:bg-white/20 hover:text-white focus:outline-none focus:ring-2 focus:ring-[#13A0F9]"
+                  >
+                    <span class="text-white/90">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-pink-300">
+                        <rect width="14" height="20" x="5" y="2" rx="2" ry="2"></rect>
+                        <path d="M12 18h.01"></path>
+                      </svg>
+                    </span>
+                    <span>TikTok</span>
+                  </a>
+                  <a
+                    href="https://www.facebook.com/fjolsenbanden"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="flex items-center gap-2 rounded-full border border-white/10 bg-white/10 px-3 py-1.5 text-xs font-medium uppercase tracking-wide text-white/90 transition duration-200 hover:-translate-y-0.5 hover:bg-white/20 hover:text-white focus:outline-none focus:ring-2 focus:ring-[#13A0F9]"
+                  >
+                    <span class="text-white/90">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-blue-500">
+                        <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+                      </svg>
+                    </span>
+                    <span>Facebook</span>
+                  </a>
+                </div>
+                <p class="mt-3 text-center text-xs text-zinc-400 sm:text-left">
+                  Totalt over 10 000 følgere på tvers av Twitch, TikTok, YouTube og Instagram.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="live" class="relative mt-12 px-6">
+          <div class="mx-auto grid max-w-7xl items-start gap-8 lg:grid-cols-3">
+            <div class="space-y-4 lg:col-span-2">
+              <div class="relative overflow-hidden rounded-2xl border border-white/10 shadow-2xl">
+                <span class="absolute left-3 top-3 rounded-full bg-rose-500 px-4 py-1 text-xs font-semibold text-white shadow animate-pulse">🔴 LIVE</span>
+                <iframe
+                  data-preview-frame
+                  src="https://player.twitch.tv/?channel=fjolsenbanden&parent=fjolsenbanden.setaei.com&muted=true"
+                  title="Fjolsenbanden Twitch Player"
+                  allowfullscreen
+                  class="aspect-video w-full bg-black"
+                ></iframe>
+                <div
+                  data-preview-overlay
+                  class="absolute inset-0 flex flex-col items-center justify-center gap-4 bg-black/70 p-6 text-center"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="h-12 w-12 text-[#13A0F9]"
+                  >
+                    <polygon points="6 3 20 12 6 21 6 3"></polygon>
+                  </svg>
+                  <p class="text-sm text-zinc-300">
+                    1-minutt forhåndsvisning –<span data-preview-timer class="ml-1">60</span>s igjen
+                  </p>
+                  <button
+                    type="button"
+                    data-video-unmute
+                    class="rounded-full bg-gradient-to-r from-[#13A0F9] to-[#FF2F9C] px-6 py-3 font-semibold text-white shadow-[0_16px_28px_rgba(19,160,249,0.35)] transition hover:from-[#0d8bd6] hover:to-[#e12585]"
+                  >
+                    Se full stream
+                  </button>
+                  <div class="flex gap-3 text-xs text-zinc-400">
+                    <span>
+                      eller fortsett på
+                      <a href="https://www.twitch.tv/fjolsenbanden" target="_blank" rel="noopener noreferrer" class="ml-1 text-[#13A0F9]">Twitch</a>
+                    </span>
+                    <span>|</span>
+                    <span>
+                      <a href="https://youtube.com/@fjolsenbanden" target="_blank" rel="noopener noreferrer" class="text-[#13A0F9]">YouTube</a>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="flex max-h-[640px] flex-col rounded-2xl border border-white/10 bg-[#1f2940] p-4">
+              <h3 class="mb-3 flex items-center gap-2 font-semibold text-[#13A0F9]">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4">
+                  <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-4.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+                </svg>
+                Live chat
+              </h3>
+              <div class="flex-1 space-y-3 overflow-y-auto pr-1 text-sm">
+                <div class="rounded-lg bg-white/5 px-3 py-2"><span class="mr-2 font-semibold text-[#13A0F9]">Lina</span><span class="text-zinc-200">Haha, den bossen var vilt!</span></div>
+                <div class="rounded-lg bg-white/5 px-3 py-2"><span class="mr-2 font-semibold text-[#13A0F9]">Jonas</span><span class="text-zinc-200">Gleder meg til premie-trekningen 🔥</span></div>
+                <div class="rounded-lg bg-white/5 px-3 py-2"><span class="mr-2 font-semibold text-[#13A0F9]">Sara</span><span class="text-zinc-200">Hei fra TikTok 😎</span></div>
+                <div class="rounded-lg bg-white/5 px-3 py-2"><span class="mr-2 font-semibold text-[#13A0F9]">Marius</span><span class="text-zinc-200">Bra lyd i dag!</span></div>
+              </div>
+              <input
+                type="text"
+                placeholder="Skriv en kommentar..."
+                class="mt-3 w-full rounded-lg border border-white/20 bg-white/10 px-3 py-2 text-sm text-white placeholder-zinc-400 outline-none focus:ring-2 focus:ring-[#13A0F9]"
+              />
+            </div>
+          </div>
+        </section>
+
+        <section id="medlemskap" class="mt-20 px-6 text-center">
+          <h2 class="mb-4 text-3xl font-bold">Velg medlemskap</h2>
+          <p class="mx-auto mb-8 max-w-2xl text-zinc-300">Bli med i konkurranser, streams og fellesskapet vårt på noen få klikk.</p>
+          <div class="mx-auto grid max-w-7xl gap-8 md:grid-cols-3">
+            <div class="rounded-2xl border border-white/10 bg-[#1f2940] p-6 shadow-lg transition-transform hover:-translate-y-1">
+              <div class="mb-4 flex items-center gap-2 text-white"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6"><polyline points="20 12 20 22 4 22 4 12"></polyline><rect width="16" height="6" x="4" y="6"></rect><path d="M18 6V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v2"></path></svg>Gratis</div>
+              <div class="text-3xl font-bold text-white">0 kr/mnd</div>
+              <ul class="mt-4 space-y-2 text-sm text-zinc-300">
+                <li class="flex items-center gap-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-[#13A0F9]"><path d="M12 19V6"></path><path d="m5 12 7-7 7 7"></path><path d="M19 12v5a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-5"></path></svg>Tilgang til Discord</li>
+                <li class="flex items-center gap-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-[#13A0F9]"><path d="M12 19V6"></path><path d="m5 12 7-7 7 7"></path><path d="M19 12v5a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-5"></path></svg>Ukentlige streams</li>
+                <li class="flex items-center gap-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-[#13A0F9]"><path d="M12 19V6"></path><path d="m5 12 7-7 7 7"></path><path d="M19 12v5a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-5"></path></svg>Felles events</li>
+              </ul>
+              <button
+                type="button"
+                data-open-registration
+                data-tier="Gratis"
+                class="mt-6 w-full rounded-full bg-gradient-to-r from-[#13A0F9] to-[#FF2F9C] px-6 py-3 text-center font-semibold text-white shadow-[0_16px_28px_rgba(19,160,249,0.35)] transition hover:from-[#0d8bd6] hover:to-[#e12585]"
+              >
+                Velg
+              </button>
+            </div>
+            <div class="rounded-2xl border border-white/10 bg-[#1f2940] p-6 shadow-lg transition-transform hover:-translate-y-1">
+              <div class="mb-4 flex items-center gap-2 text-white"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6"><polyline points="20 12 20 22 4 22 4 12"></polyline><rect width="16" height="6" x="4" y="6"></rect><path d="M18 6V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v2"></path></svg>Premie</div>
+              <div class="text-3xl font-bold text-white">49 kr/mnd</div>
+              <ul class="mt-4 space-y-2 text-sm text-zinc-300">
+                <li class="flex items-center gap-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-[#13A0F9]"><path d="M12 19V6"></path><path d="m5 12 7-7 7 7"></path><path d="M19 12v5a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-5"></path></svg>Alle Gratis-tilbud</li>
+                <li class="flex items-center gap-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-[#13A0F9]"><path d="M12 19V6"></path><path d="m5 12 7-7 7 7"></path><path d="M19 12v5a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-5"></path></svg>Deltakelse i premier</li>
+                <li class="flex items-center gap-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-[#13A0F9]"><path d="M12 19V6"></path><path d="m5 12 7-7 7 7"></path><path d="M19 12v5a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-5"></path></svg>Egne quests</li>
+              </ul>
+              <button
+                type="button"
+                data-open-registration
+                data-tier="Premie"
+                class="mt-6 w-full rounded-full bg-gradient-to-r from-[#13A0F9] to-[#FF2F9C] px-6 py-3 text-center font-semibold text-white shadow-[0_16px_28px_rgba(19,160,249,0.35)] transition hover:from-[#0d8bd6] hover:to-[#e12585]"
+              >
+                Velg
+              </button>
+            </div>
+            <div class="rounded-2xl border border-white/10 bg-[#1f2940] p-6 shadow-lg transition-transform hover:-translate-y-1">
+              <div class="mb-4 flex items-center gap-2 text-white"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6"><polyline points="20 12 20 22 4 22 4 12"></polyline><rect width="16" height="6" x="4" y="6"></rect><path d="M18 6V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v2"></path></svg>Sponsor</div>
+              <div class="text-3xl font-bold text-white">299 kr/mnd</div>
+              <ul class="mt-4 space-y-2 text-sm text-zinc-300">
+                <li class="flex items-center gap-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-[#13A0F9]"><path d="M12 19V6"></path><path d="m5 12 7-7 7 7"></path><path d="M19 12v5a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-5"></path></svg>Alle Premie-tilbud</li>
+                <li class="flex items-center gap-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-[#13A0F9]"><path d="M12 19V6"></path><path d="m5 12 7-7 7 7"></path><path d="M19 12v5a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-5"></path></svg>Merkevare-synlighet</li>
+                <li class="flex items-center gap-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-[#13A0F9]"><path d="M12 19V6"></path><path d="m5 12 7-7 7 7"></path><path d="M19 12v5a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-5"></path></svg>VIP support</li>
+                <li class="flex items-center gap-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-[#13A0F9]"><path d="M12 19V6"></path><path d="m5 12 7-7 7 7"></path><path d="M19 12v5a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-5"></path></svg>Egne events</li>
+              </ul>
+              <button
+                type="button"
+                data-open-registration
+                data-tier="Sponsor"
+                class="mt-6 w-full rounded-full bg-gradient-to-r from-[#13A0F9] to-[#FF2F9C] px-6 py-3 text-center font-semibold text-white shadow-[0_16px_28px_rgba(19,160,249,0.35)] transition hover:from-[#0d8bd6] hover:to-[#e12585]"
+              >
+                Velg
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <section id="premier" class="mt-20 px-6 text-center">
+          <h2 class="mb-4 text-3xl font-bold">Samarbeidspartnere</h2>
+          <p class="mx-auto max-w-3xl text-zinc-300">Vi har allerede hatt samarbeid med flere kjente merkevarer.</p>
+          <p class="mx-auto mt-4 max-w-3xl text-sm uppercase tracking-wide text-zinc-400">
+            LOGOER: Lenovo – Samsung – Philips – Komplett.no
+          </p>
+          <p class="mx-auto mt-6 max-w-2xl text-zinc-300">
+            Ønsker du å synliggjøre din merkevare for vårt engasjerte og voksende gaming-publikum?
+          </p>
+          <p class="mx-auto mt-2 max-w-2xl text-zinc-300">Ta kontakt for samarbeid!</p>
+          <div class="mt-8 flex justify-center">
+            <a
+              class="rounded-full bg-gradient-to-r from-[#13A0F9] to-[#FF2F9C] px-8 py-3 font-semibold text-white shadow-[0_16px_28px_rgba(19,160,249,0.35)] transition hover:from-[#0d8bd6] hover:to-[#e12585]"
+              href="#kontakt"
             >
-              Se full stream
-            </button>
-            <div class="flex flex-wrap items-center justify-center gap-2 text-xs text-zinc-300">
-              <span class="text-zinc-200">eller fortsett på</span>
-              <a href="https://www.twitch.tv/fjolsenbanden" target="_blank" rel="noopener noreferrer" class="font-medium text-[#13A0F9] hover:underline">Twitch</a>
-              <span class="hidden sm:inline">|</span>
-              <a href="https://youtube.com/@fjolsenbanden" target="_blank" rel="noopener noreferrer" class="font-medium text-[#13A0F9] hover:underline">YouTube</a>
+              Kontakt oss
+            </a>
+          </div>
+        <div id="sponsorer" class="mt-10 flex flex-wrap justify-center gap-6">
+          <div class="flex h-20 w-40 items-center justify-center rounded-2xl border border-white/10 bg-white/5 p-4 shadow-[0_12px_24px_rgba(8,18,40,0.35)] transition hover:bg-white/10">
+            <img
+              src="https://wallpapers.com/images/hd/lenovo-logo-blue-background-5eusj88firqak72j-5eusj88firqak72j.jpg"
+              alt="Lenovo"
+              class="h-full w-full object-contain"
+              loading="lazy"
+            />
+          </div>
+          <div class="flex h-20 w-40 items-center justify-center rounded-2xl border border-white/10 bg-white/5 p-4 shadow-[0_12px_24px_rgba(8,18,40,0.35)] transition hover:bg-white/10">
+            <img
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR5b167HuOXql2HDZHamkzcYas962igQOzcqA&s"
+              alt="Samsung"
+              class="h-full w-full object-contain"
+              loading="lazy"
+            />
+          </div>
+          <div class="flex h-20 w-40 items-center justify-center rounded-2xl border border-white/10 bg-white/5 p-4 shadow-[0_12px_24px_rgba(8,18,40,0.35)] transition hover:bg-white/10">
+            <img
+              src="https://www.sthb.nl/wp-content/uploads/2016/02/Philips-Logo-HD.jpg"
+              alt="Philips"
+              class="h-full w-full object-contain"
+              loading="lazy"
+            />
+          </div>
+          <div class="flex h-20 w-40 items-center justify-center rounded-2xl border border-white/10 bg-white/5 p-4 shadow-[0_12px_24px_rgba(8,18,40,0.35)] transition hover:bg-white/10">
+            <img
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYtpuPO71nnzwUIVosVdrevGmHTUrgoiqLGA&s"
+              alt="Komplett.no"
+              class="h-full w-full object-contain"
+              loading="lazy"
+            />
+          </div>
+        </div>
+      </section>
+
+      <section id="tilbud" class="mt-20 px-6">
+        <div class="mx-auto max-w-6xl space-y-6 rounded-3xl border border-white/10 bg-white/5 p-8 text-center shadow-[0_24px_48px_rgba(6,14,35,0.45)]">
+          <div class="space-y-3">
+            <h2 class="text-3xl font-bold text-white">Andre tilbud</h2>
+            <p class="text-lg text-zinc-200">FjOlsenbanden tilbyr mer enn bare streaming!</p>
+          </div>
+          <div class="grid gap-6 text-left sm:grid-cols-2">
+            <div class="flex h-full flex-col gap-4 rounded-2xl border border-white/10 bg-[#101a33]/80 p-6 shadow-[0_16px_32px_rgba(6,14,35,0.45)]">
+              <div class="flex items-center gap-3">
+                <span class="grid h-12 w-12 place-content-center rounded-xl bg-gradient-to-br from-[#13A0F9] to-[#FF2F9C] text-2xl">🎤</span>
+                <h3 class="text-xl font-semibold text-white">Foredrag</h3>
+              </div>
+              <p class="text-sm leading-relaxed text-zinc-300">FjOlsen besøker skoler, idrettslag og e-sportklubber for å snakke om streaming, gaming-kultur og nettvett.</p>
+            </div>
+            <div class="flex h-full flex-col gap-4 rounded-2xl border border-white/10 bg-[#101a33]/80 p-6 shadow-[0_16px_32px_rgba(6,14,35,0.45)]">
+              <div class="flex items-center gap-3">
+                <span class="grid h-12 w-12 place-content-center rounded-xl bg-gradient-to-br from-[#13A0F9] to-[#FF2F9C] text-2xl">🕹️</span>
+                <h3 class="text-xl font-semibold text-white">Events</h3>
+              </div>
+              <p class="text-sm leading-relaxed text-zinc-300">Vi arrangerer gaming-konkurranser for bedrifter, skoler og klubber – både digitalt og fysisk.</p>
+            </div>
+            <div class="flex h-full flex-col gap-4 rounded-2xl border border-white/10 bg-[#101a33]/80 p-6 shadow-[0_16px_32px_rgba(6,14,35,0.45)]">
+              <div class="flex items-center gap-3">
+                <span class="grid h-12 w-12 place-content-center rounded-xl bg-gradient-to-br from-[#13A0F9] to-[#FF2F9C] text-2xl">🎁</span>
+                <h3 class="text-xl font-semibold text-white">Unboxing</h3>
+              </div>
+              <p class="text-sm leading-relaxed text-zinc-300">FjOlsen lager profesjonelle unboxing-videoer av dine produkter som kan brukes i deres markedsføring og deles med vårt community.</p>
+            </div>
+            <div class="flex h-full flex-col gap-4 rounded-2xl border border-white/10 bg-[#101a33]/80 p-6 shadow-[0_16px_32px_rgba(6,14,35,0.45)]">
+              <div class="flex items-center gap-3">
+                <span class="grid h-12 w-12 place-content-center rounded-xl bg-gradient-to-br from-[#13A0F9] to-[#FF2F9C] text-2xl">📡</span>
+                <h3 class="text-xl font-semibold text-white">Streamer for hire</h3>
+              </div>
+              <p class="text-sm leading-relaxed text-zinc-300">Ønsker du at FjOlsen skal streame på vegne av din merkevare? Han er tilgjengelig for co-streams, produktlanseringer og kampanjer – der ditt budskap blir formidlet på en autentisk og engasjerende måte til tusenvis av følgere.</p>
+            </div>
+            <div class="flex h-full flex-col gap-4 rounded-2xl border border-white/10 bg-[#101a33]/80 p-6 shadow-[0_16px_32px_rgba(6,14,35,0.45)] sm:col-span-2">
+              <div class="flex items-center gap-3">
+                <span class="grid h-12 w-12 place-content-center rounded-xl bg-gradient-to-br from-[#13A0F9] to-[#FF2F9C] text-2xl">🎓</span>
+                <h3 class="text-xl font-semibold text-white">Coaching</h3>
+              </div>
+              <p class="text-sm leading-relaxed text-zinc-300">I FjOlsenbanden finner du flere av Norges dyktigste Fortnite-spillere. Sammen tilbyr vi 1-til-1 coaching for barn og unge som ønsker å utvikle seg som spillere – med fokus på strategi, samarbeid, kommunikasjon og trygg nettkultur. Ta kontakt hvis du ønsker mer informasjon eller vil booke en økt.</p>
             </div>
           </div>
         </div>
-        <div class="mt-4 flex flex-wrap gap-3">
-          <a
-            href="https://www.twitch.tv/fjolsenbanden"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-sm transition hover:bg-white/15"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-twitch h-4 w-4 text-purple-400">
-              <path d="M21 2H3v16h5v4l4-4h5l4-4V2zm-10 9V7m5 4V7"></path>
-            </svg>
-            <span>Se på Twitch</span>
-          </a>
-          <a
-            href="https://youtube.com/@fjolsenbanden"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-sm transition hover:bg-white/15"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-youtube h-4 w-4 text-red-500">
-              <path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17"></path>
-              <path d="m10 15 5-3-5-3z"></path>
-            </svg>
-            <span>Se på YouTube</span>
-          </a>
-          <a
-            href="https://www.tiktok.com/@fjolsenbanden"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-sm transition hover:bg-white/15"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-smartphone h-4 w-4 text-pink-300">
-              <rect width="14" height="20" x="5" y="2" rx="2" ry="2"></rect>
-              <path d="M12 18h.01"></path>
-            </svg>
-            <span>Se på TikTok</span>
-          </a>
-          <a
-            href="https://www.facebook.com/fjolsenbanden"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-sm transition hover:bg-white/15"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-facebook h-4 w-4 text-blue-500">
-              <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
-            </svg>
-            <span>Facebook Gaming</span>
-          </a>
-        </div>
-</div>
-</div>
-</section>
-<section id="medlemskap" class="px-4 py-12" style="background:linear-gradient(160deg, rgba(34,48,103,0.92) 0%, rgba(10,24,62,0.9) 100%)">
-<div class="mx-auto max-w-7xl">
-<h2 class="mb-6 text-2xl font-bold" style="font-family:&quot;Luckiest Guy&quot;, cursive">Medlemskap</h2>
-<div class="grid gap-6 md:grid-cols-3">
-<div class="rounded-2xl border border-zinc-200 bg-white shadow-sm rounded-2xl border-white/10 backdrop-blur" style="background:rgba(9, 15, 47, 0.78)">
-<div class="p-6">
-<h3 class="text-lg font-semibold flex items-center gap-2 text-base">
-<span class="inline-block h-3 w-3 rounded-full" style="background:#223067">
-</span>Gratis</h3>
-</div>
-<div class="px-6 pb-6 space-y-3">
-<div class="text-3xl font-extrabold" style="color:#223067">0 kr</div>
-<ul class="space-y-2 text-sm text-zinc-100">
-<li class="flex items-center gap-2">
-<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield-check h-4 w-4">
-<path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z">
-</path>
-<path d="m9 12 2 2 4-4">
-</path>
-</svg>Discord &amp; streams</li>
-<li class="flex items-center gap-2">
-<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield-check h-4 w-4">
-<path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z">
-</path>
-<path d="m9 12 2 2 4-4">
-</path>
-</svg>Ukentlige events</li>
-<li class="flex items-center gap-2">
-<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield-check h-4 w-4">
-<path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z">
-</path>
-<path d="m9 12 2 2 4-4">
-</path>
-</svg>Foreldre‑verifisering</li>
-</ul>
-<button type="button" class="inline-flex items-center justify-center font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-60 bg-zinc-900 text-white hover:bg-zinc-800 focus-visible:ring-zinc-900 h-10 px-4 text-sm rounded-xl w-full rounded-full text-sm font-semibold text-white" style="background:#223067">Velg</button>
-</div>
-</div>
-<div class="rounded-2xl border border-zinc-200 bg-white shadow-sm rounded-2xl border-white/10 backdrop-blur" style="background:rgba(9, 15, 47, 0.78)">
-<div class="p-6">
-<h3 class="text-lg font-semibold flex items-center gap-2 text-base">
-<span class="inline-block h-3 w-3 rounded-full" style="background:#13A0F9">
-</span>Premie<span class="ml-2 rounded-full px-2 py-0.5 text-[10px]" style="background:#FF2F9C;color:black">MEST VALGT</span>
-</h3>
-</div>
-<div class="px-6 pb-6 space-y-3">
-<div class="text-3xl font-extrabold" style="color:#13A0F9">49 kr/mnd</div>
-<ul class="space-y-2 text-sm text-zinc-100">
-<li class="flex items-center gap-2">
-<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield-check h-4 w-4">
-<path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z">
-</path>
-<path d="m9 12 2 2 4-4">
-</path>
-</svg>Vinne premier</li>
-<li class="flex items-center gap-2">
-<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield-check h-4 w-4">
-<path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z">
-</path>
-<path d="m9 12 2 2 4-4">
-</path>
-</svg>Ekstra konkurranser</li>
-<li class="flex items-center gap-2">
-<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield-check h-4 w-4">
-<path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z">
-</path>
-<path d="m9 12 2 2 4-4">
-</path>
-</svg>Prioritert support</li>
-</ul>
-<button type="button" class="inline-flex items-center justify-center font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-60 bg-zinc-900 text-white hover:bg-zinc-800 focus-visible:ring-zinc-900 h-10 px-4 text-sm rounded-xl w-full rounded-full text-sm font-semibold text-white" style="background:#13A0F9">Velg</button>
-</div>
-</div>
-<div class="rounded-2xl border border-zinc-200 bg-white shadow-sm rounded-2xl border-white/10 backdrop-blur" style="background:rgba(9, 15, 47, 0.78)">
-<div class="p-6">
-<h3 class="text-lg font-semibold flex items-center gap-2 text-base">
-<span class="inline-block h-3 w-3 rounded-full" style="background:#FF2F9C">
-</span>Sponsor</h3>
-</div>
-<div class="px-6 pb-6 space-y-3">
-<div class="text-3xl font-extrabold" style="color:#FF2F9C">299 kr/mnd</div>
-<ul class="space-y-2 text-sm text-zinc-100">
-<li class="flex items-center gap-2">
-<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield-check h-4 w-4">
-<path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z">
-</path>
-<path d="m9 12 2 2 4-4">
-</path>
-</svg>Synlighet på nettside/stream</li>
-<li class="flex items-center gap-2">
-<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield-check h-4 w-4">
-<path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z">
-</path>
-<path d="m9 12 2 2 4-4">
-</path>
-</svg>Logo‑vegg</li>
-<li class="flex items-center gap-2">
-<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield-check h-4 w-4">
-<path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z">
-</path>
-<path d="m9 12 2 2 4-4">
-</path>
-</svg>VIP‑events</li>
-</ul>
-<button type="button" class="inline-flex items-center justify-center font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-60 bg-zinc-900 text-white hover:bg-zinc-800 focus-visible:ring-zinc-900 h-10 px-4 text-sm rounded-xl w-full rounded-full text-sm font-semibold text-white" style="background:#FF2F9C">Velg</button>
-</div>
-</div>
-</div>
-</div>
-</section>
-<section id="premier" class="px-4 py-12" style="background:linear-gradient(160deg, rgba(255,47,156,0.35) 0%, rgba(48,9,56,0.92) 100%)">
-<div class="mx-auto grid max-w-7xl items-center gap-8 lg:grid-cols-2">
-<div>
-<h2 class="mb-2 text-2xl font-bold" style="font-family:&quot;Luckiest Guy&quot;, cursive">Premier &amp; trekninger</h2>
-<ul class="space-y-2 text-sm text-zinc-100">
-<li class="flex items-center gap-2">
-<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trophy h-4 w-4">
-<path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6">
-</path>
-<path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18">
-</path>
-<path d="M4 22h16">
-</path>
-<path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22">
-</path>
-<path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22">
-</path>
-<path d="M18 2H6v7a6 6 0 0 0 12 0V2Z">
-</path>
-</svg>Ukentlig quiz + trekning</li>
-<li class="flex items-center gap-2">
-<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trophy h-4 w-4">
-<path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6">
-</path>
-<path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18">
-</path>
-<path d="M4 22h16">
-</path>
-<path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22">
-</path>
-<path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22">
-</path>
-<path d="M18 2H6v7a6 6 0 0 0 12 0V2Z">
-</path>
-</svg>Månedlig hovedpremie</li>
-<li class="flex items-center gap-2">
-<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trophy h-4 w-4">
-<path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6">
-</path>
-<path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18">
-</path>
-<path d="M4 22h16">
-</path>
-<path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22">
-</path>
-<path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22">
-</path>
-<path d="M18 2H6v7a6 6 0 0 0 12 0V2Z">
-</path>
-</svg>Sesongfinale med ekstra gevinster</li>
-</ul>
-</div>
-<div class="rounded-2xl border border-zinc-200 bg-white shadow-sm rounded-2xl border-white/10 backdrop-blur" style="background:rgba(9, 15, 47, 0.78)">
-<div class="px-6 pb-6 grid gap-4 p-6 sm:grid-cols-3">
-<div class="relative overflow-hidden rounded-2xl border border-white/15 bg-[#090f2f]/80 p-5 text-left shadow-[0_18px_40px_rgba(9,17,58,0.35)]">
-<div class="absolute right-4 top-4 h-10 w-10 rounded-full bg-white/5" aria-hidden="true">
-</div>
-<div class="absolute -right-6 -top-6 h-20 w-20 rounded-full" style="background:radial-gradient(circle, #FF2F9C55 0%, transparent 65%)">
-</div>
-<div class="relative rounded-xl bg-gradient-to-br from-white/15 via-white/5 to-white/0 p-4">
-<img src="/assets/prize-legion-headset.svg" alt="Lenovo Legion premie" class="mx-auto h-24 w-auto"/>
-</div>
-<div class="mt-4 text-xs uppercase tracking-[0.28em] text-white/60">Partner</div>
-<div class="mt-1 text-lg font-semibold text-white">Lenovo Legion</div>
-<div class="mt-1 text-sm text-white/80">Gaming headset</div>
-<div class="mt-4 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs font-semibold text-white">
-<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sparkles h-4 w-4">
-<path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z">
-</path>
-<path d="M20 3v4">
-</path>
-<path d="M22 5h-4">
-</path>
-<path d="M4 17v2">
-</path>
-<path d="M5 18H3">
-</path>
-</svg>Verdi 1 299,-</div>
-</div>
-<div class="relative overflow-hidden rounded-2xl border border-white/15 bg-[#090f2f]/80 p-5 text-left shadow-[0_18px_40px_rgba(9,17,58,0.35)]">
-<div class="absolute right-4 top-4 h-10 w-10 rounded-full bg-white/5" aria-hidden="true">
-</div>
-<div class="absolute -right-6 -top-6 h-20 w-20 rounded-full" style="background:radial-gradient(circle, #FF2F9C55 0%, transparent 65%)">
-</div>
-<div class="relative rounded-xl bg-gradient-to-br from-white/15 via-white/5 to-white/0 p-4">
-<img src="/assets/prize-odyssey-monitor.svg" alt="Samsung Odyssey premie" class="mx-auto h-24 w-auto"/>
-</div>
-<div class="mt-4 text-xs uppercase tracking-[0.28em] text-white/60">Partner</div>
-<div class="mt-1 text-lg font-semibold text-white">Samsung Odyssey</div>
-<div class="mt-1 text-sm text-white/80">27&quot; QHD skjerm</div>
-<div class="mt-4 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs font-semibold text-white">
-<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sparkles h-4 w-4">
-<path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z">
-</path>
-<path d="M20 3v4">
-</path>
-<path d="M22 5h-4">
-</path>
-<path d="M4 17v2">
-</path>
-<path d="M5 18H3">
-</path>
-</svg>Verdi 4 990,-</div>
-</div>
-<div class="relative overflow-hidden rounded-2xl border border-white/15 bg-[#090f2f]/80 p-5 text-left shadow-[0_18px_40px_rgba(9,17,58,0.35)]">
-<div class="absolute right-4 top-4 h-10 w-10 rounded-full bg-white/5" aria-hidden="true">
-</div>
-<div class="absolute -right-6 -top-6 h-20 w-20 rounded-full" style="background:radial-gradient(circle, #FF2F9C55 0%, transparent 65%)">
-</div>
-<div class="relative rounded-xl bg-gradient-to-br from-white/15 via-white/5 to-white/0 p-4">
-<img src="/assets/prize-hue-kit.svg" alt="Philips Hue premie" class="mx-auto h-24 w-auto"/>
-</div>
-<div class="mt-4 text-xs uppercase tracking-[0.28em] text-white/60">Partner</div>
-<div class="mt-1 text-lg font-semibold text-white">Philips Hue</div>
-<div class="mt-1 text-sm text-white/80">Smart startpakke</div>
-<div class="mt-4 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs font-semibold text-white">
-<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sparkles h-4 w-4">
-<path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z">
-</path>
-<path d="M20 3v4">
-</path>
-<path d="M22 5h-4">
-</path>
-<path d="M4 17v2">
-</path>
-<path d="M5 18H3">
-</path>
-</svg>Verdi 1 599,-</div>
-</div>
-</div>
-</div>
-</div>
-</section>
-<section id="foreldre" class="px-4 py-12" style="background:linear-gradient(160deg, rgba(19,160,249,0.18) 0%, rgba(5,22,58,0.88) 100%)">
-<div class="mx-auto grid max-w-7xl items-start gap-8 lg:grid-cols-2">
-<div class="rounded-2xl border border-zinc-200 bg-white shadow-sm rounded-2xl border-white/10 backdrop-blur" style="background:rgba(9, 15, 47, 0.78)">
-<div class="p-6">
-<h3 class="text-lg font-semibold flex items-center gap-2">
-<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield-check h-5 w-5">
-<path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z">
-</path>
-<path d="m9 12 2 2 4-4">
-</path>
-</svg> Foreldre‑innmelding</h3>
-</div>
-<div class="px-6 pb-6 space-y-3 text-sm text-white/90">
-<p>Forelder verifiserer seg trygt med Vipps. Vi henter navn og fødselsdato automatisk. Legg inn barnets info – ferdig.</p>
-<div class="rounded-2xl border border-white/10 bg-[#1a1f33] p-4 text-sm text-white/90 shadow-[0_12px_30px_rgba(9,15,47,0.35)]">
-<div class="flex items-center justify-between gap-3">
-<div class="flex items-center gap-2">
-<svg aria-hidden="true" viewBox="0 0 32 32" class="h-6 w-6" role="img" focusable="false">
-<circle cx="16" cy="16" r="16" fill="#FF5A00">
-</circle>
-<path d="M10.4 15.1c-.44-.95.1-2.1 1.13-2.3l.16-.03c.78-.15 1.54.28 1.82 1.02l1.62 4.08 4.18-6.22c.46-.68 1.38-.88 2.08-.46.76.46.99 1.46.51 2.2l-5.4 7.96c-.67.99-2.15.88-2.66-.21l-2.44-5.05Z" fill="white">
-</path>
-</svg>
-<div class="text-xs uppercase tracking-[0.24em] text-white/60">Vipps-modul</div>
-</div>
-<span class="rounded-full bg-white/10 px-3 py-1 text-xs font-semibold text-white">Klar</span>
-</div>
-<div class="mt-3 space-y-2 text-xs text-white/70">
-<p class="flex items-center gap-2">
-<span class="grid h-6 w-6 place-items-center rounded-full bg-white/10 text-white">1</span>Forelder velger «Logg inn med Vipps».</p>
-<p class="flex items-center gap-2">
-<span class="grid h-6 w-6 place-items-center rounded-full bg-white/10 text-white">2</span>Vipps bekrefter identiteten automatisk.</p>
-<p class="flex items-center gap-2">
-<span class="grid h-6 w-6 place-items-center rounded-full bg-white/10 text-white">3</span>Barnets profil er klar for premier og turneringer.</p>
-</div>
-</div>
-<div class="flex flex-wrap gap-3">
-<button type="button" class="inline-flex items-center justify-center font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-60 bg-zinc-900 text-white hover:bg-zinc-800 focus-visible:ring-zinc-900 h-10 px-4 text-sm rounded-xl group flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold text-white shadow-[0_14px_34px_rgba(255,90,0,0.45)] transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/60 " aria-label="Logg inn med Vipps" style="background:#FF5A00;font-family:&quot;Inter&quot;, &quot;Segoe UI&quot;, system-ui, -apple-system, sans-serif">
-<svg aria-hidden="true" viewBox="0 0 72 24" class="h-4" fill="currentColor" role="img" focusable="false">
-<path d="M7.64 18.22c-3.55 0-6.16-2.52-6.16-6.2 0-3.64 2.61-6.18 6.16-6.18 2.02 0 3.41.84 4.28 1.98l-2.12 1.6c-.48-.62-1.17-1.04-2.16-1.04-1.68 0-2.91 1.36-2.91 3.64 0 2.3 1.23 3.66 2.91 3.66.99 0 1.7-.43 2.18-1.07l2.12 1.6c-.89 1.16-2.3 2.01-4.32 2.01Zm8.77-.18h-2.86V1.78h2.86v16.26Zm8.33.23c-3.48 0-5.91-2.61-5.91-6.22 0-3.61 2.43-6.22 5.91-6.22 3.47 0 5.89 2.61 5.89 6.22 0 3.61-2.42 6.22-5.89 6.22Zm0-2.55c1.77 0 3.03-1.43 3.03-3.67 0-2.24-1.26-3.67-3.03-3.67-1.78 0-3.05 1.43-3.05 3.67 0 2.24 1.27 3.67 3.05 3.67Zm11.68 2.55c-3.47 0-5.91-2.61-5.91-6.22 0-3.61 2.44-6.22 5.91-6.22 3.48 0 5.9 2.61 5.9 6.22 0 3.61-2.42 6.22-5.9 6.22Zm0-2.55c1.78 0 3.04-1.43 3.04-3.67 0-2.24-1.26-3.67-3.04-3.67-1.77 0-3.04 1.43-3.04 3.67 0 2.24 1.27 3.67 3.04 3.67Zm12.14 2.3c-2.18 0-3.9-.75-5.13-2.07l1.73-1.95c.93.93 2.1 1.43 3.36 1.43 1.12 0 1.78-.41 1.78-1.07 0-.66-.51-.91-2.18-1.29-2.62-.6-4.5-1.23-4.5-3.67 0-2.18 1.84-3.57 4.53-3.57 2 0 3.53.63 4.73 1.78l-1.7 1.92c-.95-.82-2-.1-3.07-.1-1.01 0-1.56.39-1.56.98 0 .68.55.93 2.2 1.31 2.61.61 4.48 1.3 4.48 3.65 0 2.35-1.91 3.65-4.67 3.65Zm8.52-.1c-1.5 0-2.96-.52-4.02-1.41l1.17-2.26c.87.7 1.88 1.07 2.91 1.07 1.04 0 1.68-.39 1.68-1.14 0-.72-.48-1.07-1.96-1.47-2.52-.64-3.59-1.6-3.59-3.42 0-2.04 1.63-3.42 3.99-3.42 1.45 0 2.67.46 3.65 1.21l-1.12 2.26c-.81-.6-1.62-.93-2.5-.93-.99 0-1.58.43-1.58 1.07 0 .7.5 1.01 2 1.41 2.38.62 3.54 1.56 3.54 3.47 0 2.08-1.7 3.56-4.17 3.56Z">
-</path>
-</svg>
-<span class="tracking-wide">Logg inn med Vipps</span>
-</button>
-<button type="button" class="inline-flex items-center justify-center font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-60 border border-zinc-200 bg-white text-zinc-900 hover:bg-zinc-50 focus-visible:ring-zinc-200 h-10 px-4 text-sm rounded-xl rounded-full border-white/30 text-white">Les personvern</button>
-</div>
-</div>
-</div>
-<div class="rounded-2xl border border-zinc-200 bg-white shadow-sm rounded-2xl border-white/10 backdrop-blur" style="background:rgba(9, 15, 47, 0.78)">
-<div class="p-6">
-<h3 class="text-lg font-semibold flex items-center gap-2">
-<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-users h-5 w-5">
-<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2">
-</path>
-<circle cx="9" cy="7" r="4">
-</circle>
-<path d="M22 21v-2a4 4 0 0 0-3-3.87">
-</path>
-<path d="M16 3.13a4 4 0 0 1 0 7.75">
-</path>
-</svg> Community</h3>
-</div>
-<div class="px-6 pb-6 grid grid-cols-3 gap-4 text-center">
-<div class="rounded-xl border border-white/10 bg-white/10 p-4 text-center text-white">
-<div class="text-2xl font-extrabold" style="color:#13A0F9">3.2k</div>
-<div class="text-xs text-zinc-100">Twitch</div>
-</div>
-<div class="rounded-xl border border-white/10 bg-white/10 p-4 text-center text-white">
-<div class="text-2xl font-extrabold" style="color:#13A0F9">4.2k</div>
-<div class="text-xs text-zinc-100">YouTube</div>
-</div>
-<div class="rounded-xl border border-white/10 bg-white/10 p-4 text-center text-white">
-<div class="text-2xl font-extrabold" style="color:#13A0F9">2.5k</div>
-<div class="text-xs text-zinc-100">Discord</div>
-</div>
-</div>
-</div>
-</div>
-</section>
-</main>
-<footer class="border-t border-white/10" style="background:#0E1A42">
-<div class="mx-auto grid max-w-7xl gap-6 px-4 py-8 text-sm text-white/80 md:grid-cols-3">
-<div>
-<div class="mb-2 font-semibold text-white">Fjolsenbanden</div>
-<p>Trygge, barnevennlige streams og aktiviteter. Vipps‑verifisering for foreldre.</p>
-</div>
-<div>
-<div class="mb-2 font-semibold text-white">Lenker</div>
-<ul class="space-y-2">
-<li>
-<a href="#live" class="hover:underline">Live</a>
-</li>
-<li>
-<a href="#medlemskap" class="hover:underline">Medlemskap</a>
-</li>
-<li>
-<a href="#premier" class="hover:underline">Premier</a>
-</li>
-<li>
-<a href="#foreldre" class="hover:underline">Foreldre</a>
-</li>
-</ul>
-</div>
-<div>
-<div class="mb-2 font-semibold text-white">Kontakt</div>
-<p>partner@fjolsenbanden.no</p>
-</div>
-</div>
-<div class="pb-8 text-center text-xs text-white/50">© 2025 Fjolsenbanden</div>
-</footer>
-    <script>
-      (function () {
-        var overlay = document.querySelector('[data-preview-overlay]');
-        var frame = document.querySelector('[data-preview-frame]');
-        var timer = document.querySelector('[data-preview-timer]');
-        var unmuteButton = document.querySelector('[data-video-unmute]');
+      </section>
 
-        if (!overlay || !frame || !timer || !unmuteButton) {
-          return;
+      <section id="kontakt" class="mt-20 px-6">
+        <div class="mx-auto max-w-5xl space-y-6 rounded-3xl border border-white/10 bg-[#161f33]/90 p-8 text-center shadow-2xl">
+          <h2 class="text-3xl font-bold">Kontakt oss</h2>
+            <p class="text-zinc-300">
+              Har du spørsmål om medlemskap, samarbeid eller events? Send oss en melding så kommer vi tilbake til deg.
+            </p>
+            <form id="contact-form" class="grid gap-4 text-left md:grid-cols-2">
+              <div>
+                <label class="mb-1 block text-sm font-semibold text-zinc-200" for="contact-name">Navn</label>
+                <input
+                  id="contact-name"
+                  name="name"
+                  type="text"
+                  required
+                  class="w-full rounded-xl border border-white/15 bg-white/5 px-4 py-3 text-sm text-white placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-[#13A0F9]"
+                />
+              </div>
+              <div>
+                <label class="mb-1 block text-sm font-semibold text-zinc-200" for="contact-email">E-post</label>
+                <input
+                  id="contact-email"
+                  name="email"
+                  type="email"
+                  required
+                  class="w-full rounded-xl border border-white/15 bg-white/5 px-4 py-3 text-sm text-white placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-[#13A0F9]"
+                />
+              </div>
+              <div class="md:col-span-2">
+                <label class="mb-1 block text-sm font-semibold text-zinc-200" for="contact-message">Melding</label>
+                <textarea
+                  id="contact-message"
+                  name="message"
+                  rows="4"
+                  required
+                  class="w-full rounded-xl border border-white/15 bg-white/5 px-4 py-3 text-sm text-white placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-[#13A0F9]"
+                ></textarea>
+              </div>
+              <div class="md:col-span-2 flex flex-col gap-2 text-sm text-zinc-400 md:flex-row md:items-center md:justify-between">
+                <span>Vi svarer så snart vi kan, som regel innen 1–2 virkedager.</span>
+                <button
+                  type="submit"
+                  class="rounded-full bg-gradient-to-r from-[#13A0F9] to-[#FF2F9C] px-6 py-3 font-semibold text-white shadow-[0_16px_28px_rgba(19,160,249,0.35)] transition hover:from-[#0d8bd6] hover:to-[#e12585]"
+                >
+                  Send melding
+                </button>
+              </div>
+            </form>
+          </div>
+        </section>
+
+        </main>
+
+        <footer class="mt-20 border-t border-white/10 py-8 text-center text-sm text-zinc-500">
+        <div class="flex flex-col items-center justify-center gap-2 text-sm md:flex-row">
+          <span>© <span id="current-year"></span> Fjolsenbanden. Alle rettigheter reservert.</span>
+          <a href="/admin" class="font-medium text-zinc-300 transition hover:text-white">Admin</a>
+        </div>
+      </footer>
+
+      <div class="fixed inset-x-0 bottom-0 z-40 border-t border-white/10 bg-[#080f2a]/95 px-4 py-3 backdrop-blur">
+        <div class="mx-auto flex max-w-5xl flex-col items-center justify-between gap-3 text-center text-sm text-zinc-200 sm:flex-row sm:text-left">
+          <span class="font-medium text-white">Klar for å bli med i FjOlsenbanden?</span>
+          <button
+            type="button"
+            data-open-registration
+            class="w-full rounded-full bg-gradient-to-r from-[#13A0F9] to-[#FF2F9C] px-8 py-3 font-semibold text-white shadow-[0_16px_32px_rgba(19,160,249,0.35)] transition hover:from-[#0d8bd6] hover:to-[#e12585] sm:w-auto"
+          >
+            Bli medlem
+          </button>
+        </div>
+      </div>
+
+      <div id="registration-modal" class="fixed inset-0 z-[100] hidden flex items-center justify-center px-4 py-10">
+        <button
+          type="button"
+          id="registration-overlay"
+          data-close-registration
+          aria-label="Lukk registrering"
+          class="absolute inset-0 h-full w-full bg-black/70"
+        ></button>
+        <div class="relative z-[101] w-full max-w-2xl overflow-hidden rounded-3xl border border-white/10 bg-[#0d1733] shadow-[0_32px_80px_rgba(4,8,20,0.7)]">
+          <div class="flex items-start justify-between gap-4 border-b border-white/10 bg-white/5 px-6 py-5">
+            <div>
+              <p class="text-xs font-semibold uppercase tracking-[0.2em] text-[#13A0F9]">Medlemsregistrering</p>
+              <h3 class="mt-1 text-2xl font-bold text-white">
+                Bli med i FjOlsenbanden<span id="registration-tier" class="mt-1 block text-sm font-semibold text-[#13A0F9] sm:ml-2 sm:inline"></span>
+              </h3>
+              <p class="mt-2 max-w-xl text-sm text-zinc-300">
+                Følg Vipps-flyten for å aktivere medlemskapet ditt. Vi bruker Vipps Login til å hente nødvendige opplysninger og sørger for trygg foreldre-godkjenning der det trengs.
+              </p>
+            </div>
+            <button
+              type="button"
+              data-close-registration
+              class="rounded-full border border-white/20 p-2 text-zinc-300 transition hover:bg-white/10 hover:text-white"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" x2="6" y1="6" y2="18"></line>
+                <line x1="6" x2="18" y1="6" y2="18"></line>
+              </svg>
+            </button>
+          </div>
+
+          <div class="space-y-6 px-6 py-6 md:px-8">
+            <div class="space-y-4 rounded-3xl border border-white/15 bg-[#131f3f]/80 p-5 shadow-inner">
+              <div class="flex items-center gap-3">
+                <span class="grid h-10 w-10 place-content-center rounded-2xl bg-gradient-to-br from-[#13A0F9] to-[#FF2F9C] text-white">1</span>
+                <div>
+                  <p class="text-sm font-semibold text-white">Vipps Login først</p>
+                  <p class="text-xs text-zinc-300">Autentiser medlemmet og hent navn, fødselsdato, telefon og e-post sikkert via Vipps Login API.</p>
+                </div>
+              </div>
+
+              <button
+                id="vipps-login"
+                type="button"
+                class="flex w-full items-center justify-center gap-2 rounded-full bg-[#FF5B24] px-6 py-3 font-semibold text-white shadow-[0_16px_34px_rgba(255,91,36,0.35)] transition hover:bg-[#ff6f40]"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4">
+                  <rect width="18" height="11" x="3" y="11" rx="2" ry="2"></rect>
+                  <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                </svg>
+                Logg inn med Vipps
+              </button>
+
+              <form id="vipps-form" class="hidden grid gap-4 md:grid-cols-2">
+                <div>
+                  <label class="mb-1 block text-xs font-semibold uppercase tracking-wide text-zinc-300" for="vipps-name">Navn</label>
+                  <input
+                    id="vipps-name"
+                    type="text"
+                    class="w-full rounded-xl border border-white/15 bg-white/5 px-4 py-2 text-sm text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-[#13A0F9]"
+                    required
+                  />
+                </div>
+                <div>
+                  <label class="mb-1 block text-xs font-semibold uppercase tracking-wide text-zinc-300" for="vipps-dob">Fødselsdato</label>
+                  <input
+                    id="vipps-dob"
+                    type="date"
+                    class="w-full rounded-xl border border-white/15 bg-white/5 px-4 py-2 text-sm text-white focus:outline-none focus:ring-2 focus:ring-[#13A0F9]"
+                    required
+                  />
+                </div>
+                <div>
+                  <label class="mb-1 block text-xs font-semibold uppercase tracking-wide text-zinc-300" for="vipps-phone">Telefon</label>
+                  <input
+                    id="vipps-phone"
+                    type="tel"
+                    class="w-full rounded-xl border border-white/15 bg-white/5 px-4 py-2 text-sm text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-[#13A0F9]"
+                    required
+                  />
+                </div>
+                <div>
+                  <label class="mb-1 block text-xs font-semibold uppercase tracking-wide text-zinc-300" for="vipps-email">E-post</label>
+                  <input
+                    id="vipps-email"
+                    type="email"
+                    class="w-full rounded-xl border border-white/15 bg-white/5 px-4 py-2 text-sm text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-[#13A0F9]"
+                    required
+                  />
+                </div>
+                <div class="md:col-span-2 flex flex-col gap-3 rounded-2xl bg-white/5 p-4 text-sm text-zinc-200">
+                  <div class="flex items-center gap-2 text-xs uppercase tracking-wide text-zinc-400">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-[#13A0F9]">
+                      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                      <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                    Data mottatt fra Vipps
+                  </div>
+                  <p>Når du bekrefter opplysningene, bruker vi fødselsdatoen til å styre riktig løp for foreldre-godkjenning eller betaling.</p>
+                </div>
+                <div class="md:col-span-2 flex flex-col gap-2 text-sm text-zinc-300 md:flex-row md:items-center md:justify-between">
+                  <span id="vipps-age-label">Bekreft og gå videre til neste steg.</span>
+                  <button
+                    type="submit"
+                    class="flex items-center gap-2 rounded-full bg-gradient-to-r from-[#13A0F9] to-[#FF2F9C] px-6 py-3 font-semibold text-white shadow-[0_16px_32px_rgba(19,160,249,0.35)] transition hover:from-[#0d8bd6] hover:to-[#e12585]"
+                  >
+                    Fortsett
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4">
+                      <path d="m5 12 7-7 7 7"></path>
+                      <path d="M12 19V5"></path>
+                    </svg>
+                  </button>
+                </div>
+              </form>
+            </div>
+
+            <div id="guardian-section" class="hidden space-y-4 rounded-3xl border border-white/15 bg-[#101b35]/80 p-5">
+              <div class="flex items-center gap-3">
+                <span class="grid h-10 w-10 place-content-center rounded-2xl bg-gradient-to-br from-[#FF2F9C] to-[#13A0F9] text-white">2</span>
+                <div>
+                  <p class="text-sm font-semibold text-white">Foreldre-godkjenning i Vipps</p>
+                  <p class="text-xs text-zinc-300">Spilleren er under 18 år. Send Vipps-forespørselen til foresatte før registreringen fullføres.</p>
+                </div>
+              </div>
+              <form id="guardian-form" class="space-y-4">
+                <div>
+                  <label class="mb-1 block text-xs font-semibold uppercase tracking-wide text-zinc-300" for="guardian-phone">Forelder/verge sitt Vipps-nummer</label>
+                  <div class="flex flex-col gap-3 sm:flex-row">
+                    <input
+                      id="guardian-phone"
+                      type="tel"
+                      placeholder="+47 400 00 000"
+                      class="flex-1 rounded-xl border border-white/15 bg-white/5 px-4 py-2 text-sm text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-[#13A0F9]"
+                      required
+                    />
+                    <button
+                      type="submit"
+                      class="flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#13A0F9] to-[#FF2F9C] px-6 py-3 font-semibold text-white shadow-[0_16px_32px_rgba(19,160,249,0.35)] transition hover:from-[#0d8bd6] hover:to-[#e12585]"
+                    >
+                      Send forespørsel
+                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4">
+                        <path d="M22 12h-4"></path>
+                        <path d="M18 12a6 6 0 1 1-6-6v0a6 6 0 0 1 6 6Z"></path>
+                        <path d="m9 10 2 2-2 2"></path>
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+                <p class="text-xs text-zinc-400">Systemet oppretter en Vipps Payment-forespørsel til foresatte. Når betalingen eller samtykket bekreftes via callback-URLen, låses medlemskapet opp.</p>
+              </form>
+              <div id="guardian-success" class="hidden space-y-3 rounded-2xl bg-white/5 p-4 text-sm text-zinc-200">
+                <div class="flex items-center gap-2 text-[#4ade80]">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                  </svg>
+                  Forespørsel sendt til <span id="guardian-number" class="font-semibold text-white"></span>
+                </div>
+                <p>Når foresatte godkjenner i Vipps, aktiveres medlemskapet automatisk. Gi beskjed hvis du ikke får svar i løpet av få minutter.</p>
+              </div>
+            </div>
+
+            <div id="checkout-section" class="hidden space-y-4 rounded-3xl border border-white/15 bg-[#101b35]/80 p-5">
+              <div class="flex items-center gap-3">
+                <span class="grid h-10 w-10 place-content-center rounded-2xl bg-gradient-to-br from-[#FF2F9C] to-[#13A0F9] text-white">2</span>
+                <div>
+                  <p class="text-sm font-semibold text-white">Vipps Checkout</p>
+                  <p class="text-xs text-zinc-300">Voksne medlemmer går direkte til betaling. Vipps bekrefter beløpet og returnerer status til backend.</p>
+                </div>
+              </div>
+              <button
+                id="checkout-button"
+                type="button"
+                class="flex w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#13A0F9] to-[#FF2F9C] px-6 py-3 font-semibold text-white shadow-[0_18px_36px_rgba(19,160,249,0.35)] transition hover:from-[#0d8bd6] hover:to-[#e12585]"
+              >
+                Start betaling i Vipps
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4">
+                  <rect width="20" height="14" x="2" y="5" rx="2"></rect>
+                  <line x1="2" x2="22" y1="10" y2="10"></line>
+                </svg>
+              </button>
+              <div id="checkout-success" class="hidden space-y-3 rounded-2xl bg-white/5 p-4 text-sm text-zinc-200">
+                <div class="flex items-center gap-2 text-[#4ade80]">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                  </svg>
+                  Vipps-betaling bekreftet
+                </div>
+                <p>Kvitteringen er sendt til backend via callback. Du er klar til å fullføre registreringen og få tilgang til medlemsfordelene.</p>
+              </div>
+            </div>
+
+            <div id="completion-section" class="hidden space-y-3 rounded-3xl border border-[#13A0F9]/40 bg-[#0f1a32]/90 p-5">
+              <div class="flex items-center gap-3">
+                <span class="grid h-10 w-10 place-content-center rounded-2xl bg-gradient-to-br from-[#13A0F9] to-[#FF2F9C] text-white">3</span>
+                <div>
+                  <p class="text-sm font-semibold text-white">Fullfør registrering</p>
+                  <p class="text-xs text-zinc-300">Send inn skjemaet slik at vi kan lagre medlemskapet ditt med riktig alder og kontaktinformasjon.</p>
+                </div>
+              </div>
+              <a
+                id="completion-link"
+                href="https://docs.google.com/forms/d/e/1FAIpQLSc9pIGhLF4impGUQhxBMZUbfp7mQOaraYxEL7VrsTRkbD9EgA/viewform"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="flex w-full items-center justify-center gap-2 rounded-full bg-white/10 px-6 py-3 font-semibold text-white transition hover:bg-white/20"
+              >
+                Åpne registreringsskjema
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4">
+                  <path d="M5 12h14"></path>
+                  <path d="m12 5 7 7-7 7"></path>
+                </svg>
+              </a>
+              <p class="text-xs text-zinc-400">
+                Skjemaet fanger opp samtykke (for foresatte) eller kvittering fra Vipps Checkout. Husk å lagre Vipps-ID (<span id="vipps-phone-placeholder"></span>) og status i databasen.
+              </p>
+            </div>
+
+            <div class="rounded-3xl border border-white/10 bg-white/5 p-5 text-xs text-zinc-300">
+              <p class="mb-2 font-semibold text-white">Teknisk oversikt</p>
+              <ul class="list-disc space-y-1 pl-4">
+                <li>Vipps Login callback: <code class="rounded bg-black/40 px-2 py-1">GET /auth/callback</code></li>
+                <li>Start betaling eller forespørsel: <code class="rounded bg-black/40 px-2 py-1">POST /payment/initiate</code></li>
+                <li>Håndter bekreftelse fra Vipps: <code class="rounded bg-black/40 px-2 py-1">POST /payment/confirm</code></li>
+                <li>Lagre felt i databasen: <code class="rounded bg-black/40 px-2 py-1">user_id, dob, parent_phone, vipps_status</code></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+      const toggle = document.getElementById("nav-toggle");
+      const menu = document.getElementById("nav-menu");
+      if (toggle && menu) {
+        toggle.addEventListener("click", () => {
+          menu.classList.toggle("hidden");
+        });
+      }
+
+      const previewFrame = document.querySelector("[data-preview-frame]");
+      const previewOverlay = document.querySelector("[data-preview-overlay]");
+      const previewTimer = document.querySelector("[data-preview-timer]");
+      const unmuteButton = document.querySelector("[data-video-unmute]");
+      let countdown = 60;
+
+      if (previewTimer) {
+        setInterval(() => {
+          countdown = Math.max(countdown - 1, 0);
+          previewTimer.textContent = String(countdown);
+        }, 1000);
+      }
+
+      if (unmuteButton && previewOverlay && previewFrame) {
+        unmuteButton.addEventListener("click", () => {
+          previewOverlay.classList.add("hidden");
+          const url = new URL(previewFrame.src);
+          url.searchParams.set("muted", "false");
+          previewFrame.src = url.toString();
+        });
+      }
+
+      const contactForm = document.getElementById("contact-form");
+      if (contactForm) {
+        contactForm.addEventListener("submit", (event) => {
+          event.preventDefault();
+          const formData = new FormData(contactForm);
+          const name = (formData.get("name") || "").toString().trim();
+          const email = (formData.get("email") || "").toString().trim();
+          const message = (formData.get("message") || "").toString().trim();
+          const subject = encodeURIComponent("Kontakt via fjolsenbanden.no");
+          const body = encodeURIComponent(`${message}\n\nNavn: ${name || "Ukjent"}\nE-post: ${email || "Ikke oppgitt"}`);
+          window.location.href = `mailto:kontakt@fjolsenbanden.no?subject=${subject}&body=${body}`;
+          contactForm.reset();
+        });
+      }
+
+      const registrationForms = {
+        under18: "https://docs.google.com/forms/d/e/1FAIpQLScqgnf92CTsQ2TLg8viDBMllbUUGcDPW8uG48yXSYFVYGdRSw/viewform",
+        over18: "https://docs.google.com/forms/d/e/1FAIpQLSc9pIGhLF4impGUQhxBMZUbfp7mQOaraYxEL7VrsTRkbD9EgA/viewform",
+      };
+
+      const vippsDefaults = {
+        name: "FjOlsen Fan",
+        dateOfBirth: "2005-05-17",
+        phone: "+47 987 65 432",
+        email: "fjolsenfan@example.com",
+      };
+
+      const registrationModal = document.getElementById("registration-modal");
+      const registrationOverlay = document.getElementById("registration-overlay");
+      const openRegistrationButtons = document.querySelectorAll("[data-open-registration]");
+      const closeRegistrationButtons = document.querySelectorAll("[data-close-registration]");
+      const registrationTier = document.getElementById("registration-tier");
+      const vippsLoginButton = document.getElementById("vipps-login");
+      const vippsForm = document.getElementById("vipps-form");
+      const vippsNameInput = document.getElementById("vipps-name");
+      const vippsDobInput = document.getElementById("vipps-dob");
+      const vippsPhoneInput = document.getElementById("vipps-phone");
+      const vippsEmailInput = document.getElementById("vipps-email");
+      const vippsAgeLabel = document.getElementById("vipps-age-label");
+      const guardianSection = document.getElementById("guardian-section");
+      const guardianForm = document.getElementById("guardian-form");
+      const guardianInput = document.getElementById("guardian-phone");
+      const guardianSuccess = document.getElementById("guardian-success");
+      const guardianNumber = document.getElementById("guardian-number");
+      const checkoutSection = document.getElementById("checkout-section");
+      const checkoutButton = document.getElementById("checkout-button");
+      const checkoutSuccess = document.getElementById("checkout-success");
+      const completionSection = document.getElementById("completion-section");
+      const completionLink = document.getElementById("completion-link");
+      const vippsPhonePlaceholder = document.getElementById("vipps-phone-placeholder");
+
+      const setHidden = (element, hidden) => {
+        if (!element) return;
+        element.classList.toggle("hidden", hidden);
+      };
+
+      const calculateAge = (value) => {
+        if (!value) return 0;
+        const dob = new Date(value);
+        if (Number.isNaN(dob.getTime())) return 0;
+        const today = new Date();
+        let age = today.getFullYear() - dob.getFullYear();
+        const monthDifference = today.getMonth() - dob.getMonth();
+        if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < dob.getDate())) {
+          age -= 1;
+        }
+        return age;
+      };
+
+      const openRegistrationModal = (tierLabel) => {
+        if (!registrationModal) return;
+        registrationModal.classList.remove("hidden");
+        registrationModal.classList.add("flex");
+        document.body.classList.add("overflow-hidden");
+
+        if (registrationTier) {
+          registrationTier.textContent = tierLabel ? ` – ${tierLabel}` : "";
         }
 
-        var remaining = parseInt(timer.textContent || '60', 10) || 60;
-        var interval = window.setInterval(function () {
-          remaining = Math.max(remaining - 1, 0);
-          timer.textContent = String(remaining);
-          if (remaining === 0) {
-            window.clearInterval(interval);
-          }
-        }, 1000);
+        if (vippsLoginButton) {
+          vippsLoginButton.classList.remove("hidden");
+        }
+        if (vippsForm) {
+          vippsForm.reset();
+          vippsForm.classList.add("hidden");
+        }
+        if (vippsNameInput) vippsNameInput.value = vippsDefaults.name;
+        if (vippsDobInput) vippsDobInput.value = vippsDefaults.dateOfBirth;
+        if (vippsPhoneInput) vippsPhoneInput.value = vippsDefaults.phone;
+        if (vippsEmailInput) vippsEmailInput.value = vippsDefaults.email;
+        if (vippsAgeLabel) vippsAgeLabel.textContent = "Bekreft og gå videre til neste steg.";
 
-        var enableSound = function () {
-          overlay.remove();
-          window.clearInterval(interval);
+        if (guardianForm) guardianForm.reset();
+        if (checkoutButton) checkoutButton.classList.remove("hidden");
+        setHidden(guardianSection, true);
+        setHidden(guardianSuccess, true);
+        setHidden(checkoutSection, true);
+        setHidden(checkoutSuccess, true);
+        setHidden(completionSection, true);
 
-          try {
-            var url = new URL(frame.src);
-            url.searchParams.set('muted', 'false');
-            frame.src = url.toString();
-          } catch (error) {
-            frame.src = frame.src.replace('muted=true', 'muted=false');
-          }
-        };
+        if (guardianNumber) guardianNumber.textContent = "";
+        if (vippsPhonePlaceholder) vippsPhonePlaceholder.textContent = "";
+        if (completionLink) completionLink.setAttribute("href", registrationForms.over18);
 
-        unmuteButton.addEventListener('click', function (event) {
-          event.preventDefault();
-          enableSound();
+      };
+
+      const closeRegistrationModal = () => {
+        if (!registrationModal) return;
+        registrationModal.classList.add("hidden");
+        registrationModal.classList.remove("flex");
+        document.body.classList.remove("overflow-hidden");
+      };
+
+      openRegistrationButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          const tierLabel = button.getAttribute("data-tier") || "";
+          openRegistrationModal(tierLabel);
         });
-      })();
+      });
+
+      closeRegistrationButtons.forEach((button) => {
+        button.addEventListener("click", closeRegistrationModal);
+      });
+
+      if (registrationOverlay) {
+        registrationOverlay.addEventListener("click", closeRegistrationModal);
+      }
+
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") {
+          closeRegistrationModal();
+        }
+      });
+
+      if (vippsLoginButton && vippsForm) {
+        vippsLoginButton.addEventListener("click", () => {
+          vippsLoginButton.classList.add("hidden");
+          vippsForm.classList.remove("hidden");
+        });
+      }
+
+      if (vippsForm) {
+        vippsForm.addEventListener("submit", (event) => {
+          event.preventDefault();
+          const age = calculateAge(vippsDobInput ? vippsDobInput.value : "");
+          if (vippsAgeLabel) {
+            vippsAgeLabel.textContent = age ? `Alder ${age} år – bekreft og gå videre.` : "Bekreft og gå videre til neste steg.";
+          }
+          if (vippsPhonePlaceholder && vippsPhoneInput) {
+            vippsPhonePlaceholder.textContent = vippsPhoneInput.value;
+          }
+
+          setHidden(guardianSuccess, true);
+          setHidden(checkoutSuccess, true);
+          setHidden(completionSection, true);
+          if (guardianForm) guardianForm.reset();
+          if (checkoutButton) checkoutButton.classList.remove("hidden");
+
+          if (age > 0 && age < 18) {
+            setHidden(guardianSection, false);
+            setHidden(checkoutSection, true);
+            if (completionLink) completionLink.setAttribute("href", registrationForms.under18);
+          } else {
+            setHidden(guardianSection, true);
+            setHidden(checkoutSection, false);
+            if (completionLink) completionLink.setAttribute("href", registrationForms.over18);
+          }
+        });
+      }
+
+      if (guardianForm) {
+        guardianForm.addEventListener("submit", (event) => {
+          event.preventDefault();
+          const number = guardianInput ? guardianInput.value.trim() : "";
+          if (guardianNumber) {
+            guardianNumber.textContent = number || "forelder";
+          }
+          setHidden(guardianSuccess, false);
+          setHidden(completionSection, false);
+          if (vippsPhonePlaceholder && vippsPhoneInput) {
+            vippsPhonePlaceholder.textContent = vippsPhoneInput.value;
+          }
+        });
+      }
+
+      if (checkoutButton) {
+        checkoutButton.addEventListener("click", () => {
+          checkoutButton.classList.add("hidden");
+          setHidden(checkoutSuccess, false);
+          setHidden(completionSection, false);
+          if (vippsPhonePlaceholder && vippsPhoneInput) {
+            vippsPhonePlaceholder.textContent = vippsPhoneInput.value;
+          }
+        });
+      }
+
+      const currentYear = document.getElementById("current-year");
+      if (currentYear) {
+        currentYear.textContent = String(new Date().getFullYear());
+      }
     </script>
-</div>
   </body>
 </html>
