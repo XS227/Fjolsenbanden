@@ -33,6 +33,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import SupporterShowcase from "@/components/SupporterShowcase";
 
 type PlatformLink = {
   icon: ReactNode;
@@ -855,6 +856,8 @@ export default function FjolsenbandenHome() {
           ))}
         </div>
       </section>
+
+      <SupporterShowcase />
 
       <section id="premier" className="mt-20 px-6 text-center">
         <h2 className="mb-4 text-3xl font-bold">Samarbeidspartnere</h2>
