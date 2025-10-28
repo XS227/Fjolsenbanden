@@ -9,4 +9,4 @@ class HomeViewTests(SimpleTestCase):
     def test_homepage_renders(self) -> None:
         response = self.client.get(reverse("home"))
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, "Welcome to Fjølsenbanden")
+        self.assertContains(response, "Spillglede for hele familien")

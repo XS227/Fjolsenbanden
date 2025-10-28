@@ -9,7 +9,12 @@ SECRET_KEY = "django-insecure-please-change-me"
 
 DEBUG = True
 
-ALLOWED_HOSTS: list[str] = []
+ALLOWED_HOSTS: list[str] = [
+    "localhost",
+    "127.0.0.1",
+    "fjolsenbanden.setaei.com",
+    ".setaei.com",
+]
 
 INSTALLED_APPS = [
     "django.contrib.admin",
