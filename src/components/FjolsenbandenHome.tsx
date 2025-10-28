@@ -1,568 +1,330 @@
 "use client";
 
-import { type ReactNode, useEffect, useState } from "react";
+import React from "react";
 import {
-  Facebook,
-  Gift,
-  Menu,
-  MessageCircle,
-  Play,
-  Quote,
-  ShieldCheck,
-  Smartphone,
+  ArrowRight,
+  Gamepad2,
+  Instagram,
+  Mail,
+  Megaphone,
+  Rocket,
   Sparkles,
   Trophy,
   Twitch,
   Users,
-  X,
+  Video,
   Youtube,
 } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import type { LucideIcon } from "lucide-react";
 
-type PlatformLink = {
-  icon: ReactNode;
-  label: string;
-  href: string;
-};
-
-type MembershipTier = {
-  title: string;
-  price: string;
-  color: "green" | "cyan" | "amber";
-  features: readonly string[];
-};
-
-type Stat = {
-  title: string;
-  value: string;
-};
-
-type Prize = {
-  brand: string;
-  item: string;
-};
-
-type HostSpotlight = {
-  name: string;
-  role: string;
-  description: string;
-  highlights: readonly string[];
-  funFact: string;
-  quote: string;
-};
-
-const navLinks = [
-  { name: "Hjem", href: "#" },
-  { name: "Live", href: "#live" },
-  { name: "Premier", href: "#premier" },
-  { name: "Medlemskap", href: "#medlemskap" },
-  { name: "Tor Martin", href: "#tor-martin" },
-  { name: "Foreldre", href: "#foreldre" },
-  { name: "Sponsorer", href: "#sponsorer" },
-] as const;
-
-const platformLinks: readonly PlatformLink[] = [
+const socialLinks = [
   {
-    icon: <Twitch className="h-5 w-5 text-purple-500" />,
     label: "Twitch",
     href: "https://www.twitch.tv/fjolsenbanden",
+    icon: <Twitch className="h-5 w-5" aria-hidden="true" />,
   },
   {
-    icon: <Youtube className="h-5 w-5 text-red-500" />,
-    label: "YouTube",
-    href: "https://youtube.com/@fjolsenbanden",
-  },
-  {
-    icon: <Smartphone className="h-5 w-5 text-pink-500" />,
     label: "TikTok",
     href: "https://www.tiktok.com/@fjolsenbanden",
+    icon: <Video className="h-5 w-5" aria-hidden="true" />,
   },
   {
-    icon: <Facebook className="h-5 w-5 text-blue-500" />,
-    label: "Facebook Gaming",
-    href: "https://www.facebook.com/fjolsenbanden",
-  },
-] as const;
-
-const membershipTiers: readonly MembershipTier[] = [
-  {
-    title: "Gratis",
-    price: "0 kr/mnd",
-    color: "green",
-    features: ["Tilgang til Discord", "Ukentlige streams", "Felles events"],
+    label: "YouTube",
+    href: "https://youtube.com/@fjolsenbanden",
+    icon: <Youtube className="h-5 w-5" aria-hidden="true" />,
   },
   {
-    title: "Premie",
-    price: "49 kr/mnd",
-    color: "cyan",
-    features: ["Alle Gratis-tilbud", "Deltakelse i premier", "Eksklusive quests"],
+    label: "Instagram",
+    href: "https://www.instagram.com/fjolsenbanden",
+    icon: <Instagram className="h-5 w-5" aria-hidden="true" />,
+  },
+] as const;
+
+const stats = [
+  { label: "Discord", value: "2 500+" },
+  { label: "Twitch", value: "3 200+" },
+  { label: "TikTok", value: "4 200+" },
+] as const;
+
+const partners = ["Lenovo", "Samsung", "Philips", "Komplett.no"] as const;
+
+const offerCards = [
+  {
+    icon: <Megaphone className="h-6 w-6 text-cyan-300" aria-hidden="true" />,
+    title: "Foredrag",
+    description:
+      "FjOlsen besøker skoler, idrettslag og e-sportklubber for å snakke om streaming, gaming-kultur og nettvett.",
   },
   {
-    title: "Sponsor",
-    price: "299 kr/mnd",
-    color: "amber",
-    features: ["Alle Premie-tilbud", "Merkevare-synlighet", "VIP support", "Egne events"],
+    icon: <Trophy className="h-6 w-6 text-emerald-300" aria-hidden="true" />,
+    title: "Events",
+    description:
+      "Vi arrangerer gaming-konkurranser for bedrifter, skoler og klubber – både digitalt og fysisk.",
+  },
+  {
+    icon: <Sparkles className="h-6 w-6 text-pink-300" aria-hidden="true" />,
+    title: "Unboxing",
+    description:
+      "Profesjonelle unboxing-videoer som kan brukes i markedsføring og deles med communityet vårt.",
+  },
+  {
+    icon: <Rocket className="h-6 w-6 text-purple-300" aria-hidden="true" />,
+    title: "Streamer for hire",
+    description:
+      "Co-streams, produktlanseringer og kampanjer der FjOlsen løfter budskapet ditt til tusenvis av følgere.",
+  },
+  {
+    icon: <Users className="h-6 w-6 text-sky-300" aria-hidden="true" />,
+    title: "Coaching",
+    description:
+      "1-til-1 coaching med Norges dyktigste Fortnite-spillere – fokus på strategi, samarbeid og trygg nettkultur.",
   },
 ] as const;
 
-const stats: readonly Stat[] = [
-  { title: "Twitch følgere", value: "3.2k" },
-  { title: "TikTok følgere", value: "4.2k" },
-  { title: "Discord medlemmer", value: "2.5k" },
-  { title: "Live seere", value: "50+" },
-] as const;
-
-const prizes: readonly Prize[] = [
-  { brand: "Lenovo", item: "Legion gaming headset" },
-  { brand: "Samsung", item: "Odyssey 27\" skjerm" },
-  { brand: "Philips", item: "Hue startpakke" },
-] as const;
-
-const sponsors = ["Lenovo", "Samsung", "Philips", "NKI", "Microsoft"] as const;
-
-const demoChat = [
-  { user: "Lina", message: "Haha, den bossen var vilt!" },
-  { user: "Jonas", message: "Gleder meg til premie-trekningen 🔥" },
-  { user: "Sara", message: "Hei fra TikTok 😎" },
-  { user: "Marius", message: "Bra lyd i dag!" },
-] as const;
-
-const hostSpotlight: HostSpotlight = {
-  name: "Tor Martin",
-  role: "Game Master & trygghetsvert",
-  description:
-    "Tor Martin leder de familievennlige streamene våre med et våkent blikk på både chat og spillflyt. Han sørger for at alle føler seg sett, og at konkurransene holder et positivt tempo for alle aldre.",
-  highlights: [
-    "Sertifisert barne- og ungdomsarbeider med fokus på digital trygghet",
-    "Planlegger ukentlige quester og koordinere premier sammen med partnere",
-    "Moderator på Discord med null-toleranse for toksisk oppførsel",
-  ],
-  funFact:
-    "Favorittspill: Kreative Minecraft-bygg og co-op eventyr. Tor Martin er også kjent for å droppe random high-fives i chatten!",
-  quote:
-    "Jeg vil at alle skal føle seg velkommen – både spillere, foreldre og de som er helt nye i gaming.",
-};
-
-export default function FjolsenbandenHome() {
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [unmuted, setUnmuted] = useState(false);
-  const [previewCountdown, setPreviewCountdown] = useState(60);
-
-  useEffect(() => {
-    if (unmuted) {
-      return undefined;
-    }
-
-    if (previewCountdown <= 0) {
-      return undefined;
-    }
-
-    const timer = window.setTimeout(() => {
-      setPreviewCountdown((prev: number) => Math.max(prev - 1, 0));
-    }, 1000);
-
-    return () => window.clearTimeout(timer);
-  }, [previewCountdown, unmuted]);
-
-  const scrollToAnchor = (selector: string) => {
-    if (typeof window === "undefined") {
-      return;
-    }
-
-    const anchor = document.querySelector(selector);
-
-    if (anchor instanceof HTMLElement) {
-      anchor.scrollIntoView({ behavior: "smooth" });
-    }
-  };
-
+export default function FjolsenbandenHome(): JSX.Element {
   return (
-    <div className="relative min-h-screen overflow-x-hidden bg-gradient-to-b from-[#0e0b1a] via-[#151f2c] to-[#0e0b1a] text-white">
+    <div className="min-h-screen bg-gradient-to-b from-[#090b2a] via-[#0d1238] to-[#08091f] text-white">
       <div
-        className="pointer-events-none absolute inset-0"
+        className="pointer-events-none fixed inset-0 -z-10 opacity-60"
         style={{
           background:
-            "radial-gradient(circle at 20% 20%, rgba(0,206,255,0.2), transparent 60%)",
+            "radial-gradient(circle at 10% 20%, rgba(59,130,246,0.35), transparent 45%), radial-gradient(circle at 90% 10%, rgba(236,72,153,0.35), transparent 45%)",
         }}
       />
 
-      <nav className="relative z-50 flex items-center justify-between px-6 py-4">
-        <div className="flex items-center gap-2">
-          <div className="grid h-10 w-10 place-content-center rounded-xl bg-[#00CFFF] font-bold text-black">
-            FB
-          </div>
-          <span className="hidden text-lg font-semibold sm:block">Fjolsenbanden</span>
-        </div>
-        <ul className="hidden gap-6 text-sm font-medium md:flex">
-          {navLinks.map((link) => (
-            <li key={link.name}>
-              <a className="transition-colors duration-150 hover:text-[#00CFFF]" href={link.href}>
-                {link.name}
-              </a>
-            </li>
-          ))}
-        </ul>
-        <button
-          type="button"
-          data-nav-toggle
-          onClick={() => setMenuOpen((prev: boolean) => !prev)}
-          className="rounded-md p-2 transition hover:bg-white/10 md:hidden"
-          aria-label="Toggle navigation"
-          aria-expanded={menuOpen}
-        >
-          {menuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-        </button>
-        <ul
-          data-nav-menu
-          className={`absolute right-4 top-full mt-2 ${
-            menuOpen ? "flex" : "hidden"
-          } flex-col gap-3 rounded-xl border border-white/10 bg-[#1f2940] p-4 text-sm shadow-lg transition md:hidden`}
-        >
-          {navLinks.map((link) => (
-            <li key={link.name}>
-              <a
-                href={link.href}
-                className="block rounded-md px-4 py-2 transition hover:bg-white/10"
-                data-nav-close
-                onClick={() => setMenuOpen(false)}
-              >
-                {link.name}
-              </a>
-            </li>
-          ))}
-        </ul>
-      </nav>
-
-      <section className="mt-6 space-y-6 px-6 text-center">
-        <h1 className="text-4xl font-extrabold sm:text-5xl">
-          Spill glede for hele familien med <span className="text-[#00CFFF]">Fjolsenbanden</span>
-        </h1>
-        <p className="mx-auto max-w-3xl text-base text-zinc-300 sm:text-lg">
-          Trygge streams, ukentlige turneringer og en leken verden for barn og unge. Foreldre logger inn via Vipps for
-          enkel, trygg verifisering.
-        </p>
-        <div className="flex flex-wrap justify-center gap-4">
-          <Button
-            size="lg"
-            className="rounded-full bg-[#00CFFF] px-6 text-black hover:bg-[#00bcd4]"
-            data-scroll-to="#medlemskap"
-            onClick={() => scrollToAnchor("#medlemskap")}
-          >
-            Meld inn barn
-          </Button>
-          <Button
-            size="lg"
-            variant="outline"
-            className="rounded-full border-white/20 px-6 hover:bg-white/10"
-            data-scroll-to="#live"
-            onClick={() => scrollToAnchor("#live")}
-          >
-            Se neste stream
-          </Button>
-        </div>
-        <div className="mt-4 flex justify-center gap-6 text-sm text-zinc-400">
-          <span>3200+ følgere på Twitch</span>
-          <span>4200+ følgere på TikTok</span>
-          <span>2500+ medlemmer i Discord</span>
-        </div>
-      </section>
-
-      <section id="live" className="relative mt-12 px-6">
-        <div className="mx-auto grid max-w-7xl items-start gap-8 lg:grid-cols-3">
-          <div className="space-y-4 lg:col-span-2">
-            <div className="relative overflow-hidden rounded-2xl border border-white/10 shadow-2xl">
-              <span className="absolute left-3 top-3 rounded-full bg-rose-500 px-4 py-1 text-xs font-semibold text-white shadow animate-pulse">
-                🔴 LIVE
-              </span>
-              <iframe
-                data-preview-frame
-                src={`https://player.twitch.tv/?channel=fjolsenbanden&parent=fjolsenbanden.setaei.com&muted=${!unmuted}`}
-                title="Fjolsenbanden Twitch Player"
-                allowFullScreen
-                className="aspect-video w-full bg-black"
-              />
-              {!unmuted ? (
-                <div
-                  data-preview-overlay
-                  className="absolute inset-0 flex flex-col items-center justify-center gap-4 bg-black/70 p-6 text-center"
-                >
-                  <Play className="h-12 w-12 text-[#00CFFF]" />
-                  <p className="text-sm text-zinc-300">
-                    1-minutt forhåndsvisning –
-                    <span data-preview-timer className="ml-1">
-                      {previewCountdown}
-                    </span>
-                    s igjen
-                  </p>
-                  <Button
-                    size="lg"
-                    className="rounded-full bg-[#00CFFF] px-6 text-black hover:bg-[#00bcd4]"
-                    data-video-unmute
-                    onClick={() => setUnmuted(true)}
-                  >
-                    Se full stream
-                  </Button>
-                  <div className="flex gap-3 text-xs text-zinc-400">
-                    <span>
-                      eller fortsett på
-                      <a
-                        href="https://www.twitch.tv/fjolsenbanden"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="ml-1 text-[#00CFFF]"
-                      >
-                        Twitch
-                      </a>
-                    </span>
-                    <span>|</span>
-                    <span>
-                      <a
-                        href="https://youtube.com/@fjolsenbanden"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-[#00CFFF]"
-                      >
-                        YouTube
-                      </a>
-                    </span>
-                  </div>
-                </div>
-              ) : null}
-            </div>
-            <div className="flex flex-wrap justify-center gap-4">
-              {platformLinks.map(({ icon, label, href }) => (
-                <PlatformButton key={label} icon={icon} label={label} href={href} />
-              ))}
-            </div>
-          </div>
-          <div className="flex max-h-[640px] flex-col rounded-2xl border border-white/10 bg-[#1f2940] p-4">
-            <h3 className="mb-3 flex items-center gap-2 font-semibold text-cyan-300">
-              <MessageCircle className="h-4 w-4" /> Live chat
-            </h3>
-            <div className="flex-1 space-y-3 overflow-y-auto pr-1 text-sm">
-              {demoChat.map((chat) => (
-                <div key={chat.user} className="rounded-lg bg-white/5 px-3 py-2">
-                  <span className="mr-2 font-semibold text-cyan-300">{chat.user}</span>
-                  <span className="text-zinc-200">{chat.message}</span>
-                </div>
-              ))}
-            </div>
-            <input
-              type="text"
-              placeholder="Skriv en kommentar..."
-              className="mt-3 w-full rounded-lg border border-white/20 bg-white/10 px-3 py-2 text-sm text-white placeholder-zinc-400 outline-none focus:ring-2 focus:ring-[#00CFFF]"
-            />
-          </div>
-        </div>
-      </section>
-
-      <section id="medlemskap" className="mt-20 px-6 text-center">
-        <h2 className="mb-4 text-3xl font-bold">Velg ditt medlemskap</h2>
-        <p className="mx-auto mb-8 max-w-2xl text-zinc-300">
-          Bli med i Fjolsenbanden og lås opp premier, turneringer og unike perks. Foreldre verifiserer via Vipps.
-        </p>
-        <div className="mx-auto grid max-w-7xl gap-8 md:grid-cols-3">
-          {membershipTiers.map(({ title, price, color, features }) => (
-            <MembershipCard key={title} title={title} price={price} color={color} features={features} />
-          ))}
-        </div>
-      </section>
-
-      <section className="mt-20 px-6 text-center">
-        <h2 className="mb-4 text-3xl font-bold">Et levende community</h2>
-        <p className="mx-auto mb-8 max-w-xl text-zinc-300">
-          Fjolsenbanden vokser hver dag. Se hvor mange vi er og bli en del av eventyret!
-        </p>
-        <div className="mx-auto grid max-w-5xl gap-6 sm:grid-cols-2 md:grid-cols-4">
-          {stats.map(({ title, value }) => (
-            <StatCard key={title} title={title} value={value} Icon={Users} />
-          ))}
-        </div>
-      </section>
-
-      <section id="premier" className="mt-20 px-6 text-center">
-        <h2 className="mb-4 text-3xl font-bold">Premier &amp; Sponsorer</h2>
-        <p className="mx-auto mb-8 max-w-2xl text-zinc-300">
-          Vi samarbeider med ledende merkevarer for å gi deg fantastiske premier. Hver måned trekker vi nye vinnere!
-        </p>
-        <div className="mx-auto mb-10 grid max-w-7xl gap-8 md:grid-cols-3">
-          {prizes.map(({ brand, item }) => (
-            <PrizeCard key={brand} brand={brand} item={item} />
-          ))}
-        </div>
-        <div id="sponsorer" className="flex flex-wrap justify-center gap-6">
-          {sponsors.map((name) => (
-            <span
-              key={name}
-              className="rounded-xl border border-white/20 bg-white/5 px-4 py-2 text-sm text-white/80 transition hover:bg-white/10"
-            >
-              {name}
+      <header className="relative">
+        <div className="mx-auto flex max-w-6xl flex-col gap-12 px-6 pb-24 pt-16 lg:flex-row lg:items-center">
+          <div className="max-w-xl space-y-6">
+            <span className="inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-2 text-sm tracking-wide text-cyan-200">
+              <Gamepad2 className="h-4 w-4" aria-hidden="true" /> Velkommen til FjOlsenbanden
             </span>
-          ))}
-        </div>
-      </section>
-
-      <section id="tor-martin" className="mt-20 px-6">
-        <div className="mx-auto grid max-w-6xl gap-8 lg:grid-cols-[1.7fr_1fr]">
-          <div className="space-y-6 rounded-3xl border border-white/10 bg-[#161f33]/90 p-8 shadow-2xl">
-            <div className="inline-flex items-center gap-2 rounded-full bg-cyan-500/10 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-cyan-300">
-              <Sparkles className="h-4 w-4" /> Ukens spotlight
-            </div>
-            <div className="space-y-2">
-              <h2 className="text-3xl font-bold text-white">Møt {hostSpotlight.name}</h2>
-              <p className="text-sm uppercase tracking-wide text-cyan-300">{hostSpotlight.role}</p>
-            </div>
-            <p className="max-w-3xl text-base text-zinc-300">{hostSpotlight.description}</p>
-            <ul className="space-y-3 text-sm text-zinc-300">
-              {hostSpotlight.highlights.map((item) => (
-                <li key={item} className="flex items-start gap-3">
-                  <Sparkles className="mt-0.5 h-4 w-4 flex-shrink-0 text-cyan-300" />
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
-            <div className="rounded-2xl border border-cyan-500/20 bg-cyan-500/10 p-4 text-sm text-cyan-100">
-              <strong className="block text-cyan-200">Fun fact</strong>
-              <p className="mt-2 text-zinc-100">{hostSpotlight.funFact}</p>
+            <h1 className="text-4xl font-bold leading-tight sm:text-5xl lg:text-6xl">
+              Norges mest inkluderende gaming-community
+            </h1>
+            <p className="text-lg text-slate-200">
+              FjOlsenbanden samler over 10&nbsp;000 følgere på tvers av Discord, Twitch, TikTok og YouTube. Vi skaper et trygt
+              og positivt miljø der hele familien kan game uten hets eller mobbing.
+            </p>
+            <div className="flex flex-wrap gap-4">
+              <a
+                href="#live"
+                className="inline-flex items-center gap-2 rounded-full bg-cyan-400 px-6 py-3 font-semibold text-black shadow-[0_12px_30px_rgba(34,211,238,0.4)] transition hover:bg-cyan-300"
+              >
+                Se FjOlsen Live
+                <ArrowRight className="h-4 w-4" aria-hidden="true" />
+              </a>
+              <a
+                href="#bli-medlem"
+                className="inline-flex items-center gap-2 rounded-full border border-white/20 px-6 py-3 font-semibold text-white transition hover:border-white/40 hover:bg-white/10"
+              >
+                Bli medlem
+              </a>
             </div>
           </div>
-
-          <Card className="flex flex-col justify-between rounded-3xl border border-white/10 bg-[#101727]/90 text-left">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-cyan-300">
-                <Quote className="h-5 w-5" /> Tor Martin sier
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-6 text-zinc-200">
-              <p className="text-lg italic">“{hostSpotlight.quote}”</p>
-              <div className="rounded-2xl border border-white/10 bg-white/5 p-4 text-sm text-zinc-300">
-                <p>
-                  Si hei til Tor Martin i chatten under neste stream – han svarer alltid på spørsmål og kan tipse om hvilke quester som passer for
-                  både nye og erfarne medlemmer.
+          <div className="relative w-full max-w-xl">
+            <div className="absolute -inset-6 rounded-3xl bg-gradient-to-tr from-cyan-500/40 via-transparent to-purple-500/40 blur-3xl" />
+            <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-[#10173d] via-[#0f1b4f] to-[#141030] shadow-2xl">
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(34,211,238,0.45),transparent_55%)]" />
+              <div className="relative flex min-h-[320px] flex-col justify-end gap-6 p-10">
+                <span className="inline-flex w-fit items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.45em] text-cyan-200">
+                  Live på stream
+                </span>
+                <p className="text-2xl font-semibold text-white">
+                  🎥 Se FjOlsen live mens han guider communityet gjennom turneringer, turneringer og samarbeidsprosjekter.
+                </p>
+                <p className="text-sm text-slate-300">
+                  Fellesskap, spilleglede og respekt er alltid i sentrum – uansett om du følger på Twitch, TikTok eller YouTube.
                 </p>
               </div>
-            </CardContent>
-          </Card>
+            </div>
+          </div>
         </div>
-      </section>
+      </header>
 
-      <section id="foreldre" className="mt-20 grid gap-10 px-6 lg:grid-cols-2 lg:items-center">
-        <div className="space-y-4">
-          <h2 className="text-3xl font-bold">Informasjon til foreldre</h2>
-          <p className="text-zinc-300">
-            Som forelder kan du stole på Fjolsenbanden. Vi bruker Vipps for å verifisere alder og innhente samtykke. Ditt
-            barn kan trygt delta i streams, premier og konkurranser – alt innenfor trygge rammer.
-          </p>
-          <Button size="lg" className="rounded-full bg-[#00CFFF] px-6 text-black hover:bg-[#00bcd4]">
-            Logg inn med Vipps
-          </Button>
-        </div>
-        <Card className="rounded-2xl border border-white/10 bg-[#1f2940]">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2 text-cyan-300">
-              <ShieldCheck className="h-6 w-6" /> Trygt og sikkert
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-3 text-sm text-zinc-300">
-            <p>Vipps-innlogging sikrer at voksne verifiserer barna sine.</p>
-            <p>Alle data lagres trygt og brukes kun til medlemsadministrasjon.</p>
-            <p>Du har full oversikt over medlemskap og premier via dashbordet.</p>
-          </CardContent>
-        </Card>
-      </section>
+      <main className="space-y-28 pb-24">
+        <section id="hva-er" className="px-6">
+          <div className="mx-auto grid max-w-6xl gap-12 lg:grid-cols-2 lg:items-center">
+            <div className="space-y-6">
+              <h2 className="text-3xl font-bold sm:text-4xl">🎮 Hva er FjOlsenbanden?</h2>
+              <p className="text-lg text-slate-200">
+                FjOlsenbanden er et raskt voksende gaming-community med over 2&nbsp;500 medlemmer på Discord, 3&nbsp;200+ følgere på
+                Twitch og 4&nbsp;200+ på TikTok. Her møtes barn, ungdom og foreldre for å game trygt sammen.
+              </p>
+              <p className="text-lg text-slate-200">
+                Målet vårt er enkelt: å skape et inkluderende miljø der alle kan spille uten hets, mobbing eller negativ adferd.
+                FjOlsen legger ned mange timer hver uke på konkurranser, turneringer og aktiviteter – alltid med fellesskap og
+                spilleglede i sentrum.
+              </p>
+              <div className="rounded-3xl border border-white/10 bg-white/5 p-6 shadow-lg">
+                <p className="text-base text-slate-200">
+                  🎥 Se videoen til høyre for å møte FjOlsen og bli kjent med communityet!
+                </p>
+              </div>
+            </div>
+            <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-black/60 shadow-2xl">
+              <iframe
+                width="100%"
+                height="315"
+                src="https://www.youtube.com/embed/P01NkLOA39A?si=LYD3IVf5SSZrehsJ"
+                title="Møt FjOlsen"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerPolicy="strict-origin-when-cross-origin"
+                allowFullScreen
+                className="h-full min-h-[280px] w-full"
+              />
+            </div>
+          </div>
+        </section>
 
-      <footer className="mt-20 border-t border-white/10 py-8 text-center text-sm text-zinc-500">
-        © {new Date().getFullYear()} Fjolsenbanden. Alle rettigheter reservert.
-      </footer>
+        <section id="live" className="px-6">
+          <div className="mx-auto grid max-w-6xl gap-12 rounded-[2.5rem] border border-white/5 bg-gradient-to-br from-[#121a4b]/80 via-[#10153b]/80 to-[#0c122d]/80 p-12 shadow-2xl lg:grid-cols-[1.1fr_0.9fr]">
+            <div className="space-y-6">
+              <h2 className="text-3xl font-bold sm:text-4xl">📈 Følg FjOlsenbanden</h2>
+              <p className="text-lg text-slate-200">
+                Totalt over 10&nbsp;000 følgere på tvers av alle plattformer! Finn oss der du liker å se gaming-innhold – og bli en del av et hyggelig og støttende fellesskap.
+              </p>
+              <div className="grid gap-4 sm:grid-cols-3">
+                {stats.map((stat) => (
+                  <div key={stat.label} className="rounded-2xl border border-white/10 bg-white/5 p-4 text-center">
+                    <p className="text-2xl font-bold text-cyan-300">{stat.value}</p>
+                    <p className="text-sm text-slate-300">{stat.label}</p>
+                  </div>
+                ))}
+              </div>
+              <div className="flex flex-wrap gap-3">
+                {socialLinks.map((link) => (
+                  <a
+                    key={link.label}
+                    href={link.href}
+                    className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-sm font-medium transition hover:bg-white/20"
+                    rel="noreferrer"
+                    target="_blank"
+                  >
+                    {link.icon}
+                    <span>{link.label}</span>
+                  </a>
+                ))}
+              </div>
+              <div className="rounded-3xl border border-white/10 bg-white/5 p-6 text-sm text-slate-200">
+                🎥 Se FjOlsen LIVE! Til venstre: Stream-vindu. Til høyre: Chat-feed. 👉 Følg oss her: TikTok · YouTube · Instagram · Twitch
+              </div>
+            </div>
+            <div className="grid gap-4 lg:grid-cols-2">
+              <div className="relative col-span-2 overflow-hidden rounded-2xl border border-white/10 bg-black/70 p-6">
+                <span className="inline-flex items-center gap-2 rounded-full bg-rose-500/20 px-3 py-1 text-xs font-semibold text-rose-200">
+                  🔴 Live preview
+                </span>
+                <p className="mt-4 text-sm text-slate-300">
+                  Stream-vindu – se FjOlsen ta communityet gjennom nye utfordringer og konkurranser.
+                </p>
+              </div>
+              <div className="rounded-2xl border border-white/10 bg-black/60 p-6">
+                <p className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-400">Chat</p>
+                <ul className="mt-4 space-y-3 text-sm text-slate-200">
+                  <li>💬 Lina: «Haha, den bossen var vilt!»</li>
+                  <li>💬 Jonas: «Gleder meg til premie-trekningen 🔥»</li>
+                  <li>💬 Sara: «Hei fra TikTok 😎»</li>
+                  <li>💬 Marius: «Bra lyd i dag!»</li>
+                </ul>
+              </div>
+              <div className="rounded-2xl border border-white/10 bg-black/60 p-6">
+                <p className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-400">Fellesskap</p>
+                <p className="mt-4 text-sm text-slate-200">
+                  Vi holder chatten trygg med dedikerte moderatorer og tydelige regler mot hets, mobbing og negativ adferd.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="bli-medlem" className="px-6">
+          <div className="mx-auto max-w-6xl rounded-[2.5rem] border border-white/10 bg-white/5 p-12 shadow-2xl">
+            <h2 className="text-3xl font-bold sm:text-4xl">💬 Bli medlem</h2>
+            <p className="mt-4 text-lg text-slate-200">
+              Det er gratis å bli med i FjOlsenbanden! Alle kan delta i konkurranser, men for å vinne premier må du være registrert medlem.
+            </p>
+            <div className="mt-8 flex flex-wrap gap-4">
+              <a
+                href="https://www.fjolsenbanden.no/medlem/under-18"
+                className="inline-flex items-center gap-3 rounded-2xl bg-indigo-500 px-6 py-4 text-lg font-semibold text-white shadow-[0_12px_30px_rgba(99,102,241,0.45)] transition hover:bg-indigo-400"
+              >
+                🔵 Under 18 år
+              </a>
+              <a
+                href="https://www.fjolsenbanden.no/medlem/over-18"
+                className="inline-flex items-center gap-3 rounded-2xl bg-emerald-500 px-6 py-4 text-lg font-semibold text-white shadow-[0_12px_30px_rgba(16,185,129,0.45)] transition hover:bg-emerald-400"
+              >
+                🟢 Over 18 år
+              </a>
+            </div>
+          </div>
+        </section>
+
+        <section id="samarbeid" className="px-6">
+          <div className="mx-auto max-w-6xl space-y-8">
+            <h2 className="text-3xl font-bold sm:text-4xl">🤝 Samarbeidspartnere</h2>
+            <p className="text-lg text-slate-200">
+              Vi har allerede samarbeidet med flere kjente merkevarer – og vi er alltid på utkikk etter nye partnere som ønsker synlighet mot et engasjert gaming-publikum.
+            </p>
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+              {partners.map((partner) => (
+                <div
+                  key={partner}
+                  className="flex items-center justify-center rounded-2xl border border-white/10 bg-white/5 px-6 py-8 text-lg font-semibold tracking-wide text-slate-200"
+                >
+                  {partner}
+                </div>
+              ))}
+            </div>
+            <div className="rounded-[2rem] border border-emerald-400/30 bg-emerald-500/10 p-8 text-slate-100 shadow-lg">
+              <p className="text-lg font-semibold">🎯 Ønsker du å synliggjøre din merkevare?</p>
+              <p className="mt-2 text-base text-slate-200">
+                Ta kontakt for samarbeid! Vi skreddersyr kampanjer som treffer målgruppen din.
+              </p>
+              <a
+                href="#kontakt"
+                className="mt-4 inline-flex items-center gap-2 rounded-full bg-emerald-400 px-5 py-2 text-sm font-semibold text-black transition hover:bg-emerald-300"
+              >
+                📩 Kontakt oss
+              </a>
+            </div>
+          </div>
+        </section>
+
+        <section id="andre-tilbud" className="px-6">
+          <div className="mx-auto max-w-6xl space-y-8">
+            <h2 className="text-3xl font-bold sm:text-4xl">⚡ Andre tilbud</h2>
+            <p className="text-lg text-slate-200">
+              FjOlsenbanden tilbyr mer enn bare streaming. Vi hjelper deg med alt fra markedsføring til kompetansebygging.
+            </p>
+            <div className="grid gap-6 lg:grid-cols-2">
+              {offerCards.map((offer) => (
+                <div key={offer.title} className="flex flex-col gap-4 rounded-3xl border border-white/10 bg-white/5 p-8 shadow-xl">
+                  <div className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-white/10">
+                    {offer.icon}
+                  </div>
+                  <h3 className="text-2xl font-semibold">{offer.title}</h3>
+                  <p className="text-base text-slate-200">{offer.description}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section id="kontakt" className="px-6">
+          <div className="mx-auto max-w-5xl rounded-[2.5rem] border border-white/10 bg-gradient-to-br from-[#1f2c70] via-[#171f56] to-[#10163a] p-12 text-center shadow-2xl">
+            <h2 className="text-3xl font-bold sm:text-4xl">📬 Kontakt oss</h2>
+            <p className="mt-4 text-lg text-slate-200">
+              Har du spørsmål, forslag eller ønsker du samarbeid? Vi hører gjerne fra deg.
+            </p>
+            <a
+              href="https://www.fjolsenbanden.no/kontakt"
+              className="mt-8 inline-flex items-center gap-2 rounded-full bg-cyan-400 px-6 py-3 font-semibold text-black shadow-[0_12px_30px_rgba(34,211,238,0.4)] transition hover:bg-cyan-300"
+            >
+              <Mail className="h-5 w-5" aria-hidden="true" /> Send oss en melding via kontaktskjemaet
+            </a>
+          </div>
+        </section>
+      </main>
     </div>
-  );
-}
-
-function PlatformButton({ icon, label, href }: { icon: ReactNode; label: string; href: string }) {
-  return (
-    <a
-      href={href}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="flex items-center gap-2 rounded-full border border-white/10 bg-white/10 px-4 py-2 text-sm transition duration-200 hover:-translate-y-1 hover:bg-white/20 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-[#00CFFF] active:scale-95"
-    >
-      {icon}
-      <span>{label}</span>
-    </a>
-  );
-}
-
-function MembershipCard({
-  title,
-  price,
-  color,
-  features,
-}: {
-  title: string;
-  price: string;
-  color: "green" | "cyan" | "amber";
-  features: readonly string[];
-}) {
-  const colorClass = (tierColor: "green" | "cyan" | "amber") => {
-    switch (tierColor) {
-      case "green":
-        return "border-green-400/40 ring-green-400/50";
-      case "cyan":
-        return "border-cyan-400/40 ring-cyan-400/50";
-      case "amber":
-        return "border-amber-400/40 ring-amber-400/50";
-      default:
-        return "";
-    }
-  };
-
-  return (
-    <Card
-      className={`rounded-2xl border bg-[#1f2940] shadow-lg transition-transform hover:-translate-y-1 ${colorClass(
-        color,
-      )}`}
-    >
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2 text-white">
-          <Gift className="h-6 w-6" /> {title}
-        </CardTitle>
-      </CardHeader>
-      <CardContent className="space-y-4">
-        <div className="text-3xl font-bold text-white">{price}</div>
-        <ul className="space-y-2 text-sm text-zinc-300">
-          {features.map((feature) => (
-            <li key={feature} className="flex items-center gap-2">
-              <Trophy className="h-4 w-4 text-[#00CFFF]" /> {feature}
-            </li>
-          ))}
-        </ul>
-        <Button size="lg" className="w-full rounded-full bg-[#00CFFF] text-black hover:bg-[#00bcd4]">
-          Velg
-        </Button>
-      </CardContent>
-    </Card>
-  );
-}
-
-function StatCard({ title, value, Icon }: { title: string; value: string; Icon: LucideIcon }) {
-  return (
-    <div className="flex flex-col items-center space-y-3 rounded-2xl border border-white/10 bg-[#1f2940] p-6 text-center shadow-md">
-      <Icon className="h-8 w-8 text-[#00CFFF]" />
-      <div className="text-2xl font-extrabold text-white">{value}</div>
-      <div className="text-sm text-zinc-300">{title}</div>
-    </div>
-  );
-}
-
-function PrizeCard({ brand, item }: { brand: string; item: string }) {
-  return (
-    <Card className="rounded-2xl border border-white/10 bg-[#1f2940] shadow-lg">
-      <CardHeader>
-        <CardTitle className="text-white">{brand}</CardTitle>
-      </CardHeader>
-      <CardContent className="text-sm text-zinc-300">{item}</CardContent>
-    </Card>
   );
 }
