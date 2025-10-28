@@ -1,30 +1,37 @@
 "use client";
 
 import React from "react";
+import type { ReactNode } from "react";
 import {
   ArrowRight,
   Box,
   CalendarDays,
   CheckCircle2,
   CreditCard,
-  Facebook,
+  Discord,
   Gift,
+  GraduationCap,
+  Instagram,
   Lock,
+  Megaphone,
   Menu,
   MessageCircle,
   Mic,
   Phone,
   Play,
+  Rocket,
   ShieldCheck,
   Smartphone,
+  Sparkles,
   Trophy,
   Twitch,
+  Users,
+  UserCog,
   Video,
   X,
   Youtube,
-  GraduationCap,
-  UserCog,
 } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 
 type PlatformLink = {
   icon: ReactNode;
@@ -65,26 +72,57 @@ const navLinks = [
 
 const platformLinks: readonly PlatformLink[] = [
   {
-    icon: <Twitch className="h-4 w-4 text-purple-500" />,
+    icon: <Twitch className="h-5 w-5" aria-hidden="true" />,
     label: "Twitch",
     href: "https://www.twitch.tv/fjolsenbanden",
-    icon: <Twitch className="h-5 w-5" aria-hidden="true" />,
   },
   {
-    icon: <Youtube className="h-4 w-4 text-red-500" />,
+    icon: <Youtube className="h-5 w-5" aria-hidden="true" />,
     label: "YouTube",
     href: "https://youtube.com/@fjolsenbanden",
   },
   {
-    icon: <Smartphone className="h-4 w-4 text-pink-500" />,
+    icon: <Smartphone className="h-5 w-5" aria-hidden="true" />,
     label: "TikTok",
     href: "https://www.tiktok.com/@fjolsenbanden",
-    icon: <Video className="h-5 w-5" aria-hidden="true" />,
   },
   {
-    icon: <Facebook className="h-4 w-4 text-blue-500" />,
-    label: "Facebook Gaming",
-    href: "https://www.facebook.com/fjolsenbanden",
+    icon: <Instagram className="h-5 w-5" aria-hidden="true" />,
+    label: "Instagram",
+    href: "https://www.instagram.com/fjolsenbanden",
+  },
+  {
+    icon: <Discord className="h-5 w-5" aria-hidden="true" />,
+    label: "Discord",
+    href: "https://discord.gg/fjolsenbanden",
+  },
+] as const;
+
+const socialLinks: readonly PlatformLink[] = [
+  {
+    icon: <Discord className="h-4 w-4" aria-hidden="true" />,
+    label: "Discord",
+    href: "https://discord.gg/fjolsenbanden",
+  },
+  {
+    icon: <Twitch className="h-4 w-4" aria-hidden="true" />,
+    label: "Twitch",
+    href: "https://www.twitch.tv/fjolsenbanden",
+  },
+  {
+    icon: <Youtube className="h-4 w-4" aria-hidden="true" />,
+    label: "YouTube",
+    href: "https://youtube.com/@fjolsenbanden",
+  },
+  {
+    icon: <Smartphone className="h-4 w-4" aria-hidden="true" />,
+    label: "TikTok",
+    href: "https://www.tiktok.com/@fjolsenbanden",
+  },
+  {
+    icon: <Instagram className="h-4 w-4" aria-hidden="true" />,
+    label: "Instagram",
+    href: "https://www.instagram.com/fjolsenbanden",
   },
 ] as const;
 
@@ -420,7 +458,7 @@ export default function FjolsenbandenHome() {
                 ))}
               </div>
               <p className="mt-3 text-center text-xs text-zinc-400 sm:text-left">
-                Totalt over 10 000 følgere på tvers av Twitch, TikTok, YouTube og Instagram.
+                Totalt over 10&nbsp;000 følgere på tvers av Discord, Twitch, YouTube, TikTok og Instagram.
               </p>
             </div>
           </div>
@@ -482,7 +520,7 @@ export default function FjolsenbandenHome() {
                   <a
                     key={link.label}
                     href={link.href}
-                    className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-sm font-medium transition hover:bg-white/20"
+                    className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-sm font-medium text-white/90 transition hover:bg-white/20"
                     rel="noreferrer"
                     target="_blank"
                   >
@@ -492,7 +530,7 @@ export default function FjolsenbandenHome() {
                 ))}
               </div>
               <div className="rounded-3xl border border-white/10 bg-white/5 p-6 text-sm text-slate-200">
-                🎥 Se FjOlsen LIVE! Til venstre: Stream-vindu. Til høyre: Chat-feed. 👉 Følg oss her: TikTok · YouTube · Instagram · Twitch
+                🎥 Se FjOlsen LIVE! Til venstre: Stream-vindu. Til høyre: Chat-feed. 👉 Følg oss her: Discord · Twitch · YouTube · TikTok · Instagram
               </div>
             </div>
             <div className="grid gap-4 lg:grid-cols-2">
@@ -670,6 +708,7 @@ export default function FjolsenbandenHome() {
                 alt={name}
                 className="h-full w-full object-contain"
                 loading="lazy"
+                style={{ filter: "brightness(0) invert(1)" }}
               />
             </div>
           ))}
