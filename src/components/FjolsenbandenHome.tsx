@@ -242,12 +242,28 @@ const sponsors: readonly Sponsor[] = [
   {
     name: "Lenovo",
     slug: "lenovo",
-    remoteFileNames: ["Lenovo.svg", "lenovo.svg", "Lenovo.png", "lenovo.png"],
+    remoteFileNames: [
+      "lenova1.jpg",
+      "Lenova1.jpg",
+      "Lenovo1.jpg",
+      "lenovo1.jpg",
+      "Lenovo.svg",
+      "lenovo.svg",
+      "Lenovo.png",
+      "lenovo.png",
+    ],
   },
   {
     name: "Samsung",
     slug: "samsung",
-    remoteFileNames: ["Samsung.svg", "samsung.svg", "Samsung.png", "samsung.png"],
+    remoteFileNames: [
+      "samsung1.jpg",
+      "Samsung1.jpg",
+      "Samsung.svg",
+      "samsung.svg",
+      "Samsung.png",
+      "samsung.png",
+    ],
   },
   {
     name: "Philips",
@@ -258,6 +274,8 @@ const sponsors: readonly Sponsor[] = [
     name: "Komplett.no",
     slug: "komplett",
     remoteFileNames: [
+      "komplett1.jpg",
+      "Komplett1.jpg",
       "Komplett.svg",
       "komplett.svg",
       "Komplett.png",
@@ -447,6 +465,14 @@ export default function FjolsenbandenHome() {
     preventDefault: () => void;
   };
 
+  const toggleMenu = () => {
+    setMenuOpen((previous) => !previous);
+  };
+
+  const closeMenu = () => {
+    setMenuOpen(false);
+  };
+
   const handleContactSubmit = (event: ContactFormEvent) => {
     event.preventDefault();
 
@@ -463,6 +489,32 @@ export default function FjolsenbandenHome() {
     window.location.href = `mailto:kontakt@fjolsenbanden.no?subject=${subject}&body=${body}`;
     event.currentTarget.reset();
   };
+
+  useEffect(() => {
+    if (!menuOpen) {
+      return undefined;
+    }
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setMenuOpen(false);
+      }
+    };
+
+    const handleResize = () => {
+      if (window.innerWidth >= 768) {
+        setMenuOpen(false);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [menuOpen]);
 
   useEffect(() => {
     if (unmuted) {
@@ -721,7 +773,7 @@ export default function FjolsenbandenHome() {
         </a>
         <div className="hidden items-center gap-6 md:flex">
           <ul className="flex items-center gap-6 text-sm font-medium">
-              {filteredNavLinks.map((link: { name: string; href: string }) => (
+            {filteredNavLinks.map((link: { name: string; href: string }) => (
               <li key={link.name}>
                 <a className="transition-colors duration-150 hover:text-[#13A0F9]" href={link.href}>
                   {link.name}
@@ -736,7 +788,54 @@ export default function FjolsenbandenHome() {
             Bli medlem
           </a>
         </div>
+        <div className="flex items-center gap-3 md:hidden">
+          <button
+            type="button"
+            onClick={toggleMenu}
+            aria-expanded={menuOpen}
+            aria-controls="mobile-navigation"
+            aria-label={menuOpen ? "Lukk meny" : "Åpne meny"}
+            className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/20 text-white transition hover:border-white/40 hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/40"
+          >
+            {menuOpen ? <X className="h-5 w-5" aria-hidden="true" /> : <Menu className="h-5 w-5" aria-hidden="true" />}
+          </button>
+        </div>
+        <div
+          id="mobile-navigation"
+          className={`absolute left-0 right-0 top-full z-50 mt-3 px-6 md:hidden ${menuOpen ? "" : "hidden"}`}
+        >
+          <div className="rounded-2xl border border-white/10 bg-[#101c37] p-4 shadow-[0_18px_42px_rgba(12,21,45,0.45)]">
+            <ul className="flex flex-col gap-2 text-sm font-medium text-white/80">
+              {filteredNavLinks.map((link: { name: string; href: string }) => (
+                <li key={link.name}>
+                  <a
+                    className="block rounded-lg px-4 py-2 transition hover:bg-white/10 hover:text-white"
+                    href={link.href}
+                    onClick={closeMenu}
+                  >
+                    {link.name}
+                  </a>
+                </li>
+              ))}
+            </ul>
+            <a
+              href="#bli-medlem"
+              className="mt-4 block rounded-full border border-white/20 px-4 py-2 text-center font-semibold text-white transition hover:border-white/40 hover:bg-white/10"
+              onClick={closeMenu}
+            >
+              Bli medlem
+            </a>
+          </div>
+        </div>
       </nav>
+      {menuOpen ? (
+        <div
+          role="presentation"
+          aria-hidden="true"
+          className="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm md:hidden"
+          onClick={closeMenu}
+        />
+      ) : null}
 
       <header className="relative z-10 pb-40">
         <section id="community" className="mt-6 px-6">

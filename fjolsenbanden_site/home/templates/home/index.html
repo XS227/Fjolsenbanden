@@ -50,10 +50,12 @@
             <button
               type="button"
               data-nav-toggle="true"
-              class="rounded-md p-2 transition hover:bg-white/10 md:hidden"
-              aria-label="Toggle navigation"
+              class="inline-flex h-11 w-11 items-center justify-center rounded-md p-2 transition hover:bg-white/10 md:hidden"
+              aria-label="Åpne meny"
               aria-expanded="false"
+              aria-controls="mobile-nav"
             >
+              <span class="sr-only" data-nav-toggle-label>Åpne meny</span>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -64,38 +66,58 @@
                 stroke-width="2"
                 stroke-linecap="round"
                 stroke-linejoin="round"
-                class="lucide lucide-menu h-6 w-6"
+                data-nav-toggle-icon="open"
+                class="h-5 w-5"
               >
                 <line x1="4" x2="20" y1="12" y2="12"></line>
                 <line x1="4" x2="20" y1="6" y2="6"></line>
                 <line x1="4" x2="20" y1="18" y2="18"></line>
               </svg>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                data-nav-toggle-icon="close"
+                class="hidden h-5 w-5"
+              >
+                <line x1="18" x2="6" y1="6" y2="18"></line>
+                <line x1="6" x2="18" y1="6" y2="18"></line>
+              </svg>
             </button>
-            <ul
-              data-nav-menu="true"
-              class="absolute right-4 top-full mt-2 hidden flex-col gap-3 rounded-xl border border-white/10 bg-[#13203b] p-4 text-sm md:hidden"
-            >
-              <li><a href="#" class="block rounded-md px-4 py-2 transition hover:bg-white/10" data-nav-close="true">Hjem</a></li>
-              <li><a href="#live" class="block rounded-md px-4 py-2 transition hover:bg-white/10" data-nav-close="true">Live</a></li>
-              <li><a href="#premier" class="block rounded-md px-4 py-2 transition hover:bg-white/10" data-nav-close="true">Premier</a></li>
-              <li><a href="#medlemskap" class="block rounded-md px-4 py-2 transition hover:bg-white/10" data-nav-close="true">Medlemskap</a></li>
-              <li><a href="#tor-martin" class="block rounded-md px-4 py-2 transition hover:bg-white/10" data-nav-close="true">Tor Martin</a></li>
-              <li><a href="#foreldre" class="block rounded-md px-4 py-2 transition hover:bg-white/10" data-nav-close="true">Foreldre</a></li>
-              <li><a href="#sponsorer" class="block rounded-md px-4 py-2 transition hover:bg-white/10" data-nav-close="true">Sponsorer</a></li>
-              <li>
-                <a
-                  href="#foreldre"
-                  class="block rounded-md bg-[#ff5b24] px-4 py-2 text-center font-semibold text-[#0f172a]"
-                  data-nav-close="true"
-                >
-                  Vipps-innlogging
-                </a>
-              </li>
-            </ul>
-          </nav>
-        </header>
+          </div>
+        </nav>
+      </header>
 
-        <main class="pb-20">
+      <div class="fixed inset-0 z-40 hidden bg-black/60 backdrop-blur-sm md:hidden" data-nav-overlay aria-hidden="true"></div>
+      <div class="absolute left-0 right-0 top-[4.25rem] z-50 hidden px-4 pb-4 md:hidden" data-nav-menu id="mobile-nav">
+        <div class="rounded-2xl border border-white/10 bg-[#13203b] p-4 text-sm shadow-lg">
+          <ul class="flex flex-col gap-2">
+            <li><a href="#" class="block rounded-md px-4 py-2 transition hover:bg-white/10" data-nav-close="true">Hjem</a></li>
+            <li><a href="#live" class="block rounded-md px-4 py-2 transition hover:bg-white/10" data-nav-close="true">Live</a></li>
+            <li><a href="#premier" class="block rounded-md px-4 py-2 transition hover:bg-white/10" data-nav-close="true">Premier</a></li>
+            <li><a href="#medlemskap" class="block rounded-md px-4 py-2 transition hover:bg-white/10" data-nav-close="true">Medlemskap</a></li>
+            <li><a href="#tor-martin" class="block rounded-md px-4 py-2 transition hover:bg-white/10" data-nav-close="true">Tor Martin</a></li>
+            <li><a href="#foreldre" class="block rounded-md px-4 py-2 transition hover:bg-white/10" data-nav-close="true">Foreldre</a></li>
+            <li><a href="#sponsorer" class="block rounded-md px-4 py-2 transition hover:bg-white/10" data-nav-close="true">Sponsorer</a></li>
+            <li>
+              <a
+                href="#foreldre"
+                class="block rounded-md bg-[#ff5b24] px-4 py-2 text-center font-semibold text-[#0f172a]"
+                data-nav-close="true"
+              >
+                Vipps-innlogging
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <main class="pb-20">
           <section class="px-6 py-16 text-center">
             <div class="mx-auto max-w-4xl space-y-6">
               <h1 class="text-4xl font-extrabold sm:text-5xl">
@@ -694,21 +716,83 @@
       (function () {
         var navToggle = document.querySelector('[data-nav-toggle]');
         var navMenu = document.querySelector('[data-nav-menu]');
+        var navOverlay = document.querySelector('[data-nav-overlay]');
+        var navToggleIcons = navToggle ? navToggle.querySelectorAll('[data-nav-toggle-icon]') : [];
+        var navToggleLabel = navToggle ? navToggle.querySelector('[data-nav-toggle-label]') : null;
+
+        var setNavToggleState = function (isOpen) {
+          if (!navToggle) {
+            return;
+          }
+          navToggle.setAttribute('aria-expanded', String(isOpen));
+          navToggle.setAttribute('aria-label', isOpen ? 'Lukk meny' : 'Åpne meny');
+          if (navToggleLabel) {
+            navToggleLabel.textContent = isOpen ? 'Lukk meny' : 'Åpne meny';
+          }
+          navToggleIcons.forEach(function (icon) {
+            var shouldShow = icon.getAttribute('data-nav-toggle-icon') === (isOpen ? 'close' : 'open');
+            icon.classList.toggle('hidden', !shouldShow);
+          });
+        };
+
+        var openNav = function () {
+          if (!navMenu) {
+            return;
+          }
+          navMenu.classList.remove('hidden');
+          navMenu.classList.add('block');
+          if (navOverlay) {
+            navOverlay.classList.remove('hidden');
+            navOverlay.classList.add('block');
+          }
+          setNavToggleState(true);
+        };
+
+        var closeNav = function () {
+          if (!navMenu) {
+            return;
+          }
+          navMenu.classList.add('hidden');
+          navMenu.classList.remove('block');
+          if (navOverlay) {
+            navOverlay.classList.add('hidden');
+            navOverlay.classList.remove('block');
+          }
+          setNavToggleState(false);
+        };
+
         if (navToggle && navMenu) {
           navToggle.addEventListener('click', function () {
-            var isOpen = navMenu.classList.contains('flex');
-            navMenu.classList.toggle('flex', !isOpen);
-            navMenu.classList.toggle('hidden', isOpen);
-            navToggle.setAttribute('aria-expanded', String(!isOpen));
-          });
-          document.querySelectorAll('[data-nav-close]').forEach(function (link) {
-            link.addEventListener('click', function () {
-              navMenu.classList.remove('flex');
-              navMenu.classList.add('hidden');
-              navToggle.setAttribute('aria-expanded', 'false');
-            });
+            var isOpen = navToggle.getAttribute('aria-expanded') === 'true';
+            if (isOpen) {
+              closeNav();
+            } else {
+              openNav();
+            }
           });
         }
+
+        if (navOverlay) {
+          navOverlay.addEventListener('click', closeNav);
+        }
+
+        if (navMenu) {
+          navMenu.querySelectorAll('[data-nav-close]').forEach(function (link) {
+            link.addEventListener('click', closeNav);
+          });
+        }
+
+        window.addEventListener('resize', function () {
+          if (window.innerWidth >= 768) {
+            closeNav();
+          }
+        });
+
+        window.addEventListener('keydown', function (event) {
+          if (event.key === 'Escape') {
+            closeNav();
+          }
+        });
 
         document.querySelectorAll('[data-scroll-to]').forEach(function (button) {
           button.addEventListener('click', function (event) {
