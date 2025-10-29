@@ -1,10 +1,10 @@
 "use client";
 
 import type { ReactNode } from "react";
-import { ArrowLeft, Award, ExternalLink, Twitch, Youtube } from "lucide-react";
+import { ArrowLeft, Award, Gamepad2, MessageCircle, Music2, Twitch, Youtube } from "lucide-react";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import type { PlayerProfile, SiteSettings } from "@/lib/admin-state";
+import type { PlayerProfile, PlayerSocialHandles, SiteSettings } from "@/lib/admin-state";
 
 interface PlayerProfileViewProps {
   player: PlayerProfile;
@@ -18,8 +18,8 @@ interface PlayerProfileViewProps {
 
 function PlayerProfileView({ player, siteSettings, backLink, extraActions }: PlayerProfileViewProps) {
   const heroTitle = siteSettings.heroTitle?.trim() || "Fjolsenbanden";
-  const announcement =
-    siteSettings.announcement?.trim() || "Send melding via Discord-kanal for foreldre";
+  const socialEntries = buildSocialEntries(player.socials);
+  const segmentSummary = formatSegments(player.socials);
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 text-slate-100">
@@ -52,17 +52,19 @@ function PlayerProfileView({ player, siteSettings, backLink, extraActions }: Pla
               <p className="text-xs uppercase tracking-widest text-cyan-200">{heroTitle}</p>
               <h1 className="text-3xl font-semibold text-white sm:text-4xl">{player.gamerTag}</h1>
               <p className="text-sm text-slate-200 sm:text-base">{player.bio}</p>
-              <div className="flex flex-wrap justify-center gap-3 sm:justify-start">
-                {player.socials.twitch ? (
-                  <SocialLink href={player.socials.twitch} label="Twitch" icon={<Twitch className="h-4 w-4" />} />
-                ) : null}
-                {player.socials.youtube ? (
-                  <SocialLink href={player.socials.youtube} label="YouTube" icon={<Youtube className="h-4 w-4" />} />
-                ) : null}
-                {player.socials.tiktok ? (
-                  <SocialLink href={player.socials.tiktok} label="TikTok" icon={<ExternalLink className="h-4 w-4" />} />
-                ) : null}
-              </div>
+              {socialEntries.length > 0 ? (
+                <div className="flex flex-wrap justify-center gap-3 sm:justify-start">
+                  {socialEntries.map((entry) => (
+                    <SocialLink
+                      key={entry.key}
+                      href={entry.href}
+                      label={entry.label}
+                      handle={entry.handle}
+                      icon={entry.icon}
+                    />
+                  ))}
+                </div>
+              ) : null}
             </div>
           </div>
         </div>
@@ -96,19 +98,19 @@ function PlayerProfileView({ player, siteSettings, backLink, extraActions }: Pla
             <CardHeader className="pb-3">
               <CardTitle className="text-white">Info</CardTitle>
             </CardHeader>
-            <CardContent className="space-y-3 text-sm text-slate-200">
-              <InfoRow label="Navn" value={player.realName} />
-              <InfoRow label="Hovedspill" value={player.mainGame} />
-              <InfoRow
-                label="Med siden"
-                value={new Date(player.joinDate).toLocaleDateString("no-NO", {
-                  month: "long",
-                  year: "numeric",
-                })}
-              />
-              <InfoRow label="Kontakt" value={announcement} />
-            </CardContent>
-          </Card>
+              <CardContent className="space-y-3 text-sm text-slate-200">
+                <InfoRow label="Hovedspill" value={player.mainGame} />
+                <InfoRow
+                  label="Med siden"
+                  value={new Date(player.joinDate).toLocaleDateString("no-NO", {
+                    month: "long",
+                    year: "numeric",
+                  })}
+                />
+                {segmentSummary ? <InfoRow label="Segmenter" value={segmentSummary} /> : null}
+                <InfoRow label="Kontakt" value="Kontaktinfo deles kun gjennom Fjolsenbanden-admin." />
+              </CardContent>
+            </Card>
         </section>
 
         <Card className="border-white/10 bg-gradient-to-br from-cyan-500/10 via-emerald-500/10 to-slate-900/40 text-white">
@@ -134,22 +136,40 @@ export { PlayerProfileView };
 export default PlayerProfileView;
 
 interface SocialLinkProps {
-  href: string;
+  href?: string;
   label: string;
+  handle: string;
   icon: ReactNode;
 }
 
-function SocialLink({ href, label, icon }: SocialLinkProps) {
+function SocialLink({ href, label, handle, icon }: SocialLinkProps) {
+  const content = (
+    <>
+      <span className="flex h-9 w-9 items-center justify-center rounded-full bg-white/10 text-white">{icon}</span>
+      <span className="flex flex-col text-left">
+        <span className="text-[11px] uppercase tracking-widest text-slate-300">{label}</span>
+        <span className="text-sm font-medium text-white">{handle}</span>
+      </span>
+    </>
+  );
+
+  if (href) {
+    return (
+      <a
+        href={href}
+        target="_blank"
+        rel="noreferrer"
+        className="inline-flex items-center gap-3 rounded-2xl border border-white/20 bg-white/10 px-4 py-2 text-xs text-white transition hover:border-cyan-400 hover:text-cyan-200"
+      >
+        {content}
+      </a>
+    );
+  }
+
   return (
-    <a
-      href={href}
-      target="_blank"
-      rel="noreferrer"
-      className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-xs text-white transition hover:border-cyan-400 hover:text-cyan-200"
-    >
-      {icon}
-      {label}
-    </a>
+    <div className="inline-flex items-center gap-3 rounded-2xl border border-white/10 bg-white/10 px-4 py-2 text-xs text-white">
+      {content}
+    </div>
   );
 }
 
@@ -167,3 +187,72 @@ function InfoRow({ label, value }: InfoRowProps) {
   );
 }
 
+function buildSocialEntries(socials: PlayerSocialHandles) {
+  const config = [
+    { key: "fortnite" as const, label: "Fortnite", icon: <Gamepad2 className="h-4 w-4" />, href: undefined },
+    {
+      key: "twitch" as const,
+      label: "Twitch",
+      icon: <Twitch className="h-4 w-4" />,
+      href: (handle: string) => `https://twitch.tv/${stripHandle(handle)}`,
+    },
+    {
+      key: "discord" as const,
+      label: "Discord",
+      icon: <MessageCircle className="h-4 w-4" />,
+      href: undefined,
+    },
+    {
+      key: "tiktok" as const,
+      label: "TikTok",
+      icon: <Music2 className="h-4 w-4" />,
+      href: (handle: string) => `https://www.tiktok.com/@${stripHandle(handle)}`,
+    },
+    {
+      key: "youtube" as const,
+      label: "YouTube",
+      icon: <Youtube className="h-4 w-4" />,
+      href: (handle: string) => `https://www.youtube.com/@${stripHandle(handle)}`,
+    },
+  ];
+
+  return config
+    .map((item) => {
+      const handle = socials[item.key];
+      if (!handle) {
+        return null;
+      }
+      const cleanHandle = handle.trim();
+      const href = typeof item.href === "function" ? item.href(cleanHandle) : undefined;
+      return {
+        key: item.key,
+        label: item.label,
+        handle: cleanHandle,
+        href,
+        icon: item.icon,
+      };
+    })
+    .filter((entry): entry is {
+      key: keyof PlayerSocialHandles;
+      label: string;
+      handle: string;
+      href?: string;
+      icon: ReactNode;
+    } => Boolean(entry));
+}
+
+function formatSegments(socials: PlayerSocialHandles): string {
+  const segments = [
+    socials.fortnite ? "Fortnite" : null,
+    socials.twitch ? "Twitch" : null,
+    socials.youtube ? "YouTube" : null,
+    socials.discord ? "Discord" : null,
+    socials.tiktok ? "TikTok" : null,
+  ].filter(Boolean);
+
+  return segments.join(" • ");
+}
+
+function stripHandle(handle: string): string {
+  return handle.replace(/^@/, "");
+}

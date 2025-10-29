@@ -11,6 +11,7 @@ import {
   Lock,
   LogOut,
   MessageCircle,
+  PieChart,
   Plus,
   ShieldCheck,
   TrendingUp,
@@ -25,6 +26,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import {
   DEFAULT_SITE_MODULES,
+  type PlayerProfile,
   type SiteModules,
   type SiteSettings,
   StatsPoint,
@@ -44,9 +46,17 @@ interface NewPlayerState {
   achievements: string;
   avatarUrl: string;
   joinDate: string;
-  twitch?: string;
-  youtube?: string;
-  tiktok?: string;
+  email: string;
+  phone: string;
+  birthDate: string;
+  gender: string;
+  postalCode: string;
+  city: string;
+  fortnite: string;
+  twitch: string;
+  discord: string;
+  youtube: string;
+  tiktok: string;
 }
 
 const emptyNewPlayer = (): NewPlayerState => ({
@@ -57,7 +67,15 @@ const emptyNewPlayer = (): NewPlayerState => ({
   achievements: "",
   avatarUrl: "",
   joinDate: new Date().toISOString().slice(0, 10),
+  email: "",
+  phone: "",
+  birthDate: new Date().toISOString().slice(0, 10),
+  gender: "",
+  postalCode: "",
+  city: "",
+  fortnite: "",
   twitch: "",
+  discord: "",
   youtube: "",
   tiktok: "",
 });
@@ -132,6 +150,7 @@ function AdminDashboardContent({ auth }: DashboardContentProps) {
   }, [statsHistory]);
 
   const chart = useMemo(() => buildChartPoints(statsHistory), [statsHistory]);
+  const sponsorSegments = useMemo(() => buildSponsorSegments(players), [players]);
 
   const handleBrandSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -154,10 +173,21 @@ function AdminDashboardContent({ auth }: DashboardContentProps) {
         newPlayer.avatarUrl.trim() ||
         "https://images.unsplash.com/photo-1603415526960-f7e0328c63b1?auto=format&fit=crop&w=320&q=80",
       joinDate: newPlayer.joinDate,
+      contact: {
+        fullName: newPlayer.realName.trim() || newPlayer.gamerTag.trim(),
+        email: newPlayer.email.trim(),
+        phone: newPlayer.phone.trim(),
+        birthDate: newPlayer.birthDate,
+        gender: newPlayer.gender.trim(),
+        postalCode: newPlayer.postalCode.trim(),
+        city: newPlayer.city.trim(),
+      },
       socials: {
-        twitch: newPlayer.twitch?.trim() || undefined,
-        youtube: newPlayer.youtube?.trim() || undefined,
-        tiktok: newPlayer.tiktok?.trim() || undefined,
+        fortnite: newPlayer.fortnite.trim() || undefined,
+        twitch: newPlayer.twitch.trim() || undefined,
+        discord: newPlayer.discord.trim() || undefined,
+        youtube: newPlayer.youtube.trim() || undefined,
+        tiktok: newPlayer.tiktok.trim() || undefined,
       },
     });
 
@@ -496,6 +526,39 @@ function AdminDashboardContent({ auth }: DashboardContentProps) {
           </Card>
 
           <div className="space-y-6">
+            <Card className="border-white/10 bg-gradient-to-br from-cyan-500/20 via-sky-500/10 to-indigo-900/30 text-white">
+              <CardHeader className="pb-3">
+                <CardTitle className="flex items-center gap-2 text-white">
+                  <PieChart className="h-5 w-5 text-cyan-200" /> Sponsorsegmenter
+                </CardTitle>
+                <p className="text-sm text-slate-200/90">
+                  Se hvilke kanaler spillerne dekker for å målrette sponsorplassene bedre.
+                </p>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="rounded-2xl border border-white/10 bg-white/10 p-4">
+                  <p className="text-xs uppercase tracking-wide text-cyan-100/80">Profiler klare</p>
+                  <p className="mt-1 text-2xl font-semibold text-white">{sponsorSegments.totalPlayers}</p>
+                  <p className="text-xs text-cyan-100/70">Med komplette kontaktdata</p>
+                </div>
+                <div className="space-y-3">
+                  {sponsorSegments.segments.map((segment) => (
+                    <div key={segment.key} className="space-y-2">
+                      <div className="flex items-center justify-between text-xs text-slate-200">
+                        <span className="uppercase tracking-wide text-slate-300">{segment.label}</span>
+                        <span className="font-semibold text-white">{segment.members}</span>
+                      </div>
+                      <div className="h-2 w-full overflow-hidden rounded-full bg-white/10">
+                        <div
+                          className="h-full rounded-full bg-cyan-400/80"
+                          style={{ width: `${segment.percent}%` }}
+                        />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
             <Card className="border-white/10 bg-white/5 text-white">
               <CardHeader className="pb-2">
                 <CardTitle className="flex items-center gap-2 text-white">
@@ -611,6 +674,21 @@ function AdminDashboardContent({ auth }: DashboardContentProps) {
                             <ArrowUpRight className="mr-2 h-4 w-4" /> Åpne profil
                           </a>
                         </Button>
+                      </div>
+                      <div className="sm:col-span-3 rounded-2xl border border-white/10 bg-slate-950/40 p-4 text-left">
+                        <p className="text-[11px] uppercase tracking-widest text-slate-400">Kontaktinfo (intern)</p>
+                        <div className="mt-3 grid gap-3 text-sm text-slate-200 sm:grid-cols-2">
+                          <ContactDetail label="Navn" value={player.contact.fullName} />
+                          <ContactDetail label="E-post" value={player.contact.email} />
+                          <ContactDetail label="Mobil" value={player.contact.phone} />
+                          <ContactDetail label="Fødselsdato" value={formatBirthDate(player.contact.birthDate)} />
+                          <ContactDetail label="Kjønn" value={player.contact.gender} />
+                          <ContactDetail
+                            label="Postnr / sted"
+                            value={formatLocation(player.contact.postalCode, player.contact.city)}
+                          />
+                        </div>
+                        <p className="mt-3 text-[11px] text-cyan-200/80">Skjult for besøkende – kun synlig i admin.</p>
                       </div>
                     </article>
                   ))}
@@ -732,15 +810,129 @@ function AdminDashboardContent({ auth }: DashboardContentProps) {
                       />
                     </div>
                     <div className="space-y-2">
+                      <Label htmlFor="birthDate" className="text-slate-200">
+                        Fødselsdato
+                      </Label>
+                      <Input
+                        id="birthDate"
+                        type="date"
+                        name="birthDate"
+                        value={newPlayer.birthDate}
+                        onChange={(event) => setNewPlayer((state) => ({ ...state, birthDate: event.target.value }))}
+                        className="bg-slate-950/40 text-white placeholder:text-slate-400"
+                      />
+                    </div>
+                  </div>
+                  <div className="grid gap-4 sm:grid-cols-2">
+                    <div className="space-y-2">
+                      <Label htmlFor="email" className="text-slate-200">
+                        E-post
+                      </Label>
+                      <Input
+                        id="email"
+                        name="email"
+                        type="email"
+                        value={newPlayer.email}
+                        onChange={(event) => setNewPlayer((state) => ({ ...state, email: event.target.value }))}
+                        placeholder="navn@fjolsenbanden.no"
+                        className="bg-slate-950/40 text-white placeholder:text-slate-400"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="phone" className="text-slate-200">
+                        Mobil
+                      </Label>
+                      <Input
+                        id="phone"
+                        name="phone"
+                        type="tel"
+                        value={newPlayer.phone}
+                        onChange={(event) => setNewPlayer((state) => ({ ...state, phone: event.target.value }))}
+                        placeholder="+47 123 45 678"
+                        className="bg-slate-950/40 text-white placeholder:text-slate-400"
+                      />
+                    </div>
+                  </div>
+                  <div className="grid gap-4 sm:grid-cols-2">
+                    <div className="space-y-2">
+                      <Label htmlFor="gender" className="text-slate-200">
+                        Kjønn
+                      </Label>
+                      <Input
+                        id="gender"
+                        name="gender"
+                        value={newPlayer.gender}
+                        onChange={(event) => setNewPlayer((state) => ({ ...state, gender: event.target.value }))}
+                        placeholder="F.eks. Kvinne"
+                        className="bg-slate-950/40 text-white placeholder:text-slate-400"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="postalCode" className="text-slate-200">
+                        Postnr
+                      </Label>
+                      <Input
+                        id="postalCode"
+                        name="postalCode"
+                        value={newPlayer.postalCode}
+                        onChange={(event) => setNewPlayer((state) => ({ ...state, postalCode: event.target.value }))}
+                        placeholder="0000"
+                        className="bg-slate-950/40 text-white placeholder:text-slate-400"
+                      />
+                    </div>
+                  </div>
+                  <div className="grid gap-4 sm:grid-cols-2">
+                    <div className="space-y-2">
+                      <Label htmlFor="city" className="text-slate-200">
+                        Sted
+                      </Label>
+                      <Input
+                        id="city"
+                        name="city"
+                        value={newPlayer.city}
+                        onChange={(event) => setNewPlayer((state) => ({ ...state, city: event.target.value }))}
+                        placeholder="Oslo"
+                        className="bg-slate-950/40 text-white placeholder:text-slate-400"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="fortnite" className="text-slate-200">
+                        Fortnite-brukernavn
+                      </Label>
+                      <Input
+                        id="fortnite"
+                        name="fortnite"
+                        value={newPlayer.fortnite}
+                        onChange={(event) => setNewPlayer((state) => ({ ...state, fortnite: event.target.value }))}
+                        placeholder="FjolseFar#Nord"
+                        className="bg-slate-950/40 text-white placeholder:text-slate-400"
+                      />
+                    </div>
+                  </div>
+                  <div className="grid gap-4 sm:grid-cols-2">
+                    <div className="space-y-2">
                       <Label htmlFor="twitch" className="text-slate-200">
-                        Twitch (valgfritt)
+                        Twitch-brukernavn (valgfritt)
                       </Label>
                       <Input
                         id="twitch"
                         name="twitch"
                         value={newPlayer.twitch}
                         onChange={(event) => setNewPlayer((state) => ({ ...state, twitch: event.target.value }))}
-                        placeholder="https://twitch.tv/..."
+                        placeholder="fjolsefar"
+                        className="bg-slate-950/40 text-white placeholder:text-slate-400"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="discord" className="text-slate-200">
+                        Discord (valgfritt)
+                      </Label>
+                      <Input
+                        id="discord"
+                        name="discord"
+                        value={newPlayer.discord}
+                        onChange={(event) => setNewPlayer((state) => ({ ...state, discord: event.target.value }))}
+                        placeholder="FjolseFar#1024"
                         className="bg-slate-950/40 text-white placeholder:text-slate-400"
                       />
                     </div>
@@ -748,27 +940,27 @@ function AdminDashboardContent({ auth }: DashboardContentProps) {
                   <div className="grid gap-4 sm:grid-cols-2">
                     <div className="space-y-2">
                       <Label htmlFor="youtube" className="text-slate-200">
-                        YouTube (valgfritt)
+                        YouTube-brukernavn (valgfritt)
                       </Label>
                       <Input
                         id="youtube"
                         name="youtube"
                         value={newPlayer.youtube}
                         onChange={(event) => setNewPlayer((state) => ({ ...state, youtube: event.target.value }))}
-                        placeholder="https://youtube.com/@..."
+                        placeholder="@fjolsefar"
                         className="bg-slate-950/40 text-white placeholder:text-slate-400"
                       />
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="tiktok" className="text-slate-200">
-                        TikTok (valgfritt)
+                        TikTok-brukernavn (valgfritt)
                       </Label>
                       <Input
                         id="tiktok"
                         name="tiktok"
                         value={newPlayer.tiktok}
                         onChange={(event) => setNewPlayer((state) => ({ ...state, tiktok: event.target.value }))}
-                        placeholder="https://www.tiktok.com/@..."
+                        placeholder="@fjolsefar"
                         className="bg-slate-950/40 text-white placeholder:text-slate-400"
                       />
                     </div>
@@ -917,6 +1109,35 @@ function buildChartPoints(history: StatsPoint[]) {
   return { points, linePath, areaPath };
 }
 
+function buildSponsorSegments(players: PlayerProfile[]) {
+  const definitions = [
+    { key: "fortnite" as const, label: "Fortnite" },
+    { key: "twitch" as const, label: "Twitch" },
+    { key: "discord" as const, label: "Discord" },
+    { key: "tiktok" as const, label: "TikTok" },
+    { key: "youtube" as const, label: "YouTube" },
+  ];
+
+  const segments = definitions.map((definition) => {
+    const members = players.filter((player) => {
+      const handle = player.socials[definition.key];
+      return Boolean(handle && handle.trim());
+    }).length;
+    return { ...definition, members };
+  });
+
+  const maxMembers = Math.max(1, ...segments.map((segment) => segment.members));
+
+  return {
+    totalPlayers: players.length,
+    segments: segments.map((segment) => ({
+      ...segment,
+      percent:
+        segment.members > 0 ? Math.max((segment.members / maxMembers) * 100, 12) : 0,
+    })),
+  };
+}
+
 function extractAchievements(input: string): string[] {
   return input
     .split(",")
@@ -936,6 +1157,42 @@ function formatDate(input: string): string {
   } catch (error) {
     return input;
   }
+}
+
+function formatBirthDate(input: string): string {
+  if (!input) {
+    return "—";
+  }
+  try {
+    return new Date(input).toLocaleDateString("no-NO", {
+      year: "numeric",
+      month: "short",
+      day: "2-digit",
+    });
+  } catch (error) {
+    return input;
+  }
+}
+
+function formatLocation(postalCode: string, city: string): string {
+  const trimmedPostal = postalCode?.trim() ?? "";
+  const trimmedCity = city?.trim() ?? "";
+  const parts = [trimmedPostal, trimmedCity].filter(Boolean);
+  return parts.length > 0 ? parts.join(" ") : "—";
+}
+
+interface ContactDetailProps {
+  label: string;
+  value: string;
+}
+
+function ContactDetail({ label, value }: ContactDetailProps) {
+  return (
+    <div>
+      <p className="text-xs uppercase tracking-wide text-slate-400">{label}</p>
+      <p className="mt-1 text-sm font-medium text-white">{value || "—"}</p>
+    </div>
+  );
 }
 
 interface StatTileProps {

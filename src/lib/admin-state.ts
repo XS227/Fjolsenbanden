@@ -16,6 +16,24 @@ export interface SiteSettings {
   modules: SiteModules;
 }
 
+export interface PlayerContactInfo {
+  fullName: string;
+  email: string;
+  phone: string;
+  birthDate: string;
+  gender: string;
+  postalCode: string;
+  city: string;
+}
+
+export interface PlayerSocialHandles {
+  fortnite?: string;
+  twitch?: string;
+  discord?: string;
+  tiktok?: string;
+  youtube?: string;
+}
+
 export interface PlayerProfile {
   id: string;
   slug: string;
@@ -26,12 +44,14 @@ export interface PlayerProfile {
   achievements: string[];
   avatarUrl: string;
   joinDate: string;
-  socials: {
-    twitch?: string;
-    youtube?: string;
-    tiktok?: string;
-  };
+  contact: PlayerContactInfo;
+  socials: PlayerSocialHandles;
 }
+
+type StoredPlayerProfile = Omit<PlayerProfile, "contact" | "socials"> & {
+  contact?: Partial<PlayerContactInfo>;
+  socials?: Partial<PlayerSocialHandles>;
+};
 
 export interface StatsPoint {
   month: string;
@@ -76,9 +96,21 @@ const DEFAULT_STATE: AdminState = {
       avatarUrl:
         "https://images.unsplash.com/photo-1544723795-3fb6469f5b39?auto=format&fit=crop&w=320&q=80",
       joinDate: "2021-08-16",
+      contact: {
+        fullName: "Marius Fjolsen",
+        email: "marius@fjolsenbanden.no",
+        phone: "+47 998 33 221",
+        birthDate: "1987-04-11",
+        gender: "Mann",
+        postalCode: "0456",
+        city: "Oslo",
+      },
       socials: {
-        twitch: "https://twitch.tv/fjolsefar",
-        youtube: "https://youtube.com/@fjolsefar",
+        fortnite: "FjolseFar#Nord",
+        twitch: "fjolsefar",
+        youtube: "FjolseFar",
+        discord: "FjolseFar#1024",
+        tiktok: "@fjolsefar",
       },
     },
     {
@@ -92,9 +124,21 @@ const DEFAULT_STATE: AdminState = {
       avatarUrl:
         "https://images.unsplash.com/photo-1502767089025-6572583495b0?auto=format&fit=crop&w=320&q=80",
       joinDate: "2022-02-04",
+      contact: {
+        fullName: "June Olsen",
+        email: "june@fjolsenbanden.no",
+        phone: "+47 913 55 402",
+        birthDate: "1991-09-23",
+        gender: "Kvinne",
+        postalCode: "3111",
+        city: "Tønsberg",
+      },
       socials: {
-        twitch: "https://twitch.tv/pixeline",
-        tiktok: "https://www.tiktok.com/@pixeline",
+        fortnite: "PixelineNo",
+        twitch: "pixeline",
+        youtube: "PixelinePlays",
+        discord: "pixeline",
+        tiktok: "@pixeline",
       },
     },
     {
@@ -108,9 +152,21 @@ const DEFAULT_STATE: AdminState = {
       avatarUrl:
         "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=320&q=80",
       joinDate: "2020-11-09",
+      contact: {
+        fullName: "Tor Martin Fjolsen",
+        email: "tormartin@fjolsenbanden.no",
+        phone: "+47 974 66 110",
+        birthDate: "2002-02-17",
+        gender: "Mann",
+        postalCode: "4321",
+        city: "Sandnes",
+      },
       socials: {
-        twitch: "https://twitch.tv/shieldkid",
-        youtube: "https://youtube.com/@shieldkid",
+        fortnite: "ShieldKid",
+        twitch: "shieldkid",
+        youtube: "ShieldKidTV",
+        discord: "shieldkid#7777",
+        tiktok: "@shieldkid",
       },
     },
   ],
@@ -143,6 +199,45 @@ function ensureUniqueSlug(existing: PlayerProfile[], base: string): string {
   return candidate;
 }
 
+function ensurePlayerProfile(player: StoredPlayerProfile): PlayerProfile {
+  const fallbackName = player.realName?.trim() || player.gamerTag?.trim() || "Spiller";
+  const achievements = Array.isArray(player.achievements) ? player.achievements : [];
+  const contact = player.contact ?? {};
+  const socials = player.socials ?? {};
+
+  return {
+    ...player,
+    realName: player.realName ?? fallbackName,
+    gamerTag: player.gamerTag ?? fallbackName,
+    achievements,
+    avatarUrl:
+      player.avatarUrl ??
+      "https://images.unsplash.com/photo-1603415526960-f7e0328c63b1?auto=format&fit=crop&w=320&q=80",
+    joinDate: player.joinDate ?? new Date().toISOString(),
+    contact: {
+      fullName: contact.fullName?.trim() || fallbackName,
+      email: contact.email?.trim() || "",
+      phone: contact.phone?.trim() || "",
+      birthDate: contact.birthDate || "",
+      gender: contact.gender?.trim() || "",
+      postalCode: contact.postalCode?.trim() || "",
+      city: contact.city?.trim() || "",
+    },
+    socials: {
+      fortnite: sanitizeHandle(socials.fortnite),
+      twitch: sanitizeHandle(socials.twitch),
+      discord: sanitizeHandle(socials.discord),
+      tiktok: sanitizeHandle(socials.tiktok),
+      youtube: sanitizeHandle(socials.youtube),
+    },
+  } as PlayerProfile;
+}
+
+function sanitizeHandle(value: string | undefined): string | undefined {
+  const trimmed = value?.trim();
+  return trimmed ? trimmed : undefined;
+}
+
 export function useAdminState() {
   const [persistedState, setPersistedState] = usePersistentState<AdminState>(
     "fjolsenbanden-admin",
@@ -166,11 +261,11 @@ export function useAdminState() {
       const safeCurrent = ensureStateShape(current);
       const baseSlug = slugify(player.gamerTag);
       const slug = ensureUniqueSlug(safeCurrent.players, baseSlug);
-      const newPlayer: PlayerProfile = {
+      const newPlayer: PlayerProfile = ensurePlayerProfile({
         ...player,
         id: generateId(),
         slug,
-      };
+      });
       return {
         ...safeCurrent,
         players: [newPlayer, ...safeCurrent.players],
@@ -185,16 +280,18 @@ export function useAdminState() {
         ...safeCurrent,
         players: safeCurrent.players.map((player) =>
           player.id === id
-            ? {
+            ? ensurePlayerProfile({
                 ...player,
                 ...updates,
+                contact: { ...player.contact, ...(updates.contact ?? {}) },
+                socials: { ...player.socials, ...(updates.socials ?? {}) },
                 slug: updates.gamerTag
                   ? ensureUniqueSlug(
                       safeCurrent.players.filter((item) => item.id !== id),
                       slugify(updates.gamerTag),
                     )
                   : player.slug,
-              }
+              })
             : player,
         ),
       };
@@ -228,9 +325,13 @@ export type UseAdminStateReturn = ReturnType<typeof useAdminState>;
 function ensureStateShape(input: AdminState): AdminState {
   const siteSettings = mergeSiteSettings(DEFAULT_STATE.siteSettings, input.siteSettings ?? {});
 
+  const players = [...(input.players ?? DEFAULT_STATE.players)].map((player) =>
+    ensurePlayerProfile(player as StoredPlayerProfile),
+  );
+
   return {
     siteSettings,
-    players: [...(input.players ?? DEFAULT_STATE.players)],
+    players,
     statsHistory: [...(input.statsHistory ?? DEFAULT_STATE.statsHistory)],
   };
 }
