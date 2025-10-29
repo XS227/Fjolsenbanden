@@ -363,6 +363,9 @@ export default function FjolsenbandenHome() {
     siteSettings.announcement?.trim() ||
     "Neste livesending starter 20:00 med co-op i Mario Kart og premier fra Lenovo!";
   const logoUrl = siteSettings.logoUrl?.trim() || "/assets/logo.svg";
+  const presentationVideoUrl =
+    siteSettings.presentationVideoUrl?.trim() ||
+    "https://www.youtube.com/embed/8EgRIkmvmtM?si=qMzmEaMfP-2ODMbc";
 
   const filteredNavLinks = useMemo(
     () =>
@@ -715,7 +718,7 @@ export default function FjolsenbandenHome() {
                 className="aspect-video w-full"
                 width="560"
                 height="315"
-                src="https://www.youtube.com/embed/qaHsJWL4xpM?si=gXrmtGxiH5k7Ft80"
+                src={presentationVideoUrl}
                 title="YouTube video player"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 referrerPolicy="strict-origin-when-cross-origin"
