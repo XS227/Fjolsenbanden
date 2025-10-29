@@ -203,12 +203,11 @@
               </button>
               <div
                 id="profile-preview-menu"
-                class="absolute right-0 z-20 mt-2 hidden w-56 rounded-2xl border border-white/10 bg-slate-900/95 p-3 text-xs text-slate-200 shadow-2xl backdrop-blur"
                 role="menu"
-                aria-labelledby="profile-preview-button"
+                class="absolute right-0 top-full z-40 mt-2 hidden w-56 rounded-xl border border-white/10 bg-[#101c37]/95 p-2 text-xs shadow-lg backdrop-blur"
               >
-                <p class="px-2 text-[11px] font-semibold uppercase tracking-wide text-slate-400">Velg modus</p>
-                <div class="mt-2 flex flex-col gap-1">
+                <p class="px-2 pb-2 text-[11px] font-semibold uppercase tracking-wide text-slate-400">Forhåndsvis som</p>
+                <div class="space-y-1">
                   <button
                     type="button"
                     class="flex items-center justify-between gap-2 rounded-lg px-3 py-2 text-left text-xs font-medium text-slate-200 transition hover:bg-white/10 hover:text-white focus:outline-none focus:ring-2 focus:ring-[#13A0F9]"
@@ -219,7 +218,7 @@
                       <span class="grid h-6 w-6 place-content-center rounded-full bg-sky-500/15 text-sky-200 font-semibold">V</span>
                       <span class="flex flex-col leading-tight">
                         <span class="font-semibold text-white">Besøkende</span>
-                        <span class="text-[10px] font-normal text-slate-400">Forsiden slik publikum ser den</span>
+                        <span class="text-[10px] font-normal text-slate-400">Ser nettsiden som gjest</span>
                       </span>
                     </span>
                     <svg
@@ -312,31 +311,82 @@
                 <path d="M15.5 10.5 18 13l3.5-3.5"></path>
               </svg>
             </a>
-            <button class="rounded-md p-2 transition hover:bg-white/10 md:hidden" aria-label="Åpne meny" id="nav-toggle">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <button
+              type="button"
+              class="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/20 text-white transition hover:border-white/40 hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/40 md:hidden"
+              aria-label="Åpne meny"
+              aria-expanded="false"
+              aria-controls="nav-menu"
+              id="nav-toggle"
+            >
+              <span class="sr-only" data-nav-toggle-label>Åpne meny</span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                data-nav-toggle-icon="open"
+                class="h-5 w-5"
+              >
                 <line x1="4" x2="20" y1="12" y2="12"></line>
                 <line x1="4" x2="20" y1="6" y2="6"></line>
                 <line x1="4" x2="20" y1="18" y2="18"></line>
               </svg>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                data-nav-toggle-icon="close"
+                class="hidden h-5 w-5"
+              >
+                <line x1="18" x2="6" y1="6" y2="18"></line>
+                <line x1="6" x2="18" y1="6" y2="18"></line>
+              </svg>
             </button>
           </div>
-          <ul
-            class="absolute right-4 top-full mt-2 hidden flex-col gap-3 rounded-xl border border-white/10 bg-[#1f2940] p-4 text-sm shadow-lg md:hidden sm:right-6"
-            id="nav-menu"
-          >
-            <li><a class="block rounded-md px-4 py-2 transition hover:bg-white/10" href="#">Hjem</a></li>
-            <li><a class="block rounded-md px-4 py-2 transition hover:bg-white/10" href="#live">Live</a></li>
-            <li><a class="block rounded-md px-4 py-2 transition hover:bg-white/10" href="#medlemskap">Medlemskap</a></li>
-            <li><a class="block rounded-md px-4 py-2 transition hover:bg-white/10" href="#premier">Premier</a></li>
-            <li><a class="block rounded-md px-4 py-2 transition hover:bg-white/10" href="#partners">Samarbeid</a></li>
-            <li><a class="block rounded-md px-4 py-2 transition hover:bg-white/10" href="#kontakt">Kontakt</a></li>
-            <li>
-              <a class="flex items-center gap-2 rounded-md px-4 py-2 transition hover:bg-white/10" href="preview/admin-dashboard-preview.html" target="_blank" rel="noreferrer">
-                <span aria-hidden="true">🔐</span>
-                <span>Adminpanel (forhåndsvisning)</span>
-              </a>
-            </li>
-            <li class="border-t border-white/10 pt-2">
+        </nav>
+        <div class="fixed inset-0 z-40 hidden bg-black/60 backdrop-blur-sm md:hidden" id="nav-backdrop" aria-hidden="true"></div>
+        <div class="absolute left-0 right-0 top-full z-50 hidden px-4 pb-4 md:hidden sm:px-6" id="nav-menu">
+          <div class="rounded-2xl border border-white/10 bg-[#1f2940] p-4 text-sm shadow-lg">
+            <ul class="flex flex-col gap-2">
+              <li><a class="block rounded-md px-4 py-2 transition hover:bg-white/10" href="#" data-nav-close="true">Hjem</a></li>
+              <li><a class="block rounded-md px-4 py-2 transition hover:bg-white/10" href="#live" data-nav-close="true">Live</a></li>
+              <li><a class="block rounded-md px-4 py-2 transition hover:bg-white/10" href="#medlemskap" data-nav-close="true">Medlemskap</a></li>
+              <li><a class="block rounded-md px-4 py-2 transition hover:bg-white/10" href="#premier" data-nav-close="true">Premier</a></li>
+              <li><a class="block rounded-md px-4 py-2 transition hover:bg-white/10" href="#partners" data-nav-close="true">Samarbeid</a></li>
+              <li><a class="block rounded-md px-4 py-2 transition hover:bg-white/10" href="#kontakt" data-nav-close="true">Kontakt</a></li>
+              <li>
+                <a
+                  class="flex items-center gap-2 rounded-md px-4 py-2 transition hover:bg-white/10"
+                  href="preview/admin-dashboard-preview.html"
+                  target="_blank"
+                  rel="noreferrer"
+                  data-nav-close="true"
+                >
+                  <span aria-hidden="true">🔐</span>
+                  <span>Adminpanel (forhåndsvisning)</span>
+                </a>
+              </li>
+            </ul>
+            <a
+              class="mt-4 block rounded-full border border-white/20 px-4 py-2 text-center font-semibold text-white transition hover:border-white/40 hover:bg-white/10"
+              href="#bli-medlem"
+              data-nav-close="true"
+            >
+              Bli medlem
+            </a>
+            <div class="mt-4 border-t border-white/10 pt-3">
               <p class="px-2 text-xs font-semibold uppercase tracking-wide text-zinc-400">Velg modus</p>
               <div class="mt-2 flex flex-col gap-2">
                 <button
@@ -375,9 +425,10 @@
                   </span>
                 </button>
               </div>
-            </li>
-          </ul>
-        </nav>
+            </div>
+          </div>
+        </div>
+
 
         <main class="relative z-10 pb-40">
         <section id="community" class="section-shell mt-6">
@@ -644,16 +695,31 @@
             <!-- LOGO-LISTE (midtstilt) -->
             <ul class="partners__logos" aria-label="Våre samarbeidspartnere">
               <li>
-                <img src="/assets/partners/lenovo.svg" alt="Lenovo" class="logo" />
+                <img
+                  src="http://fjolsenbanden.setaei.com/Images/lenova1.jpg"
+                  alt="Lenovo"
+                  class="logo"
+                  loading="lazy"
+                />
               </li>
               <li>
-                <img src="/assets/partners/komplett.svg" alt="Komplett" class="logo" />
+                <img
+                  src="http://fjolsenbanden.setaei.com/Images/komplett1.jpg"
+                  alt="Komplett"
+                  class="logo"
+                  loading="lazy"
+                />
               </li>
               <li>
                 <img src="/assets/partners/philips.svg" alt="Philips" class="logo" />
               </li>
               <li>
-                <img src="/assets/partners/samsung.svg" alt="Samsung" class="logo" />
+                <img
+                  src="http://fjolsenbanden.setaei.com/Images/samsung1.jpg"
+                  alt="Samsung"
+                  class="logo"
+                  loading="lazy"
+                />
               </li>
             </ul>
 
@@ -1037,18 +1103,83 @@
   <script>
       const toggle = document.getElementById("nav-toggle");
       const menu = document.getElementById("nav-menu");
+      const backdrop = document.getElementById("nav-backdrop");
+      const toggleIcons = toggle ? toggle.querySelectorAll("[data-nav-toggle-icon]") : [];
+      const toggleLabel = toggle ? toggle.querySelector("[data-nav-toggle-label]") : null;
+
+      const setToggleState = (isOpen) => {
+        if (!toggle) {
+          return;
+        }
+        toggle.setAttribute("aria-expanded", String(isOpen));
+        toggle.setAttribute("aria-label", isOpen ? "Lukk meny" : "Åpne meny");
+        if (toggleLabel) {
+          toggleLabel.textContent = isOpen ? "Lukk meny" : "Åpne meny";
+        }
+        toggleIcons.forEach((icon) => {
+          const shouldShow = icon.dataset.navToggleIcon === (isOpen ? "close" : "open");
+          icon.classList.toggle("hidden", !shouldShow);
+        });
+      };
+
+      const openMenu = () => {
+        if (!menu) {
+          return;
+        }
+        menu.classList.remove("hidden");
+        menu.classList.add("block");
+        if (backdrop) {
+          backdrop.classList.remove("hidden");
+          backdrop.classList.add("block");
+        }
+        setToggleState(true);
+      };
+
+      const closeMenu = () => {
+        if (!menu) {
+          return;
+        }
+        menu.classList.add("hidden");
+        menu.classList.remove("block");
+        if (backdrop) {
+          backdrop.classList.add("hidden");
+          backdrop.classList.remove("block");
+        }
+        setToggleState(false);
+      };
+
       if (toggle && menu) {
         toggle.addEventListener("click", () => {
-          menu.classList.toggle("hidden");
+          const isOpen = toggle.getAttribute("aria-expanded") === "true";
+          if (isOpen) {
+            closeMenu();
+          } else {
+            openMenu();
+          }
         });
       }
+
+      if (backdrop) {
+        backdrop.addEventListener("click", closeMenu);
+      }
+
       if (menu) {
-        menu.querySelectorAll("a").forEach((link) => {
-          link.addEventListener("click", () => {
-            menu.classList.add("hidden");
-          });
+        menu.querySelectorAll("[data-nav-close]").forEach((element) => {
+          element.addEventListener("click", closeMenu);
         });
       }
+
+      window.addEventListener("resize", () => {
+        if (window.innerWidth >= 768) {
+          closeMenu();
+        }
+      });
+
+      window.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") {
+          closeMenu();
+        }
+      });
 
       const profilePreviewWrapper = document.querySelector("[data-preview-mode-wrapper]");
       const profilePreviewButton = document.getElementById("profile-preview-button");
