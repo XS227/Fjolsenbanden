@@ -221,7 +221,7 @@ const offerCards = [
   },
   {
     icon: <Users className="h-6 w-6 text-sky-300" aria-hidden="true" />,
-    title: "Coaching",
+    title: "Fortnite Coaching",
     description:
       "1-til-1 coaching med Norges dyktigste Fortnite-spillere – fokus på strategi, samarbeid og trygg nettkultur.",
   },
