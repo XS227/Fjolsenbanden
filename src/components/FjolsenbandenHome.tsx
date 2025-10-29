@@ -930,19 +930,7 @@ export default function FjolsenbandenHome() {
           <p className="mx-auto max-w-3xl text-zinc-300">
             Vi har allerede hatt samarbeid med flere kjente merkevarer.
           </p>
-          <p className="mx-auto mt-6 max-w-2xl text-zinc-300">
-            Ønsker du å synliggjøre din merkevare for vårt engasjerte og voksende gaming-publikum?
-          </p>
-          <p className="mx-auto mt-2 max-w-2xl text-zinc-300">Ta kontakt for samarbeid!</p>
-          <div className="mt-8 flex justify-center">
-            <Button
-              asChild
-              className="rounded-full bg-gradient-to-r from-[#13A0F9] to-[#FF2F9C] px-8 py-3 font-semibold text-white shadow-[0_16px_28px_rgba(19,160,249,0.35)] transition hover:from-[#0d8bd6] hover:to-[#e12585]"
-            >
-              <a href="#kontakt">Kontakt oss</a>
-            </Button>
-          </div>
-          <div id="sponsorer" className="mt-6 flex flex-wrap justify-center gap-6">
+          <div id="sponsorer" className="mt-8 flex flex-wrap justify-center gap-6">
             {sponsors.map(({ name, logoUrl }) => (
               <div
                 key={name}
@@ -956,6 +944,20 @@ export default function FjolsenbandenHome() {
                 />
               </div>
             ))}
+          </div>
+          <div className="mt-8 space-y-4">
+            <p className="mx-auto max-w-2xl text-zinc-300">
+              Ønsker du å synliggjøre din merkevare for vårt engasjerte og voksende gaming-publikum?
+            </p>
+            <p className="mx-auto max-w-2xl text-zinc-300">Ta kontakt for samarbeid!</p>
+            <div className="flex justify-center">
+              <Button
+                asChild
+                className="rounded-full bg-gradient-to-r from-[#13A0F9] to-[#FF2F9C] px-8 py-3 font-semibold text-white shadow-[0_16px_28px_rgba(19,160,249,0.35)] transition hover:from-[#0d8bd6] hover:to-[#e12585]"
+              >
+                <a href="#kontakt">Kontakt oss</a>
+              </Button>
+            </div>
           </div>
         </section>
       ) : null}
