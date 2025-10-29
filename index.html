@@ -214,11 +214,135 @@
             <li><a class="transition-colors duration-150 hover:text-[#13A0F9]" href="#kontakt">Kontakt</a></li>
           </ul>
           <div class="flex items-center gap-3 md:ml-4">
+            <div class="relative" data-preview-mode-wrapper>
+              <button
+                type="button"
+                id="profile-preview-button"
+                class="inline-flex items-center gap-2 rounded-xl border border-white/15 bg-white/10 px-3 py-2 text-xs font-semibold text-white shadow-sm transition duration-150 hover:-translate-y-0.5 hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-[#13A0F9]"
+                aria-expanded="false"
+                aria-haspopup="true"
+                aria-controls="profile-preview-menu"
+                title="Velg forhåndsvisning"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4">
+                  <path d="M16 7a4 4 0 1 1-8 0 4 4 0 0 1 8 0"></path>
+                  <path d="M3 21a7 7 0 0 1 14 0"></path>
+                </svg>
+                <span class="hidden text-xs font-medium text-white/80 sm:inline" data-preview-mode-label>Besøkende</span>
+                <span
+                  data-preview-mode-indicator
+                  data-base-class="h-2 w-2 rounded-full transition-colors duration-200 sm:h-2.5 sm:w-2.5"
+                  class="h-2 w-2 rounded-full transition-colors duration-200 sm:h-2.5 sm:w-2.5 bg-sky-400"
+                  aria-hidden="true"
+                ></span>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-3 w-3 text-white/60">
+                  <path d="m6 9 6 6 6-6"></path>
+                </svg>
+              </button>
+              <div
+                id="profile-preview-menu"
+                class="absolute right-0 z-20 mt-2 hidden w-56 rounded-2xl border border-white/10 bg-slate-900/95 p-3 text-xs text-slate-200 shadow-2xl backdrop-blur"
+                role="menu"
+                aria-labelledby="profile-preview-button"
+              >
+                <p class="px-2 text-[11px] font-semibold uppercase tracking-wide text-slate-400">Velg modus</p>
+                <div class="mt-2 flex flex-col gap-1">
+                  <button
+                    type="button"
+                    class="flex items-center justify-between gap-2 rounded-lg px-3 py-2 text-left text-xs font-medium text-slate-200 transition hover:bg-white/10 hover:text-white focus:outline-none focus:ring-2 focus:ring-[#13A0F9]"
+                    data-preview-mode-option="visitor"
+                    data-preview-mode-option-scope="menu"
+                  >
+                    <span class="flex items-center gap-2">
+                      <span class="grid h-6 w-6 place-content-center rounded-full bg-sky-500/15 text-sky-200 font-semibold">V</span>
+                      <span class="flex flex-col leading-tight">
+                        <span class="font-semibold text-white">Besøkende</span>
+                        <span class="text-[10px] font-normal text-slate-400">Forsiden slik publikum ser den</span>
+                      </span>
+                    </span>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      data-preview-mode-check
+                      data-base-class="h-3.5 w-3.5 text-emerald-400 transition-opacity duration-200"
+                      class="h-3.5 w-3.5 text-emerald-400 transition-opacity duration-200 opacity-0"
+                    >
+                      <path d="m5 12 5 5 9-11"></path>
+                    </svg>
+                  </button>
+                  <button
+                    type="button"
+                    class="flex items-center justify-between gap-2 rounded-lg px-3 py-2 text-left text-xs font-medium text-slate-200 transition hover:bg-white/10 hover:text-white focus:outline-none focus:ring-2 focus:ring-[#13A0F9]"
+                    data-preview-mode-option="user"
+                    data-preview-mode-option-scope="menu"
+                    data-preview-url="preview/player-profile-preview.html"
+                  >
+                    <span class="flex items-center gap-2">
+                      <span class="grid h-6 w-6 place-content-center rounded-full bg-emerald-500/15 text-emerald-200 font-semibold">M</span>
+                      <span class="flex flex-col leading-tight">
+                        <span class="font-semibold text-white">Medlem</span>
+                        <span class="text-[10px] font-normal text-slate-400">Åpner medlemsprofil i ny fane</span>
+                      </span>
+                    </span>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      data-preview-mode-check
+                      data-base-class="h-3.5 w-3.5 text-emerald-400 transition-opacity duration-200"
+                      class="h-3.5 w-3.5 text-emerald-400 transition-opacity duration-200 opacity-0"
+                    >
+                      <path d="m5 12 5 5 9-11"></path>
+                    </svg>
+                  </button>
+                  <button
+                    type="button"
+                    class="flex items-center justify-between gap-2 rounded-lg px-3 py-2 text-left text-xs font-medium text-slate-200 transition hover:bg-white/10 hover:text-white focus:outline-none focus:ring-2 focus:ring-[#13A0F9]"
+                    data-preview-mode-option="admin"
+                    data-preview-mode-option-scope="menu"
+                    data-preview-url="preview/admin-dashboard-preview.html"
+                  >
+                    <span class="flex items-center gap-2">
+                      <span class="grid h-6 w-6 place-content-center rounded-full bg-amber-500/15 text-amber-200 font-semibold">A</span>
+                      <span class="flex flex-col leading-tight">
+                        <span class="font-semibold text-white">Administrator</span>
+                        <span class="text-[10px] font-normal text-slate-400">Viser kontrollpanelet</span>
+                      </span>
+                    </span>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      data-preview-mode-check
+                      data-base-class="h-3.5 w-3.5 text-emerald-400 transition-opacity duration-200"
+                      class="h-3.5 w-3.5 text-emerald-400 transition-opacity duration-200 opacity-0"
+                    >
+                      <path d="m5 12 5 5 9-11"></path>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            </div>
             <a
-              href="/admin"
+              href="preview/admin-dashboard-preview.html"
+              target="_blank"
+              rel="noreferrer"
               class="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-white/15 bg-white/10 text-white shadow-sm transition duration-150 hover:-translate-y-0.5 hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-[#13A0F9]"
-              aria-label="Admin-innlogging"
-              title="Admin-innlogging"
+              aria-label="Åpne adminpanel"
+              title="Åpne adminpanel"
             >
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5">
                 <path d="M12 12a5 5 0 1 0-5-5 5 5 0 0 0 5 5Z"></path>
@@ -245,10 +369,50 @@
             <li><a class="block rounded-md px-4 py-2 transition hover:bg-white/10" href="#partners">Samarbeid</a></li>
             <li><a class="block rounded-md px-4 py-2 transition hover:bg-white/10" href="#kontakt">Kontakt</a></li>
             <li>
-              <a class="flex items-center gap-2 rounded-md px-4 py-2 transition hover:bg-white/10" href="/admin">
+              <a class="flex items-center gap-2 rounded-md px-4 py-2 transition hover:bg-white/10" href="preview/admin-dashboard-preview.html" target="_blank" rel="noreferrer">
                 <span aria-hidden="true">🔐</span>
-                <span>Admin-innlogging</span>
+                <span>Adminpanel (forhåndsvisning)</span>
               </a>
+            </li>
+            <li class="border-t border-white/10 pt-2">
+              <p class="px-2 text-xs font-semibold uppercase tracking-wide text-zinc-400">Velg modus</p>
+              <div class="mt-2 flex flex-col gap-2">
+                <button
+                  type="button"
+                  class="flex items-center justify-between rounded-md px-4 py-2 text-left text-xs font-medium text-zinc-200 transition hover:bg-white/10 hover:text-white focus:outline-none focus:ring-2 focus:ring-[#13A0F9]"
+                  data-preview-mode-option="visitor"
+                  data-preview-mode-option-scope="mobile"
+                >
+                  <span class="flex items-center gap-2">
+                    <span aria-hidden="true">👀</span>
+                    <span>Besøkende-modus</span>
+                  </span>
+                </button>
+                <button
+                  type="button"
+                  class="flex items-center justify-between rounded-md px-4 py-2 text-left text-xs font-medium text-zinc-200 transition hover:bg-white/10 hover:text-white focus:outline-none focus:ring-2 focus:ring-[#13A0F9]"
+                  data-preview-mode-option="user"
+                  data-preview-mode-option-scope="mobile"
+                  data-preview-url="preview/player-profile-preview.html"
+                >
+                  <span class="flex items-center gap-2">
+                    <span aria-hidden="true">🧑‍🤝‍🧑</span>
+                    <span>Medlemsprofil (ny fane)</span>
+                  </span>
+                </button>
+                <button
+                  type="button"
+                  class="flex items-center justify-between rounded-md px-4 py-2 text-left text-xs font-medium text-zinc-200 transition hover:bg-white/10 hover:text-white focus:outline-none focus:ring-2 focus:ring-[#13A0F9]"
+                  data-preview-mode-option="admin"
+                  data-preview-mode-option-scope="mobile"
+                  data-preview-url="preview/admin-dashboard-preview.html"
+                >
+                  <span class="flex items-center gap-2">
+                    <span aria-hidden="true">🛠️</span>
+                    <span>Adminpanel (ny fane)</span>
+                  </span>
+                </button>
+              </div>
             </li>
           </ul>
         </nav>
@@ -640,7 +804,7 @@
         <footer class="mt-20 border-t border-white/10 py-8 text-center text-sm text-zinc-500">
         <div class="flex flex-col items-center justify-center gap-2 text-sm md:flex-row">
           <span>© <span id="current-year"></span> Fjolsenbanden. Alle rettigheter reservert.</span>
-          <a href="/admin" class="flex items-center gap-2 font-medium text-zinc-300 transition hover:text-white">
+          <a href="preview/admin-dashboard-preview.html" target="_blank" rel="noreferrer" class="flex items-center gap-2 font-medium text-zinc-300 transition hover:text-white">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
@@ -923,6 +1087,142 @@
           });
         });
       }
+
+      const profilePreviewWrapper = document.querySelector("[data-preview-mode-wrapper]");
+      const profilePreviewButton = document.getElementById("profile-preview-button");
+      const profilePreviewMenu = document.getElementById("profile-preview-menu");
+      const profilePreviewLabel = document.querySelector("[data-preview-mode-label]");
+      const profilePreviewIndicator = document.querySelector("[data-preview-mode-indicator]");
+      const profilePreviewOptions = document.querySelectorAll("[data-preview-mode-option]");
+      const previewModeStorageKey = "fjolsen-preview-mode";
+      const previewModeConfig = {
+        visitor: { label: "Besøkende", indicatorClass: "bg-sky-400" },
+        user: { label: "Medlem", indicatorClass: "bg-emerald-400", url: "preview/player-profile-preview.html" },
+        admin: { label: "Administrator", indicatorClass: "bg-amber-400", url: "preview/admin-dashboard-preview.html" },
+      };
+      const indicatorBaseClass = profilePreviewIndicator
+        ? (profilePreviewIndicator.dataset.baseClass || profilePreviewIndicator.className || "")
+        : "";
+
+      const applyMenuSelectionState = (mode) => {
+        profilePreviewOptions.forEach((option) => {
+          const optionMode = option.dataset.previewModeOption;
+          if (!optionMode) {
+            return;
+          }
+          const isActive = optionMode === mode;
+          if (option.dataset.previewModeOptionScope === "menu") {
+            option.classList.toggle("bg-white/10", isActive);
+            option.classList.toggle("text-white", isActive);
+            option.classList.toggle("text-slate-200", !isActive);
+            option.classList.toggle("ring-1", isActive);
+            option.classList.toggle("ring-emerald-400/60", isActive);
+            const check = option.querySelector("[data-preview-mode-check]");
+            if (check) {
+              const baseClass = (check.dataset.baseClass || "").trim();
+              check.setAttribute("class", `${baseClass} ${isActive ? "opacity-100" : "opacity-0"}`.trim());
+            }
+          }
+        });
+      };
+
+      const setPreviewMode = (mode) => {
+        if (!Object.prototype.hasOwnProperty.call(previewModeConfig, mode)) {
+          mode = "visitor";
+        }
+        const config = previewModeConfig[mode];
+        if (profilePreviewLabel) {
+          profilePreviewLabel.textContent = config.label;
+        }
+        if (profilePreviewIndicator) {
+          const classes = [indicatorBaseClass, config.indicatorClass].filter(Boolean).join(" ");
+          profilePreviewIndicator.setAttribute("class", classes);
+        }
+        if (profilePreviewButton) {
+          profilePreviewButton.setAttribute("data-active-mode", mode);
+          profilePreviewButton.setAttribute("aria-label", `Velg forhåndsvisning – aktivt: ${config.label}`);
+        }
+        applyMenuSelectionState(mode);
+        try {
+          window.localStorage.setItem(previewModeStorageKey, mode);
+        } catch (error) {
+          console.warn("Kunne ikke lagre forhåndsvisningsmodus", error);
+        }
+      };
+
+      const closeProfileMenu = () => {
+        if (profilePreviewMenu && profilePreviewButton) {
+          profilePreviewMenu.classList.add("hidden");
+          profilePreviewButton.setAttribute("aria-expanded", "false");
+        }
+      };
+
+      const openProfileMenu = () => {
+        if (profilePreviewMenu && profilePreviewButton) {
+          profilePreviewMenu.classList.remove("hidden");
+          profilePreviewButton.setAttribute("aria-expanded", "true");
+          const firstOption = profilePreviewMenu.querySelector("[data-preview-mode-option]");
+          if (firstOption instanceof HTMLElement) {
+            firstOption.focus();
+          }
+        }
+      };
+
+      if (profilePreviewButton && profilePreviewMenu) {
+        profilePreviewButton.addEventListener("click", () => {
+          const isOpen = !profilePreviewMenu.classList.contains("hidden");
+          if (isOpen) {
+            closeProfileMenu();
+          } else {
+            openProfileMenu();
+          }
+        });
+      }
+
+      document.addEventListener("click", (event) => {
+        if (!profilePreviewWrapper) {
+          return;
+        }
+        if (!(event.target instanceof Node)) {
+          return;
+        }
+        if (!profilePreviewWrapper.contains(event.target)) {
+          closeProfileMenu();
+        }
+      });
+
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") {
+          closeProfileMenu();
+        }
+      });
+
+      profilePreviewOptions.forEach((option) => {
+        option.addEventListener("click", (event) => {
+          event.preventDefault();
+          const mode = option.dataset.previewModeOption || "visitor";
+          setPreviewMode(mode);
+          closeProfileMenu();
+          const targetUrl = option.dataset.previewUrl;
+          if (targetUrl) {
+            window.open(targetUrl, "_blank", "noopener");
+          }
+          if (option.dataset.previewModeOptionScope === "mobile" && menu) {
+            menu.classList.add("hidden");
+          }
+        });
+      });
+
+      let initialPreviewMode = "visitor";
+      try {
+        const storedMode = window.localStorage.getItem(previewModeStorageKey);
+        if (storedMode && Object.prototype.hasOwnProperty.call(previewModeConfig, storedMode)) {
+          initialPreviewMode = storedMode;
+        }
+      } catch (error) {
+        console.warn("Kunne ikke lese forhåndsvisningsmodus", error);
+      }
+      setPreviewMode(initialPreviewMode);
 
       const previewFrame = document.querySelector("[data-preview-frame]");
       const previewOverlay = document.querySelector("[data-preview-overlay]");

@@ -43,31 +43,139 @@
       </header>
 
       <section class="grid gap-6 lg:grid-cols-[1.2fr,1fr]">
-        <div class="rounded-3xl border border-white/10 bg-white/5 p-6 text-white shadow-xl">
-          <div class="space-y-5">
-            <div>
-              <h2 class="text-lg font-semibold text-white">Oppdater logo og tekst</h2>
-              <p class="text-sm text-slate-300">Tilpass hvordan Fjolsenbanden presenteres utad.</p>
+        <div class="space-y-6">
+          <div class="rounded-3xl border border-white/10 bg-white/5 p-6 text-white shadow-xl">
+            <div class="space-y-5">
+              <div>
+                <h2 class="text-lg font-semibold text-white">Oppdater logo og tekst</h2>
+                <p class="text-sm text-slate-300">Tilpass hvordan Fjolsenbanden presenteres utad.</p>
+              </div>
+              <div class="space-y-2">
+                <label class="text-sm text-slate-200">Logo-URL</label>
+                <input
+                  class="w-full rounded-lg border border-white/10 bg-slate-950/40 px-3 py-2 text-sm text-white placeholder:text-slate-400"
+                  value="/assets/logo.svg"
+                  data-preview-target="logo"
+                  placeholder="https://"
+                />
+              </div>
+              <div class="space-y-2">
+                <label class="text-sm text-slate-200">Hovedtittel</label>
+                <input
+                  class="w-full rounded-lg border border-white/10 bg-slate-950/40 px-3 py-2 text-sm text-white placeholder:text-slate-400"
+                  value="FJOLSENBANDEN"
+                  data-preview-target="hero-title"
+                  placeholder="Skriv inn overskrift"
+                />
+              </div>
+              <div class="space-y-2">
+                <label class="text-sm text-slate-200">Ingress / slagord</label>
+                <textarea
+                  class="h-24 w-full rounded-lg border border-white/10 bg-slate-950/40 px-3 py-2 text-sm text-white placeholder:text-slate-400"
+                  data-preview-target="hero-tagline"
+                  placeholder="Denne teksten vises under overskriften"
+                >Spillglede for hele familien – trygge streams, turneringer og premier.</textarea>
+              </div>
+              <div class="space-y-2">
+                <label class="text-sm text-slate-200">Aktuell melding</label>
+                <textarea
+                  class="h-20 w-full rounded-lg border border-white/10 bg-slate-950/40 px-3 py-2 text-sm text-white placeholder:text-slate-400"
+                  data-preview-target="hero-message"
+                  placeholder="Kort statusmelding for forsiden"
+                >Neste livesending starter 20:00 med co-op i Mario Kart og premier fra Lenovo!</textarea>
+              </div>
+              <div class="flex items-center justify-between gap-3">
+                <p class="text-xs text-slate-400">Lagres lokalt når du klikker «Publiser endringer».</p>
+                <button class="rounded-lg bg-emerald-500 px-4 py-2 text-sm font-semibold text-emerald-950 shadow hover:bg-emerald-400">Lagre endringer</button>
+              </div>
             </div>
-            <div class="space-y-2">
-              <label class="text-sm text-slate-200">Logo-URL</label>
-              <input class="w-full rounded-lg border border-white/10 bg-slate-950/40 px-3 py-2 text-sm text-white placeholder:text-slate-400" value="/assets/logo.svg" />
+          </div>
+
+          <div class="rounded-3xl border border-white/10 bg-white/5 p-6 text-white shadow-xl">
+            <div class="flex items-start justify-between gap-3">
+              <div>
+                <h2 class="text-lg font-semibold text-white">Seksjoner på forsiden</h2>
+                <p class="text-sm text-slate-300">
+                  Slå av eller på ulike moduler for å tilpasse hva som vises for besøkende.
+                </p>
+              </div>
+              <span class="inline-flex items-center gap-2 rounded-full border border-emerald-400/40 bg-emerald-400/10 px-3 py-1 text-[11px] font-medium uppercase tracking-wide text-emerald-100">
+                Live-oppdatert
+              </span>
             </div>
-            <div class="space-y-2">
-              <label class="text-sm text-slate-200">Hovedtittel</label>
-              <input class="w-full rounded-lg border border-white/10 bg-slate-950/40 px-3 py-2 text-sm text-white placeholder:text-slate-400" value="FJOLSENBANDEN" />
-            </div>
-            <div class="space-y-2">
-              <label class="text-sm text-slate-200">Ingress / slagord</label>
-              <textarea class="h-24 w-full rounded-lg border border-white/10 bg-slate-950/40 px-3 py-2 text-sm text-white placeholder:text-slate-400">Spillglede for hele familien – trygge streams, turneringer og premier.</textarea>
-            </div>
-            <div class="space-y-2">
-              <label class="text-sm text-slate-200">Aktuell melding</label>
-              <textarea class="h-20 w-full rounded-lg border border-white/10 bg-slate-950/40 px-3 py-2 text-sm text-white placeholder:text-slate-400">Neste livesending starter 20:00 med co-op i Mario Kart og premier fra Lenovo!</textarea>
-            </div>
-            <div class="flex items-center justify-between gap-3">
-              <p class="text-xs text-slate-400">Lagres lokalt når du klikker «Publiser endringer».</p>
-              <button class="rounded-lg bg-emerald-500 px-4 py-2 text-sm font-semibold text-emerald-950 shadow hover:bg-emerald-400">Lagre endringer</button>
+            <div class="mt-6 space-y-3" data-section-toggle-list>
+              <label class="flex items-center justify-between gap-6 rounded-2xl border border-white/10 bg-slate-950/40 px-4 py-3">
+                <div>
+                  <p class="text-sm font-medium text-white">Hero og intro</p>
+                  <p class="text-xs text-slate-400">Viser velkomsttekst, video og sosiale lenker.</p>
+                </div>
+                <div class="relative">
+                  <input type="checkbox" class="peer sr-only" data-section-toggle="hero" checked />
+                  <div class="flex h-6 w-11 cursor-pointer items-center rounded-full bg-slate-700 transition peer-checked:bg-emerald-500">
+                    <span class="ml-1 h-4 w-4 rounded-full bg-white transition peer-checked:translate-x-5"></span>
+                  </div>
+                </div>
+              </label>
+              <label class="flex items-center justify-between gap-6 rounded-2xl border border-white/10 bg-slate-950/40 px-4 py-3">
+                <div>
+                  <p class="text-sm font-medium text-white">Live-sending</p>
+                  <p class="text-xs text-slate-400">Kontroller om live-stream modulen er synlig.</p>
+                </div>
+                <div class="relative">
+                  <input type="checkbox" class="peer sr-only" data-section-toggle="live" checked />
+                  <div class="flex h-6 w-11 cursor-pointer items-center rounded-full bg-slate-700 transition peer-checked:bg-emerald-500">
+                    <span class="ml-1 h-4 w-4 rounded-full bg-white transition peer-checked:translate-x-5"></span>
+                  </div>
+                </div>
+              </label>
+              <label class="flex items-center justify-between gap-6 rounded-2xl border border-white/10 bg-slate-950/40 px-4 py-3">
+                <div>
+                  <p class="text-sm font-medium text-white">Medlemskap</p>
+                  <p class="text-xs text-slate-400">Skjul eller vis medlemsfordeler og registrering.</p>
+                </div>
+                <div class="relative">
+                  <input type="checkbox" class="peer sr-only" data-section-toggle="membership" checked />
+                  <div class="flex h-6 w-11 cursor-pointer items-center rounded-full bg-slate-700 transition peer-checked:bg-emerald-500">
+                    <span class="ml-1 h-4 w-4 rounded-full bg-white transition peer-checked:translate-x-5"></span>
+                  </div>
+                </div>
+              </label>
+              <label class="flex items-center justify-between gap-6 rounded-2xl border border-white/10 bg-slate-950/40 px-4 py-3">
+                <div>
+                  <p class="text-sm font-medium text-white">Premier</p>
+                  <p class="text-xs text-slate-400">Styr om giveaways og premier vises på forsiden.</p>
+                </div>
+                <div class="relative">
+                  <input type="checkbox" class="peer sr-only" data-section-toggle="rewards" checked />
+                  <div class="flex h-6 w-11 cursor-pointer items-center rounded-full bg-slate-700 transition peer-checked:bg-emerald-500">
+                    <span class="ml-1 h-4 w-4 rounded-full bg-white transition peer-checked:translate-x-5"></span>
+                  </div>
+                </div>
+              </label>
+              <label class="flex items-center justify-between gap-6 rounded-2xl border border-white/10 bg-slate-950/40 px-4 py-3">
+                <div>
+                  <p class="text-sm font-medium text-white">Samarbeidspartnere</p>
+                  <p class="text-xs text-slate-400">Vis frem partnerlogoer og sponsorinformasjon.</p>
+                </div>
+                <div class="relative">
+                  <input type="checkbox" class="peer sr-only" data-section-toggle="partners" checked />
+                  <div class="flex h-6 w-11 cursor-pointer items-center rounded-full bg-slate-700 transition peer-checked:bg-emerald-500">
+                    <span class="ml-1 h-4 w-4 rounded-full bg-white transition peer-checked:translate-x-5"></span>
+                  </div>
+                </div>
+              </label>
+              <label class="flex items-center justify-between gap-6 rounded-2xl border border-white/10 bg-slate-950/40 px-4 py-3">
+                <div>
+                  <p class="text-sm font-medium text-white">Kontakt og trygghet</p>
+                  <p class="text-xs text-slate-400">Skjuler kontaktskjema og trygghetserklæringer.</p>
+                </div>
+                <div class="relative">
+                  <input type="checkbox" class="peer sr-only" data-section-toggle="contact" checked />
+                  <div class="flex h-6 w-11 cursor-pointer items-center rounded-full bg-slate-700 transition peer-checked:bg-emerald-500">
+                    <span class="ml-1 h-4 w-4 rounded-full bg-white transition peer-checked:translate-x-5"></span>
+                  </div>
+                </div>
+              </label>
             </div>
           </div>
         </div>
@@ -80,8 +188,8 @@
           <div class="mt-6 overflow-hidden rounded-2xl border border-white/10" style="background: radial-gradient(circle at 15% 15%, rgba(64,172,255,0.3), transparent 55%), #03091b;">
             <div class="flex flex-col gap-6 p-6">
               <div class="flex items-center gap-4">
-                <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-white/10">
-                  <span class="text-lg font-semibold tracking-wide">FB</span>
+                <div class="flex h-14 w-14 items-center justify-center overflow-hidden rounded-2xl bg-white/10" data-preview-field="logo-wrapper">
+                  <span class="text-lg font-semibold tracking-wide" data-preview-field="logo-text">FB</span>
                 </div>
                 <div>
                   <p class="text-xs uppercase tracking-wide text-slate-300">Brand hero</p>
@@ -89,8 +197,8 @@
                 </div>
               </div>
               <div class="space-y-3">
-                <h3 class="text-3xl font-black tracking-tight text-white">FJOLSENBANDEN</h3>
-                <p class="text-sm text-slate-200">Spillglede for hele familien – trygge streams, turneringer og premier.</p>
+                <h3 class="text-3xl font-black tracking-tight text-white" data-preview-field="hero-title">FJOLSENBANDEN</h3>
+                <p class="text-sm text-slate-200" data-preview-field="hero-tagline">Spillglede for hele familien – trygge streams, turneringer og premier.</p>
               </div>
               <div class="flex flex-wrap gap-3">
                 <button class="rounded-full bg-emerald-500 px-5 py-2 text-sm font-semibold text-emerald-950 shadow-lg">Bli med på neste stream</button>
@@ -98,11 +206,313 @@
               </div>
             </div>
             <div class="border-t border-white/10 bg-white/5 px-6 py-4 text-xs text-slate-200">
-              <span class="font-semibold text-white">Nyhet:</span> Neste livesending starter 20:00 med co-op i Mario Kart og premier fra Lenovo!
+              <span class="font-semibold text-white">Nyhet:</span>
+              <span data-preview-field="hero-message">Neste livesending starter 20:00 med co-op i Mario Kart og premier fra Lenovo!</span>
+            </div>
+            <div class="border-t border-white/10 bg-slate-950/50 px-6 py-5">
+              <div class="flex items-center justify-between text-xs uppercase tracking-wide text-indigo-200">
+                <span>Synlig på forsiden</span>
+                <span id="preview-section-count">6 av 6</span>
+              </div>
+              <ul class="mt-4 space-y-2 text-sm" id="preview-section-list">
+                <li class="flex items-center justify-between gap-3 rounded-xl bg-white/5 px-3 py-2 text-slate-200" data-section-state="hero">
+                  <div class="flex items-center gap-2">
+                    <span class="grid h-8 w-8 place-content-center rounded-full bg-emerald-500/20 text-emerald-200">01</span>
+                    <span>Hero &amp; intro</span>
+                  </div>
+                  <span
+                    class="inline-flex items-center gap-2 rounded-full bg-emerald-500/15 px-2.5 py-1 text-xs font-semibold text-emerald-200"
+                    data-section-badge
+                    data-active-class="inline-flex items-center gap-2 rounded-full bg-emerald-500/15 px-2.5 py-1 text-xs font-semibold text-emerald-200"
+                    data-inactive-class="inline-flex items-center gap-2 rounded-full bg-rose-500/15 px-2.5 py-1 text-xs font-semibold text-rose-200"
+                  >
+                    <span
+                      class="h-2 w-2 rounded-full bg-emerald-400"
+                      data-section-dot
+                      data-active-dot-class="h-2 w-2 rounded-full bg-emerald-400"
+                      data-inactive-dot-class="h-2 w-2 rounded-full bg-rose-400"
+                    ></span>
+                    <span data-section-label>Aktivert</span>
+                  </span>
+                </li>
+                <li class="flex items-center justify-between gap-3 rounded-xl bg-white/5 px-3 py-2 text-slate-200" data-section-state="live">
+                  <div class="flex items-center gap-2">
+                    <span class="grid h-8 w-8 place-content-center rounded-full bg-emerald-500/20 text-emerald-200">02</span>
+                    <span>Live-sending</span>
+                  </div>
+                  <span
+                    class="inline-flex items-center gap-2 rounded-full bg-emerald-500/15 px-2.5 py-1 text-xs font-semibold text-emerald-200"
+                    data-section-badge
+                    data-active-class="inline-flex items-center gap-2 rounded-full bg-emerald-500/15 px-2.5 py-1 text-xs font-semibold text-emerald-200"
+                    data-inactive-class="inline-flex items-center gap-2 rounded-full bg-rose-500/15 px-2.5 py-1 text-xs font-semibold text-rose-200"
+                  >
+                    <span
+                      class="h-2 w-2 rounded-full bg-emerald-400"
+                      data-section-dot
+                      data-active-dot-class="h-2 w-2 rounded-full bg-emerald-400"
+                      data-inactive-dot-class="h-2 w-2 rounded-full bg-rose-400"
+                    ></span>
+                    <span data-section-label>Aktivert</span>
+                  </span>
+                </li>
+                <li class="flex items-center justify-between gap-3 rounded-xl bg-white/5 px-3 py-2 text-slate-200" data-section-state="membership">
+                  <div class="flex items-center gap-2">
+                    <span class="grid h-8 w-8 place-content-center rounded-full bg-emerald-500/20 text-emerald-200">03</span>
+                    <span>Medlemskap</span>
+                  </div>
+                  <span
+                    class="inline-flex items-center gap-2 rounded-full bg-emerald-500/15 px-2.5 py-1 text-xs font-semibold text-emerald-200"
+                    data-section-badge
+                    data-active-class="inline-flex items-center gap-2 rounded-full bg-emerald-500/15 px-2.5 py-1 text-xs font-semibold text-emerald-200"
+                    data-inactive-class="inline-flex items-center gap-2 rounded-full bg-rose-500/15 px-2.5 py-1 text-xs font-semibold text-rose-200"
+                  >
+                    <span
+                      class="h-2 w-2 rounded-full bg-emerald-400"
+                      data-section-dot
+                      data-active-dot-class="h-2 w-2 rounded-full bg-emerald-400"
+                      data-inactive-dot-class="h-2 w-2 rounded-full bg-rose-400"
+                    ></span>
+                    <span data-section-label>Aktivert</span>
+                  </span>
+                </li>
+                <li class="flex items-center justify-between gap-3 rounded-xl bg-white/5 px-3 py-2 text-slate-200" data-section-state="rewards">
+                  <div class="flex items-center gap-2">
+                    <span class="grid h-8 w-8 place-content-center rounded-full bg-emerald-500/20 text-emerald-200">04</span>
+                    <span>Premier</span>
+                  </div>
+                  <span
+                    class="inline-flex items-center gap-2 rounded-full bg-emerald-500/15 px-2.5 py-1 text-xs font-semibold text-emerald-200"
+                    data-section-badge
+                    data-active-class="inline-flex items-center gap-2 rounded-full bg-emerald-500/15 px-2.5 py-1 text-xs font-semibold text-emerald-200"
+                    data-inactive-class="inline-flex items-center gap-2 rounded-full bg-rose-500/15 px-2.5 py-1 text-xs font-semibold text-rose-200"
+                  >
+                    <span
+                      class="h-2 w-2 rounded-full bg-emerald-400"
+                      data-section-dot
+                      data-active-dot-class="h-2 w-2 rounded-full bg-emerald-400"
+                      data-inactive-dot-class="h-2 w-2 rounded-full bg-rose-400"
+                    ></span>
+                    <span data-section-label>Aktivert</span>
+                  </span>
+                </li>
+                <li class="flex items-center justify-between gap-3 rounded-xl bg-white/5 px-3 py-2 text-slate-200" data-section-state="partners">
+                  <div class="flex items-center gap-2">
+                    <span class="grid h-8 w-8 place-content-center rounded-full bg-emerald-500/20 text-emerald-200">05</span>
+                    <span>Samarbeidspartnere</span>
+                  </div>
+                  <span
+                    class="inline-flex items-center gap-2 rounded-full bg-emerald-500/15 px-2.5 py-1 text-xs font-semibold text-emerald-200"
+                    data-section-badge
+                    data-active-class="inline-flex items-center gap-2 rounded-full bg-emerald-500/15 px-2.5 py-1 text-xs font-semibold text-emerald-200"
+                    data-inactive-class="inline-flex items-center gap-2 rounded-full bg-rose-500/15 px-2.5 py-1 text-xs font-semibold text-rose-200"
+                  >
+                    <span
+                      class="h-2 w-2 rounded-full bg-emerald-400"
+                      data-section-dot
+                      data-active-dot-class="h-2 w-2 rounded-full bg-emerald-400"
+                      data-inactive-dot-class="h-2 w-2 rounded-full bg-rose-400"
+                    ></span>
+                    <span data-section-label>Aktivert</span>
+                  </span>
+                </li>
+                <li class="flex items-center justify-between gap-3 rounded-xl bg-white/5 px-3 py-2 text-slate-200" data-section-state="contact">
+                  <div class="flex items-center gap-2">
+                    <span class="grid h-8 w-8 place-content-center rounded-full bg-emerald-500/20 text-emerald-200">06</span>
+                    <span>Kontakt</span>
+                  </div>
+                  <span
+                    class="inline-flex items-center gap-2 rounded-full bg-emerald-500/15 px-2.5 py-1 text-xs font-semibold text-emerald-200"
+                    data-section-badge
+                    data-active-class="inline-flex items-center gap-2 rounded-full bg-emerald-500/15 px-2.5 py-1 text-xs font-semibold text-emerald-200"
+                    data-inactive-class="inline-flex items-center gap-2 rounded-full bg-rose-500/15 px-2.5 py-1 text-xs font-semibold text-rose-200"
+                  >
+                    <span
+                      class="h-2 w-2 rounded-full bg-emerald-400"
+                      data-section-dot
+                      data-active-dot-class="h-2 w-2 rounded-full bg-emerald-400"
+                      data-inactive-dot-class="h-2 w-2 rounded-full bg-rose-400"
+                    ></span>
+                    <span data-section-label>Aktivert</span>
+                  </span>
+                </li>
+              </ul>
             </div>
           </div>
         </div>
       </section>
     </div>
+    <script>
+      const previewDefaults = {
+        logo: "/assets/logo.svg",
+        "hero-title": "FJOLSENBANDEN",
+        "hero-tagline": "Spillglede for hele familien – trygge streams, turneringer og premier.",
+        "hero-message": "Neste livesending starter 20:00 med co-op i Mario Kart og premier fra Lenovo!",
+      };
+
+      const sectionDefaults = {
+        hero: true,
+        live: true,
+        membership: true,
+        rewards: true,
+        partners: true,
+        contact: true,
+      };
+
+      const storageKeys = {
+        content: "fjolsen-admin-content",
+        sections: "fjolsen-admin-sections",
+      };
+
+      const fieldInputs = document.querySelectorAll("[data-preview-target]");
+      const sectionToggles = document.querySelectorAll("[data-section-toggle]");
+      const previewFields = new Map(
+        Array.from(document.querySelectorAll("[data-preview-field]"), (element) => [element.dataset.previewField, element])
+      );
+      const previewSectionItems = new Map(
+        Array.from(document.querySelectorAll("[data-section-state]"), (element) => [element.dataset.sectionState, element])
+      );
+      const previewSectionCount = document.getElementById("preview-section-count");
+
+      const loadStoredState = (key, defaults) => {
+        try {
+          const saved = window.localStorage.getItem(key);
+          if (!saved) return { ...defaults };
+          const parsed = JSON.parse(saved);
+          return { ...defaults, ...parsed };
+        } catch (error) {
+          console.warn("Kunne ikke lese lagret admin-data", error);
+          return { ...defaults };
+        }
+      };
+
+      const persistState = (key, state) => {
+        try {
+          window.localStorage.setItem(key, JSON.stringify(state));
+        } catch (error) {
+          console.warn("Kunne ikke lagre admin-data", error);
+        }
+      };
+
+      const applyContentState = (state) => {
+        const logoWrapper = previewFields.get("logo-wrapper");
+        const logoText = previewFields.get("logo-text");
+        const logoValue = state.logo?.trim();
+
+        if (logoWrapper && logoText) {
+          if (logoValue) {
+            logoWrapper.style.backgroundImage = `url(${logoValue})`;
+            logoWrapper.style.backgroundSize = "cover";
+            logoWrapper.style.backgroundPosition = "center";
+            logoWrapper.classList.add("ring-2", "ring-emerald-500/40");
+            logoText.textContent = "";
+            logoText.classList.add("hidden");
+          } else {
+            logoWrapper.style.backgroundImage = "";
+            logoWrapper.classList.remove("ring-2", "ring-emerald-500/40");
+            logoText.textContent = "FB";
+            logoText.classList.remove("hidden");
+          }
+        }
+
+        ["hero-title", "hero-tagline", "hero-message"].forEach((key) => {
+          const element = previewFields.get(key);
+          if (element) {
+            element.textContent = state[key] || previewDefaults[key] || "";
+          }
+        });
+      };
+
+      const applySectionState = (state) => {
+        let activeCount = 0;
+
+        previewSectionItems.forEach((element, key) => {
+          const isActive = Boolean(state[key]);
+          const badge = element.querySelector("[data-section-badge]");
+          const dot = element.querySelector("[data-section-dot]");
+          const label = element.querySelector("[data-section-label]");
+
+          element.classList.toggle("opacity-60", !isActive);
+          element.classList.toggle("border", !isActive);
+          element.classList.toggle("border-rose-500/30", !isActive);
+
+          if (badge) {
+            const activeClass = badge.dataset.activeClass || "";
+            const inactiveClass = badge.dataset.inactiveClass || "";
+            badge.setAttribute("class", isActive ? activeClass : inactiveClass);
+          }
+
+          if (dot) {
+            const activeDot = dot.dataset.activeDotClass || "";
+            const inactiveDot = dot.dataset.inactiveDotClass || "";
+            dot.setAttribute("class", isActive ? activeDot : inactiveDot);
+          }
+
+          if (label) {
+            label.textContent = isActive ? "Aktivert" : "Skjult";
+          }
+
+          if (isActive) {
+            activeCount += 1;
+          }
+        });
+
+        if (previewSectionCount) {
+          previewSectionCount.textContent = `${activeCount} av ${previewSectionItems.size}`;
+        }
+      };
+
+      const currentContentState = loadStoredState(storageKeys.content, previewDefaults);
+      const currentSectionState = loadStoredState(storageKeys.sections, sectionDefaults);
+
+      fieldInputs.forEach((input) => {
+        const key = input.dataset.previewTarget;
+        if (!key) {
+          return;
+        }
+
+        if (Object.prototype.hasOwnProperty.call(currentContentState, key)) {
+          const value = currentContentState[key];
+          if (typeof value === "string") {
+            if (input instanceof HTMLInputElement || input instanceof HTMLTextAreaElement) {
+              input.value = value;
+            }
+          }
+        }
+
+        input.addEventListener("input", (event) => {
+          const target = event.currentTarget;
+          if (!(target instanceof HTMLInputElement || target instanceof HTMLTextAreaElement)) {
+            return;
+          }
+          currentContentState[key] = target.value;
+          applyContentState(currentContentState);
+          persistState(storageKeys.content, currentContentState);
+        });
+      });
+
+      sectionToggles.forEach((toggle) => {
+        const key = toggle.dataset.sectionToggle;
+        if (!key) {
+          return;
+        }
+
+        if (Object.prototype.hasOwnProperty.call(currentSectionState, key)) {
+          toggle.checked = Boolean(currentSectionState[key]);
+        }
+
+        toggle.addEventListener("change", (event) => {
+          const target = event.currentTarget;
+          if (!(target instanceof HTMLInputElement)) {
+            return;
+          }
+          currentSectionState[key] = target.checked;
+          applySectionState(currentSectionState);
+          persistState(storageKeys.sections, currentSectionState);
+        });
+      });
+
+      applyContentState(currentContentState);
+      applySectionState(currentSectionState);
+    </script>
   </body>
 </html>
