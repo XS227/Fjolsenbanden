@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import type { ReactNode } from "react";
 import type { LucideIcon } from "lucide-react";
 import {
@@ -9,9 +9,9 @@ import {
   CalendarDays,
   CheckCircle2,
   CreditCard,
-  Discord,
   Gift,
   GraduationCap,
+  Instagram,
   Lock,
   Megaphone,
   Menu,
@@ -33,7 +33,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import SupporterShowcase from "@/components/SupporterShowcase";
+import { DEFAULT_SITE_MODULES, type SiteModules, useAdminState } from "@/lib/admin-state";
 
 type PlatformLink = {
   icon: ReactNode;
@@ -88,7 +88,7 @@ type ProfileFormValues = {
   acceptRules: boolean;
 };
 
-const navLinks = [
+const navLinks: ReadonlyArray<{ name: string; href: string }> = [
   { name: "Hjem", href: "#" },
   { name: "Live", href: "#live" },
   { name: "Medlemskap", href: "#medlemskap" },
@@ -119,7 +119,7 @@ const platformLinks: readonly PlatformLink[] = [
     href: "https://www.instagram.com/fjolsenbanden",
   },
   {
-    icon: <Discord className="h-5 w-5" aria-hidden="true" />,
+    icon: <DiscordIcon className="h-5 w-5" aria-hidden="true" />,
     label: "Discord",
     href: "https://discord.gg/fjolsenbanden",
   },
@@ -127,7 +127,7 @@ const platformLinks: readonly PlatformLink[] = [
 
 const socialLinks: readonly PlatformLink[] = [
   {
-    icon: <Discord className="h-4 w-4" aria-hidden="true" />,
+    icon: <DiscordIcon className="h-4 w-4" aria-hidden="true" />,
     label: "Discord",
     href: "https://discord.gg/fjolsenbanden",
   },
@@ -150,6 +150,39 @@ const socialLinks: readonly PlatformLink[] = [
     icon: <Instagram className="h-4 w-4" aria-hidden="true" />,
     label: "Instagram",
     href: "https://www.instagram.com/fjolsenbanden",
+  },
+] as const;
+
+const membershipTiers: readonly MembershipTier[] = [
+  {
+    title: "Gratismedlem",
+    price: "0 kr / mnd",
+    color: "green",
+    features: [
+      "Tilgang til Discord-serveren",
+      "Delta på community-events",
+      "Få nyheter og oppdateringer først",
+    ],
+  },
+  {
+    title: "Turneringsmedlem",
+    price: "79 kr / mnd",
+    color: "cyan",
+    features: [
+      "Alt i Gratismedlem",
+      "Delta i eksklusive turneringer",
+      "Premier fra partnere hver måned",
+    ],
+  },
+  {
+    title: "Pro-medlem",
+    price: "149 kr / mnd",
+    color: "amber",
+    features: [
+      "Alt i Turneringsmedlem",
+      "Coaching fra FjOlsen og teamet",
+      "Tilgang til lukkede arrangementer",
+    ],
   },
 ] as const;
 
@@ -215,6 +248,9 @@ const sponsors = [
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYtpuPO71nnzwUIVosVdrevGmHTUrgoiqLGA&s",
   },
 ] as const;
+
+const unboxingVideoUrl =
+  "https://www.youtube.com/embed/v_8kKWD0K84?si=KzawWGqmMEQA7n78";
 
 const offerings: readonly Offering[] = [
   {
@@ -294,18 +330,56 @@ export default function FjolsenbandenHome() {
   const [unmuted, setUnmuted] = useState(false);
   const [previewCountdown, setPreviewCountdown] = useState(60);
   const [registrationOpen, setRegistrationOpen] = useState(false);
-  const [selectedTier, setSelectedTier] = useState<string | null>(null);
+  const [selectedTier, setSelectedTier] = useState(() => null as string | null);
   const [vippsLoggedIn, setVippsLoggedIn] = useState(false);
-  const [vippsDraft, setVippsDraft] = useState<VippsUser>(createDefaultVippsUser());
-  const [vippsUser, setVippsUser] = useState<VippsUser | null>(null);
-  const [vippsFlow, setVippsFlow] = useState<VippsFlow>(null);
+  const [vippsDraft, setVippsDraft] = useState(createDefaultVippsUser);
+  const [vippsUser, setVippsUser] = useState(() => null as VippsUser | null);
+  const [vippsFlow, setVippsFlow] = useState(() => null as VippsFlow);
   const [parentPhone, setParentPhone] = useState("");
   const [approvalSent, setApprovalSent] = useState(false);
   const [paymentInitiated, setPaymentInitiated] = useState(false);
-  const [profileDraft, setProfileDraft] = useState<ProfileFormValues>(createDefaultProfileDraft());
+  const [profileDraft, setProfileDraft] = useState(createDefaultProfileDraft);
   const [profileSubmitted, setProfileSubmitted] = useState(false);
   const [ctaVisible, setCtaVisible] = useState(false);
   const [ctaDocked, setCtaDocked] = useState(false);
+  const [showUnboxingVideo, setShowUnboxingVideo] = useState(false);
+
+  const { state } = useAdminState();
+  const { siteSettings } = state;
+
+  const moduleSettings = useMemo(
+    () =>
+      ({ ...DEFAULT_SITE_MODULES, ...(siteSettings.modules ?? DEFAULT_SITE_MODULES) }) satisfies SiteModules,
+    [siteSettings.modules],
+  );
+
+  const { liveStream, partners: partnersEnabled, contactForm } = moduleSettings;
+
+  const heroTitle = siteSettings.heroTitle?.trim() || "FJOLSENBANDEN";
+  const heroTagline =
+    siteSettings.heroTagline?.trim() ||
+    "Spillglede for hele familien – trygge streams, turneringer og premier.";
+  const announcement =
+    siteSettings.announcement?.trim() ||
+    "Neste livesending starter 20:00 med co-op i Mario Kart og premier fra Lenovo!";
+  const logoUrl = siteSettings.logoUrl?.trim() || "/assets/logo.svg";
+
+  const filteredNavLinks = useMemo(
+    () =>
+      navLinks.filter((link: { name: string; href: string }) => {
+        if (link.href === "#live") {
+          return liveStream;
+        }
+        if (link.href === "#sponsorer" || link.href === "#premier") {
+          return partnersEnabled;
+        }
+        if (link.href === "#kontakt") {
+          return contactForm;
+        }
+        return true;
+      }),
+    [contactForm, liveStream, partnersEnabled],
+  );
 
   type ContactFormEvent = {
     preventDefault: () => void;
@@ -376,8 +450,26 @@ export default function FjolsenbandenHome() {
   }, []);
 
   useEffect(() => {
+    if (!showUnboxingVideo) {
+      return undefined;
+    }
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setShowUnboxingVideo(false);
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [showUnboxingVideo]);
+
+  useEffect(() => {
     if (vippsFlow !== "minor") {
-      setProfileDraft((previous) => {
+        setProfileDraft((previous: ProfileFormValues) => {
         if (
           !previous.parentName &&
           !previous.parentPhone &&
@@ -404,7 +496,7 @@ export default function FjolsenbandenHome() {
       return;
     }
 
-    setProfileDraft((previous) => {
+      setProfileDraft((previous: ProfileFormValues) => {
       if (previous.parentPhone) {
         return previous;
       }
@@ -490,7 +582,7 @@ export default function FjolsenbandenHome() {
     field: keyof ProfileFormValues,
   ) => {
     const value = event.currentTarget.value;
-    setProfileDraft((previous) => ({ ...previous, [field]: value }));
+    setProfileDraft((previous: ProfileFormValues) => ({ ...previous, [field]: value }));
   };
 
   const handleProfileCheckboxChange = (
@@ -498,7 +590,7 @@ export default function FjolsenbandenHome() {
     field: keyof ProfileFormValues,
   ) => {
     const checked = event.currentTarget.checked;
-    setProfileDraft((previous) => ({ ...previous, [field]: checked }));
+    setProfileDraft((previous: ProfileFormValues) => ({ ...previous, [field]: checked }));
   };
 
   const handleFavoriteGameToggle = (
@@ -506,7 +598,7 @@ export default function FjolsenbandenHome() {
     game: FavoriteGame,
   ) => {
     const checked = event.currentTarget.checked;
-    setProfileDraft((previous) => {
+    setProfileDraft((previous: ProfileFormValues) => {
       const current = new Set(previous.favoriteGames);
 
       if (checked) {
@@ -549,9 +641,18 @@ export default function FjolsenbandenHome() {
   const [firstName, ...remainingNameParts] = resolvedName ? resolvedName.split(/\s+/) : [""];
   const lastName = remainingNameParts.join(" ");
   const shouldShowStickyCta = ctaVisible && !ctaDocked;
+  const estimatedUnboxingReach = new Intl.NumberFormat("no-NO").format(2500 + 3200 + 4200);
 
   return (
     <div className="relative min-h-screen overflow-x-hidden bg-gradient-to-b from-[#131A49] via-[#0B163F] to-[#050B24] text-white">
+      {showUnboxingVideo ? (
+        <VideoLightbox
+          videoUrl={unboxingVideoUrl}
+          onClose={() => setShowUnboxingVideo(false)}
+          title="Se hvordan vi pakker ut og presenterer produkter for communityet"
+        />
+      ) : null}
+
       <div
         className="pointer-events-none fixed inset-0 -z-10 opacity-60"
         style={{
@@ -562,41 +663,37 @@ export default function FjolsenbandenHome() {
 
       <nav className="relative z-50 flex items-center justify-between px-6 py-4">
         <a className="flex items-center gap-3" href="#" aria-label="Fjolsenbanden hjem">
-          <img
-            src="https://yt3.googleusercontent.com/JDzOGDpzoZ-j6r2NGC-LboiPeK3qGmZqwSRTxgSvvMTmUbySUUGLm80RXmZtcbrAgKYacqTYzAs=s160-c-k-c0x00ffffff-no-rj"
-            alt="Fjolsenbanden logo"
-            className="h-10 w-10 rounded-xl object-cover"
-          />
-          <span className="hidden text-lg font-semibold sm:block">Fjolsenbanden</span>
+          <img src={logoUrl} alt={`${heroTitle} logo`} className="h-10 w-10 rounded-xl object-cover" />
+          <span className="hidden text-lg font-semibold sm:block">{heroTitle}</span>
         </a>
-        <ul className="hidden gap-6 text-sm font-medium md:flex">
-          {navLinks.map((link) => (
-            <li key={link.name}>
-              <a className="transition-colors duration-150 hover:text-[#13A0F9]" href={link.href}>
-                {link.name}
-              </a>
-              <a
-                href="#bli-medlem"
-                className="inline-flex items-center gap-2 rounded-full border border-white/20 px-6 py-3 font-semibold text-white transition hover:border-white/40 hover:bg-white/10"
-              >
-                Bli medlem
-              </a>
-            </li>
-          ))}
-        </ul>
+        <div className="hidden items-center gap-6 md:flex">
+          <ul className="flex items-center gap-6 text-sm font-medium">
+              {filteredNavLinks.map((link: { name: string; href: string }) => (
+              <li key={link.name}>
+                <a className="transition-colors duration-150 hover:text-[#13A0F9]" href={link.href}>
+                  {link.name}
+                </a>
+              </li>
+            ))}
+          </ul>
+          <a
+            href="#bli-medlem"
+            className="inline-flex items-center gap-2 rounded-full border border-white/20 px-6 py-3 font-semibold text-white transition hover:border-white/40 hover:bg-white/10"
+          >
+            Bli medlem
+          </a>
+        </div>
       </nav>
 
-      <main className="relative z-10 pb-40">
-      <section id="community" className="mt-6 px-6">
-        <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-2 lg:items-start">
-          <div className="space-y-6">
-            <div className="space-y-4 text-center lg:text-left">
+      <header className="relative z-10 pb-40">
+        <section id="community" className="mt-6 px-6">
+          <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-2 lg:items-start">
+            <div className="space-y-6">
+              <div className="space-y-4 text-center lg:text-left">
               <h1 className="text-4xl font-extrabold sm:text-5xl">
-                Velkommen til <span className="text-[#13A0F9]">FjOlsenbanden</span>
+                Velkommen til <span className="text-[#13A0F9]">{heroTitle}</span>
               </h1>
-              <p className="text-base text-zinc-300 sm:text-lg">
-                Norges mest inkluderende gaming-community for hele familien.
-              </p>
+              <p className="text-base text-zinc-300 sm:text-lg">{heroTagline}</p>
             </div>
             <div className="space-y-4 rounded-3xl border border-white/10 bg-white/5 p-6 text-left shadow-[0_18px_42px_rgba(12,21,45,0.45)]">
               <h2 className="text-xl font-semibold text-[#13A0F9]">🎮 Hva er FjOlsenbanden?</h2>
@@ -625,7 +722,7 @@ export default function FjolsenbandenHome() {
                 allowFullScreen
               />
             </div>
-            <div className="w-full rounded-3xl border border-white/10 bg-[#101c37]/80 p-5 shadow-[0_18px_42px_rgba(12,21,45,0.45)]">
+              <div className="w-full rounded-3xl border border-white/10 bg-[#101c37]/80 p-5 shadow-[0_18px_42px_rgba(12,21,45,0.45)]">
               <div className="mb-3 flex items-center gap-2 text-sm font-semibold uppercase tracking-wide text-white/80">
                 <ShieldCheck className="h-4 w-4 text-[#13A0F9]" /> Følg FjOlsenbanden
               </div>
@@ -634,12 +731,11 @@ export default function FjolsenbandenHome() {
                   <PlatformButton key={label} icon={icon} label={label} href={href} />
                 ))}
               </div>
-              <p className="mt-3 text-center text-xs text-zinc-400 sm:text-left">
-                Totalt over 10&nbsp;000 følgere på tvers av Discord, Twitch, YouTube, TikTok og Instagram.
-              </p>
+              <p className="mt-3 text-center text-xs text-zinc-400 sm:text-left">{announcement}</p>
             </div>
           </div>
         </div>
+        </section>
       </header>
 
       <main className="space-y-28 pb-24">
@@ -677,7 +773,8 @@ export default function FjolsenbandenHome() {
           </div>
         </section>
 
-        <section id="live" className="px-6">
+        {liveStream ? (
+          <section id="live" className="px-6">
           <div className="mx-auto grid max-w-6xl gap-12 rounded-[2.5rem] border border-white/5 bg-gradient-to-br from-[#121a4b]/80 via-[#10153b]/80 to-[#0c122d]/80 p-12 shadow-2xl lg:grid-cols-[1.1fr_0.9fr]">
             <div className="space-y-6">
               <h2 className="text-3xl font-bold sm:text-4xl">📈 Følg FjOlsenbanden</h2>
@@ -736,7 +833,8 @@ export default function FjolsenbandenHome() {
               </div>
             </div>
           </div>
-        </section>
+          </section>
+        ) : null}
 
         <section id="bli-medlem" className="px-6">
           <div className="mx-auto max-w-6xl rounded-[2.5rem] border border-white/10 bg-white/5 p-12 shadow-2xl">
@@ -761,82 +859,51 @@ export default function FjolsenbandenHome() {
           </div>
         </section>
 
-        <section id="samarbeid" className="px-6">
-          <div className="mx-auto max-w-6xl space-y-8">
-            <h2 className="text-3xl font-bold sm:text-4xl">🤝 Samarbeidspartnere</h2>
-            <p className="text-lg text-slate-200">
-              Vi har allerede samarbeidet med flere kjente merkevarer – og vi er alltid på utkikk etter nye partnere som ønsker synlighet mot et engasjert gaming-publikum.
-            </p>
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-              {partners.map((partner) => (
-                <div
-                  key={partner}
-                  className="flex items-center justify-center rounded-2xl border border-white/10 bg-white/5 px-6 py-8 text-lg font-semibold tracking-wide text-slate-200"
-                >
-                  <Play className="h-12 w-12 text-[#13A0F9]" />
-                  <p className="text-sm text-zinc-300">
-                    1-minutt forhåndsvisning –
-                    <span data-preview-timer className="ml-1">
-                      {previewCountdown}
-                    </span>
-                    s igjen
-                  </p>
-                  <Button
-                    size="lg"
-                    className="rounded-full bg-gradient-to-r from-[#13A0F9] to-[#FF2F9C] px-6 font-semibold text-white shadow-[0_16px_28px_rgba(19,160,249,0.35)] transition hover:from-[#0d8bd6] hover:to-[#e12585]"
-                    data-video-unmute
-                    onClick={() => setUnmuted(true)}
+        {partnersEnabled ? (
+          <section id="samarbeid" className="px-6">
+            <div className="mx-auto max-w-6xl space-y-8">
+              <h2 className="text-3xl font-bold sm:text-4xl">🤝 Samarbeidspartnere</h2>
+              <p className="text-lg text-slate-200">
+                Vi har allerede samarbeidet med flere kjente merkevarer – og vi er alltid på utkikk etter nye partnere som ønsker synlighet mot et engasjert gaming-publikum.
+              </p>
+              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                {partners.map((partner) => (
+                  <div
+                    key={partner}
+                    className="flex items-center justify-center rounded-2xl border border-white/10 bg-white/5 px-6 py-8 text-lg font-semibold tracking-wide text-slate-200"
                   >
-                    Se full stream
-                  </Button>
-                  <div className="flex gap-3 text-xs text-zinc-400">
-                    <span>
-                      eller fortsett på
-                      <a
-                        href="https://www.twitch.tv/FjOlsenFN"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="ml-1 text-[#13A0F9]"
-                      >
-                        Twitch
-                      </a>
-                    </span>
-                    <span>|</span>
-                    <span>
-                      <a
-                        href="https://youtube.com/@fjolsenbanden"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-[#13A0F9]"
-                      >
-                        YouTube
-                      </a>
-                    </span>
-                  </div>
-                </div>
-              ) : null}
-            </div>
-          </div>
-          <div className="flex max-h-[640px] flex-col rounded-2xl border border-white/10 bg-[#1f2940] p-4">
-            <h3 className="mb-3 flex items-center gap-2 font-semibold text-[#13A0F9]">
-              <MessageCircle className="h-4 w-4" /> Live chat
-            </h3>
-            <div className="flex-1 space-y-3 overflow-y-auto pr-1 text-sm">
-                {demoChat.map((chat) => (
-                  <div key={chat.user} className="rounded-lg bg-white/5 px-3 py-2">
-                    <span className="mr-2 font-semibold text-[#13A0F9]">{chat.user}</span>
-                    <span className="text-zinc-200">{chat.message}</span>
+                    {partner}
                   </div>
                 ))}
+              </div>
             </div>
-            <input
-              type="text"
-              placeholder="Skriv en kommentar..."
-              className="mt-3 w-full rounded-lg border border-white/20 bg-white/10 px-3 py-2 text-sm text-white placeholder-zinc-400 outline-none focus:ring-2 focus:ring-[#13A0F9]"
-            />
-          </div>
-        </div>
-      </section>
+          </section>
+        ) : null}
+
+        {liveStream ? (
+          <section id="live-chat" className="px-6">
+            <div className="mx-auto max-w-6xl">
+              <div className="flex max-h-[640px] flex-col rounded-2xl border border-white/10 bg-[#1f2940] p-4">
+                <h3 className="mb-3 flex items-center gap-2 font-semibold text-[#13A0F9]">
+                  <MessageCircle className="h-4 w-4" /> Live chat
+                </h3>
+                <div className="flex-1 space-y-3 overflow-y-auto pr-1 text-sm">
+                  {demoChat.map((chat) => (
+                    <div key={chat.user} className="rounded-lg bg-white/5 px-3 py-2">
+                      <span className="mr-2 font-semibold text-[#13A0F9]">{chat.user}</span>
+                      <span className="text-zinc-200">{chat.message}</span>
+                    </div>
+                  ))}
+                </div>
+                <input
+                  type="text"
+                  placeholder="Skriv en kommentar..."
+                  className="mt-3 w-full rounded-lg border border-white/20 bg-white/10 px-3 py-2 text-sm text-white placeholder-zinc-400 outline-none focus:ring-2 focus:ring-[#13A0F9]"
+                />
+              </div>
+            </div>
+          </section>
+        ) : null}
 
       <section id="medlemskap" className="mt-20 px-6 text-center">
         <h2 className="mb-4 text-3xl font-bold">Velg medlemskap</h2>
@@ -857,41 +924,41 @@ export default function FjolsenbandenHome() {
         </div>
       </section>
 
-      <SupporterShowcase />
-
-      <section id="premier" className="mt-20 px-6 text-center">
-        <h2 className="mb-4 text-3xl font-bold">Samarbeidspartnere</h2>
-        <p className="mx-auto max-w-3xl text-zinc-300">
-          Vi har allerede hatt samarbeid med flere kjente merkevarer.
-        </p>
-        <p className="mx-auto mt-6 max-w-2xl text-zinc-300">
-          Ønsker du å synliggjøre din merkevare for vårt engasjerte og voksende gaming-publikum?
-        </p>
-        <p className="mx-auto mt-2 max-w-2xl text-zinc-300">Ta kontakt for samarbeid!</p>
-        <div className="mt-8 flex justify-center">
-          <Button
-            asChild
-            className="rounded-full bg-gradient-to-r from-[#13A0F9] to-[#FF2F9C] px-8 py-3 font-semibold text-white shadow-[0_16px_28px_rgba(19,160,249,0.35)] transition hover:from-[#0d8bd6] hover:to-[#e12585]"
-          >
-            <a href="#kontakt">Kontakt oss</a>
-          </Button>
-        </div>
-        <div id="sponsorer" className="mt-6 flex flex-wrap justify-center gap-6">
-          {sponsors.map(({ name, logoUrl }) => (
-            <div
-              key={name}
-              className="flex h-20 w-40 items-center justify-center rounded-2xl border border-white/10 bg-white/5 p-4 shadow-[0_12px_24px_rgba(8,18,40,0.35)] transition hover:bg-white/10"
+      {partnersEnabled ? (
+        <section id="premier" className="mt-20 px-6 text-center">
+          <h2 className="mb-4 text-3xl font-bold">Samarbeidspartnere</h2>
+          <p className="mx-auto max-w-3xl text-zinc-300">
+            Vi har allerede hatt samarbeid med flere kjente merkevarer.
+          </p>
+          <p className="mx-auto mt-6 max-w-2xl text-zinc-300">
+            Ønsker du å synliggjøre din merkevare for vårt engasjerte og voksende gaming-publikum?
+          </p>
+          <p className="mx-auto mt-2 max-w-2xl text-zinc-300">Ta kontakt for samarbeid!</p>
+          <div className="mt-8 flex justify-center">
+            <Button
+              asChild
+              className="rounded-full bg-gradient-to-r from-[#13A0F9] to-[#FF2F9C] px-8 py-3 font-semibold text-white shadow-[0_16px_28px_rgba(19,160,249,0.35)] transition hover:from-[#0d8bd6] hover:to-[#e12585]"
             >
-              <img
-                src={logoUrl}
-                alt={name}
-                className="h-full w-full object-contain filter brightness-0 invert"
-                loading="lazy"
-              />
-            </div>
-          ))}
-        </div>
-      </section>
+              <a href="#kontakt">Kontakt oss</a>
+            </Button>
+          </div>
+          <div id="sponsorer" className="mt-6 flex flex-wrap justify-center gap-6">
+            {sponsors.map(({ name, logoUrl }) => (
+              <div
+                key={name}
+                className="flex h-20 w-40 items-center justify-center rounded-2xl border border-white/10 bg-white/5 p-4 shadow-[0_12px_24px_rgba(8,18,40,0.35)] transition hover:bg-white/10"
+              >
+                <img
+                  src={logoUrl}
+                  alt={name}
+                  className="h-full w-full object-contain filter brightness-0 invert"
+                  loading="lazy"
+                />
+              </div>
+            ))}
+          </div>
+        </section>
+      ) : null}
 
       <section id="tilbud" className="mt-20 px-6">
         <div className="mx-auto max-w-6xl space-y-6 rounded-3xl border border-white/10 bg-white/5 p-8 text-center shadow-[0_24px_48px_rgba(6,14,35,0.45)]">
@@ -900,69 +967,83 @@ export default function FjolsenbandenHome() {
             <p className="text-lg text-zinc-200">FjOlsenbanden tilbyr mer enn bare streaming!</p>
           </div>
           <div className="grid gap-6 text-left sm:grid-cols-2">
-            {offerings.map(({ title, description, Icon }) => (
-              <OfferingCard key={title} title={title} description={description} Icon={Icon} />
-            ))}
+            {offerings.map(({ title, description, Icon }) =>
+              title === "Unboxing" ? (
+                <UnboxingOfferingCard
+                  key={title}
+                  title={title}
+                  description={description}
+                  Icon={Icon}
+                  onWatchVideo={() => setShowUnboxingVideo(true)}
+                  reachLabel={estimatedUnboxingReach}
+                  audienceStats={stats}
+                />
+              ) : (
+                <OfferingCard key={title} title={title} description={description} Icon={Icon} />
+              ),
+            )}
           </div>
         </div>
       </section>
 
-      <section id="kontakt" className="mt-20 px-6">
-        <div className="mx-auto max-w-5xl space-y-6 rounded-3xl border border-white/10 bg-[#161f33]/90 p-8 text-center shadow-2xl">
-          <h2 className="text-3xl font-bold">Kontakt oss</h2>
-          <p className="text-zinc-300">
-            Har du spørsmål om medlemskap, samarbeid eller events? Send oss en melding så kommer vi tilbake til deg.
-          </p>
-          <form className="grid gap-4 text-left md:grid-cols-2" onSubmit={handleContactSubmit}>
-            <div>
-              <label className="mb-1 block text-sm font-semibold text-zinc-200" htmlFor="name">
-                Navn
-              </label>
-              <input
-                id="name"
-                name="name"
-                type="text"
-                required
-                className="w-full rounded-xl border border-white/15 bg-white/5 px-4 py-3 text-sm text-white placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-[#13A0F9]"
-              />
+        {contactForm ? (
+          <section id="kontakt" className="mt-20 px-6">
+            <div className="mx-auto max-w-5xl space-y-6 rounded-3xl border border-white/10 bg-[#161f33]/90 p-8 text-center shadow-2xl">
+              <h2 className="text-3xl font-bold">Kontakt oss</h2>
+              <p className="text-zinc-300">
+                Har du spørsmål om medlemskap, samarbeid eller events? Send oss en melding så kommer vi tilbake til deg.
+              </p>
+              <form className="grid gap-4 text-left md:grid-cols-2" onSubmit={handleContactSubmit}>
+                <div>
+                  <label className="mb-1 block text-sm font-semibold text-zinc-200" htmlFor="name">
+                    Navn
+                  </label>
+                  <input
+                    id="name"
+                    name="name"
+                    type="text"
+                    required
+                    className="w-full rounded-xl border border-white/15 bg-white/5 px-4 py-3 text-sm text-white placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-[#13A0F9]"
+                  />
+                </div>
+                <div>
+                  <label className="mb-1 block text-sm font-semibold text-zinc-200" htmlFor="email">
+                    E-post
+                  </label>
+                  <input
+                    id="email"
+                    name="email"
+                    type="email"
+                    required
+                    className="w-full rounded-xl border border-white/15 bg-white/5 px-4 py-3 text-sm text-white placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-[#13A0F9]"
+                  />
+                </div>
+                <div className="md:col-span-2">
+                  <label className="mb-1 block text-sm font-semibold text-zinc-200" htmlFor="message">
+                    Melding
+                  </label>
+                  <textarea
+                    id="message"
+                    name="message"
+                    rows={4}
+                    required
+                    className="w-full rounded-xl border border-white/15 bg-white/5 px-4 py-3 text-sm text-white placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-[#13A0F9]"
+                  />
+                </div>
+                <div className="md:col-span-2 flex flex-col gap-2 text-sm text-zinc-400 md:flex-row md:items-center md:justify-between">
+                  <span>Vi svarer så snart vi kan, som regel innen 1–2 virkedager.</span>
+                  <Button
+                    type="submit"
+                    size="lg"
+                    className="rounded-full bg-gradient-to-r from-[#13A0F9] to-[#FF2F9C] px-6 font-semibold text-white shadow-[0_16px_28px_rgba(19,160,249,0.35)] transition hover:from-[#0d8bd6] hover:to-[#e12585]"
+                  >
+                    Send melding
+                  </Button>
+                </div>
+              </form>
             </div>
-            <div>
-              <label className="mb-1 block text-sm font-semibold text-zinc-200" htmlFor="email">
-                E-post
-              </label>
-              <input
-                id="email"
-                name="email"
-                type="email"
-                required
-                className="w-full rounded-xl border border-white/15 bg-white/5 px-4 py-3 text-sm text-white placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-[#13A0F9]"
-              />
-            </div>
-            <div className="md:col-span-2">
-              <label className="mb-1 block text-sm font-semibold text-zinc-200" htmlFor="message">
-                Melding
-              </label>
-              <textarea
-                id="message"
-                name="message"
-                rows={4}
-                required
-                className="w-full rounded-xl border border-white/15 bg-white/5 px-4 py-3 text-sm text-white placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-[#13A0F9]"
-              />
-            </div>
-            <div className="md:col-span-2 flex flex-col gap-2 text-sm text-zinc-400 md:flex-row md:items-center md:justify-between">
-              <span>Vi svarer så snart vi kan, som regel innen 1–2 virkedager.</span>
-              <Button
-                type="submit"
-                size="lg"
-                className="rounded-full bg-gradient-to-r from-[#13A0F9] to-[#FF2F9C] px-6 font-semibold text-white shadow-[0_16px_28px_rgba(19,160,249,0.35)] transition hover:from-[#0d8bd6] hover:to-[#e12585]"
-              >
-                Send melding
-              </Button>
-            </div>
-          </form>
-        </div>
-      </section>
+          </section>
+        ) : null}
 
       </main>
 
@@ -1550,6 +1631,21 @@ export default function FjolsenbandenHome() {
   );
 }
 
+function DiscordIcon({ className, ...props }: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      aria-hidden="true"
+      focusable="false"
+      className={className}
+      fill="currentColor"
+      {...props}
+    >
+      <path d="M20.317 4.369a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.211.375-.444.864-.608 1.249-1.844-.276-3.68-.276-5.486 0-.163-.407-.415-.874-.626-1.249a.077.077 0 0 0-.079-.037 19.736 19.736 0 0 0-4.885 1.515.07.07 0 0 0-.032.028C2.205 9.045 1.588 13.58 2.014 18.059a.082.082 0 0 0 .031.056 19.9 19.9 0 0 0 5.993 3.047.079.079 0 0 0 .084-.028c.461-.63.873-1.295 1.226-1.994a.077.077 0 0 0-.041-.105c-.652-.247-1.273-.549-1.872-.892a.078.078 0 0 1-.008-.13c.125-.094.25-.192.37-.291a.074.074 0 0 1 .077-.01c3.927 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .078.01c.12.099.245.198.37.291a.078.078 0 0 1-.008.13 13.09 13.09 0 0 1-1.873.892.077.077 0 0 0-.04.105c.36.699.772 1.364 1.225 1.994a.079.079 0 0 0 .084.028 19.876 19.876 0 0 0 6.002-3.047.077.077 0 0 0 .03-.055c.5-5.177-.838-9.673-3.548-13.662a.061.061 0 0 0-.031-.028Zm-12.052 9.91c-1.18 0-2.158-1.085-2.158-2.419 0-1.333.955-2.418 2.158-2.418 1.213 0 2.182 1.095 2.158 2.418-.001 1.334-.955 2.419-2.158 2.419Zm7.472 0c-1.18 0-2.158-1.085-2.158-2.419 0-1.333.955-2.418 2.158-2.418 1.213 0 2.182 1.095 2.158 2.418 0 1.334-.945 2.419-2.158 2.419Z" />
+    </svg>
+  );
+}
+
 function PlatformButton({ icon, label, href }: { icon: ReactNode; label: string; href: string }) {
   return (
     <a
@@ -1620,6 +1716,115 @@ function MembershipCard({
         </Button>
       </CardContent>
     </Card>
+  );
+}
+
+function VideoLightbox({
+  videoUrl,
+  onClose,
+  title,
+}: {
+  videoUrl: string;
+  onClose: () => void;
+  title: string;
+}) {
+  return (
+    <div
+      className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 px-4 py-10"
+      role="dialog"
+      aria-modal="true"
+      aria-label={title}
+      onClick={onClose}
+    >
+      <div
+        className="relative w-full max-w-4xl overflow-hidden rounded-3xl border border-white/10 bg-[#0b163f] shadow-[0_24px_48px_rgba(6,14,35,0.7)]"
+        onClick={(event) => event.stopPropagation()}
+      >
+        <button
+          type="button"
+          onClick={onClose}
+          className="absolute right-4 top-4 inline-flex h-10 w-10 items-center justify-center rounded-full bg-black/50 text-white transition hover:bg-black/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#13A0F9]"
+          aria-label="Lukk video"
+        >
+          <X className="h-5 w-5" />
+        </button>
+        <div className="aspect-video w-full bg-black">
+          <iframe
+            src={videoUrl}
+            title={title}
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerPolicy="strict-origin-when-cross-origin"
+            allowFullScreen
+            className="h-full w-full"
+          />
+        </div>
+        <div className="space-y-2 border-t border-white/10 bg-black/30 p-6 text-left">
+          <h3 className="text-lg font-semibold text-white">{title}</h3>
+          <p className="text-sm text-zinc-300">
+            Videoen viser hvordan vi pakker ut, iscenesetter og presenterer produkter slik at følgerne våre får lyst til å kjøpe dem.
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function UnboxingOfferingCard({
+  title,
+  description,
+  Icon,
+  onWatchVideo,
+  reachLabel,
+  audienceStats,
+}: {
+  title: string;
+  description: string;
+  Icon: LucideIcon;
+  onWatchVideo: () => void;
+  reachLabel: string;
+  audienceStats: typeof stats;
+}) {
+  return (
+    <div className="flex h-full flex-col gap-5 rounded-2xl border border-white/10 bg-gradient-to-br from-[#161f33] via-[#101a33] to-[#0a1329] p-6 shadow-[0_20px_36px_rgba(6,14,35,0.55)]">
+      <div className="flex items-center gap-3">
+        <span className="grid h-12 w-12 place-content-center rounded-xl bg-gradient-to-br from-[#13A0F9] to-[#FF2F9C] text-black">
+          <Icon className="h-6 w-6" />
+        </span>
+        <div>
+          <h3 className="text-xl font-semibold text-white">{title}</h3>
+          <p className="text-sm text-zinc-300">{description}</p>
+        </div>
+      </div>
+      <div className="space-y-4 rounded-2xl border border-pink-400/30 bg-pink-500/10 p-5 text-left text-pink-100/90">
+        <p className="text-base font-semibold text-white">
+          🎯 Potensiell rekkevidde: <span className="text-2xl text-[#FFB7E5]">{reachLabel}+</span> kjøpsvillige følgere ser oss hver uke.
+        </p>
+        <p className="text-sm text-pink-100/80">
+          Vi aktiverer communityet på tvers av plattformene våre, slik at produktet ditt får både hype og salgsmuligheter allerede første dag.
+        </p>
+        <div className="grid gap-3 sm:grid-cols-3">
+          {audienceStats.map((stat) => (
+            <div
+              key={stat.label}
+              className="rounded-xl bg-black/30 px-4 py-3 text-center text-xs uppercase tracking-wide text-pink-100/80"
+            >
+              <p className="text-lg font-semibold text-white">{stat.value}</p>
+              <p>{stat.label}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+      <Button
+        size="lg"
+        className="rounded-full bg-gradient-to-r from-[#13A0F9] to-[#FF2F9C] font-semibold text-white shadow-[0_16px_28px_rgba(19,160,249,0.35)] transition hover:from-[#0d8bd6] hover:to-[#e12585]"
+        onClick={onWatchVideo}
+      >
+        Se unboxing-eksempel
+      </Button>
+      <p className="text-xs text-zinc-400">
+        Trykk på knappen for å se en full unboxing-produksjon slik samarbeidspartnerne våre får den levert.
+      </p>
+    </div>
   );
 }
 
