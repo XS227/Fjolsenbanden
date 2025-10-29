@@ -17,22 +17,24 @@ import {
   Trophy,
   Users,
 } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { StatsPoint, useAdminState } from "@/lib/admin-state";
+import {
+  DEFAULT_SITE_MODULES,
+  type SiteModules,
+  type SiteSettings,
+  StatsPoint,
+  useAdminState,
+} from "@/lib/admin-state";
 import { useAdminAuth } from "@/lib/admin-auth";
 
 const brandBackground = "radial-gradient(circle at 15% 15%, rgba(64,172,255,0.3), transparent 55%), #03091b";
 
-interface BrandFormState {
-  logoUrl: string;
-  heroTitle: string;
-  heroTagline: string;
-  announcement: string;
-}
+type BrandFormState = Pick<SiteSettings, "logoUrl" | "heroTitle" | "heroTagline" | "announcement">;
 
 interface NewPlayerState {
   gamerTag: string;
@@ -60,6 +62,34 @@ const emptyNewPlayer = (): NewPlayerState => ({
   tiktok: "",
 });
 
+type ModuleKey = keyof SiteModules;
+
+const moduleToggleItems: ReadonlyArray<{
+  key: ModuleKey;
+  label: string;
+  description: string;
+  Icon: LucideIcon;
+}> = [
+  {
+    key: "liveStream",
+    label: "Live-sending",
+    description: "Viser Twitch-forhåndsvisningen og chatten på forsiden.",
+    Icon: Activity,
+  },
+  {
+    key: "partners",
+    label: "Samarbeidspartnere",
+    description: "Aktiverer seksjonene for samarbeidspartnere og sponsorer.",
+    Icon: Crown,
+  },
+  {
+    key: "contactForm",
+    label: "Kontaktskjema",
+    description: "Viser kontaktskjemaet nederst på forsiden.",
+    Icon: MessageCircle,
+  },
+];
+
 export default function AdminDashboard() {
   const auth = useAdminAuth();
 
@@ -85,6 +115,11 @@ function AdminDashboardContent({ auth }: DashboardContentProps) {
   useEffect(() => {
     setBrandForm(siteSettings);
   }, [siteSettings]);
+
+  const moduleSettings = useMemo<SiteModules>(
+    () => ({ ...DEFAULT_SITE_MODULES, ...(siteSettings.modules ?? DEFAULT_SITE_MODULES) }),
+    [siteSettings.modules],
+  );
 
   const totals = useMemo(() => {
     const totalMembers = statsHistory.at(-1)?.members ?? 0;
@@ -132,6 +167,11 @@ function AdminDashboardContent({ auth }: DashboardContentProps) {
 
   const lastLogin = auth.state.lastLoginAt ? formatDateTime(auth.state.lastLoginAt) : null;
 
+  const handleModuleToggle = (module: ModuleKey) => {
+    const nextValue = !moduleSettings[module];
+    updateSiteSettings({ modules: { [module]: nextValue } as Partial<SiteModules> });
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 text-slate-100">
       <div className="mx-auto flex w-full max-w-6xl flex-col gap-10 px-6 py-12">
@@ -177,7 +217,7 @@ function AdminDashboardContent({ auth }: DashboardContentProps) {
                 Tilpass hvordan Fjolsenbanden presenteres utad. Endringene vises med en gang i forhåndsvisningen.
               </p>
             </CardHeader>
-            <CardContent>
+            <CardContent className="space-y-6">
               <form className="space-y-5" onSubmit={handleBrandSubmit}>
                 <div className="space-y-2">
                   <Label htmlFor="logoUrl" className="text-slate-200">
@@ -242,6 +282,49 @@ function AdminDashboardContent({ auth }: DashboardContentProps) {
                   </Button>
                 </div>
               </form>
+              <div className="space-y-4 rounded-2xl border border-white/10 bg-white/5 p-5">
+                <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
+                  <p className="text-sm font-semibold text-white">Moduler på forsiden</p>
+                  <span className="text-xs text-slate-300">Slå av seksjoner som ikke skal vises.</span>
+                </div>
+                <div className="space-y-3">
+                  {moduleToggleItems.map(({ key, label, description, Icon }) => {
+                    const enabled = moduleSettings[key];
+                    return (
+                      <div
+                        key={key}
+                        className="flex flex-col gap-4 rounded-xl border border-white/10 bg-slate-950/30 p-4 sm:flex-row sm:items-center sm:justify-between"
+                      >
+                        <div className="flex items-start gap-3 text-left">
+                          <span className="mt-1 rounded-full bg-white/10 p-2 text-slate-200">
+                            <Icon className="h-4 w-4 text-emerald-300" />
+                          </span>
+                          <div>
+                            <p className="text-sm font-semibold text-white">{label}</p>
+                            <p className="text-xs text-slate-300">{description}</p>
+                          </div>
+                        </div>
+                        <button
+                          type="button"
+                          onClick={() => handleModuleToggle(key)}
+                          className={`inline-flex items-center gap-2 self-start rounded-full border px-4 py-1 text-xs font-semibold transition sm:self-auto ${
+                            enabled
+                              ? "border-emerald-400/60 bg-emerald-500/20 text-emerald-100 hover:bg-emerald-500/30"
+                              : "border-white/20 bg-white/5 text-slate-200 hover:bg-white/10"
+                          }`}
+                          aria-pressed={enabled}
+                        >
+                          <span
+                            className={`h-2 w-2 rounded-full ${enabled ? "bg-emerald-300" : "bg-slate-400"}`}
+                            aria-hidden="true"
+                          />
+                          {enabled ? "Aktiv" : "Skjult"}
+                        </button>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
             </CardContent>
           </Card>
 

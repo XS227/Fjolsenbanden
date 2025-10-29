@@ -2,11 +2,18 @@
 
 import { usePersistentState } from "@/lib/persistent-state";
 
+export interface SiteModules {
+  liveStream: boolean;
+  partners: boolean;
+  contactForm: boolean;
+}
+
 export interface SiteSettings {
   logoUrl: string;
   heroTitle: string;
   heroTagline: string;
   announcement: string;
+  modules: SiteModules;
 }
 
 export interface PlayerProfile {
@@ -40,12 +47,22 @@ export interface AdminState {
   statsHistory: StatsPoint[];
 }
 
+export type SiteSettingsUpdate =
+  Partial<Omit<SiteSettings, "modules">> & { modules?: Partial<SiteModules> };
+
+export const DEFAULT_SITE_MODULES: SiteModules = {
+  liveStream: true,
+  partners: true,
+  contactForm: true,
+};
+
 const DEFAULT_STATE: AdminState = {
   siteSettings: {
     logoUrl: "/assets/logo.svg",
     heroTitle: "FJOLSENBANDEN",
     heroTagline: "Spillglede for hele familien – trygge streams, turneringer og premier.",
     announcement: "Neste livesending starter 20:00 med co-op i Mario Kart og premier fra Lenovo!",
+    modules: DEFAULT_SITE_MODULES,
   },
   players: [
     {
@@ -127,63 +144,77 @@ function ensureUniqueSlug(existing: PlayerProfile[], base: string): string {
 }
 
 export function useAdminState() {
-  const [state, setState] = usePersistentState<AdminState>("fjolsenbanden-admin", DEFAULT_STATE);
+  const [persistedState, setPersistedState] = usePersistentState<AdminState>(
+    "fjolsenbanden-admin",
+    DEFAULT_STATE,
+  );
 
-  const updateSiteSettings = (input: Partial<SiteSettings>) => {
-    setState((current) => ({
-      ...current,
-      siteSettings: { ...current.siteSettings, ...input },
-    }));
+  const state = ensureStateShape(persistedState);
+
+  const updateSiteSettings = (input: SiteSettingsUpdate) => {
+    setPersistedState((current) => {
+      const safeCurrent = ensureStateShape(current);
+      return {
+        ...safeCurrent,
+        siteSettings: mergeSiteSettings(safeCurrent.siteSettings, input),
+      };
+    });
   };
 
   const addPlayer = (player: Omit<PlayerProfile, "id" | "slug">) => {
-    setState((current) => {
+    setPersistedState((current) => {
+      const safeCurrent = ensureStateShape(current);
       const baseSlug = slugify(player.gamerTag);
-      const slug = ensureUniqueSlug(current.players, baseSlug);
+      const slug = ensureUniqueSlug(safeCurrent.players, baseSlug);
       const newPlayer: PlayerProfile = {
         ...player,
         id: generateId(),
         slug,
       };
       return {
-        ...current,
-        players: [newPlayer, ...current.players],
+        ...safeCurrent,
+        players: [newPlayer, ...safeCurrent.players],
       };
     });
   };
 
   const updatePlayer = (id: string, updates: Partial<PlayerProfile>) => {
-    setState((current) => ({
-      ...current,
-      players: current.players.map((player) =>
-        player.id === id
-          ? {
-              ...player,
-              ...updates,
-              slug: updates.gamerTag
-                ? ensureUniqueSlug(
-                    current.players.filter((item) => item.id !== id),
-                    slugify(updates.gamerTag)
-                  )
-                : player.slug,
-            }
-          : player
-      ),
-    }));
+    setPersistedState((current) => {
+      const safeCurrent = ensureStateShape(current);
+      return {
+        ...safeCurrent,
+        players: safeCurrent.players.map((player) =>
+          player.id === id
+            ? {
+                ...player,
+                ...updates,
+                slug: updates.gamerTag
+                  ? ensureUniqueSlug(
+                      safeCurrent.players.filter((item) => item.id !== id),
+                      slugify(updates.gamerTag),
+                    )
+                  : player.slug,
+              }
+            : player,
+        ),
+      };
+    });
   };
 
   const removePlayer = (id: string) => {
-    setState((current) => ({
-      ...current,
-      players: current.players.filter((player) => player.id !== id),
-    }));
+    setPersistedState((current) => {
+      const safeCurrent = ensureStateShape(current);
+      return {
+        ...safeCurrent,
+        players: safeCurrent.players.filter((player) => player.id !== id),
+      };
+    });
   };
 
   const findPlayerBySlug = (slug: string) => state.players.find((player) => player.slug === slug) ?? null;
 
   return {
     state,
-    setState,
     updateSiteSettings,
     addPlayer,
     updatePlayer,
@@ -193,6 +224,28 @@ export function useAdminState() {
 }
 
 export type UseAdminStateReturn = ReturnType<typeof useAdminState>;
+
+function ensureStateShape(input: AdminState): AdminState {
+  const siteSettings = mergeSiteSettings(DEFAULT_STATE.siteSettings, input.siteSettings ?? {});
+
+  return {
+    siteSettings,
+    players: [...(input.players ?? DEFAULT_STATE.players)],
+    statsHistory: [...(input.statsHistory ?? DEFAULT_STATE.statsHistory)],
+  };
+}
+
+function mergeSiteSettings(base: SiteSettings, updates: SiteSettingsUpdate): SiteSettings {
+  const { modules: moduleUpdates, ...rest } = updates;
+  return {
+    ...base,
+    ...rest,
+    modules: {
+      ...base.modules,
+      ...(moduleUpdates ?? {}),
+    },
+  };
+}
 
 function generateId(): string {
   if (typeof crypto !== "undefined" && typeof crypto.randomUUID === "function") {
