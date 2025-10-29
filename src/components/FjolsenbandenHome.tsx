@@ -249,6 +249,9 @@ const sponsors = [
   },
 ] as const;
 
+const unboxingVideoUrl =
+  "https://www.youtube.com/embed/v_8kKWD0K84?si=KzawWGqmMEQA7n78";
+
 const offerings: readonly Offering[] = [
   {
     title: "Foredrag",
@@ -339,6 +342,7 @@ export default function FjolsenbandenHome() {
   const [profileSubmitted, setProfileSubmitted] = useState(false);
   const [ctaVisible, setCtaVisible] = useState(false);
   const [ctaDocked, setCtaDocked] = useState(false);
+  const [showUnboxingVideo, setShowUnboxingVideo] = useState(false);
 
   const { state } = useAdminState();
   const { siteSettings } = state;
@@ -444,6 +448,24 @@ export default function FjolsenbandenHome() {
       window.removeEventListener("resize", handleScroll);
     };
   }, []);
+
+  useEffect(() => {
+    if (!showUnboxingVideo) {
+      return undefined;
+    }
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setShowUnboxingVideo(false);
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [showUnboxingVideo]);
 
   useEffect(() => {
     if (vippsFlow !== "minor") {
@@ -619,9 +641,18 @@ export default function FjolsenbandenHome() {
   const [firstName, ...remainingNameParts] = resolvedName ? resolvedName.split(/\s+/) : [""];
   const lastName = remainingNameParts.join(" ");
   const shouldShowStickyCta = ctaVisible && !ctaDocked;
+  const estimatedUnboxingReach = new Intl.NumberFormat("no-NO").format(2500 + 3200 + 4200);
 
   return (
     <div className="relative min-h-screen overflow-x-hidden bg-gradient-to-b from-[#131A49] via-[#0B163F] to-[#050B24] text-white">
+      {showUnboxingVideo ? (
+        <VideoLightbox
+          videoUrl={unboxingVideoUrl}
+          onClose={() => setShowUnboxingVideo(false)}
+          title="Se hvordan vi pakker ut og presenterer produkter for communityet"
+        />
+      ) : null}
+
       <div
         className="pointer-events-none fixed inset-0 -z-10 opacity-60"
         style={{
@@ -936,9 +967,21 @@ export default function FjolsenbandenHome() {
             <p className="text-lg text-zinc-200">FjOlsenbanden tilbyr mer enn bare streaming!</p>
           </div>
           <div className="grid gap-6 text-left sm:grid-cols-2">
-            {offerings.map(({ title, description, Icon }) => (
-              <OfferingCard key={title} title={title} description={description} Icon={Icon} />
-            ))}
+            {offerings.map(({ title, description, Icon }) =>
+              title === "Unboxing" ? (
+                <UnboxingOfferingCard
+                  key={title}
+                  title={title}
+                  description={description}
+                  Icon={Icon}
+                  onWatchVideo={() => setShowUnboxingVideo(true)}
+                  reachLabel={estimatedUnboxingReach}
+                  audienceStats={stats}
+                />
+              ) : (
+                <OfferingCard key={title} title={title} description={description} Icon={Icon} />
+              ),
+            )}
           </div>
         </div>
       </section>
@@ -1673,6 +1716,115 @@ function MembershipCard({
         </Button>
       </CardContent>
     </Card>
+  );
+}
+
+function VideoLightbox({
+  videoUrl,
+  onClose,
+  title,
+}: {
+  videoUrl: string;
+  onClose: () => void;
+  title: string;
+}) {
+  return (
+    <div
+      className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 px-4 py-10"
+      role="dialog"
+      aria-modal="true"
+      aria-label={title}
+      onClick={onClose}
+    >
+      <div
+        className="relative w-full max-w-4xl overflow-hidden rounded-3xl border border-white/10 bg-[#0b163f] shadow-[0_24px_48px_rgba(6,14,35,0.7)]"
+        onClick={(event) => event.stopPropagation()}
+      >
+        <button
+          type="button"
+          onClick={onClose}
+          className="absolute right-4 top-4 inline-flex h-10 w-10 items-center justify-center rounded-full bg-black/50 text-white transition hover:bg-black/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#13A0F9]"
+          aria-label="Lukk video"
+        >
+          <X className="h-5 w-5" />
+        </button>
+        <div className="aspect-video w-full bg-black">
+          <iframe
+            src={videoUrl}
+            title={title}
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerPolicy="strict-origin-when-cross-origin"
+            allowFullScreen
+            className="h-full w-full"
+          />
+        </div>
+        <div className="space-y-2 border-t border-white/10 bg-black/30 p-6 text-left">
+          <h3 className="text-lg font-semibold text-white">{title}</h3>
+          <p className="text-sm text-zinc-300">
+            Videoen viser hvordan vi pakker ut, iscenesetter og presenterer produkter slik at følgerne våre får lyst til å kjøpe dem.
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function UnboxingOfferingCard({
+  title,
+  description,
+  Icon,
+  onWatchVideo,
+  reachLabel,
+  audienceStats,
+}: {
+  title: string;
+  description: string;
+  Icon: LucideIcon;
+  onWatchVideo: () => void;
+  reachLabel: string;
+  audienceStats: typeof stats;
+}) {
+  return (
+    <div className="flex h-full flex-col gap-5 rounded-2xl border border-white/10 bg-gradient-to-br from-[#161f33] via-[#101a33] to-[#0a1329] p-6 shadow-[0_20px_36px_rgba(6,14,35,0.55)]">
+      <div className="flex items-center gap-3">
+        <span className="grid h-12 w-12 place-content-center rounded-xl bg-gradient-to-br from-[#13A0F9] to-[#FF2F9C] text-black">
+          <Icon className="h-6 w-6" />
+        </span>
+        <div>
+          <h3 className="text-xl font-semibold text-white">{title}</h3>
+          <p className="text-sm text-zinc-300">{description}</p>
+        </div>
+      </div>
+      <div className="space-y-4 rounded-2xl border border-pink-400/30 bg-pink-500/10 p-5 text-left text-pink-100/90">
+        <p className="text-base font-semibold text-white">
+          🎯 Potensiell rekkevidde: <span className="text-2xl text-[#FFB7E5]">{reachLabel}+</span> kjøpsvillige følgere ser oss hver uke.
+        </p>
+        <p className="text-sm text-pink-100/80">
+          Vi aktiverer communityet på tvers av plattformene våre, slik at produktet ditt får både hype og salgsmuligheter allerede første dag.
+        </p>
+        <div className="grid gap-3 sm:grid-cols-3">
+          {audienceStats.map((stat) => (
+            <div
+              key={stat.label}
+              className="rounded-xl bg-black/30 px-4 py-3 text-center text-xs uppercase tracking-wide text-pink-100/80"
+            >
+              <p className="text-lg font-semibold text-white">{stat.value}</p>
+              <p>{stat.label}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+      <Button
+        size="lg"
+        className="rounded-full bg-gradient-to-r from-[#13A0F9] to-[#FF2F9C] font-semibold text-white shadow-[0_16px_28px_rgba(19,160,249,0.35)] transition hover:from-[#0d8bd6] hover:to-[#e12585]"
+        onClick={onWatchVideo}
+      >
+        Se unboxing-eksempel
+      </Button>
+      <p className="text-xs text-zinc-400">
+        Trykk på knappen for å se en full unboxing-produksjon slik samarbeidspartnerne våre får den levert.
+      </p>
+    </div>
   );
 }
 
