@@ -4,6 +4,7 @@ export type CardProps = React.HTMLAttributes<HTMLDivElement>;
 export type CardHeaderProps = React.HTMLAttributes<HTMLDivElement>;
 export type CardContentProps = React.HTMLAttributes<HTMLDivElement>;
 export type CardTitleProps = React.HTMLAttributes<HTMLHeadingElement>;
+export type CardFooterProps = React.HTMLAttributes<HTMLDivElement>;
 
 function cn(...classes: Array<string | undefined | null | false>) {
   return classes.filter(Boolean).join(" ");
@@ -55,3 +56,14 @@ export const CardContent = React.forwardRef<HTMLDivElement, CardContentProps>(
   )
 );
 CardContent.displayName = "CardContent";
+
+export const CardFooter = React.forwardRef<HTMLDivElement, CardFooterProps>(
+  ({ className, ...props }, ref) => (
+    <div
+      ref={ref}
+      className={cn("px-6 pb-6", className)}
+      {...props}
+    />
+  )
+);
+CardFooter.displayName = "CardFooter";
