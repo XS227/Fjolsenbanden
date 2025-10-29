@@ -18,6 +18,11 @@
     <style>
       :root {
         color-scheme: dark;
+        --bg-1: #041149;
+        --txt: #ffffff;
+        --muted: rgba(255, 255, 255, 0.75);
+        --ring: rgba(255, 255, 255, 0.12);
+        --grad: linear-gradient(90deg, #13a0f9 0%, #b54bff 55%, #ff2f9c 100%);
       }
       body {
         margin: 0;
@@ -58,6 +63,85 @@
           width: min(18rem, 90vw);
         }
       }
+
+      .partners {
+        background: radial-gradient(1200px 600px at 50% -10%, #0b1230, var(--bg-1));
+        color: var(--txt);
+        padding: 44px 16px 36px;
+      }
+      .partners__inner {
+        max-width: 960px;
+        margin: 0 auto;
+        text-align: center;
+        border-top: 1px solid var(--ring);
+        padding-top: 28px;
+      }
+      .partners__title {
+        font-size: clamp(22px, 4.5vw, 36px);
+        font-weight: 800;
+        letter-spacing: 0.3px;
+        margin: 0 0 8px;
+      }
+      .partners__lead {
+        color: var(--muted);
+        font-size: clamp(14px, 2.8vw, 18px);
+        margin: 0 auto 18px;
+        max-width: 48ch;
+      }
+      .partners__logos {
+        list-style: none;
+        padding: 0;
+        margin: 8px auto 16px;
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+        max-width: 640px;
+        justify-items: center;
+        align-items: center;
+      }
+      @media (min-width: 700px) {
+        .partners__logos {
+          grid-template-columns: repeat(4, minmax(0, 1fr));
+          gap: 18px;
+        }
+      }
+      .logo {
+        height: 28px;
+        width: auto;
+        display: block;
+        filter: drop-shadow(0 0 10px rgba(19, 160, 249, 0.28))
+          drop-shadow(0 0 18px rgba(255, 47, 156, 0.18));
+        opacity: 0.96;
+      }
+      @media (min-width: 700px) {
+        .logo {
+          height: 34px;
+        }
+      }
+      .partners__cta-text {
+        color: var(--muted);
+        margin: 10px auto 14px;
+        max-width: 50ch;
+        font-size: 14px;
+      }
+      .partners__btn {
+        display: inline-block;
+        padding: 12px 18px;
+        border-radius: 14px;
+        background: var(--grad);
+        color: #fff;
+        font-weight: 700;
+        text-decoration: none;
+        box-shadow: 0 10px 30px rgba(19, 160, 249, 0.18), 0 2px 0 rgba(255, 255, 255, 0.08)
+          inset;
+        transition: transform 0.15s ease, filter 0.15s ease;
+      }
+      .partners__btn:hover {
+        transform: translateY(-1px);
+        filter: brightness(1.05);
+      }
+      .partners__btn:active {
+        transform: translateY(0);
       #preview-switcher {
         position: fixed;
         top: 1.25rem;
@@ -126,7 +210,7 @@
             <li><a class="transition-colors duration-150 hover:text-[#13A0F9]" href="#live">Live</a></li>
             <li><a class="transition-colors duration-150 hover:text-[#13A0F9]" href="#medlemskap">Medlemskap</a></li>
             <li><a class="transition-colors duration-150 hover:text-[#13A0F9]" href="#premier">Premier</a></li>
-            <li><a class="transition-colors duration-150 hover:text-[#13A0F9]" href="#sponsorer">Samarbeid</a></li>
+            <li><a class="transition-colors duration-150 hover:text-[#13A0F9]" href="#partners">Samarbeid</a></li>
             <li><a class="transition-colors duration-150 hover:text-[#13A0F9]" href="#kontakt">Kontakt</a></li>
           </ul>
           <div class="flex items-center gap-3 md:ml-4">
@@ -158,7 +242,7 @@
             <li><a class="block rounded-md px-4 py-2 transition hover:bg-white/10" href="#live">Live</a></li>
             <li><a class="block rounded-md px-4 py-2 transition hover:bg-white/10" href="#medlemskap">Medlemskap</a></li>
             <li><a class="block rounded-md px-4 py-2 transition hover:bg-white/10" href="#premier">Premier</a></li>
-            <li><a class="block rounded-md px-4 py-2 transition hover:bg-white/10" href="#sponsorer">Samarbeid</a></li>
+            <li><a class="block rounded-md px-4 py-2 transition hover:bg-white/10" href="#partners">Samarbeid</a></li>
             <li><a class="block rounded-md px-4 py-2 transition hover:bg-white/10" href="#kontakt">Kontakt</a></li>
             <li>
               <a class="flex items-center gap-2 rounded-md px-4 py-2 transition hover:bg-white/10" href="/admin">
@@ -424,56 +508,36 @@
           </div>
         </section>
 
-        <section id="premier" class="section-shell mt-20 text-center">
-          <h2 class="mb-4 text-3xl font-bold">Samarbeidspartnere</h2>
-          <p class="lead-clamp mx-auto max-w-3xl text-zinc-300">Vi har allerede hatt samarbeid med flere kjente merkevarer.</p>
-          <p class="lead-clamp mx-auto mt-6 max-w-2xl text-zinc-300">
-            Ønsker du å synliggjøre din merkevare for vårt engasjerte og voksende gaming-publikum?
-          </p>
-          <p class="lead-clamp mx-auto mt-2 max-w-2xl text-zinc-300">Ta kontakt for samarbeid!</p>
-          <div class="mt-8 flex justify-center">
-            <a
-              class="rounded-full bg-gradient-to-r from-[#13A0F9] to-[#FF2F9C] px-8 py-3 font-semibold text-white shadow-[0_16px_28px_rgba(19,160,249,0.35)] transition hover:from-[#0d8bd6] hover:to-[#e12585]"
-              href="#kontakt"
-            >
-              Kontakt oss
-            </a>
+        <section id="partners" class="partners">
+          <div class="partners__inner">
+            <h2 id="premier" class="partners__title">Samarbeidspartnere</h2>
+            <p class="partners__lead">
+              Vi har allerede hatt samarbeid med flere kjente merkevarer.
+            </p>
+
+            <!-- LOGO-LISTE (midtstilt) -->
+            <ul class="partners__logos" aria-label="Våre samarbeidspartnere">
+              <li>
+                <img src="/assets/partners/lenovo.svg" alt="Lenovo" class="logo" />
+              </li>
+              <li>
+                <img src="/assets/partners/komplett.svg" alt="Komplett" class="logo" />
+              </li>
+              <li>
+                <img src="/assets/partners/philips.svg" alt="Philips" class="logo" />
+              </li>
+              <li>
+                <img src="/assets/partners/samsung.svg" alt="Samsung" class="logo" />
+              </li>
+            </ul>
+
+            <!-- CTA -->
+            <p class="partners__cta-text">
+              Ønsker du å synliggjøre din merkevare for vårt engasjerte gaming-publikum?
+            </p>
+            <a href="#kontakt" class="partners__btn">Kontakt oss</a>
           </div>
-        <div id="sponsorer" class="mt-10 flex flex-wrap justify-center gap-6">
-          <div class="flex h-20 w-40 items-center justify-center rounded-2xl border border-white/10 bg-white/5 p-4 shadow-[0_12px_24px_rgba(8,18,40,0.35)] transition hover:bg-white/10">
-            <img
-              src="https://wallpapers.com/images/hd/lenovo-logo-blue-background-5eusj88firqak72j-5eusj88firqak72j.jpg"
-              alt="Lenovo"
-              class="h-full w-full object-contain"
-              loading="lazy"
-            />
-          </div>
-          <div class="flex h-20 w-40 items-center justify-center rounded-2xl border border-white/10 bg-white/5 p-4 shadow-[0_12px_24px_rgba(8,18,40,0.35)] transition hover:bg-white/10">
-            <img
-              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR5b167HuOXql2HDZHamkzcYas962igQOzcqA&s"
-              alt="Samsung"
-              class="h-full w-full object-contain"
-              loading="lazy"
-            />
-          </div>
-          <div class="flex h-20 w-40 items-center justify-center rounded-2xl border border-white/10 bg-white/5 p-4 shadow-[0_12px_24px_rgba(8,18,40,0.35)] transition hover:bg-white/10">
-            <img
-              src="https://www.sthb.nl/wp-content/uploads/2016/02/Philips-Logo-HD.jpg"
-              alt="Philips"
-              class="h-full w-full object-contain"
-              loading="lazy"
-            />
-          </div>
-          <div class="flex h-20 w-40 items-center justify-center rounded-2xl border border-white/10 bg-white/5 p-4 shadow-[0_12px_24px_rgba(8,18,40,0.35)] transition hover:bg-white/10">
-            <img
-              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYtpuPO71nnzwUIVosVdrevGmHTUrgoiqLGA&s"
-              alt="Komplett.no"
-              class="h-full w-full object-contain"
-              loading="lazy"
-            />
-          </div>
-        </div>
-      </section>
+        </section>
 
       <section id="tilbud" class="section-shell mt-20">
         <div class="mx-auto max-w-6xl space-y-6 rounded-3xl border border-white/10 bg-white/5 p-8 text-center shadow-[0_24px_48px_rgba(6,14,35,0.45)]">
