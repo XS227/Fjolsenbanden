@@ -838,19 +838,20 @@ export default function FjolsenbandenHome() {
 
         <section id="bli-medlem" className="px-6">
           <div className="mx-auto max-w-6xl rounded-[2.5rem] border border-white/10 bg-white/5 p-12 shadow-2xl">
-            <h2 className="text-3xl font-bold sm:text-4xl">💬 Bli medlem</h2>
+            <h2 className="text-3xl font-bold sm:text-4xl">Bli medlem</h2>
             <p className="mt-4 text-lg text-slate-200">
-              Det er gratis å bli med i FjOlsenbanden! Alle kan delta i konkurranser, men for å vinne premier må du være registrert medlem.
+              Det er gratis å bli medlem i FjOlsenbanden! Alle kan delta i konkurranser, men for å vinne premier må du være registrert medlem.
             </p>
-            <div className="mt-8 flex flex-wrap gap-4">
+            <p className="mt-6 text-base text-slate-200 sm:text-lg">Velg alder for å bli med:</p>
+            <div className="mt-6 flex flex-wrap gap-4">
               <a
-                href="https://www.fjolsenbanden.no/medlem/under-18"
+                href="https://forms.gle/sq4mUf7s6e6UY7R58"
                 className="inline-flex items-center gap-3 rounded-2xl bg-indigo-500 px-6 py-4 text-lg font-semibold text-white shadow-[0_12px_30px_rgba(99,102,241,0.45)] transition hover:bg-indigo-400"
               >
                 🔵 Under 18 år
               </a>
               <a
-                href="https://www.fjolsenbanden.no/medlem/over-18"
+                href="https://forms.gle/ZrbXCggnUY8FTT7t9"
                 className="inline-flex items-center gap-3 rounded-2xl bg-emerald-500 px-6 py-4 text-lg font-semibold text-white shadow-[0_12px_30px_rgba(16,185,129,0.45)] transition hover:bg-emerald-400"
               >
                 🟢 Over 18 år
