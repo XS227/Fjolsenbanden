@@ -88,6 +88,12 @@ type ProfileFormValues = {
   acceptRules: boolean;
 };
 
+type Sponsor = {
+  name: string;
+  slug: string;
+  remoteFileNames: readonly string[];
+};
+
 const navLinks: ReadonlyArray<{ name: string; href: string }> = [
   { name: "Hjem", href: "#" },
   { name: "Live", href: "#live" },
@@ -227,27 +233,71 @@ const offerCards = [
   },
 ] as const;
 
-const sponsors = [
+const PARTNER_LOGO_BASE_URLS = [
+  "https://fjolsenbanden.setaei.com/Images",
+  "http://fjolsenbanden.setaei.com/Images",
+] as const;
+
+const sponsors: readonly Sponsor[] = [
   {
     name: "Lenovo",
-    logoUrl:
-      "https://wallpapers.com/images/hd/lenovo-logo-blue-background-5eusj88firqak72j-5eusj88firqak72j.jpg",
+    slug: "lenovo",
+    remoteFileNames: ["Lenovo.svg", "lenovo.svg", "Lenovo.png", "lenovo.png"],
   },
   {
     name: "Samsung",
-    logoUrl:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR5b167HuOXql2HDZHamkzcYas962igQOzcqA&s",
+    slug: "samsung",
+    remoteFileNames: ["Samsung.svg", "samsung.svg", "Samsung.png", "samsung.png"],
   },
   {
     name: "Philips",
-    logoUrl: "https://www.sthb.nl/wp-content/uploads/2016/02/Philips-Logo-HD.jpg",
+    slug: "philips",
+    remoteFileNames: ["Philips.svg", "philips.svg", "Philips.png", "philips.png"],
   },
   {
     name: "Komplett.no",
-    logoUrl:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYtpuPO71nnzwUIVosVdrevGmHTUrgoiqLGA&s",
+    slug: "komplett",
+    remoteFileNames: [
+      "Komplett.svg",
+      "komplett.svg",
+      "Komplett.png",
+      "komplett.png",
+      "Komplett-no.png",
+      "komplett-no.png",
+    ],
   },
 ] as const;
+
+const buildSponsorLogoSources = (sponsor: Sponsor) => [
+  ...PARTNER_LOGO_BASE_URLS.flatMap((baseUrl) =>
+    sponsor.remoteFileNames.map((fileName) => `${baseUrl}/${fileName}`),
+  ),
+  `/assets/partners/${sponsor.slug}.svg`,
+];
+
+const SponsorLogoCard = ({ sponsor }: { sponsor: Sponsor }) => {
+  const [sourceIndex, setSourceIndex] = useState(0);
+  const sources = useMemo(() => buildSponsorLogoSources(sponsor), [sponsor]);
+  const safeIndex = Math.min(sourceIndex, sources.length - 1);
+  const currentSource = sources[Math.max(0, safeIndex)];
+
+  return (
+    <div className="flex h-20 w-40 items-center justify-center rounded-2xl border border-white/10 bg-white/5 p-4 shadow-[0_12px_24px_rgba(8,18,40,0.35)] transition hover:bg-white/10">
+      <img
+        src={currentSource}
+        alt={sponsor.name}
+        className="h-full w-full object-contain filter brightness-0 invert"
+        loading="lazy"
+        onError={() =>
+          setSourceIndex((previous) => {
+            const nextIndex = previous + 1;
+            return nextIndex < sources.length ? nextIndex : previous;
+          })
+        }
+      />
+    </div>
+  );
+};
 
 const unboxingVideoUrl =
   "https://www.youtube.com/embed/v_8kKWD0K84?si=KzawWGqmMEQA7n78";
@@ -935,18 +985,8 @@ export default function FjolsenbandenHome() {
             Vi har allerede hatt samarbeid med flere kjente merkevarer.
           </p>
           <div id="sponsorer" className="mt-8 flex flex-wrap justify-center gap-6">
-            {sponsors.map(({ name, logoUrl }) => (
-              <div
-                key={name}
-                className="flex h-20 w-40 items-center justify-center rounded-2xl border border-white/10 bg-white/5 p-4 shadow-[0_12px_24px_rgba(8,18,40,0.35)] transition hover:bg-white/10"
-              >
-                <img
-                  src={logoUrl}
-                  alt={name}
-                  className="h-full w-full object-contain filter brightness-0 invert"
-                  loading="lazy"
-                />
-              </div>
+            {sponsors.map((sponsor) => (
+              <SponsorLogoCard key={sponsor.name} sponsor={sponsor} />
             ))}
           </div>
           <div className="mt-8 space-y-4">
