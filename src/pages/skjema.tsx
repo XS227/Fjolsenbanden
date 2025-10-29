@@ -1,429 +1,304 @@
 "use client";
 
-import React, { useMemo, useState } from "react";
-import type { FormEvent } from "react";
-import type { LucideIcon } from "lucide-react";
-import {
-  ArrowRight,
-  CheckCircle2,
-  Gamepad2,
-  Gift,
-  HandHeart,
-  PartyPopper,
-  Sparkles,
-  Star,
-  MessageCircle,
-} from "lucide-react";
+import { useMemo, useState } from "react";
+import type { ChangeEvent, FormEvent } from "react";
+import { ArrowLeft, CheckCircle2 } from "lucide-react";
+
 import { Button } from "@/components/ui/button";
 
-const vippsBrandColor = "#FF5B24";
-
 type FormData = {
-  heroName: string;
-  hypeSong: string;
-  dreamSquadName: string;
-  xpGoal: string;
-  snack: string;
-  energyLevel: string;
-  vibeBadges: string[];
   parentName: string;
+  parentEmail: string;
   parentPhone: string;
-  parentCheerMessage: string;
-};
-
-type CheckboxFieldName = "vibeBadges";
-type TextFieldName = Exclude<keyof FormData, CheckboxFieldName>;
-
-type QuestField =
-  | {
-      name: TextFieldName;
-      label: string;
-      description?: string;
-      type: "text" | "textarea" | "select";
-      placeholder?: string;
-      options?: readonly string[];
-    }
-  | {
-      name: CheckboxFieldName;
-      label: string;
-      description?: string;
-      type: "checkboxes";
-      options: readonly string[];
-    };
-
-type Quest = {
-  id: string;
-  title: string;
-  description: string;
-  reward: string;
-  icon: LucideIcon;
-  fields: readonly QuestField[];
+  name: string;
+  email: string;
+  phone: string;
+  birthDate: string;
+  gender: string;
+  postalCode: string;
+  city: string;
+  fortniteUsername: string;
+  twitchUsername: string;
+  discordName: string;
+  tiktokUsername: string;
+  youtubeUsername: string;
+  streams: "ja" | "nei" | "";
+  streamLink: string;
+  platforms: string[];
+  otherPlatform: string;
+  games: string[];
+  otherGame: string;
+  rulesConsent: boolean;
+  guardianConsent: boolean;
 };
 
 const initialFormData: FormData = {
-  heroName: "",
-  hypeSong: "",
-  dreamSquadName: "",
-  xpGoal: "",
-  snack: "",
-  energyLevel: "",
-  vibeBadges: [],
   parentName: "",
+  parentEmail: "",
   parentPhone: "",
-  parentCheerMessage: "",
+  name: "",
+  email: "",
+  phone: "",
+  birthDate: "",
+  gender: "",
+  postalCode: "",
+  city: "",
+  fortniteUsername: "",
+  twitchUsername: "",
+  discordName: "",
+  tiktokUsername: "",
+  youtubeUsername: "",
+  streams: "",
+  streamLink: "",
+  platforms: [],
+  otherPlatform: "",
+  games: [],
+  otherGame: "",
+  rulesConsent: false,
+  guardianConsent: false,
 };
 
-const quests: readonly Quest[] = [
-  {
-    id: "origin",
-    title: "Quest 1: Origin Story",
-    description:
-      "Gi oss den episke introen! Tenk på dette som første scene i din egen gaming-serie.",
-    reward: "+200 hype XP",
-    icon: Sparkles,
-    fields: [
-      {
-        name: "heroName",
-        label: "Hva er ditt gamer-alias?",
-        placeholder: "Captain Clutch, PixelPirate, ...",
-        description: "Vi printer det på ditt virtuelle superhelt-kort!",
-        type: "text",
-      },
-      {
-        name: "hypeSong",
-        label: "Hvilken låt spiller i bakgrunnen når du går inn i lobbyen?",
-        placeholder: "Skriv inn din ultimate hype-låt",
-        type: "text",
-      },
-      {
-        name: "dreamSquadName",
-        label: "Hva heter drømmeteamet ditt?",
-        placeholder: "Fjolsen Flares, Northern Ninjas, ...",
-        type: "text",
-      },
-    ],
-  },
-  {
-    id: "gear",
-    title: "Quest 2: Loot & Lag",
-    description:
-      "Fortell oss hvordan du lader opp energien og hva slags stemning du tar med deg inn i kampen.",
-    reward: "+350 energi XP",
-    icon: Gamepad2,
-    fields: [
-      {
-        name: "xpGoal",
-        label: "Hva er ditt neste gaming-mål?",
-        type: "select",
-        options: [
-          "Vinnekroner i Fortnite",
-          "Bygge tidens kuleste Minecraft-base",
-          "Lede laget til Rocket League-seier",
-          "Arrangere familiens spillkveld",
-        ],
-      },
-      {
-        name: "snack",
-        label: "Hva er din hemmelige power-snack?",
-        placeholder: "F.eks. blåbær, ostesmørbrød eller mormors vafler",
-        type: "text",
-      },
-      {
-        name: "energyLevel",
-        label: "Hvordan beskriver du energinivået ditt i en turnering?",
-        type: "select",
-        options: [
-          "Zen-master: Fokusert og iskald",
-          "Party booster: Høy energi og masse latter",
-          "Strategiguru: Tenker tre moves frem",
-          "Wildcard: Holder alle på tærne",
-        ],
-      },
-      {
-        name: "vibeBadges",
-        label: "Hvilke badges matcher deg best?",
-        description: "Trykk på alle som passer – jo flere, jo bedre bragging rights!",
-        type: "checkboxes",
-        options: [
-          "Lagkaptein",
-          "Emoji-spammer",
-          "Clutch-konge",
-          "Support-helt",
-          "Strategi-ninja",
-          "Mememester",
-        ],
-      },
-    ],
-  },
-  {
-    id: "vipps",
-    title: "Quest 3: Crew Approval",
-    description:
-      "Tid for high-five fra de hjemme. Foreldre eller foresatte må også bli med på hypen!",
-    reward: "Vipps boost + trygg registrering",
-    icon: HandHeart,
-    fields: [
-      {
-        name: "parentName",
-        label: "Hvem er din hype-manager hjemme (forelder/foresatt)?",
-        placeholder: "Navn",
-        type: "text",
-      },
-      {
-        name: "parentPhone",
-        label: "Hva er Vipps-nummeret deres?",
-        placeholder: "8 sifre",
-        type: "text",
-      },
-      {
-        name: "parentCheerMessage",
-        label: "Hva vil du at vi skal fortelle dem i Vipps-popupen?",
-        placeholder: "Skriv en morsom beskjed – vi legger den i Vipps-notatet!",
-        type: "textarea",
-      },
-    ],
-  },
-];
+const platformOptions = ["PC", "Playstation", "Xbox", "Nintendo"] as const;
 
-export default function MotivasjonsSkjemaPage() {
-  const [currentQuestIndex, setCurrentQuestIndex] = useState(0);
+const gameOptions = [
+  "Fortnite",
+  "FC25/FC26",
+  "F1 25",
+  "Valorant",
+  "Roblox",
+  "Minecraft",
+  "Call of Duty / Battlefield",
+  "Rocket League",
+  "Apex Legends",
+  "Counter-Strike 2",
+  "Overwatch 2",
+  "Stumble Guys",
+] as const;
+
+const inputClasses =
+  "mt-2 w-full rounded-xl border border-white/10 bg-white/10 px-4 py-3 text-base text-white placeholder:text-zinc-400 focus:border-[#13A0F9] focus:outline-none focus:ring-2 focus:ring-[#13A0F9]/40";
+
+const checkboxBaseClasses =
+  "h-5 w-5 rounded-md border border-white/20 bg-white/5 text-[#13A0F9] focus:ring-[#13A0F9]";
+
+export default function RegistrationFormPage() {
   const [formData, setFormData] = useState<FormData>(initialFormData);
-  const [showVippsModal, setShowVippsModal] = useState(false);
-  const [vippsModalStep, setVippsModalStep] = useState(0);
-  const [formSubmitted, setFormSubmitted] = useState(false);
-  const [validationMessage, setValidationMessage] = useState<string | null>(null);
+  const [errors, setErrors] = useState<string[]>([]);
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const progress = useMemo(
-    () => Math.round(((currentQuestIndex + 1) / quests.length) * 100),
-    [currentQuestIndex]
+  const selectedPlatforms = useMemo(
+    () => [...formData.platforms, formData.otherPlatform].filter(Boolean).join(", "),
+    [formData.otherPlatform, formData.platforms]
   );
 
-  const currentQuest = quests[currentQuestIndex];
-  const QuestIcon = currentQuest.icon;
+  const selectedGames = useMemo(
+    () => [...formData.games, formData.otherGame].filter(Boolean).join(", "),
+    [formData.games, formData.otherGame]
+  );
 
-  const handleFieldChange = <K extends TextFieldName>(name: K, value: FormData[K]) => {
+  const handleTextChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = event.target;
     setFormData((previous) => ({ ...previous, [name]: value }));
   };
 
-  const handleBadgeToggle = (name: CheckboxFieldName, option: string) => {
+  const handleCheckboxToggle = (collection: "platforms" | "games", value: string) => {
     setFormData((previous) => {
-      const currentValues = previous[name];
-      const updatedValues = currentValues.includes(option)
-        ? currentValues.filter((value) => value !== option)
-        : [...currentValues, option];
-
-      return { ...previous, [name]: updatedValues };
+      const existing = previous[collection];
+      const hasValue = existing.includes(value);
+      return {
+        ...previous,
+        [collection]: hasValue
+          ? existing.filter((entry) => entry !== value)
+          : [...existing, value],
+      };
     });
   };
 
-  const ensureQuestCompleted = (quest: Quest) => {
-    const missingField = quest.fields.find((field) => {
-      if (field.type === "checkboxes") {
-        return formData[field.name].length === 0;
-      }
-
-      const value = formData[field.name];
-      return typeof value !== "string" || value.trim().length === 0;
-    });
-
-    if (missingField) {
-      setValidationMessage(
-        `Wooops! ${missingField.label} mangler. Fullfør questen for å låse opp neste steg.`
-      );
-      return false;
-    }
-
-    setValidationMessage(null);
-    return true;
+  const handleConsentToggle = (name: "rulesConsent" | "guardianConsent") => {
+    setFormData((previous) => ({ ...previous, [name]: !previous[name] }));
   };
 
-  const handleNextQuest = () => {
-    if (!ensureQuestCompleted(currentQuest)) {
-      return;
+  const validateForm = () => {
+    const issues: string[] = [];
+
+    if (!formData.name.trim()) {
+      issues.push("Fyll inn barnets navn.");
     }
 
-    setCurrentQuestIndex((previous) => Math.min(previous + 1, quests.length - 1));
-  };
+    if (!formData.email.trim()) {
+      issues.push("Legg inn en gyldig e-postadresse.");
+    }
 
-  const handlePreviousQuest = () => {
-    setValidationMessage(null);
-    setCurrentQuestIndex((previous) => Math.max(previous - 1, 0));
+    if (!formData.birthDate.trim()) {
+      issues.push("Fødselsdato må fylles inn.");
+    }
+
+    if (!formData.postalCode.trim() || !formData.city.trim()) {
+      issues.push("Postnummer og sted må fylles inn.");
+    }
+
+    if (!formData.rulesConsent) {
+      issues.push("Du må godta retningslinjer og personvernerklæring.");
+    }
+
+    if (!formData.guardianConsent) {
+      issues.push("Foresatt må samtykke til deltakelse og premier.");
+    }
+
+    return issues;
   };
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    const validationIssues = validateForm();
 
-    if (!ensureQuestCompleted(currentQuest)) {
+    if (validationIssues.length > 0) {
+      setErrors(validationIssues);
       return;
     }
 
-    setVippsModalStep(0);
-    setShowVippsModal(true);
-  };
-
-  const handleVippsComplete = () => {
-    setShowVippsModal(false);
-    setFormSubmitted(true);
-    setVippsModalStep(0);
-  };
-
-  const handleVippsCancel = () => {
-    setShowVippsModal(false);
-    setVippsModalStep(0);
-  };
-
-  const vippsModalSlides = useMemo(
-    () => [
-      {
-        id: "intro",
-        title: "Steg 1: Vipps-varsel på vei",
-        description:
-          formData.parentName && formData.parentPhone
-            ? `Vi sender en Vipps-popup til ${formData.parentName} på ${formData.parentPhone}. Be dem sjekke mobilen sin.`
-            : "Vi sender en Vipps-popup til foresatte. Be dem sjekke mobilen sin.",
-        content: (
-          <ul className="mt-4 space-y-2 text-sm text-zinc-600">
-            <li className="flex items-start gap-3">
-              <Sparkles className="mt-1 h-4 w-4 text-[#FF5B24]" aria-hidden="true" />
-              <span>Vipps ber dem bekrefte at de godkjenner innmeldingen.</span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Sparkles className="mt-1 h-4 w-4 text-[#FF5B24]" aria-hidden="true" />
-              <span>De kan trygt se over navn, nummer og beskjed fra deg.</span>
-            </li>
-          </ul>
-        ),
-      },
-      {
-        id: "message",
-        title: "Steg 2: Beskjeden din",
-        description: "Dette er teksten som vises i Vipps-popupen. Les over at alt ser riktig ut.",
-        content: (
-          <div className="mt-4 rounded-2xl bg-zinc-100 px-5 py-4 text-sm text-zinc-700">
-            <p>
-              Din beskjed:
-              <span className="ml-2 font-semibold text-zinc-900">
-                “{formData.parentCheerMessage || "Ingen beskjed fylt inn enda"}”
-              </span>
-            </p>
-            <p className="mt-2 text-xs uppercase tracking-[0.24em] text-zinc-500">Sendes direkte i Vipps-notatet</p>
-          </div>
-        ),
-      },
-      {
-        id: "confirm",
-        title: "Steg 3: Klar til å starte",
-        description: "Når foresatte trykker godkjenn i Vipps er du klar. Trykk på knappen under for å sende popupen.",
-        content: (
-          <div className="mt-4 grid gap-3 text-sm text-zinc-600">
-            <div className="flex items-start gap-3">
-              <CheckCircle2 className="mt-0.5 h-5 w-5 text-emerald-500" aria-hidden="true" />
-              <span>Du får beskjed i chatten når bekreftelsen er gjennomført.</span>
-            </div>
-            <div className="flex items-start gap-3">
-              <MessageCircle className="mt-0.5 h-5 w-5 text-[#13A0F9]" aria-hidden="true" />
-              <span>Gi dem et hint om at Vipps-varslet kommer nå – det gjør prosessen raskere.</span>
-            </div>
-          </div>
-        ),
-      },
-    ],
-    [formData.parentCheerMessage, formData.parentName, formData.parentPhone]
-  );
-
-  const handleVippsNextStep = () => {
-    setVippsModalStep((previous) => Math.min(previous + 1, vippsModalSlides.length - 1));
-  };
-
-  const handleVippsPreviousStep = () => {
-    setVippsModalStep((previous) => Math.max(previous - 1, 0));
+    setErrors([]);
+    setIsSubmitted(true);
   };
 
   const handleReset = () => {
     setFormData(initialFormData);
-    setCurrentQuestIndex(0);
-    setFormSubmitted(false);
-    setValidationMessage(null);
+    setErrors([]);
+    setIsSubmitted(false);
   };
 
-  if (formSubmitted) {
+  if (isSubmitted) {
     return (
       <div className="min-h-screen bg-gradient-to-b from-zinc-950 via-zinc-900 to-zinc-950 text-white">
-        <main className="mx-auto max-w-3xl px-6 py-16">
+        <main className="mx-auto max-w-4xl px-6 py-16">
           <div className="rounded-3xl border border-white/10 bg-white/5 p-10 shadow-2xl backdrop-blur">
-            <div className="flex items-start gap-4">
-              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-400/20 text-emerald-300">
-                <CheckCircle2 className="h-6 w-6" aria-hidden="true" />
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-start">
+              <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-emerald-400/15 text-emerald-300">
+                <CheckCircle2 className="h-7 w-7" aria-hidden="true" />
               </div>
               <div>
-                <p className="text-sm uppercase tracking-[0.24em] text-emerald-200/80">
-                  Mission accomplished
-                </p>
-                <h1 className="mt-2 text-3xl font-bold sm:text-4xl">
-                  Vipps high-five! Skjemaet er sendt.
-                </h1>
+                <p className="text-xs uppercase tracking-[0.28em] text-emerald-200/80">Registrering fullført</p>
+                <h1 className="mt-2 text-3xl font-bold sm:text-4xl">Takk! Skjemaet er sendt inn.</h1>
                 <p className="mt-3 text-lg text-zinc-200">
-                  Vi pakker sammen svarene dine og sender en Vipps-popup til hype-manageren din.
-                  I mellomtiden kan du varme opp emote-dansen!
+                  Vi lagrer informasjonen og følger opp via e-post eller telefon. Du kan når som helst sende inn flere barn
+                  eller oppdatere informasjonen ved å fylle ut skjemaet på nytt.
                 </p>
               </div>
             </div>
 
-            <dl className="mt-10 grid gap-6 sm:grid-cols-2">
-              <div className="rounded-2xl border border-white/10 bg-zinc-950/60 p-5">
-                <dt className="text-xs uppercase tracking-[0.2em] text-zinc-400">Gamer-navn</dt>
-                <dd className="mt-2 text-lg font-semibold text-white">{formData.heroName}</dd>
+            <section className="mt-10 grid gap-6">
+              <div className="rounded-2xl border border-white/10 bg-zinc-950/50 p-6">
+                <h2 className="text-sm font-semibold uppercase tracking-[0.2em] text-white/70">
+                  Foresatt kontakt
+                </h2>
+                <dl className="mt-4 grid gap-4 sm:grid-cols-3">
+                  <div>
+                    <dt className="text-xs uppercase tracking-[0.2em] text-zinc-400">Navn</dt>
+                    <dd className="mt-1 text-base font-semibold text-white">{formData.parentName || "Ikke oppgitt"}</dd>
+                  </div>
+                  <div>
+                    <dt className="text-xs uppercase tracking-[0.2em] text-zinc-400">E-post</dt>
+                    <dd className="mt-1 text-base font-semibold text-white">{formData.parentEmail || "Ikke oppgitt"}</dd>
+                  </div>
+                  <div>
+                    <dt className="text-xs uppercase tracking-[0.2em] text-zinc-400">Telefon</dt>
+                    <dd className="mt-1 text-base font-semibold text-white">{formData.parentPhone || "Ikke oppgitt"}</dd>
+                  </div>
+                </dl>
               </div>
-              <div className="rounded-2xl border border-white/10 bg-zinc-950/60 p-5">
-                <dt className="text-xs uppercase tracking-[0.2em] text-zinc-400">Hype-låt</dt>
-                <dd className="mt-2 text-lg font-semibold text-white">{formData.hypeSong}</dd>
+
+              <div className="rounded-2xl border border-white/10 bg-zinc-950/50 p-6">
+                <h2 className="text-sm font-semibold uppercase tracking-[0.2em] text-white/70">
+                  Personinformasjon
+                </h2>
+                <dl className="mt-4 grid gap-4 sm:grid-cols-2">
+                  <div>
+                    <dt className="text-xs uppercase tracking-[0.2em] text-zinc-400">Navn</dt>
+                    <dd className="mt-1 text-base font-semibold text-white">{formData.name}</dd>
+                  </div>
+                  <div>
+                    <dt className="text-xs uppercase tracking-[0.2em] text-zinc-400">E-post</dt>
+                    <dd className="mt-1 text-base font-semibold text-white">{formData.email}</dd>
+                  </div>
+                  <div>
+                    <dt className="text-xs uppercase tracking-[0.2em] text-zinc-400">Telefon</dt>
+                    <dd className="mt-1 text-base font-semibold text-white">{formData.phone || "Ikke oppgitt"}</dd>
+                  </div>
+                  <div>
+                    <dt className="text-xs uppercase tracking-[0.2em] text-zinc-400">Fødselsdato</dt>
+                    <dd className="mt-1 text-base font-semibold text-white">{formData.birthDate}</dd>
+                  </div>
+                  <div>
+                    <dt className="text-xs uppercase tracking-[0.2em] text-zinc-400">Kjønn</dt>
+                    <dd className="mt-1 text-base font-semibold text-white">{formData.gender || "Ikke oppgitt"}</dd>
+                  </div>
+                  <div>
+                    <dt className="text-xs uppercase tracking-[0.2em] text-zinc-400">Sted</dt>
+                    <dd className="mt-1 text-base font-semibold text-white">
+                      {formData.postalCode} {formData.city}
+                    </dd>
+                  </div>
+                </dl>
               </div>
-              <div className="rounded-2xl border border-white/10 bg-zinc-950/60 p-5">
-                <dt className="text-xs uppercase tracking-[0.2em] text-zinc-400">Drømmeteam</dt>
-                <dd className="mt-2 text-lg font-semibold text-white">{formData.dreamSquadName}</dd>
+
+              <div className="rounded-2xl border border-white/10 bg-zinc-950/50 p-6">
+                <h2 className="text-sm font-semibold uppercase tracking-[0.2em] text-white/70">
+                  Spill- og plattforminfo
+                </h2>
+                <dl className="mt-4 grid gap-4 sm:grid-cols-2">
+                  <div>
+                    <dt className="text-xs uppercase tracking-[0.2em] text-zinc-400">Fortnite-brukernavn</dt>
+                    <dd className="mt-1 text-base font-semibold text-white">{formData.fortniteUsername || "Ikke oppgitt"}</dd>
+                  </div>
+                  <div>
+                    <dt className="text-xs uppercase tracking-[0.2em] text-zinc-400">Twitch</dt>
+                    <dd className="mt-1 text-base font-semibold text-white">{formData.twitchUsername || "Ikke oppgitt"}</dd>
+                  </div>
+                  <div>
+                    <dt className="text-xs uppercase tracking-[0.2em] text-zinc-400">Discord</dt>
+                    <dd className="mt-1 text-base font-semibold text-white">{formData.discordName || "Ikke oppgitt"}</dd>
+                  </div>
+                  <div>
+                    <dt className="text-xs uppercase tracking-[0.2em] text-zinc-400">TikTok</dt>
+                    <dd className="mt-1 text-base font-semibold text-white">{formData.tiktokUsername || "Ikke oppgitt"}</dd>
+                  </div>
+                  <div>
+                    <dt className="text-xs uppercase tracking-[0.2em] text-zinc-400">YouTube</dt>
+                    <dd className="mt-1 text-base font-semibold text-white">{formData.youtubeUsername || "Ikke oppgitt"}</dd>
+                  </div>
+                  <div>
+                    <dt className="text-xs uppercase tracking-[0.2em] text-zinc-400">Streamer</dt>
+                    <dd className="mt-1 text-base font-semibold text-white">
+                      {formData.streams === "ja" ? `Ja${formData.streamLink ? ` – ${formData.streamLink}` : ""}` : "Nei"}
+                    </dd>
+                  </div>
+                  <div className="sm:col-span-2">
+                    <dt className="text-xs uppercase tracking-[0.2em] text-zinc-400">Plattformer</dt>
+                    <dd className="mt-1 text-base font-semibold text-white">{selectedPlatforms || "Ingen valgt"}</dd>
+                  </div>
+                </dl>
               </div>
-              <div className="rounded-2xl border border-white/10 bg-zinc-950/60 p-5">
-                <dt className="text-xs uppercase tracking-[0.2em] text-zinc-400">Neste mål</dt>
-                <dd className="mt-2 text-lg font-semibold text-white">{formData.xpGoal}</dd>
+
+              <div className="rounded-2xl border border-white/10 bg-zinc-950/50 p-6">
+                <h2 className="text-sm font-semibold uppercase tracking-[0.2em] text-white/70">Favorittspill</h2>
+                <p className="mt-2 text-sm text-zinc-300">
+                  {selectedGames || "Ingen spill valgt"}
+                </p>
               </div>
-              <div className="rounded-2xl border border-white/10 bg-zinc-950/60 p-5">
-                <dt className="text-xs uppercase tracking-[0.2em] text-zinc-400">Power-snack</dt>
-                <dd className="mt-2 text-lg font-semibold text-white">{formData.snack}</dd>
-              </div>
-              <div className="rounded-2xl border border-white/10 bg-zinc-950/60 p-5">
-                <dt className="text-xs uppercase tracking-[0.2em] text-zinc-400">Turneringsenergi</dt>
-                <dd className="mt-2 text-lg font-semibold text-white">{formData.energyLevel}</dd>
-              </div>
-              <div className="rounded-2xl border border-white/10 bg-zinc-950/60 p-5 sm:col-span-2">
-                <dt className="text-xs uppercase tracking-[0.2em] text-zinc-400">Badges</dt>
-                <dd className="mt-2 text-lg font-semibold text-white">
-                  {formData.vibeBadges.join(", ")}
-                </dd>
-              </div>
-              <div className="rounded-2xl border border-white/10 bg-zinc-950/60 p-5">
-                <dt className="text-xs uppercase tracking-[0.2em] text-zinc-400">Hype-manager</dt>
-                <dd className="mt-2 text-lg font-semibold text-white">{formData.parentName}</dd>
-              </div>
-              <div className="rounded-2xl border border-white/10 bg-zinc-950/60 p-5">
-                <dt className="text-xs uppercase tracking-[0.2em] text-zinc-400">Vipps-nummer</dt>
-                <dd className="mt-2 text-lg font-semibold text-white">{formData.parentPhone}</dd>
-              </div>
-              <div className="rounded-2xl border border-white/10 bg-zinc-950/60 p-5 sm:col-span-2">
-                <dt className="text-xs uppercase tracking-[0.2em] text-zinc-400">Melding til Vipps</dt>
-                <dd className="mt-2 text-lg font-semibold text-white">
-                  {formData.parentCheerMessage}
-                </dd>
-              </div>
-            </dl>
+            </section>
 
             <div className="mt-10 flex flex-wrap items-center justify-between gap-4">
-              <div className="flex items-center gap-3 text-zinc-300">
-                <PartyPopper className="h-5 w-5 text-emerald-300" aria-hidden="true" />
-                <span>Neste steg: Vent på Vipps-bekreftelsen og gled deg til neste quest!</span>
-              </div>
-              <Button onClick={handleReset} className="rounded-2xl bg-white/10 px-6 text-sm hover:bg-white/20">
-                Start et nytt eventyr
+              <Button
+                type="button"
+                onClick={handleReset}
+                className="rounded-2xl bg-white/10 px-6 text-sm text-white hover:bg-white/20"
+              >
+                Registrer nytt medlem
               </Button>
+              <div className="flex items-center gap-2 text-sm text-zinc-300">
+                <ArrowLeft className="h-4 w-4" aria-hidden="true" />
+                <span>Trykk for å sende inn et nytt svar</span>
+              </div>
             </div>
           </div>
         </main>
@@ -434,275 +309,395 @@ export default function MotivasjonsSkjemaPage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-zinc-950 via-zinc-900 to-zinc-950 text-white">
       <main className="mx-auto max-w-4xl px-6 py-16">
-        <div className="overflow-hidden rounded-3xl border border-white/10 bg-white/5 shadow-2xl backdrop-blur">
-          <div className="bg-gradient-to-r from-[#151D2E] via-[#1C2438] to-[#1F1B2F] px-8 py-10">
-            <div className="flex flex-wrap items-start justify-between gap-6">
-              <div>
-                <p className="text-xs uppercase tracking-[0.28em] text-white/60">Fjolsen Quest Board</p>
-                <h1 className="mt-3 text-3xl font-bold sm:text-4xl">
-                  Utfyll skjemaet og lås opp Vipps-portalen
-                </h1>
-                <p className="mt-4 max-w-xl text-base text-zinc-300">
-                  Vi har laget et skjema som føles mer som en questline enn papirarbeid. Fullfør alle spørsmålene,
-                  så sender vi en glitrende Vipps-popup til hype-manageren din for bekreftelse.
+        <div className="rounded-3xl border border-white/10 bg-white/5 p-10 shadow-2xl backdrop-blur">
+          <header className="max-w-3xl">
+            <p className="text-xs uppercase tracking-[0.28em] text-white/60">Innmeldingsskjema FjOlsenbanden</p>
+            <h1 className="mt-4 text-3xl font-bold sm:text-4xl">Meld barnet inn og lås opp premier</h1>
+            <p className="mt-3 text-base text-zinc-200">
+              Foreldre må registrere barnet for at vi skal kunne dele ut premier og invitere til eventer. Fyll først inn
+              foresattes kontaktinfo, deretter barnets detaljer og spillvaner.
+            </p>
+          </header>
+
+          <form className="mt-10 space-y-10" onSubmit={handleSubmit}>
+            <section className="rounded-2xl border border-white/10 bg-zinc-950/40 p-6">
+              <h2 className="text-lg font-semibold text-white">👨‍👩‍👧 Foresatt kontakt</h2>
+              <p className="mt-1 text-sm text-zinc-300">Fylles ut dersom barnet er under 18 år.</p>
+              <div className="mt-6 grid gap-6 sm:grid-cols-3">
+                <label className="flex flex-col text-sm font-medium text-white">
+                  Navn foresatt
+                  <input
+                    name="parentName"
+                    type="text"
+                    value={formData.parentName}
+                    onChange={handleTextChange}
+                    placeholder="Navn"
+                    className={inputClasses}
+                  />
+                </label>
+                <label className="flex flex-col text-sm font-medium text-white">
+                  E-post foresatt
+                  <input
+                    name="parentEmail"
+                    type="email"
+                    value={formData.parentEmail}
+                    onChange={handleTextChange}
+                    placeholder="navn@epost.no"
+                    className={inputClasses}
+                  />
+                </label>
+                <label className="flex flex-col text-sm font-medium text-white">
+                  Telefonnummer foresatt
+                  <input
+                    name="parentPhone"
+                    type="tel"
+                    value={formData.parentPhone}
+                    onChange={handleTextChange}
+                    placeholder="8 sifre"
+                    className={inputClasses}
+                  />
+                </label>
+              </div>
+            </section>
+
+            <section className="rounded-2xl border border-white/10 bg-zinc-950/40 p-6">
+              <h2 className="text-lg font-semibold text-white">👤 Del 1: Personinformasjon</h2>
+              <p className="mt-1 text-sm text-zinc-300">
+                Oppgi kontaktinformasjon til den som skal delta i FjOlsenbandens aktiviteter.
+              </p>
+              <div className="mt-6 grid gap-6 sm:grid-cols-2">
+                <label className="flex flex-col text-sm font-medium text-white sm:col-span-2">
+                  Navn
+                  <input
+                    name="name"
+                    type="text"
+                    value={formData.name}
+                    onChange={handleTextChange}
+                    placeholder="Fornavn Etternavn"
+                    className={inputClasses}
+                    required
+                  />
+                </label>
+                <label className="flex flex-col text-sm font-medium text-white">
+                  E-post
+                  <input
+                    name="email"
+                    type="email"
+                    value={formData.email}
+                    onChange={handleTextChange}
+                    placeholder="navn@epost.no"
+                    className={inputClasses}
+                    required
+                  />
+                </label>
+                <label className="flex flex-col text-sm font-medium text-white">
+                  Telefon
+                  <input
+                    name="phone"
+                    type="tel"
+                    value={formData.phone}
+                    onChange={handleTextChange}
+                    placeholder="Valgfritt"
+                    className={inputClasses}
+                  />
+                </label>
+                <label className="flex flex-col text-sm font-medium text-white">
+                  Fødselsdato
+                  <input
+                    name="birthDate"
+                    type="date"
+                    value={formData.birthDate}
+                    onChange={handleTextChange}
+                    className={inputClasses}
+                    required
+                  />
+                </label>
+                <label className="flex flex-col text-sm font-medium text-white">
+                  Kjønn (valgfritt)
+                  <input
+                    name="gender"
+                    type="text"
+                    value={formData.gender}
+                    onChange={handleTextChange}
+                    placeholder="Valgfritt"
+                    className={inputClasses}
+                  />
+                </label>
+                <label className="flex flex-col text-sm font-medium text-white">
+                  Postnummer
+                  <input
+                    name="postalCode"
+                    type="text"
+                    value={formData.postalCode}
+                    onChange={handleTextChange}
+                    placeholder="####"
+                    className={inputClasses}
+                    required
+                  />
+                </label>
+                <label className="flex flex-col text-sm font-medium text-white">
+                  Sted
+                  <input
+                    name="city"
+                    type="text"
+                    value={formData.city}
+                    onChange={handleTextChange}
+                    placeholder="By eller kommune"
+                    className={inputClasses}
+                    required
+                  />
+                </label>
+              </div>
+              <p className="mt-4 text-xs uppercase tracking-[0.2em] text-zinc-400">
+                Segmentering på region hjelper oss å arrangere lokale eventer.
+              </p>
+            </section>
+
+            <section className="rounded-2xl border border-white/10 bg-zinc-950/40 p-6">
+              <h2 className="text-lg font-semibold text-white">🎮 Del 2: Spill- og plattforminfo</h2>
+              <div className="mt-6 grid gap-6 sm:grid-cols-2">
+                <label className="flex flex-col text-sm font-medium text-white">
+                  Fortnite-brukernavn
+                  <input
+                    name="fortniteUsername"
+                    type="text"
+                    value={formData.fortniteUsername}
+                    onChange={handleTextChange}
+                    placeholder="Valgfritt"
+                    className={inputClasses}
+                  />
+                </label>
+                <label className="flex flex-col text-sm font-medium text-white">
+                  Twitch-brukernavn
+                  <input
+                    name="twitchUsername"
+                    type="text"
+                    value={formData.twitchUsername}
+                    onChange={handleTextChange}
+                    placeholder="Valgfritt"
+                    className={inputClasses}
+                  />
+                </label>
+                <label className="flex flex-col text-sm font-medium text-white">
+                  Discord-navn
+                  <input
+                    name="discordName"
+                    type="text"
+                    value={formData.discordName}
+                    onChange={handleTextChange}
+                    placeholder="Brukernavn#0000"
+                    className={inputClasses}
+                  />
+                </label>
+                <label className="flex flex-col text-sm font-medium text-white">
+                  TikTok-brukernavn
+                  <input
+                    name="tiktokUsername"
+                    type="text"
+                    value={formData.tiktokUsername}
+                    onChange={handleTextChange}
+                    placeholder="Valgfritt"
+                    className={inputClasses}
+                  />
+                </label>
+                <label className="flex flex-col text-sm font-medium text-white">
+                  YouTube-brukernavn
+                  <input
+                    name="youtubeUsername"
+                    type="text"
+                    value={formData.youtubeUsername}
+                    onChange={handleTextChange}
+                    placeholder="Valgfritt"
+                    className={inputClasses}
+                  />
+                </label>
+              </div>
+
+              <div className="mt-8 space-y-4">
+                <span className="text-sm font-medium text-white">Streamer ditt barn?</span>
+                <div className="flex flex-wrap gap-4 text-sm text-white">
+                  {(["nei", "ja"] as const).map((option) => (
+                    <label key={option} className="flex items-center gap-2">
+                      <input
+                        type="radio"
+                        name="streams"
+                        value={option}
+                        checked={formData.streams === option}
+                        onChange={(event) => {
+                          const nextValue = event.target.value as FormData["streams"];
+                          setFormData((previous) => ({
+                            ...previous,
+                            streams: nextValue,
+                            streamLink: nextValue === "nei" ? "" : previous.streamLink,
+                          }));
+                        }}
+                        className="h-5 w-5 border border-white/20 bg-white/5 text-[#13A0F9] focus:ring-[#13A0F9]"
+                      />
+                      {option === "ja" ? "Ja" : "Nei"}
+                    </label>
+                  ))}
+                </div>
+                {formData.streams === "ja" ? (
+                  <label className="flex flex-col text-sm font-medium text-white">
+                    Link til stream
+                    <input
+                      name="streamLink"
+                      type="url"
+                      value={formData.streamLink}
+                      onChange={handleTextChange}
+                      placeholder="https://"
+                      className={inputClasses}
+                    />
+                  </label>
+                ) : null}
+              </div>
+
+              <div className="mt-8">
+                <span className="text-sm font-medium text-white">Hvilke plattformer spiller barnet på?</span>
+                <div className="mt-3 grid gap-3 sm:grid-cols-2">
+                  {platformOptions.map((platform) => (
+                    <label key={platform} className="flex items-center gap-3 text-sm text-white">
+                      <input
+                        type="checkbox"
+                        className={checkboxBaseClasses}
+                        checked={formData.platforms.includes(platform)}
+                        onChange={() => handleCheckboxToggle("platforms", platform)}
+                      />
+                      {platform}
+                    </label>
+                  ))}
+                  <label className="flex items-center gap-3 text-sm text-white">
+                    <input
+                      type="checkbox"
+                      className={checkboxBaseClasses}
+                      checked={Boolean(formData.otherPlatform)}
+                      onChange={(event) =>
+                        setFormData((previous) => ({
+                          ...previous,
+                          otherPlatform: event.target.checked ? previous.otherPlatform : "",
+                        }))
+                      }
+                    />
+                    <div className="flex-1">
+                      Annet
+                      <input
+                        name="otherPlatform"
+                        type="text"
+                        value={formData.otherPlatform}
+                        onChange={handleTextChange}
+                        placeholder="Skriv plattform"
+                        className={`${inputClasses} mt-3`}
+                      />
+                    </div>
+                  </label>
+                </div>
+                <p className="mt-3 text-xs uppercase tracking-[0.2em] text-zinc-400">
+                  Plattformdata er verdifull for partnere og sponsorater.
                 </p>
               </div>
-              <div className="flex flex-col items-end gap-3 rounded-2xl border border-white/10 bg-white/10 p-5 text-right">
-                <div className="flex items-center gap-2 text-sm text-zinc-200">
-                  <Star className="h-4 w-4 text-yellow-300" aria-hidden="true" />
-                  <span>{progress}% klar</span>
-                </div>
-                <div className="h-2 w-48 rounded-full bg-white/20">
-                  <div
-                    className="h-2 rounded-full bg-[#13A0F9] transition-all"
-                    style={{ width: `${progress}%` }}
-                    aria-hidden="true"
+            </section>
+
+            <section className="rounded-2xl border border-white/10 bg-zinc-950/40 p-6">
+              <h2 className="text-lg font-semibold text-white">🕹️ Del 3: Spill du spiller</h2>
+              <p className="mt-1 text-sm text-zinc-300">Velg spillene som spilles oftest.</p>
+              <div className="mt-6 grid gap-3 sm:grid-cols-2">
+                {gameOptions.map((game) => (
+                  <label key={game} className="flex items-center gap-3 text-sm text-white">
+                    <input
+                      type="checkbox"
+                      className={checkboxBaseClasses}
+                      checked={formData.games.includes(game)}
+                      onChange={() => handleCheckboxToggle("games", game)}
+                    />
+                    {game}
+                  </label>
+                ))}
+                <label className="flex items-center gap-3 text-sm text-white sm:col-span-2">
+                  <input
+                    type="checkbox"
+                    className={checkboxBaseClasses}
+                    checked={Boolean(formData.otherGame)}
+                    onChange={(event) =>
+                      setFormData((previous) => ({
+                        ...previous,
+                        otherGame: event.target.checked ? previous.otherGame : "",
+                      }))
+                    }
                   />
-                </div>
-                <div className="text-xs uppercase tracking-[0.24em] text-white/60">
-                  Quest {currentQuestIndex + 1} av {quests.length}
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <form className="px-8 py-10" onSubmit={handleSubmit}>
-            <div className="flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-white/10 bg-zinc-950/50 p-6">
-              <div className="flex items-center gap-4">
-                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white/10 text-[#13A0F9]">
-                  <QuestIcon className="h-6 w-6" aria-hidden="true" />
-                </div>
-                <div>
-                  <h2 className="text-2xl font-semibold">{currentQuest.title}</h2>
-                  <p className="mt-1 text-sm text-zinc-300">{currentQuest.description}</p>
-                </div>
-              </div>
-              <div className="rounded-xl bg-white/5 px-4 py-2 text-sm text-emerald-200">
-                <Gift className="mr-2 inline h-4 w-4" aria-hidden="true" />
-                {currentQuest.reward}
-              </div>
-            </div>
-
-            <div className="mt-8 space-y-6">
-              {currentQuest.fields.map((field) => {
-                if (field.type === "checkboxes") {
-                  const selectedValues = formData[field.name];
-                  return (
-                    <div key={field.name} className="rounded-2xl border border-white/10 bg-white/5 p-6">
-                      <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-                        <div>
-                          <label className="text-sm font-semibold uppercase tracking-[0.2em] text-white/80">
-                            {field.label}
-                          </label>
-                          {field.description ? (
-                            <p className="mt-1 text-sm text-zinc-300">{field.description}</p>
-                          ) : null}
-                        </div>
-                        <span className="text-xs uppercase tracking-[0.2em] text-white/50">
-                          Velg så mange du vil
-                        </span>
-                      </div>
-
-                      <div className="mt-5 flex flex-wrap gap-3">
-                        {field.options.map((option) => {
-                          const isActive = selectedValues.includes(option);
-                          return (
-                            <button
-                              key={option}
-                              type="button"
-                              onClick={() => handleBadgeToggle(field.name, option)}
-                              className={`rounded-2xl px-4 py-2 text-sm transition-all ${
-                                isActive
-                                  ? "bg-[#13A0F9]/20 text-[#13A0F9] shadow-lg shadow-[#13A0F9]/30"
-                                  : "bg-white/10 text-white/80 hover:bg-white/20"
-                              }`}
-                            >
-                              {option}
-                            </button>
-                          );
-                        })}
-                      </div>
-                    </div>
-                  );
-                }
-
-                const sharedClasses =
-                  "mt-3 w-full rounded-2xl border border-white/10 bg-zinc-950/70 px-4 py-3 text-base text-white placeholder:text-zinc-500 focus:border-[#13A0F9] focus:outline-none focus:ring-2 focus:ring-[#13A0F9]/40";
-
-                return (
-                  <div key={field.name} className="rounded-2xl border border-white/10 bg-white/5 p-6">
-                    <label className="text-sm font-semibold uppercase tracking-[0.2em] text-white/80">
-                      {field.label}
-                    </label>
-                    {field.description ? (
-                      <p className="mt-1 text-sm text-zinc-300">{field.description}</p>
-                    ) : null}
-                    {field.type === "textarea" ? (
-                      <textarea
-                        value={formData[field.name] as string}
-                        onChange={(event) => handleFieldChange(field.name, event.target.value)}
-                        rows={4}
-                        placeholder={field.placeholder}
-                        className={`${sharedClasses} resize-none`}
-                      />
-                    ) : field.type === "select" ? (
-                      <select
-                        value={formData[field.name] as string}
-                        onChange={(event) => handleFieldChange(field.name, event.target.value)}
-                        className={`${sharedClasses} appearance-none`}
-                      >
-                        <option value="">Velg et alternativ</option>
-                        {field.options?.map((option) => (
-                          <option key={option} value={option}>
-                            {option}
-                          </option>
-                        ))}
-                      </select>
-                    ) : (
-                      <input
-                        value={formData[field.name] as string}
-                        onChange={(event) => handleFieldChange(field.name, event.target.value)}
-                        type="text"
-                        placeholder={field.placeholder}
-                        className={sharedClasses}
-                      />
-                    )}
+                  <div className="flex-1">
+                    Annet
+                    <input
+                      name="otherGame"
+                      type="text"
+                      value={formData.otherGame}
+                      onChange={handleTextChange}
+                      placeholder="Legg til spill"
+                      className={`${inputClasses} mt-3`}
+                    />
                   </div>
-                );
-              })}
-            </div>
+                </label>
+              </div>
+              <p className="mt-3 text-xs uppercase tracking-[0.2em] text-zinc-400">
+                Denne innsikten hjelper oss å planlegge turneringer og events.
+              </p>
+            </section>
 
-            {validationMessage ? (
-              <div className="mt-6 rounded-2xl border border-amber-300/30 bg-amber-400/10 px-5 py-4 text-sm text-amber-200">
-                {validationMessage}
+            <section className="rounded-2xl border border-white/10 bg-zinc-950/40 p-6">
+              <h2 className="text-lg font-semibold text-white">📊 Del 4: Samtykke</h2>
+              <p className="mt-1 text-sm text-zinc-300">
+                Samtykke gjør det mulig å sende informasjon og dele ut premier via Vipps, gavekort eller utstyr.
+              </p>
+              <div className="mt-6 space-y-4">
+                <label className="flex items-start gap-3 text-sm text-white">
+                  <input
+                    type="checkbox"
+                    className={checkboxBaseClasses}
+                    checked={formData.rulesConsent}
+                    onChange={() => handleConsentToggle("rulesConsent")}
+                    required
+                  />
+                  <span>Jeg godtar FjOlsenbandens retningslinjer og personvernerklæring.</span>
+                </label>
+                <label className="flex items-start gap-3 text-sm text-white">
+                  <input
+                    type="checkbox"
+                    className={checkboxBaseClasses}
+                    checked={formData.guardianConsent}
+                    onChange={() => handleConsentToggle("guardianConsent")}
+                  />
+                  <span>
+                    Jeg (foresatt) samtykker til at mitt barn kan delta i aktiviteter og motta premier fra FjOlsenbanden.
+                  </span>
+                </label>
+              </div>
+            </section>
+
+            {errors.length > 0 ? (
+              <div className="rounded-2xl border border-amber-300/40 bg-amber-400/10 px-5 py-4 text-sm text-amber-100">
+                <p className="font-semibold">Vennligst sjekk skjemaet på nytt:</p>
+                <ul className="mt-2 list-disc space-y-1 pl-4">
+                  {errors.map((error) => (
+                    <li key={error}>{error}</li>
+                  ))}
+                </ul>
               </div>
             ) : null}
 
-            <div className="mt-10 flex flex-wrap items-center justify-between gap-4">
+            <div className="flex flex-wrap items-center justify-between gap-4">
               <Button
                 type="button"
-                onClick={handlePreviousQuest}
-                className="rounded-2xl bg-white/10 px-5 text-sm hover:bg-white/20"
-                disabled={currentQuestIndex === 0}
+                onClick={handleReset}
+                className="rounded-2xl bg-white/10 px-5 text-sm text-white hover:bg-white/20"
               >
-                Tilbake
+                Nullstill skjema
               </Button>
-              <div className="flex items-center gap-3">
-                {currentQuestIndex < quests.length - 1 ? (
-                  <Button
-                    type="button"
-                    onClick={handleNextQuest}
-                    className="rounded-2xl bg-[#13A0F9] px-6 text-sm hover:bg-[#1090df]"
-                  >
-                    Neste quest <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
-                  </Button>
-                ) : (
-                  <Button
-                    type="submit"
-                    className="rounded-2xl px-6 text-sm text-white"
-                    style={{ backgroundColor: vippsBrandColor }}
-                  >
-                    Send inn og åpne Vipps
-                  </Button>
-                )}
-              </div>
+              <Button type="submit" className="rounded-2xl bg-[#13A0F9] px-6 text-sm text-white hover:bg-[#1090df]">
+                Send inn skjema
+              </Button>
             </div>
           </form>
         </div>
       </main>
-
-      {showVippsModal ? (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 px-4">
-          <div
-            role="dialog"
-            aria-modal="true"
-            className="max-w-xl rounded-3xl border border-white/10 bg-white p-10 text-zinc-900 shadow-2xl"
-          >
-            <div className="flex items-center gap-4">
-              <div
-                className="flex h-12 w-12 items-center justify-center rounded-2xl"
-                style={{ backgroundColor: `${vippsBrandColor}1A`, color: vippsBrandColor }}
-              >
-                <Sparkles className="h-6 w-6" aria-hidden="true" />
-              </div>
-              <div>
-                <h2 className="text-2xl font-semibold">Vipps-popup klar!</h2>
-                <p className="mt-1 text-sm text-zinc-600">
-                  Følg de tre stegene under for å sende Vipps-popupen til {formData.parentName || "foresatte"}. Hver slide forklarer
-                  hva som skjer.
-                </p>
-              </div>
-            </div>
-
-            <div className="mt-8 overflow-hidden">
-              <div
-                className="flex transition-transform duration-500"
-                style={{ transform: `translateX(-${vippsModalStep * 100}%)` }}
-              >
-                {vippsModalSlides.map((slide) => (
-                  <div key={slide.id} className="min-w-full flex-shrink-0">
-                    <h3 className="text-lg font-semibold text-zinc-900">{slide.title}</h3>
-                    <p className="mt-2 text-sm text-zinc-600">{slide.description}</p>
-                    {slide.content}
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="mt-6 flex justify-center gap-2">
-              {vippsModalSlides.map((slide, index) => (
-                <span
-                  key={slide.id}
-                  className={`h-2.5 w-2.5 rounded-full transition ${
-                    index === vippsModalStep ? "bg-[#FF5B24]" : "bg-zinc-200"
-                  }`}
-                />
-              ))}
-            </div>
-
-            <div className="mt-8 flex flex-wrap items-center justify-between gap-3">
-              <Button
-                type="button"
-                variant="outline"
-                className="rounded-2xl border-zinc-300 px-5 text-sm text-zinc-700 hover:bg-zinc-100"
-                onClick={handleVippsCancel}
-              >
-                Avbryt
-              </Button>
-              <div className="flex flex-wrap justify-end gap-3">
-                {vippsModalStep > 0 ? (
-                  <Button
-                    type="button"
-                    variant="outline"
-                    className="rounded-2xl border-zinc-200 px-5 text-sm text-zinc-700 hover:bg-zinc-100"
-                    onClick={handleVippsPreviousStep}
-                  >
-                    Forrige steg
-                  </Button>
-                ) : null}
-                {vippsModalStep < vippsModalSlides.length - 1 ? (
-                  <Button
-                    type="button"
-                    className="rounded-2xl bg-[#13A0F9] px-6 text-sm text-white hover:bg-[#1090df]"
-                    onClick={handleVippsNextStep}
-                  >
-                    Neste steg
-                  </Button>
-                ) : (
-                  <Button
-                    type="button"
-                    className="rounded-2xl px-6 text-sm text-white"
-                    style={{ backgroundColor: vippsBrandColor }}
-                    onClick={handleVippsComplete}
-                  >
-                    Start Vipps-popup
-                  </Button>
-                )}
-              </div>
-            </div>
-          </div>
-        </div>
-      ) : null}
     </div>
   );
 }
