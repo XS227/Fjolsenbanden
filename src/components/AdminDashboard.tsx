@@ -36,7 +36,10 @@ import { useAdminAuth } from "@/lib/admin-auth";
 
 const brandBackground = "radial-gradient(circle at 15% 15%, rgba(64,172,255,0.3), transparent 55%), #03091b";
 
-type BrandFormState = Pick<SiteSettings, "logoUrl" | "heroTitle" | "heroTagline" | "announcement">;
+type BrandFormState = Pick<
+  SiteSettings,
+  "logoUrl" | "heroTitle" | "heroTagline" | "announcement" | "presentationVideoUrl"
+>;
 
 interface NewPlayerState {
   gamerTag: string;
@@ -288,6 +291,24 @@ function AdminDashboardContent({ auth }: DashboardContentProps) {
                     placeholder="Beskriv kort hva Fjolsenbanden tilbyr"
                     className="bg-slate-950/40 text-white placeholder:text-slate-400"
                   />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="presentationVideoUrl" className="text-slate-200">
+                    Presentasjonsvideo (YouTube-embed)
+                  </Label>
+                  <Input
+                    id="presentationVideoUrl"
+                    name="presentationVideoUrl"
+                    value={brandForm.presentationVideoUrl}
+                    onChange={(event) =>
+                      setBrandForm((state) => ({ ...state, presentationVideoUrl: event.target.value }))
+                    }
+                    placeholder="https://www.youtube.com/embed/..."
+                    className="bg-slate-950/40 text-white placeholder:text-slate-400"
+                  />
+                  <p className="text-xs text-slate-400">
+                    Lim inn adressen fra «Del» → «Bygg inn» (starter med https://www.youtube.com/embed/).
+                  </p>
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="announcement" className="text-slate-200">

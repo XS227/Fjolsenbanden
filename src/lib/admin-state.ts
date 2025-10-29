@@ -13,6 +13,7 @@ export interface SiteSettings {
   heroTitle: string;
   heroTagline: string;
   announcement: string;
+  presentationVideoUrl: string;
   modules: SiteModules;
 }
 
@@ -82,6 +83,8 @@ const DEFAULT_STATE: AdminState = {
     heroTitle: "FJOLSENBANDEN",
     heroTagline: "Spillglede for hele familien – trygge streams, turneringer og premier.",
     announcement: "Neste livesending starter 20:00 med co-op i Mario Kart og premier fra Lenovo!",
+    presentationVideoUrl:
+      "https://www.youtube.com/embed/8EgRIkmvmtM?si=qMzmEaMfP-2ODMbc",
     modules: DEFAULT_SITE_MODULES,
   },
   players: [
