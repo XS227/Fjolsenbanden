@@ -142,48 +142,10 @@
       }
       .partners__btn:active {
         transform: translateY(0);
-      #preview-switcher {
-        position: fixed;
-        top: 1.25rem;
-        right: 1.25rem;
-        z-index: 999;
-        display: flex;
-        gap: 0.5rem;
-      }
-      #preview-switcher a {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.35rem;
-        padding: 0.45rem 0.9rem;
-        border-radius: 9999px;
-        background: rgba(15, 23, 42, 0.75);
-        border: 1px solid rgba(255, 255, 255, 0.16);
-        color: #f8fafc;
-        text-decoration: none;
-        font-size: 0.75rem;
-        font-weight: 600;
-        letter-spacing: 0.02em;
-        box-shadow: 0 12px 30px rgba(15, 23, 42, 0.35);
-        backdrop-filter: blur(12px);
-        transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
-      }
-      #preview-switcher a:hover {
-        transform: translateY(-1px);
-        background: rgba(30, 41, 59, 0.85);
-        border-color: rgba(148, 163, 184, 0.45);
-      }
-      #preview-switcher a span {
-        font-size: 0.7rem;
-        opacity: 0.8;
       }
     </style>
   </head>
   <body>
-    <nav id="preview-switcher" aria-label="Forhåndsvisninger">
-      <a href="./index.html">Forside</a>
-      <a href="preview/admin-dashboard-preview.html" target="_blank" rel="noreferrer">Admin</a>
-      <a href="preview/player-profile-preview.html" target="_blank" rel="noreferrer">Profil</a>
-    </nav>
     <div class="relative min-h-screen overflow-x-hidden bg-gradient-to-b from-[#131A49] via-[#0B163F] to-[#050B24] text-white">
       <div
         class="pointer-events-none absolute inset-0"
