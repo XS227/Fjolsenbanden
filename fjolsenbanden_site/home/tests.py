@@ -10,3 +10,8 @@ class HomeViewTests(SimpleTestCase):
         response = self.client.get(reverse("home"))
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Spillglede for hele familien")
+
+    def test_guide_page_renders(self) -> None:
+        response = self.client.get(reverse("guide"))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Guide &amp; How-To")

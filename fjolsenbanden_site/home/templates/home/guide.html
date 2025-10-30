@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Project Guide – Fjolsenbanden</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: 'Nunito', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        background-color: #0f172a;
+      }
+    </style>
+  </head>
+  <body class="min-h-screen bg-[#0f172a] text-white">
+    <header class="border-b border-white/10 bg-[#101a2e]">
+      <nav class="mx-auto flex max-w-5xl items-center justify-between px-6 py-5">
+        <a href="/" class="flex items-center gap-3 text-white transition hover:text-[#38bdf8]">
+          <span class="grid h-10 w-10 place-content-center rounded-xl bg-[#22d3ee] font-bold text-[#0f172a]">
+            FB
+          </span>
+          <span class="text-lg font-semibold">Fjolsenbanden</span>
+        </a>
+        <a
+          href="/guide/"
+          class="rounded-full border border-[#38bdf8] px-4 py-1.5 text-sm font-semibold text-[#38bdf8] transition hover:bg-[#38bdf8] hover:text-[#0f172a]"
+        >
+          Guide
+        </a>
+      </nav>
+    </header>
+
+    <main class="mx-auto max-w-4xl px-6 py-12">
+      <div class="space-y-12 rounded-3xl border border-white/10 bg-[#101a2e] p-10 shadow-2xl">
+        <header class="space-y-3 text-center">
+          <p class="text-sm uppercase tracking-widest text-[#38bdf8]/80">Hvordan komme i gang</p>
+          <h1 class="text-4xl font-extrabold">Fjolsenbanden – Guide &amp; How-To</h1>
+          <p class="text-base text-slate-300">
+            Denne siden beskriver hvordan du kjører prosjektet lokalt for utvikling og hvordan du gjør en enkel
+            produksjonsdistribusjon.
+          </p>
+        </header>
+
+        <section class="space-y-4">
+          <h2 class="text-2xl font-bold text-[#38bdf8]">1. Forutsetninger</h2>
+          <ul class="list-disc space-y-2 pl-6 text-slate-300">
+            <li>Python 3.11 eller nyere installert på maskinen din.</li>
+            <li>Et virtuelt miljø (<code>venv</code>) anbefales for lokal utvikling.</li>
+            <li>
+              Opsjonelt for produksjon: <span class="font-semibold">Gunicorn</span> som WSGI-server og en revers-proxy som
+              <span class="font-semibold">Nginx</span>.
+            </li>
+          </ul>
+        </section>
+
+        <section class="space-y-4">
+          <h2 class="text-2xl font-bold text-[#38bdf8]">2. Kjøring lokalt</h2>
+          <ol class="list-decimal space-y-4 pl-6 text-slate-300">
+            <li>
+              <span class="font-semibold">Klon repoet</span> og gå inn i katalogen:
+              <pre class="mt-2 overflow-x-auto rounded-xl bg-[#0f172a] p-4 text-sm text-slate-200"><code>git clone &lt;repo-url&gt;
+cd Fjolsenbanden</code></pre>
+            </li>
+            <li>
+              <span class="font-semibold">Lag og aktiver</span> et virtuelt miljø:
+              <pre class="mt-2 overflow-x-auto rounded-xl bg-[#0f172a] p-4 text-sm text-slate-200"><code>python -m venv .venv
+source .venv/bin/activate  # Windows: .venv\Scripts\activate</code></pre>
+            </li>
+            <li>
+              <span class="font-semibold">Installer avhengigheter</span> fra <code>requirements.txt</code>:
+              <pre class="mt-2 overflow-x-auto rounded-xl bg-[#0f172a] p-4 text-sm text-slate-200"><code>pip install -r fjolsenbanden_site/requirements.txt</code></pre>
+            </li>
+            <li>
+              <span class="font-semibold">Migrer databasen</span> og start utviklingsserveren:
+              <pre class="mt-2 overflow-x-auto rounded-xl bg-[#0f172a] p-4 text-sm text-slate-200"><code>python fjolsenbanden_site/manage.py migrate
+python fjolsenbanden_site/manage.py runserver</code></pre>
+            </li>
+            <li>
+              <span class="font-semibold">Åpne nettleseren</span> og gå til
+              <a href="http://127.0.0.1:8000" class="font-semibold text-[#22d3ee] hover:text-[#38bdf8]">http://127.0.0.1:8000</a>
+              for å se siden.
+            </li>
+          </ol>
+        </section>
+
+        <section class="space-y-4">
+          <h2 class="text-2xl font-bold text-[#38bdf8]">3. Kjøre tester</h2>
+          <p class="text-slate-300">
+            Prosjektet inkluderer en enkel test som bekrefter at forsiden rendres. Kjør testene slik:
+          </p>
+          <pre class="overflow-x-auto rounded-xl bg-[#0f172a] p-4 text-sm text-slate-200"><code>python fjolsenbanden_site/manage.py test</code></pre>
+        </section>
+
+        <section class="space-y-4">
+          <h2 class="text-2xl font-bold text-[#38bdf8]">4. Produksjonsdistribusjon</h2>
+          <p class="text-slate-300">
+            For en lettvektsproduksjon kan du bruke Gunicorn bak en revers-proxy. Under ser du et eksempeloppsett på en Linux-
+            server:
+          </p>
+          <ol class="list-decimal space-y-4 pl-6 text-slate-300">
+            <li>
+              Installer systempakker og aktiver miljøet ditt (for eksempel via <code>systemd</code>-tjenester).
+            </li>
+            <li>
+              Kjør databasmigreringer før du starter applikasjonen:
+              <pre class="mt-2 overflow-x-auto rounded-xl bg-[#0f172a] p-4 text-sm text-slate-200"><code>python fjolsenbanden_site/manage.py migrate</code></pre>
+            </li>
+            <li>
+              Start Gunicorn og pek på Django-prosjektets WSGI-applikasjon:
+              <pre class="mt-2 overflow-x-auto rounded-xl bg-[#0f172a] p-4 text-sm text-slate-200"><code>gunicorn --chdir fjolsenbanden_site fjolsenbanden_site.wsgi:application</code></pre>
+            </li>
+            <li>
+              La en revers-proxy (for eksempel Nginx) motta trafikk på port 80/443 og videresende til Gunicorn på en intern
+              port (for eksempel <code>127.0.0.1:8000</code>).
+            </li>
+            <li>
+              Konfigurer miljøvariabler for hemmelig nøkkel, tillatte verter og databindingspunkter via operativsystemet eller
+              serverens <code>systemd</code>-tjeneste.
+            </li>
+          </ol>
+        </section>
+
+        <section class="space-y-4">
+          <h2 class="text-2xl font-bold text-[#38bdf8]">5. Nyttige kommandosammendrag</h2>
+          <div class="grid gap-4 md:grid-cols-2">
+            <div class="rounded-2xl border border-white/5 bg-[#0f172a] p-5">
+              <h3 class="text-lg font-semibold">Oppdatere avhengigheter</h3>
+              <p class="mt-2 text-sm text-slate-300">Installer på nytt etter at <code>requirements.txt</code> endres.</p>
+              <pre class="mt-3 overflow-x-auto rounded-xl bg-[#101a2e] p-4 text-sm text-slate-200"><code>pip install -r fjolsenbanden_site/requirements.txt</code></pre>
+            </div>
+            <div class="rounded-2xl border border-white/5 bg-[#0f172a] p-5">
+              <h3 class="text-lg font-semibold">Samle statiske filer</h3>
+              <p class="mt-2 text-sm text-slate-300">
+                Før produksjon, kjør <code>collectstatic</code> og gjør filene tilgjengelige via en webserver.
+              </p>
+              <pre class="mt-3 overflow-x-auto rounded-xl bg-[#101a2e] p-4 text-sm text-slate-200"><code>python fjolsenbanden_site/manage.py collectstatic</code></pre>
+            </div>
+          </div>
+        </section>
+
+        <footer class="text-center text-sm text-slate-400">
+          Sist oppdatert {% now "j. F Y" %} · Trenger du mer hjelp? Ta kontakt med teamet på Discord.
+        </footer>
+      </div>
+    </main>
+  </body>
+</html>
