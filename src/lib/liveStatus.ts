@@ -1,5 +1,6 @@
 import { fetchTwitchLiveStatus, TwitchCredentials } from "./twitch";
 import { fetchYoutubeLiveStatus, YoutubeCredentials } from "./youtube";
+import { FJOLSEN_TWITCH_CHANNEL, FJOLSEN_TWITCH_CHANNEL_URL } from "./community";
 
 export type LivePlatform = "twitch" | "youtube";
 
@@ -38,7 +39,7 @@ export interface AggregateLiveStatusOptions {
 
 const DEFAULT_CONFIG: LiveStatusConfig = {
   twitch: {
-    channel: "FjOlsenFN",
+    channel: FJOLSEN_TWITCH_CHANNEL,
   },
 };
 
@@ -79,14 +80,14 @@ export async function aggregateLiveStatus(
         viewers: twitchStatus.viewers,
         startedAt: twitchStatus.startedAt ?? null,
         thumbnailUrl: twitchStatus.thumbnailUrl ?? null,
-        url: twitchStatus.url,
+        url: twitchStatus.url ?? FJOLSEN_TWITCH_CHANNEL_URL,
         note: twitchStatus.gameName ? `Spiller ${twitchStatus.gameName}` : undefined,
       });
     } catch (error) {
       statuses.push({
         platform: "twitch",
         isLive: false,
-        url: `https://twitch.tv/${twitchConfig.channel}`,
+        url: FJOLSEN_TWITCH_CHANNEL_URL,
         error: error instanceof Error ? error.message : "Ukjent feil mot Twitch",
       });
     }

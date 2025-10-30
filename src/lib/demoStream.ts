@@ -1,1 +1,3 @@
-export const DEMO_STREAM_URL = "https://player.twitch.tv/?channel=FjOlsenFN";
+import { FJOLSEN_TWITCH_EMBED_BASE } from "./community";
+
+export const DEMO_STREAM_URL = FJOLSEN_TWITCH_EMBED_BASE;
