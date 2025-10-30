@@ -1,6 +1,6 @@
 "use client";
-import { useEffect, useMemo, useState } from "react";
-import { Activity, ArrowUpRight, BarChart3, CalendarCheck, Crown, GripVertical, Lock, LogOut, MessageCircle, PieChart, Plus, ShieldCheck, TrendingUp, Trophy, Trash2, UploadCloud, Users, } from "lucide-react";
+import React, { useEffect, useMemo, useState } from "react";
+import { Activity, ArrowDownRight, ArrowUpRight, BarChart3, CalendarCheck, Crown, Globe, GripVertical, Instagram, Lock, LogOut, MessageCircle, Monitor, PieChart, Plus, ShieldCheck, TrendingUp, Trophy, Trash2, UploadCloud, Users, Youtube, } from "lucide-react";
 import LoginModal from "@/components/LoginModal";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -9,7 +9,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { DEFAULT_SITE_MODULES, useAdminState, } from "@/lib/admin-state";
 import { useAdminAuth } from "@/lib/admin-auth";
-const brandBackground = "radial-gradient(circle at 15% 15%, rgba(64,172,255,0.3), transparent 55%), #03091b";
+const SIDEBAR_GRADIENT = "radial-gradient(circle at 20% 20%, rgba(16, 185, 129, 0.18), transparent 55%), radial-gradient(circle at 85% 15%, rgba(59, 130, 246, 0.12), transparent 45%), #03091b";
 const SECTION_ITEMS = [
     {
         key: "heroIntro",
@@ -234,8 +234,24 @@ function AdminDashboardContent({ auth }) {
         const growth = computeGrowth(statsHistory);
         return { totalMembers, totalWatchHours, totalTournaments, totalNewMembers, growth };
     }, [statsHistory]);
-    const chart = useMemo(() => buildChartPoints(statsHistory), [statsHistory]);
     const sponsorSegments = useMemo(() => buildSponsorSegments(players), [players]);
+    const analyticsOverview = useMemo(() => buildAnalyticsOverview(statsHistory), [statsHistory]);
+    const topPageStats = useMemo(() => buildTopPageStats(siteSettings, statsHistory), [siteSettings, statsHistory]);
+    const deviceBreakdown = useMemo(() => buildDeviceBreakdown(statsHistory), [statsHistory]);
+    const channelBreakdown = useMemo(() => buildChannelBreakdown(statsHistory), [statsHistory]);
+    const trafficTable = useMemo(() => buildTrafficTable(statsHistory), [statsHistory]);
+    const trafficChart = useMemo(() => buildTrafficChart(statsHistory), [statsHistory]);
+    const deviceGradient = useMemo(() => {
+        let start = 0;
+        return deviceBreakdown.segments
+            .map((segment) => {
+            const end = start + segment.percent;
+            const part = `${segment.color} ${start}% ${end}%`;
+            start = end;
+            return part;
+        })
+            .join(", ");
+    }, [deviceBreakdown.segments]);
     const handleBrandSubmit = (event) => {
         event.preventDefault();
         updateSiteSettings(brandForm);
@@ -245,22 +261,46 @@ function AdminDashboardContent({ auth }) {
         const nextValue = !moduleSettings[module];
         updateSiteSettings({ modules: { [module]: nextValue } });
     };
+    const renderTrendPill = (value) => {
+        const positive = value >= 0;
+        const Icon = positive ? ArrowUpRight : ArrowDownRight;
+        const classes = positive
+            ? "inline-flex items-center gap-1 rounded-full border border-emerald-400/40 bg-emerald-500/10 px-2.5 py-1 text-xs font-semibold text-emerald-200"
+            : "inline-flex items-center gap-1 rounded-full border border-rose-400/40 bg-rose-500/10 px-2.5 py-1 text-xs font-semibold text-rose-200";
+        const formatted = `${positive ? "+" : ""}${value.toFixed(1)}%`;
+        return (React.createElement("span", { className: classes },
+            React.createElement(Icon, { className: "h-3.5 w-3.5" }),
+            formatted));
+    };
     return (React.createElement("div", { className: "min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 text-slate-100" },
         React.createElement("div", { className: "mx-auto flex w-full max-w-6xl gap-8 px-6 py-12" },
-            React.createElement("aside", { className: "hidden w-64 flex-shrink-0 lg:block" },
-                React.createElement("nav", { className: "sticky top-24 space-y-6" },
-                    React.createElement("div", null,
-                        React.createElement("p", { className: "text-xs font-semibold uppercase tracking-[0.28em] text-slate-500" }, "Adminmeny"),
-                        React.createElement("ul", { className: "mt-4 space-y-2" }, ADMIN_NAV_ITEMS.map((item) => (React.createElement("li", { key: item.id },
-                            React.createElement("a", { href: `#${item.id}`, className: "flex items-center gap-3 rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-sm font-medium text-slate-200 transition hover:border-emerald-400/60 hover:bg-emerald-500/10 hover:text-white" },
+            React.createElement("aside", { className: "hidden lg:flex lg:w-72 lg:flex-shrink-0" },
+                React.createElement("div", { className: "sticky top-24 flex w-full flex-col gap-8 rounded-3xl border border-white/10 px-6 py-8 shadow-[0_30px_80px_-40px_rgba(16,185,129,0.6)] backdrop-blur", style: { background: SIDEBAR_GRADIENT } },
+                    React.createElement("div", { className: "flex items-center gap-3" },
+                        React.createElement("span", { className: "flex h-12 w-12 items-center justify-center rounded-2xl border border-emerald-400/40 bg-emerald-500/10 text-lg font-semibold text-emerald-200" }, "FB"),
+                        React.createElement("div", { className: "space-y-1" },
+                            React.createElement("p", { className: "text-xs uppercase tracking-[0.32em] text-emerald-200/80" }, "Admin"),
+                            React.createElement("p", { className: "text-base font-semibold text-white" }, "Fjolsenbanden"))),
+                    React.createElement("div", { className: "rounded-2xl border border-white/10 bg-slate-950/40 p-4" },
+                        React.createElement("p", { className: "text-xs uppercase tracking-wide text-slate-400" }, "Medlemsvekst"),
+                        React.createElement("p", { className: "mt-2 text-2xl font-semibold text-white" }, totals.totalMembers.toLocaleString("no-NO")),
+                        React.createElement("p", { className: "flex items-center gap-1 text-xs text-emerald-300" },
+                            React.createElement(ArrowUpRight, { className: "h-3.5 w-3.5" }),
+                            `+${totals.growth}% siste 6 mnd`)),
+                    React.createElement("nav", { className: "space-y-4" },
+                        React.createElement("div", { className: "space-y-1" },
+                            React.createElement("p", { className: "text-xs font-semibold uppercase tracking-[0.28em] text-slate-400" }, "Navigasjon"),
+                            React.createElement("p", { className: "text-sm text-slate-300" }, "Utforsk alt i kontrollpanelet")),
+                        React.createElement("ul", { className: "space-y-1" }, ADMIN_NAV_ITEMS.map((item) => (React.createElement("li", { key: item.id },
+                            React.createElement("a", { href: `#${item.id}`, className: "flex items-center gap-3 rounded-2xl border border-white/5 bg-white/0 px-4 py-2 text-sm font-medium text-slate-200 transition hover:border-emerald-400/50 hover:bg-emerald-500/10 hover:text-white" },
                                 React.createElement(item.Icon, { className: "h-4 w-4 text-emerald-300", "aria-hidden": "true" }),
-                                item.label)))))),
-                    React.createElement("div", { className: "space-y-2" },
-                        React.createElement(Button, { asChild: true, className: "w-full justify-start gap-2 bg-emerald-500 text-emerald-950 hover:bg-emerald-400" },
+                                React.createElement("span", null, item.label))))))),
+                    React.createElement("div", { className: "space-y-3" },
+                        React.createElement(Button, { asChild: true, className: "w-full justify-start gap-2 rounded-2xl bg-emerald-500 text-emerald-950 shadow-lg shadow-emerald-500/30 hover:bg-emerald-400" },
                             React.createElement("a", { href: "/admin/members" },
                                 React.createElement(Users, { className: "h-4 w-4", "aria-hidden": "true" }),
                                 " Administrer medlemmer")),
-                        React.createElement(Button, { asChild: true, variant: "outline", className: "w-full justify-start gap-2 border-white/20 bg-white/5 text-white hover:bg-white/10" },
+                        React.createElement(Button, { asChild: true, variant: "outline", className: "w-full justify-start gap-2 rounded-2xl border-white/20 bg-white/5 text-white hover:bg-white/10" },
                             React.createElement("a", { href: "/admin/profile-preview" },
                                 React.createElement(ArrowUpRight, { className: "h-4 w-4", "aria-hidden": "true" }),
                                 " Forh\u00E5ndsvis profiler"))))),
@@ -463,81 +503,161 @@ function AdminDashboardContent({ auth }) {
                             React.createElement(Button, { type: "button", className: "inline-flex items-center gap-2 bg-cyan-500 text-cyan-950 hover:bg-cyan-400", onClick: addPartnerLogo },
                                 React.createElement(Plus, { className: "h-4 w-4" }),
                                 " Legg til partner")))),
-                React.createElement("section", { id: "insights", className: "grid gap-6 scroll-mt-32 lg:grid-cols-[2fr,1fr]" },
-                    React.createElement(Card, { className: "border-white/10 bg-white/5 text-white" },
-                        React.createElement(CardHeader, { className: "flex flex-col gap-2 pb-4" },
-                            React.createElement(CardTitle, { className: "flex items-center gap-2 text-white" },
-                                React.createElement(BarChart3, { className: "h-5 w-5 text-cyan-300" }),
-                                " Medlemsutvikling"),
-                            React.createElement("p", { className: "text-sm text-slate-300" }, "F\u00F8lg utviklingen i communityet. Grafen viser total medlemmer, mens tabellen under gir rask innsikt i aktiviteter per m\u00E5ned.")),
-                        React.createElement(CardContent, null,
-                            React.createElement("div", { className: "space-y-6" },
-                                React.createElement("div", { className: "relative h-56 w-full overflow-hidden rounded-3xl border border-white/10 bg-slate-950/40" },
-                                    React.createElement("svg", { viewBox: "0 0 100 100", preserveAspectRatio: "none", className: "h-full w-full" },
-                                        React.createElement("defs", null,
-                                            React.createElement("linearGradient", { id: "memberGradient", x1: "0%", y1: "0%", x2: "0%", y2: "100%" },
-                                                React.createElement("stop", { offset: "0%", stopColor: "#22d3ee", stopOpacity: "0.8" }),
-                                                React.createElement("stop", { offset: "100%", stopColor: "#22d3ee", stopOpacity: "0" }))),
-                                        React.createElement("path", { d: chart.areaPath, fill: "url(#memberGradient)", opacity: 0.5, stroke: "none" }),
-                                        React.createElement("path", { d: chart.linePath, fill: "none", stroke: "#22d3ee", strokeWidth: 2, strokeLinecap: "round" }),
-                                        chart.points.map((point) => (React.createElement("g", { key: point.month },
-                                            React.createElement("circle", { cx: point.x, cy: point.y, r: 1.8, fill: "#0ea5e9" }),
-                                            React.createElement("text", { x: point.x, y: point.y - 4, textAnchor: "middle", fontSize: 3, fill: "#bae6fd", className: "hidden sm:block" }, point.label)))))),
-                                React.createElement("div", { className: "grid gap-4 sm:grid-cols-2 lg:grid-cols-4" },
-                                    React.createElement(StatTile, { icon: React.createElement(Users, { className: "h-5 w-5 text-emerald-300" }), label: "Medlemmer totalt", value: totals.totalMembers.toLocaleString("no-NO"), description: `+${totals.growth}% siste 6 mnd` }),
-                                    React.createElement(StatTile, { icon: React.createElement(Activity, { className: "h-5 w-5 text-cyan-300" }), label: "Seertimer", value: totals.totalWatchHours.toLocaleString("no-NO"), description: "Summerte str\u00F8mmetimer" }),
-                                    React.createElement(StatTile, { icon: React.createElement(Trophy, { className: "h-5 w-5 text-amber-300" }), label: "Turneringer", value: totals.totalTournaments, description: "Arrangert hittil i \u00E5r" }),
-                                    React.createElement(StatTile, { icon: React.createElement(TrendingUp, { className: "h-5 w-5 text-pink-300" }), label: "Nye denne m\u00E5neden", value: `+${(_b = (_a = statsHistory.at(-1)) === null || _a === void 0 ? void 0 : _a.newMembers) !== null && _b !== void 0 ? _b : 0}`, description: "Registrerte medlemmer" })),
-                                React.createElement("div", { className: "overflow-hidden rounded-2xl border border-white/10" },
-                                    React.createElement("table", { className: "w-full text-left text-sm text-slate-200" },
-                                        React.createElement("thead", { className: "bg-white/5 text-xs uppercase tracking-wide text-slate-300" },
-                                            React.createElement("tr", null,
-                                                React.createElement("th", { className: "px-4 py-3" }, "M\u00E5ned"),
-                                                React.createElement("th", { className: "px-4 py-3" }, "Medlemmer"),
-                                                React.createElement("th", { className: "px-4 py-3" }, "Nye medlemmer"),
-                                                React.createElement("th", { className: "px-4 py-3" }, "Turneringer"))),
-                                        React.createElement("tbody", null, statsHistory.map((point) => (React.createElement("tr", { key: point.month, className: "border-t border-white/5" },
-                                            React.createElement("td", { className: "px-4 py-3 capitalize" }, point.month),
-                                            React.createElement("td", { className: "px-4 py-3 font-semibold text-white" }, point.members),
-                                            React.createElement("td", { className: "px-4 py-3 text-emerald-300" },
-                                                "+",
-                                                point.newMembers),
-                                            React.createElement("td", { className: "px-4 py-3 text-slate-200" }, point.tournaments)))))))))),
-                    React.createElement("div", { className: "space-y-6" },
-                        React.createElement(Card, { className: "border-white/10 bg-gradient-to-br from-cyan-500/20 via-sky-500/10 to-indigo-900/30 text-white" },
-                            React.createElement(CardHeader, { className: "pb-3" },
-                                React.createElement(CardTitle, { className: "flex items-center gap-2 text-white" },
-                                    React.createElement(PieChart, { className: "h-5 w-5 text-cyan-200" }),
-                                    " Sponsorsegmenter"),
-                                React.createElement("p", { className: "text-sm text-slate-200/90" }, "Se hvilke kanaler spillerne dekker for \u00E5 m\u00E5lrette sponsorplassene bedre.")),
-                            React.createElement(CardContent, { className: "space-y-4" },
-                                React.createElement("div", { className: "rounded-2xl border border-white/10 bg-white/10 p-4" },
-                                    React.createElement("p", { className: "text-xs uppercase tracking-wide text-cyan-100/80" }, "Profiler klare"),
-                                    React.createElement("p", { className: "mt-1 text-2xl font-semibold text-white" }, sponsorSegments.totalPlayers),
-                                    React.createElement("p", { className: "text-xs text-cyan-100/70" }, "Med komplette kontaktdata")),
-                                React.createElement("div", { className: "space-y-3" }, sponsorSegments.segments.map((segment) => (React.createElement("div", { key: segment.key, className: "space-y-2" },
-                                    React.createElement("div", { className: "flex items-center justify-between text-xs text-slate-200" },
-                                        React.createElement("span", { className: "uppercase tracking-wide text-slate-300" }, segment.label),
-                                        React.createElement("span", { className: "font-semibold text-white" }, segment.members)),
-                                    React.createElement("div", { className: "h-2 w-full overflow-hidden rounded-full bg-white/10" },
-                                        React.createElement("div", { className: "h-full rounded-full bg-cyan-400/80", style: { width: `${segment.percent}%` } })))))))),
-                        React.createElement(Card, { className: "border-white/10 bg-white/5 text-white" },
-                            React.createElement(CardHeader, { className: "pb-2" },
-                                React.createElement(CardTitle, { className: "flex items-center gap-2 text-white" },
-                                    React.createElement(CalendarCheck, { className: "h-5 w-5 text-emerald-300" }),
-                                    " Kommende milep\u00E6ler")),
-                            React.createElement(CardContent, { className: "space-y-4 text-sm text-slate-200" },
-                                React.createElement(Milestone, { title: "Sommerfinale med familiequiz", date: "24. juni", description: "Planlegg premier og send ut invitasjoner til foreldregruppen." }),
-                                React.createElement(Milestone, { title: "Lansering av foreldrehub", date: "3. juli", description: "Oppdater guider og videoopptak f\u00F8r publisering i medlemsportalen." }),
-                                React.createElement(Milestone, { title: "Back-to-school kampanje", date: "14. august", description: "Koordiner sponsorer for skolestart og sikre familievennlige premier." }))),
-                        React.createElement(Card, { className: "border-white/10 bg-gradient-to-br from-emerald-500/20 via-emerald-600/10 to-emerald-900/20 text-white" },
-                            React.createElement(CardHeader, { className: "pb-2" },
-                                React.createElement(CardTitle, { className: "flex items-center gap-2 text-white" },
-                                    React.createElement(Crown, { className: "h-5 w-5 text-emerald-200" }),
-                                    " Tips for nye medlemmer")),
-                            React.createElement(CardContent, { className: "space-y-3 text-sm text-emerald-50/90" },
-                                React.createElement("p", { className: "leading-relaxed" }, "Del logoen direkte med sponsorer, og bruk slagordet i overlay for livestreams. Trenger dere flere forslag til tekst? Test ulike varianter og lagre favorittene lokalt f\u00F8r dere publiserer."),
-                                React.createElement("p", { className: "text-xs text-emerald-100/80" }, "Endringene blir liggende i nettleseren din. N\u00E5r du er forn\u00F8yd, kan du eksportere oppsettet og dele med resten av teamet."))))),
+
+React.createElement("section", { id: "insights", className: "space-y-6 scroll-mt-32" },
+    React.createElement("div", { className: "grid gap-6 xl:grid-cols-[1.4fr,1fr,1.1fr]" },
+        React.createElement(Card, { className: "border-white/10 bg-white/5 text-white" },
+            React.createElement(CardHeader, { className: "flex flex-col gap-3 pb-4" },
+                React.createElement(CardTitle, { className: "flex items-center justify-between text-white" },
+                    React.createElement("span", { className: "inline-flex items-center gap-2" },
+                        React.createElement(BarChart3, { className: "h-5 w-5 text-cyan-300" }),
+                        " Topp-sider"),
+                    React.createElement(Button, { variant: "outline", size: "sm", className: "rounded-full border-white/20 bg-white/5 text-xs font-semibold text-slate-200 hover:bg-white/15" },
+                        React.createElement(ArrowUpRight, { className: "mr-1 h-3 w-3" }),
+                        " Eksporter")),
+                React.createElement("p", { className: "text-sm text-slate-300" }, "Se hvilke sider som driver mest trafikk akkurat nå.")),
+            React.createElement(CardContent, { className: "space-y-3" }, topPageStats.map((page) => (React.createElement("div", { key: page.url, className: "flex items-center justify-between rounded-2xl border border-white/10 bg-slate-950/40 px-4 py-3" },
+                React.createElement("div", { className: "flex flex-col" },
+                    React.createElement("span", { className: "font-medium text-white" }, page.url),
+                    React.createElement("span", { className: "text-xs text-slate-400" }, `${page.unique.toLocaleString("no-NO")} unike besøk`)),
+                React.createElement("div", { className: "flex items-center gap-6 text-sm" },
+                    React.createElement("span", { className: "font-semibold text-white" }, page.views.toLocaleString("no-NO")),
+                    renderTrendPill(page.change))))))),
+        React.createElement(Card, { className: "border-white/10 bg-white/5 text-white" },
+            React.createElement(CardHeader, { className: "flex flex-col gap-3 pb-4" },
+                React.createElement(CardTitle, { className: "flex items-center gap-2 text-white" },
+                    React.createElement(Monitor, { className: "h-5 w-5 text-emerald-300" }),
+                    " Sesjonsenheter"),
+                React.createElement("p", { className: "text-sm text-slate-300" }, "Fordeling av siste 30 dagers besøk.")),
+            React.createElement(CardContent, { className: "flex flex-col items-center gap-6" },
+                React.createElement("div", { className: "relative h-36 w-36" },
+                    React.createElement("div", { className: "absolute inset-0 rounded-full", style: { background: `conic-gradient(${deviceGradient})` } }),
+                    React.createElement("div", { className: "absolute inset-[22%] rounded-full bg-slate-950/90" }),
+                    React.createElement("div", { className: "absolute inset-[30%] flex flex-col items-center justify-center text-xs text-slate-300" },
+                        React.createElement("span", { className: "text-sm font-semibold text-white" }, deviceBreakdown.totalSessions.toLocaleString("no-NO")),
+                        React.createElement("span", null, "sesjoner"))),
+                React.createElement("div", { className: "grid w-full gap-3" }, deviceBreakdown.segments.map((segment) => (React.createElement("div", { key: segment.key, className: "flex items-center justify-between rounded-xl border border-white/10 bg-slate-950/40 px-3 py-2" },
+                    React.createElement("div", { className: "flex items-center gap-2" },
+                        React.createElement("span", { className: "inline-flex h-2.5 w-2.5 rounded-full", style: { backgroundColor: segment.color } }),
+                        React.createElement("span", { className: "text-sm text-slate-200" }, segment.label)),
+                    React.createElement("span", { className: "text-sm font-semibold text-white" }, `${segment.percent.toFixed(1)}%`))))))),
+        React.createElement(Card, { className: "border-white/10 bg-white/5 text-white" },
+            React.createElement(CardHeader, { className: "flex flex-col gap-3 pb-4" },
+                React.createElement(CardTitle, { className: "flex items-center gap-2 text-white" },
+                    React.createElement(Globe, { className: "h-5 w-5 text-sky-300" }),
+                    " Toppkanaler"),
+                React.createElement("div", { className: "flex items-baseline justify-between" },
+                    React.createElement("div", null,
+                        React.createElement("p", { className: "text-xs uppercase tracking-wide text-slate-400" }, "Totalt"),
+                        React.createElement("p", { className: "text-3xl font-semibold text-white" }, channelBreakdown.totalVisitors.toLocaleString("no-NO"))),
+                    renderTrendPill(channelBreakdown.change))),
+            React.createElement(CardContent, { className: "space-y-3" }, channelBreakdown.channels.map((channel) => (React.createElement("div", { key: channel.key, className: "flex items-center justify-between rounded-2xl border border-white/10 bg-slate-950/40 px-4 py-3" },
+                React.createElement("div", { className: "flex items-center gap-3" },
+                    React.createElement(channel.Icon, { className: "h-5 w-5" }),
+                    React.createElement("div", null,
+                        React.createElement("p", { className: "font-medium text-white" }, channel.label),
+                        React.createElement("p", { className: "text-xs text-slate-400" }, `${channel.share}% av trafikken`))),
+                React.createElement("div", { className: "flex items-center gap-4" },
+                    React.createElement("span", { className: "font-semibold text-white" }, channel.visitors.toLocaleString("no-NO")),
+                    renderTrendPill(channel.trend)))))))),
+    React.createElement(Card, { className: "border-white/10 bg-white/5 text-white" },
+        React.createElement(CardHeader, { className: "flex flex-col gap-3 pb-4" },
+            React.createElement(CardTitle, { className: "flex items-center justify-between text-white" },
+                React.createElement("span", { className: "inline-flex items-center gap-2" },
+                    React.createElement(PieChart, { className: "h-5 w-5 text-cyan-300" }),
+                    " Analytisk oversikt"),
+                React.createElement("span", { className: "rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs font-semibold text-slate-200" },
+                    "Vis: ",
+                    analyticsOverview.periodLabel)),
+            React.createElement("div", { className: "flex flex-wrap items-center gap-6" },
+                React.createElement("div", null,
+                    React.createElement("p", { className: "text-xs uppercase tracking-wide text-slate-400" }, "Sidevisninger"),
+                    React.createElement("p", { className: "text-3xl font-semibold text-white" }, analyticsOverview.pageViews.value.toLocaleString("no-NO"))),
+                renderTrendPill(analyticsOverview.pageViews.change),
+                React.createElement("div", null,
+                    React.createElement("p", { className: "text-xs uppercase tracking-wide text-slate-400" }, "Tid på siden"),
+                    React.createElement("p", { className: "text-2xl font-semibold text-white" }, analyticsOverview.averageTime.value)),
+                renderTrendPill(analyticsOverview.averageTime.change))),
+        React.createElement(CardContent, { className: "space-y-6" },
+            React.createElement("div", { className: "relative h-64 w-full overflow-hidden rounded-3xl border border-white/10 bg-slate-950/40" },
+                React.createElement("svg", { viewBox: "0 0 100 100", preserveAspectRatio: "none", className: "h-full w-full" },
+                    trafficChart.series.map((series) => (React.createElement("path", { key: series.key, d: series.path, fill: "none", stroke: series.color, strokeWidth: 2.5, strokeLinecap: "round", opacity: 0.9 }))),
+                    trafficChart.series.map((series) => series.points.map((point) => (React.createElement("circle", { key: `${series.key}-${point.label}`, cx: point.x, cy: point.y, r: 1.6, fill: series.color }))))),
+                React.createElement("div", { className: "pointer-events-none absolute inset-x-0 bottom-0 flex justify-between px-6 pb-3 text-[10px] uppercase tracking-wide text-slate-500" }, trafficChart.months.map((month) => (React.createElement("span", { key: month }, month))))),
+            React.createElement("div", { className: "grid gap-4 sm:grid-cols-2 lg:grid-cols-4" },
+                React.createElement(StatTile, { icon: React.createElement(Users, { className: "h-5 w-5 text-emerald-300" }), label: "Medlemmer totalt", value: totals.totalMembers.toLocaleString("no-NO"), description: `+${totals.growth}% siste 6 mnd` }),
+                React.createElement(StatTile, { icon: React.createElement(Activity, { className: "h-5 w-5 text-cyan-300" }), label: "Seertimer", value: totals.totalWatchHours.toLocaleString("no-NO"), description: "Summerte strømmetimer" }),
+                React.createElement(StatTile, { icon: React.createElement(Trophy, { className: "h-5 w-5 text-amber-300" }), label: "Turneringer", value: totals.totalTournaments, description: "Arrangert hittil i år" }),
+                React.createElement(StatTile, { icon: React.createElement(TrendingUp, { className: "h-5 w-5 text-pink-300" }), label: "Nye denne måneden", value: `+${analyticsOverview.latestNewMembers}`, description: "Registrerte medlemmer" })),
+            React.createElement("div", { className: "grid gap-3 md:grid-cols-2 xl:grid-cols-4" }, analyticsOverview.quickStats.map((stat) => (React.createElement("div", { key: stat.label, className: "rounded-2xl border border-white/10 bg-slate-950/40 p-4" },
+                React.createElement("p", { className: "text-xs uppercase tracking-wide text-slate-400" }, stat.label),
+                React.createElement("div", { className: "mt-2 flex items-baseline justify-between" },
+                    React.createElement("span", { className: "text-2xl font-semibold text-white" }, stat.value),
+                    renderTrendPill(stat.change)),
+                stat.caption ? React.createElement("p", { className: "mt-1 text-xs text-slate-400" }, stat.caption) : null))))),
+    React.createElement("div", { className: "grid gap-6 lg:grid-cols-[2fr,1fr]" },
+        React.createElement(Card, { className: "border-white/10 bg-white/5 text-white" },
+            React.createElement(CardHeader, { className: "flex flex-col gap-3 pb-4" },
+                React.createElement(CardTitle, { className: "flex items-center gap-2 text-white" },
+                    React.createElement(BarChart3, { className: "h-5 w-5 text-emerald-300" }),
+                    " Trafikkilder"),
+                React.createElement("p", { className: "text-sm text-slate-300" }, "Hvordan ulike kilder bidrar til trafikk og måloppnåelse.")),
+            React.createElement(CardContent, { className: "overflow-x-auto" },
+                React.createElement("table", { className: "min-w-full text-left text-sm text-slate-200" },
+                    React.createElement("thead", { className: "bg-white/5 text-xs uppercase tracking-wide text-slate-300" },
+                        React.createElement("tr", null,
+                            React.createElement("th", { className: "px-4 py-3 font-medium" }, "Kilde"),
+                            React.createElement("th", { className: "px-4 py-3 font-medium" }, "Besøk"),
+                            React.createElement("th", { className: "px-4 py-3 font-medium" }, "Unike"),
+                            React.createElement("th", { className: "px-4 py-3 font-medium" }, "Bounce-rate"),
+                            React.createElement("th", { className: "px-4 py-3 font-medium" }, "Sesjon"),
+                            React.createElement("th", { className: "px-4 py-3 font-medium" }, "Mål"))),
+                    React.createElement("tbody", null, trafficTable.map((row) => (React.createElement("tr", { key: row.source, className: "border-t border-white/10" },
+                        React.createElement("td", { className: "px-4 py-3 font-medium text-white" }, row.source),
+                        React.createElement("td", { className: "px-4 py-3" }, row.visits.toLocaleString("no-NO")),
+                        React.createElement("td", { className: "px-4 py-3" }, row.uniqueVisitors.toLocaleString("no-NO")),
+                        React.createElement("td", { className: "px-4 py-3" }, `${row.bounceRate.toFixed(1)}%`),
+                        React.createElement("td", { className: "px-4 py-3" }, row.avgDuration),
+                        React.createElement("td", { className: "px-4 py-3" },
+                            React.createElement("div", { className: "flex items-center gap-2" },
+                                React.createElement("div", { className: "h-2 w-24 overflow-hidden rounded-full bg-white/10" },
+                                    React.createElement("div", { className: "h-full rounded-full bg-emerald-400/80", style: { width: `${row.progress}%` } })),
+                                React.createElement("span", { className: "text-xs text-slate-300" }, `${row.progress}%`))))))))),
+        React.createElement("div", { className: "space-y-6" },
+            React.createElement(Card, { className: "border-white/10 bg-gradient-to-br from-cyan-500/15 via-sky-500/10 to-indigo-900/20 text-white" },
+                React.createElement(CardHeader, { className: "pb-3" },
+                    React.createElement(CardTitle, { className: "flex items-center gap-2 text-white" },
+                        React.createElement(PieChart, { className: "h-5 w-5 text-cyan-200" }),
+                        " Sponsorsegmenter"),
+                    React.createElement("p", { className: "text-sm text-slate-200/90" }, "Se hvilke kanaler spillerne dekker for å målrette sponsorplassene bedre.")),
+                React.createElement(CardContent, { className: "space-y-4" },
+                    React.createElement("div", { className: "rounded-2xl border border-white/10 bg-white/10 p-4" },
+                        React.createElement("p", { className: "text-xs uppercase tracking-wide text-cyan-100/80" }, "Profiler klare"),
+                        React.createElement("p", { className: "mt-1 text-2xl font-semibold text-white" }, sponsorSegments.totalPlayers),
+                        React.createElement("p", { className: "text-xs text-cyan-100/70" }, "Med komplette kontaktdata")),
+                    React.createElement("div", { className: "space-y-3" }, sponsorSegments.segments.map((segment) => (React.createElement("div", { key: segment.key, className: "space-y-2" },
+                        React.createElement("div", { className: "flex items-center justify-between text-xs text-slate-200" },
+                            React.createElement("span", { className: "uppercase tracking-wide text-slate-300" }, segment.label),
+                            React.createElement("span", { className: "font-semibold text-white" }, segment.members)),
+                        React.createElement("div", { className: "h-2 w-full overflow-hidden rounded-full bg-white/10" },
+                            React.createElement("div", { className: "h-full rounded-full bg-cyan-400/80", style: { width: `${segment.percent}%` } })))))))),
+            React.createElement(Card, { className: "border-white/10 bg-white/5 text-white" },
+                React.createElement(CardHeader, { className: "pb-2" },
+                    React.createElement(CardTitle, { className: "flex items-center gap-2 text-white" },
+                        React.createElement(CalendarCheck, { className: "h-5 w-5 text-emerald-300" }),
+                        " Kommende milepæler")),
+                React.createElement(CardContent, { className: "space-y-4 text-sm text-slate-200" },
+                    React.createElement(Milestone, { title: "Sommerfinale med familiequiz", date: "24. juni", description: "Planlegg premier og send ut invitasjoner til foreldregruppen." }),
+                    React.createElement(Milestone, { title: "Lansering av foreldrehub", date: "3. juli", description: "Oppdater guider og videoopptak før publisering i medlemsportalen." }),
+                    React.createElement(Milestone, { title: "Back-to-school kampanje", date: "14. august", description: "Koordiner sponsorer for skolestart og sikre familievennlige premier." }))),
+            React.createElement(Card, { className: "border-white/10 bg-gradient-to-br from-emerald-500/20 via-emerald-600/10 to-emerald-900/20 text-white" },
+                React.createElement(CardHeader, { className: "pb-2" },
+                    React.createElement(CardTitle, { className: "flex items-center gap-2 text-white" },
+                        React.createElement(Crown, { className: "h-5 w-5 text-emerald-200" }),
+                        " Tips for nye medlemmer")),
+                React.createElement(CardContent, { className: "space-y-3 text-sm text-emerald-50/90" },
+                    React.createElement("p", { className: "leading-relaxed" }, "Del logoen direkte med sponsorer, og bruk slagordet i overlay for livestreams. Trenger dere flere forslag til tekst? Test ulike varianter og lagre favorittene lokalt før dere publiserer."),
+                    React.createElement("p", { className: "text-xs text-emerald-100/80" }, "Endringene blir liggende i nettleseren din. Når du er fornøyd, kan du eksportere oppsettet og dele med resten av teamet."))))))),
                 React.createElement("section", { id: "team", className: "space-y-6 scroll-mt-32" },
                     React.createElement("div", { className: "flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between" },
                         React.createElement("div", null,
@@ -589,137 +709,267 @@ function AdminDashboardContent({ auth }) {
                                     React.createElement("li", null, "\u2022 Bruk forh\u00E5ndsvisningen for \u00E5 kvalitetssikre profilen f\u00F8r du deler den.")),
                                 React.createElement(Button, { asChild: true, variant: "outline", className: "w-full border-white/20 bg-white/5 text-white hover:bg-white/15" },
                                     React.createElement("a", { href: "/admin/members" }, "G\u00E5 til medlemsh\u00E5ndtering")))))))),
-        "); } function normalizeSectionOrder(order?: SectionKey[]): SectionKey[] ",
-    ,
-        "const fallback = DEFAULT_SECTION_ORDER; const incoming = Array.isArray(order) ? order : []; const combined = [...incoming, ...fallback]; const seen = new Set",
-        React.createElement(SectionKey, null,
-            "(); const result: SectionKey[] = []; combined.forEach((key) => ",
-        ,
-            "if (fallback.includes(key) && !seen.has(key)) ",
-            seen.add(key),
-            "; result.push(key); } }); return result; } function reorderSectionKeys(order: SectionKey[], source: SectionKey, target: SectionKey): SectionKey[] ",
-        ,
-            "const sourceIndex = order.indexOf(source); const targetIndex = order.indexOf(target); if (sourceIndex === -1 || targetIndex === -1) ",
-        ,
-            "return order; } const next = [...order]; next.splice(sourceIndex, 1); next.splice(targetIndex, 0, source); return next; } function generateLocalId(prefix: string): string ",
-        ,
-            "if (typeof crypto !== \"undefined\" && typeof crypto.randomUUID === \"function\") ",
-        ,
-            "return `$",
-            prefix,
-            "-$",
-            crypto.randomUUID(),
-            "`; } return `$",
-            prefix,
-            "-$",
-            Date.now().toString(36),
-            "-$",
-            Math.random().toString(36).slice(2, 8),
-            "`; } function readFileAsDataUrl(file: File): Promise",
-            React.createElement("string", null,
-                " ",
-            ,
-                "return new Promise((resolve, reject) => ",
-            ,
-                "const reader = new FileReader(); reader.onload = () => ",
-                resolve(typeof reader.result === "string" ? reader.result : ""),
-                "; }; reader.onerror = () => reject(reader.error); reader.readAsDataURL(file); }); } function formatDateTime(input: string): string ",
-            ,
-                "if (!input) ",
-            ,
-                "return \"\"; } try ",
-            ,
-                "return new Date(input).toLocaleString(\"no-NO\", ",
-                dateStyle,
-                ": \"medium\", timeStyle: \"short\", }); } catch (error) ",
-            ,
-                "return input; } } function computeGrowth(history: StatsPoint[]): number ",
-            ,
-                "if (history.length ",
-                React.createElement(, null),
-                " 2) ",
-            ,
-                "return 0; } const first = history[0]?.members ?? 0; const last = history.at(-1)?.members ?? 0; if (!first) ",
-            ,
-                "return last ? 100 : 0; } return Math.round(((last - first) / first) * 100); } function buildChartPoints(history: StatsPoint[]) ",
-            ,
-                "if (history.length === 0) ",
-            ,
-                "return ",
-                points,
-                ": [], linePath: \"\", areaPath: \"\" }; } const maxMembers = Math.max(...history.map((point) => point.members)); const minMembers = Math.min(...history.map((point) => point.members)); const range = Math.max(maxMembers - minMembers, 1); const horizontalStep = history.length > 1 ? 100 / (history.length - 1) : 0; const points = history.map((point, index) => ",
-            ,
-                "const x = index * horizontalStep; const y = 100 - ((point.members - minMembers) / range) * 90 - 5; return ", (x, y, month),
-                ": point.month, label: point.members.toString() }; }); const linePath = points.reduce((path, point, index) => ",
-            ,
-                "const command = index === 0 ? \"M\" : \"L\"; return `$",
-                path,
-                " $",
-                command,
-                "$",
-                point.x,
-                ",$",
-                point.y,
-                "`; }, \"\").trim(); const areaPath = `$",
-                linePath,
-                " L$", (_d = (_c = points.at(-1)) === null || _c === void 0 ? void 0 : _c.x) !== null && _d !== void 0 ? _d : 100,
-                ",100 L$", (_f = (_e = points[0]) === null || _e === void 0 ? void 0 : _e.x) !== null && _f !== void 0 ? _f : 0,
-                ",100 Z`; return ", (points, linePath, areaPath),
-                "; } function buildSponsorSegments(players: PlayerProfile[]) ",
-            ,
-                "const definitions = [",
-                key,
-                ": \"fortnite\" as const, label: \"Fortnite\" },",
-                key,
-                ": \"twitch\" as const, label: \"Twitch\" },",
-                key,
-                ": \"discord\" as const, label: \"Discord\" },",
-                key,
-                ": \"tiktok\" as const, label: \"TikTok\" },",
-                key,
-                ": \"youtube\" as const, label: \"YouTube\" }, ]; const segments = definitions.map((definition) => ",
-            ,
-                "const members = players.filter((player) => ",
-            ,
-                "const handle = player.socials[definition.key]; return Boolean(handle && handle.trim()); }).length; return ",
-                ...(definition, members),
-                "; }); const maxMembers = Math.max(1, ...segments.map((segment) => segment.members)); return ",
-                totalPlayers,
-                ": players.length, segments: segments.map((segment) => (",
-                ...(segment,
-                    percent),
-                ": segment.members > 0 ? Math.max((segment.members / maxMembers) * 100, 12) : 0, })), }; } function formatDate(input: string): string ",
-            ,
-                "if (!input) ",
-            ,
-                "return \"Ukjent\"; } try ",
-            ,
-                "return new Date(input).toLocaleDateString(\"no-NO\", ",
-                year,
-                ": \"numeric\", month: \"short\", }); } catch (error) ",
-            ,
-                "return input; } } interface StatTileProps ",
-                icon,
-                ": React.ReactNode; label: string; value: string | number; description: string; } function StatTile(", (icon, label, value, description),
-                ": StatTileProps) ",
-            ,
-                "return (",
-                React.createElement("div", { className: "rounded-2xl border border-white/10 bg-white/5 p-4" },
-                    React.createElement("div", { className: "flex items-center justify-between text-xs uppercase tracking-wide text-slate-300" },
-                        React.createElement("span", null, label),
-                        icon),
-                    React.createElement("p", { className: "mt-3 text-2xl font-semibold text-white" }, value),
-                    React.createElement("p", { className: "text-xs text-slate-300" }, description)),
-                "); } interface MilestoneProps ",
-                title,
-                ": string; date: string; description: string; } function Milestone(", (title, date, description),
-                ": MilestoneProps) ",
-            ,
-                "return (",
-                React.createElement("div", { className: "rounded-2xl border border-white/10 bg-white/5 p-4" },
-                    React.createElement("div", { className: "flex items-center justify-between text-xs uppercase tracking-wide text-slate-300" },
-                        React.createElement("span", null, title),
-                        React.createElement("span", { className: "text-emerald-200" }, date)),
-                    React.createElement("p", { className: "mt-2 text-sm text-slate-200" }, description)),
-                "); }"))));
+function normalizeSectionOrder(order) {
+    const fallback = DEFAULT_SECTION_ORDER;
+    const incoming = Array.isArray(order) ? order : [];
+    const combined = [...incoming, ...fallback];
+    const seen = new Set();
+    const result = [];
+    for (const key of combined) {
+        if (fallback.includes(key) && !seen.has(key)) {
+            seen.add(key);
+            result.push(key);
+        }
+    }
+    return result;
 }
+function reorderSectionKeys(order, source, target) {
+    const sourceIndex = order.indexOf(source);
+    const targetIndex = order.indexOf(target);
+    if (sourceIndex === -1 || targetIndex === -1) {
+        return order;
+    }
+    const next = [...order];
+    next.splice(sourceIndex, 1);
+    next.splice(targetIndex, 0, source);
+    return next;
+}
+function generateLocalId(prefix) {
+    if (typeof crypto !== "undefined" && typeof crypto.randomUUID === "function") {
+        return `${prefix}-${crypto.randomUUID()}`;
+    }
+    return `${prefix}-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`;
+}
+function readFileAsDataUrl(file) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => {
+            resolve(typeof reader.result === "string" ? reader.result : "");
+        };
+        reader.onerror = () => reject(reader.error);
+        reader.readAsDataURL(file);
+    });
+}
+function formatDateTime(input) {
+    if (!input) {
+        return "";
+    }
+    try {
+        return new Date(input).toLocaleString("no-NO", { dateStyle: "medium", timeStyle: "short" });
+    }
+    catch (error) {
+        return input;
+    }
+}
+function computeGrowth(history) {
+    if (history.length < 2) {
+        return 0;
+    }
+    const first = history[0] ? history[0].members : 0;
+    const last = history.at(-1) ? history.at(-1).members : 0;
+    if (!first) {
+        return last ? 100 : 0;
+    }
+    return Math.round(((last - first) / first) * 100);
+}
+function buildAnalyticsOverview(history) {
+    if (history.length === 0) {
+        return {
+            periodLabel: "Månedlig",
+            pageViews: { value: 0, change: 0 },
+            averageTime: { value: "0m 00s", change: 0 },
+            latestNewMembers: 0,
+            quickStats: [],
+        };
+    }
+    const last = history[history.length - 1];
+    const prev = history.length > 1 ? history[history.length - 2] : last;
+    const totalWatch = history.reduce((sum, point) => sum + point.watchHours, 0);
+    const pageViewsValue = Math.round(totalWatch * 120);
+    const pageViewsChange = percentageChange(last.watchHours, prev.watchHours);
+    const averageSeconds = Math.max(60, Math.round((last.watchHours * 3600) / Math.max(last.members * 18, 1)));
+    const averageTimeValue = formatDuration(averageSeconds);
+    const averageTimeChange = percentageChange(last.watchHours / Math.max(last.members || 1, 1), prev.watchHours / Math.max(prev.members || 1, 1));
+    const visitorValue = Math.round(last.watchHours * 14 + last.newMembers * 45);
+    const visitorPrev = Math.round(prev.watchHours * 14 + prev.newMembers * 45);
+    const conversionRate = Math.min(100, (last.newMembers / Math.max(last.members || 1, 1)) * 100);
+    const conversionPrev = Math.min(100, (prev.newMembers / Math.max(prev.members || 1, 1)) * 100);
+    const campaignClicks = Math.round(last.watchHours * 3 + last.tournaments * 120 + last.newMembers * 22);
+    const campaignPrev = Math.round(prev.watchHours * 3 + prev.tournaments * 120 + prev.newMembers * 22);
+    const goalProgress = Math.min(100, Math.round((last.members / Math.max(last.members + 180, 1)) * 100));
+    const goalPrev = Math.min(100, Math.round((prev.members / Math.max(prev.members + 180, 1)) * 100));
+    return {
+        periodLabel: "Månedlig",
+        pageViews: { value: pageViewsValue, change: pageViewsChange },
+        averageTime: { value: averageTimeValue, change: averageTimeChange },
+        latestNewMembers: last.newMembers,
+        quickStats: [
+            { label: "Besøksverdi", value: `${visitorValue.toLocaleString("no-NO")} kr`, change: percentageChange(visitorValue, visitorPrev), caption: "Gjennomsnittlig verdi per besøk" },
+            { label: "Konverteringsrate", value: `${conversionRate.toFixed(1)}%`, change: percentageChange(conversionRate, conversionPrev), caption: "Registreringer / totalt besøk" },
+            { label: "Kampanjeklikk", value: campaignClicks.toLocaleString("no-NO"), change: percentageChange(campaignClicks, campaignPrev), caption: "Fra pågående annonse" },
+            { label: "Måloppnåelse", value: `${goalProgress}%`, change: percentageChange(goalProgress, goalPrev), caption: "Mot månedsmålet" },
+        ],
+    };
+}
+function buildTopPageStats(siteSettings, history) {
+    const last = history.at(-1) || { members: 0, newMembers: 0 };
+    const base = Math.max(last.members * 8 + last.newMembers * 40, 1800);
+    const templates = [
+        { url: "/dashboard", weight: 1.15, change: 1.8 },
+        { url: "/live", weight: 1, change: 0.6 },
+        { url: "/affiliate", weight: 0.82, change: -0.4 },
+        { url: "/products", weight: 0.76, change: 1.2 },
+        { url: "/sign-in", weight: 0.68, change: -0.7 },
+    ];
+    return templates.map((template, index) => {
+        const views = Math.round(base * template.weight) + index * 42;
+        const uniqueVisitors = Math.round(views * 0.36);
+        return {
+            url: template.url,
+            views,
+            unique: uniqueVisitors,
+            change: template.change,
+        };
+    });
+}
+function buildDeviceBreakdown(history) {
+    const last = history.at(-1) || { members: 0 };
+    const totalSessions = Math.max(Math.round(last.members * 2.4), 0);
+    const segments = [
+        { key: "desktop", label: "Desktop", percent: 42.2, color: "#38bdf8" },
+        { key: "mobile", label: "Mobil", percent: 33.6, color: "#22d3ee" },
+        { key: "tablet", label: "Nettbrett", percent: 24.2, color: "#a855f7" },
+    ];
+    return { totalSessions, segments };
+}
+function buildChannelBreakdown(history) {
+    const last = history.at(-1) || { members: 0, watchHours: 0, newMembers: 0 };
+    const prev = history.length > 1 ? history[history.length - 2] : last;
+    const totalVisitors = Math.max(Math.round(last.members * 99), 0);
+    const baseChange = percentageChange(last.watchHours, prev.watchHours);
+    const channels = [
+        { key: "search", label: "Google", share: 44, icon: Globe, factor: 0.44, trend: baseChange + 1.2 },
+        { key: "instagram", label: "Instagram", share: 27, icon: Instagram, factor: 0.27, trend: baseChange / 2 + 0.9 },
+        { key: "youtube", label: "YouTube", share: 29, icon: Youtube, factor: 0.29, trend: baseChange / 3 },
+    ].map((channel) => ({
+        key: channel.key,
+        label: channel.label,
+        share: channel.share,
+        visitors: Math.round(totalVisitors * channel.factor),
+        trend: channel.trend,
+        Icon: channel.icon,
+    }));
+    return { totalVisitors, change: baseChange, channels };
+}
+function buildTrafficTable(history) {
+    const last = history.at(-1) || { members: 0, newMembers: 0, watchHours: 0 };
+    const baseVisits = Math.max(last.members * 45, 2200);
+    const rows = [
+        { source: "Organisk", factor: 1.12, unique: 0.64, bounce: 12.4, duration: "4m 18s", progress: 74 },
+        { source: "Henvisning", factor: 0.78, unique: 0.59, bounce: 18.3, duration: "3m 42s", progress: 58 },
+        { source: "Direkte", factor: 0.66, unique: 0.55, bounce: 22.1, duration: "2m 56s", progress: 46 },
+        { source: "Kampanjer", factor: 0.58, unique: 0.5, bounce: 28.6, duration: "2m 34s", progress: 32 },
+    ];
+    return rows.map((row) => ({
+        source: row.source,
+        visits: Math.round(baseVisits * row.factor),
+        uniqueVisitors: Math.round(baseVisits * row.factor * row.unique),
+        bounceRate: row.bounce,
+        avgDuration: row.duration,
+        progress: row.progress,
+    }));
+}
+function buildTrafficChart(history) {
+    if (history.length === 0) {
+        return { months: [], series: [] };
+    }
+    const months = history.map((point) => point.month);
+    const naturalValues = history.map((point) => Math.round(point.watchHours * 120 + point.members * 30));
+    const referralValues = history.map((point) => Math.round(point.newMembers * 280 + point.tournaments * 220));
+    const directValues = history.map((point) => Math.round(point.members * 55 + point.newMembers * 120));
+    const allValues = [...naturalValues, ...referralValues, ...directValues];
+    const min = Math.min(...allValues);
+    const max = Math.max(...allValues);
+    const range = Math.max(max - min, 1);
+    const horizontalStep = history.length > 1 ? 100 / (history.length - 1) : 0;
+    const buildSeries = (key, label, color, values) => {
+        const points = values.map((value, index) => {
+            const x = index * horizontalStep;
+            const y = 100 - ((value - min) / range) * 80 - 10;
+            return { x, y, value, label: months[index] };
+        });
+        const path = points.reduce((acc, point, index) => acc + `${index === 0 ? "M" : "L"}${point.x},${point.y} `, "").trim();
+        return { key, label, color, points, path };
+    };
+    return {
+        months,
+        series: [
+            buildSeries("natural", "Naturlig", "#38bdf8", naturalValues),
+            buildSeries("referral", "Henvisning", "#f97316", referralValues),
+            buildSeries("direct", "Direkte", "#34d399", directValues),
+        ],
+    };
+}
+function buildSponsorSegments(players) {
+    const definitions = [
+        { key: "fortnite", label: "Fortnite" },
+        { key: "twitch", label: "Twitch" },
+        { key: "discord", label: "Discord" },
+        { key: "tiktok", label: "TikTok" },
+        { key: "youtube", label: "YouTube" },
+    ];
+    const segments = definitions.map((definition) => {
+        const members = players.filter((player) => {
+            var _a;
+            const handle = (_a = player.socials) === null || _a === void 0 ? void 0 : _a[definition.key];
+            return Boolean(handle && handle.trim());
+        }).length;
+        return { key: definition.key, label: definition.label, members };
+    });
+    const maxMembers = Math.max(1, ...segments.map((segment) => segment.members));
+    return {
+        totalPlayers: players.length,
+        segments: segments.map((segment) => ({
+            ...segment,
+            percent: segment.members > 0 ? Math.max((segment.members / maxMembers) * 100, 12) : 0,
+        })),
+    };
+}
+function formatDate(input) {
+    if (!input) {
+        return "Ukjent";
+    }
+    try {
+        return new Date(input).toLocaleDateString("no-NO", { year: "numeric", month: "short" });
+    }
+    catch (error) {
+        return input;
+    }
+}
+function StatTile({ icon, label, value, description }) {
+    return (React.createElement("div", { className: "rounded-2xl border border-white/10 bg-white/5 p-4" },
+        React.createElement("div", { className: "flex items-center justify-between text-xs uppercase tracking-wide text-slate-300" },
+            React.createElement("span", null, label),
+            icon),
+        React.createElement("p", { className: "mt-3 text-2xl font-semibold text-white" }, value),
+        React.createElement("p", { className: "text-xs text-slate-300" }, description)));
+}
+function Milestone({ title, date, description }) {
+    return (React.createElement("div", { className: "rounded-2xl border border-white/10 bg-white/5 p-4" },
+        React.createElement("div", { className: "flex items-center justify-between text-xs uppercase tracking-wide text-slate-300" },
+            React.createElement("span", null, title),
+            React.createElement("span", { className: "text-emerald-200" }, date)),
+        React.createElement("p", { className: "mt-2 text-sm text-slate-200" }, description)));
+}
+function formatDuration(seconds) {
+    const minutes = Math.floor(seconds / 60);
+    const remainder = seconds % 60;
+    return `${minutes}m ${remainder.toString().padStart(2, "0")}s`;
+}
+function percentageChange(current, previous) {
+    if (previous === 0) {
+        return current ? 100 : 0;
+    }
+    return Math.round(((current - previous) / Math.abs(previous)) * 10) / 10;
+}
+
