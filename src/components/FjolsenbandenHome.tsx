@@ -831,39 +831,41 @@ export default function FjolsenbandenHome() {
         }}
       />
 
-      <nav className="relative z-50 flex items-center justify-between px-6 py-4">
-        <a className="flex items-center gap-3" href="#" aria-label="Fjolsenbanden hjem">
-          <img src={logoUrl} alt={`${heroTitle} logo`} className="h-10 w-10 rounded-xl object-cover" />
-          <span className="hidden text-lg font-semibold sm:block">{heroTitle}</span>
-        </a>
-        <div className="hidden items-center gap-6 md:flex">
-          <ul className="flex items-center gap-6 text-sm font-medium">
-            {filteredNavLinks.map((link: { name: string; href: string }) => (
-              <li key={link.name}>
-                <a className="transition-colors duration-150 hover:text-[#13A0F9]" href={link.href}>
-                  {link.name}
-                </a>
-              </li>
-            ))}
-          </ul>
-          <a
-            href="#bli-medlem"
-            className="inline-flex items-center gap-2 rounded-full border border-white/20 px-6 py-3 font-semibold text-white transition hover:border-white/40 hover:bg-white/10"
-          >
-            Bli medlem
+      <nav className="relative sticky top-0 z-50 border-b border-white/10 bg-[#050B24]/80 backdrop-blur">
+        <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-4">
+          <a className="flex items-center gap-3" href="#" aria-label="Fjolsenbanden hjem">
+            <img src={logoUrl} alt={`${heroTitle} logo`} className="h-10 w-10 rounded-xl object-cover" />
+            <span className="hidden text-lg font-semibold sm:block">{heroTitle}</span>
           </a>
-        </div>
-        <div className="flex items-center gap-3 md:hidden">
-          <button
-            type="button"
-            onClick={toggleMenu}
-            aria-expanded={menuOpen}
-            aria-controls="mobile-navigation"
-            aria-label={menuOpen ? "Lukk meny" : "Åpne meny"}
-            className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/20 text-white transition hover:border-white/40 hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/40"
-          >
-            {menuOpen ? <X className="h-5 w-5" aria-hidden="true" /> : <Menu className="h-5 w-5" aria-hidden="true" />}
-          </button>
+          <div className="hidden items-center gap-6 md:flex">
+            <ul className="flex items-center gap-6 text-sm font-medium">
+              {filteredNavLinks.map((link: { name: string; href: string }) => (
+                <li key={link.name}>
+                  <a className="transition-colors duration-150 hover:text-[#13A0F9]" href={link.href}>
+                    {link.name}
+                  </a>
+                </li>
+              ))}
+            </ul>
+            <a
+              href="#bli-medlem"
+              className="inline-flex items-center gap-2 rounded-full border border-white/20 px-6 py-3 font-semibold text-white transition hover:border-white/40 hover:bg-white/10"
+            >
+              Bli medlem
+            </a>
+          </div>
+          <div className="flex items-center gap-3 md:hidden">
+            <button
+              type="button"
+              onClick={toggleMenu}
+              aria-expanded={menuOpen}
+              aria-controls="mobile-navigation"
+              aria-label={menuOpen ? "Lukk meny" : "Åpne meny"}
+              className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/20 text-white transition hover:border-white/40 hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/40"
+            >
+              {menuOpen ? <X className="h-5 w-5" aria-hidden="true" /> : <Menu className="h-5 w-5" aria-hidden="true" />}
+            </button>
+          </div>
         </div>
         <div
           id="mobile-navigation"

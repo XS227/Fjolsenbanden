@@ -8,7 +8,6 @@ import {
   CalendarCheck,
   Crown,
   GripVertical,
-  Loader2,
   Lock,
   LogOut,
   MessageCircle,
@@ -53,48 +52,6 @@ type BrandFormState = Pick<
   | "presentationVideoUrl"
   | "twitchEmbedUrl"
 >;
-
-interface NewPlayerState {
-  gamerTag: string;
-  realName: string;
-  mainGame: string;
-  bio: string;
-  achievements: string;
-  avatarUrl: string;
-  joinDate: string;
-  email: string;
-  phone: string;
-  birthDate: string;
-  gender: string;
-  postalCode: string;
-  city: string;
-  fortnite: string;
-  twitch: string;
-  discord: string;
-  youtube: string;
-  tiktok: string;
-}
-
-const emptyNewPlayer = (): NewPlayerState => ({
-  gamerTag: "",
-  realName: "",
-  mainGame: "",
-  bio: "",
-  achievements: "",
-  avatarUrl: "",
-  joinDate: new Date().toISOString().slice(0, 10),
-  email: "",
-  phone: "",
-  birthDate: new Date().toISOString().slice(0, 10),
-  gender: "",
-  postalCode: "",
-  city: "",
-  fortnite: "",
-  twitch: "",
-  discord: "",
-  youtube: "",
-  tiktok: "",
-});
 
 type ModuleKey = keyof SiteModules;
 
@@ -149,6 +106,14 @@ const SECTION_ITEMS: ReadonlyArray<SectionListItem> = [
   },
 ];
 
+const ADMIN_NAV_ITEMS = [
+  { id: "overview", label: "Oversikt", Icon: ShieldCheck },
+  { id: "site", label: "Nettside og moduler", Icon: UploadCloud },
+  { id: "memberships", label: "Medlemskap & partnere", Icon: Users },
+  { id: "insights", label: "Statistikk", Icon: BarChart3 },
+  { id: "team", label: "Team & profiler", Icon: Trophy },
+] as const;
+
 export default function AdminDashboard() {
   const auth = useAdminAuth();
 
@@ -174,12 +139,10 @@ interface DashboardContentProps {
 }
 
 function AdminDashboardContent({ auth }: DashboardContentProps) {
-  const { state, updateSiteSettings, addPlayer, removePlayer } = useAdminState();
+  const { state, updateSiteSettings } = useAdminState();
   const { siteSettings, players, statsHistory } = state;
 
   const [brandForm, setBrandForm] = useState<BrandFormState>(siteSettings);
-  const [newPlayer, setNewPlayer] = useState<NewPlayerState>(emptyNewPlayer());
-  const [justAddedPlayer, setJustAddedPlayer] = useState<string | null>(null);
   const [sectionOrder, setSectionOrder] = useState<SectionKey[]>(() =>
     normalizeSectionOrder(siteSettings.sectionOrder),
   );
@@ -384,44 +347,6 @@ function AdminDashboardContent({ auth }: DashboardContentProps) {
     updateSiteSettings(brandForm);
   };
 
-  const handleAddPlayer = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    if (!newPlayer.gamerTag.trim()) {
-      return;
-    }
-
-    addPlayer({
-      gamerTag: newPlayer.gamerTag.trim(),
-      realName: newPlayer.realName.trim() || newPlayer.gamerTag.trim(),
-      mainGame: newPlayer.mainGame.trim() || "Allsidig",
-      bio: newPlayer.bio.trim() || "Ny i Fjolsenbanden. Profilen oppdateres snart!",
-      achievements: extractAchievements(newPlayer.achievements),
-      avatarUrl:
-        newPlayer.avatarUrl.trim() ||
-        "https://images.unsplash.com/photo-1603415526960-f7e0328c63b1?auto=format&fit=crop&w=320&q=80",
-      joinDate: newPlayer.joinDate,
-      contact: {
-        fullName: newPlayer.realName.trim() || newPlayer.gamerTag.trim(),
-        email: newPlayer.email.trim(),
-        phone: newPlayer.phone.trim(),
-        birthDate: newPlayer.birthDate,
-        gender: newPlayer.gender.trim(),
-        postalCode: newPlayer.postalCode.trim(),
-        city: newPlayer.city.trim(),
-      },
-      socials: {
-        fortnite: newPlayer.fortnite.trim() || undefined,
-        twitch: newPlayer.twitch.trim() || undefined,
-        discord: newPlayer.discord.trim() || undefined,
-        youtube: newPlayer.youtube.trim() || undefined,
-        tiktok: newPlayer.tiktok.trim() || undefined,
-      },
-    });
-
-    setJustAddedPlayer(newPlayer.gamerTag.trim());
-    setNewPlayer(emptyNewPlayer());
-  };
-
   const lastLogin = auth.state.lastLoginAt ? formatDateTime(auth.state.lastLoginAt) : null;
 
   const handleModuleToggle = (module: ModuleKey) => {
@@ -431,42 +356,93 @@ function AdminDashboardContent({ auth }: DashboardContentProps) {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 text-slate-100">
-      <div className="mx-auto flex w-full max-w-6xl flex-col gap-10 px-6 py-12">
-        <header className="flex flex-col justify-between gap-6 lg:flex-row lg:items-start">
-          <div className="space-y-3">
-            <p className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-4 py-1 text-sm font-medium text-emerald-200">
-              <ShieldCheck className="h-4 w-4" /> Intern oversikt
-            </p>
-            <h1 className="text-3xl font-semibold tracking-tight text-white sm:text-4xl">Adminpanel for Fjolsenbanden</h1>
-            <p className="max-w-2xl text-base text-slate-300">
-              Oppdater profileringen, legg til nye spillere og følg med på vekst direkte fra ett samlet kontrollrom. Endringer
-              lagres lokalt i nettleseren slik at du kan jobbe trygt før publisering.
-            </p>
-          </div>
-          <div className="flex flex-col items-end gap-4">
-            <div className="flex flex-wrap items-center justify-end gap-3">
-              <span className="inline-flex items-center gap-2 rounded-full border border-emerald-400/40 bg-emerald-400/10 px-3 py-1 text-xs font-medium text-emerald-100">
-                <Lock className="h-3.5 w-3.5" /> Innlogget som administrator
-              </span>
-              <Button className="bg-white/10 text-white hover:bg-white/20" type="button">
-                <ArrowUpRight className="mr-2 h-4 w-4" /> Eksporter CSV
+      <div className="mx-auto flex w-full max-w-6xl gap-8 px-6 py-12">
+        <aside className="hidden w-64 flex-shrink-0 lg:block">
+          <nav className="sticky top-24 space-y-6">
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-[0.28em] text-slate-500">Adminmeny</p>
+              <ul className="mt-4 space-y-2">
+                {ADMIN_NAV_ITEMS.map((item) => (
+                  <li key={item.id}>
+                    <a
+                      href={`#${item.id}`}
+                      className="flex items-center gap-3 rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-sm font-medium text-slate-200 transition hover:border-emerald-400/60 hover:bg-emerald-500/10 hover:text-white"
+                    >
+                      <item.Icon className="h-4 w-4 text-emerald-300" aria-hidden="true" />
+                      {item.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="space-y-2">
+              <Button asChild className="w-full justify-start gap-2 bg-emerald-500 text-emerald-950 hover:bg-emerald-400">
+                <a href="/admin/members">
+                  <Users className="h-4 w-4" aria-hidden="true" /> Administrer medlemmer
+                </a>
               </Button>
-              <Button variant="outline" className="border-white/20 bg-white/5 text-white hover:bg-white/15" type="button">
-                <MessageCircle className="mr-2 h-4 w-4" /> Del status
-              </Button>
-              <Button
-                variant="outline"
-                className="border-white/20 bg-white/5 text-white hover:bg-white/15"
-                onClick={auth.logout}
-              >
-                <LogOut className="mr-2 h-4 w-4" /> Logg ut
+              <Button asChild variant="outline" className="w-full justify-start gap-2 border-white/20 bg-white/5 text-white hover:bg-white/10">
+                <a href="/admin/profile-preview">
+                  <ArrowUpRight className="h-4 w-4" aria-hidden="true" /> Forhåndsvis profiler
+                </a>
               </Button>
             </div>
-            {lastLogin ? <p className="text-xs text-slate-400">Sist verifisert {lastLogin}</p> : null}
-          </div>
-        </header>
+          </nav>
+        </aside>
 
-        <section className="grid gap-6 lg:grid-cols-[1.2fr,1fr]">
+        <div className="flex min-w-0 flex-1 flex-col gap-10">
+          <header
+            id="overview"
+            className="scroll-mt-32 flex flex-col justify-between gap-6 lg:flex-row lg:items-start"
+          >
+            <div className="space-y-3">
+              <p className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-4 py-1 text-sm font-medium text-emerald-200">
+                <ShieldCheck className="h-4 w-4" /> Intern oversikt
+              </p>
+              <h1 className="text-3xl font-semibold tracking-tight text-white sm:text-4xl">Adminpanel for Fjolsenbanden</h1>
+              <p className="max-w-2xl text-base text-slate-300">
+                Oppdater profileringen, styr hvilke moduler som vises og følg med på vekst direkte fra ett samlet kontrollrom.
+                Medlemsdata håndteres nå i en egen administrasjonsside.
+              </p>
+            </div>
+            <div className="flex flex-col items-end gap-4">
+              <div className="flex flex-wrap items-center justify-end gap-3">
+                <span className="inline-flex items-center gap-2 rounded-full border border-emerald-400/40 bg-emerald-400/10 px-3 py-1 text-xs font-medium text-emerald-100">
+                  <Lock className="h-3.5 w-3.5" /> Innlogget som administrator
+                </span>
+                <Button className="bg-white/10 text-white hover:bg-white/20" type="button">
+                  <ArrowUpRight className="mr-2 h-4 w-4" /> Eksporter CSV
+                </Button>
+                <Button variant="outline" className="border-white/20 bg-white/5 text-white hover:bg-white/15" type="button">
+                  <MessageCircle className="mr-2 h-4 w-4" /> Del status
+                </Button>
+                <Button
+                  variant="outline"
+                  className="border-white/20 bg-white/5 text-white hover:bg-white/15"
+                  onClick={auth.logout}
+                >
+                  <LogOut className="mr-2 h-4 w-4" /> Logg ut
+                </Button>
+              </div>
+              {lastLogin ? <p className="text-xs text-slate-400">Sist verifisert {lastLogin}</p> : null}
+            </div>
+          </header>
+
+          <div className="lg:hidden">
+            <div className="-mx-1 flex snap-x gap-2 overflow-x-auto px-1 pb-2">
+              {ADMIN_NAV_ITEMS.map((item) => (
+                <a
+                  key={item.id}
+                  href={`#${item.id}`}
+                  className="whitespace-nowrap rounded-full border border-white/15 bg-white/5 px-4 py-2 text-xs font-semibold text-slate-200 transition hover:border-emerald-400/60 hover:bg-emerald-500/10 hover:text-white"
+                >
+                  {item.label}
+                </a>
+              ))}
+            </div>
+          </div>
+
+          <section id="site" className="grid gap-6 scroll-mt-32 lg:grid-cols-[1.2fr,1fr]">
           <Card className="border-white/10 bg-white/5 text-white">
             <CardHeader>
               <CardTitle className="text-lg text-white">Oppdater logo og tekst</CardTitle>
@@ -737,7 +713,7 @@ function AdminDashboardContent({ auth }: DashboardContentProps) {
           </Card>
         </section>
 
-        <section className="grid gap-6 lg:grid-cols-2">
+          <section id="memberships" className="grid gap-6 scroll-mt-32 lg:grid-cols-2">
           <Card className="border-white/10 bg-white/5 text-white">
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-white">
@@ -922,7 +898,7 @@ function AdminDashboardContent({ auth }: DashboardContentProps) {
           </Card>
         </section>
 
-        <section className="grid gap-6 lg:grid-cols-[2fr,1fr]">
+          <section id="insights" className="grid gap-6 scroll-mt-32 lg:grid-cols-[2fr,1fr]">
           <Card className="border-white/10 bg-white/5 text-white">
             <CardHeader className="flex flex-col gap-2 pb-4">
               <CardTitle className="flex items-center gap-2 text-white">
@@ -1095,99 +1071,78 @@ function AdminDashboardContent({ auth }: DashboardContentProps) {
           </div>
         </section>
 
-        <section className="space-y-6">
+        <section id="team" className="space-y-6 scroll-mt-32">
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <div>
-              <h2 className="text-2xl font-semibold text-white">Spillerprofiler</h2>
+              <h2 className="text-2xl font-semibold text-white">Team og profiler</h2>
               <p className="text-sm text-slate-300">
-                Hver spiller får automatisk en profilside som du kan dele med communityet.
+                Hver spiller får automatisk en profilside. Administrer detaljer fra medlemsoversikten.
               </p>
             </div>
-            {justAddedPlayer ? (
-              <span className="inline-flex items-center gap-2 rounded-full border border-emerald-400/40 bg-emerald-400/10 px-4 py-1 text-sm text-emerald-100">
-                <ShieldCheck className="h-4 w-4" /> {justAddedPlayer} er klar med egen profilside
-              </span>
-            ) : null}
+            <div className="flex flex-wrap gap-2">
+              <Button asChild className="bg-emerald-500 text-emerald-950 hover:bg-emerald-400">
+                <a href="/admin/members">Åpne medlemsadministrasjon</a>
+              </Button>
+              <Button
+                asChild
+                variant="outline"
+                className="border-white/20 bg-white/5 text-white hover:bg-white/15"
+              >
+                <a href="/admin/profile-preview">Forhåndsvis profiler</a>
+              </Button>
+            </div>
           </div>
 
           <div className="grid gap-6 lg:grid-cols-[1.4fr,1fr]">
             <Card className="border-white/10 bg-white/5 text-white">
               <CardHeader className="pb-4">
-                <CardTitle className="flex items-center gap-2 text-white">
-                  <Users className="h-5 w-5 text-cyan-300" /> Aktive spillere
+                <CardTitle className="flex items-center justify-between text-white">
+                  <span className="inline-flex items-center gap-2">
+                    <Users className="h-5 w-5 text-cyan-300" /> Aktive spillere
+                  </span>
+                  <span className="text-xs text-slate-300">{players.length} totalt</span>
                 </CardTitle>
                 <p className="text-sm text-slate-300">
-                  Klikk på navnet for å åpne offentlig profil. Du kan også fjerne spillere herfra ved behov.
+                  Se en rask oversikt over laget. For å oppdatere informasjon, bruk medlemsadministrasjonen.
                 </p>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
-                  {players.map((player) => (
-                    <article
-                      key={player.id}
-                      className="grid gap-4 rounded-2xl border border-white/10 bg-white/5 p-4 sm:grid-cols-[auto,1fr,auto] sm:items-center"
-                    >
-                      <div className="flex items-center gap-4">
-                        <img
-                          src={player.avatarUrl}
-                          alt={player.gamerTag}
-                          className="h-16 w-16 rounded-2xl object-cover"
-                        />
-                        <div>
-                          <a
-                            href={`/players/${player.slug}`}
-                            className="text-lg font-semibold text-white hover:text-cyan-200"
-                          >
-                            {player.gamerTag}
-                          </a>
-                          <p className="text-xs uppercase tracking-wide text-slate-300">{player.mainGame}</p>
-                          <p className="mt-1 text-sm text-slate-300 line-clamp-2">{player.bio}</p>
-                        </div>
-                      </div>
-                      <dl className="grid grid-cols-2 gap-2 text-xs text-slate-300 sm:justify-self-end">
-                        <div>
-                          <dt className="uppercase tracking-wide text-slate-400">Ble med</dt>
-                          <dd className="font-medium text-white">{formatDate(player.joinDate)}</dd>
-                        </div>
-                        <div>
-                          <dt className="uppercase tracking-wide text-slate-400">Meritter</dt>
-                          <dd className="font-medium text-emerald-200">{player.achievements.length}</dd>
-                        </div>
-                      </dl>
-                      <div className="flex items-center justify-end gap-2">
-                        <Button
-                          variant="outline"
-                          className="border-white/20 bg-white/5 text-white hover:bg-white/20"
-                          onClick={() => removePlayer(player.id)}
-                        >
-                          Fjern
-                        </Button>
-                        <Button className="bg-cyan-500 text-cyan-950 hover:bg-cyan-400" asChild>
-                          <a href={`/players/${player.slug}`}>
-                            <ArrowUpRight className="mr-2 h-4 w-4" /> Åpne profil
-                          </a>
-                        </Button>
-                      </div>
-                      <div className="sm:col-span-3 rounded-2xl border border-white/10 bg-slate-950/40 p-4 text-left">
-                        <p className="text-[11px] uppercase tracking-widest text-slate-400">Kontaktinfo (intern)</p>
-                        <div className="mt-3 grid gap-3 text-sm text-slate-200 sm:grid-cols-2">
-                          <ContactDetail label="Navn" value={player.contact.fullName} />
-                          <ContactDetail label="E-post" value={player.contact.email} />
-                          <ContactDetail label="Mobil" value={player.contact.phone} />
-                          <ContactDetail label="Fødselsdato" value={formatBirthDate(player.contact.birthDate)} />
-                          <ContactDetail label="Kjønn" value={player.contact.gender} />
-                          <ContactDetail
-                            label="Postnr / sted"
-                            value={formatLocation(player.contact.postalCode, player.contact.city)}
+                  {players.length ? (
+                    players.slice(0, 4).map((player) => (
+                      <article
+                        key={player.id}
+                        className="flex flex-col gap-4 rounded-2xl border border-white/10 bg-white/5 p-4 sm:flex-row sm:items-center sm:justify-between"
+                      >
+                        <div className="flex items-center gap-4">
+                          <img
+                            src={player.avatarUrl}
+                            alt={player.gamerTag}
+                            className="h-16 w-16 rounded-2xl object-cover"
                           />
+                          <div>
+                            <p className="text-lg font-semibold text-white">{player.gamerTag}</p>
+                            <p className="text-xs uppercase tracking-wide text-slate-300">{player.mainGame}</p>
+                            <p className="text-xs text-slate-400">Med siden {formatDate(player.joinDate)}</p>
+                          </div>
                         </div>
-                        <p className="mt-3 text-[11px] text-cyan-200/80">Skjult for besøkende – kun synlig i admin.</p>
-                      </div>
-                    </article>
-                  ))}
-                  {players.length === 0 ? (
+                        <div className="flex items-center gap-2 self-end sm:self-auto">
+                          <Button asChild size="sm" className="bg-cyan-500 text-cyan-950 hover:bg-cyan-400">
+                            <a href={`/players/${player.slug}`}>
+                              <ArrowUpRight className="mr-2 h-4 w-4" /> Åpne profil
+                            </a>
+                          </Button>
+                        </div>
+                      </article>
+                    ))
+                  ) : (
                     <p className="rounded-xl border border-dashed border-white/20 bg-white/5 p-6 text-center text-sm text-slate-300">
-                      Ingen spillere er registrert ennå. Legg til den første spilleren i skjemaet ved siden av.
+                      Ingen spillere er registrert ennå. Opprett den første via medlemsadministrasjonen.
+                    </p>
+                  )}
+                  {players.length > 4 ? (
+                    <p className="text-xs text-slate-400">
+                      Vis hele listen og gjør endringer under «Administrer medlemmer».
                     </p>
                   ) : null}
                 </div>
@@ -1195,273 +1150,23 @@ function AdminDashboardContent({ auth }: DashboardContentProps) {
             </Card>
 
             <Card className="border-white/10 bg-gradient-to-br from-cyan-500/10 via-indigo-500/10 to-slate-900/40 text-white">
-              <CardHeader className="pb-4">
+              <CardHeader className="pb-3">
                 <CardTitle className="flex items-center gap-2 text-white">
-                  <Plus className="h-5 w-5 text-cyan-300" /> Legg til ny spiller
+                  <ShieldCheck className="h-5 w-5 text-cyan-200" /> Slik jobber du med medlemmene
                 </CardTitle>
-                <p className="text-sm text-slate-300">
-                  Fyll inn detaljene under for å opprette en ny profil i Fjolsenbanden.
-                </p>
               </CardHeader>
-              <CardContent>
-                <form className="space-y-4" onSubmit={handleAddPlayer}>
-                  <div className="space-y-2">
-                    <Label htmlFor="gamerTag" className="text-slate-200">
-                      Gamertag
-                    </Label>
-                    <Input
-                      id="gamerTag"
-                      name="gamerTag"
-                      value={newPlayer.gamerTag}
-                      onChange={(event) => setNewPlayer((state) => ({ ...state, gamerTag: event.target.value }))}
-                      placeholder="FjolseFar"
-                      className="bg-slate-950/40 text-white placeholder:text-slate-400"
-                      required
-                    />
-                  </div>
-                  <div className="grid gap-4 sm:grid-cols-2">
-                    <div className="space-y-2">
-                      <Label htmlFor="realName" className="text-slate-200">
-                        Fullt navn
-                      </Label>
-                      <Input
-                        id="realName"
-                        name="realName"
-                        value={newPlayer.realName}
-                        onChange={(event) => setNewPlayer((state) => ({ ...state, realName: event.target.value }))}
-                        placeholder="Marius Fjolsen"
-                        className="bg-slate-950/40 text-white placeholder:text-slate-400"
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="mainGame" className="text-slate-200">
-                        Hovedspill
-                      </Label>
-                      <Input
-                        id="mainGame"
-                        name="mainGame"
-                        value={newPlayer.mainGame}
-                        onChange={(event) => setNewPlayer((state) => ({ ...state, mainGame: event.target.value }))}
-                        placeholder="Mario Kart 8 Deluxe"
-                        className="bg-slate-950/40 text-white placeholder:text-slate-400"
-                      />
-                    </div>
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="bio" className="text-slate-200">
-                      Kort bio
-                    </Label>
-                    <Textarea
-                      id="bio"
-                      name="bio"
-                      rows={3}
-                      value={newPlayer.bio}
-                      onChange={(event) => setNewPlayer((state) => ({ ...state, bio: event.target.value }))}
-                      placeholder="Hva gjør spilleren unik?"
-                      className="bg-slate-950/40 text-white placeholder:text-slate-400"
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="achievements" className="text-slate-200">
-                      Meritter (kommaseparert)
-                    </Label>
-                    <Textarea
-                      id="achievements"
-                      name="achievements"
-                      rows={2}
-                      value={newPlayer.achievements}
-                      onChange={(event) => setNewPlayer((state) => ({ ...state, achievements: event.target.value }))}
-                      placeholder="Arrangerte familieligaen 2023, Vant høstturneringen"
-                      className="bg-slate-950/40 text-white placeholder:text-slate-400"
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="avatarUrl" className="text-slate-200">
-                      Avatar-URL
-                    </Label>
-                    <Input
-                      id="avatarUrl"
-                      name="avatarUrl"
-                      value={newPlayer.avatarUrl}
-                      onChange={(event) => setNewPlayer((state) => ({ ...state, avatarUrl: event.target.value }))}
-                      placeholder="https://..."
-                      className="bg-slate-950/40 text-white placeholder:text-slate-400"
-                    />
-                  </div>
-                  <div className="grid gap-4 sm:grid-cols-2">
-                    <div className="space-y-2">
-                      <Label htmlFor="joinDate" className="text-slate-200">
-                        Bli-med-dato
-                      </Label>
-                      <Input
-                        id="joinDate"
-                        type="date"
-                        name="joinDate"
-                        value={newPlayer.joinDate}
-                        onChange={(event) => setNewPlayer((state) => ({ ...state, joinDate: event.target.value }))}
-                        className="bg-slate-950/40 text-white placeholder:text-slate-400"
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="birthDate" className="text-slate-200">
-                        Fødselsdato
-                      </Label>
-                      <Input
-                        id="birthDate"
-                        type="date"
-                        name="birthDate"
-                        value={newPlayer.birthDate}
-                        onChange={(event) => setNewPlayer((state) => ({ ...state, birthDate: event.target.value }))}
-                        className="bg-slate-950/40 text-white placeholder:text-slate-400"
-                      />
-                    </div>
-                  </div>
-                  <div className="grid gap-4 sm:grid-cols-2">
-                    <div className="space-y-2">
-                      <Label htmlFor="email" className="text-slate-200">
-                        E-post
-                      </Label>
-                      <Input
-                        id="email"
-                        name="email"
-                        type="email"
-                        value={newPlayer.email}
-                        onChange={(event) => setNewPlayer((state) => ({ ...state, email: event.target.value }))}
-                        placeholder="navn@fjolsenbanden.no"
-                        className="bg-slate-950/40 text-white placeholder:text-slate-400"
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="phone" className="text-slate-200">
-                        Mobil
-                      </Label>
-                      <Input
-                        id="phone"
-                        name="phone"
-                        type="tel"
-                        value={newPlayer.phone}
-                        onChange={(event) => setNewPlayer((state) => ({ ...state, phone: event.target.value }))}
-                        placeholder="+47 123 45 678"
-                        className="bg-slate-950/40 text-white placeholder:text-slate-400"
-                      />
-                    </div>
-                  </div>
-                  <div className="grid gap-4 sm:grid-cols-2">
-                    <div className="space-y-2">
-                      <Label htmlFor="gender" className="text-slate-200">
-                        Kjønn
-                      </Label>
-                      <Input
-                        id="gender"
-                        name="gender"
-                        value={newPlayer.gender}
-                        onChange={(event) => setNewPlayer((state) => ({ ...state, gender: event.target.value }))}
-                        placeholder="F.eks. Kvinne"
-                        className="bg-slate-950/40 text-white placeholder:text-slate-400"
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="postalCode" className="text-slate-200">
-                        Postnr
-                      </Label>
-                      <Input
-                        id="postalCode"
-                        name="postalCode"
-                        value={newPlayer.postalCode}
-                        onChange={(event) => setNewPlayer((state) => ({ ...state, postalCode: event.target.value }))}
-                        placeholder="0000"
-                        className="bg-slate-950/40 text-white placeholder:text-slate-400"
-                      />
-                    </div>
-                  </div>
-                  <div className="grid gap-4 sm:grid-cols-2">
-                    <div className="space-y-2">
-                      <Label htmlFor="city" className="text-slate-200">
-                        Sted
-                      </Label>
-                      <Input
-                        id="city"
-                        name="city"
-                        value={newPlayer.city}
-                        onChange={(event) => setNewPlayer((state) => ({ ...state, city: event.target.value }))}
-                        placeholder="Oslo"
-                        className="bg-slate-950/40 text-white placeholder:text-slate-400"
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="fortnite" className="text-slate-200">
-                        Fortnite-brukernavn
-                      </Label>
-                      <Input
-                        id="fortnite"
-                        name="fortnite"
-                        value={newPlayer.fortnite}
-                        onChange={(event) => setNewPlayer((state) => ({ ...state, fortnite: event.target.value }))}
-                        placeholder="FjolseFar#Nord"
-                        className="bg-slate-950/40 text-white placeholder:text-slate-400"
-                      />
-                    </div>
-                  </div>
-                  <div className="grid gap-4 sm:grid-cols-2">
-                    <div className="space-y-2">
-                      <Label htmlFor="twitch" className="text-slate-200">
-                        Twitch-brukernavn (valgfritt)
-                      </Label>
-                      <Input
-                        id="twitch"
-                        name="twitch"
-                        value={newPlayer.twitch}
-                        onChange={(event) => setNewPlayer((state) => ({ ...state, twitch: event.target.value }))}
-                        placeholder="fjolsefar"
-                        className="bg-slate-950/40 text-white placeholder:text-slate-400"
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="discord" className="text-slate-200">
-                        Discord (valgfritt)
-                      </Label>
-                      <Input
-                        id="discord"
-                        name="discord"
-                        value={newPlayer.discord}
-                        onChange={(event) => setNewPlayer((state) => ({ ...state, discord: event.target.value }))}
-                        placeholder="FjolseFar#1024"
-                        className="bg-slate-950/40 text-white placeholder:text-slate-400"
-                      />
-                    </div>
-                  </div>
-                  <div className="grid gap-4 sm:grid-cols-2">
-                    <div className="space-y-2">
-                      <Label htmlFor="youtube" className="text-slate-200">
-                        YouTube-brukernavn (valgfritt)
-                      </Label>
-                      <Input
-                        id="youtube"
-                        name="youtube"
-                        value={newPlayer.youtube}
-                        onChange={(event) => setNewPlayer((state) => ({ ...state, youtube: event.target.value }))}
-                        placeholder="@fjolsefar"
-                        className="bg-slate-950/40 text-white placeholder:text-slate-400"
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="tiktok" className="text-slate-200">
-                        TikTok-brukernavn (valgfritt)
-                      </Label>
-                      <Input
-                        id="tiktok"
-                        name="tiktok"
-                        value={newPlayer.tiktok}
-                        onChange={(event) => setNewPlayer((state) => ({ ...state, tiktok: event.target.value }))}
-                        placeholder="@fjolsefar"
-                        className="bg-slate-950/40 text-white placeholder:text-slate-400"
-                      />
-                    </div>
-                  </div>
-                  <Button type="submit" className="w-full bg-cyan-500 py-3 text-cyan-950 hover:bg-cyan-400">
-                    Opprett profil
-                  </Button>
-                </form>
+              <CardContent className="space-y-4 text-sm text-slate-200">
+                <p>
+                  All medlemsdata – inkludert kontaktinfo og sosiale kanaler – ligger samlet på den nye siden for medlemshåndtering.
+                </p>
+                <ul className="space-y-2 text-slate-300">
+                  <li>• Oppdater biografi, spill og sosiale lenker direkte per medlem.</li>
+                  <li>• Registrer nye spillere med full kontaktinfo og tildel slug automatisk.</li>
+                  <li>• Bruk forhåndsvisningen for å kvalitetssikre profilen før du deler den.</li>
+                </ul>
+                <Button asChild variant="outline" className="w-full border-white/20 bg-white/5 text-white hover:bg-white/15">
+                  <a href="/admin/members">Gå til medlemshåndtering</a>
+                </Button>
               </CardContent>
             </Card>
           </div>
@@ -1599,13 +1304,6 @@ function buildSponsorSegments(players: PlayerProfile[]) {
   };
 }
 
-function extractAchievements(input: string): string[] {
-  return input
-    .split(",")
-    .map((item) => item.trim())
-    .filter(Boolean);
-}
-
 function formatDate(input: string): string {
   if (!input) {
     return "Ukjent";
@@ -1618,42 +1316,6 @@ function formatDate(input: string): string {
   } catch (error) {
     return input;
   }
-}
-
-function formatBirthDate(input: string): string {
-  if (!input) {
-    return "—";
-  }
-  try {
-    return new Date(input).toLocaleDateString("no-NO", {
-      year: "numeric",
-      month: "short",
-      day: "2-digit",
-    });
-  } catch (error) {
-    return input;
-  }
-}
-
-function formatLocation(postalCode: string, city: string): string {
-  const trimmedPostal = postalCode?.trim() ?? "";
-  const trimmedCity = city?.trim() ?? "";
-  const parts = [trimmedPostal, trimmedCity].filter(Boolean);
-  return parts.length > 0 ? parts.join(" ") : "—";
-}
-
-interface ContactDetailProps {
-  label: string;
-  value: string;
-}
-
-function ContactDetail({ label, value }: ContactDetailProps) {
-  return (
-    <div>
-      <p className="text-xs uppercase tracking-wide text-slate-400">{label}</p>
-      <p className="mt-1 text-sm font-medium text-white">{value || "—"}</p>
-    </div>
-  );
 }
 
 interface StatTileProps {
