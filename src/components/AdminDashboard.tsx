@@ -1,12 +1,13 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, type ChangeEvent } from "react";
 import {
   Activity,
   ArrowUpRight,
   BarChart3,
   CalendarCheck,
   Crown,
+  GripVertical,
   Loader2,
   Lock,
   LogOut,
@@ -16,6 +17,8 @@ import {
   ShieldCheck,
   TrendingUp,
   Trophy,
+  Trash2,
+  UploadCloud,
   Users,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
@@ -26,7 +29,11 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import {
   DEFAULT_SITE_MODULES,
+  DEFAULT_SECTION_ORDER,
+  type MembershipTierSettings,
+  type PartnerLogo,
   type PlayerProfile,
+  type SectionKey,
   type SiteModules,
   type SiteSettings,
   StatsPoint,
@@ -38,7 +45,12 @@ const brandBackground = "radial-gradient(circle at 15% 15%, rgba(64,172,255,0.3)
 
 type BrandFormState = Pick<
   SiteSettings,
-  "logoUrl" | "heroTitle" | "heroTagline" | "announcement" | "presentationVideoUrl"
+  | "logoUrl"
+  | "heroTitle"
+  | "heroTagline"
+  | "announcement"
+  | "presentationVideoUrl"
+  | "twitchEmbedUrl"
 >;
 
 interface NewPlayerState {
@@ -85,29 +97,54 @@ const emptyNewPlayer = (): NewPlayerState => ({
 
 type ModuleKey = keyof SiteModules;
 
-const moduleToggleItems: ReadonlyArray<{
-  key: ModuleKey;
+interface SectionListItem {
+  key: SectionKey;
   label: string;
   description: string;
   Icon: LucideIcon;
-}> = [
+  moduleKey?: ModuleKey;
+}
+
+const SECTION_ITEMS: ReadonlyArray<SectionListItem> = [
+  {
+    key: "heroIntro",
+    label: "Hero & intro",
+    description: "Åpningsseksjonen med video, høydepunkter og velkomsttekst.",
+    Icon: ShieldCheck,
+  },
   {
     key: "liveStream",
     label: "Live-sending",
     description: "Viser Twitch-forhåndsvisningen og chatten på forsiden.",
     Icon: Activity,
+    moduleKey: "liveStream",
+  },
+  {
+    key: "membership",
+    label: "Medlemskap",
+    description: "Prisplaner og medlemsfordeler som kan oppdateres her.",
+    Icon: Users,
+  },
+  {
+    key: "prizes",
+    label: "Premier",
+    description: "Presentasjon av premier og sponsorlogoer.",
+    Icon: Trophy,
+    moduleKey: "partners",
   },
   {
     key: "partners",
     label: "Samarbeidspartnere",
-    description: "Aktiverer seksjonene for samarbeidspartnere og sponsorer.",
+    description: "Logoer og omtale av samarbeidspartnere.",
     Icon: Crown,
+    moduleKey: "partners",
   },
   {
-    key: "contactForm",
-    label: "Kontaktskjema",
-    description: "Viser kontaktskjemaet nederst på forsiden.",
+    key: "contact",
+    label: "Kontakt",
+    description: "Kontaktskjema for henvendelser fra besøkende.",
     Icon: MessageCircle,
+    moduleKey: "contactForm",
   },
 ];
 
@@ -132,15 +169,191 @@ function AdminDashboardContent({ auth }: DashboardContentProps) {
   const [brandForm, setBrandForm] = useState<BrandFormState>(siteSettings);
   const [newPlayer, setNewPlayer] = useState<NewPlayerState>(emptyNewPlayer());
   const [justAddedPlayer, setJustAddedPlayer] = useState<string | null>(null);
+  const [sectionOrder, setSectionOrder] = useState<SectionKey[]>(() =>
+    normalizeSectionOrder(siteSettings.sectionOrder),
+  );
+  const [draggingSection, setDraggingSection] = useState<SectionKey | null>(null);
+  const [dragOverSection, setDragOverSection] = useState<SectionKey | null>(null);
+  const [membershipDrafts, setMembershipDrafts] = useState<MembershipTierSettings[]>(
+    () => siteSettings.membershipTiers,
+  );
+  const [partnerLogos, setPartnerLogos] = useState<PartnerLogo[]>(() => siteSettings.partnerLogos);
 
   useEffect(() => {
     setBrandForm(siteSettings);
+    setSectionOrder(normalizeSectionOrder(siteSettings.sectionOrder));
+    setMembershipDrafts(siteSettings.membershipTiers);
+    setPartnerLogos(siteSettings.partnerLogos);
   }, [siteSettings]);
 
   const moduleSettings = useMemo<SiteModules>(
     () => ({ ...DEFAULT_SITE_MODULES, ...(siteSettings.modules ?? DEFAULT_SITE_MODULES) }),
     [siteSettings.modules],
   );
+
+  const sectionItemMap = useMemo(() => new Map(SECTION_ITEMS.map((item) => [item.key, item])), []);
+
+  const orderedSectionItems = useMemo(() => {
+    const order = normalizeSectionOrder(sectionOrder);
+    return order
+      .map((key) => sectionItemMap.get(key))
+      .filter((value): value is SectionListItem => Boolean(value));
+  }, [sectionItemMap, sectionOrder]);
+
+  const handleSectionDragStart = (key: SectionKey) => (event: React.DragEvent<HTMLDivElement>) => {
+    setDraggingSection(key);
+    setDragOverSection(null);
+    if (event.dataTransfer) {
+      event.dataTransfer.effectAllowed = "move";
+      event.dataTransfer.setData("text/plain", key);
+    }
+  };
+
+  const handleSectionDragEnter = (key: SectionKey) => (event: React.DragEvent<HTMLDivElement>) => {
+    event.preventDefault();
+    if (draggingSection === key) {
+      return;
+    }
+    setDragOverSection(key);
+  };
+
+  const handleSectionDragOver = (event: React.DragEvent<HTMLDivElement>) => {
+    event.preventDefault();
+    if (event.dataTransfer) {
+      event.dataTransfer.dropEffect = "move";
+    }
+  };
+
+  const handleSectionDrop = (targetKey: SectionKey) => (event: React.DragEvent<HTMLDivElement>) => {
+    event.preventDefault();
+    const sourceKey = (event.dataTransfer?.getData("text/plain") as SectionKey | undefined) ?? draggingSection;
+    if (!sourceKey || sourceKey === targetKey) {
+      setDragOverSection(null);
+      setDraggingSection(null);
+      return;
+    }
+
+    setSectionOrder((current) => {
+      const normalized = normalizeSectionOrder(current);
+      const next = reorderSectionKeys(normalized, sourceKey, targetKey);
+      updateSiteSettings({ sectionOrder: next });
+      return next;
+    });
+
+    setDragOverSection(null);
+    setDraggingSection(null);
+  };
+
+  const handleSectionDragEnd = () => {
+    setDragOverSection(null);
+    setDraggingSection(null);
+  };
+
+  const handleMembershipFieldChange = <K extends keyof MembershipTierSettings>(
+    id: string,
+    field: K,
+    value: MembershipTierSettings[K],
+  ) => {
+    setMembershipDrafts((current) => {
+      const next = current.map((tier) => (tier.id === id ? { ...tier, [field]: value } : tier));
+      updateSiteSettings({ membershipTiers: next });
+      return next;
+    });
+  };
+
+  const handleMembershipFeaturesChange = (id: string, value: string) => {
+    const features = value
+      .split(/\r?\n/)
+      .map((feature) => feature.trim())
+      .filter(Boolean);
+    handleMembershipFieldChange(id, "features", features);
+  };
+
+  const addMembershipTier = () => {
+    const newTier: MembershipTierSettings = {
+      id: generateLocalId("tier"),
+      title: "Nytt medlemskap",
+      price: "0 kr / mnd",
+      color: "green",
+      features: ["Fordel 1", "Fordel 2"],
+    };
+
+    setMembershipDrafts((current) => {
+      const next = [...current, newTier];
+      updateSiteSettings({ membershipTiers: next });
+      return next;
+    });
+  };
+
+  const removeMembershipTier = (id: string) => {
+    setMembershipDrafts((current) => {
+      const next = current.filter((tier) => tier.id !== id);
+      const safeNext = next.length > 0 ? next : current;
+      updateSiteSettings({ membershipTiers: safeNext });
+      return safeNext;
+    });
+  };
+
+  const handlePartnerFieldChange = (id: string, field: keyof PartnerLogo, value: string) => {
+    setPartnerLogos((current) => {
+      const next = current.map((partner) =>
+        partner.id === id ? { ...partner, [field]: value } : partner,
+      );
+      updateSiteSettings({ partnerLogos: next });
+      return next;
+    });
+  };
+
+  const addPartnerLogo = () => {
+    const newPartner: PartnerLogo = {
+      id: generateLocalId("partner"),
+      name: "Ny partner",
+      logoUrl: "",
+    };
+
+    setPartnerLogos((current) => {
+      const next = [...current, newPartner];
+      updateSiteSettings({ partnerLogos: next });
+      return next;
+    });
+  };
+
+  const removePartnerLogo = (id: string) => {
+    setPartnerLogos((current) => {
+      const next = current.filter((partner) => partner.id !== id);
+      updateSiteSettings({ partnerLogos: next });
+      return next.length > 0 ? next : current;
+    });
+  };
+
+  const handlePartnerLogoUpload = (id: string) => async (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) {
+      return;
+    }
+
+    try {
+      const dataUrl = await readFileAsDataUrl(file);
+      handlePartnerFieldChange(id, "logoUrl", dataUrl);
+    } finally {
+      event.target.value = "";
+    }
+  };
+
+  const handleLogoFileChange = async (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) {
+      return;
+    }
+
+    try {
+      const dataUrl = await readFileAsDataUrl(file);
+      setBrandForm((state) => ({ ...state, logoUrl: dataUrl }));
+      updateSiteSettings({ logoUrl: dataUrl });
+    } finally {
+      event.target.value = "";
+    }
+  };
 
   const totals = useMemo(() => {
     const totalMembers = statsHistory.at(-1)?.members ?? 0;
@@ -264,6 +477,19 @@ function AdminDashboardContent({ auth }: DashboardContentProps) {
                     placeholder="https://..."
                     className="bg-slate-950/40 text-white placeholder:text-slate-400"
                   />
+                  <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
+                    <label className="inline-flex cursor-pointer items-center gap-2 rounded-full border border-white/20 bg-white/5 px-4 py-1.5 text-xs font-semibold text-slate-200 transition hover:bg-white/10">
+                      <UploadCloud className="h-4 w-4" aria-hidden="true" />
+                      Last opp fil
+                      <input
+                        type="file"
+                        accept="image/*"
+                        className="hidden"
+                        onChange={handleLogoFileChange}
+                      />
+                    </label>
+                    <p className="text-xs text-slate-400">Støtter PNG, JPG og SVG. Maks 2&nbsp;MB anbefales.</p>
+                  </div>
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="heroTitle" className="text-slate-200">
@@ -311,6 +537,24 @@ function AdminDashboardContent({ auth }: DashboardContentProps) {
                   </p>
                 </div>
                 <div className="space-y-2">
+                  <Label htmlFor="twitchEmbedUrl" className="text-slate-200">
+                    Twitch-embed URL
+                  </Label>
+                  <Input
+                    id="twitchEmbedUrl"
+                    name="twitchEmbedUrl"
+                    value={brandForm.twitchEmbedUrl}
+                    onChange={(event) =>
+                      setBrandForm((state) => ({ ...state, twitchEmbedUrl: event.target.value }))
+                    }
+                    placeholder="https://player.twitch.tv/?channel=...&parent=din-side.no"
+                    className="bg-slate-950/40 text-white placeholder:text-slate-400"
+                  />
+                  <p className="text-xs text-slate-400">
+                    Husk å oppdatere <code className="rounded bg-white/10 px-1 py-[1px]">parent</code>-parameteren med domenet ditt.
+                  </p>
+                </div>
+                <div className="space-y-2">
                   <Label htmlFor="announcement" className="text-slate-200">
                     Aktuell melding
                   </Label>
@@ -339,38 +583,70 @@ function AdminDashboardContent({ auth }: DashboardContentProps) {
                   <span className="text-xs text-slate-300">Slå av seksjoner som ikke skal vises.</span>
                 </div>
                 <div className="space-y-3">
-                  {moduleToggleItems.map(({ key, label, description, Icon }) => {
-                    const enabled = moduleSettings[key];
+                  {orderedSectionItems.map((item, index) => {
+                    const enabled = item.moduleKey ? moduleSettings[item.moduleKey] : true;
+                    const isDropTarget = dragOverSection === item.key;
+                    const isDragging = draggingSection === item.key;
+                    const orderLabel = String(index + 1).padStart(2, "0");
+
                     return (
                       <div
-                        key={key}
-                        className="flex flex-col gap-4 rounded-xl border border-white/10 bg-slate-950/30 p-4 sm:flex-row sm:items-center sm:justify-between"
+                        key={item.key}
+                        draggable
+                        onDragStart={handleSectionDragStart(item.key)}
+                        onDragEnter={handleSectionDragEnter(item.key)}
+                        onDragOver={handleSectionDragOver}
+                        onDrop={handleSectionDrop(item.key)}
+                        onDragEnd={handleSectionDragEnd}
+                        className={`flex flex-col gap-4 rounded-xl border bg-slate-950/30 p-4 transition sm:flex-row sm:items-center sm:justify-between ${
+                          isDropTarget
+                            ? "border-emerald-400/60 bg-emerald-500/10"
+                            : isDragging
+                            ? "border-cyan-400/60 bg-cyan-500/10"
+                            : "border-white/10"
+                        }`}
                       >
-                        <div className="flex items-start gap-3 text-left">
-                          <span className="mt-1 rounded-full bg-white/10 p-2 text-slate-200">
-                            <Icon className="h-4 w-4 text-emerald-300" />
+                        <div className="flex flex-1 items-start gap-3 text-left">
+                          <span className="flex h-9 w-9 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-sm font-semibold text-emerald-200">
+                            {orderLabel}
                           </span>
-                          <div>
-                            <p className="text-sm font-semibold text-white">{label}</p>
-                            <p className="text-xs text-slate-300">{description}</p>
+                          <div className="flex-1">
+                            <p className="flex items-center gap-2 text-sm font-semibold text-white">
+                              <item.Icon className="h-4 w-4 text-emerald-300" /> {item.label}
+                            </p>
+                            <p className="text-xs text-slate-300">{item.description}</p>
                           </div>
                         </div>
-                        <button
-                          type="button"
-                          onClick={() => handleModuleToggle(key)}
-                          className={`inline-flex items-center gap-2 self-start rounded-full border px-4 py-1 text-xs font-semibold transition sm:self-auto ${
-                            enabled
-                              ? "border-emerald-400/60 bg-emerald-500/20 text-emerald-100 hover:bg-emerald-500/30"
-                              : "border-white/20 bg-white/5 text-slate-200 hover:bg-white/10"
-                          }`}
-                          aria-pressed={enabled}
-                        >
-                          <span
-                            className={`h-2 w-2 rounded-full ${enabled ? "bg-emerald-300" : "bg-slate-400"}`}
-                            aria-hidden="true"
-                          />
-                          {enabled ? "Aktiv" : "Skjult"}
-                        </button>
+                        <div className="flex items-center gap-3 self-stretch sm:self-auto">
+                          <span className="inline-flex items-center gap-1 rounded-full border border-white/15 bg-white/5 px-3 py-1 text-[11px] uppercase tracking-widest text-slate-300">
+                            <GripVertical className="h-3.5 w-3.5" aria-hidden="true" /> Flytt
+                          </span>
+                          {item.moduleKey ? (
+                            <button
+                              type="button"
+                              onClick={(event) => {
+                                event.stopPropagation();
+                                handleModuleToggle(item.moduleKey!);
+                              }}
+                              className={`inline-flex items-center gap-2 rounded-full border px-4 py-1 text-xs font-semibold transition ${
+                                enabled
+                                  ? "border-emerald-400/60 bg-emerald-500/20 text-emerald-100 hover:bg-emerald-500/30"
+                                  : "border-white/20 bg-white/5 text-slate-200 hover:bg-white/10"
+                              }`}
+                              aria-pressed={enabled}
+                            >
+                              <span
+                                className={`h-2 w-2 rounded-full ${enabled ? "bg-emerald-300" : "bg-slate-400"}`}
+                                aria-hidden="true"
+                              />
+                              {enabled ? "Aktivert" : "Skjult"}
+                            </button>
+                          ) : (
+                            <span className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-4 py-1 text-xs font-semibold text-slate-200">
+                              <span className="h-2 w-2 rounded-full bg-emerald-300" aria-hidden="true" /> Alltid aktiv
+                            </span>
+                          )}
+                        </div>
                       </div>
                     );
                   })}
@@ -446,6 +722,191 @@ function AdminDashboardContent({ auth }: DashboardContentProps) {
                   <p className="text-xs text-indigo-100/80">Siste 6 måneder</p>
                 </div>
               </div>
+            </CardContent>
+          </Card>
+        </section>
+
+        <section className="grid gap-6 lg:grid-cols-2">
+          <Card className="border-white/10 bg-white/5 text-white">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2 text-white">
+                <Users className="h-5 w-5 text-emerald-300" /> Medlemskap
+              </CardTitle>
+              <p className="text-sm text-slate-300">
+                Oppdater navn, pris og fordeler for hver medlemskategori. Endringer lagres med en gang.
+              </p>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              {membershipDrafts.map((tier) => (
+                <div
+                  key={tier.id}
+                  className="space-y-4 rounded-2xl border border-white/10 bg-slate-950/40 p-4"
+                >
+                  <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                    <div>
+                      <p className="text-sm font-semibold text-white">{tier.title || "Medlemskap"}</p>
+                      <p className="text-xs text-slate-400">Vises i prislisten på forsiden.</p>
+                    </div>
+                    <Button
+                      variant="outline"
+                      className="inline-flex items-center gap-2 border-white/20 bg-white/5 text-xs text-slate-200 hover:bg-white/10"
+                      type="button"
+                      onClick={() => removeMembershipTier(tier.id)}
+                    >
+                      <Trash2 className="h-3.5 w-3.5" /> Fjern
+                    </Button>
+                  </div>
+                  <div className="grid gap-4 sm:grid-cols-2">
+                    <div className="space-y-2">
+                      <Label htmlFor={`tier-title-${tier.id}`} className="text-slate-200">
+                        Navn
+                      </Label>
+                      <Input
+                        id={`tier-title-${tier.id}`}
+                        value={tier.title}
+                        onChange={(event) => handleMembershipFieldChange(tier.id, "title", event.target.value)}
+                        className="bg-slate-950/40 text-white placeholder:text-slate-400"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor={`tier-price-${tier.id}`} className="text-slate-200">
+                        Pris
+                      </Label>
+                      <Input
+                        id={`tier-price-${tier.id}`}
+                        value={tier.price}
+                        onChange={(event) => handleMembershipFieldChange(tier.id, "price", event.target.value)}
+                        className="bg-slate-950/40 text-white placeholder:text-slate-400"
+                      />
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor={`tier-color-${tier.id}`} className="text-slate-200">
+                      Fargevalg
+                    </Label>
+                    <select
+                      id={`tier-color-${tier.id}`}
+                      value={tier.color}
+                      onChange={(event) =>
+                        handleMembershipFieldChange(
+                          tier.id,
+                          "color",
+                          event.target.value as MembershipTierSettings["color"],
+                        )
+                      }
+                      className="w-full rounded-lg border border-white/15 bg-slate-950/40 px-3 py-2 text-sm text-white focus:outline-none focus:ring-2 focus:ring-emerald-400"
+                    >
+                      <option value="green">Grønn</option>
+                      <option value="cyan">Turkis</option>
+                      <option value="amber">Gul</option>
+                    </select>
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor={`tier-features-${tier.id}`} className="text-slate-200">
+                      Fordeler (én per linje)
+                    </Label>
+                    <Textarea
+                      id={`tier-features-${tier.id}`}
+                      value={tier.features.join("\n")}
+                      onChange={(event) => handleMembershipFeaturesChange(tier.id, event.target.value)}
+                      rows={3}
+                      className="bg-slate-950/40 text-white placeholder:text-slate-400"
+                    />
+                  </div>
+                </div>
+              ))}
+              <Button
+                type="button"
+                className="inline-flex items-center gap-2 bg-emerald-500 text-emerald-950 hover:bg-emerald-400"
+                onClick={addMembershipTier}
+              >
+                <Plus className="h-4 w-4" /> Legg til medlemskap
+              </Button>
+            </CardContent>
+          </Card>
+
+          <Card className="border-white/10 bg-white/5 text-white">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2 text-white">
+                <Crown className="h-5 w-5 text-amber-300" /> Samarbeidspartnere
+              </CardTitle>
+              <p className="text-sm text-slate-300">
+                Last opp logoer og oppdater navn på partnerne som vises på forsiden.
+              </p>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              {partnerLogos.map((partner) => (
+                <div
+                  key={partner.id}
+                  className="space-y-4 rounded-2xl border border-white/10 bg-slate-950/40 p-4"
+                >
+                  <div className="flex flex-col gap-4 sm:flex-row sm:items-start">
+                    <div className="flex h-20 w-20 items-center justify-center rounded-xl border border-white/10 bg-white/5">
+                      {partner.logoUrl ? (
+                        <img
+                          src={partner.logoUrl}
+                          alt={partner.name || "Partnerlogo"}
+                          className="h-16 w-16 object-contain"
+                        />
+                      ) : (
+                        <span className="text-xs text-slate-400">Ingen logo</span>
+                      )}
+                    </div>
+                    <div className="flex-1 space-y-3">
+                      <div className="space-y-2">
+                        <Label htmlFor={`partner-name-${partner.id}`} className="text-slate-200">
+                          Navn
+                        </Label>
+                        <Input
+                          id={`partner-name-${partner.id}`}
+                          value={partner.name}
+                          onChange={(event) => handlePartnerFieldChange(partner.id, "name", event.target.value)}
+                          className="bg-slate-950/40 text-white placeholder:text-slate-400"
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor={`partner-logo-${partner.id}`} className="text-slate-200">
+                          Logo-URL
+                        </Label>
+                        <Input
+                          id={`partner-logo-${partner.id}`}
+                          value={partner.logoUrl}
+                          onChange={(event) => handlePartnerFieldChange(partner.id, "logoUrl", event.target.value)}
+                          placeholder="https://..."
+                          className="bg-slate-950/40 text-white placeholder:text-slate-400"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex flex-wrap items-center gap-3">
+                    <label className="inline-flex cursor-pointer items-center gap-2 rounded-full border border-white/20 bg-white/5 px-4 py-1.5 text-xs font-semibold text-slate-200 transition hover:bg-white/10">
+                      <UploadCloud className="h-4 w-4" aria-hidden="true" />
+                      Last opp logo
+                      <input
+                        type="file"
+                        accept="image/*"
+                        className="hidden"
+                        onChange={handlePartnerLogoUpload(partner.id)}
+                      />
+                    </label>
+                    <Button
+                      variant="outline"
+                      className="inline-flex items-center gap-2 border-white/20 bg-white/5 text-xs text-slate-200 hover:bg-white/10"
+                      type="button"
+                      onClick={() => removePartnerLogo(partner.id)}
+                    >
+                      <Trash2 className="h-3.5 w-3.5" /> Fjern
+                    </Button>
+                  </div>
+                </div>
+              ))}
+              <Button
+                type="button"
+                className="inline-flex items-center gap-2 bg-cyan-500 text-cyan-950 hover:bg-cyan-400"
+                onClick={addPartnerLogo}
+              >
+                <Plus className="h-4 w-4" /> Legg til partner
+              </Button>
             </CardContent>
           </Card>
         </section>
@@ -997,6 +1458,54 @@ function AdminDashboardContent({ auth }: DashboardContentProps) {
       </div>
     </div>
   );
+}
+
+function normalizeSectionOrder(order?: SectionKey[]): SectionKey[] {
+  const fallback = DEFAULT_SECTION_ORDER;
+  const incoming = Array.isArray(order) ? order : [];
+  const combined = [...incoming, ...fallback];
+  const seen = new Set<SectionKey>();
+  const result: SectionKey[] = [];
+
+  combined.forEach((key) => {
+    if (fallback.includes(key) && !seen.has(key)) {
+      seen.add(key);
+      result.push(key);
+    }
+  });
+
+  return result;
+}
+
+function reorderSectionKeys(order: SectionKey[], source: SectionKey, target: SectionKey): SectionKey[] {
+  const sourceIndex = order.indexOf(source);
+  const targetIndex = order.indexOf(target);
+  if (sourceIndex === -1 || targetIndex === -1) {
+    return order;
+  }
+
+  const next = [...order];
+  next.splice(sourceIndex, 1);
+  next.splice(targetIndex, 0, source);
+  return next;
+}
+
+function generateLocalId(prefix: string): string {
+  if (typeof crypto !== "undefined" && typeof crypto.randomUUID === "function") {
+    return `${prefix}-${crypto.randomUUID()}`;
+  }
+  return `${prefix}-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`;
+}
+
+function readFileAsDataUrl(file: File): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => {
+      resolve(typeof reader.result === "string" ? reader.result : "");
+    };
+    reader.onerror = () => reject(reader.error);
+    reader.readAsDataURL(file);
+  });
 }
 
 interface AdminLoginProps {

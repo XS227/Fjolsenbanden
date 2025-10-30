@@ -33,19 +33,21 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { DEFAULT_SITE_MODULES, type SiteModules, useAdminState } from "@/lib/admin-state";
+import {
+  DEFAULT_SECTION_ORDER,
+  DEFAULT_SITE_MODULES,
+  DEFAULT_TWITCH_EMBED_URL,
+  type MembershipTierSettings,
+  type PartnerLogo,
+  type SectionKey,
+  type SiteModules,
+  useAdminState,
+} from "@/lib/admin-state";
 
 type PlatformLink = {
   icon: ReactNode;
   label: string;
   href: string;
-};
-
-type MembershipTier = {
-  title: string;
-  price: string;
-  color: "green" | "cyan" | "amber";
-  features: readonly string[];
 };
 
 type Offering = {
@@ -159,46 +161,11 @@ const socialLinks: readonly PlatformLink[] = [
   },
 ] as const;
 
-const membershipTiers: readonly MembershipTier[] = [
-  {
-    title: "Gratismedlem",
-    price: "0 kr / mnd",
-    color: "green",
-    features: [
-      "Tilgang til Discord-serveren",
-      "Delta på community-events",
-      "Få nyheter og oppdateringer først",
-    ],
-  },
-  {
-    title: "Turneringsmedlem",
-    price: "79 kr / mnd",
-    color: "cyan",
-    features: [
-      "Alt i Gratismedlem",
-      "Delta i eksklusive turneringer",
-      "Premier fra partnere hver måned",
-    ],
-  },
-  {
-    title: "Pro-medlem",
-    price: "149 kr / mnd",
-    color: "amber",
-    features: [
-      "Alt i Turneringsmedlem",
-      "Coaching fra FjOlsen og teamet",
-      "Tilgang til lukkede arrangementer",
-    ],
-  },
-] as const;
-
 const stats = [
   { label: "Discord", value: "2 500+" },
   { label: "Twitch", value: "3 200+" },
   { label: "TikTok", value: "4 200+" },
 ] as const;
-
-const partners = ["Lenovo", "Samsung", "Philips", "Komplett.no"] as const;
 
 const offerCards = [
   {
@@ -293,18 +260,30 @@ const buildSponsorLogoSources = (sponsor: Sponsor) => [
   `/assets/partners/${sponsor.slug}.svg`,
 ];
 
-const SponsorLogoCard = ({ sponsor }: { sponsor: Sponsor }) => {
+const SponsorLogoCard = ({
+  sponsor,
+  label,
+  className = "",
+  imgClassName = "h-full w-full object-contain filter brightness-0 invert",
+}: {
+  sponsor: Sponsor;
+  label?: string;
+  className?: string;
+  imgClassName?: string;
+}) => {
   const [sourceIndex, setSourceIndex] = useState(0);
   const sources = useMemo(() => buildSponsorLogoSources(sponsor), [sponsor]);
   const safeIndex = Math.min(sourceIndex, sources.length - 1);
   const currentSource = sources[Math.max(0, safeIndex)];
 
   return (
-    <div className="flex h-20 w-40 items-center justify-center rounded-2xl border border-white/10 bg-white/5 p-4 shadow-[0_12px_24px_rgba(8,18,40,0.35)] transition hover:bg-white/10">
+    <div
+      className={`flex h-20 w-40 items-center justify-center rounded-2xl border border-white/10 bg-white/5 p-4 shadow-[0_12px_24px_rgba(8,18,40,0.35)] transition hover:bg-white/10 ${className}`.trim()}
+    >
       <img
         src={currentSource}
-        alt={sponsor.name}
-        className="h-full w-full object-contain filter brightness-0 invert"
+        alt={label ?? sponsor.name}
+        className={imgClassName}
         loading="lazy"
         onError={() =>
           setSourceIndex((previous) => {
@@ -316,6 +295,55 @@ const SponsorLogoCard = ({ sponsor }: { sponsor: Sponsor }) => {
     </div>
   );
 };
+
+function PartnerLogoTile({
+  partner,
+  fallback,
+  variant = "compact",
+}: {
+  partner: PartnerLogo;
+  fallback?: Sponsor;
+  variant?: "compact" | "large";
+}) {
+  const sizeClasses =
+    variant === "large"
+      ? "h-24 w-48 p-5"
+      : "h-20 w-full px-4 py-3";
+
+  if (partner.logoUrl) {
+    return (
+      <div
+        className={`flex items-center justify-center rounded-2xl border border-white/10 bg-white/5 shadow-[0_12px_24px_rgba(8,18,40,0.35)] transition hover:bg-white/10 ${sizeClasses}`.trim()}
+      >
+        <img
+          src={partner.logoUrl}
+          alt={partner.name}
+          className="h-full w-full object-contain"
+          loading="lazy"
+        />
+      </div>
+    );
+  }
+
+  if (fallback) {
+    return (
+      <SponsorLogoCard
+        sponsor={fallback}
+        label={partner.name}
+        className={sizeClasses}
+        imgClassName="h-full w-full object-contain filter brightness-0 invert"
+      />
+    );
+  }
+
+  return (
+    <div
+      className={`flex items-center justify-center rounded-2xl border border-dashed border-white/10 bg-white/5 text-center text-sm font-semibold text-slate-200 shadow-[0_12px_24px_rgba(8,18,40,0.35)] ${sizeClasses}`.trim()}
+    >
+      {partner.name}
+    </div>
+  );
+}
 
 const unboxingVideoUrl =
   "https://www.youtube.com/embed/v_8kKWD0K84?si=KzawWGqmMEQA7n78";
@@ -423,6 +451,32 @@ export default function FjolsenbandenHome() {
 
   const { liveStream, partners: partnersEnabled, contactForm } = moduleSettings;
 
+  const normalizedSectionOrder = useMemo(() => {
+    const incoming = Array.isArray(siteSettings.sectionOrder) ? siteSettings.sectionOrder : [];
+    const combined = [...incoming, ...DEFAULT_SECTION_ORDER];
+    const seen = new Set<SectionKey>();
+    return combined.filter((key): key is SectionKey => {
+      if (!DEFAULT_SECTION_ORDER.includes(key)) {
+        return false;
+      }
+      if (seen.has(key)) {
+        return false;
+      }
+      seen.add(key);
+      return true;
+    });
+  }, [siteSettings.sectionOrder]);
+
+  const sectionOrderMap = useMemo(() => {
+    const map = new Map<SectionKey, number>();
+    normalizedSectionOrder.forEach((key, index) => map.set(key, index));
+    return map;
+  }, [normalizedSectionOrder]);
+
+  const sectionOrderStyle = (key: SectionKey): React.CSSProperties => ({
+    order: sectionOrderMap.get(key) ?? normalizedSectionOrder.length,
+  });
+
   const heroTitle = siteSettings.heroTitle?.trim() || "FJOLSENBANDEN";
   const heroTagline =
     siteSettings.heroTagline?.trim() ||
@@ -434,6 +488,24 @@ export default function FjolsenbandenHome() {
   const presentationVideoUrl =
     siteSettings.presentationVideoUrl?.trim() ||
     "https://www.youtube.com/embed/8EgRIkmvmtM?si=qMzmEaMfP-2ODMbc";
+  const twitchEmbedUrl = siteSettings.twitchEmbedUrl?.trim() || DEFAULT_TWITCH_EMBED_URL;
+  const membershipTiers = siteSettings.membershipTiers ?? [];
+  const partnerLogos = siteSettings.partnerLogos ?? [];
+
+  const sponsorFallbackMap = useMemo(() => {
+    const map = new Map<string, Sponsor>();
+    sponsors.forEach((sponsor) => map.set(sponsor.name.toLowerCase(), sponsor));
+    return map;
+  }, []);
+
+  const partnerLogoData = useMemo(
+    () =>
+      partnerLogos.map((partner) => ({
+        partner,
+        fallback: sponsorFallbackMap.get(partner.name.toLowerCase()),
+      })),
+    [partnerLogos, sponsorFallbackMap],
+  );
 
   const filteredNavLinks = useMemo(
     () =>
@@ -890,8 +962,8 @@ export default function FjolsenbandenHome() {
         </section>
       </header>
 
-      <main className="space-y-28 pb-24">
-        <section id="hva-er" className="px-6">
+      <main className="flex flex-col gap-28 pb-24">
+        <section id="hva-er" className="px-6" style={sectionOrderStyle("heroIntro")}>
           <div className="mx-auto grid max-w-6xl gap-12 lg:grid-cols-2 lg:items-center">
             <div className="space-y-6">
               <h2 className="text-3xl font-bold sm:text-4xl">🎮 Hva er FjOlsenbanden?</h2>
@@ -926,7 +998,7 @@ export default function FjolsenbandenHome() {
         </section>
 
         {liveStream ? (
-          <section id="live" className="px-6">
+          <section id="live" className="px-6" style={sectionOrderStyle("liveStream")}>
           <div className="mx-auto grid max-w-6xl gap-12 rounded-[2.5rem] border border-white/5 bg-gradient-to-br from-[#121a4b]/80 via-[#10153b]/80 to-[#0c122d]/80 p-12 shadow-2xl lg:grid-cols-[1.1fr_0.9fr]">
             <div className="space-y-6">
               <h2 className="text-3xl font-bold sm:text-4xl">📈 Følg FjOlsenbanden</h2>
@@ -967,6 +1039,19 @@ export default function FjolsenbandenHome() {
                 <p className="mt-4 text-sm text-slate-300">
                   Stream-vindu – se FjOlsen ta communityet gjennom nye utfordringer og konkurranser.
                 </p>
+                <div className="mt-4 overflow-hidden rounded-xl border border-white/10 bg-black/80">
+                  <iframe
+                    title="FjOlsenbanden live"
+                    src={twitchEmbedUrl}
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; picture-in-picture"
+                    allowFullScreen
+                    referrerPolicy="strict-origin-when-cross-origin"
+                    className="aspect-video w-full"
+                  />
+                </div>
+                <p className="mt-3 text-xs text-slate-400">
+                  Oppdater lenken i adminpanelet for å endre hvilken Twitch-kanal som vises.
+                </p>
               </div>
               <div className="rounded-2xl border border-white/10 bg-black/60 p-6">
                 <p className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-400">Chat</p>
@@ -988,7 +1073,7 @@ export default function FjolsenbandenHome() {
           </section>
         ) : null}
 
-        <section id="bli-medlem" className="px-6">
+        <section id="bli-medlem" className="px-6" style={sectionOrderStyle("heroIntro")}>
           <div className="mx-auto max-w-6xl rounded-[2.5rem] border border-white/10 bg-white/5 p-12 shadow-2xl">
             <h2 className="text-3xl font-bold sm:text-4xl">Bli medlem</h2>
             <p className="mt-4 text-lg text-slate-200">
@@ -1013,20 +1098,20 @@ export default function FjolsenbandenHome() {
         </section>
 
         {partnersEnabled ? (
-          <section id="samarbeid" className="px-6">
+          <section id="samarbeid" className="px-6" style={sectionOrderStyle("partners")}>
             <div className="mx-auto max-w-6xl space-y-8">
               <h2 className="text-3xl font-bold sm:text-4xl">🤝 Samarbeidspartnere</h2>
               <p className="text-lg text-slate-200">
                 Vi har allerede samarbeidet med flere kjente merkevarer – og vi er alltid på utkikk etter nye partnere som ønsker synlighet mot et engasjert gaming-publikum.
               </p>
               <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-                {partners.map((partner) => (
-                  <div
-                    key={partner}
-                    className="flex items-center justify-center rounded-2xl border border-white/10 bg-white/5 px-6 py-8 text-lg font-semibold tracking-wide text-slate-200"
-                  >
-                    {partner}
-                  </div>
+                {partnerLogoData.map(({ partner, fallback }) => (
+                  <PartnerLogoTile
+                    key={partner.id}
+                    partner={partner}
+                    fallback={fallback}
+                    variant="compact"
+                  />
                 ))}
               </div>
             </div>
@@ -1034,7 +1119,7 @@ export default function FjolsenbandenHome() {
         ) : null}
 
         {liveStream ? (
-          <section id="live-chat" className="px-6">
+          <section id="live-chat" className="px-6" style={sectionOrderStyle("liveStream")}>
             <div className="mx-auto max-w-6xl">
               <div className="flex max-h-[640px] flex-col rounded-2xl border border-white/10 bg-[#1f2940] p-4">
                 <h3 className="mb-3 flex items-center gap-2 font-semibold text-[#13A0F9]">
@@ -1058,19 +1143,23 @@ export default function FjolsenbandenHome() {
           </section>
         ) : null}
 
-      <section id="medlemskap" className="mt-20 px-6 text-center">
+      <section
+        id="medlemskap"
+        className="mt-20 px-6 text-center"
+        style={sectionOrderStyle("membership")}
+      >
         <h2 className="mb-4 text-3xl font-bold">Velg medlemskap</h2>
         <p className="mx-auto mb-8 max-w-2xl text-zinc-300">
           Bli med i konkurranser, streams og fellesskapet vårt på noen få klikk.
         </p>
         <div className="mx-auto grid max-w-7xl gap-8 md:grid-cols-3">
-          {membershipTiers.map(({ title, price, color, features }) => (
+          {membershipTiers.map((tier) => (
             <MembershipCard
-              key={title}
-              title={title}
-              price={price}
-              color={color}
-              features={features}
+              key={tier.id}
+              title={tier.title}
+              price={tier.price}
+              color={tier.color}
+              features={tier.features}
               onSelect={openRegistration}
             />
           ))}
@@ -1078,14 +1167,23 @@ export default function FjolsenbandenHome() {
       </section>
 
       {partnersEnabled ? (
-        <section id="premier" className="mt-20 px-6 text-center">
+        <section
+          id="premier"
+          className="mt-20 px-6 text-center"
+          style={sectionOrderStyle("prizes")}
+        >
           <h2 className="mb-4 text-3xl font-bold">Samarbeidspartnere</h2>
           <p className="mx-auto max-w-3xl text-zinc-300">
             Vi har allerede hatt samarbeid med flere kjente merkevarer.
           </p>
           <div id="sponsorer" className="mt-8 flex flex-wrap justify-center gap-6">
-            {sponsors.map((sponsor) => (
-              <SponsorLogoCard key={sponsor.name} sponsor={sponsor} />
+            {partnerLogoData.map(({ partner, fallback }) => (
+              <PartnerLogoTile
+                key={`premier-${partner.id}`}
+                partner={partner}
+                fallback={fallback}
+                variant="large"
+              />
             ))}
           </div>
           <div className="mt-8 space-y-4">
@@ -1132,7 +1230,7 @@ export default function FjolsenbandenHome() {
       </section>
 
         {contactForm ? (
-          <section id="kontakt" className="mt-20 px-6">
+          <section id="kontakt" className="mt-20 px-6" style={sectionOrderStyle("contact")}>
             <div className="mx-auto max-w-5xl space-y-6 rounded-3xl border border-white/10 bg-[#161f33]/90 p-8 text-center shadow-2xl">
               <h2 className="text-3xl font-bold">Kontakt oss</h2>
               <p className="text-zinc-300">
@@ -1814,11 +1912,11 @@ function MembershipCard({
 }: {
   title: string;
   price: string;
-  color: "green" | "cyan" | "amber";
-  features: readonly string[];
+  color: MembershipTierSettings["color"];
+  features: string[];
   onSelect: (tier?: string) => void;
 }) {
-  const colorClass = (tierColor: "green" | "cyan" | "amber") => {
+  const colorClass = (tierColor: MembershipTierSettings["color"]) => {
     switch (tierColor) {
       case "green":
         return "border-green-400/40 ring-green-400/50";
