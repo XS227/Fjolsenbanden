@@ -8,12 +8,38 @@ export interface SiteModules {
   contactForm: boolean;
 }
 
+export type SectionKey =
+  | "heroIntro"
+  | "liveStream"
+  | "membership"
+  | "prizes"
+  | "partners"
+  | "contact";
+
+export interface MembershipTierSettings {
+  id: string;
+  title: string;
+  price: string;
+  color: "green" | "cyan" | "amber";
+  features: string[];
+}
+
+export interface PartnerLogo {
+  id: string;
+  name: string;
+  logoUrl: string;
+}
+
 export interface SiteSettings {
   logoUrl: string;
   heroTitle: string;
   heroTagline: string;
   announcement: string;
   presentationVideoUrl: string;
+  twitchEmbedUrl: string;
+  membershipTiers: MembershipTierSettings[];
+  partnerLogos: PartnerLogo[];
+  sectionOrder: SectionKey[];
   modules: SiteModules;
 }
 
@@ -77,6 +103,60 @@ export const DEFAULT_SITE_MODULES: SiteModules = {
   contactForm: true,
 };
 
+export const DEFAULT_SECTION_ORDER: SectionKey[] = [
+  "heroIntro",
+  "liveStream",
+  "membership",
+  "prizes",
+  "partners",
+  "contact",
+];
+
+export const DEFAULT_MEMBERSHIP_TIERS: MembershipTierSettings[] = [
+  {
+    id: "tier-free",
+    title: "Gratismedlem",
+    price: "0 kr / mnd",
+    color: "green",
+    features: [
+      "Tilgang til Discord-serveren",
+      "Delta på community-events",
+      "Få nyheter og oppdateringer først",
+    ],
+  },
+  {
+    id: "tier-tournament",
+    title: "Turneringsmedlem",
+    price: "79 kr / mnd",
+    color: "cyan",
+    features: [
+      "Alt i Gratismedlem",
+      "Delta i eksklusive turneringer",
+      "Premier fra partnere hver måned",
+    ],
+  },
+  {
+    id: "tier-pro",
+    title: "Pro-medlem",
+    price: "149 kr / mnd",
+    color: "amber",
+    features: [
+      "Alt i Turneringsmedlem",
+      "Coaching fra FjOlsen og teamet",
+      "Tilgang til lukkede arrangementer",
+    ],
+  },
+];
+
+export const DEFAULT_PARTNER_LOGOS: PartnerLogo[] = [
+  { id: "partner-lenovo", name: "Lenovo", logoUrl: "/assets/partners/lenovo.svg" },
+  { id: "partner-samsung", name: "Samsung", logoUrl: "/assets/partners/samsung.svg" },
+  { id: "partner-philips", name: "Philips", logoUrl: "/assets/partners/philips.svg" },
+  { id: "partner-komplett", name: "Komplett.no", logoUrl: "/assets/partners/komplett.svg" },
+];
+
+export const DEFAULT_TWITCH_EMBED_URL = "https://player.twitch.tv/?channel=FjOlsenFN&parent=localhost";
+
 const DEFAULT_STATE: AdminState = {
   siteSettings: {
     logoUrl: "/assets/logo.svg",
@@ -85,6 +165,10 @@ const DEFAULT_STATE: AdminState = {
     announcement: "Neste livesending starter 20:00 med co-op i Mario Kart og premier fra Lenovo!",
     presentationVideoUrl:
       "https://www.youtube.com/embed/8EgRIkmvmtM?si=qMzmEaMfP-2ODMbc",
+    twitchEmbedUrl: DEFAULT_TWITCH_EMBED_URL,
+    membershipTiers: DEFAULT_MEMBERSHIP_TIERS,
+    partnerLogos: DEFAULT_PARTNER_LOGOS,
+    sectionOrder: DEFAULT_SECTION_ORDER,
     modules: DEFAULT_SITE_MODULES,
   },
   players: [
@@ -326,7 +410,7 @@ export function useAdminState() {
 export type UseAdminStateReturn = ReturnType<typeof useAdminState>;
 
 function ensureStateShape(input: AdminState): AdminState {
-  const siteSettings = mergeSiteSettings(DEFAULT_STATE.siteSettings, input.siteSettings ?? {});
+  const siteSettings = ensureSiteSettings(mergeSiteSettings(DEFAULT_STATE.siteSettings, input.siteSettings ?? {}));
 
   const players = [...(input.players ?? DEFAULT_STATE.players)].map((player) =>
     ensurePlayerProfile(player as StoredPlayerProfile),
@@ -339,9 +423,80 @@ function ensureStateShape(input: AdminState): AdminState {
   };
 }
 
+function ensureSiteSettings(settings: SiteSettings): SiteSettings {
+  return {
+    ...settings,
+    modules: {
+      ...DEFAULT_SITE_MODULES,
+      ...(settings.modules ?? DEFAULT_SITE_MODULES),
+    },
+    twitchEmbedUrl: settings.twitchEmbedUrl?.trim() || DEFAULT_TWITCH_EMBED_URL,
+    membershipTiers: ensureMembershipTierArray(settings.membershipTiers),
+    partnerLogos: ensurePartnerLogoArray(settings.partnerLogos),
+    sectionOrder: ensureSectionOrder(settings.sectionOrder),
+  };
+}
+
+function ensureMembershipTierArray(input?: MembershipTierSettings[]): MembershipTierSettings[] {
+  const source = Array.isArray(input) && input.length > 0 ? input : DEFAULT_MEMBERSHIP_TIERS;
+
+  return source.map((tier, index) => {
+    const fallback = DEFAULT_MEMBERSHIP_TIERS[index] ?? DEFAULT_MEMBERSHIP_TIERS[0];
+    const features = Array.isArray(tier.features)
+      ? tier.features.map((feature) => feature.trim()).filter(Boolean)
+      : [...fallback.features];
+
+    const normalizedColor: MembershipTierSettings["color"] =
+      tier.color === "cyan" || tier.color === "amber" || tier.color === "green"
+        ? tier.color
+        : fallback.color;
+
+    return {
+      id: tier.id?.trim() || fallback.id || `tier-${index}`,
+      title: tier.title?.trim() || fallback.title,
+      price: tier.price?.trim() || fallback.price,
+      color: normalizedColor,
+      features: features.length > 0 ? features : [...fallback.features],
+    };
+  });
+}
+
+function ensurePartnerLogoArray(input?: PartnerLogo[]): PartnerLogo[] {
+  const source = Array.isArray(input) && input.length > 0 ? input : DEFAULT_PARTNER_LOGOS;
+
+  return source.map((partner, index) => {
+    const fallback = DEFAULT_PARTNER_LOGOS[index] ?? DEFAULT_PARTNER_LOGOS[0];
+    return {
+      id: partner.id?.trim() || fallback.id || `partner-${index}`,
+      name: partner.name?.trim() || fallback.name,
+      logoUrl: partner.logoUrl?.trim() || fallback.logoUrl,
+    };
+  });
+}
+
+function ensureSectionOrder(order?: SectionKey[]): SectionKey[] {
+  const fallback = DEFAULT_SECTION_ORDER;
+  const customOrder = Array.isArray(order)
+    ? order.filter((key): key is SectionKey => fallback.includes(key as SectionKey))
+    : [];
+
+  const combined = [...customOrder, ...fallback];
+  const seen = new Set<SectionKey>();
+  const result: SectionKey[] = [];
+
+  combined.forEach((key) => {
+    if (!seen.has(key)) {
+      seen.add(key);
+      result.push(key);
+    }
+  });
+
+  return result;
+}
+
 function mergeSiteSettings(base: SiteSettings, updates: SiteSettingsUpdate): SiteSettings {
   const { modules: moduleUpdates, ...rest } = updates;
-  return {
+  const merged: SiteSettings = {
     ...base,
     ...rest,
     modules: {
@@ -349,6 +504,8 @@ function mergeSiteSettings(base: SiteSettings, updates: SiteSettingsUpdate): Sit
       ...(moduleUpdates ?? {}),
     },
   };
+
+  return ensureSiteSettings(merged);
 }
 
 function generateId(): string {
