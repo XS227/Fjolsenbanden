@@ -13,13 +13,9 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
-    "@types/node": "^20.11.0",
-    "@types/react": "^18.2.0",
-    "@types/react-dom": "^18.2.0",
     "typescript": "^5.3.0"
   },
   "scripts": {
-    "sync:php": "node scripts/sync-index-php.mjs",
-    "sync:html": "node scripts/sync-index-html.mjs"
+    "build": "node scripts/bundle.mjs"
   }
 }
