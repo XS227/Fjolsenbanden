@@ -110,13 +110,14 @@ export default function FjolsenbandenBrandMock() {
           <div className="flex items-center gap-3">
             <VippsButton className="hidden text-sm md:inline-flex">Logg inn med Vipps</VippsButton>
             <button
+              type="button"
               className="md:hidden"
               onClick={toggleMenu}
-              aria-label="Åpne meny"
+              aria-label={menu ? "Lukk meny" : "Åpne meny"}
               aria-expanded={menu}
               aria-controls="mobilmeny"
             >
-              {menu ? <X /> : <Menu />}
+              {menu ? <X aria-hidden="true" /> : <Menu aria-hidden="true" />}
             </button>
           </div>
         </div>
