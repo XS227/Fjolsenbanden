@@ -535,6 +535,101 @@
           </div>
         </section>
 
+        <section id="showcase" class="section-shell mt-20">
+          <div class="mx-auto max-w-6xl space-y-10">
+            <div class="space-y-3 text-center">
+              <span
+                class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1 text-xs font-semibold uppercase tracking-[0.24em] text-[#13A0F9]/90"
+              >
+                Walkthrough
+              </span>
+              <h2 class="text-3xl font-bold text-white">Slik fremstår hele plattformen</h2>
+              <p class="lead-clamp mx-auto max-w-3xl text-zinc-300">
+                Vi har bygget en gjennomgående opplevelse som viser frem både den lekne frontend-opplevelsen og den solide backend-motoren.
+                Under får du en rask presentasjon av hva som møter besøkende, medlemmer og administratorer.
+              </p>
+            </div>
+
+            <div class="grid gap-6 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)]">
+              <div class="space-y-4 rounded-3xl border border-white/10 bg-[#101c37]/85 p-6 shadow-[0_18px_42px_rgba(12,21,45,0.4)]">
+                <h3 class="text-xl font-semibold text-[#13A0F9]">Frontend-opplevelsen</h3>
+                <p class="text-sm leading-relaxed text-zinc-200">
+                  Vi viser frem et moderne, familievennlig design bygget med Tailwind og komponenter som fremhever fellesskap, premier og livesendinger.
+                  Navigasjon, modaler og korte tekster gjør det enkelt å finne medlemskap, samarbeidspartnere og kontaktpunkter.
+                </p>
+                <ul class="space-y-3 text-sm text-zinc-200">
+                  <li class="flex gap-3">
+                    <span aria-hidden="true" class="mt-1.5 h-2 w-2 rounded-full bg-[#13A0F9]"></span>
+                    <span><span class="font-semibold text-white">Responsiv landingsside:</span> Hero, videoembed og sosiale kanaler presentert i et sømløst grid.</span>
+                  </li>
+                  <li class="flex gap-3">
+                    <span aria-hidden="true" class="mt-1.5 h-2 w-2 rounded-full bg-emerald-400"></span>
+                    <span><span class="font-semibold text-white">Interaktive menyer:</span> Besøkende kan forhåndsvise medlems- og adminopplevelsen direkte fra navigasjonen.</span>
+                  </li>
+                  <li class="flex gap-3">
+                    <span aria-hidden="true" class="mt-1.5 h-2 w-2 rounded-full bg-pink-400"></span>
+                    <span><span class="font-semibold text-white">Storytelling-kort:</span> Seksjoner for community, premier og samarbeidspartnere gjør det lett å vise verdiforslaget.</span>
+                  </li>
+                </ul>
+              </div>
+
+              <div class="space-y-4 rounded-3xl border border-[#2b3760]/60 bg-[#060d26]/90 p-6 shadow-[0_18px_42px_rgba(6,12,28,0.4)]">
+                <h3 class="text-xl font-semibold text-white">Backend-motoren</h3>
+                <p class="text-sm leading-relaxed text-zinc-300">
+                  Bak kulissene sørger PHP-endepunkter og tilpassede scripts for at dataen som vises på forsiden er oppdatert, trygg og klar for videreutvikling.
+                </p>
+                <dl class="space-y-3 text-sm text-zinc-200">
+                  <div class="rounded-2xl border border-white/10 bg-white/5 p-3">
+                    <dt class="font-semibold text-white">Sanntidsoppdateringer</dt>
+                    <dd>Oppdateringsscriptet <span class="font-mono text-white/80">updates.php</span> trekker inn nye events og premier uten å forstyrre frontenden.</dd>
+                  </div>
+                  <div class="rounded-2xl border border-white/10 bg-white/5 p-3">
+                    <dt class="font-semibold text-white">Integrasjoner</dt>
+                    <dd>Sømløs støtte for Vipps Login, Discord-webhooks og fremtidige CMS-integrasjoner gjennom modulære Node-scripts.</dd>
+                  </div>
+                  <div class="rounded-2xl border border-white/10 bg-white/5 p-3">
+                    <dt class="font-semibold text-white">Forhåndsvisning</dt>
+                    <dd>Egne forhåndsvisningsmaler i <span class="font-mono text-white/80">preview/</span> gir stakeholders innsyn i medlems- og adminløsningene.</dd>
+                  </div>
+                </dl>
+              </div>
+            </div>
+
+            <div class="rounded-3xl border border-white/10 bg-[#0b163f]/70 p-8 shadow-[0_24px_48px_rgba(5,11,24,0.5)]">
+              <h3 class="text-lg font-semibold text-white">Opplevelsen steg for steg</h3>
+              <div class="mt-6 grid gap-4 lg:grid-cols-3">
+                <article class="flex h-full flex-col gap-3 rounded-2xl border border-white/10 bg-[#101c37]/80 p-5">
+                  <div class="flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-[#13A0F9]">
+                    <span class="grid h-7 w-7 place-content-center rounded-full bg-[#13A0F9]/15 text-[#13A0F9]">1</span>
+                    Førsteinntrykk
+                  </div>
+                  <p class="text-sm text-zinc-200">
+                    Brukeren lander på forsiden, ser videoen og sosial bevisning og klikker seg videre via de tydelige CTA-ene.
+                  </p>
+                </article>
+                <article class="flex h-full flex-col gap-3 rounded-2xl border border-white/10 bg-[#101c37]/80 p-5">
+                  <div class="flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-emerald-300">
+                    <span class="grid h-7 w-7 place-content-center rounded-full bg-emerald-400/15 text-emerald-300">2</span>
+                    Registrering
+                  </div>
+                  <p class="text-sm text-zinc-200">
+                    Når medlemsskjemaet åpnes sender frontenden trygg informasjon til backend som håndterer Vipps-login, samtykke og lagring.
+                  </p>
+                </article>
+                <article class="flex h-full flex-col gap-3 rounded-2xl border border-white/10 bg-[#101c37]/80 p-5">
+                  <div class="flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-pink-300">
+                    <span class="grid h-7 w-7 place-content-center rounded-full bg-pink-400/15 text-pink-300">3</span>
+                    Oppfølging
+                  </div>
+                  <p class="text-sm text-zinc-200">
+                    Adminpanelet og scripts sørger for at nye konkurranser, premier og sendinger blir synlige på forsiden og delt i communityet.
+                  </p>
+                </article>
+              </div>
+            </div>
+          </div>
+        </section>
+
         <section id="medlemskap" class="section-shell mt-20 text-center">
           <h2 class="mb-4 text-3xl font-bold">Bli medlem</h2>
           <p class="lead-clamp mx-auto mb-8 max-w-2xl text-zinc-300">
