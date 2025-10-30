@@ -517,6 +517,24 @@ export default function FjolsenbandenHome() {
   }, [menuOpen]);
 
   useEffect(() => {
+    if (!menuOpen) {
+      return;
+    }
+
+    const body = document.body;
+    const previousOverflow = body.style.overflow;
+    const previousTouchAction = body.style.touchAction;
+
+    body.style.overflow = "hidden";
+    body.style.touchAction = "none";
+
+    return () => {
+      body.style.overflow = previousOverflow;
+      body.style.touchAction = previousTouchAction;
+    };
+  }, [menuOpen]);
+
+  useEffect(() => {
     if (unmuted) {
       return undefined;
     }
@@ -802,7 +820,7 @@ export default function FjolsenbandenHome() {
         </div>
         <div
           id="mobile-navigation"
-          className={`absolute left-0 right-0 top-full z-50 mt-3 px-6 md:hidden ${menuOpen ? "" : "hidden"}`}
+          className={`absolute left-0 right-0 top-full z-[60] mt-3 px-6 md:hidden ${menuOpen ? "" : "hidden"}`}
         >
           <div className="rounded-2xl border border-white/10 bg-[#101c37] p-4 shadow-[0_18px_42px_rgba(12,21,45,0.45)]">
             <ul className="flex flex-col gap-2 text-sm font-medium text-white/80">
@@ -832,7 +850,7 @@ export default function FjolsenbandenHome() {
         <div
           role="presentation"
           aria-hidden="true"
-          className="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm md:hidden"
+          className="fixed inset-0 z-50 overflow-y-auto overscroll-contain bg-black/60 backdrop-blur-sm md:hidden"
           onClick={closeMenu}
         />
       ) : null}
