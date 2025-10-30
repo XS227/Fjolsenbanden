@@ -4,10 +4,13 @@
   "private": true,
   "type": "module",
   "dependencies": {
+    "@hookform/resolvers": "^3.3.4",
     "framer-motion": "^11.0.0",
     "lucide-react": "^0.379.0",
+    "react-hook-form": "^7.50.1",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@types/node": "^20.11.0",
