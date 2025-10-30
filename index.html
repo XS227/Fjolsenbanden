@@ -878,22 +878,6 @@
         </div>
       </footer>
 
-      <div class="fixed inset-x-0 bottom-0 z-40 border-t border-white/10 bg-[#080f2a]/95 px-4 py-3 backdrop-blur">
-        <div class="mx-auto flex max-w-5xl flex-col items-center justify-between gap-3 text-center text-sm text-zinc-200 sm:flex-row sm:text-left">
-          <div class="flex flex-col items-center gap-1 sm:items-start">
-            <span class="font-medium text-white">Klar for å bli med i FjOlsenbanden?</span>
-            <span class="text-xs text-zinc-400">© <span id="sticky-year"></span> Fjolsenbanden</span>
-          </div>
-          <button
-            type="button"
-            data-open-registration
-            class="w-full rounded-full bg-gradient-to-r from-[#13A0F9] to-[#FF2F9C] px-8 py-3 font-semibold text-white shadow-[0_16px_32px_rgba(19,160,249,0.35)] transition hover:from-[#0d8bd6] hover:to-[#e12585] sm:w-auto"
-          >
-            Bli medlem
-          </button>
-        </div>
-      </div>
-
       <div id="registration-modal" class="fixed inset-0 z-[100] hidden flex items-center justify-center px-4 py-10">
         <button
           type="button"
@@ -1558,10 +1542,6 @@
       const currentYear = document.getElementById("current-year");
       if (currentYear) {
         currentYear.textContent = yearValue;
-      }
-      const stickyYear = document.getElementById("sticky-year");
-      if (stickyYear) {
-        stickyYear.textContent = yearValue;
       }
     </script>
   </body>
