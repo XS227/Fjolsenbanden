@@ -86,15 +86,24 @@ export default function FjolsenbandenPortalShort() {
             <Button className="hidden rounded-full sm:inline-flex">Logg inn med Vipps</Button>
             <button
               className="rounded-full border border-zinc-200 p-2 md:hidden"
-              aria-label="Toggle navigation"
+              aria-label={menuOpen ? "Lukk meny" : "Åpne meny"}
+              aria-expanded={menuOpen}
+              aria-controls="portal-mobile-nav"
               onClick={() => setMenuOpen((open) => !open)}
             >
-              {menuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+              {menuOpen ? (
+                <X aria-hidden="true" className="h-5 w-5" />
+              ) : (
+                <Menu aria-hidden="true" className="h-5 w-5" />
+              )}
             </button>
           </div>
         </div>
         {menuOpen ? (
-          <nav className="border-t border-zinc-200 bg-white/95 py-3 md:hidden">
+          <nav
+            id="portal-mobile-nav"
+            className="border-t border-zinc-200 bg-white/95 py-3 md:hidden"
+          >
             <ul className="mx-auto flex max-w-6xl flex-col gap-2 px-4 text-sm">
               {navLinks.map((link) => (
                 <li key={link.href}>
