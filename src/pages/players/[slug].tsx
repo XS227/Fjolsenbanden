@@ -1,12 +1,15 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { ArrowLeft, Shield } from "lucide-react";
+import { ArrowLeft, LogOut, Shield } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import MemberLoginView from "@/components/MemberLoginView";
 import { useAdminState } from "@/lib/admin-state";
 import PlayerProfileView from "@/components/PlayerProfileView";
+import { useMemberAuth } from "@/lib/member-auth";
 
 export default function PlayerProfilePage() {
+  const memberAuth = useMemberAuth();
   const { state, findPlayerBySlug } = useAdminState();
   const { siteSettings } = state;
   const [slug, setSlug] = useState(() => "");
@@ -20,6 +23,16 @@ export default function PlayerProfilePage() {
   }, []);
 
   const player = useMemo(() => (slug ? findPlayerBySlug(slug) : null), [findPlayerBySlug, slug]);
+
+  if (!memberAuth.state.isAuthenticated) {
+    return (
+      <MemberLoginView
+        auth={memberAuth}
+        title="Medlemsinnhold"
+        description="Logg inn som medlem (brukernavn og passord: User) for å se spillerprofilen."
+      />
+    );
+  }
 
   if (!player) {
     return (
@@ -46,6 +59,15 @@ export default function PlayerProfilePage() {
       player={player}
       siteSettings={siteSettings}
       backLink={{ href: "/players", label: "Til spilleroversikt" }}
+      extraActions={
+        <Button
+          variant="outline"
+          className="border-white/15 bg-white/5 text-white hover:bg-white/15"
+          onClick={memberAuth.logout}
+        >
+          <LogOut className="mr-2 h-4 w-4" /> Logg ut
+        </Button>
+      }
     />
   );
 }

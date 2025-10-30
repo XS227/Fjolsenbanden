@@ -3,11 +3,24 @@
 import { useMemo } from "react";
 import { ArrowRight, Trophy, Users } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import MemberLoginView from "@/components/MemberLoginView";
 import { useAdminState } from "@/lib/admin-state";
+import { useMemberAuth } from "@/lib/member-auth";
 
 export default function PlayersIndexPage() {
+  const memberAuth = useMemberAuth();
   const { state } = useAdminState();
   const { siteSettings, players, statsHistory } = state;
+
+  if (!memberAuth.state.isAuthenticated) {
+    return (
+      <MemberLoginView
+        auth={memberAuth}
+        description="Logg inn som medlem for å se spilleroversikten og profiler med medlemsinnhold."
+      />
+    );
+  }
 
   const totalMembers = statsHistory.at(-1)?.members ?? players.length * 120;
   const tournaments = statsHistory.reduce((sum, point) => sum + point.tournaments, 0);
@@ -17,6 +30,15 @@ export default function PlayersIndexPage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 text-slate-100">
       <div className="mx-auto flex w-full max-w-5xl flex-col gap-10 px-6 py-12">
+        <div className="flex justify-end">
+          <Button
+            variant="outline"
+            className="border-white/15 bg-white/5 text-white hover:bg-white/15"
+            onClick={memberAuth.logout}
+          >
+            Logg ut
+          </Button>
+        </div>
         <header className="space-y-6 text-center">
           <p className="inline-flex items-center gap-2 rounded-full border border-cyan-500/30 bg-cyan-500/10 px-4 py-1 text-xs font-medium uppercase tracking-wide text-cyan-100">
             <Users className="h-3.5 w-3.5" /> Spillerstallen

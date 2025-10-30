@@ -1513,18 +1513,20 @@ interface AdminLoginProps {
 }
 
 function AdminLoginView({ auth }: AdminLoginProps) {
-  const [passcode, setPasscode] = useState("");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setError(null);
-    const result = await auth.login(passcode);
+    const result = await auth.login({ username, password });
     if (!result.success) {
       setError(result.error ?? "Kunne ikke logge inn.");
       return;
     }
-    setPasscode("");
+    setUsername("");
+    setPassword("");
   };
 
   return (
@@ -1537,23 +1539,40 @@ function AdminLoginView({ auth }: AdminLoginProps) {
             </div>
             <CardTitle className="text-2xl text-white">Admininnlogging</CardTitle>
             <p className="text-sm text-slate-300">
-              Oppgi tilgangskoden som deles med administratorteamet for å åpne kontrollpanelet.
+              Oppgi brukernavn og passord for administratorer for å åpne kontrollpanelet.
             </p>
           </CardHeader>
           <CardContent>
             <form className="space-y-4" onSubmit={handleSubmit}>
               <div className="space-y-2">
-                <Label htmlFor="passcode" className="text-slate-200">
-                  Tilgangskode
+                <Label htmlFor="admin-username" className="text-slate-200">
+                  Brukernavn
                 </Label>
                 <Input
-                  id="passcode"
-                  name="passcode"
+                  id="admin-username"
+                  name="username"
+                  type="text"
+                  autoComplete="username"
+                  value={username}
+                  onChange={(event) => setUsername(event.target.value)}
+                  placeholder="Skriv inn brukernavnet"
+                  className="bg-slate-950/40 text-white placeholder:text-slate-400"
+                  disabled={auth.isVerifying}
+                  required
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="admin-password" className="text-slate-200">
+                  Passord
+                </Label>
+                <Input
+                  id="admin-password"
+                  name="password"
                   type="password"
                   autoComplete="current-password"
-                  value={passcode}
-                  onChange={(event) => setPasscode(event.target.value)}
-                  placeholder="Skriv inn koden"
+                  value={password}
+                  onChange={(event) => setPassword(event.target.value)}
+                  placeholder="Skriv inn passordet"
                   className="bg-slate-950/40 text-white placeholder:text-slate-400"
                   disabled={auth.isVerifying}
                   required

@@ -1,9 +1,10 @@
 "use client";
 
 import { useMemo, useState } from "react";
+
 import { usePersistentState } from "@/lib/persistent-state";
 
-interface AdminAuthState {
+interface MemberAuthState {
   isAuthenticated: boolean;
   lastLoginAt?: string;
 }
@@ -13,22 +14,22 @@ interface LoginResult {
   error?: string;
 }
 
-interface LoginCredentials {
+interface MemberCredentials {
   username: string;
   password: string;
 }
 
-const AUTH_STORAGE_KEY = "fjolsenbanden-admin-auth";
-const ADMIN_USERNAME = "Admin";
-const ADMIN_PASSWORD = "Admin";
+const MEMBER_AUTH_STORAGE_KEY = "fjolsenbanden-member-auth";
+const MEMBER_USERNAME = "User";
+const MEMBER_PASSWORD = "User";
 
-export function useAdminAuth() {
-  const [state, setState] = usePersistentState<AdminAuthState>(AUTH_STORAGE_KEY, {
+export function useMemberAuth() {
+  const [state, setState] = usePersistentState<MemberAuthState>(MEMBER_AUTH_STORAGE_KEY, {
     isAuthenticated: false,
   });
   const [isVerifying, setIsVerifying] = useState(false);
 
-  const login = async ({ username, password }: LoginCredentials): Promise<LoginResult> => {
+  const login = async ({ username, password }: MemberCredentials): Promise<LoginResult> => {
     const trimmedUsername = (username ?? "").trim();
     const trimmedPassword = (password ?? "").trim();
 
@@ -38,10 +39,10 @@ export function useAdminAuth() {
 
     setIsVerifying(true);
     try {
-      await new Promise((resolve) => setTimeout(resolve, 450));
+      await new Promise((resolve) => setTimeout(resolve, 350));
       const isValidUser =
-        trimmedUsername.localeCompare(ADMIN_USERNAME, undefined, { sensitivity: "accent" }) === 0 &&
-        trimmedPassword === ADMIN_PASSWORD;
+        trimmedUsername.localeCompare(MEMBER_USERNAME, undefined, { sensitivity: "accent" }) === 0 &&
+        trimmedPassword === MEMBER_PASSWORD;
 
       if (!isValidUser) {
         return { success: false, error: "Feil brukernavn eller passord. Prøv igjen." };
@@ -62,8 +63,8 @@ export function useAdminAuth() {
   };
 
   const hint = useMemo(
-    () => "Brukernavn: Admin • Passord: Admin (store forbokstaver).",
-    []
+    () => "Brukernavn: User • Passord: User (store forbokstaver).",
+    [],
   );
 
   return {
@@ -75,4 +76,4 @@ export function useAdminAuth() {
   };
 }
 
-export type AdminAuth = ReturnType<typeof useAdminAuth>;
+export type MemberAuth = ReturnType<typeof useMemberAuth>;
