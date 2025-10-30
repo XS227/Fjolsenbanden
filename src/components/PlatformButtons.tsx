@@ -4,6 +4,7 @@ import { Discord, Instagram, PlayCircle, Smartphone, Twitch, Youtube } from "luc
 
 import type { LivePlatform, PlatformStatus } from "@/lib/liveStatus";
 import { DEMO_STREAM_URL } from "@/lib/demoStream";
+import { FJOLSEN_TWITCH_CHANNEL_URL } from "@/lib/community";
 
 export interface PlatformButtonsProps {
   statusMap?: Partial<Record<LivePlatform, PlatformStatus>>;
@@ -28,7 +29,7 @@ const PLATFORM_LINKS: PlatformLinkConfig[] = [
   {
     id: "twitch",
     label: "Se på Twitch",
-    href: "https://twitch.tv/FjOlsenFN",
+    href: FJOLSEN_TWITCH_CHANNEL_URL,
     icon: <Twitch className="h-5 w-5" />,
     livePlatform: "twitch",
   },

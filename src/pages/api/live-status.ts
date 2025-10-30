@@ -1,4 +1,5 @@
 import { getTwitchStatus } from "@/lib/twitch";
+import { FJOLSEN_TWITCH_CHANNEL } from "@/lib/community";
 
 type ApiResponse = {
   status: (code: number) => ApiResponse;
@@ -9,7 +10,7 @@ type ApiRequest = Record<string, unknown>;
 
 export default async function handler(_req: ApiRequest, res: ApiResponse): Promise<void> {
   try {
-    const status = await getTwitchStatus("FjOlsenFN");
+    const status = await getTwitchStatus(FJOLSEN_TWITCH_CHANNEL);
     res.status(200).json({
       live: Boolean(status),
       title: status?.title ?? "Offline",

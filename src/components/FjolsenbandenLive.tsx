@@ -6,6 +6,7 @@ import LiveChat from "@/components/LiveChat";
 import LivePlayer from "@/components/LivePlayer";
 import PlatformButtons from "@/components/PlatformButtons";
 import { DEMO_STREAM_URL } from "@/lib/demoStream";
+import { FJOLSEN_TWITCH_CHANNEL } from "@/lib/community";
 import {
   aggregateLiveStatus,
   AggregatedLiveStatus,
@@ -14,7 +15,6 @@ import {
 } from "@/lib/liveStatus";
 
 const NAV_LINKS = ["Hjem", "Premier", "Foreldre", "Sponsorer", "Kontakt"] as const;
-const TWITCH_CHANNEL = "FjOlsenFN";
 const YOUTUBE_CHANNEL_ID = "@fjolsenbanden";
 const REFRESH_INTERVAL_MS = 60_000;
 
@@ -30,7 +30,7 @@ export default function FjolsenbandenLive() {
       try {
         const data = await aggregateLiveStatus({
           config: {
-            twitch: { channel: TWITCH_CHANNEL },
+            twitch: { channel: FJOLSEN_TWITCH_CHANNEL },
             youtube: { channelId: YOUTUBE_CHANNEL_ID },
           },
         });
@@ -121,7 +121,7 @@ export default function FjolsenbandenLive() {
       <main className="relative mx-auto grid max-w-6xl gap-8 px-4 py-12 lg:grid-cols-3">
         <div className="relative space-y-4 lg:col-span-2">
           <LivePlayer
-            channel={TWITCH_CHANNEL}
+            channel={FJOLSEN_TWITCH_CHANNEL}
             status={twitchStatus}
             demoUrl={DEMO_STREAM_URL}
           />
