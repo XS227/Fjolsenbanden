@@ -1,4 +1,23 @@
 const TWITCH_API_BASE = "https://api.twitch.tv/helix";
+
+function getEnvVar(...keys) {
+    const sources = [];
+    if (typeof import.meta !== "undefined" && import.meta.env) {
+        sources.push(import.meta.env);
+    }
+    if (typeof process !== "undefined" && typeof process.env !== "undefined") {
+        sources.push(process.env);
+    }
+    for (const source of sources) {
+        for (const key of keys) {
+            const value = source[key];
+            if (typeof value !== "undefined") {
+                return value;
+            }
+        }
+    }
+    return undefined;
+}
 function normaliseChannelName(channel) {
     return channel.trim().toLowerCase();
 }
@@ -44,8 +63,8 @@ export async function fetchTwitchLiveStatus(channel, credentials, fetchFn = fetc
 }
 export async function getTwitchStatus(channel) {
     var _a;
-    const clientId = process.env.TWITCH_CLIENT_ID;
-    const token = process.env.TWITCH_OAUTH_TOKEN;
+    const clientId = getEnvVar("VITE_TWITCH_CLIENT_ID", "TWITCH_CLIENT_ID");
+    const token = getEnvVar("VITE_TWITCH_OAUTH_TOKEN", "TWITCH_OAUTH_TOKEN");
     if (!clientId || !token) {
         throw new Error("Missing Twitch API credentials. Set TWITCH_CLIENT_ID and TWITCH_OAUTH_TOKEN.");
     }
