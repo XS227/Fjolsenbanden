@@ -2,8 +2,8 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { ArrowLeft, LogOut, Shield } from "lucide-react";
+import LoginModal from "@/components/LoginModal";
 import { Button } from "@/components/ui/button";
-import MemberLoginView from "@/components/MemberLoginView";
 import { useAdminState } from "@/lib/admin-state";
 import PlayerProfileView from "@/components/PlayerProfileView";
 import { useMemberAuth } from "@/lib/member-auth";
@@ -26,11 +26,15 @@ export default function PlayerProfilePage() {
 
   if (!memberAuth.state.isAuthenticated) {
     return (
-      <MemberLoginView
-        auth={memberAuth}
-        title="Medlemsinnhold"
-        description="Logg inn som medlem (brukernavn og passord: User) for å se spillerprofilen."
-      />
+      <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950">
+        <LoginModal
+          open
+          auth={memberAuth}
+          title="Medlemsinnhold"
+          description="Logg inn som medlem (brukernavn og passord: User) for å se spillerprofilen."
+          accent="cyan"
+        />
+      </div>
     );
   }
 

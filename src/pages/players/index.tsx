@@ -2,9 +2,9 @@
 
 import { useMemo } from "react";
 import { ArrowRight, Trophy, Users } from "lucide-react";
+import LoginModal from "@/components/LoginModal";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import MemberLoginView from "@/components/MemberLoginView";
 import { useAdminState } from "@/lib/admin-state";
 import { useMemberAuth } from "@/lib/member-auth";
 
@@ -15,10 +15,15 @@ export default function PlayersIndexPage() {
 
   if (!memberAuth.state.isAuthenticated) {
     return (
-      <MemberLoginView
-        auth={memberAuth}
-        description="Logg inn som medlem for å se spilleroversikten og profiler med medlemsinnhold."
-      />
+      <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950">
+        <LoginModal
+          open
+          auth={memberAuth}
+          title="Medlemsinnlogging"
+          description="Logg inn som medlem for å se spilleroversikten og profiler med medlemsinnhold."
+          accent="cyan"
+        />
+      </div>
     );
   }
 
