@@ -46,9 +46,6 @@
 <a class="transition-colors duration-150 hover:text-[#13A0F9]" href="#sponsorer">Samarbeid</a>
 </li>
 <li>
-<a class="transition-colors duration-150 hover:text-[#13A0F9]" href="updates.php">Oppdateringer</a>
-</li>
-<li>
 <a class="transition-colors duration-150 hover:text-[#13A0F9]" href="#kontakt">Kontakt</a>
 </li>
 </ul>
@@ -83,9 +80,6 @@
 </li>
 <li>
 <a class="block rounded-lg px-4 py-2 transition hover:bg-white/10 hover:text-white" href="#sponsorer">Samarbeid</a>
-</li>
-<li>
-<a class="block rounded-lg px-4 py-2 transition hover:bg-white/10 hover:text-white" href="updates.php">Oppdateringer</a>
 </li>
 <li>
 <a class="block rounded-lg px-4 py-2 transition hover:bg-white/10 hover:text-white" href="#kontakt">Kontakt</a>
@@ -312,16 +306,16 @@
 <h2 class="text-3xl font-bold sm:text-4xl">🤝 Samarbeidspartnere</h2>
 <p class="text-lg text-slate-200">Vi har allerede samarbeidet med flere kjente merkevarer – og vi er alltid på utkikk etter nye partnere som ønsker synlighet mot et engasjert gaming-publikum.</p>
 <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-<div class="flex items-center justify-center rounded-2xl border border-white/10 bg-white/5 shadow-[0_12px_24px_rgba(8,18,40,0.35)] transition hover:bg-white/10 h-20 w-full px-4 py-3">
+<div class="flex items-center justify-center rounded-2xl border border-white/10 bg-white/5 shadow-[0_12px_24px_rgba(8,18,40,0.35)] transition hover:bg-white/10 h-60 w-full px-4 py-3">
 <img src="https://setaei.com/Fjolsen/lenova.jpg" alt="Lenovo" class="h-full w-full object-contain" loading="lazy"/>
 </div>
-<div class="flex items-center justify-center rounded-2xl border border-white/10 bg-white/5 shadow-[0_12px_24px_rgba(8,18,40,0.35)] transition hover:bg-white/10 h-20 w-full px-4 py-3">
+<div class="flex items-center justify-center rounded-2xl border border-white/10 bg-white/5 shadow-[0_12px_24px_rgba(8,18,40,0.35)] transition hover:bg-white/10 h-60 w-full px-4 py-3">
 <img src="https://setaei.com/Fjolsen/samsung.jpg" alt="Samsung" class="h-full w-full object-contain" loading="lazy"/>
 </div>
-<div class="flex items-center justify-center rounded-2xl border border-white/10 bg-white/5 shadow-[0_12px_24px_rgba(8,18,40,0.35)] transition hover:bg-white/10 h-20 w-full px-4 py-3">
+<div class="flex items-center justify-center rounded-2xl border border-white/10 bg-white/5 shadow-[0_12px_24px_rgba(8,18,40,0.35)] transition hover:bg-white/10 h-60 w-full px-4 py-3">
 <img src="https://setaei.com/Fjolsen/philips.jpg" alt="Philips" class="h-full w-full object-contain" loading="lazy"/>
 </div>
-<div class="flex items-center justify-center rounded-2xl border border-white/10 bg-white/5 shadow-[0_12px_24px_rgba(8,18,40,0.35)] transition hover:bg-white/10 h-20 w-full px-4 py-3">
+<div class="flex items-center justify-center rounded-2xl border border-white/10 bg-white/5 shadow-[0_12px_24px_rgba(8,18,40,0.35)] transition hover:bg-white/10 h-60 w-full px-4 py-3">
 <img src="/assets/partners/komplett.svg" alt="Komplett.no" class="h-full w-full object-contain" loading="lazy"/>
 </div>
 </div>
@@ -565,16 +559,16 @@
 <h2 class="mb-4 text-3xl font-bold">Samarbeidspartnere</h2>
 <p class="mx-auto max-w-3xl text-zinc-300">Vi har allerede hatt samarbeid med flere kjente merkevarer.</p>
 <div id="sponsorer" class="mt-8 flex flex-wrap justify-center gap-6">
-<div class="flex items-center justify-center rounded-2xl border border-white/10 bg-white/5 shadow-[0_12px_24px_rgba(8,18,40,0.35)] transition hover:bg-white/10 h-24 w-48 p-5">
+<div class="flex items-center justify-center rounded-2xl border border-white/10 bg-white/5 shadow-[0_12px_24px_rgba(8,18,40,0.35)] transition hover:bg-white/10 h-72 w-full max-w-[36rem] p-5">
 <img src="https://setaei.com/Fjolsen/lenova.jpg" alt="Lenovo" class="h-full w-full object-contain" loading="lazy"/>
 </div>
-<div class="flex items-center justify-center rounded-2xl border border-white/10 bg-white/5 shadow-[0_12px_24px_rgba(8,18,40,0.35)] transition hover:bg-white/10 h-24 w-48 p-5">
+<div class="flex items-center justify-center rounded-2xl border border-white/10 bg-white/5 shadow-[0_12px_24px_rgba(8,18,40,0.35)] transition hover:bg-white/10 h-72 w-full max-w-[36rem] p-5">
 <img src="https://setaei.com/Fjolsen/samsung.jpg" alt="Samsung" class="h-full w-full object-contain" loading="lazy"/>
 </div>
-<div class="flex items-center justify-center rounded-2xl border border-white/10 bg-white/5 shadow-[0_12px_24px_rgba(8,18,40,0.35)] transition hover:bg-white/10 h-24 w-48 p-5">
+<div class="flex items-center justify-center rounded-2xl border border-white/10 bg-white/5 shadow-[0_12px_24px_rgba(8,18,40,0.35)] transition hover:bg-white/10 h-72 w-full max-w-[36rem] p-5">
 <img src="https://setaei.com/Fjolsen/philips.jpg" alt="Philips" class="h-full w-full object-contain" loading="lazy"/>
 </div>
-<div class="flex items-center justify-center rounded-2xl border border-white/10 bg-white/5 shadow-[0_12px_24px_rgba(8,18,40,0.35)] transition hover:bg-white/10 h-24 w-48 p-5">
+<div class="flex items-center justify-center rounded-2xl border border-white/10 bg-white/5 shadow-[0_12px_24px_rgba(8,18,40,0.35)] transition hover:bg-white/10 h-72 w-full max-w-[36rem] p-5">
 <img src="/assets/partners/komplett.svg" alt="Komplett.no" class="h-full w-full object-contain" loading="lazy"/>
 </div>
 </div>

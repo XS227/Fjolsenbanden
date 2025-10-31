@@ -697,7 +697,7 @@ function CTASection() {
             "rounded-2xl border-white/30 bg-white/10 px-8 text-base text-white hover:bg-white/20",
           onClick: () => {
             if (typeof window !== "undefined") {
-              window.open("/preview/admin-dashboard-preview.html", "_blank", "noopener,noreferrer");
+              window.open("/admin-dashboard-preview.html", "_blank", "noopener,noreferrer");
             }
           },
         },
@@ -785,7 +785,7 @@ export default function AdminMarketingPage() {
                 "rounded-2xl border-white/20 bg-white/10 px-8 text-base text-white hover:bg-white/20",
               onClick: () => {
                 if (typeof window !== "undefined") {
-                  window.open("/preview/admin-dashboard-preview.html", "_blank", "noopener,noreferrer");
+                  window.open("/admin-dashboard-preview.html", "_blank", "noopener,noreferrer");
                 }
               },
             },
