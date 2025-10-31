@@ -1,16 +1,23 @@
 # syntax=docker/dockerfile:1
-FROM node:20-alpine AS builder
+
+###
+### Builder — Use Debian-based for full Vite/Rollup support
+###
+FROM node:20 AS builder
 
 WORKDIR /app
 
 COPY package*.json ./
-RUN npm ci
+RUN npm ci || npm install
 
 COPY . .
 ENV NODE_ENV=production
 RUN npm run build
 
-# Final stage copies output only
+
+###
+### Artifact — extract static build artifacts only
+###
 FROM alpine AS runner
 WORKDIR /out
 COPY --from=builder /app/dist/. .
