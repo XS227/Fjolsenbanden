@@ -85,11 +85,11 @@ const SECTION_ITEMS = [
 ];
 
 const ADMIN_NAV_ITEMS = [
-    { id: "overview", label: "Oversikt", Icon: ShieldCheck },
-    { id: "site", label: "Nettside og moduler", Icon: UploadCloud },
-    { id: "memberships", label: "Medlemskap & partnere", Icon: Users },
-    { id: "insights", label: "Statistikk", Icon: BarChart3 },
-    { id: "team", label: "Team & profiler", Icon: Trophy },
+    { id: "sections", label: "Oppdater sideinnhold", Icon: GripVertical },
+    { id: "members", label: "Medlemmer", Icon: Users },
+    { id: "membership", label: "Medlemskap", Icon: ShieldCheck },
+    { id: "partners", label: "Sponsorer & partnere", Icon: Crown },
+    { id: "statistics", label: "Statistikk", Icon: BarChart3 },
 ];
 
 export default function AdminDashboard() {
