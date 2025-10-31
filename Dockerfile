@@ -1,9 +1,7 @@
-# syntax=docker/dockerfile:1
-
 FROM node:20-bullseye-slim AS builder
 WORKDIR /app
 
-# ✅ Apply Rollup fix BEFORE install
+# ✅ Fix BEFORE install
 ENV ROLLUP_SKIP_NODEJS_NATIVE_BUILD=1
 
 COPY package*.json ./
@@ -16,7 +14,4 @@ RUN npm run build
 
 FROM nginx:stable-alpine AS runner
 WORKDIR /usr/share/nginx/html
-
-COPY --from=builder /app/dist/ .
-
-# Optional logging, gzip later
+COPY --from=builder /app/dist .
