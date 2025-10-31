@@ -76,3 +76,4 @@ DerivedDataCache/*
 
 # Node modules
 node_modules/
+dist/

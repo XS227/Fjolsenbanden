@@ -6,11 +6,1511 @@
     <title>Fjolsenbanden – Spillglede for hele familien</title>
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="/favicon.svg" />
-    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <meta property="og:title" content="Fjolsenbanden – Spillglede for hele familien" />
+    <meta
+      property="og:description"
+      content="Trygge streams, premier og Vipps-verifisering i et familievennlig gaming-community."
+    />
+    <meta property="og:image" content="/og-image.svg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="/og-image.svg" />
+    <script src="https://cdn.tailwindcss.com"></script>
   </head>
   <body>
-    <div id="root"></div>
-    <script src="/assets/bundle.js"></script>
+    <div class="relative min-h-screen overflow-x-hidden bg-gradient-to-b from-[#131A49] via-[#0B163F] to-[#050B24] text-white">
+      <div
+        class="pointer-events-none absolute inset-0"
+        style="background:radial-gradient(circle at 18% 12%, rgba(19,160,249,0.3), transparent 55%), radial-gradient(circle at 80% 0%, rgba(255,47,156,0.18), transparent 50%)"
+      ></div>
+      <div class="relative">
+        <nav class="section-shell flex items-center justify-between py-4">
+          <a class="flex items-center gap-3" href="#" aria-label="Fjolsenbanden hjem">
+            <img
+              src="https://yt3.googleusercontent.com/JDzOGDpzoZ-j6r2NGC-LboiPeK3qGmZqwSRTxgSvvMTmUbySUUGLm80RXmZtcbrAgKYacqTYzAs=s160-c-k-c0x00ffffff-no-rj"
+              srcset="https://yt3.googleusercontent.com/JDzOGDpzoZ-j6r2NGC-LboiPeK3qGmZqwSRTxgSvvMTmUbySUUGLm80RXmZtcbrAgKYacqTYzAs=s160-c-k-c0x00ffffff-no-rj 1x, https://yt3.googleusercontent.com/JDzOGDpzoZ-j6r2NGC-LboiPeK3qGmZqwSRTxgSvvMTmUbySUUGLm80RXmZtcbrAgKYacqTYzAs=s320-c-k-c0x00ffffff-no-rj 2x"
+              width="64"
+              height="64"
+              alt="Fjolsenbanden logo"
+              class="h-10 w-10 rounded-xl object-cover"
+              data-retina
+              loading="lazy"
+              decoding="async"
+            />
+            <span class="hidden text-lg font-semibold sm:block">Fjolsenbanden</span>
+          </a>
+          <ul class="hidden flex-1 items-center justify-center gap-6 text-sm font-medium md:flex">
+            <li><a class="transition-colors duration-150 hover:text-[#13A0F9]" href="#">Hjem</a></li>
+            <li><a class="transition-colors duration-150 hover:text-[#13A0F9]" href="#live">Live</a></li>
+            <li><a class="transition-colors duration-150 hover:text-[#13A0F9]" href="#medlemskap">Medlemskap</a></li>
+            <li><a class="transition-colors duration-150 hover:text-[#13A0F9]" href="#premier">Premier</a></li>
+            <li><a class="transition-colors duration-150 hover:text-[#13A0F9]" href="#partners">Samarbeid</a></li>
+            <li><a class="transition-colors duration-150 hover:text-[#13A0F9]" href="#kontakt">Kontakt</a></li>
+          </ul>
+          <div class="flex items-center gap-3 md:ml-4">
+            <div class="relative" data-preview-mode-wrapper>
+              <button
+                type="button"
+                id="profile-preview-button"
+                class="inline-flex items-center gap-2 rounded-xl border border-white/15 bg-white/10 px-3 py-2 text-xs font-semibold text-white shadow-sm transition duration-150 hover:-translate-y-0.5 hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-[#13A0F9]"
+                aria-expanded="false"
+                aria-haspopup="true"
+                aria-controls="profile-preview-menu"
+                title="Velg forhåndsvisning"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4">
+                  <path d="M16 7a4 4 0 1 1-8 0 4 4 0 0 1 8 0"></path>
+                  <path d="M3 21a7 7 0 0 1 14 0"></path>
+                </svg>
+                <span class="hidden text-xs font-medium text-white/80 sm:inline" data-preview-mode-label>Besøkende</span>
+                <span
+                  data-preview-mode-indicator
+                  data-base-class="h-2 w-2 rounded-full transition-colors duration-200 sm:h-2.5 sm:w-2.5"
+                  class="h-2 w-2 rounded-full transition-colors duration-200 sm:h-2.5 sm:w-2.5 bg-sky-400"
+                  aria-hidden="true"
+                ></span>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-3 w-3 text-white/60">
+                  <path d="m6 9 6 6 6-6"></path>
+                </svg>
+              </button>
+              <div
+                id="profile-preview-menu"
+                role="menu"
+                class="absolute right-0 top-full z-40 mt-2 hidden w-56 rounded-xl border border-white/10 bg-[#101c37]/95 p-2 text-xs shadow-lg backdrop-blur"
+              >
+                <p class="px-2 pb-2 text-[11px] font-semibold uppercase tracking-wide text-slate-400">Forhåndsvis som</p>
+                <div class="space-y-1">
+                  <button
+                    type="button"
+                    class="flex items-center justify-between gap-2 rounded-lg px-3 py-2 text-left text-xs font-medium text-slate-200 transition hover:bg-white/10 hover:text-white focus:outline-none focus:ring-2 focus:ring-[#13A0F9]"
+                    data-preview-mode-option="visitor"
+                    data-preview-mode-option-scope="menu"
+                  >
+                    <span class="flex items-center gap-2">
+                      <span class="grid h-6 w-6 place-content-center rounded-full bg-sky-500/15 text-sky-200 font-semibold">V</span>
+                      <span class="flex flex-col leading-tight">
+                        <span class="font-semibold text-white">Besøkende</span>
+                        <span class="text-[10px] font-normal text-slate-400">Ser nettsiden som gjest</span>
+                      </span>
+                    </span>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      data-preview-mode-check
+                      data-base-class="h-3.5 w-3.5 text-emerald-400 transition-opacity duration-200"
+                      class="h-3.5 w-3.5 text-emerald-400 transition-opacity duration-200 opacity-0"
+                    >
+                      <path d="m5 12 5 5 9-11"></path>
+                    </svg>
+                  </button>
+                  <button
+                    type="button"
+                    class="flex items-center justify-between gap-2 rounded-lg px-3 py-2 text-left text-xs font-medium text-slate-200 transition hover:bg-white/10 hover:text-white focus:outline-none focus:ring-2 focus:ring-[#13A0F9]"
+                    data-preview-mode-option="user"
+                    data-preview-mode-option-scope="menu"
+                    data-preview-url="preview/player-profile-preview.html"
+                  >
+                    <span class="flex items-center gap-2">
+                      <span class="grid h-6 w-6 place-content-center rounded-full bg-emerald-500/15 text-emerald-200 font-semibold">M</span>
+                      <span class="flex flex-col leading-tight">
+                        <span class="font-semibold text-white">Medlem</span>
+                        <span class="text-[10px] font-normal text-slate-400">Åpner medlemsprofil i ny fane</span>
+                      </span>
+                    </span>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      data-preview-mode-check
+                      data-base-class="h-3.5 w-3.5 text-emerald-400 transition-opacity duration-200"
+                      class="h-3.5 w-3.5 text-emerald-400 transition-opacity duration-200 opacity-0"
+                    >
+                      <path d="m5 12 5 5 9-11"></path>
+                    </svg>
+                  </button>
+                  <button
+                    type="button"
+                    class="flex items-center justify-between gap-2 rounded-lg px-3 py-2 text-left text-xs font-medium text-slate-200 transition hover:bg-white/10 hover:text-white focus:outline-none focus:ring-2 focus:ring-[#13A0F9]"
+                    data-preview-mode-option="admin"
+                    data-preview-mode-option-scope="menu"
+                    data-preview-url="preview/admin-dashboard-preview.html"
+                  >
+                    <span class="flex items-center gap-2">
+                      <span class="grid h-6 w-6 place-content-center rounded-full bg-amber-500/15 text-amber-200 font-semibold">A</span>
+                      <span class="flex flex-col leading-tight">
+                        <span class="font-semibold text-white">Administrator</span>
+                        <span class="text-[10px] font-normal text-slate-400">Viser kontrollpanelet</span>
+                      </span>
+                    </span>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      data-preview-mode-check
+                      data-base-class="h-3.5 w-3.5 text-emerald-400 transition-opacity duration-200"
+                      class="h-3.5 w-3.5 text-emerald-400 transition-opacity duration-200 opacity-0"
+                    >
+                      <path d="m5 12 5 5 9-11"></path>
+                    </svg>
+                  </button>
+                </div>
+                <div class="mt-3 space-y-1 rounded-lg border border-white/10 bg-white/5 p-3 text-[11px] text-slate-300">
+                  <p class="font-semibold text-white/90">Innloggingsdetaljer</p>
+                  <p>
+                    <span class="font-semibold text-white">Medlem</span>:
+                    Brukernavn <span class="font-mono text-slate-100">User</span> • Passord
+                    <span class="font-mono text-slate-100">User</span>
+                  </p>
+                  <p>
+                    <span class="font-semibold text-white">Administrator</span>:
+                    Brukernavn <span class="font-mono text-slate-100">Admin</span> • Passord
+                    <span class="font-mono text-slate-100">Admin</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+            <a
+              href="preview/admin-dashboard-preview.html"
+              target="_blank"
+              rel="noreferrer"
+              class="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-white/15 bg-white/10 text-white shadow-sm transition duration-150 hover:-translate-y-0.5 hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-[#13A0F9]"
+              aria-label="Åpne adminpanel"
+              title="Åpne adminpanel"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5">
+                <path d="M12 12a5 5 0 1 0-5-5 5 5 0 0 0 5 5Z"></path>
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <path d="M15.5 10.5 18 13l3.5-3.5"></path>
+              </svg>
+            </a>
+            <button
+              type="button"
+              class="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/20 text-white transition hover:border-white/40 hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/40 md:hidden"
+              aria-label="Åpne meny"
+              aria-expanded="false"
+              aria-controls="nav-menu"
+              id="nav-toggle"
+            >
+              <span class="sr-only" data-nav-toggle-label>Åpne meny</span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                data-nav-toggle-icon="open"
+                class="h-5 w-5"
+                aria-hidden="true"
+              >
+                <line x1="4" x2="20" y1="12" y2="12"></line>
+                <line x1="4" x2="20" y1="6" y2="6"></line>
+                <line x1="4" x2="20" y1="18" y2="18"></line>
+              </svg>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                data-nav-toggle-icon="close"
+                class="hidden h-5 w-5"
+                aria-hidden="true"
+              >
+                <line x1="18" x2="6" y1="6" y2="18"></line>
+                <line x1="6" x2="18" y1="6" y2="18"></line>
+              </svg>
+            </button>
+          </div>
+        </nav>
+        <div class="fixed inset-0 z-40 hidden bg-black/60 backdrop-blur-sm md:hidden" id="nav-backdrop" aria-hidden="true"></div>
+        <div class="absolute left-0 right-0 top-full z-50 hidden px-4 pb-4 md:hidden sm:px-6" id="nav-menu">
+          <div class="rounded-2xl border border-white/10 bg-[#1f2940] p-4 text-sm shadow-lg">
+            <ul class="flex flex-col gap-2">
+              <li><a class="block rounded-md px-4 py-2 transition hover:bg-white/10" href="#" data-nav-close="true">Hjem</a></li>
+              <li><a class="block rounded-md px-4 py-2 transition hover:bg-white/10" href="#live" data-nav-close="true">Live</a></li>
+              <li><a class="block rounded-md px-4 py-2 transition hover:bg-white/10" href="#medlemskap" data-nav-close="true">Medlemskap</a></li>
+              <li><a class="block rounded-md px-4 py-2 transition hover:bg-white/10" href="#premier" data-nav-close="true">Premier</a></li>
+              <li><a class="block rounded-md px-4 py-2 transition hover:bg-white/10" href="#partners" data-nav-close="true">Samarbeid</a></li>
+              <li><a class="block rounded-md px-4 py-2 transition hover:bg-white/10" href="#kontakt" data-nav-close="true">Kontakt</a></li>
+              <li>
+                <a
+                  class="flex items-center gap-2 rounded-md px-4 py-2 transition hover:bg-white/10"
+                  href="preview/admin-dashboard-preview.html"
+                  target="_blank"
+                  rel="noreferrer"
+                  data-nav-close="true"
+                >
+                  <span aria-hidden="true">🔐</span>
+                  <span>Adminpanel (forhåndsvisning)</span>
+                </a>
+              </li>
+            </ul>
+            <a
+              class="mt-4 block rounded-full border border-white/20 px-4 py-2 text-center font-semibold text-white transition hover:border-white/40 hover:bg-white/10"
+              href="#bli-medlem"
+              data-nav-close="true"
+            >
+              Bli medlem
+            </a>
+            <div class="mt-4 border-t border-white/10 pt-3">
+              <p class="px-2 text-xs font-semibold uppercase tracking-wide text-zinc-400">Velg modus</p>
+              <div class="mt-2 flex flex-col gap-2">
+                <button
+                  type="button"
+                  class="flex items-center justify-between rounded-md px-4 py-2 text-left text-xs font-medium text-zinc-200 transition hover:bg-white/10 hover:text-white focus:outline-none focus:ring-2 focus:ring-[#13A0F9]"
+                  data-preview-mode-option="visitor"
+                  data-preview-mode-option-scope="mobile"
+                >
+                  <span class="flex items-center gap-2">
+                    <span aria-hidden="true">👀</span>
+                    <span>Besøkende-modus</span>
+                  </span>
+                </button>
+                <button
+                  type="button"
+                  class="flex items-center justify-between rounded-md px-4 py-2 text-left text-xs font-medium text-zinc-200 transition hover:bg-white/10 hover:text-white focus:outline-none focus:ring-2 focus:ring-[#13A0F9]"
+                  data-preview-mode-option="user"
+                  data-preview-mode-option-scope="mobile"
+                  data-preview-url="preview/player-profile-preview.html"
+                >
+                  <span class="flex items-center gap-2">
+                    <span aria-hidden="true">🧑‍🤝‍🧑</span>
+                    <span>Medlemsprofil (ny fane)</span>
+                  </span>
+                </button>
+                <button
+                  type="button"
+                  class="flex items-center justify-between rounded-md px-4 py-2 text-left text-xs font-medium text-zinc-200 transition hover:bg-white/10 hover:text-white focus:outline-none focus:ring-2 focus:ring-[#13A0F9]"
+                  data-preview-mode-option="admin"
+                  data-preview-mode-option-scope="mobile"
+                  data-preview-url="preview/admin-dashboard-preview.html"
+                >
+                  <span class="flex items-center gap-2">
+                    <span aria-hidden="true">🛠️</span>
+                    <span>Adminpanel (ny fane)</span>
+                  </span>
+                </button>
+                </div>
+                <div class="mt-3 space-y-1 rounded-lg border border-white/10 bg-white/5 p-3 text-[11px] text-slate-300">
+                  <p class="font-semibold text-white/90">Innloggingsdetaljer</p>
+                  <p>
+                    <span class="font-semibold text-white">Medlem</span>:
+                    Brukernavn <span class="font-mono text-slate-100">User</span> • Passord
+                    <span class="font-mono text-slate-100">User</span>
+                  </p>
+                  <p>
+                    <span class="font-semibold text-white">Administrator</span>:
+                    Brukernavn <span class="font-mono text-slate-100">Admin</span> • Passord
+                    <span class="font-mono text-slate-100">Admin</span>
+                  </p>
+                </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+          
+
+        <main class="relative z-10 pb-40">
+        <section id="community" class="section-shell mt-6">
+          <div class="mx-auto grid max-w-6xl gap-10 lg:grid-cols-2 lg:items-start">
+            <div class="space-y-6">
+              <div class="space-y-4 text-center lg:text-left">
+                <h1 class="heading-clamp text-4xl font-extrabold sm:text-5xl">
+                  Velkommen til <span class="text-[#13A0F9]">FjOlsenbanden</span>
+                </h1>
+                <p class="lead-clamp text-base text-zinc-300 sm:text-lg">
+                  Norges mest inkluderende gaming-community for hele familien.
+                </p>
+              </div>
+              <div class="space-y-4 rounded-3xl border border-white/10 bg-white/5 p-6 text-left shadow-[0_18px_42px_rgba(12,21,45,0.45)]">
+                <h2 class="text-xl font-semibold text-[#13A0F9]">🎮 Hva er FjOlsenbanden?</h2>
+                <p class="text-sm leading-relaxed text-zinc-200 sm:text-base">
+                  FjOlsenbanden er et raskt voksende gaming-community med over 2500 medlemmer på Discord, 3200+ følgere på Twitch og 4200+ på TikTok – både barn, ungdom og foreldre!
+                </p>
+                <p class="text-sm leading-relaxed text-zinc-200 sm:text-base">
+                  <span class="font-semibold text-white">Målet vårt er enkelt:</span><br class="hidden sm:block" />Å skape et trygt, positivt og inkluderende miljø der alle kan game uten hets, mobbing eller negativ adferd.
+                </p>
+                <p class="text-sm leading-relaxed text-zinc-200 sm:text-base">
+                  FjOlsen bruker mange timer hver uke på å arrangere konkurranser, turneringer og aktiviteter for medlemmene – alltid med fellesskap, spilleglede og respekt i sentrum.
+                </p>
+              </div>
+            </div>
+            <div class="flex w-full max-w-xl flex-col items-center gap-6 lg:items-start">
+              <div class="relative w-full overflow-hidden rounded-3xl border border-white/10 shadow-[0_28px_60px_rgba(7,12,28,0.6)]">
+                <iframe
+                  class="aspect-video w-full"
+                  width="560"
+                  height="315"
+                  src="https://www.youtube.com/embed/8EgRIkmvmtM?si=qMzmEaMfP-2ODMbc"
+                  title="YouTube video player"
+                  frameborder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  referrerpolicy="strict-origin-when-cross-origin"
+                  allowfullscreen
+                ></iframe>
+              </div>
+              <div class="w-full rounded-3xl border border-white/10 bg-[#101c37]/80 p-5 shadow-[0_18px_42px_rgba(12,21,45,0.45)]">
+                <div class="mb-3 flex items-center gap-2 text-sm font-semibold uppercase tracking-wide text-white/80">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-[#13A0F9]"><path d="M12 15l-3-3m0 0l3-3m-3 3h8"></path><path d="M5 19V5"></path><path d="M19 5v14"></path></svg>
+                  Følg FjOlsenbanden
+                </div>
+                <div class="flex flex-wrap justify-center gap-2 sm:justify-start">
+                  <a
+                    href="https://www.twitch.tv/FjOlsenFN"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="flex items-center gap-2 rounded-full border border-white/10 bg-white/10 px-3 py-1.5 text-xs font-medium uppercase tracking-wide text-white/90 transition duration-200 hover:-translate-y-0.5 hover:bg-white/20 hover:text-white focus:outline-none focus:ring-2 focus:ring-[#13A0F9]"
+                  >
+                    <span class="text-white/90">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-purple-400">
+                        <path d="M21 2H3v16h5v4l4-4h5l4-4V2zm-10 9V7m5 4V7"></path>
+                      </svg>
+                    </span>
+                    <span>Twitch</span>
+                  </a>
+                  <a
+                    href="https://discord.gg/fjolsenbanden"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="flex items-center gap-2 rounded-full border border-white/10 bg-white/10 px-3 py-1.5 text-xs font-medium uppercase tracking-wide text-white/90 transition duration-200 hover:-translate-y-0.5 hover:bg-white/20 hover:text-white focus:outline-none focus:ring-2 focus:ring-[#13A0F9]"
+                  >
+                    <span class="text-white/90">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        class="h-4 w-4 text-indigo-300"
+                      >
+                        <path d="M20 8c-1.7-.8-3.5-1.3-5.3-1.5L13.4 5c-1.6-.4-3.2-.4-4.8 0L9.3 6.5C7.5 6.7 5.7 7.2 4 8c-1.4 2.1-2 4.5-1.7 6.9 1.9 1.4 3.9 2.4 6.1 3.1l.8-1.8c.7.2 1.3.3 2 .4-.1-.6-.3-1.1-.4-1.6a5.3 5.3 0 0 1-3.2-1.6c.7-.6 1.3-1.3 1.9-2 1.7.9 3.5.9 5.2 0 .6.7 1.2 1.4 1.9 2a5.3 5.3 0 0 1-3.2 1.6c-.1.5-.3 1-.4 1.6.7-.1 1.3-.2 2-.4l.8 1.8c2.2-.7 4.2-1.7 6.1-3.1.3-2.4-.3-4.8-1.7-6.9Z"></path>
+                        <path d="M9 13c.5.5 1.5.5 2 0"></path>
+                        <path d="M13 13c.5.5 1.5.5 2 0"></path>
+                      </svg>
+                    </span>
+                    <span>Discord</span>
+                  </a>
+                  <a
+                    href="https://youtube.com/@fjolsenbanden"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="flex items-center gap-2 rounded-full border border-white/10 bg-white/10 px-3 py-1.5 text-xs font-medium uppercase tracking-wide text-white/90 transition duration-200 hover:-translate-y-0.5 hover:bg-white/20 hover:text-white focus:outline-none focus:ring-2 focus:ring-[#13A0F9]"
+                  >
+                    <span class="text-white/90">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-red-500">
+                        <path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17"></path>
+                        <path d="m10 15 5-3-5-3z"></path>
+                      </svg>
+                    </span>
+                    <span>YouTube</span>
+                  </a>
+                  <a
+                    href="https://www.tiktok.com/@fjolsenbanden"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="flex items-center gap-2 rounded-full border border-white/10 bg-white/10 px-3 py-1.5 text-xs font-medium uppercase tracking-wide text-white/90 transition duration-200 hover:-translate-y-0.5 hover:bg-white/20 hover:text-white focus:outline-none focus:ring-2 focus:ring-[#13A0F9]"
+                  >
+                    <span class="text-white/90">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-pink-300">
+                        <rect width="14" height="20" x="5" y="2" rx="2" ry="2"></rect>
+                        <path d="M12 18h.01"></path>
+                      </svg>
+                    </span>
+                    <span>TikTok</span>
+                  </a>
+                </div>
+                <p class="mt-3 text-center text-xs text-zinc-400 sm:text-left">
+                  Totalt over 10 000 følgere på tvers av Discord, Twitch, YouTube og TikTok.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="live" class="section-shell relative mt-12">
+          <div class="mx-auto grid max-w-7xl items-start gap-8 lg:grid-cols-3">
+            <div class="space-y-4 lg:col-span-2">
+              <div class="relative overflow-hidden rounded-2xl border border-white/10 shadow-2xl">
+                <span class="absolute left-3 top-3 rounded-full bg-rose-500 px-4 py-1 text-xs font-semibold text-white shadow animate-pulse">🔴 LIVE</span>
+                <iframe
+                  data-preview-frame
+                  src="https://player.twitch.tv/?channel=FjOlsenFN&parent=fjolsenbanden.setaei.com&muted=true"
+                  title="Fjolsenbanden Twitch Player"
+                  allowfullscreen
+                  class="aspect-video w-full bg-black"
+                ></iframe>
+                <div
+                  data-preview-overlay
+                  class="absolute inset-0 flex flex-col items-center justify-center gap-4 bg-black/70 p-6 text-center"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="h-12 w-12 text-[#13A0F9]"
+                  >
+                    <polygon points="6 3 20 12 6 21 6 3"></polygon>
+                  </svg>
+                  <p class="text-sm text-zinc-300">
+                    1-minutt forhåndsvisning –<span data-preview-timer class="ml-1">60</span>s igjen
+                  </p>
+                  <button
+                    type="button"
+                    data-video-unmute
+                    class="rounded-full bg-gradient-to-r from-[#13A0F9] to-[#FF2F9C] px-6 py-3 font-semibold text-white shadow-[0_16px_28px_rgba(19,160,249,0.35)] transition hover:from-[#0d8bd6] hover:to-[#e12585]"
+                  >
+                    Se full stream
+                  </button>
+                  <div class="flex gap-3 text-xs text-zinc-400">
+                    <span>
+                      eller fortsett på
+                  <a href="https://www.twitch.tv/FjOlsenFN" target="_blank" rel="noopener noreferrer" class="ml-1 text-[#13A0F9]">Twitch</a>
+                    </span>
+                    <span>|</span>
+                    <span>
+                      <a href="https://youtube.com/@fjolsenbanden" target="_blank" rel="noopener noreferrer" class="text-[#13A0F9]">YouTube</a>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="flex max-h-[640px] flex-col rounded-2xl border border-white/10 bg-[#1f2940] p-4">
+              <h3 class="mb-3 flex items-center gap-2 font-semibold text-[#13A0F9]">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4">
+                  <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-4.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+                </svg>
+                Live chat
+              </h3>
+              <div class="flex-1 space-y-3 overflow-y-auto pr-1 text-sm">
+                <div class="rounded-lg bg-white/5 px-3 py-2"><span class="mr-2 font-semibold text-[#13A0F9]">Lina</span><span class="text-zinc-200">Haha, den bossen var vilt!</span></div>
+                <div class="rounded-lg bg-white/5 px-3 py-2"><span class="mr-2 font-semibold text-[#13A0F9]">Jonas</span><span class="text-zinc-200">Gleder meg til premie-trekningen 🔥</span></div>
+                <div class="rounded-lg bg-white/5 px-3 py-2"><span class="mr-2 font-semibold text-[#13A0F9]">Sara</span><span class="text-zinc-200">Hei fra TikTok 😎</span></div>
+                <div class="rounded-lg bg-white/5 px-3 py-2"><span class="mr-2 font-semibold text-[#13A0F9]">Marius</span><span class="text-zinc-200">Bra lyd i dag!</span></div>
+              </div>
+              <input
+                type="text"
+                placeholder="Skriv en kommentar..."
+                class="mt-3 w-full rounded-lg border border-white/20 bg-white/10 px-3 py-2 text-sm text-white placeholder-zinc-400 outline-none focus:ring-2 focus:ring-[#13A0F9]"
+              />
+            </div>
+          </div>
+        </section>
+
+        <section id="showcase" class="section-shell mt-20">
+          <div class="mx-auto max-w-6xl space-y-10">
+            <div class="space-y-3 text-center">
+              <span
+                class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1 text-xs font-semibold uppercase tracking-[0.24em] text-[#13A0F9]/90"
+              >
+                Walkthrough
+              </span>
+              <h2 class="text-3xl font-bold text-white">Slik fremstår hele plattformen</h2>
+              <p class="lead-clamp mx-auto max-w-3xl text-zinc-300">
+                Vi har bygget en gjennomgående opplevelse som viser frem både den lekne frontend-opplevelsen og den solide backend-motoren.
+                Under får du en rask presentasjon av hva som møter besøkende, medlemmer og administratorer.
+              </p>
+            </div>
+
+            <div class="grid gap-6 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)]">
+              <div class="space-y-4 rounded-3xl border border-white/10 bg-[#101c37]/85 p-6 shadow-[0_18px_42px_rgba(12,21,45,0.4)]">
+                <h3 class="text-xl font-semibold text-[#13A0F9]">Frontend-opplevelsen</h3>
+                <p class="text-sm leading-relaxed text-zinc-200">
+                  Vi viser frem et moderne, familievennlig design bygget med Tailwind og komponenter som fremhever fellesskap, premier og livesendinger.
+                  Navigasjon, modaler og korte tekster gjør det enkelt å finne medlemskap, samarbeidspartnere og kontaktpunkter.
+                </p>
+                <ul class="space-y-3 text-sm text-zinc-200">
+                  <li class="flex gap-3">
+                    <span aria-hidden="true" class="mt-1.5 h-2 w-2 rounded-full bg-[#13A0F9]"></span>
+                    <span><span class="font-semibold text-white">Responsiv landingsside:</span> Hero, videoembed og sosiale kanaler presentert i et sømløst grid.</span>
+                  </li>
+                  <li class="flex gap-3">
+                    <span aria-hidden="true" class="mt-1.5 h-2 w-2 rounded-full bg-emerald-400"></span>
+                    <span><span class="font-semibold text-white">Interaktive menyer:</span> Besøkende kan forhåndsvise medlems- og adminopplevelsen direkte fra navigasjonen.</span>
+                  </li>
+                  <li class="flex gap-3">
+                    <span aria-hidden="true" class="mt-1.5 h-2 w-2 rounded-full bg-pink-400"></span>
+                    <span><span class="font-semibold text-white">Storytelling-kort:</span> Seksjoner for community, premier og samarbeidspartnere gjør det lett å vise verdiforslaget.</span>
+                  </li>
+                </ul>
+              </div>
+
+              <div class="space-y-4 rounded-3xl border border-[#2b3760]/60 bg-[#060d26]/90 p-6 shadow-[0_18px_42px_rgba(6,12,28,0.4)]">
+                <h3 class="text-xl font-semibold text-white">Backend-motoren</h3>
+                <p class="text-sm leading-relaxed text-zinc-300">
+                  Bak kulissene sørger PHP-endepunkter og tilpassede scripts for at dataen som vises på forsiden er oppdatert, trygg og klar for videreutvikling.
+                </p>
+                <dl class="space-y-3 text-sm text-zinc-200">
+                  <div class="rounded-2xl border border-white/10 bg-white/5 p-3">
+                    <dt class="font-semibold text-white">Sanntidsoppdateringer</dt>
+                    <dd>Oppdateringsscriptet <span class="font-mono text-white/80">updates.php</span> trekker inn nye events og premier uten å forstyrre frontenden.</dd>
+                  </div>
+                  <div class="rounded-2xl border border-white/10 bg-white/5 p-3">
+                    <dt class="font-semibold text-white">Integrasjoner</dt>
+                    <dd>Sømløs støtte for Vipps Login, Discord-webhooks og fremtidige CMS-integrasjoner gjennom modulære Node-scripts.</dd>
+                  </div>
+                  <div class="rounded-2xl border border-white/10 bg-white/5 p-3">
+                    <dt class="font-semibold text-white">Forhåndsvisning</dt>
+                    <dd>Egne forhåndsvisningsmaler i <span class="font-mono text-white/80">preview/</span> gir stakeholders innsyn i medlems- og adminløsningene.</dd>
+                  </div>
+                </dl>
+              </div>
+            </div>
+
+            <div class="rounded-3xl border border-white/10 bg-[#0b163f]/70 p-8 shadow-[0_24px_48px_rgba(5,11,24,0.5)]">
+              <h3 class="text-lg font-semibold text-white">Opplevelsen steg for steg</h3>
+              <div class="mt-6 grid gap-4 lg:grid-cols-3">
+                <article class="flex h-full flex-col gap-3 rounded-2xl border border-white/10 bg-[#101c37]/80 p-5">
+                  <div class="flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-[#13A0F9]">
+                    <span class="grid h-7 w-7 place-content-center rounded-full bg-[#13A0F9]/15 text-[#13A0F9]">1</span>
+                    Førsteinntrykk
+                  </div>
+                  <p class="text-sm text-zinc-200">
+                    Brukeren lander på forsiden, ser videoen og sosial bevisning og klikker seg videre via de tydelige CTA-ene.
+                  </p>
+                </article>
+                <article class="flex h-full flex-col gap-3 rounded-2xl border border-white/10 bg-[#101c37]/80 p-5">
+                  <div class="flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-emerald-300">
+                    <span class="grid h-7 w-7 place-content-center rounded-full bg-emerald-400/15 text-emerald-300">2</span>
+                    Registrering
+                  </div>
+                  <p class="text-sm text-zinc-200">
+                    Når medlemsskjemaet åpnes sender frontenden trygg informasjon til backend som håndterer Vipps-login, samtykke og lagring.
+                  </p>
+                </article>
+                <article class="flex h-full flex-col gap-3 rounded-2xl border border-white/10 bg-[#101c37]/80 p-5">
+                  <div class="flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-pink-300">
+                    <span class="grid h-7 w-7 place-content-center rounded-full bg-pink-400/15 text-pink-300">3</span>
+                    Oppfølging
+                  </div>
+                  <p class="text-sm text-zinc-200">
+                    Adminpanelet og scripts sørger for at nye konkurranser, premier og sendinger blir synlige på forsiden og delt i communityet.
+                  </p>
+                </article>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="medlemskap" class="section-shell mt-20 text-center">
+          <h2 class="mb-4 text-3xl font-bold">Bli medlem</h2>
+          <p class="lead-clamp mx-auto mb-8 max-w-2xl text-zinc-300">
+            Vipps-løsningen kommer snart. I mellomtiden bruker vi et enkelt skjema og tydelig dokumentert samtykke for å holde deg trygg og konkurransedyktig.
+          </p>
+          <div class="mx-auto grid max-w-6xl gap-6 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)]">
+            <div class="rounded-2xl bg-zinc-900/60 p-5 text-left text-white shadow-lg ring-1 ring-white/10">
+              <h3 class="mb-2 text-xl font-bold">Bli medlem</h3>
+              <p class="mb-4 text-sm text-zinc-300">
+                Det er gratis å bli medlem i FjOlsenbanden! Alle kan delta i konkurranser, men for å vinne premier må du være registrert medlem.
+              </p>
+              <p class="mb-4 text-sm text-zinc-300">Velg alder for å bli med:</p>
+              <div class="grid gap-3 sm:grid-cols-2">
+                <a
+                  href="https://forms.gle/sq4mUf7s6e6UY7R58"
+                  class="rounded-xl bg-sky-600 px-4 py-3 text-center text-sm font-semibold text-white transition hover:bg-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-300"
+                >
+                  🔵 Under 18 år
+                </a>
+                <a
+                  href="https://forms.gle/ZrbXCggnUY8FTT7t9"
+                  class="rounded-xl bg-emerald-600 px-4 py-3 text-center text-sm font-semibold text-white transition hover:bg-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-300"
+                >
+                  🟢 Over 18 år
+                </a>
+              </div>
+            </div>
+
+            <div class="rounded-2xl border border-white/10 bg-white/5 p-5 text-left shadow-lg">
+              <h3 class="text-lg font-semibold text-white">Foreldre-samtykke og Vipps-flyt</h3>
+              <p class="mt-2 text-sm text-zinc-300">
+                Vipps Login henter navn, e-post, fødselsdato og telefon, slik at vi kan tilpasse opplevelsen og dokumentere samtykke.
+              </p>
+              <ol class="mt-4 space-y-3 text-sm text-zinc-200">
+                <li class="rounded-xl border border-white/10 bg-[#131f3f]/80 p-3">
+                  <span class="font-semibold text-white">1. Autentisering:</span> Logg inn med Vipps for å bekrefte hvem du er og la systemet sjekke alderen automatisk.
+                </li>
+                <li class="rounded-xl border border-white/10 bg-[#131f3f]/80 p-3">
+                  <span class="font-semibold text-white">2. Under 18 år:</span> Vi viser steget «Foresatt kontakt». Barnet legger inn foresattes Vipps-nummer, foresatte mottar en egen Vipps Login-lenke og bekrefter samtykke. Vi logger tidspunkt, barn og foresatt før registreringen fortsetter.
+                </li>
+                <li class="rounded-xl border border-white/10 bg-[#131f3f]/80 p-3">
+                  <span class="font-semibold text-white">3. 18 år eller eldre:</span> Du går direkte til Vipps Checkout-stegene og fullfører registreringen på få minutter.
+                </li>
+              </ol>
+              <p class="mt-4 text-xs uppercase tracking-wide text-[#4ade80]">Samtykke er separert og dokumentert før barns data behandles.</p>
+            </div>
+          </div>
+        </section>
+
+        <section id="partners" class="partners">
+          <div class="partners__inner">
+            <h2 id="premier" class="partners__title">Samarbeidspartnere</h2>
+            <p class="partners__lead">
+              Vi har allerede hatt samarbeid med flere kjente merkevarer.
+            </p>
+
+            <!-- LOGO-LISTE (midtstilt) -->
+            <ul class="partners__logos" aria-label="Våre samarbeidspartnere">
+              <li>
+                <img
+                  src="http://fjolsenbanden.setaei.com/Images/lenova1.jpg"
+                  alt="Lenovo"
+                  class="logo"
+                  loading="lazy"
+                />
+              </li>
+              <li>
+                <img
+                  src="http://fjolsenbanden.setaei.com/Images/komplett1.jpg"
+                  alt="Komplett"
+                  class="logo"
+                  loading="lazy"
+                />
+              </li>
+              <li>
+                <img src="/assets/partners/philips.svg" alt="Philips" class="logo" />
+              </li>
+              <li>
+                <img
+                  src="http://fjolsenbanden.setaei.com/Images/samsung1.jpg"
+                  alt="Samsung"
+                  class="logo"
+                  loading="lazy"
+                />
+              </li>
+            </ul>
+
+            <!-- CTA -->
+            <p class="partners__cta-text">
+              Ønsker du å synliggjøre din merkevare for vårt engasjerte gaming-publikum?
+            </p>
+            <a href="#kontakt" class="partners__btn">Kontakt oss</a>
+          </div>
+        </section>
+
+      <section id="tilbud" class="section-shell mt-20">
+        <div class="mx-auto max-w-6xl space-y-6 rounded-3xl border border-white/10 bg-white/5 p-8 text-center shadow-[0_24px_48px_rgba(6,14,35,0.45)]">
+          <div class="space-y-3">
+            <h2 class="text-3xl font-bold text-white">Andre tilbud</h2>
+            <p class="lead-clamp text-lg text-zinc-200">FjOlsenbanden tilbyr mer enn bare streaming!</p>
+          </div>
+          <div class="grid gap-6 text-left sm:grid-cols-2">
+            <div class="flex h-full flex-col gap-4 rounded-2xl border border-white/10 bg-[#101a33]/80 p-6 shadow-[0_16px_32px_rgba(6,14,35,0.45)]">
+              <div class="flex items-center gap-3">
+                <span class="grid h-12 w-12 place-content-center rounded-xl bg-gradient-to-br from-[#13A0F9] to-[#FF2F9C] text-2xl">🎤</span>
+                <h3 class="text-xl font-semibold text-white">Foredrag</h3>
+              </div>
+              <p class="text-sm leading-relaxed text-zinc-300">FjOlsen besøker skoler, idrettslag og e-sportklubber for å snakke om streaming, gaming-kultur og nettvett.</p>
+            </div>
+            <div class="flex h-full flex-col gap-4 rounded-2xl border border-white/10 bg-[#101a33]/80 p-6 shadow-[0_16px_32px_rgba(6,14,35,0.45)]">
+              <div class="flex items-center gap-3">
+                <span class="grid h-12 w-12 place-content-center rounded-xl bg-gradient-to-br from-[#13A0F9] to-[#FF2F9C] text-2xl">🕹️</span>
+                <h3 class="text-xl font-semibold text-white">Events</h3>
+              </div>
+              <p class="text-sm leading-relaxed text-zinc-300">Vi arrangerer gaming-konkurranser for bedrifter, skoler og klubber – både digitalt og fysisk.</p>
+            </div>
+            <div class="flex h-full flex-col gap-4 rounded-2xl border border-white/10 bg-[#101a33]/80 p-6 shadow-[0_16px_32px_rgba(6,14,35,0.45)]">
+              <div class="flex items-center gap-3">
+                <span class="grid h-12 w-12 place-content-center rounded-xl bg-gradient-to-br from-[#13A0F9] to-[#FF2F9C] text-2xl">🎁</span>
+                <h3 class="text-xl font-semibold text-white">Unboxing</h3>
+              </div>
+              <p class="text-sm leading-relaxed text-zinc-300">FjOlsen lager profesjonelle unboxing-videoer av dine produkter som kan brukes i deres markedsføring og deles med vårt community.</p>
+            </div>
+            <div class="flex h-full flex-col gap-4 rounded-2xl border border-white/10 bg-[#101a33]/80 p-6 shadow-[0_16px_32px_rgba(6,14,35,0.45)]">
+              <div class="flex items-center gap-3">
+                <span class="grid h-12 w-12 place-content-center rounded-xl bg-gradient-to-br from-[#13A0F9] to-[#FF2F9C] text-2xl">📡</span>
+                <h3 class="text-xl font-semibold text-white">Streamer for hire</h3>
+              </div>
+              <p class="text-sm leading-relaxed text-zinc-300">Ønsker du at FjOlsen skal streame på vegne av din merkevare? Han er tilgjengelig for co-streams, produktlanseringer og kampanjer – der ditt budskap blir formidlet på en autentisk og engasjerende måte til tusenvis av følgere.</p>
+            </div>
+            <div class="flex h-full flex-col gap-4 rounded-2xl border border-white/10 bg-[#101a33]/80 p-6 shadow-[0_16px_32px_rgba(6,14,35,0.45)] sm:col-span-2">
+              <div class="flex items-center gap-3">
+                <span class="grid h-12 w-12 place-content-center rounded-xl bg-gradient-to-br from-[#13A0F9] to-[#FF2F9C] text-2xl">🎓</span>
+                <h3 class="text-xl font-semibold text-white">Fortnite Coaching</h3>
+              </div>
+              <p class="text-sm leading-relaxed text-zinc-300">I FjOlsenbanden finner du flere av Norges dyktigste Fortnite-spillere. Sammen tilbyr vi 1-til-1 coaching for barn og unge som ønsker å utvikle seg som spillere – med fokus på strategi, samarbeid, kommunikasjon og trygg nettkultur. Ta kontakt hvis du ønsker mer informasjon eller vil booke en økt.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="kontakt" class="section-shell mt-20">
+        <div class="mx-auto max-w-5xl space-y-6 rounded-3xl border border-white/10 bg-[#161f33]/90 p-8 text-center shadow-2xl">
+          <h2 class="text-3xl font-bold">Kontakt oss</h2>
+            <p class="text-zinc-300">
+              Har du spørsmål om medlemskap, samarbeid eller events? Send oss en melding så kommer vi tilbake til deg.
+            </p>
+            <form id="contact-form" class="grid gap-4 text-left md:grid-cols-2">
+              <div>
+                <label class="mb-1 block text-sm font-semibold text-zinc-200" for="contact-name">Navn</label>
+                <input
+                  id="contact-name"
+                  name="name"
+                  type="text"
+                  required
+                  class="w-full rounded-xl border border-white/15 bg-white/5 px-4 py-3 text-sm text-white placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-[#13A0F9]"
+                />
+              </div>
+              <div>
+                <label class="mb-1 block text-sm font-semibold text-zinc-200" for="contact-email">E-post</label>
+                <input
+                  id="contact-email"
+                  name="email"
+                  type="email"
+                  required
+                  class="w-full rounded-xl border border-white/15 bg-white/5 px-4 py-3 text-sm text-white placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-[#13A0F9]"
+                />
+              </div>
+              <div class="md:col-span-2">
+                <label class="mb-1 block text-sm font-semibold text-zinc-200" for="contact-message">Melding</label>
+                <textarea
+                  id="contact-message"
+                  name="message"
+                  rows="4"
+                  required
+                  class="w-full rounded-xl border border-white/15 bg-white/5 px-4 py-3 text-sm text-white placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-[#13A0F9]"
+                ></textarea>
+              </div>
+              <div class="md:col-span-2 flex flex-col gap-2 text-sm text-zinc-400 md:flex-row md:items-center md:justify-between">
+                <span>Vi svarer så snart vi kan, som regel innen 1–2 virkedager.</span>
+                <button
+                  type="submit"
+                  class="rounded-full bg-gradient-to-r from-[#13A0F9] to-[#FF2F9C] px-6 py-3 font-semibold text-white shadow-[0_16px_28px_rgba(19,160,249,0.35)] transition hover:from-[#0d8bd6] hover:to-[#e12585]"
+                >
+                  Send melding
+                </button>
+              </div>
+            </form>
+          </div>
+        </section>
+
+        </main>
+
+        <footer class="mt-20 border-t border-white/10 py-8 text-center text-sm text-zinc-500">
+        <div class="flex flex-col items-center justify-center gap-2 text-sm md:flex-row">
+          <span>© <span id="current-year"></span> Fjolsenbanden. Alle rettigheter reservert.</span>
+          <a href="preview/admin-dashboard-preview.html" target="_blank" rel="noreferrer" class="flex items-center gap-2 font-medium text-zinc-300 transition hover:text-white">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="h-4 w-4"
+              aria-hidden="true"
+            >
+              <circle cx="18" cy="15" r="3"></circle>
+              <path d="M19.5 12.5v-2.2a2.3 2.3 0 0 0-.7-1.6l-3.1-3.1a2.3 2.3 0 0 0-1.6-.7H8.8a2.3 2.3 0 0 0-2.3 2.3v2.2"></path>
+              <path d="M2 15.8a2.3 2.3 0 0 0 2.3 2.3h6"></path>
+              <circle cx="6" cy="15" r="3"></circle>
+              <path d="m21.7 16.4-.9.9"></path>
+              <path d="m21.7 13.6-.9-.9"></path>
+              <path d="m16.3 16.4.9.9"></path>
+              <path d="m16.3 13.6.9-.9"></path>
+              <path d="M9 7V4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3"></path>
+            </svg>
+            <span>Admin</span>
+          </a>
+        </div>
+      </footer>
+
+      <div id="registration-modal" class="fixed inset-0 z-[100] hidden flex items-center justify-center px-4 py-10">
+        <button
+          type="button"
+          id="registration-overlay"
+          data-close-registration
+          aria-label="Lukk registrering"
+          class="absolute inset-0 h-full w-full bg-black/70"
+        ></button>
+        <div class="relative z-[101] w-full max-w-2xl overflow-hidden rounded-3xl border border-white/10 bg-[#0d1733] shadow-[0_32px_80px_rgba(4,8,20,0.7)]">
+          <div class="flex items-start justify-between gap-4 border-b border-white/10 bg-white/5 px-6 py-5">
+            <div>
+              <p class="text-xs font-semibold uppercase tracking-[0.2em] text-[#13A0F9]">Medlemsregistrering</p>
+              <h3 class="mt-1 text-2xl font-bold text-white">
+                Bli med i FjOlsenbanden<span id="registration-tier" class="mt-1 block text-sm font-semibold text-[#13A0F9] sm:ml-2 sm:inline"></span>
+              </h3>
+              <p class="mt-2 max-w-xl text-sm text-zinc-300">
+                Følg Vipps-flyten for å aktivere medlemskapet ditt. Vi bruker Vipps Login til å hente nødvendige opplysninger og sørger for trygg foreldre-godkjenning der det trengs.
+              </p>
+            </div>
+            <button
+              type="button"
+              data-close-registration
+              class="rounded-full border border-white/20 p-2 text-zinc-300 transition hover:bg-white/10 hover:text-white"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" x2="6" y1="6" y2="18"></line>
+                <line x1="6" x2="18" y1="6" y2="18"></line>
+              </svg>
+            </button>
+          </div>
+
+          <div class="space-y-6 px-6 py-6 md:px-8">
+            <div class="space-y-4 rounded-3xl border border-white/15 bg-[#131f3f]/80 p-5 shadow-inner">
+              <div class="flex items-center gap-3">
+                <span class="grid h-10 w-10 place-content-center rounded-2xl bg-gradient-to-br from-[#13A0F9] to-[#FF2F9C] text-white">1</span>
+                <div>
+                  <p class="text-sm font-semibold text-white">Vipps Login først</p>
+                  <p class="text-xs text-zinc-300">Autentiser medlemmet og hent navn, fødselsdato, telefon og e-post sikkert via Vipps Login API.</p>
+                </div>
+              </div>
+
+              <button
+                id="vipps-login"
+                type="button"
+                class="flex w-full items-center justify-center gap-2 rounded-full bg-[#FF5B24] px-6 py-3 font-semibold text-white shadow-[0_16px_34px_rgba(255,91,36,0.35)] transition hover:bg-[#ff6f40]"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4">
+                  <rect width="18" height="11" x="3" y="11" rx="2" ry="2"></rect>
+                  <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                </svg>
+                Logg inn med Vipps
+              </button>
+
+              <form id="vipps-form" class="hidden grid gap-4 md:grid-cols-2">
+                <div>
+                  <label class="mb-1 block text-xs font-semibold uppercase tracking-wide text-zinc-300" for="vipps-name">Navn</label>
+                  <input
+                    id="vipps-name"
+                    type="text"
+                    class="w-full rounded-xl border border-white/15 bg-white/5 px-4 py-2 text-sm text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-[#13A0F9]"
+                    required
+                  />
+                </div>
+                <div>
+                  <label class="mb-1 block text-xs font-semibold uppercase tracking-wide text-zinc-300" for="vipps-dob">Fødselsdato</label>
+                  <input
+                    id="vipps-dob"
+                    type="date"
+                    class="w-full rounded-xl border border-white/15 bg-white/5 px-4 py-2 text-sm text-white focus:outline-none focus:ring-2 focus:ring-[#13A0F9]"
+                    required
+                  />
+                </div>
+                <div>
+                  <label class="mb-1 block text-xs font-semibold uppercase tracking-wide text-zinc-300" for="vipps-phone">Telefon</label>
+                  <input
+                    id="vipps-phone"
+                    type="tel"
+                    class="w-full rounded-xl border border-white/15 bg-white/5 px-4 py-2 text-sm text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-[#13A0F9]"
+                    required
+                  />
+                </div>
+                <div>
+                  <label class="mb-1 block text-xs font-semibold uppercase tracking-wide text-zinc-300" for="vipps-email">E-post</label>
+                  <input
+                    id="vipps-email"
+                    type="email"
+                    class="w-full rounded-xl border border-white/15 bg-white/5 px-4 py-2 text-sm text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-[#13A0F9]"
+                    required
+                  />
+                </div>
+                <div class="md:col-span-2 flex flex-col gap-3 rounded-2xl bg-white/5 p-4 text-sm text-zinc-200">
+                  <div class="flex items-center gap-2 text-xs uppercase tracking-wide text-zinc-400">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-[#13A0F9]">
+                      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                      <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                    Data mottatt fra Vipps
+                  </div>
+                  <p>Når du bekrefter opplysningene, bruker vi fødselsdatoen til å styre riktig løp for foreldre-godkjenning eller betaling.</p>
+                </div>
+                <div class="md:col-span-2 flex flex-col gap-2 text-sm text-zinc-300 md:flex-row md:items-center md:justify-between">
+                  <span id="vipps-age-label">Bekreft og gå videre til neste steg.</span>
+                  <button
+                    type="submit"
+                    class="flex items-center gap-2 rounded-full bg-gradient-to-r from-[#13A0F9] to-[#FF2F9C] px-6 py-3 font-semibold text-white shadow-[0_16px_32px_rgba(19,160,249,0.35)] transition hover:from-[#0d8bd6] hover:to-[#e12585]"
+                  >
+                    Fortsett
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4">
+                      <path d="m5 12 7-7 7 7"></path>
+                      <path d="M12 19V5"></path>
+                    </svg>
+                  </button>
+                </div>
+              </form>
+            </div>
+
+            <div id="guardian-section" class="hidden space-y-4 rounded-3xl border border-white/15 bg-[#101b35]/80 p-5">
+              <div class="flex items-center gap-3">
+                <span class="grid h-10 w-10 place-content-center rounded-2xl bg-gradient-to-br from-[#FF2F9C] to-[#13A0F9] text-white">2</span>
+                <div>
+                  <p class="text-sm font-semibold text-white">Foreldre-godkjenning i Vipps</p>
+                  <p class="text-xs text-zinc-300">Spilleren er under 18 år. Send Vipps-forespørselen til foresatte før registreringen fullføres.</p>
+                </div>
+              </div>
+              <form id="guardian-form" class="space-y-4">
+                <div>
+                  <label class="mb-1 block text-xs font-semibold uppercase tracking-wide text-zinc-300" for="guardian-phone">Forelder/verge sitt Vipps-nummer</label>
+                  <div class="flex flex-col gap-3 sm:flex-row">
+                    <input
+                      id="guardian-phone"
+                      type="tel"
+                      placeholder="+47 400 00 000"
+                      class="flex-1 rounded-xl border border-white/15 bg-white/5 px-4 py-2 text-sm text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-[#13A0F9]"
+                      required
+                    />
+                    <button
+                      type="submit"
+                      class="flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#13A0F9] to-[#FF2F9C] px-6 py-3 font-semibold text-white shadow-[0_16px_32px_rgba(19,160,249,0.35)] transition hover:from-[#0d8bd6] hover:to-[#e12585]"
+                    >
+                      Send forespørsel
+                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4">
+                        <path d="M22 12h-4"></path>
+                        <path d="M18 12a6 6 0 1 1-6-6v0a6 6 0 0 1 6 6Z"></path>
+                        <path d="m9 10 2 2-2 2"></path>
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+                <p class="text-xs text-zinc-400">Systemet oppretter en Vipps Payment-forespørsel til foresatte. Når betalingen eller samtykket bekreftes via callback-URLen, låses medlemskapet opp.</p>
+              </form>
+              <div id="guardian-success" class="hidden space-y-3 rounded-2xl bg-white/5 p-4 text-sm text-zinc-200">
+                <div class="flex items-center gap-2 text-[#4ade80]">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                  </svg>
+                  Forespørsel sendt til <span id="guardian-number" class="font-semibold text-white"></span>
+                </div>
+                <p>Når foresatte godkjenner i Vipps, aktiveres medlemskapet automatisk. Gi beskjed hvis du ikke får svar i løpet av få minutter.</p>
+              </div>
+            </div>
+
+            <div id="checkout-section" class="hidden space-y-4 rounded-3xl border border-white/15 bg-[#101b35]/80 p-5">
+              <div class="flex items-center gap-3">
+                <span class="grid h-10 w-10 place-content-center rounded-2xl bg-gradient-to-br from-[#FF2F9C] to-[#13A0F9] text-white">2</span>
+                <div>
+                  <p class="text-sm font-semibold text-white">Vipps Checkout</p>
+                  <p class="text-xs text-zinc-300">Voksne medlemmer går direkte til betaling. Vipps bekrefter beløpet og returnerer status til backend.</p>
+                </div>
+              </div>
+              <button
+                id="checkout-button"
+                type="button"
+                class="flex w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#13A0F9] to-[#FF2F9C] px-6 py-3 font-semibold text-white shadow-[0_18px_36px_rgba(19,160,249,0.35)] transition hover:from-[#0d8bd6] hover:to-[#e12585]"
+              >
+                Start betaling i Vipps
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4">
+                  <rect width="20" height="14" x="2" y="5" rx="2"></rect>
+                  <line x1="2" x2="22" y1="10" y2="10"></line>
+                </svg>
+              </button>
+              <div id="checkout-success" class="hidden space-y-3 rounded-2xl bg-white/5 p-4 text-sm text-zinc-200">
+                <div class="flex items-center gap-2 text-[#4ade80]">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                  </svg>
+                  Vipps-betaling bekreftet
+                </div>
+                <p>Kvitteringen er sendt til backend via callback. Du er klar til å fullføre registreringen og få tilgang til medlemsfordelene.</p>
+              </div>
+            </div>
+
+            <div id="completion-section" class="hidden space-y-3 rounded-3xl border border-[#13A0F9]/40 bg-[#0f1a32]/90 p-5">
+              <div class="flex items-center gap-3">
+                <span class="grid h-10 w-10 place-content-center rounded-2xl bg-gradient-to-br from-[#13A0F9] to-[#FF2F9C] text-white">3</span>
+                <div>
+                  <p class="text-sm font-semibold text-white">Fullfør registrering</p>
+                  <p class="text-xs text-zinc-300">Send inn skjemaet slik at vi kan lagre medlemskapet ditt med riktig alder og kontaktinformasjon.</p>
+                </div>
+              </div>
+              <a
+                id="completion-link"
+                href="https://docs.google.com/forms/d/e/1FAIpQLSc9pIGhLF4impGUQhxBMZUbfp7mQOaraYxEL7VrsTRkbD9EgA/viewform"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="flex w-full items-center justify-center gap-2 rounded-full bg-white/10 px-6 py-3 font-semibold text-white transition hover:bg-white/20"
+              >
+                Åpne registreringsskjema
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4">
+                  <path d="M5 12h14"></path>
+                  <path d="m12 5 7 7-7 7"></path>
+                </svg>
+              </a>
+              <p class="text-xs text-zinc-400">
+                Skjemaet fanger opp samtykke (for foresatte) eller kvittering fra Vipps Checkout. Husk å lagre Vipps-ID (<span id="vipps-phone-placeholder"></span>) og status i databasen.
+              </p>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+      const toggle = document.getElementById("nav-toggle");
+      const menu = document.getElementById("nav-menu");
+      const backdrop = document.getElementById("nav-backdrop");
+      const toggleIcons = toggle ? toggle.querySelectorAll("[data-nav-toggle-icon]") : [];
+      const toggleLabel = toggle ? toggle.querySelector("[data-nav-toggle-label]") : null;
+
+      const setToggleState = (isOpen) => {
+        if (!toggle) {
+          return;
+        }
+        toggle.setAttribute("aria-expanded", String(isOpen));
+        toggle.setAttribute("aria-label", isOpen ? "Lukk meny" : "Åpne meny");
+        if (toggleLabel) {
+          toggleLabel.textContent = isOpen ? "Lukk meny" : "Åpne meny";
+        }
+        toggleIcons.forEach((icon) => {
+          const shouldShow = icon.dataset.navToggleIcon === (isOpen ? "close" : "open");
+          icon.classList.toggle("hidden", !shouldShow);
+        });
+      };
+
+      const openMenu = () => {
+        if (!menu) {
+          return;
+        }
+        menu.classList.remove("hidden");
+        menu.classList.add("block");
+        if (backdrop) {
+          backdrop.classList.remove("hidden");
+          backdrop.classList.add("block");
+        }
+        setToggleState(true);
+      };
+
+      const closeMenu = () => {
+        if (!menu) {
+          return;
+        }
+        menu.classList.add("hidden");
+        menu.classList.remove("block");
+        if (backdrop) {
+          backdrop.classList.add("hidden");
+          backdrop.classList.remove("block");
+        }
+        setToggleState(false);
+      };
+
+      if (toggle && menu) {
+        toggle.addEventListener("click", () => {
+          const isOpen = toggle.getAttribute("aria-expanded") === "true";
+          if (isOpen) {
+            closeMenu();
+          } else {
+            openMenu();
+          }
+        });
+      }
+
+      if (backdrop) {
+        backdrop.addEventListener("click", closeMenu);
+      }
+
+      if (menu) {
+        menu.querySelectorAll("[data-nav-close]").forEach((element) => {
+          element.addEventListener("click", closeMenu);
+        });
+      }
+
+      window.addEventListener("resize", () => {
+        if (window.innerWidth >= 768) {
+          closeMenu();
+        }
+      });
+
+      window.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") {
+          closeMenu();
+        }
+      });
+
+      const profilePreviewWrapper = document.querySelector("[data-preview-mode-wrapper]");
+      const profilePreviewButton = document.getElementById("profile-preview-button");
+      const profilePreviewMenu = document.getElementById("profile-preview-menu");
+      const profilePreviewLabel = document.querySelector("[data-preview-mode-label]");
+      const profilePreviewIndicator = document.querySelector("[data-preview-mode-indicator]");
+      const profilePreviewOptions = document.querySelectorAll("[data-preview-mode-option]");
+      const previewModeStorageKey = "fjolsen-preview-mode";
+      const previewModeConfig = {
+        visitor: { label: "Besøkende", indicatorClass: "bg-sky-400" },
+        user: { label: "Medlem", indicatorClass: "bg-emerald-400", url: "preview/player-profile-preview.html" },
+        admin: { label: "Administrator", indicatorClass: "bg-amber-400", url: "preview/admin-dashboard-preview.html" },
+      };
+      const indicatorBaseClass = profilePreviewIndicator
+        ? (profilePreviewIndicator.dataset.baseClass || profilePreviewIndicator.className || "")
+        : "";
+
+      const applyMenuSelectionState = (mode) => {
+        profilePreviewOptions.forEach((option) => {
+          const optionMode = option.dataset.previewModeOption;
+          if (!optionMode) {
+            return;
+          }
+          const isActive = optionMode === mode;
+          if (option.dataset.previewModeOptionScope === "menu") {
+            option.classList.toggle("bg-white/10", isActive);
+            option.classList.toggle("text-white", isActive);
+            option.classList.toggle("text-slate-200", !isActive);
+            option.classList.toggle("ring-1", isActive);
+            option.classList.toggle("ring-emerald-400/60", isActive);
+            const check = option.querySelector("[data-preview-mode-check]");
+            if (check) {
+              const baseClass = (check.dataset.baseClass || "").trim();
+              check.setAttribute("class", `${baseClass} ${isActive ? "opacity-100" : "opacity-0"}`.trim());
+            }
+          }
+        });
+      };
+
+      const setPreviewMode = (mode) => {
+        if (!Object.prototype.hasOwnProperty.call(previewModeConfig, mode)) {
+          mode = "visitor";
+        }
+        const config = previewModeConfig[mode];
+        if (profilePreviewLabel) {
+          profilePreviewLabel.textContent = config.label;
+        }
+        if (profilePreviewIndicator) {
+          const classes = [indicatorBaseClass, config.indicatorClass].filter(Boolean).join(" ");
+          profilePreviewIndicator.setAttribute("class", classes);
+        }
+        if (profilePreviewButton) {
+          profilePreviewButton.setAttribute("data-active-mode", mode);
+          profilePreviewButton.setAttribute("aria-label", `Velg forhåndsvisning – aktivt: ${config.label}`);
+        }
+        applyMenuSelectionState(mode);
+        try {
+          window.localStorage.setItem(previewModeStorageKey, mode);
+        } catch (error) {
+          console.warn("Kunne ikke lagre forhåndsvisningsmodus", error);
+        }
+      };
+
+      const closeProfileMenu = () => {
+        if (profilePreviewMenu && profilePreviewButton) {
+          profilePreviewMenu.classList.add("hidden");
+          profilePreviewButton.setAttribute("aria-expanded", "false");
+        }
+      };
+
+      const openProfileMenu = () => {
+        if (profilePreviewMenu && profilePreviewButton) {
+          profilePreviewMenu.classList.remove("hidden");
+          profilePreviewButton.setAttribute("aria-expanded", "true");
+          const firstOption = profilePreviewMenu.querySelector("[data-preview-mode-option]");
+          if (firstOption instanceof HTMLElement) {
+            firstOption.focus();
+          }
+        }
+      };
+
+      if (profilePreviewButton && profilePreviewMenu) {
+        profilePreviewButton.addEventListener("click", () => {
+          const isOpen = !profilePreviewMenu.classList.contains("hidden");
+          if (isOpen) {
+            closeProfileMenu();
+          } else {
+            openProfileMenu();
+          }
+        });
+      }
+
+      document.addEventListener("click", (event) => {
+        if (!profilePreviewWrapper) {
+          return;
+        }
+        if (!(event.target instanceof Node)) {
+          return;
+        }
+        if (!profilePreviewWrapper.contains(event.target)) {
+          closeProfileMenu();
+        }
+      });
+
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") {
+          closeProfileMenu();
+        }
+      });
+
+      profilePreviewOptions.forEach((option) => {
+        option.addEventListener("click", (event) => {
+          event.preventDefault();
+          const mode = option.dataset.previewModeOption || "visitor";
+          setPreviewMode(mode);
+          closeProfileMenu();
+          const targetUrl = option.dataset.previewUrl;
+          if (targetUrl) {
+            window.open(targetUrl, "_blank", "noopener");
+          }
+          if (option.dataset.previewModeOptionScope === "mobile" && menu) {
+            menu.classList.add("hidden");
+          }
+        });
+      });
+
+      let initialPreviewMode = "visitor";
+      try {
+        const storedMode = window.localStorage.getItem(previewModeStorageKey);
+        if (storedMode && Object.prototype.hasOwnProperty.call(previewModeConfig, storedMode)) {
+          initialPreviewMode = storedMode;
+        }
+      } catch (error) {
+        console.warn("Kunne ikke lese forhåndsvisningsmodus", error);
+      }
+      setPreviewMode(initialPreviewMode);
+
+      const previewFrame = document.querySelector("[data-preview-frame]");
+      const previewOverlay = document.querySelector("[data-preview-overlay]");
+      const previewTimer = document.querySelector("[data-preview-timer]");
+      const unmuteButton = document.querySelector("[data-video-unmute]");
+      let countdown = 60;
+
+      if (previewTimer) {
+        setInterval(() => {
+          countdown = Math.max(countdown - 1, 0);
+          previewTimer.textContent = String(countdown);
+        }, 1000);
+      }
+
+      if (unmuteButton && previewOverlay && previewFrame) {
+        unmuteButton.addEventListener("click", () => {
+          previewOverlay.classList.add("hidden");
+          const url = new URL(previewFrame.src);
+          url.searchParams.set("muted", "false");
+          previewFrame.src = url.toString();
+        });
+      }
+
+      const contactForm = document.getElementById("contact-form");
+      if (contactForm) {
+        contactForm.addEventListener("submit", (event) => {
+          event.preventDefault();
+          const formData = new FormData(contactForm);
+          const name = (formData.get("name") || "").toString().trim();
+          const email = (formData.get("email") || "").toString().trim();
+          const message = (formData.get("message") || "").toString().trim();
+          const subject = encodeURIComponent("Kontakt via fjolsenbanden.no");
+          const body = encodeURIComponent(`${message}\n\nNavn: ${name || "Ukjent"}\nE-post: ${email || "Ikke oppgitt"}`);
+          window.location.href = `mailto:kontakt@fjolsenbanden.no?subject=${subject}&body=${body}`;
+          contactForm.reset();
+        });
+      }
+
+      const registrationForms = {
+        under18: "https://docs.google.com/forms/d/e/1FAIpQLScqgnf92CTsQ2TLg8viDBMllbUUGcDPW8uG48yXSYFVYGdRSw/viewform",
+        over18: "https://docs.google.com/forms/d/e/1FAIpQLSc9pIGhLF4impGUQhxBMZUbfp7mQOaraYxEL7VrsTRkbD9EgA/viewform",
+      };
+
+      const vippsDefaults = {
+        name: "FjOlsen Fan",
+        dateOfBirth: "2005-05-17",
+        phone: "+47 987 65 432",
+        email: "fjolsenfan@example.com",
+      };
+
+      const registrationModal = document.getElementById("registration-modal");
+      const registrationOverlay = document.getElementById("registration-overlay");
+      const openRegistrationButtons = document.querySelectorAll("[data-open-registration]");
+      const closeRegistrationButtons = document.querySelectorAll("[data-close-registration]");
+      const registrationTier = document.getElementById("registration-tier");
+      const vippsLoginButton = document.getElementById("vipps-login");
+      const vippsForm = document.getElementById("vipps-form");
+      const vippsNameInput = document.getElementById("vipps-name");
+      const vippsDobInput = document.getElementById("vipps-dob");
+      const vippsPhoneInput = document.getElementById("vipps-phone");
+      const vippsEmailInput = document.getElementById("vipps-email");
+      const vippsAgeLabel = document.getElementById("vipps-age-label");
+      const guardianSection = document.getElementById("guardian-section");
+      const guardianForm = document.getElementById("guardian-form");
+      const guardianInput = document.getElementById("guardian-phone");
+      const guardianSuccess = document.getElementById("guardian-success");
+      const guardianNumber = document.getElementById("guardian-number");
+      const checkoutSection = document.getElementById("checkout-section");
+      const checkoutButton = document.getElementById("checkout-button");
+      const checkoutSuccess = document.getElementById("checkout-success");
+      const completionSection = document.getElementById("completion-section");
+      const completionLink = document.getElementById("completion-link");
+      const vippsPhonePlaceholder = document.getElementById("vipps-phone-placeholder");
+
+      const setHidden = (element, hidden) => {
+        if (!element) return;
+        element.classList.toggle("hidden", hidden);
+      };
+
+      const calculateAge = (value) => {
+        if (!value) return 0;
+        const dob = new Date(value);
+        if (Number.isNaN(dob.getTime())) return 0;
+        const today = new Date();
+        let age = today.getFullYear() - dob.getFullYear();
+        const monthDifference = today.getMonth() - dob.getMonth();
+        if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < dob.getDate())) {
+          age -= 1;
+        }
+        return age;
+      };
+
+      const openRegistrationModal = (tierLabel) => {
+        if (!registrationModal) return;
+        registrationModal.classList.remove("hidden");
+        registrationModal.classList.add("flex");
+        document.body.classList.add("overflow-hidden");
+
+        if (registrationTier) {
+          registrationTier.textContent = tierLabel ? ` – ${tierLabel}` : "";
+        }
+
+        if (vippsLoginButton) {
+          vippsLoginButton.classList.remove("hidden");
+        }
+        if (vippsForm) {
+          vippsForm.reset();
+          vippsForm.classList.add("hidden");
+        }
+        if (vippsNameInput) vippsNameInput.value = vippsDefaults.name;
+        if (vippsDobInput) vippsDobInput.value = vippsDefaults.dateOfBirth;
+        if (vippsPhoneInput) vippsPhoneInput.value = vippsDefaults.phone;
+        if (vippsEmailInput) vippsEmailInput.value = vippsDefaults.email;
+        if (vippsAgeLabel) vippsAgeLabel.textContent = "Bekreft og gå videre til neste steg.";
+
+        if (guardianForm) guardianForm.reset();
+        if (checkoutButton) checkoutButton.classList.remove("hidden");
+        setHidden(guardianSection, true);
+        setHidden(guardianSuccess, true);
+        setHidden(checkoutSection, true);
+        setHidden(checkoutSuccess, true);
+        setHidden(completionSection, true);
+
+        if (guardianNumber) guardianNumber.textContent = "";
+        if (vippsPhonePlaceholder) vippsPhonePlaceholder.textContent = "";
+        if (completionLink) completionLink.setAttribute("href", registrationForms.over18);
+
+      };
+
+      const closeRegistrationModal = () => {
+        if (!registrationModal) return;
+        registrationModal.classList.add("hidden");
+        registrationModal.classList.remove("flex");
+        document.body.classList.remove("overflow-hidden");
+      };
+
+      openRegistrationButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          const tierLabel = button.getAttribute("data-tier") || "";
+          openRegistrationModal(tierLabel);
+        });
+      });
+
+      closeRegistrationButtons.forEach((button) => {
+        button.addEventListener("click", closeRegistrationModal);
+      });
+
+      if (registrationOverlay) {
+        registrationOverlay.addEventListener("click", closeRegistrationModal);
+      }
+
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") {
+          closeRegistrationModal();
+        }
+      });
+
+      if (vippsLoginButton && vippsForm) {
+        vippsLoginButton.addEventListener("click", () => {
+          vippsLoginButton.classList.add("hidden");
+          vippsForm.classList.remove("hidden");
+        });
+      }
+
+      if (vippsForm) {
+        vippsForm.addEventListener("submit", (event) => {
+          event.preventDefault();
+          const age = calculateAge(vippsDobInput ? vippsDobInput.value : "");
+          if (vippsAgeLabel) {
+            vippsAgeLabel.textContent = age ? `Alder ${age} år – bekreft og gå videre.` : "Bekreft og gå videre til neste steg.";
+          }
+          if (vippsPhonePlaceholder && vippsPhoneInput) {
+            vippsPhonePlaceholder.textContent = vippsPhoneInput.value;
+          }
+
+          setHidden(guardianSuccess, true);
+          setHidden(checkoutSuccess, true);
+          setHidden(completionSection, true);
+          if (guardianForm) guardianForm.reset();
+          if (checkoutButton) checkoutButton.classList.remove("hidden");
+
+          if (age > 0 && age < 18) {
+            setHidden(guardianSection, false);
+            setHidden(checkoutSection, true);
+            if (completionLink) completionLink.setAttribute("href", registrationForms.under18);
+          } else {
+            setHidden(guardianSection, true);
+            setHidden(checkoutSection, false);
+            if (completionLink) completionLink.setAttribute("href", registrationForms.over18);
+          }
+        });
+      }
+
+      if (guardianForm) {
+        guardianForm.addEventListener("submit", (event) => {
+          event.preventDefault();
+          const number = guardianInput ? guardianInput.value.trim() : "";
+          if (guardianNumber) {
+            guardianNumber.textContent = number || "forelder";
+          }
+          setHidden(guardianSuccess, false);
+          setHidden(completionSection, false);
+          if (vippsPhonePlaceholder && vippsPhoneInput) {
+            vippsPhonePlaceholder.textContent = vippsPhoneInput.value;
+          }
+        });
+      }
+
+      if (checkoutButton) {
+        checkoutButton.addEventListener("click", () => {
+          checkoutButton.classList.add("hidden");
+          setHidden(checkoutSuccess, false);
+          setHidden(completionSection, false);
+          if (vippsPhonePlaceholder && vippsPhoneInput) {
+            vippsPhonePlaceholder.textContent = vippsPhoneInput.value;
+          }
+        });
+      }
+
+      const yearValue = String(new Date().getFullYear());
+      const currentYear = document.getElementById("current-year");
+      if (currentYear) {
+        currentYear.textContent = yearValue;
+      }
+    </script>
   </body>
 </html>
