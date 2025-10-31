@@ -17,12 +17,12 @@
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
   <body class="m-0 bg-[#050B24]">
-    <div class="relative overflow-x-hidden bg-gradient-to-b from-[#131A49] via-[#0B163F] to-[#050B24] text-white">
+    <div class="relative flex min-h-screen flex-col overflow-x-hidden bg-gradient-to-b from-[#131A49] via-[#0B163F] to-[#050B24] text-white">
       <div
         class="pointer-events-none absolute inset-0"
         style="background:radial-gradient(circle at 18% 12%, rgba(19,160,249,0.3), transparent 55%), radial-gradient(circle at 80% 0%, rgba(255,47,156,0.18), transparent 50%)"
       ></div>
-      <div class="relative">
+      <div class="relative flex flex-1 flex-col">
         <nav class="section-shell flex items-center justify-between py-4">
           <a class="flex items-center gap-3" href="#" aria-label="Fjolsenbanden hjem">
             <img
@@ -125,7 +125,7 @@
 
           
 
-        <main class="relative z-10 pb-40">
+        <main class="relative z-10 flex flex-1 flex-col pb-16">
         <section id="community" class="section-shell pt-6">
           <div class="mx-auto grid max-w-6xl gap-10 lg:grid-cols-2 lg:items-start">
             <div class="space-y-6">
@@ -481,7 +481,7 @@
 
         </main>
 
-        <footer class="mt-20 border-t border-white/10 py-8 text-center text-sm text-zinc-500">
+        <footer class="mt-12 border-t border-white/10 py-8 text-center text-sm text-zinc-500">
           <span>© <span id="current-year"></span> Fjolsenbanden. Alle rettigheter reservert.</span>
         </footer>
 
@@ -801,7 +801,7 @@
           const message = (formData.get("message") || "").toString().trim();
           const subject = encodeURIComponent("Kontakt via fjolsenbanden.no");
           const body = encodeURIComponent(`${message}\n\nNavn: ${name || "Ukjent"}\nE-post: ${email || "Ikke oppgitt"}`);
-          window.location.href = `mailto:kontakt@fjolsenbanden.no?subject=${subject}&body=${body}`;
+          window.location.href = `mailto:fjolsenfn@gmail.com?subject=${subject}&body=${body}`;
           contactForm.reset();
         });
       }
