@@ -15,9 +15,139 @@
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:image" content="/og-image.svg" />
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      .loader {
+        position: fixed;
+        inset: 0;
+        display: grid;
+        place-items: center;
+        background: radial-gradient(
+            1200px 800px at 15% -10%,
+            rgba(255, 255, 255, 0.08),
+            transparent 60%
+          ),
+          linear-gradient(180deg, #1b5dfe, #9c3eff);
+        z-index: 9999;
+        overflow: hidden;
+      }
+      .brand {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 18px;
+        text-align: center;
+        color: #fff;
+      }
+      .brand img {
+        width: 84px;
+        height: 84px;
+        border-radius: 20px;
+        box-shadow: 0 12px 36px rgba(0, 0, 0, 0.35);
+      }
+      .brand h1 {
+        margin: 0;
+        font-size: 20px;
+        letter-spacing: 0.6px;
+        opacity: 0.95;
+        color: inherit;
+      }
+      .dots {
+        display: inline-flex;
+        gap: 8px;
+        margin-top: 6px;
+      }
+      .dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 999px;
+        background: #fff;
+        opacity: 0.6;
+        animation: bounce 1.2s infinite ease-in-out;
+      }
+      .dot:nth-child(2) {
+        animation-delay: 0.15s;
+      }
+      .dot:nth-child(3) {
+        animation-delay: 0.3s;
+      }
+      @keyframes bounce {
+        0%,
+        80%,
+        100% {
+          transform: translateY(0);
+          opacity: 0.6;
+        }
+        40% {
+          transform: translateY(-8px);
+          opacity: 1;
+        }
+      }
+      .shard {
+        position: absolute;
+        opacity: 0.28;
+        filter: blur(0.2px);
+      }
+      .shard svg {
+        display: block;
+      }
+      .s1 {
+        top: 8%;
+        left: 6%;
+        animation: float 7s ease-in-out infinite;
+      }
+      .s2 {
+        top: 22%;
+        right: 8%;
+        animation: float 9s ease-in-out infinite reverse;
+      }
+      .s3 {
+        bottom: 10%;
+        left: 12%;
+        animation: float 8s ease-in-out infinite;
+      }
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0) rotate(0);
+        }
+        50% {
+          transform: translateY(-14px) rotate(3deg);
+        }
+      }
+    </style>
   </head>
-  <body class="m-0 bg-[#050B24]">
-    <div class="relative overflow-x-hidden bg-gradient-to-b from-[#131A49] via-[#0B163F] to-[#050B24] text-white">
+  <body class="m-0 flex min-h-screen flex-col bg-[#050B24]">
+    <!-- Fortnite-inspirert pageloader -->
+    <div id="loader" class="loader">
+      <div class="shard s1">
+        <svg width="120" height="120" viewBox="0 0 100 100" fill="none">
+          <polygon points="10,20 90,10 70,90 5,70" fill="#ffffff" />
+        </svg>
+      </div>
+      <div class="shard s2">
+        <svg width="160" height="160" viewBox="0 0 100 100" fill="none">
+          <polygon points="15,15 95,35 65,95 5,65" fill="#13A0F9" />
+        </svg>
+      </div>
+      <div class="shard s3">
+        <svg width="140" height="140" viewBox="0 0 100 100" fill="none">
+          <polygon points="20,10 95,25 80,95 10,80" fill="#FF2F9C" />
+        </svg>
+      </div>
+
+      <div class="brand">
+        <img
+          src="https://yt3.googleusercontent.com/JDzOGDpzoZ-j6r2NGC-LboiPeK3qGmZqwSRTxgSvvMTmUbySUUGLm80RXmZtcbrAgKYacqTYzAs=s160-c-k-c0x00ffffff-no-rj"
+          alt="Fjolsenbanden"
+        />
+        <h1>Laster Fjolsenbanden-portalen…</h1>
+        <div class="dots">
+          <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="relative flex flex-1 flex-col overflow-x-hidden bg-gradient-to-b from-[#131A49] via-[#0B163F] to-[#050B24] text-white">
       <div
         class="pointer-events-none absolute inset-0"
         style="background:radial-gradient(circle at 18% 12%, rgba(19,160,249,0.3), transparent 55%), radial-gradient(circle at 80% 0%, rgba(255,47,156,0.18), transparent 50%)"
@@ -344,7 +474,7 @@
             <ul class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4" aria-label="Våre samarbeidspartnere">
               <li class="flex items-center justify-center rounded-2xl border border-white/10 bg-[#0b163f]/70 p-6 shadow-[0_12px_28px_rgba(6,12,28,0.4)]">
                 <img
-                  src="http://fjolsenbanden.setaei.com/Images/lenova1.jpg"
+                  src="https://setaei.com/Fjolsen/lenova.jpg"
                   alt="Lenovo"
                   class="max-h-12 w-full object-contain"
                   loading="lazy"
@@ -359,11 +489,11 @@
                 />
               </li>
               <li class="flex items-center justify-center rounded-2xl border border-white/10 bg-[#0b163f]/70 p-6 shadow-[0_12px_28px_rgba(6,12,28,0.4)]">
-                <img src="/assets/partners/philips.svg" alt="Philips" class="max-h-12 w-full object-contain" />
+                <img src="https://setaei.com/Fjolsen/philips.jpg" alt="Philips" class="max-h-12 w-full object-contain" />
               </li>
               <li class="flex items-center justify-center rounded-2xl border border-white/10 bg-[#0b163f]/70 p-6 shadow-[0_12px_28px_rgba(6,12,28,0.4)]">
                 <img
-                  src="http://fjolsenbanden.setaei.com/Images/samsung1.jpg"
+                  src="https://setaei.com/Fjolsen/samsung.jpg"
                   alt="Samsung"
                   class="max-h-12 w-full object-contain"
                   loading="lazy"
@@ -483,7 +613,7 @@
 
         </main>
 
-        <footer class="mt-12 border-t border-white/10 py-8 text-center text-sm text-zinc-500">
+        <footer class="mt-auto border-t border-white/10 py-8 text-center text-sm text-zinc-500">
           <span>© <span id="current-year"></span> Fjolsenbanden. Alle rettigheter reservert.</span>
         </footer>
 
@@ -994,6 +1124,17 @@
       if (currentYear) {
         currentYear.textContent = yearValue;
       }
+    </script>
+    <script>
+      window.addEventListener("load", () => {
+        const loader = document.getElementById("loader");
+        if (!loader) {
+          return;
+        }
+        loader.style.transition = "opacity .4s ease";
+        loader.style.opacity = "0";
+        window.setTimeout(() => loader.remove(), 450);
+      });
     </script>
   </body>
 </html>

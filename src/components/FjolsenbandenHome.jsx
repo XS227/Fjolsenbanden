@@ -113,6 +113,8 @@ const sponsors = [
             "Lenova1.jpg",
             "Lenovo1.jpg",
             "lenovo1.jpg",
+            "lenova.jpg",
+            "Lenova.jpg",
             "Lenovo.svg",
             "lenovo.svg",
             "Lenovo.png",
@@ -566,7 +568,7 @@ export default function FjolsenbandenHome() {
     const [firstName, ...remainingNameParts] = resolvedName ? resolvedName.split(/\s+/) : [""];
     const lastName = remainingNameParts.join(" ");
     const estimatedUnboxingReach = new Intl.NumberFormat("no-NO").format(2500 + 3200 + 4200);
-    return (React.createElement("div", { className: "relative overflow-x-hidden bg-gradient-to-b from-[#131A49] via-[#0B163F] to-[#050B24] text-white" },
+    return (React.createElement("div", { className: "relative flex min-h-screen flex-col overflow-x-hidden bg-gradient-to-b from-[#131A49] via-[#0B163F] to-[#050B24] text-white" },
         showUnboxingVideo ? (React.createElement(VideoLightbox, { videoUrl: unboxingVideoUrl, onClose: () => setShowUnboxingVideo(false), title: "Se hvordan vi pakker ut og presenterer produkter for communityet" })) : null,
         React.createElement("div", { className: "pointer-events-none fixed inset-0 -z-10 opacity-60", style: {
                 background: "radial-gradient(circle at 18% 12%, rgba(19,160,249,0.3), transparent 55%), radial-gradient(circle at 80% 0%, rgba(255,47,156,0.18), transparent 50%)",
@@ -716,7 +718,7 @@ export default function FjolsenbandenHome() {
                         React.createElement("div", { className: "md:col-span-2 flex flex-col gap-2 text-sm text-zinc-100 md:flex-row md:items-center md:justify-between" },
                             React.createElement("span", null, "Vi svarer s\u00E5 snart vi kan, som regel innen 1\u20132 virkedager."),
                             React.createElement(Button, { type: "submit", size: "lg", className: "rounded-full bg-gradient-to-r from-[#13A0F9] to-[#FF2F9C] px-6 font-semibold text-white shadow-[0_16px_28px_rgba(19,160,249,0.35)] transition hover:from-[#0d8bd6] hover:to-[#e12585]" }, "Send melding")))))) : null)),
-        React.createElement("footer", { className: "mt-12 border-t border-white/10 py-8 text-center text-sm text-zinc-500" },
+        React.createElement("footer", { className: "mt-auto border-t border-white/10 py-8 text-center text-sm text-zinc-500" },
             React.createElement("div", { className: "flex flex-col items-center justify-center gap-2 text-sm md:flex-row" },
                 React.createElement("span", null,
                     "\u00A9 ",
