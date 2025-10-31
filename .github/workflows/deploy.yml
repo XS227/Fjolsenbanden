@@ -5,35 +5,32 @@ on:
     branches: [ main ]
 
 jobs:
-  build-deploy:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Node
+      - name: Install Node & Build
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: 20
 
-      - name: Install dependencies
-        run: npm install
+      - run: npm ci
+      - run: npm run build
 
-      - name: Build production
-        run: npm run build
-
-      - name: Copy build to server
-        uses: appleboy/scp-action@v0.1.6
+      - name: Upload dist to server
+        uses: appleboy/scp-action@v0.1.5
         with:
           host: ${{ secrets.SERVER_HOST }}
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SERVER_SSH_KEY }}
           port: ${{ secrets.SERVER_SSH_PORT }}
           source: "dist/*"
-          target: "/var/www/fjolsenbanden/build/"
+          target: "/var/www/fjolsenbanden/dist"
 
-      - name: Reload Nginx
+      - name: Reload nginx
         uses: appleboy/ssh-action@v1.1.0
         with:
           host: ${{ secrets.SERVER_HOST }}
@@ -41,4 +38,4 @@ jobs:
           key: ${{ secrets.SERVER_SSH_KEY }}
           port: ${{ secrets.SERVER_SSH_PORT }}
           script: |
-            sudo systemctl reload nginx
+            sudo nginx -t && sudo systemctl reload nginx
