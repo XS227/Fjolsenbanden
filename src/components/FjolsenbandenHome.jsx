@@ -329,7 +329,8 @@ export default function FjolsenbandenHome() {
         "Spillglede for hele familien – trygge streams, turneringer og premier.";
     const announcement = ((_c = siteSettings.announcement) === null || _c === void 0 ? void 0 : _c.trim()) ||
         "Neste livesending starter 20:00 med co-op i Mario Kart og premier fra Lenovo!";
-    const logoUrl = ((_d = siteSettings.logoUrl) === null || _d === void 0 ? void 0 : _d.trim()) || "/assets/logo.svg";
+    const logoUrl = ((_d = siteSettings.logoUrl) === null || _d === void 0 ? void 0 : _d.trim()) ||
+        "/assets/branding/Liggende-Mork.svg";
     const presentationVideoUrl = ((_e = siteSettings.presentationVideoUrl) === null || _e === void 0 ? void 0 : _e.trim()) ||
         "https://www.youtube.com/embed/8EgRIkmvmtM?si=qMzmEaMfP-2ODMbc";
     const twitchEmbedUrl = ((_f = siteSettings.twitchEmbedUrl) === null || _f === void 0 ? void 0 : _f.trim()) || DEFAULT_TWITCH_EMBED_URL;
@@ -356,6 +357,16 @@ export default function FjolsenbandenHome() {
         }
         return true;
     }), [contactForm, liveStream, partnersEnabled]);
+    const desktopNavGroups = useMemo(() => {
+        if (filteredNavLinks.length <= 1) {
+            return { left: filteredNavLinks, right: [] };
+        }
+        const midpoint = Math.ceil(filteredNavLinks.length / 2);
+        return {
+            left: filteredNavLinks.slice(0, midpoint),
+            right: filteredNavLinks.slice(midpoint),
+        };
+    }, [filteredNavLinks]);
     const toggleMenu = () => {
         setMenuOpen((previous) => !previous);
     };
@@ -574,17 +585,23 @@ export default function FjolsenbandenHome() {
                 background: "radial-gradient(circle at 18% 12%, rgba(19,160,249,0.3), transparent 55%), radial-gradient(circle at 80% 0%, rgba(255,47,156,0.18), transparent 50%)",
             } }),
         React.createElement("div", { className: "flex flex-1 flex-col" },
-            React.createElement("nav", { className: "relative sticky top-0 z-50 border-b border-white/10 bg-[#050B24]/80 backdrop-blur" },
-            React.createElement("div", { className: "mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-4" },
-                React.createElement("a", { className: "flex items-center gap-3", href: "#", "aria-label": "Fjolsenbanden hjem" },
-                    React.createElement("img", { src: logoUrl, alt: `${heroTitle} logo`, className: "h-10 w-10 rounded-xl object-cover" }),
-                    React.createElement("span", { className: "hidden text-lg font-semibold sm:block" }, heroTitle)),
-                React.createElement("div", { className: "hidden items-center gap-6 md:flex" },
-                    React.createElement("ul", { className: "flex items-center gap-6 text-sm font-medium" }, filteredNavLinks.map((link) => (React.createElement("li", { key: link.name },
-                        React.createElement("a", { className: "transition-colors duration-150 hover:text-[#13A0F9]", href: link.href }, link.name))))),
-                    React.createElement("a", { href: "#bli-medlem", className: "inline-flex items-center gap-2 rounded-full border border-white/20 px-6 py-3 font-semibold text-white transition hover:border-white/40 hover:bg-white/10" }, "Bli medlem")),
-                React.createElement("div", { className: "flex items-center gap-3 md:hidden" },
-                    React.createElement("button", { type: "button", onClick: toggleMenu, "aria-expanded": menuOpen, "aria-controls": "mobile-navigation", "aria-label": menuOpen ? "Lukk meny" : "Åpne meny", className: "inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/20 text-white transition hover:border-white/40 hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/40" }, menuOpen ? React.createElement(X, { className: "h-5 w-5", "aria-hidden": "true" }) : React.createElement(Menu, { className: "h-5 w-5", "aria-hidden": "true" })))),
+        React.createElement("nav", { className: "relative sticky top-0 z-50 border-b border-white/10 bg-[#050B24]/80 backdrop-blur" },
+        (() => {
+            const renderBrand = () => (React.createElement("a", { className: "flex items-center gap-3 text-white md:justify-self-center", href: "#", "aria-label": "Fjolsenbanden hjem" },
+                React.createElement("img", { src: logoUrl, alt: `${heroTitle} logo`, className: "h-8 w-auto max-w-[180px] sm:h-10 md:h-12" }),
+                React.createElement("span", { className: "hidden text-lg font-semibold sm:block" }, heroTitle)));
+            return (React.createElement(React.Fragment, null,
+                React.createElement("div", { className: "mx-auto hidden w-full max-w-6xl items-center gap-6 px-6 py-4 md:grid md:grid-cols-[1fr_auto_1fr]" },
+                    React.createElement("div", { className: "hidden items-center justify-end gap-6 md:flex" }, desktopNavGroups.left.length > 0 ? (React.createElement("ul", { className: "flex items-center gap-6 text-sm font-medium" }, desktopNavGroups.left.map((link) => (React.createElement("li", { key: link.name },
+                        React.createElement("a", { className: "transition-colors duration-150 hover:text-[#13A0F9]", href: link.href }, link.name)))))) : null),
+                    renderBrand(),
+                    React.createElement("div", { className: "hidden items-center justify-start gap-6 md:flex" }, desktopNavGroups.right.length > 0 ? (React.createElement("ul", { className: "flex items-center gap-6 text-sm font-medium" }, desktopNavGroups.right.map((link) => (React.createElement("li", { key: link.name },
+                        React.createElement("a", { className: "transition-colors duration-150 hover:text-[#13A0F9]", href: link.href }, link.name)))))) : null,
+                        React.createElement("a", { href: "#bli-medlem", className: "inline-flex items-center gap-2 rounded-full border border-white/20 px-6 py-3 font-semibold text-white transition hover:border-white/40 hover:bg-white/10" }, "Bli medlem"))),
+                React.createElement("div", { className: "mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-4 md:hidden" },
+                    renderBrand(),
+                    React.createElement("button", { type: "button", onClick: toggleMenu, "aria-expanded": menuOpen, "aria-controls": "mobile-navigation", "aria-label": menuOpen ? "Lukk meny" : "Åpne meny", className: "inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/20 text-white transition hover:border-white/40 hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/40" }, menuOpen ? React.createElement(X, { className: "h-5 w-5", "aria-hidden": "true" }) : React.createElement(Menu, { className: "h-5 w-5", "aria-hidden": "true" })))));
+        })(),
             React.createElement("div", { id: "mobile-navigation", className: `absolute left-0 right-0 top-full z-[60] mt-3 px-6 md:hidden ${menuOpen ? "" : "hidden"}` },
                 React.createElement("div", { className: "rounded-2xl border border-white/10 bg-[#101c37] p-4 shadow-[0_18px_42px_rgba(12,21,45,0.45)]" },
                     React.createElement("ul", { className: "flex flex-col gap-2 text-sm font-medium text-white/80" }, filteredNavLinks.map((link) => (React.createElement("li", { key: link.name },

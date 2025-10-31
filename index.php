@@ -28,12 +28,9 @@
       <div class="relative flex flex-1 flex-col overflow-x-hidden bg-gradient-to-b from-[#131A49] via-[#0B163F] to-[#050B24] text-white">
 <div class="pointer-events-none fixed inset-0 -z-10 opacity-60" style="background:radial-gradient(circle at 18% 12%, rgba(19,160,249,0.3), transparent 55%), radial-gradient(circle at 80% 0%, rgba(255,47,156,0.18), transparent 50%)">
 </div>
-<nav class="relative z-50 flex items-center justify-between px-6 py-4">
-<a class="flex items-center gap-3" href="#" aria-label="Fjolsenbanden hjem">
-<img src="/assets/logo.svg" alt="FJOLSENBANDEN logo" class="h-10 w-10 rounded-xl object-cover"/>
-<span class="hidden text-lg font-semibold sm:block">FJOLSENBANDEN</span>
-</a>
-<div class="hidden items-center gap-6 md:flex">
+<nav class="relative sticky top-0 z-50 border-b border-white/10 bg-[#050B24]/80 backdrop-blur">
+<div class="mx-auto hidden w-full max-w-6xl items-center gap-6 px-6 py-4 md:grid md:grid-cols-[1fr_auto_1fr]">
+<div class="hidden items-center justify-end gap-6 md:flex">
 <ul class="flex items-center gap-6 text-sm font-medium">
 <li>
 <a class="transition-colors duration-150 hover:text-[#13A0F9]" href="#">Hjem</a>
@@ -44,6 +41,14 @@
 <li>
 <a class="transition-colors duration-150 hover:text-[#13A0F9]" href="#medlemskap">Medlemskap</a>
 </li>
+</ul>
+</div>
+<a class="flex items-center gap-3 text-white md:justify-self-center" href="#" aria-label="Fjolsenbanden hjem">
+<img src="/assets/branding/Liggende-Mork.svg" alt="FJOLSENBANDEN logo" class="h-8 w-auto max-w-[180px] sm:h-10 md:h-12"/>
+<span class="hidden text-lg font-semibold sm:block">FJOLSENBANDEN</span>
+</a>
+<div class="hidden items-center justify-start gap-6 md:flex">
+<ul class="flex items-center gap-6 text-sm font-medium">
 <li>
 <a class="transition-colors duration-150 hover:text-[#13A0F9]" href="#premier">Premier</a>
 </li>
@@ -56,7 +61,13 @@
 </ul>
 <a href="#bli-medlem" class="inline-flex items-center gap-2 rounded-full border border-white/20 px-6 py-3 font-semibold text-white transition hover:border-white/40 hover:bg-white/10">Bli medlem</a>
 </div>
-<div class="flex items-center gap-3 md:hidden">
+</div>
+<div class="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-4 md:hidden">
+<a class="flex items-center gap-3 text-white" href="#" aria-label="Fjolsenbanden hjem">
+<img src="/assets/branding/Liggende-Mork.svg" alt="FJOLSENBANDEN logo" class="h-8 w-auto max-w-[180px] sm:h-10"/>
+<span class="hidden text-lg font-semibold sm:block">FJOLSENBANDEN</span>
+</a>
+<div class="flex items-center gap-3">
 <button type="button" aria-expanded="false" aria-controls="mobile-navigation" aria-label="Åpne meny" class="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/20 text-white transition hover:border-white/40 hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/40">
 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-menu h-5 w-5" aria-hidden="true">
 <line x1="4" x2="20" y1="12" y2="12">
@@ -67,6 +78,7 @@
 </line>
 </svg>
 </button>
+</div>
 </div>
 <div id="mobile-navigation" class="absolute left-0 right-0 top-full z-[60] mt-3 px-6 md:hidden hidden">
 <div class="rounded-2xl border border-white/10 bg-[#101c37] p-4 shadow-[0_18px_42px_rgba(12,21,45,0.45)]">

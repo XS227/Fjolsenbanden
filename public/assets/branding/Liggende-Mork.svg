@@ -1,0 +1,18 @@
+<svg width="320" height="96" viewBox="0 0 320 96" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect x="4" y="4" width="312" height="88" rx="44" fill="#071133" stroke="#13A0F9" stroke-width="8"/>
+  <g filter="url(#glow)">
+    <path d="M72 64C59.8497 64 50 54.1503 50 42C50 29.8497 59.8497 20 72 20C84.1503 20 94 29.8497 94 42C94 54.1503 84.1503 64 72 64Z" fill="#0B1438"/>
+    <path d="M60 42C60 34.268 66.268 28 74 28C81.732 28 88 34.268 88 42V54H60V42Z" fill="#13A0F9"/>
+    <path d="M88 42C88 34.268 94.268 28 102 28C109.732 28 116 34.268 116 42V54H88V42Z" fill="#FF2F9C"/>
+    <circle cx="66" cy="38" r="4" fill="white"/>
+    <circle cx="78" cy="38" r="4" fill="white"/>
+    <rect x="64" y="52" width="20" height="6" rx="3" fill="white"/>
+  </g>
+  <text x="136" y="56" fill="white" font-family="'Nunito', 'Segoe UI', sans-serif" font-weight="800" font-size="32" letter-spacing="0.1em">FJOLSENBANDEN</text>
+  <defs>
+    <filter id="glow" x="42" y="16" width="82" height="56" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feBlend in="SourceGraphic" in2="blur" mode="screen"/>
+    </filter>
+  </defs>
+</svg>

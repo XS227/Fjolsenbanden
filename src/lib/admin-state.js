@@ -57,7 +57,7 @@ export const DEFAULT_PARTNER_LOGOS = [
 export const DEFAULT_TWITCH_EMBED_URL = "https://player.twitch.tv/?channel=FjOlsenFN&parent=localhost";
 const DEFAULT_STATE = {
     siteSettings: {
-        logoUrl: "/assets/logo.svg",
+        logoUrl: "/assets/branding/Liggende-Mork.svg",
         heroTitle: "FJOLSENBANDEN",
         heroTagline: "Spillglede for hele familien – trygge streams, turneringer og premier.",
         announcement: "Neste livesending starter 20:00 med co-op i Mario Kart og premier fra Lenovo!",
