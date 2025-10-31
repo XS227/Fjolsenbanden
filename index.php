@@ -319,44 +319,71 @@
   }, 5000);
 })();
 </script>
-<p class="text-xs text-slate-400">Oppdater lenken i adminpanelet for å endre hvilken Twitch-kanal som vises.</p>
+<p class="mt-3 text-xs text-slate-400">Oppdater lenken i adminpanelet for å endre hvilken Twitch-kanal som vises.</p>
 </div>
-<!-- LIVE CHAT (Twitch embed) -->
-<div class="flex h-[640px] min-h-0 flex-col rounded-2xl border border-white/10 bg-[#1f2940]">
-<h3 class="mb-0 flex items-center gap-2 px-4 pt-4 font-semibold text-[#13A0F9]">
-  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" class="h-4 w-4">
-    <path d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5H3l1.9-4.7A8.5 8.5 0 1 1 21 11.5Z" />
-  </svg>
-  Live chat
-</h3>
-<!-- Viktig: flex-1 + min-h-0 for at absolutt-posisjonert iframe skal få plass -->
-<div id="twitch-chat-wrap" class="relative flex-1 min-h-0">
-  <!-- Iframe settes inn av skriptet under -->
-</div>
+<div class="flex max-h-[640px] flex-col rounded-2xl border border-white/10 bg-[#1f2940] p-4">
+<h3 class="mb-3 flex items-center gap-2 font-semibold text-[#13A0F9]">Live chat</h3>
+<div id="custom-chat" class="flex-1 overflow-y-auto space-y-2 pr-1 text-sm"></div>
 </div>
 <div class="rounded-2xl border border-white/10 bg-black/60 p-6 lg:col-span-2">
 <p class="text-xs font-semibold uppercase tracking-[0.3em] text-slate-400">Fellesskap</p>
 <p class="mt-4 text-sm text-slate-200">Vi holder chatten trygg med dedikerte moderatorer og tydelige regler mot hets, mobbing og negativ adferd.</p>
 </div>
 </div>
+<script src="https://unpkg.com/tmi.js@1.8.5/dist/tmi.min.js"></script>
 <script>
-(function initTwitchChat(){
+(() => {
   const channel = "FjOlsenFN";
-  const parent = location.hostname;
-  const wrap = document.getElementById("twitch-chat-wrap");
-  if (!wrap) return;
+  const el = document.getElementById("custom-chat");
+  const maxItems = 200;
 
-  const chat = document.createElement("iframe");
-  chat.src = `https://www.twitch.tv/embed/${encodeURIComponent(channel)}/chat?parent=${encodeURIComponent(parent)}&theme=dark`;
-  chat.title = "Twitch Chat";
-  chat.scrolling = "no";
-  chat.allowFullscreen = true;
-  chat.style.position = "absolute";
-  chat.style.inset = "0";
-  chat.style.width = "100%";
-  chat.style.height = "100%";
-  chat.style.border = "0";
-  wrap.appendChild(chat);
+  if (!el) return;
+
+  const client = new tmi.Client({
+    connection: { secure: true, reconnect: true },
+    channels: [channel],
+  });
+
+  client.connect().catch(console.error);
+
+  function addMsg({ user, text, color }) {
+    const item = document.createElement("div");
+    item.className = "rounded-lg bg-white/5 px-3 py-2";
+
+    const name = document.createElement("span");
+    name.className = "mr-2 font-semibold";
+    name.style.color = color || "#13A0F9";
+    name.textContent = user;
+
+    const body = document.createElement("span");
+    body.className = "text-slate-200";
+    body.textContent = text;
+
+    item.appendChild(name);
+    item.appendChild(body);
+    el.appendChild(item);
+
+    while (el.children.length > maxItems) {
+      el.removeChild(el.firstChild);
+    }
+    el.scrollTop = el.scrollHeight;
+  }
+
+  client.on("message", (channel, tags, message, self) => {
+    if (self) return;
+    addMsg({
+      user: tags["display-name"] || tags.username,
+      text: message,
+      color: tags.color,
+    });
+  });
+
+  client.on("connected", () =>
+    addMsg({ user: "System", text: "Tilkoblet Twitch-chat ✅", color: "#4ade80" })
+  );
+  client.on("disconnected", () =>
+    addMsg({ user: "System", text: "Frakoblet fra chat ❌", color: "#f87171" })
+  );
 })();
 </script>
 </section>
