@@ -186,12 +186,6 @@
             <li><a class="transition-colors duration-150 hover:text-[#13A0F9]" href="#kontakt">Kontakt</a></li>
           </ul>
           <div class="flex items-center gap-3 md:ml-4">
-            <a
-              href="#medlemskap"
-              class="hidden items-center gap-2 rounded-full bg-gradient-to-r from-[#13A0F9] to-[#FF2F9C] px-4 py-2 text-sm font-semibold text-white shadow-[0_10px_24px_rgba(19,160,249,0.35)] transition hover:from-[#0d8bd6] hover:to-[#e12585] md:inline-flex"
-            >
-              Bli medlem
-            </a>
             <button
               type="button"
               class="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/20 text-white transition hover:border-white/40 hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/40 md:hidden"
@@ -250,21 +244,14 @@
               <li><a class="block rounded-md px-4 py-2 transition hover:bg-white/10" href="#partners" data-nav-close="true">Samarbeid</a></li>
               <li><a class="block rounded-md px-4 py-2 transition hover:bg-white/10" href="#kontakt" data-nav-close="true">Kontakt</a></li>
             </ul>
-            <a
-              class="mt-4 block rounded-full border border-white/20 px-4 py-2 text-center font-semibold text-white transition hover:border-white/40 hover:bg-white/10"
-              href="#medlemskap"
-              data-nav-close="true"
-            >
-              Bli medlem
-            </a>
-              </div>
-            </div>
           </div>
         </div>
+      </div>
+    </div>
 
-          
 
-        <main class="relative z-10 flex flex-1 flex-col pb-16">
+
+        <main class="relative z-10 flex flex-1 flex-col pb-28">
         <section id="community" class="section-shell pt-6">
           <div class="mx-auto grid max-w-6xl gap-10 lg:grid-cols-2 lg:items-start">
             <div class="space-y-6">
@@ -279,7 +266,7 @@
               <div class="space-y-4 rounded-3xl border border-white/10 bg-white/5 p-6 text-left shadow-[0_18px_42px_rgba(12,21,45,0.45)]">
                 <h2 class="text-xl font-semibold text-[#13A0F9]">🎮 Hva er FjOlsenbanden?</h2>
                 <p class="text-sm leading-relaxed text-zinc-200 sm:text-base">
-                  FjOlsenbanden er et raskt voksende gaming-community med over 2500 medlemmer på Discord, 3200++ følgere på Twitch og 4200+ på TikTok – både barn, ungdom og foreldre!
+                  FjOlsenbanden er et raskt voksende gaming-community med over 2.5k medlemmer på Discord, 3.2k følgere på Twitch og 4.2k på TikTok – både barn, ungdom og foreldre!
                 </p>
                 <p class="text-sm leading-relaxed text-zinc-200 sm:text-base">
                   <span class="font-semibold text-white">Målet vårt er enkelt:</span><br class="hidden sm:block" />Å skape et trygt, positivt og inkluderende miljø der alle kan game uten hets, mobbing eller negativ adferd.
@@ -643,8 +630,16 @@
 
         </main>
 
-        <footer class="mt-auto border-t border-white/10 py-8 text-center text-sm text-zinc-500">
-          <span>© <span id="current-year"></span> Fjolsenbanden. Alle rettigheter reservert.</span>
+        <footer class="fixed bottom-0 left-0 right-0 z-50 border-t border-white/10 bg-[#050B24]/90 py-4 backdrop-blur">
+          <div class="mx-auto flex w-full max-w-6xl flex-col gap-3 px-4 text-sm text-zinc-300 sm:flex-row sm:items-center sm:justify-between">
+            <span class="text-center text-xs text-zinc-500 sm:text-left sm:text-sm">© <span id="current-year"></span> Fjolsenbanden. Alle rettigheter reservert.</span>
+            <a
+              href="#medlemskap"
+              class="inline-flex items-center justify-center rounded-full bg-gradient-to-r from-[#13A0F9] to-[#FF2F9C] px-5 py-2 text-sm font-semibold text-white shadow-[0_12px_28px_rgba(19,160,249,0.35)] transition hover:from-[#0d8bd6] hover:to-[#e12585]"
+            >
+              Bli medlem
+            </a>
+          </div>
         </footer>
 
       <div id="registration-modal" class="fixed inset-0 z-[100] hidden flex items-center justify-center px-4 py-10">
