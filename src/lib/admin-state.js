@@ -49,9 +49,9 @@ export const DEFAULT_MEMBERSHIP_TIERS = [
     },
 ];
 export const DEFAULT_PARTNER_LOGOS = [
-    { id: "partner-lenovo", name: "Lenovo", logoUrl: "/assets/partners/lenovo.svg" },
+    { id: "partner-lenovo", name: "Lenovo", logoUrl: "https://setaei.com/Fjolsen/lenova.jpg" },
     { id: "partner-samsung", name: "Samsung", logoUrl: "/assets/partners/samsung.svg" },
-    { id: "partner-philips", name: "Philips", logoUrl: "/assets/partners/philips.svg" },
+    { id: "partner-philips", name: "Philips", logoUrl: "https://setaei.com/Fjolsen/philips.jpg" },
     { id: "partner-komplett", name: "Komplett.no", logoUrl: "/assets/partners/komplett.svg" },
 ];
 export const DEFAULT_TWITCH_EMBED_URL = "https://player.twitch.tv/?channel=FjOlsenFN&parent=localhost";
