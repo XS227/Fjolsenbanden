@@ -113,6 +113,8 @@ const sponsors = [
             "Lenova1.jpg",
             "Lenovo1.jpg",
             "lenovo1.jpg",
+            "lenova.jpg",
+            "Lenova.jpg",
             "Lenovo.svg",
             "lenovo.svg",
             "Lenovo.png",
