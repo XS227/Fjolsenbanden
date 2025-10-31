@@ -46,6 +46,9 @@
 <a class="transition-colors duration-150 hover:text-[#13A0F9]" href="#sponsorer">Samarbeid</a>
 </li>
 <li>
+<a class="transition-colors duration-150 hover:text-[#13A0F9]" href="updates.php">Oppdateringer</a>
+</li>
+<li>
 <a class="transition-colors duration-150 hover:text-[#13A0F9]" href="#kontakt">Kontakt</a>
 </li>
 </ul>
@@ -80,6 +83,9 @@
 </li>
 <li>
 <a class="block rounded-lg px-4 py-2 transition hover:bg-white/10 hover:text-white" href="#sponsorer">Samarbeid</a>
+</li>
+<li>
+<a class="block rounded-lg px-4 py-2 transition hover:bg-white/10 hover:text-white" href="updates.php">Oppdateringer</a>
 </li>
 <li>
 <a class="block rounded-lg px-4 py-2 transition hover:bg-white/10 hover:text-white" href="#kontakt">Kontakt</a>
