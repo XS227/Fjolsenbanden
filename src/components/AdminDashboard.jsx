@@ -1,15 +1,46 @@
 "use client";
+
 import React, { useEffect, useMemo, useState } from "react";
-import { Activity, ArrowDownRight, ArrowUpRight, BarChart3, CalendarCheck, Crown, Globe, GripVertical, Instagram, Lock, LogOut, MessageCircle, Monitor, PieChart, Plus, ShieldCheck, TrendingUp, Trophy, Trash2, UploadCloud, Users, Youtube, } from "lucide-react";
+import {
+    Activity,
+    ArrowDownRight,
+    ArrowUpRight,
+    BarChart3,
+    Bell,
+    CalendarCheck,
+    Crown,
+    Globe,
+    GripVertical,
+    Instagram,
+    Lock,
+    LogOut,
+    Menu,
+    MessageCircle,
+    Monitor,
+    PieChart,
+    Plus,
+    Search,
+    ShieldCheck,
+    TrendingUp,
+    Trophy,
+    Trash2,
+    UploadCloud,
+    Users,
+    Youtube,
+} from "lucide-react";
 import LoginModal from "@/components/LoginModal";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { DEFAULT_SITE_MODULES, useAdminState, } from "@/lib/admin-state";
+import {
+    DEFAULT_SITE_MODULES,
+    DEFAULT_SECTION_ORDER,
+    useAdminState,
+} from "@/lib/admin-state";
 import { useAdminAuth } from "@/lib/admin-auth";
-const SIDEBAR_GRADIENT = "radial-gradient(circle at 20% 20%, rgba(16, 185, 129, 0.18), transparent 55%), radial-gradient(circle at 85% 15%, rgba(59, 130, 246, 0.12), transparent 45%), #03091b";
+
 const SECTION_ITEMS = [
     {
         key: "heroIntro",
@@ -52,6 +83,7 @@ const SECTION_ITEMS = [
         moduleKey: "contactForm",
     },
 ];
+
 const ADMIN_NAV_ITEMS = [
     { id: "overview", label: "Oversikt", Icon: ShieldCheck },
     { id: "site", label: "Nettside og moduler", Icon: UploadCloud },
@@ -59,38 +91,67 @@ const ADMIN_NAV_ITEMS = [
     { id: "insights", label: "Statistikk", Icon: BarChart3 },
     { id: "team", label: "Team & profiler", Icon: Trophy },
 ];
+
 export default function AdminDashboard() {
     const auth = useAdminAuth();
+
     if (!auth.state.isAuthenticated) {
-        return (React.createElement("div", { className: "min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950" },
-            React.createElement(LoginModal, { open: true, auth: auth, title: "Admininnlogging", description: "Oppgi brukernavn og passord for administratorer for \u00E5 \u00E5pne kontrollpanelet.", accent: "emerald" })));
+        return (
+            <div className="min-h-screen bg-slate-100">
+                <LoginModal
+                    open
+                    auth={auth}
+                    title="Admininnlogging"
+                    description="Oppgi brukernavn og passord for administratorer for å åpne kontrollpanelet."
+                    accent="emerald"
+                />
+            </div>
+        );
     }
-    return React.createElement(AdminDashboardContent, { auth: auth });
+
+    return <AdminDashboardContent auth={auth} />;
 }
+
 function AdminDashboardContent({ auth }) {
-    var _a, _b, _c, _d, _e, _f;
     const { state, updateSiteSettings } = useAdminState();
     const { siteSettings, players, statsHistory } = state;
+
     const [brandForm, setBrandForm] = useState(siteSettings);
-    const [sectionOrder, setSectionOrder] = useState(() => normalizeSectionOrder(siteSettings.sectionOrder));
+    const [sectionOrder, setSectionOrder] = useState(() =>
+        normalizeSectionOrder(siteSettings.sectionOrder),
+    );
     const [draggingSection, setDraggingSection] = useState(null);
     const [dragOverSection, setDragOverSection] = useState(null);
     const [membershipDrafts, setMembershipDrafts] = useState(() => siteSettings.membershipTiers);
     const [partnerLogos, setPartnerLogos] = useState(() => siteSettings.partnerLogos);
+
     useEffect(() => {
         setBrandForm(siteSettings);
         setSectionOrder(normalizeSectionOrder(siteSettings.sectionOrder));
         setMembershipDrafts(siteSettings.membershipTiers);
         setPartnerLogos(siteSettings.partnerLogos);
     }, [siteSettings]);
-    const moduleSettings = useMemo(() => { var _a; return ({ ...DEFAULT_SITE_MODULES, ...((_a = siteSettings.modules) !== null && _a !== void 0 ? _a : DEFAULT_SITE_MODULES) }); }, [siteSettings.modules]);
-    const sectionItemMap = useMemo(() => new Map(SECTION_ITEMS.map((item) => [item.key, item])), []);
+
+    const moduleSettings = useMemo(
+        () => ({
+            ...DEFAULT_SITE_MODULES,
+            ...(siteSettings.modules ?? DEFAULT_SITE_MODULES),
+        }),
+        [siteSettings.modules],
+    );
+
+    const sectionItemMap = useMemo(
+        () => new Map(SECTION_ITEMS.map((item) => [item.key, item])),
+        [],
+    );
+
     const orderedSectionItems = useMemo(() => {
         const order = normalizeSectionOrder(sectionOrder);
         return order
             .map((key) => sectionItemMap.get(key))
             .filter((value) => Boolean(value));
     }, [sectionItemMap, sectionOrder]);
+
     const handleSectionDragStart = (key) => (event) => {
         setDraggingSection(key);
         setDragOverSection(null);
@@ -99,6 +160,7 @@ function AdminDashboardContent({ auth }) {
             event.dataTransfer.setData("text/plain", key);
         }
     };
+
     const handleSectionDragEnter = (key) => (event) => {
         event.preventDefault();
         if (draggingSection === key) {
@@ -106,16 +168,17 @@ function AdminDashboardContent({ auth }) {
         }
         setDragOverSection(key);
     };
+
     const handleSectionDragOver = (event) => {
         event.preventDefault();
         if (event.dataTransfer) {
             event.dataTransfer.dropEffect = "move";
         }
     };
+
     const handleSectionDrop = (targetKey) => (event) => {
-        var _a, _b;
         event.preventDefault();
-        const sourceKey = (_b = (_a = event.dataTransfer) === null || _a === void 0 ? void 0 : _a.getData("text/plain")) !== null && _b !== void 0 ? _b : draggingSection;
+        const sourceKey = event.dataTransfer?.getData("text/plain") ?? draggingSection;
         if (!sourceKey || sourceKey === targetKey) {
             setDragOverSection(null);
             setDraggingSection(null);
@@ -130,17 +193,22 @@ function AdminDashboardContent({ auth }) {
         setDragOverSection(null);
         setDraggingSection(null);
     };
+
     const handleSectionDragEnd = () => {
         setDragOverSection(null);
         setDraggingSection(null);
     };
+
     const handleMembershipFieldChange = (id, field, value) => {
         setMembershipDrafts((current) => {
-            const next = current.map((tier) => (tier.id === id ? { ...tier, [field]: value } : tier));
+            const next = current.map((tier) =>
+                tier.id === id ? { ...tier, [field]: value } : tier,
+            );
             updateSiteSettings({ membershipTiers: next });
             return next;
         });
     };
+
     const handleMembershipFeaturesChange = (id, value) => {
         const features = value
             .split(/\r?\n/)
@@ -148,6 +216,7 @@ function AdminDashboardContent({ auth }) {
             .filter(Boolean);
         handleMembershipFieldChange(id, "features", features);
     };
+
     const addMembershipTier = () => {
         const newTier = {
             id: generateLocalId("tier"),
@@ -162,6 +231,7 @@ function AdminDashboardContent({ auth }) {
             return next;
         });
     };
+
     const removeMembershipTier = (id) => {
         setMembershipDrafts((current) => {
             const next = current.filter((tier) => tier.id !== id);
@@ -170,13 +240,17 @@ function AdminDashboardContent({ auth }) {
             return safeNext;
         });
     };
+
     const handlePartnerFieldChange = (id, field, value) => {
         setPartnerLogos((current) => {
-            const next = current.map((partner) => partner.id === id ? { ...partner, [field]: value } : partner);
+            const next = current.map((partner) =>
+                partner.id === id ? { ...partner, [field]: value } : partner,
+            );
             updateSiteSettings({ partnerLogos: next });
             return next;
         });
     };
+
     const addPartnerLogo = () => {
         const newPartner = {
             id: generateLocalId("partner"),
@@ -189,6 +263,7 @@ function AdminDashboardContent({ auth }) {
             return next;
         });
     };
+
     const removePartnerLogo = (id) => {
         setPartnerLogos((current) => {
             const next = current.filter((partner) => partner.id !== id);
@@ -196,23 +271,22 @@ function AdminDashboardContent({ auth }) {
             return next.length > 0 ? next : current;
         });
     };
+
     const handlePartnerLogoUpload = (id) => async (event) => {
-        var _a;
-        const file = (_a = event.target.files) === null || _a === void 0 ? void 0 : _a[0];
+        const file = event.target.files?.[0];
         if (!file) {
             return;
         }
         try {
             const dataUrl = await readFileAsDataUrl(file);
             handlePartnerFieldChange(id, "logoUrl", dataUrl);
-        }
-        finally {
+        } finally {
             event.target.value = "";
         }
     };
+
     const handleLogoFileChange = async (event) => {
-        var _a;
-        const file = (_a = event.target.files) === null || _a === void 0 ? void 0 : _a[0];
+        const file = event.target.files?.[0];
         if (!file) {
             return;
         }
@@ -220,509 +294,1265 @@ function AdminDashboardContent({ auth }) {
             const dataUrl = await readFileAsDataUrl(file);
             setBrandForm((state) => ({ ...state, logoUrl: dataUrl }));
             updateSiteSettings({ logoUrl: dataUrl });
-        }
-        finally {
+        } finally {
             event.target.value = "";
         }
     };
+
     const totals = useMemo(() => {
-        var _a, _b;
-        const totalMembers = (_b = (_a = statsHistory.at(-1)) === null || _a === void 0 ? void 0 : _a.members) !== null && _b !== void 0 ? _b : 0;
+        const totalMembers = statsHistory.at(-1)?.members ?? 0;
         const totalWatchHours = statsHistory.reduce((sum, point) => sum + point.watchHours, 0);
         const totalTournaments = statsHistory.reduce((sum, point) => sum + point.tournaments, 0);
         const totalNewMembers = statsHistory.reduce((sum, point) => sum + point.newMembers, 0);
         const growth = computeGrowth(statsHistory);
         return { totalMembers, totalWatchHours, totalTournaments, totalNewMembers, growth };
     }, [statsHistory]);
-    const sponsorSegments = useMemo(() => buildSponsorSegments(players), [players]);
-    const analyticsOverview = useMemo(() => buildAnalyticsOverview(statsHistory), [statsHistory]);
-    const topPageStats = useMemo(() => buildTopPageStats(siteSettings, statsHistory), [siteSettings, statsHistory]);
-    const deviceBreakdown = useMemo(() => buildDeviceBreakdown(statsHistory), [statsHistory]);
-    const channelBreakdown = useMemo(() => buildChannelBreakdown(statsHistory), [statsHistory]);
-    const trafficTable = useMemo(() => buildTrafficTable(statsHistory), [statsHistory]);
-    const trafficChart = useMemo(() => buildTrafficChart(statsHistory), [statsHistory]);
+
+    const latestStats = statsHistory.at(-1) ?? {
+        members: 0,
+        watchHours: 0,
+        tournaments: 0,
+        newMembers: 0,
+    };
+    const previousStats = statsHistory.length > 1 ? statsHistory[statsHistory.length - 2] : latestStats;
+
+    const overviewCards = [
+        {
+            key: "members",
+            label: "Medlemmer",
+            icon: Users,
+            value: totals.totalMembers.toLocaleString("no-NO"),
+            helper: "Totalt i communityet",
+            change: totals.growth,
+        },
+        {
+            key: "watch",
+            label: "Seertimer",
+            icon: Monitor,
+            value: `${latestStats.watchHours.toLocaleString("no-NO")} t`,
+            helper: "Siste måned",
+            change: percentageChange(latestStats.watchHours, previousStats.watchHours),
+        },
+        {
+            key: "events",
+            label: "Turneringer",
+            icon: CalendarCheck,
+            value: latestStats.tournaments.toLocaleString("no-NO"),
+            helper: "Planlagt / måned",
+            change: percentageChange(latestStats.tournaments, previousStats.tournaments),
+        },
+        {
+            key: "new",
+            label: "Nye medlemmer",
+            icon: TrendingUp,
+            value: latestStats.newMembers.toLocaleString("no-NO"),
+            helper: "Registrert siste måned",
+            change: percentageChange(latestStats.newMembers, previousStats.newMembers),
+        },
+    ];
+
+    const analyticsOverview = useMemo(
+        () => buildAnalyticsOverview(statsHistory),
+        [statsHistory],
+    );
+    const topPageStats = useMemo(
+        () => buildTopPageStats(siteSettings, statsHistory),
+        [siteSettings, statsHistory],
+    );
+    const deviceBreakdown = useMemo(
+        () => buildDeviceBreakdown(statsHistory),
+        [statsHistory],
+    );
+    const channelBreakdown = useMemo(
+        () => buildChannelBreakdown(statsHistory),
+        [statsHistory],
+    );
+    const trafficTable = useMemo(
+        () => buildTrafficTable(statsHistory),
+        [statsHistory],
+    );
+    const trafficChart = useMemo(
+        () => buildTrafficChart(statsHistory),
+        [statsHistory],
+    );
+    const sponsorSegments = useMemo(
+        () => buildSponsorSegments(players),
+        [players],
+    );
+
     const deviceGradient = useMemo(() => {
         let start = 0;
         return deviceBreakdown.segments
             .map((segment) => {
-            const end = start + segment.percent;
-            const part = `${segment.color} ${start}% ${end}%`;
-            start = end;
-            return part;
-        })
+                const end = start + segment.percent;
+                const part = `${segment.color} ${start}% ${end}%`;
+                start = end;
+                return part;
+            })
             .join(", ");
     }, [deviceBreakdown.segments]);
+
     const handleBrandSubmit = (event) => {
         event.preventDefault();
         updateSiteSettings(brandForm);
     };
+
     const lastLogin = auth.state.lastLoginAt ? formatDateTime(auth.state.lastLoginAt) : null;
+
     const handleModuleToggle = (module) => {
         const nextValue = !moduleSettings[module];
         updateSiteSettings({ modules: { [module]: nextValue } });
     };
+
     const renderTrendPill = (value) => {
         const positive = value >= 0;
         const Icon = positive ? ArrowUpRight : ArrowDownRight;
         const classes = positive
-            ? "inline-flex items-center gap-1 rounded-full border border-emerald-400/40 bg-emerald-500/10 px-2.5 py-1 text-xs font-semibold text-emerald-200"
-            : "inline-flex items-center gap-1 rounded-full border border-rose-400/40 bg-rose-500/10 px-2.5 py-1 text-xs font-semibold text-rose-200";
+            ? "inline-flex items-center gap-1 rounded-full border border-emerald-200 bg-emerald-50 px-2.5 py-1 text-xs font-medium text-emerald-600"
+            : "inline-flex items-center gap-1 rounded-full border border-rose-200 bg-rose-50 px-2.5 py-1 text-xs font-medium text-rose-600";
         const formatted = `${positive ? "+" : ""}${value.toFixed(1)}%`;
-        return (React.createElement("span", { className: classes },
-            React.createElement(Icon, { className: "h-3.5 w-3.5" }),
-            formatted));
+        return (
+            <span className={classes}>
+                <Icon className="h-3.5 w-3.5" />
+                {formatted}
+            </span>
+        );
     };
-    return (React.createElement("div", { className: "min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 text-slate-100" },
-        React.createElement("div", { className: "mx-auto flex w-full max-w-6xl gap-8 px-6 py-12" },
-            React.createElement("aside", { className: "hidden lg:flex lg:w-72 lg:flex-shrink-0" },
-                React.createElement("div", { className: "sticky top-24 flex w-full flex-col gap-8 rounded-3xl border border-white/10 px-6 py-8 shadow-[0_30px_80px_-40px_rgba(16,185,129,0.6)] backdrop-blur", style: { background: SIDEBAR_GRADIENT } },
-                    React.createElement("div", { className: "flex items-center gap-3" },
-                        React.createElement("span", { className: "flex h-12 w-12 items-center justify-center rounded-2xl border border-emerald-400/40 bg-emerald-500/10 text-lg font-semibold text-emerald-200" }, "FB"),
-                        React.createElement("div", { className: "space-y-1" },
-                            React.createElement("p", { className: "text-xs uppercase tracking-[0.32em] text-emerald-200/80" }, "Admin"),
-                            React.createElement("p", { className: "text-base font-semibold text-white" }, "Fjolsenbanden"))),
-                    React.createElement("div", { className: "rounded-2xl border border-white/10 bg-slate-950/40 p-4" },
-                        React.createElement("p", { className: "text-xs uppercase tracking-wide text-slate-400" }, "Medlemsvekst"),
-                        React.createElement("p", { className: "mt-2 text-2xl font-semibold text-white" }, totals.totalMembers.toLocaleString("no-NO")),
-                        React.createElement("p", { className: "flex items-center gap-1 text-xs text-emerald-300" },
-                            React.createElement(ArrowUpRight, { className: "h-3.5 w-3.5" }),
-                            `+${totals.growth}% siste 6 mnd`)),
-                    React.createElement("nav", { className: "space-y-4" },
-                        React.createElement("div", { className: "space-y-1" },
-                            React.createElement("p", { className: "text-xs font-semibold uppercase tracking-[0.28em] text-slate-400" }, "Navigasjon"),
-                            React.createElement("p", { className: "text-sm text-slate-300" }, "Utforsk alt i kontrollpanelet")),
-                        React.createElement("ul", { className: "space-y-1" }, ADMIN_NAV_ITEMS.map((item) => (React.createElement("li", { key: item.id },
-                            React.createElement("a", { href: `#${item.id}`, className: "flex items-center gap-3 rounded-2xl border border-white/5 bg-white/0 px-4 py-2 text-sm font-medium text-slate-200 transition hover:border-emerald-400/50 hover:bg-emerald-500/10 hover:text-white" },
-                                React.createElement(item.Icon, { className: "h-4 w-4 text-emerald-300", "aria-hidden": "true" }),
-                                React.createElement("span", null, item.label))))))),
-                    React.createElement("div", { className: "space-y-3" },
-                        React.createElement(Button, { asChild: true, className: "w-full justify-start gap-2 rounded-2xl bg-emerald-500 text-emerald-950 shadow-lg shadow-emerald-500/30 hover:bg-emerald-400" },
-                            React.createElement("a", { href: "/admin/members" },
-                                React.createElement(Users, { className: "h-4 w-4", "aria-hidden": "true" }),
-                                " Administrer medlemmer")),
-                        React.createElement(Button, { asChild: true, variant: "outline", className: "w-full justify-start gap-2 rounded-2xl border-white/20 bg-white/5 text-white hover:bg-white/10" },
-                            React.createElement("a", { href: "/admin/profile-preview" },
-                                React.createElement(ArrowUpRight, { className: "h-4 w-4", "aria-hidden": "true" }),
-                                " Forh\u00E5ndsvis profiler"))))),
-            React.createElement("div", { className: "flex min-w-0 flex-1 flex-col gap-10" },
-                React.createElement("header", { id: "overview", className: "scroll-mt-32 flex flex-col justify-between gap-6 lg:flex-row lg:items-start" },
-                    React.createElement("div", { className: "space-y-3" },
-                        React.createElement("p", { className: "inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-4 py-1 text-sm font-medium text-emerald-200" },
-                            React.createElement(ShieldCheck, { className: "h-4 w-4" }),
-                            " Intern oversikt"),
-                        React.createElement("h1", { className: "text-3xl font-semibold tracking-tight text-white sm:text-4xl" }, "Adminpanel for Fjolsenbanden"),
-                        React.createElement("p", { className: "max-w-2xl text-base text-slate-300" }, "Oppdater profileringen, styr hvilke moduler som vises og f\u00F8lg med p\u00E5 vekst direkte fra ett samlet kontrollrom. Medlemsdata h\u00E5ndteres n\u00E5 i en egen administrasjonsside.")),
-                    React.createElement("div", { className: "flex flex-col items-end gap-4" },
-                        React.createElement("div", { className: "flex flex-wrap items-center justify-end gap-3" },
-                            React.createElement("span", { className: "inline-flex items-center gap-2 rounded-full border border-emerald-400/40 bg-emerald-400/10 px-3 py-1 text-xs font-medium text-emerald-100" },
-                                React.createElement(Lock, { className: "h-3.5 w-3.5" }),
-                                " Innlogget som administrator"),
-                            React.createElement(Button, { className: "bg-white/10 text-white hover:bg-white/20", type: "button" },
-                                React.createElement(ArrowUpRight, { className: "mr-2 h-4 w-4" }),
-                                " Eksporter CSV"),
-                            React.createElement(Button, { variant: "outline", className: "border-white/20 bg-white/5 text-white hover:bg-white/15", type: "button" },
-                                React.createElement(MessageCircle, { className: "mr-2 h-4 w-4" }),
-                                " Del status"),
-                            React.createElement(Button, { variant: "outline", className: "border-white/20 bg-white/5 text-white hover:bg-white/15", onClick: auth.logout },
-                                React.createElement(LogOut, { className: "mr-2 h-4 w-4" }),
-                                " Logg ut")),
-                        lastLogin ? React.createElement("p", { className: "text-xs text-slate-400" },
-                            "Sist verifisert ",
-                            lastLogin) : null)),
-                React.createElement("div", { className: "lg:hidden" },
-                    React.createElement("div", { className: "-mx-1 flex snap-x gap-2 overflow-x-auto px-1 pb-2" }, ADMIN_NAV_ITEMS.map((item) => (React.createElement("a", { key: item.id, href: `#${item.id}`, className: "whitespace-nowrap rounded-full border border-white/15 bg-white/5 px-4 py-2 text-xs font-semibold text-slate-200 transition hover:border-emerald-400/60 hover:bg-emerald-500/10 hover:text-white" }, item.label))))),
-                React.createElement("section", { id: "site", className: "grid gap-6 scroll-mt-32 lg:grid-cols-[1.2fr,1fr]" },
-                    React.createElement(Card, { className: "border-white/10 bg-white/5 text-white" },
-                        React.createElement(CardHeader, null,
-                            React.createElement(CardTitle, { className: "text-lg text-white" }, "Oppdater logo og tekst"),
-                            React.createElement("p", { className: "text-sm text-slate-300" }, "Tilpass hvordan Fjolsenbanden presenteres utad. Endringene vises med en gang i forh\u00E5ndsvisningen.")),
-                        React.createElement(CardContent, { className: "space-y-6" },
-                            React.createElement("form", { className: "space-y-5", onSubmit: handleBrandSubmit },
-                                React.createElement("div", { className: "space-y-2" },
-                                    React.createElement(Label, { htmlFor: "logoUrl", className: "text-slate-200" }, "Logo-URL"),
-                                    React.createElement(Input, { id: "logoUrl", name: "logoUrl", value: brandForm.logoUrl, onChange: (event) => setBrandForm((state) => ({ ...state, logoUrl: event.target.value })), placeholder: "https://...", className: "bg-slate-950/40 text-white placeholder:text-slate-400" }),
-                                    React.createElement("div", { className: "flex flex-col gap-2 sm:flex-row sm:items-center" },
-                                        React.createElement("label", { className: "inline-flex cursor-pointer items-center gap-2 rounded-full border border-white/20 bg-white/5 px-4 py-1.5 text-xs font-semibold text-slate-200 transition hover:bg-white/10" },
-                                            React.createElement(UploadCloud, { className: "h-4 w-4", "aria-hidden": "true" }),
-                                            "Last opp fil",
-                                            React.createElement("input", { type: "file", accept: "image/*", className: "hidden", onChange: handleLogoFileChange })),
-                                        React.createElement("p", { className: "text-xs text-slate-400" }, "St\u00F8tter PNG, JPG og SVG. Maks 2\u00A0MB anbefales."))),
-                                React.createElement("div", { className: "space-y-2" },
-                                    React.createElement(Label, { htmlFor: "heroTitle", className: "text-slate-200" }, "Hovedtittel"),
-                                    React.createElement(Input, { id: "heroTitle", name: "heroTitle", value: brandForm.heroTitle, onChange: (event) => setBrandForm((state) => ({ ...state, heroTitle: event.target.value })), placeholder: "FJOLSENBANDEN", className: "bg-slate-950/40 text-white placeholder:text-slate-400" })),
-                                React.createElement("div", { className: "space-y-2" },
-                                    React.createElement(Label, { htmlFor: "heroTagline", className: "text-slate-200" }, "Ingress / slagord"),
-                                    React.createElement(Textarea, { id: "heroTagline", name: "heroTagline", rows: 3, value: brandForm.heroTagline, onChange: (event) => setBrandForm((state) => ({ ...state, heroTagline: event.target.value })), placeholder: "Beskriv kort hva Fjolsenbanden tilbyr", className: "bg-slate-950/40 text-white placeholder:text-slate-400" })),
-                                React.createElement("div", { className: "space-y-2" },
-                                    React.createElement(Label, { htmlFor: "presentationVideoUrl", className: "text-slate-200" }, "Presentasjonsvideo (YouTube-embed)"),
-                                    React.createElement(Input, { id: "presentationVideoUrl", name: "presentationVideoUrl", value: brandForm.presentationVideoUrl, onChange: (event) => setBrandForm((state) => ({ ...state, presentationVideoUrl: event.target.value })), placeholder: "https://www.youtube.com/embed/...", className: "bg-slate-950/40 text-white placeholder:text-slate-400" }),
-                                    React.createElement("p", { className: "text-xs text-slate-400" }, "Lim inn adressen fra \u00ABDel\u00BB \u2192 \u00ABBygg inn\u00BB (starter med https://www.youtube.com/embed/).")),
-                                React.createElement("div", { className: "space-y-2" },
-                                    React.createElement(Label, { htmlFor: "twitchEmbedUrl", className: "text-slate-200" }, "Twitch-embed URL"),
-                                    React.createElement(Input, { id: "twitchEmbedUrl", name: "twitchEmbedUrl", value: brandForm.twitchEmbedUrl, onChange: (event) => setBrandForm((state) => ({ ...state, twitchEmbedUrl: event.target.value })), placeholder: "https://player.twitch.tv/?channel=...&parent=din-side.no", className: "bg-slate-950/40 text-white placeholder:text-slate-400" }),
-                                    React.createElement("p", { className: "text-xs text-slate-400" },
-                                        "Husk \u00E5 oppdatere ",
-                                        React.createElement("code", { className: "rounded bg-white/10 px-1 py-[1px]" }, "parent"),
-                                        "-parameteren med domenet ditt.")),
-                                React.createElement("div", { className: "space-y-2" },
-                                    React.createElement(Label, { htmlFor: "announcement", className: "text-slate-200" }, "Aktuell melding"),
-                                    React.createElement(Textarea, { id: "announcement", name: "announcement", rows: 2, value: brandForm.announcement, onChange: (event) => setBrandForm((state) => ({ ...state, announcement: event.target.value })), placeholder: "Neste livesending starter...", className: "bg-slate-950/40 text-white placeholder:text-slate-400" })),
-                                React.createElement("div", { className: "flex items-center justify-between gap-3" },
-                                    React.createElement("p", { className: "text-xs text-slate-400" }, "Lagres automatisk i nettleseren n\u00E5r du klikker \u00ABPubliser endringer\u00BB."),
-                                    React.createElement(Button, { type: "submit", className: "bg-emerald-500 text-emerald-950 hover:bg-emerald-400" }, "Lagre endringer"))),
-                            React.createElement("div", { className: "space-y-4 rounded-2xl border border-white/10 bg-white/5 p-5" },
-                                React.createElement("div", { className: "flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between" },
-                                    React.createElement("p", { className: "text-sm font-semibold text-white" }, "Moduler p\u00E5 forsiden"),
-                                    React.createElement("span", { className: "text-xs text-slate-300" }, "Sl\u00E5 av seksjoner som ikke skal vises.")),
-                                React.createElement("div", { className: "space-y-3" }, orderedSectionItems.map((item, index) => {
-                                    const enabled = item.moduleKey ? moduleSettings[item.moduleKey] : true;
-                                    const isDropTarget = dragOverSection === item.key;
-                                    const isDragging = draggingSection === item.key;
-                                    const orderLabel = String(index + 1).padStart(2, "0");
-                                    return (React.createElement("div", { key: item.key, draggable: true, onDragStart: handleSectionDragStart(item.key), onDragEnter: handleSectionDragEnter(item.key), onDragOver: handleSectionDragOver, onDrop: handleSectionDrop(item.key), onDragEnd: handleSectionDragEnd, className: `flex flex-col gap-4 rounded-xl border bg-slate-950/30 p-4 transition sm:flex-row sm:items-center sm:justify-between ${isDropTarget
-                                            ? "border-emerald-400/60 bg-emerald-500/10"
-                                            : isDragging
-                                                ? "border-cyan-400/60 bg-cyan-500/10"
-                                                : "border-white/10"}` },
-                                        React.createElement("div", { className: "flex flex-1 items-start gap-3 text-left" },
-                                            React.createElement("span", { className: "flex h-9 w-9 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-sm font-semibold text-emerald-200" }, orderLabel),
-                                            React.createElement("div", { className: "flex-1" },
-                                                React.createElement("p", { className: "flex items-center gap-2 text-sm font-semibold text-white" },
-                                                    React.createElement(item.Icon, { className: "h-4 w-4 text-emerald-300" }),
-                                                    " ",
-                                                    item.label),
-                                                React.createElement("p", { className: "text-xs text-slate-300" }, item.description))),
-                                        React.createElement("div", { className: "flex items-center gap-3 self-stretch sm:self-auto" },
-                                            React.createElement("span", { className: "inline-flex items-center gap-1 rounded-full border border-white/15 bg-white/5 px-3 py-1 text-[11px] uppercase tracking-widest text-slate-300" },
-                                                React.createElement(GripVertical, { className: "h-3.5 w-3.5", "aria-hidden": "true" }),
-                                                " Flytt"),
-                                            item.moduleKey ? (React.createElement("button", { type: "button", onClick: (event) => {
-                                                    event.stopPropagation();
-                                                    handleModuleToggle(item.moduleKey);
-                                                }, className: `inline-flex items-center gap-2 rounded-full border px-4 py-1 text-xs font-semibold transition ${enabled
-                                                    ? "border-emerald-400/60 bg-emerald-500/20 text-emerald-100 hover:bg-emerald-500/30"
-                                                    : "border-white/20 bg-white/5 text-slate-200 hover:bg-white/10"}`, "aria-pressed": enabled },
-                                                React.createElement("span", { className: `h-2 w-2 rounded-full ${enabled ? "bg-emerald-300" : "bg-slate-400"}`, "aria-hidden": "true" }),
-                                                enabled ? "Aktivert" : "Skjult")) : (React.createElement("span", { className: "inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-4 py-1 text-xs font-semibold text-slate-200" },
-                                                React.createElement("span", { className: "h-2 w-2 rounded-full bg-emerald-300", "aria-hidden": "true" }),
-                                                " Alltid aktiv")))));
-                                }))))),
-                    React.createElement(Card, { className: "border-white/10 bg-gradient-to-br from-indigo-900/80 via-indigo-950 to-slate-950 text-white" },
-                        React.createElement(CardHeader, { className: "pb-4" },
-                            React.createElement(CardTitle, { className: "flex items-center justify-between text-base text-white" },
-                                "Forh\u00E5ndsvisning",
-                                React.createElement("span", { className: "text-xs font-medium text-indigo-200" }, "Oppdatert i sanntid"))),
-                        React.createElement(CardContent, { className: "space-y-6" },
-                            React.createElement("div", { className: "overflow-hidden rounded-2xl border border-white/10", style: { background: brandBackground } },
-                                React.createElement("div", { className: "flex flex-col gap-6 p-6" },
-                                    React.createElement("div", { className: "flex items-center gap-4" },
-                                        React.createElement("div", { className: "flex h-14 w-14 items-center justify-center rounded-2xl bg-white/10" }, siteSettings.logoUrl ? (React.createElement("img", { src: siteSettings.logoUrl, alt: "Fjolsenbanden-logo", className: "max-h-12 max-w-full object-contain" })) : (React.createElement("span", { className: "text-lg font-semibold tracking-wide" }, "FB"))),
-                                        React.createElement("div", null,
-                                            React.createElement("p", { className: "text-xs uppercase tracking-wide text-slate-300" }, "Brand hero"),
-                                            React.createElement("p", { className: "text-lg font-semibold text-white" }, "F\u00F8rsteinntrykket ute p\u00E5 nettsiden"))),
-                                    React.createElement("div", { className: "space-y-3" },
-                                        React.createElement("h2", { className: "text-3xl font-black tracking-tight text-white sm:text-4xl" }, siteSettings.heroTitle || "FJOLSENBANDEN"),
-                                        React.createElement("p", { className: "text-sm text-slate-200 sm:text-base" }, siteSettings.heroTagline ||
-                                            "Spillglede for hele familien – trygge streams, turneringer og premier.")),
-                                    React.createElement("div", { className: "flex flex-wrap gap-3" },
-                                        React.createElement(Button, { className: "rounded-full bg-emerald-500 px-5 text-sm font-semibold text-emerald-950 shadow-lg" }, "Bli med p\u00E5 neste stream"),
-                                        React.createElement(Button, { variant: "outline", className: "rounded-full border-white/30 bg-white/10 px-5 text-sm text-white hover:bg-white/20" }, "Les medlemsguiden"))),
-                                React.createElement("div", { className: "border-t border-white/10 bg-white/5 px-6 py-4 text-xs text-slate-200" },
-                                    React.createElement("span", { className: "font-semibold text-white" }, "Nyhet:"),
-                                    " ",
-                                    siteSettings.announcement)),
-                            React.createElement("div", { className: "grid gap-4 sm:grid-cols-2" },
-                                React.createElement("div", { className: "rounded-2xl border border-white/10 bg-white/5 p-4" },
-                                    React.createElement("p", { className: "text-xs uppercase tracking-wide text-indigo-200" }, "Medlemsvekst"),
-                                    React.createElement("p", { className: "mt-2 text-2xl font-semibold text-white" }, totals.totalMembers.toLocaleString("no-NO")),
-                                    React.createElement("p", { className: "text-xs text-indigo-100/80" }, "Medlemmer totalt")),
-                                React.createElement("div", { className: "rounded-2xl border border-white/10 bg-white/5 p-4" },
-                                    React.createElement("p", { className: "text-xs uppercase tracking-wide text-indigo-200" }, "Nye medlemmer"),
-                                    React.createElement("p", { className: "mt-2 text-2xl font-semibold text-white" }, totals.totalNewMembers),
-                                    React.createElement("p", { className: "text-xs text-indigo-100/80" }, "Siste 6 m\u00E5neder")))))),
-                React.createElement("section", { id: "memberships", className: "grid gap-6 scroll-mt-32 lg:grid-cols-2" },
-                    React.createElement(Card, { className: "border-white/10 bg-white/5 text-white" },
-                        React.createElement(CardHeader, null,
-                            React.createElement(CardTitle, { className: "flex items-center gap-2 text-white" },
-                                React.createElement(Users, { className: "h-5 w-5 text-emerald-300" }),
-                                " Medlemskap"),
-                            React.createElement("p", { className: "text-sm text-slate-300" }, "Oppdater navn, pris og fordeler for hver medlemskategori. Endringer lagres med en gang.")),
-                        React.createElement(CardContent, { className: "space-y-4" },
-                            membershipDrafts.map((tier) => (React.createElement("div", { key: tier.id, className: "space-y-4 rounded-2xl border border-white/10 bg-slate-950/40 p-4" },
-                                React.createElement("div", { className: "flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between" },
-                                    React.createElement("div", null,
-                                        React.createElement("p", { className: "text-sm font-semibold text-white" }, tier.title || "Medlemskap"),
-                                        React.createElement("p", { className: "text-xs text-slate-400" }, "Vises i prislisten p\u00E5 forsiden.")),
-                                    React.createElement(Button, { variant: "outline", className: "inline-flex items-center gap-2 border-white/20 bg-white/5 text-xs text-slate-200 hover:bg-white/10", type: "button", onClick: () => removeMembershipTier(tier.id) },
-                                        React.createElement(Trash2, { className: "h-3.5 w-3.5" }),
-                                        " Fjern")),
-                                React.createElement("div", { className: "grid gap-4 sm:grid-cols-2" },
-                                    React.createElement("div", { className: "space-y-2" },
-                                        React.createElement(Label, { htmlFor: `tier-title-${tier.id}`, className: "text-slate-200" }, "Navn"),
-                                        React.createElement(Input, { id: `tier-title-${tier.id}`, value: tier.title, onChange: (event) => handleMembershipFieldChange(tier.id, "title", event.target.value), className: "bg-slate-950/40 text-white placeholder:text-slate-400" })),
-                                    React.createElement("div", { className: "space-y-2" },
-                                        React.createElement(Label, { htmlFor: `tier-price-${tier.id}`, className: "text-slate-200" }, "Pris"),
-                                        React.createElement(Input, { id: `tier-price-${tier.id}`, value: tier.price, onChange: (event) => handleMembershipFieldChange(tier.id, "price", event.target.value), className: "bg-slate-950/40 text-white placeholder:text-slate-400" }))),
-                                React.createElement("div", { className: "space-y-2" },
-                                    React.createElement(Label, { htmlFor: `tier-color-${tier.id}`, className: "text-slate-200" }, "Fargevalg"),
-                                    React.createElement("select", { id: `tier-color-${tier.id}`, value: tier.color, onChange: (event) => handleMembershipFieldChange(tier.id, "color", event.target.value), className: "w-full rounded-lg border border-white/15 bg-slate-950/40 px-3 py-2 text-sm text-white focus:outline-none focus:ring-2 focus:ring-emerald-400" },
-                                        React.createElement("option", { value: "green" }, "Gr\u00F8nn"),
-                                        React.createElement("option", { value: "cyan" }, "Turkis"),
-                                        React.createElement("option", { value: "amber" }, "Gul"))),
-                                React.createElement("div", { className: "space-y-2" },
-                                    React.createElement(Label, { htmlFor: `tier-features-${tier.id}`, className: "text-slate-200" }, "Fordeler (\u00E9n per linje)"),
-                                    React.createElement(Textarea, { id: `tier-features-${tier.id}`, value: tier.features.join("\n"), onChange: (event) => handleMembershipFeaturesChange(tier.id, event.target.value), rows: 3, className: "bg-slate-950/40 text-white placeholder:text-slate-400" }))))),
-                            React.createElement(Button, { type: "button", className: "inline-flex items-center gap-2 bg-emerald-500 text-emerald-950 hover:bg-emerald-400", onClick: addMembershipTier },
-                                React.createElement(Plus, { className: "h-4 w-4" }),
-                                " Legg til medlemskap"))),
-                    React.createElement(Card, { className: "border-white/10 bg-white/5 text-white" },
-                        React.createElement(CardHeader, null,
-                            React.createElement(CardTitle, { className: "flex items-center gap-2 text-white" },
-                                React.createElement(Crown, { className: "h-5 w-5 text-amber-300" }),
-                                " Samarbeidspartnere"),
-                            React.createElement("p", { className: "text-sm text-slate-300" }, "Last opp logoer og oppdater navn p\u00E5 partnerne som vises p\u00E5 forsiden.")),
-                        React.createElement(CardContent, { className: "space-y-4" },
-                            partnerLogos.map((partner) => (React.createElement("div", { key: partner.id, className: "space-y-4 rounded-2xl border border-white/10 bg-slate-950/40 p-4" },
-                                React.createElement("div", { className: "flex flex-col gap-4 sm:flex-row sm:items-start" },
-                                    React.createElement("div", { className: "flex h-20 w-20 items-center justify-center rounded-xl border border-white/10 bg-white/5" }, partner.logoUrl ? (React.createElement("img", { src: partner.logoUrl, alt: partner.name || "Partnerlogo", className: "h-16 w-16 object-contain" })) : (React.createElement("span", { className: "text-xs text-slate-400" }, "Ingen logo"))),
-                                    React.createElement("div", { className: "flex-1 space-y-3" },
-                                        React.createElement("div", { className: "space-y-2" },
-                                            React.createElement(Label, { htmlFor: `partner-name-${partner.id}`, className: "text-slate-200" }, "Navn"),
-                                            React.createElement(Input, { id: `partner-name-${partner.id}`, value: partner.name, onChange: (event) => handlePartnerFieldChange(partner.id, "name", event.target.value), className: "bg-slate-950/40 text-white placeholder:text-slate-400" })),
-                                        React.createElement("div", { className: "space-y-2" },
-                                            React.createElement(Label, { htmlFor: `partner-logo-${partner.id}`, className: "text-slate-200" }, "Logo-URL"),
-                                            React.createElement(Input, { id: `partner-logo-${partner.id}`, value: partner.logoUrl, onChange: (event) => handlePartnerFieldChange(partner.id, "logoUrl", event.target.value), placeholder: "https://...", className: "bg-slate-950/40 text-white placeholder:text-slate-400" })))),
-                                React.createElement("div", { className: "flex flex-wrap items-center gap-3" },
-                                    React.createElement("label", { className: "inline-flex cursor-pointer items-center gap-2 rounded-full border border-white/20 bg-white/5 px-4 py-1.5 text-xs font-semibold text-slate-200 transition hover:bg-white/10" },
-                                        React.createElement(UploadCloud, { className: "h-4 w-4", "aria-hidden": "true" }),
-                                        "Last opp logo",
-                                        React.createElement("input", { type: "file", accept: "image/*", className: "hidden", onChange: handlePartnerLogoUpload(partner.id) })),
-                                    React.createElement(Button, { variant: "outline", className: "inline-flex items-center gap-2 border-white/20 bg-white/5 text-xs text-slate-200 hover:bg-white/10", type: "button", onClick: () => removePartnerLogo(partner.id) },
-                                        React.createElement(Trash2, { className: "h-3.5 w-3.5" }),
-                                        " Fjern"))))),
-                            React.createElement(Button, { type: "button", className: "inline-flex items-center gap-2 bg-cyan-500 text-cyan-950 hover:bg-cyan-400", onClick: addPartnerLogo },
-                                React.createElement(Plus, { className: "h-4 w-4" }),
-                                " Legg til partner")))),
 
-React.createElement("section", { id: "insights", className: "space-y-6 scroll-mt-32" },
-    React.createElement("div", { className: "grid gap-6 xl:grid-cols-[1.4fr,1fr,1.1fr]" },
-        React.createElement(Card, { className: "border-white/10 bg-white/5 text-white" },
-            React.createElement(CardHeader, { className: "flex flex-col gap-3 pb-4" },
-                React.createElement(CardTitle, { className: "flex items-center justify-between text-white" },
-                    React.createElement("span", { className: "inline-flex items-center gap-2" },
-                        React.createElement(BarChart3, { className: "h-5 w-5 text-cyan-300" }),
-                        " Topp-sider"),
-                    React.createElement(Button, { variant: "outline", size: "sm", className: "rounded-full border-white/20 bg-white/5 text-xs font-semibold text-slate-200 hover:bg-white/15" },
-                        React.createElement(ArrowUpRight, { className: "mr-1 h-3 w-3" }),
-                        " Eksporter")),
-                React.createElement("p", { className: "text-sm text-slate-300" }, "Se hvilke sider som driver mest trafikk akkurat nå.")),
-            React.createElement(CardContent, { className: "space-y-3" }, topPageStats.map((page) => (React.createElement("div", { key: page.url, className: "flex items-center justify-between rounded-2xl border border-white/10 bg-slate-950/40 px-4 py-3" },
-                React.createElement("div", { className: "flex flex-col" },
-                    React.createElement("span", { className: "font-medium text-white" }, page.url),
-                    React.createElement("span", { className: "text-xs text-slate-400" }, `${page.unique.toLocaleString("no-NO")} unike besøk`)),
-                React.createElement("div", { className: "flex items-center gap-6 text-sm" },
-                    React.createElement("span", { className: "font-semibold text-white" }, page.views.toLocaleString("no-NO")),
-                    renderTrendPill(page.change))))))),
-        React.createElement(Card, { className: "border-white/10 bg-white/5 text-white" },
-            React.createElement(CardHeader, { className: "flex flex-col gap-3 pb-4" },
-                React.createElement(CardTitle, { className: "flex items-center gap-2 text-white" },
-                    React.createElement(Monitor, { className: "h-5 w-5 text-emerald-300" }),
-                    " Sesjonsenheter"),
-                React.createElement("p", { className: "text-sm text-slate-300" }, "Fordeling av siste 30 dagers besøk.")),
-            React.createElement(CardContent, { className: "flex flex-col items-center gap-6" },
-                React.createElement("div", { className: "relative h-36 w-36" },
-                    React.createElement("div", { className: "absolute inset-0 rounded-full", style: { background: `conic-gradient(${deviceGradient})` } }),
-                    React.createElement("div", { className: "absolute inset-[22%] rounded-full bg-slate-950/90" }),
-                    React.createElement("div", { className: "absolute inset-[30%] flex flex-col items-center justify-center text-xs text-slate-300" },
-                        React.createElement("span", { className: "text-sm font-semibold text-white" }, deviceBreakdown.totalSessions.toLocaleString("no-NO")),
-                        React.createElement("span", null, "sesjoner"))),
-                React.createElement("div", { className: "grid w-full gap-3" }, deviceBreakdown.segments.map((segment) => (React.createElement("div", { key: segment.key, className: "flex items-center justify-between rounded-xl border border-white/10 bg-slate-950/40 px-3 py-2" },
-                    React.createElement("div", { className: "flex items-center gap-2" },
-                        React.createElement("span", { className: "inline-flex h-2.5 w-2.5 rounded-full", style: { backgroundColor: segment.color } }),
-                        React.createElement("span", { className: "text-sm text-slate-200" }, segment.label)),
-                    React.createElement("span", { className: "text-sm font-semibold text-white" }, `${segment.percent.toFixed(1)}%`))))))),
-        React.createElement(Card, { className: "border-white/10 bg-white/5 text-white" },
-            React.createElement(CardHeader, { className: "flex flex-col gap-3 pb-4" },
-                React.createElement(CardTitle, { className: "flex items-center gap-2 text-white" },
-                    React.createElement(Globe, { className: "h-5 w-5 text-sky-300" }),
-                    " Toppkanaler"),
-                React.createElement("div", { className: "flex items-baseline justify-between" },
-                    React.createElement("div", null,
-                        React.createElement("p", { className: "text-xs uppercase tracking-wide text-slate-400" }, "Totalt"),
-                        React.createElement("p", { className: "text-3xl font-semibold text-white" }, channelBreakdown.totalVisitors.toLocaleString("no-NO"))),
-                    renderTrendPill(channelBreakdown.change))),
-            React.createElement(CardContent, { className: "space-y-3" }, channelBreakdown.channels.map((channel) => (React.createElement("div", { key: channel.key, className: "flex items-center justify-between rounded-2xl border border-white/10 bg-slate-950/40 px-4 py-3" },
-                React.createElement("div", { className: "flex items-center gap-3" },
-                    React.createElement(channel.Icon, { className: "h-5 w-5" }),
-                    React.createElement("div", null,
-                        React.createElement("p", { className: "font-medium text-white" }, channel.label),
-                        React.createElement("p", { className: "text-xs text-slate-400" }, `${channel.share}% av trafikken`))),
-                React.createElement("div", { className: "flex items-center gap-4" },
-                    React.createElement("span", { className: "font-semibold text-white" }, channel.visitors.toLocaleString("no-NO")),
-                    renderTrendPill(channel.trend)))))))),
-    React.createElement(Card, { className: "border-white/10 bg-white/5 text-white" },
-        React.createElement(CardHeader, { className: "flex flex-col gap-3 pb-4" },
-            React.createElement(CardTitle, { className: "flex items-center justify-between text-white" },
-                React.createElement("span", { className: "inline-flex items-center gap-2" },
-                    React.createElement(PieChart, { className: "h-5 w-5 text-cyan-300" }),
-                    " Analytisk oversikt"),
-                React.createElement("span", { className: "rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs font-semibold text-slate-200" },
-                    "Vis: ",
-                    analyticsOverview.periodLabel)),
-            React.createElement("div", { className: "flex flex-wrap items-center gap-6" },
-                React.createElement("div", null,
-                    React.createElement("p", { className: "text-xs uppercase tracking-wide text-slate-400" }, "Sidevisninger"),
-                    React.createElement("p", { className: "text-3xl font-semibold text-white" }, analyticsOverview.pageViews.value.toLocaleString("no-NO"))),
-                renderTrendPill(analyticsOverview.pageViews.change),
-                React.createElement("div", null,
-                    React.createElement("p", { className: "text-xs uppercase tracking-wide text-slate-400" }, "Tid på siden"),
-                    React.createElement("p", { className: "text-2xl font-semibold text-white" }, analyticsOverview.averageTime.value)),
-                renderTrendPill(analyticsOverview.averageTime.change))),
-        React.createElement(CardContent, { className: "space-y-6" },
-            React.createElement("div", { className: "relative h-64 w-full overflow-hidden rounded-3xl border border-white/10 bg-slate-950/40" },
-                React.createElement("svg", { viewBox: "0 0 100 100", preserveAspectRatio: "none", className: "h-full w-full" },
-                    trafficChart.series.map((series) => (React.createElement("path", { key: series.key, d: series.path, fill: "none", stroke: series.color, strokeWidth: 2.5, strokeLinecap: "round", opacity: 0.9 }))),
-                    trafficChart.series.map((series) => series.points.map((point) => (React.createElement("circle", { key: `${series.key}-${point.label}`, cx: point.x, cy: point.y, r: 1.6, fill: series.color }))))),
-                React.createElement("div", { className: "pointer-events-none absolute inset-x-0 bottom-0 flex justify-between px-6 pb-3 text-[10px] uppercase tracking-wide text-slate-500" }, trafficChart.months.map((month) => (React.createElement("span", { key: month }, month))))),
-            React.createElement("div", { className: "grid gap-4 sm:grid-cols-2 lg:grid-cols-4" },
-                React.createElement(StatTile, { icon: React.createElement(Users, { className: "h-5 w-5 text-emerald-300" }), label: "Medlemmer totalt", value: totals.totalMembers.toLocaleString("no-NO"), description: `+${totals.growth}% siste 6 mnd` }),
-                React.createElement(StatTile, { icon: React.createElement(Activity, { className: "h-5 w-5 text-cyan-300" }), label: "Seertimer", value: totals.totalWatchHours.toLocaleString("no-NO"), description: "Summerte strømmetimer" }),
-                React.createElement(StatTile, { icon: React.createElement(Trophy, { className: "h-5 w-5 text-amber-300" }), label: "Turneringer", value: totals.totalTournaments, description: "Arrangert hittil i år" }),
-                React.createElement(StatTile, { icon: React.createElement(TrendingUp, { className: "h-5 w-5 text-pink-300" }), label: "Nye denne måneden", value: `+${analyticsOverview.latestNewMembers}`, description: "Registrerte medlemmer" })),
-            React.createElement("div", { className: "grid gap-3 md:grid-cols-2 xl:grid-cols-4" }, analyticsOverview.quickStats.map((stat) => (React.createElement("div", { key: stat.label, className: "rounded-2xl border border-white/10 bg-slate-950/40 p-4" },
-                React.createElement("p", { className: "text-xs uppercase tracking-wide text-slate-400" }, stat.label),
-                React.createElement("div", { className: "mt-2 flex items-baseline justify-between" },
-                    React.createElement("span", { className: "text-2xl font-semibold text-white" }, stat.value),
-                    renderTrendPill(stat.change)),
-                stat.caption ? React.createElement("p", { className: "mt-1 text-xs text-slate-400" }, stat.caption) : null))))),
-    React.createElement("div", { className: "grid gap-6 lg:grid-cols-[2fr,1fr]" },
-        React.createElement(Card, { className: "border-white/10 bg-white/5 text-white" },
-            React.createElement(CardHeader, { className: "flex flex-col gap-3 pb-4" },
-                React.createElement(CardTitle, { className: "flex items-center gap-2 text-white" },
-                    React.createElement(BarChart3, { className: "h-5 w-5 text-emerald-300" }),
-                    " Trafikkilder"),
-                React.createElement("p", { className: "text-sm text-slate-300" }, "Hvordan ulike kilder bidrar til trafikk og måloppnåelse.")),
-            React.createElement(CardContent, { className: "overflow-x-auto" },
-                React.createElement("table", { className: "min-w-full text-left text-sm text-slate-200" },
-                    React.createElement("thead", { className: "bg-white/5 text-xs uppercase tracking-wide text-slate-300" },
-                        React.createElement("tr", null,
-                            React.createElement("th", { className: "px-4 py-3 font-medium" }, "Kilde"),
-                            React.createElement("th", { className: "px-4 py-3 font-medium" }, "Besøk"),
-                            React.createElement("th", { className: "px-4 py-3 font-medium" }, "Unike"),
-                            React.createElement("th", { className: "px-4 py-3 font-medium" }, "Bounce-rate"),
-                            React.createElement("th", { className: "px-4 py-3 font-medium" }, "Sesjon"),
-                            React.createElement("th", { className: "px-4 py-3 font-medium" }, "Mål"))),
-                    React.createElement("tbody", null, trafficTable.map((row) => (React.createElement("tr", { key: row.source, className: "border-t border-white/10" },
-                        React.createElement("td", { className: "px-4 py-3 font-medium text-white" }, row.source),
-                        React.createElement("td", { className: "px-4 py-3" }, row.visits.toLocaleString("no-NO")),
-                        React.createElement("td", { className: "px-4 py-3" }, row.uniqueVisitors.toLocaleString("no-NO")),
-                        React.createElement("td", { className: "px-4 py-3" }, `${row.bounceRate.toFixed(1)}%`),
-                        React.createElement("td", { className: "px-4 py-3" }, row.avgDuration),
-                        React.createElement("td", { className: "px-4 py-3" },
-                            React.createElement("div", { className: "flex items-center gap-2" },
-                                React.createElement("div", { className: "h-2 w-24 overflow-hidden rounded-full bg-white/10" },
-                                    React.createElement("div", { className: "h-full rounded-full bg-emerald-400/80", style: { width: `${row.progress}%` } })),
-                                React.createElement("span", { className: "text-xs text-slate-300" }, `${row.progress}%`))))))))),
-        React.createElement("div", { className: "space-y-6" },
-            React.createElement(Card, { className: "border-white/10 bg-gradient-to-br from-cyan-500/15 via-sky-500/10 to-indigo-900/20 text-white" },
-                React.createElement(CardHeader, { className: "pb-3" },
-                    React.createElement(CardTitle, { className: "flex items-center gap-2 text-white" },
-                        React.createElement(PieChart, { className: "h-5 w-5 text-cyan-200" }),
-                        " Sponsorsegmenter"),
-                    React.createElement("p", { className: "text-sm text-slate-200/90" }, "Se hvilke kanaler spillerne dekker for å målrette sponsorplassene bedre.")),
-                React.createElement(CardContent, { className: "space-y-4" },
-                    React.createElement("div", { className: "rounded-2xl border border-white/10 bg-white/10 p-4" },
-                        React.createElement("p", { className: "text-xs uppercase tracking-wide text-cyan-100/80" }, "Profiler klare"),
-                        React.createElement("p", { className: "mt-1 text-2xl font-semibold text-white" }, sponsorSegments.totalPlayers),
-                        React.createElement("p", { className: "text-xs text-cyan-100/70" }, "Med komplette kontaktdata")),
-                    React.createElement("div", { className: "space-y-3" }, sponsorSegments.segments.map((segment) => (React.createElement("div", { key: segment.key, className: "space-y-2" },
-                        React.createElement("div", { className: "flex items-center justify-between text-xs text-slate-200" },
-                            React.createElement("span", { className: "uppercase tracking-wide text-slate-300" }, segment.label),
-                            React.createElement("span", { className: "font-semibold text-white" }, segment.members)),
-                        React.createElement("div", { className: "h-2 w-full overflow-hidden rounded-full bg-white/10" },
-                            React.createElement("div", { className: "h-full rounded-full bg-cyan-400/80", style: { width: `${segment.percent}%` } })))))))),
-            React.createElement(Card, { className: "border-white/10 bg-white/5 text-white" },
-                React.createElement(CardHeader, { className: "pb-2" },
-                    React.createElement(CardTitle, { className: "flex items-center gap-2 text-white" },
-                        React.createElement(CalendarCheck, { className: "h-5 w-5 text-emerald-300" }),
-                        " Kommende milepæler")),
-                React.createElement(CardContent, { className: "space-y-4 text-sm text-slate-200" },
-                    React.createElement(Milestone, { title: "Sommerfinale med familiequiz", date: "24. juni", description: "Planlegg premier og send ut invitasjoner til foreldregruppen." }),
-                    React.createElement(Milestone, { title: "Lansering av foreldrehub", date: "3. juli", description: "Oppdater guider og videoopptak før publisering i medlemsportalen." }),
-                    React.createElement(Milestone, { title: "Back-to-school kampanje", date: "14. august", description: "Koordiner sponsorer for skolestart og sikre familievennlige premier." }))),
-            React.createElement(Card, { className: "border-white/10 bg-gradient-to-br from-emerald-500/20 via-emerald-600/10 to-emerald-900/20 text-white" },
-                React.createElement(CardHeader, { className: "pb-2" },
-                    React.createElement(CardTitle, { className: "flex items-center gap-2 text-white" },
-                        React.createElement(Crown, { className: "h-5 w-5 text-emerald-200" }),
-                        " Tips for nye medlemmer")),
-                React.createElement(CardContent, { className: "space-y-3 text-sm text-emerald-50/90" },
-                    React.createElement("p", { className: "leading-relaxed" }, "Del logoen direkte med sponsorer, og bruk slagordet i overlay for livestreams. Trenger dere flere forslag til tekst? Test ulike varianter og lagre favorittene lokalt før dere publiserer."),
-                    React.createElement("p", { className: "text-xs text-emerald-100/80" }, "Endringene blir liggende i nettleseren din. Når du er fornøyd, kan du eksportere oppsettet og dele med resten av teamet."))))))),
-                React.createElement("section", { id: "team", className: "space-y-6 scroll-mt-32" },
-                    React.createElement("div", { className: "flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between" },
-                        React.createElement("div", null,
-                            React.createElement("h2", { className: "text-2xl font-semibold text-white" }, "Team og profiler"),
-                            React.createElement("p", { className: "text-sm text-slate-300" }, "Hver spiller f\u00E5r automatisk en profilside. Administrer detaljer fra medlemsoversikten.")),
-                        React.createElement("div", { className: "flex flex-wrap gap-2" },
-                            React.createElement(Button, { asChild: true, className: "bg-emerald-500 text-emerald-950 hover:bg-emerald-400" },
-                                React.createElement("a", { href: "/admin/members" }, "\u00C5pne medlemsadministrasjon")),
-                            React.createElement(Button, { asChild: true, variant: "outline", className: "border-white/20 bg-white/5 text-white hover:bg-white/15" },
-                                React.createElement("a", { href: "/admin/profile-preview" }, "Forh\u00E5ndsvis profiler")))),
-                    React.createElement("div", { className: "grid gap-6 lg:grid-cols-[1.4fr,1fr]" },
-                        React.createElement(Card, { className: "border-white/10 bg-white/5 text-white" },
-                            React.createElement(CardHeader, { className: "pb-4" },
-                                React.createElement(CardTitle, { className: "flex items-center justify-between text-white" },
-                                    React.createElement("span", { className: "inline-flex items-center gap-2" },
-                                        React.createElement(Users, { className: "h-5 w-5 text-cyan-300" }),
-                                        " Aktive spillere"),
-                                    React.createElement("span", { className: "text-xs text-slate-300" },
-                                        players.length,
-                                        " totalt")),
-                                React.createElement("p", { className: "text-sm text-slate-300" }, "Se en rask oversikt over laget. For \u00E5 oppdatere informasjon, bruk medlemsadministrasjonen.")),
-                            React.createElement(CardContent, null,
-                                React.createElement("div", { className: "space-y-4" },
-                                    players.length ? (players.slice(0, 4).map((player) => (React.createElement("article", { key: player.id, className: "flex flex-col gap-4 rounded-2xl border border-white/10 bg-white/5 p-4 sm:flex-row sm:items-center sm:justify-between" },
-                                        React.createElement("div", { className: "flex items-center gap-4" },
-                                            React.createElement("img", { src: player.avatarUrl, alt: player.gamerTag, className: "h-16 w-16 rounded-2xl object-cover" }),
-                                            React.createElement("div", null,
-                                                React.createElement("p", { className: "text-lg font-semibold text-white" }, player.gamerTag),
-                                                React.createElement("p", { className: "text-xs uppercase tracking-wide text-slate-300" }, player.mainGame),
-                                                React.createElement("p", { className: "text-xs text-slate-400" },
-                                                    "Med siden ",
-                                                    formatDate(player.joinDate)))),
-                                        React.createElement("div", { className: "flex items-center gap-2 self-end sm:self-auto" },
-                                            React.createElement(Button, { asChild: true, size: "sm", className: "bg-cyan-500 text-cyan-950 hover:bg-cyan-400" },
-                                                React.createElement("a", { href: `/players/${player.slug}` },
-                                                    React.createElement(ArrowUpRight, { className: "mr-2 h-4 w-4" }),
-                                                    " \u00C5pne profil"))))))) : (React.createElement("p", { className: "rounded-xl border border-dashed border-white/20 bg-white/5 p-6 text-center text-sm text-slate-300" }, "Ingen spillere er registrert enn\u00E5. Opprett den f\u00F8rste via medlemsadministrasjonen.")),
-                                    players.length > 4 ? (React.createElement("p", { className: "text-xs text-slate-400" }, "Vis hele listen og gj\u00F8r endringer under \u00ABAdministrer medlemmer\u00BB.")) : null))),
-                        React.createElement(Card, { className: "border-white/10 bg-gradient-to-br from-cyan-500/10 via-indigo-500/10 to-slate-900/40 text-white" },
-                            React.createElement(CardHeader, { className: "pb-3" },
-                                React.createElement(CardTitle, { className: "flex items-center gap-2 text-white" },
-                                    React.createElement(ShieldCheck, { className: "h-5 w-5 text-cyan-200" }),
-                                    " Slik jobber du med medlemmene")),
-                            React.createElement(CardContent, { className: "space-y-4 text-sm text-slate-200" },
-                                React.createElement("p", null, "All medlemsdata \u2013 inkludert kontaktinfo og sosiale kanaler \u2013 ligger samlet p\u00E5 den nye siden for medlemsh\u00E5ndtering."),
-                                React.createElement("ul", { className: "space-y-2 text-slate-300" },
-                                    React.createElement("li", null, "\u2022 Oppdater biografi, spill og sosiale lenker direkte per medlem."),
-                                    React.createElement("li", null, "\u2022 Registrer nye spillere med full kontaktinfo og tildel slug automatisk."),
-                                    React.createElement("li", null, "\u2022 Bruk forh\u00E5ndsvisningen for \u00E5 kvalitetssikre profilen f\u00F8r du deler den.")),
-                                React.createElement(Button, { asChild: true, variant: "outline", className: "w-full border-white/20 bg-white/5 text-white hover:bg-white/15" },
-                                    React.createElement("a", { href: "/admin/members" }, "G\u00E5 til medlemsh\u00E5ndtering")))))))),
+    return (
+        <div className="min-h-screen bg-slate-100 text-slate-900">
+            <div className="flex min-h-screen">
+                <aside className="hidden w-72 flex-col border-r border-slate-200 bg-white/80 backdrop-blur-xl xl:flex">
+                    <div className="flex flex-col gap-10 px-6 py-10">
+                        <div className="flex items-center gap-3">
+                            <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-500/10 text-lg font-semibold text-emerald-600">
+                                FB
+                            </span>
+                            <div>
+                                <p className="text-xs uppercase tracking-[0.3em] text-slate-500">Admin</p>
+                                <p className="text-base font-semibold">Fjolsenbanden</p>
+                            </div>
+                        </div>
+                        <div className="space-y-8">
+                            <div className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm">
+                                <p className="text-xs font-medium uppercase tracking-wide text-slate-500">
+                                    Medlemsvekst
+                                </p>
+                                <p className="mt-3 text-3xl font-semibold">
+                                    {totals.totalMembers.toLocaleString("no-NO")}
+                                </p>
+                                <p className="mt-2 flex items-center gap-2 text-sm text-emerald-600">
+                                    <ArrowUpRight className="h-4 w-4" />
+                                    {`+${totals.growth}% siste 6 mnd`}
+                                </p>
+                            </div>
+                            <nav className="space-y-4">
+                                <div>
+                                    <p className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-500">
+                                        Navigasjon
+                                    </p>
+                                    <p className="mt-1 text-sm text-slate-500">
+                                        Utforsk alt i kontrollpanelet
+                                    </p>
+                                </div>
+                                <ul className="space-y-2">
+                                    {ADMIN_NAV_ITEMS.map((item) => (
+                                        <li key={item.id}>
+                                            <a
+                                                href={`#${item.id}`}
+                                                className="flex items-center gap-3 rounded-2xl border border-transparent px-4 py-2 text-sm font-medium text-slate-600 transition hover:border-emerald-200 hover:bg-emerald-50 hover:text-emerald-700"
+                                            >
+                                                <item.Icon className="h-4 w-4" />
+                                                <span>{item.label}</span>
+                                            </a>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </nav>
+                            <div className="space-y-3">
+                                <Button
+                                    asChild
+                                    className="w-full justify-start gap-2 rounded-2xl bg-emerald-500 text-emerald-950 shadow-sm hover:bg-emerald-400"
+                                >
+                                    <a href="/admin/members">
+                                        <Users className="h-4 w-4" /> Administrer medlemmer
+                                    </a>
+                                </Button>
+                                <Button
+                                    asChild
+                                    variant="outline"
+                                    className="w-full justify-start gap-2 rounded-2xl border-slate-200 text-slate-700 hover:bg-slate-50"
+                                >
+                                    <a href="/admin/profile-preview">
+                                        <ArrowUpRight className="h-4 w-4" /> Forhåndsvis profiler
+                                    </a>
+                                </Button>
+                            </div>
+                        </div>
+                    </div>
+                </aside>
+                <div className="flex flex-1 flex-col">
+                    <header className="sticky top-0 z-20 border-b border-slate-200 bg-white/80 backdrop-blur">
+                        <div className="flex flex-wrap items-center justify-between gap-4 px-6 py-4">
+                            <div className="flex items-center gap-3">
+                                <Button
+                                    variant="outline"
+                                    size="sm"
+                                    className="inline-flex h-10 w-10 items-center justify-center rounded-2xl border-slate-200 text-slate-600 xl:hidden"
+                                >
+                                    <Menu className="h-5 w-5" />
+                                </Button>
+                                <div>
+                                    <h1 className="text-xl font-semibold text-slate-900">Kontrollpanel</h1>
+                                    <p className="text-sm text-slate-500">
+                                        Følg med på communityet og oppdater nettsiden i sanntid.
+                                    </p>
+                                </div>
+                            </div>
+                            <div className="flex flex-1 items-center justify-end gap-4">
+                                <div className="hidden max-w-md flex-1 items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-1.5 shadow-sm md:flex">
+                                    <Search className="h-4 w-4 text-slate-400" />
+                                    <input
+                                        type="text"
+                                        placeholder="Søk i kontoen"
+                                        className="h-8 w-full border-none bg-transparent text-sm text-slate-600 focus:outline-none"
+                                    />
+                                </div>
+                                <Button
+                                    variant="outline"
+                                    size="sm"
+                                    className="hidden h-10 w-10 items-center justify-center rounded-2xl border-slate-200 text-slate-600 md:inline-flex"
+                                >
+                                    <Bell className="h-5 w-5" />
+                                </Button>
+                                <Button
+                                    variant="outline"
+                                    size="sm"
+                                    className="hidden h-10 w-10 items-center justify-center rounded-2xl border-slate-200 text-slate-600 lg:inline-flex"
+                                >
+                                    <PieChart className="h-5 w-5" />
+                                </Button>
+                                <div className="flex items-center gap-3 rounded-2xl border border-slate-200 bg-white px-3 py-1.5">
+                                    <div className="hidden text-right sm:block">
+                                        <p className="text-sm font-semibold text-slate-700">
+                                            Admin
+                                        </p>
+                                        {lastLogin ? (
+                                            <p className="text-xs text-slate-400">Sist innlogget {lastLogin}</p>
+                                        ) : null}
+                                    </div>
+                                    <Button
+                                        variant="outline"
+                                        size="sm"
+                                        className="inline-flex h-10 items-center gap-2 rounded-xl border-emerald-200 bg-emerald-50 px-3 text-emerald-600 hover:bg-emerald-100"
+                                        onClick={auth.logout}
+                                    >
+                                        <LogOut className="h-4 w-4" /> Logg ut
+                                    </Button>
+                                </div>
+                            </div>
+                        </div>
+                    </header>
+                    <main className="flex-1 overflow-y-auto px-6 py-10">
+                        <section id="overview" className="space-y-6">
+                            <div className="flex flex-col gap-1">
+                                <p className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-400">
+                                    Oversikt
+                                </p>
+                                <h2 className="text-2xl font-semibold text-slate-900">
+                                    Nøkkeltall for Fjolsenbanden
+                                </h2>
+                            </div>
+                            <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
+                                {overviewCards.map((card) => (
+                                    <Card key={card.key} className="border-slate-200 bg-white shadow-sm">
+                                        <CardContent className="flex flex-col gap-4 p-5">
+                                            <div className="flex items-center justify-between">
+                                                <div>
+                                                    <p className="text-xs uppercase tracking-wide text-slate-400">
+                                                        {card.label}
+                                                    </p>
+                                                    <p className="mt-2 text-2xl font-semibold text-slate-900">
+                                                        {card.value}
+                                                    </p>
+                                                    <p className="text-xs text-slate-500">{card.helper}</p>
+                                                </div>
+                                                <span className="inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-emerald-50 text-emerald-600">
+                                                    <card.icon className="h-5 w-5" />
+                                                </span>
+                                            </div>
+                                            {renderTrendPill(card.change)}
+                                        </CardContent>
+                                    </Card>
+                                ))}
+                            </div>
+                        </section>
+
+                        <section
+                            id="insights"
+                            className="mt-12 grid gap-6 xl:grid-cols-[1.8fr,1fr]"
+                        >
+                            <Card className="border-slate-200 bg-white shadow-sm">
+                                <CardHeader className="flex flex-col gap-1">
+                                    <CardTitle className="text-xl font-semibold text-slate-900">
+                                        Arbeidsanalyse
+                                    </CardTitle>
+                                    <p className="text-sm text-slate-500">
+                                        Nettstedsdata oppsummert {analyticsOverview.periodLabel.toLowerCase()}.
+                                    </p>
+                                </CardHeader>
+                                <CardContent className="space-y-8">
+                                    <div className="grid gap-6 lg:grid-cols-[1.6fr,1fr]">
+                                        <div className="space-y-6">
+                                            <div className="flex flex-wrap items-center justify-between gap-3">
+                                                <div>
+                                                    <p className="text-sm text-slate-500">Sidevisninger</p>
+                                                    <p className="text-3xl font-semibold text-slate-900">
+                                                        {analyticsOverview.pageViews.value.toLocaleString("no-NO")}
+                                                    </p>
+                                                </div>
+                                                {renderTrendPill(analyticsOverview.pageViews.change)}
+                                            </div>
+                                            <div className="overflow-hidden rounded-3xl border border-slate-200 bg-slate-50 p-4">
+                                                <div className="relative h-56 w-full">
+                                                    <svg
+                                                        viewBox="0 0 100 100"
+                                                        className="h-full w-full"
+                                                        preserveAspectRatio="none"
+                                                    >
+                                                        {[20, 40, 60, 80].map((y) => (
+                                                            <line
+                                                                key={y}
+                                                                x1="0"
+                                                                x2="100"
+                                                                y1={y}
+                                                                y2={y}
+                                                                stroke="#E2E8F0"
+                                                                strokeDasharray="2 4"
+                                                                strokeWidth="0.5"
+                                                            />
+                                                        ))}
+                                                        {trafficChart.series.map((series) => (
+                                                            <g key={series.key}>
+                                                                <path
+                                                                    d={series.path}
+                                                                    fill="none"
+                                                                    stroke={series.color}
+                                                                    strokeWidth={2.4}
+                                                                    strokeLinecap="round"
+                                                                    strokeLinejoin="round"
+                                                                />
+                                                                {series.points.map((point) => (
+                                                                    <circle
+                                                                        key={`${series.key}-${point.x}`}
+                                                                        cx={point.x}
+                                                                        cy={point.y}
+                                                                        r={1.4}
+                                                                        fill="#fff"
+                                                                        stroke={series.color}
+                                                                        strokeWidth={0.8}
+                                                                    />
+                                                                ))}
+                                                            </g>
+                                                        ))}
+                                                    </svg>
+                                                </div>
+                                                <div className="mt-4 flex items-center justify-between text-xs font-semibold text-slate-400">
+                                                    {trafficChart.months.map((month) => (
+                                                        <span key={month}>{month.toUpperCase()}</span>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                            <div className="grid gap-4 sm:grid-cols-3">
+                                                <div className="rounded-2xl border border-slate-200 bg-white p-4">
+                                                    <p className="text-xs uppercase tracking-wide text-slate-400">
+                                                        Nye medlemmer
+                                                    </p>
+                                                    <p className="mt-2 text-xl font-semibold text-slate-900">
+                                                        {analyticsOverview.latestNewMembers}
+                                                    </p>
+                                                    <p className="text-xs text-slate-500">
+                                                        Registrert siste periode
+                                                    </p>
+                                                </div>
+                                                <div className="rounded-2xl border border-slate-200 bg-white p-4">
+                                                    <p className="text-xs uppercase tracking-wide text-slate-400">
+                                                        Snittid på siden
+                                                    </p>
+                                                    <p className="mt-2 text-xl font-semibold text-slate-900">
+                                                        {analyticsOverview.averageTime.value}
+                                                    </p>
+                                                    {renderTrendPill(analyticsOverview.averageTime.change)}
+                                                </div>
+                                                <div className="rounded-2xl border border-slate-200 bg-white p-4">
+                                                    <p className="text-xs uppercase tracking-wide text-slate-400">
+                                                        Aktive moduler
+                                                    </p>
+                                                    <p className="mt-2 text-xl font-semibold text-slate-900">
+                                                        {Object.values(moduleSettings).filter(Boolean).length}
+                                                    </p>
+                                                    <p className="text-xs text-slate-500">På forsiden nå</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="space-y-5">
+                                            <div className="rounded-3xl border border-slate-200 bg-slate-50 p-5">
+                                                <div className="flex items-center justify-between">
+                                                    <p className="text-sm font-semibold text-slate-700">
+                                                        Hurtigstatistikk
+                                                    </p>
+                                                    <span className="rounded-full bg-white px-3 py-1 text-xs font-medium text-slate-500">
+                                                        Oppdatert nå
+                                                    </span>
+                                                </div>
+                                                <div className="mt-4 space-y-4">
+                                                    {analyticsOverview.quickStats.map((stat) => (
+                                                        <div key={stat.label} className="space-y-1">
+                                                            <div className="flex items-center justify-between">
+                                                                <p className="text-sm font-medium text-slate-600">
+                                                                    {stat.label}
+                                                                </p>
+                                                                {renderTrendPill(stat.change)}
+                                                            </div>
+                                                            <p className="text-lg font-semibold text-slate-900">
+                                                                {stat.value}
+                                                            </p>
+                                                            <p className="text-xs text-slate-500">{stat.caption}</p>
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                            <Card className="border-slate-200 bg-white shadow-sm">
+                                                <CardContent className="flex flex-col gap-4 p-5">
+                                                    <p className="text-sm font-semibold text-slate-700">
+                                                        Trafikkilder
+                                                    </p>
+                                                    <div className="space-y-3">
+                                                        {trafficTable.map((row) => (
+                                                            <div key={row.source} className="space-y-1">
+                                                                <div className="flex items-center justify-between text-sm font-medium text-slate-600">
+                                                                    <span>{row.source}</span>
+                                                                    <span>{row.visits.toLocaleString("no-NO")}</span>
+                                                                </div>
+                                                                <div className="flex items-center justify-between text-xs text-slate-400">
+                                                                    <span>{row.uniqueVisitors.toLocaleString("no-NO")} unike</span>
+                                                                    <span>{row.avgDuration}</span>
+                                                                </div>
+                                                                <div className="h-2 rounded-full bg-slate-200">
+                                                                    <div
+                                                                        className="h-full rounded-full bg-emerald-400"
+                                                                        style={{ width: `${row.progress}%` }}
+                                                                    />
+                                                                </div>
+                                                            </div>
+                                                        ))}
+                                                    </div>
+                                                </CardContent>
+                                            </Card>
+                                        </div>
+                                    </div>
+                                </CardContent>
+                            </Card>
+                            <div className="space-y-6">
+                                <Card className="border-slate-200 bg-white shadow-sm">
+                                    <CardHeader className="gap-1">
+                                        <CardTitle className="text-lg font-semibold text-slate-900">
+                                            Sesjonsenheter
+                                        </CardTitle>
+                                        <p className="text-sm text-slate-500">
+                                            Fordeling basert på siste måneds aktivitet.
+                                        </p>
+                                    </CardHeader>
+                                    <CardContent className="flex items-center gap-6 p-5">
+                                        <div className="relative h-36 w-36">
+                                            <div
+                                                className="absolute inset-0 rounded-full"
+                                                style={{ background: `conic-gradient(${deviceGradient})` }}
+                                            />
+                                            <div className="absolute inset-4 flex flex-col items-center justify-center rounded-full bg-white text-center">
+                                                <span className="text-xs font-medium text-slate-500">
+                                                    Totalt
+                                                </span>
+                                                <span className="text-lg font-semibold text-slate-900">
+                                                    {deviceBreakdown.totalSessions}
+                                                </span>
+                                                <span className="text-[10px] text-slate-400">
+                                                    økter
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div className="flex-1 space-y-3">
+                                            {deviceBreakdown.segments.map((segment) => (
+                                                <div key={segment.key} className="space-y-1">
+                                                    <div className="flex items-center justify-between text-sm font-medium text-slate-600">
+                                                        <span className="flex items-center gap-2">
+                                                            <span
+                                                                className="h-2.5 w-2.5 rounded-full"
+                                                                style={{ backgroundColor: segment.color }}
+                                                            />
+                                                            {segment.label}
+                                                        </span>
+                                                        <span>{segment.percent.toFixed(1)}%</span>
+                                                    </div>
+                                                    <div className="h-2 rounded-full bg-slate-200">
+                                                        <div
+                                                            className="h-full rounded-full"
+                                                            style={{
+                                                                width: `${segment.percent}%`,
+                                                                backgroundColor: segment.color,
+                                                            }}
+                                                        />
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </CardContent>
+                                </Card>
+                                <Card className="border-slate-200 bg-white shadow-sm">
+                                    <CardHeader className="gap-1">
+                                        <CardTitle className="text-lg font-semibold text-slate-900">
+                                            Viktigste kanaler
+                                        </CardTitle>
+                                        <p className="text-sm text-slate-500">
+                                            Trafikkfordeling på de mest brukte kildene.
+                                        </p>
+                                    </CardHeader>
+                                    <CardContent className="space-y-4 p-5">
+                                        {channelBreakdown.channels.map((channel) => (
+                                            <div key={channel.key} className="flex items-center justify-between">
+                                                <div className="flex items-center gap-3">
+                                                    <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-slate-100">
+                                                        <channel.Icon className="h-4 w-4 text-slate-600" />
+                                                    </span>
+                                                    <div>
+                                                        <p className="text-sm font-semibold text-slate-700">
+                                                            {channel.label}
+                                                        </p>
+                                                        <p className="text-xs text-slate-500">
+                                                            {channel.visitors.toLocaleString("no-NO")} besøk
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                {renderTrendPill(channel.trend)}
+                                            </div>
+                                        ))}
+                                        <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4 text-sm text-slate-600">
+                                            <p>
+                                                Totalt {channelBreakdown.totalVisitors.toLocaleString("no-NO")} besøk denne perioden.
+                                            </p>
+                                        </div>
+                                    </CardContent>
+                                </Card>
+                            </div>
+                        </section>
+                        <section className="mt-12 grid gap-6 xl:grid-cols-[1.6fr,1fr]">
+                            <Card className="border-slate-200 bg-white shadow-sm">
+                                <CardHeader className="gap-1">
+                                    <CardTitle className="text-lg font-semibold text-slate-900">
+                                        Viktigste sider
+                                    </CardTitle>
+                                    <p className="text-sm text-slate-500">
+                                        Se hvilke områder som får mest trafikk den siste måneden.
+                                    </p>
+                                </CardHeader>
+                                <CardContent className="space-y-4 p-6">
+                                    <div className="grid grid-cols-[1.4fr,1fr,auto] gap-3 text-xs font-semibold uppercase tracking-wide text-slate-400">
+                                        <span>Side</span>
+                                        <span>Visninger</span>
+                                        <span className="text-right">Endring</span>
+                                    </div>
+                                    <div className="space-y-3">
+                                        {topPageStats.map((page) => (
+                                            <div
+                                                key={page.url}
+                                                className="grid grid-cols-[1.4fr,1fr,auto] items-center gap-3 rounded-2xl border border-slate-200 bg-white p-4 text-sm text-slate-600"
+                                            >
+                                                <div className="flex items-center gap-2">
+                                                    <span className="rounded-full bg-slate-100 px-2 py-1 text-xs font-semibold text-slate-500">
+                                                        {page.url}
+                                                    </span>
+                                                    <span className="text-xs text-slate-400">
+                                                        {page.unique.toLocaleString("no-NO")} unike
+                                                    </span>
+                                                </div>
+                                                <span className="font-semibold text-slate-800">
+                                                    {page.views.toLocaleString("no-NO")}
+                                                </span>
+                                                <span className="justify-self-end">
+                                                    {renderTrendPill(page.change)}
+                                                </span>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </CardContent>
+                            </Card>
+                            <Card className="border-slate-200 bg-white shadow-sm">
+                                <CardHeader className="gap-1">
+                                    <CardTitle className="flex items-center gap-2 text-lg font-semibold text-slate-900">
+                                        <Lock className="h-5 w-5 text-emerald-500" /> Sikkerhetsstatus
+                                    </CardTitle>
+                                    <p className="text-sm text-slate-500">
+                                        Trygg administrasjon for hele teamet.
+                                    </p>
+                                </CardHeader>
+                                <CardContent className="space-y-4 p-6">
+                                    <div className="rounded-3xl border border-emerald-200 bg-emerald-50 p-4 text-sm text-emerald-700">
+                                        <p className="font-semibold">Alt ser bra ut!</p>
+                                        <p>Tofaktor er aktivert for alle eiere av kontoen.</p>
+                                    </div>
+                                    <ul className="space-y-3 text-sm text-slate-600">
+                                        <li className="flex items-start gap-3">
+                                            <ShieldCheck className="mt-0.5 h-4 w-4 text-emerald-500" />
+                                            <span>Planlegg revisjon av tilganger hver andre måned.</span>
+                                        </li>
+                                        <li className="flex items-start gap-3">
+                                            <Users className="mt-0.5 h-4 w-4 text-emerald-500" />
+                                            <span>Send invitasjon til nye moderatorer direkte fra medlemssiden.</span>
+                                        </li>
+                                        <li className="flex items-start gap-3">
+                                            <MessageCircle className="mt-0.5 h-4 w-4 text-emerald-500" />
+                                            <span>Del ukentlig status i #admin-samtaler for full oversikt.</span>
+                                        </li>
+                                    </ul>
+                                    <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4 text-sm text-slate-600">
+                                        <p className="font-semibold text-slate-700">Neste steg</p>
+                                        <p>Oppdater passordpolicyen for supportfrivillige innen 30. juni.</p>
+                                    </div>
+                                </CardContent>
+                            </Card>
+                        </section>
+                        <section id="site" className="mt-12 space-y-6">
+                            <div className="flex flex-col gap-1">
+                                <p className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-400">
+                                    Nettside og moduler
+                                </p>
+                                <h2 className="text-2xl font-semibold text-slate-900">
+                                    Oppdater merkevare og seksjoner
+                                </h2>
+                                <p className="text-sm text-slate-500">
+                                    Endringer lagres med en gang og vises i forhåndsvisningen på forsiden.
+                                </p>
+                            </div>
+                            <div className="grid gap-6 xl:grid-cols-[1.6fr,1fr]">
+                                <Card className="border-slate-200 bg-white shadow-sm">
+                                    <CardHeader className="gap-1">
+                                        <CardTitle className="text-lg font-semibold text-slate-900">
+                                            Grunnleggende brandinnstillinger
+                                        </CardTitle>
+                                        <p className="text-sm text-slate-500">
+                                            Logo, hero-innhold og videolenker for forsiden.
+                                        </p>
+                                    </CardHeader>
+                                    <CardContent className="space-y-6 p-6">
+                                        <form className="space-y-5" onSubmit={handleBrandSubmit}>
+                                            <div className="space-y-2">
+                                                <Label htmlFor="logoUrl">Logo-URL</Label>
+                                                <Input
+                                                    id="logoUrl"
+                                                    name="logoUrl"
+                                                    value={brandForm.logoUrl}
+                                                    onChange={(event) =>
+                                                        setBrandForm((state) => ({
+                                                            ...state,
+                                                            logoUrl: event.target.value,
+                                                        }))
+                                                    }
+                                                    placeholder="https://..."
+                                                />
+                                                <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
+                                                    <label className="inline-flex cursor-pointer items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-4 py-1.5 text-xs font-semibold text-slate-600 shadow-sm hover:bg-slate-100">
+                                                        <UploadCloud className="h-4 w-4" />
+                                                        Last opp fil
+                                                        <input
+                                                            type="file"
+                                                            accept="image/*"
+                                                            className="hidden"
+                                                            onChange={handleLogoFileChange}
+                                                        />
+                                                    </label>
+                                                    <p className="text-xs text-slate-500">
+                                                        Støtter PNG, JPG og SVG. Maks 2 MB anbefales.
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <div className="grid gap-4 md:grid-cols-2">
+                                                <div className="space-y-2">
+                                                    <Label htmlFor="heroTitle">Hovedtittel</Label>
+                                                    <Input
+                                                        id="heroTitle"
+                                                        name="heroTitle"
+                                                        value={brandForm.heroTitle}
+                                                        onChange={(event) =>
+                                                            setBrandForm((state) => ({
+                                                                ...state,
+                                                                heroTitle: event.target.value,
+                                                            }))
+                                                        }
+                                                        placeholder="FJOLSENBANDEN"
+                                                    />
+                                                </div>
+                                                <div className="space-y-2">
+                                                    <Label htmlFor="announcement">Aktuell melding</Label>
+                                                    <Input
+                                                        id="announcement"
+                                                        name="announcement"
+                                                        value={brandForm.announcement}
+                                                        onChange={(event) =>
+                                                            setBrandForm((state) => ({
+                                                                ...state,
+                                                                announcement: event.target.value,
+                                                            }))
+                                                        }
+                                                        placeholder="Neste livesending starter..."
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div className="space-y-2">
+                                                <Label htmlFor="heroTagline">Ingress / slagord</Label>
+                                                <Textarea
+                                                    id="heroTagline"
+                                                    name="heroTagline"
+                                                    rows={3}
+                                                    value={brandForm.heroTagline}
+                                                    onChange={(event) =>
+                                                        setBrandForm((state) => ({
+                                                            ...state,
+                                                            heroTagline: event.target.value,
+                                                        }))
+                                                    }
+                                                    placeholder="Beskriv kort hva Fjolsenbanden tilbyr"
+                                                />
+                                            </div>
+                                            <div className="grid gap-4 md:grid-cols-2">
+                                                <div className="space-y-2">
+                                                    <Label htmlFor="presentationVideoUrl">
+                                                        Presentasjonsvideo (YouTube-embed)
+                                                    </Label>
+                                                    <Input
+                                                        id="presentationVideoUrl"
+                                                        name="presentationVideoUrl"
+                                                        value={brandForm.presentationVideoUrl}
+                                                        onChange={(event) =>
+                                                            setBrandForm((state) => ({
+                                                                ...state,
+                                                                presentationVideoUrl: event.target.value,
+                                                            }))
+                                                        }
+                                                        placeholder="https://www.youtube.com/embed/..."
+                                                    />
+                                                    <p className="text-xs text-slate-500">
+                                                        Lim inn adressen fra «Del» → «Bygg inn».
+                                                    </p>
+                                                </div>
+                                                <div className="space-y-2">
+                                                    <Label htmlFor="twitchEmbedUrl">Twitch-embed URL</Label>
+                                                    <Input
+                                                        id="twitchEmbedUrl"
+                                                        name="twitchEmbedUrl"
+                                                        value={brandForm.twitchEmbedUrl}
+                                                        onChange={(event) =>
+                                                            setBrandForm((state) => ({
+                                                                ...state,
+                                                                twitchEmbedUrl: event.target.value,
+                                                            }))
+                                                        }
+                                                        placeholder="https://player.twitch.tv/?channel=...&parent=din-side.no"
+                                                    />
+                                                    <p className="text-xs text-slate-500">
+                                                        Husk å oppdatere <code className="rounded bg-slate-100 px-1 py-[1px]">parent</code>-parameteren.
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <div className="flex flex-col gap-3 rounded-2xl border border-slate-200 bg-slate-50 p-4 text-sm text-slate-600 sm:flex-row sm:items-center sm:justify-between">
+                                                <p>
+                                                    Lagres automatisk i nettleseren når du publiserer.
+                                                </p>
+                                                <Button type="submit" className="rounded-xl bg-emerald-500 px-4 text-emerald-950 hover:bg-emerald-400">
+                                                    Lagre endringer
+                                                </Button>
+                                            </div>
+                                        </form>
+                                    </CardContent>
+                                </Card>
+                                <div className="space-y-6">
+                                    <Card className="border-slate-200 bg-white shadow-sm">
+                                        <CardHeader className="gap-1">
+                                            <CardTitle className="text-lg font-semibold text-slate-900">
+                                                Seksjoner på forsiden
+                                            </CardTitle>
+                                            <p className="text-sm text-slate-500">
+                                                Dra for å endre rekkefølge eller slå av moduler.
+                                            </p>
+                                        </CardHeader>
+                                        <CardContent className="space-y-3 p-5">
+                                            {orderedSectionItems.map((item, index) => {
+                                                const enabled = item.moduleKey ? moduleSettings[item.moduleKey] : true;
+                                                const isDropTarget = dragOverSection === item.key;
+                                                const isDragging = draggingSection === item.key;
+                                                return (
+                                                    <div
+                                                        key={item.key}
+                                                        draggable
+                                                        onDragStart={handleSectionDragStart(item.key)}
+                                                        onDragEnter={handleSectionDragEnter(item.key)}
+                                                        onDragOver={handleSectionDragOver}
+                                                        onDrop={handleSectionDrop(item.key)}
+                                                        onDragEnd={handleSectionDragEnd}
+                                                        className={`flex flex-col gap-4 rounded-2xl border bg-white p-4 transition sm:flex-row sm:items-center sm:justify-between ${
+                                                            isDropTarget
+                                                                ? "border-emerald-300 bg-emerald-50"
+                                                                : isDragging
+                                                                ? "border-cyan-300 bg-cyan-50"
+                                                                : "border-slate-200"
+                                                        }`}
+                                                    >
+                                                        <div className="flex flex-1 items-start gap-3">
+                                                            <span className="flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 bg-slate-50 text-sm font-semibold text-slate-500">
+                                                                {String(index + 1).padStart(2, "0")}
+                                                            </span>
+                                                            <div className="flex-1">
+                                                                <p className="flex items-center gap-2 text-sm font-semibold text-slate-700">
+                                                                    <item.Icon className="h-4 w-4 text-emerald-500" />
+                                                                    {item.label}
+                                                                </p>
+                                                                <p className="text-xs text-slate-500">{item.description}</p>
+                                                            </div>
+                                                        </div>
+                                                        <div className="flex items-center gap-3 self-stretch sm:self-auto">
+                                                            <span className="inline-flex items-center gap-1 rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-[11px] uppercase tracking-widest text-slate-500">
+                                                                <GripVertical className="h-3.5 w-3.5" /> Flytt
+                                                            </span>
+                                                            {item.moduleKey ? (
+                                                                <button
+                                                                    type="button"
+                                                                    onClick={(event) => {
+                                                                        event.stopPropagation();
+                                                                        handleModuleToggle(item.moduleKey);
+                                                                    }}
+                                                                    className={`inline-flex items-center gap-2 rounded-full border px-4 py-1 text-xs font-semibold transition ${
+                                                                        enabled
+                                                                            ? "border-emerald-200 bg-emerald-50 text-emerald-600"
+                                                                            : "border-slate-200 bg-white text-slate-500"
+                                                                    }`}
+                                                                >
+                                                                    <span
+                                                                        className={`h-2 w-2 rounded-full ${
+                                                                            enabled ? "bg-emerald-500" : "bg-slate-300"
+                                                                        }`}
+                                                                    />
+                                                                    {enabled ? "Aktiv" : "Skjult"}
+                                                                </button>
+                                                            ) : (
+                                                                <span className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-4 py-1 text-xs font-semibold text-slate-500">
+                                                                    <span className="h-2 w-2 rounded-full bg-emerald-500" />
+                                                                    Alltid aktiv
+                                                                </span>
+                                                            )}
+                                                        </div>
+                                                    </div>
+                                                );
+                                            })}
+                                        </CardContent>
+                                    </Card>
+                                    <Card className="border-slate-200 bg-white shadow-sm">
+                                        <CardHeader className="gap-1">
+                                            <CardTitle className="text-lg font-semibold text-slate-900">
+                                                Forhåndsvisning
+                                            </CardTitle>
+                                            <p className="text-sm text-slate-500">
+                                                Slik ser hero-seksjonen ut for besøkende akkurat nå.
+                                            </p>
+                                        </CardHeader>
+                                        <CardContent className="space-y-5 p-5">
+                                            <div className="rounded-3xl border border-slate-200 bg-gradient-to-br from-emerald-50 via-white to-slate-50 p-6 shadow-inner">
+                                                <div className="flex items-center gap-4">
+                                                    <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-white shadow">
+                                                        {siteSettings.logoUrl ? (
+                                                            <img
+                                                                src={siteSettings.logoUrl}
+                                                                alt="Fjolsenbanden-logo"
+                                                                className="max-h-12 max-w-full object-contain"
+                                                            />
+                                                        ) : (
+                                                            <span className="text-lg font-semibold tracking-wide text-slate-500">
+                                                                FB
+                                                            </span>
+                                                        )}
+                                                    </div>
+                                                    <div>
+                                                        <p className="text-xs uppercase tracking-wide text-slate-400">
+                                                            Brand hero
+                                                        </p>
+                                                        <p className="text-lg font-semibold text-slate-800">
+                                                            Førsteinntrykket ute på nettsiden
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <div className="mt-6 space-y-3">
+                                                    <h3 className="text-2xl font-black text-slate-900">
+                                                        {siteSettings.heroTitle || "FJOLSENBANDEN"}
+                                                    </h3>
+                                                    <p className="text-sm text-slate-600">
+                                                        {siteSettings.heroTagline ||
+                                                            "Spillglede for hele familien – trygge streams, turneringer og premier."}
+                                                    </p>
+                                                    <div className="flex flex-wrap gap-3">
+                                                        <Button className="rounded-full bg-emerald-500 px-5 text-sm text-emerald-950 shadow-sm hover:bg-emerald-400">
+                                                            Bli med på neste stream
+                                                        </Button>
+                                                        <Button
+                                                            variant="outline"
+                                                            className="rounded-full border-slate-200 bg-white px-5 text-sm text-slate-700 hover:bg-slate-50"
+                                                        >
+                                                            Les medlemsguiden
+                                                        </Button>
+                                                    </div>
+                                                </div>
+                                                <div className="mt-5 rounded-2xl bg-white/60 p-4 text-xs text-slate-600">
+                                                    <span className="font-semibold text-slate-800">Nyhet:</span> {siteSettings.announcement}
+                                                </div>
+                                            </div>
+                                            <div className="grid gap-3 sm:grid-cols-2">
+                                                <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+                                                    <p className="text-xs uppercase tracking-wide text-slate-400">
+                                                        Medlemsvekst
+                                                    </p>
+                                                    <p className="mt-2 text-2xl font-semibold text-slate-900">
+                                                        {totals.totalMembers.toLocaleString("no-NO")}
+                                                    </p>
+                                                    <p className="text-xs text-slate-500">Medlemmer totalt</p>
+                                                </div>
+                                                <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+                                                    <p className="text-xs uppercase tracking-wide text-slate-400">
+                                                        Nye medlemmer
+                                                    </p>
+                                                    <p className="mt-2 text-2xl font-semibold text-slate-900">
+                                                        {totals.totalNewMembers.toLocaleString("no-NO")}
+                                                    </p>
+                                                    <p className="text-xs text-slate-500">Siste 6 måneder</p>
+                                                </div>
+                                            </div>
+                                        </CardContent>
+                                    </Card>
+                                </div>
+                            </div>
+                        </section>
+                        <section id="memberships" className="mt-12 grid gap-6 xl:grid-cols-[1.6fr,1fr]">
+                            <Card className="border-slate-200 bg-white shadow-sm">
+                                <CardHeader className="gap-1">
+                                    <CardTitle className="flex items-center gap-2 text-lg font-semibold text-slate-900">
+                                        <Users className="h-5 w-5 text-emerald-500" /> Medlemskap
+                                    </CardTitle>
+                                    <p className="text-sm text-slate-500">
+                                        Oppdater navn, pris og fordeler for hver medlemskategori.
+                                    </p>
+                                </CardHeader>
+                                <CardContent className="space-y-4 p-6">
+                                    {membershipDrafts.map((tier) => (
+                                        <div key={tier.id} className="space-y-4 rounded-3xl border border-slate-200 bg-slate-50 p-5">
+                                            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                                                <div>
+                                                    <p className="text-sm font-semibold text-slate-700">
+                                                        {tier.title || "Medlemskap"}
+                                                    </p>
+                                                    <p className="text-xs text-slate-500">
+                                                        Vises i prislisten på forsiden.
+                                                    </p>
+                                                </div>
+                                                <Button
+                                                    variant="outline"
+                                                    className="inline-flex items-center gap-2 border-slate-200 bg-white text-xs text-slate-600 hover:bg-slate-100"
+                                                    type="button"
+                                                    onClick={() => removeMembershipTier(tier.id)}
+                                                >
+                                                    <Trash2 className="h-3.5 w-3.5" /> Fjern
+                                                </Button>
+                                            </div>
+                                            <div className="grid gap-4 sm:grid-cols-2">
+                                                <div className="space-y-2">
+                                                    <Label htmlFor={`tier-title-${tier.id}`}>Navn</Label>
+                                                    <Input
+                                                        id={`tier-title-${tier.id}`}
+                                                        value={tier.title}
+                                                        onChange={(event) =>
+                                                            handleMembershipFieldChange(
+                                                                tier.id,
+                                                                "title",
+                                                                event.target.value,
+                                                            )
+                                                        }
+                                                    />
+                                                </div>
+                                                <div className="space-y-2">
+                                                    <Label htmlFor={`tier-price-${tier.id}`}>Pris</Label>
+                                                    <Input
+                                                        id={`tier-price-${tier.id}`}
+                                                        value={tier.price}
+                                                        onChange={(event) =>
+                                                            handleMembershipFieldChange(
+                                                                tier.id,
+                                                                "price",
+                                                                event.target.value,
+                                                            )
+                                                        }
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div className="space-y-2">
+                                                <Label htmlFor={`tier-color-${tier.id}`}>Fargevalg</Label>
+                                                <select
+                                                    id={`tier-color-${tier.id}`}
+                                                    value={tier.color}
+                                                    onChange={(event) =>
+                                                        handleMembershipFieldChange(
+                                                            tier.id,
+                                                            "color",
+                                                            event.target.value,
+                                                        )
+                                                    }
+                                                    className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-emerald-500/40"
+                                                >
+                                                    <option value="green">Grønn</option>
+                                                    <option value="cyan">Turkis</option>
+                                                    <option value="amber">Gul</option>
+                                                </select>
+                                            </div>
+                                            <div className="space-y-2">
+                                                <Label htmlFor={`tier-features-${tier.id}`}>
+                                                    Fordeler (én per linje)
+                                                </Label>
+                                                <Textarea
+                                                    id={`tier-features-${tier.id}`}
+                                                    value={tier.features.join("\n")}
+                                                    onChange={(event) =>
+                                                        handleMembershipFeaturesChange(
+                                                            tier.id,
+                                                            event.target.value,
+                                                        )
+                                                    }
+                                                    rows={3}
+                                                />
+                                            </div>
+                                        </div>
+                                    ))}
+                                    <Button
+                                        type="button"
+                                        className="inline-flex items-center gap-2 rounded-xl bg-emerald-500 px-4 text-emerald-950 hover:bg-emerald-400"
+                                        onClick={addMembershipTier}
+                                    >
+                                        <Plus className="h-4 w-4" /> Legg til medlemskap
+                                    </Button>
+                                </CardContent>
+                            </Card>
+                            <Card className="border-slate-200 bg-white shadow-sm">
+                                <CardHeader className="gap-1">
+                                    <CardTitle className="flex items-center gap-2 text-lg font-semibold text-slate-900">
+                                        <Crown className="h-5 w-5 text-emerald-500" /> Partnere
+                                    </CardTitle>
+                                    <p className="text-sm text-slate-500">
+                                        Hold oversikt over logoer og lenker til samarbeidspartnere.
+                                    </p>
+                                </CardHeader>
+                                <CardContent className="space-y-4 p-6">
+                                    {partnerLogos.map((partner) => (
+                                        <div key={partner.id} className="space-y-3 rounded-3xl border border-slate-200 bg-slate-50 p-4">
+                                            <div className="grid gap-3 sm:grid-cols-[auto,1fr] sm:items-center">
+                                                <div className="flex h-14 w-14 items-center justify-center rounded-xl border border-slate-200 bg-white">
+                                                    {partner.logoUrl ? (
+                                                        <img
+                                                            src={partner.logoUrl}
+                                                            alt={partner.name}
+                                                            className="max-h-10 max-w-full object-contain"
+                                                        />
+                                                    ) : (
+                                                        <span className="text-xs text-slate-400">Logo</span>
+                                                    )}
+                                                </div>
+                                                <div className="space-y-2">
+                                                    <Label htmlFor={`partner-name-${partner.id}`}>Navn</Label>
+                                                    <Input
+                                                        id={`partner-name-${partner.id}`}
+                                                        value={partner.name}
+                                                        onChange={(event) =>
+                                                            handlePartnerFieldChange(
+                                                                partner.id,
+                                                                "name",
+                                                                event.target.value,
+                                                            )
+                                                        }
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div className="space-y-2">
+                                                <Label htmlFor={`partner-logo-${partner.id}`}>
+                                                    Logo-URL
+                                                </Label>
+                                                <Input
+                                                    id={`partner-logo-${partner.id}`}
+                                                    value={partner.logoUrl}
+                                                    onChange={(event) =>
+                                                        handlePartnerFieldChange(
+                                                            partner.id,
+                                                            "logoUrl",
+                                                            event.target.value,
+                                                        )
+                                                    }
+                                                    placeholder="https://..."
+                                                />
+                                                <label className="inline-flex cursor-pointer items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-1.5 text-xs font-semibold text-slate-600 shadow-sm hover:bg-slate-100">
+                                                    <UploadCloud className="h-4 w-4" /> Last opp
+                                                    <input
+                                                        type="file"
+                                                        accept="image/*"
+                                                        className="hidden"
+                                                        onChange={handlePartnerLogoUpload(partner.id)}
+                                                    />
+                                                </label>
+                                            </div>
+                                            <div className="flex justify-end">
+                                                <Button
+                                                    variant="outline"
+                                                    className="inline-flex items-center gap-2 border-slate-200 bg-white text-xs text-rose-600 hover:bg-rose-50"
+                                                    type="button"
+                                                    onClick={() => removePartnerLogo(partner.id)}
+                                                >
+                                                    <Trash2 className="h-3.5 w-3.5" /> Fjern
+                                                </Button>
+                                            </div>
+                                        </div>
+                                    ))}
+                                    <Button
+                                        type="button"
+                                        className="inline-flex items-center gap-2 rounded-xl bg-slate-900 px-4 text-white hover:bg-slate-800"
+                                        onClick={addPartnerLogo}
+                                    >
+                                        <Plus className="h-4 w-4" /> Ny partner
+                                    </Button>
+                                </CardContent>
+                            </Card>
+                        </section>
+
+                        <section id="team" className="mt-12 grid gap-6 xl:grid-cols-[1.6fr,1fr]">
+                            <Card className="border-slate-200 bg-white shadow-sm">
+                                <CardHeader className="gap-1">
+                                    <CardTitle className="flex items-center gap-2 text-lg font-semibold text-slate-900">
+                                        <Trophy className="h-5 w-5 text-emerald-500" /> Team & profiler
+                                    </CardTitle>
+                                    <p className="text-sm text-slate-500">
+                                        Hurtigoversikt over spillere i Fjolsenbanden.
+                                    </p>
+                                </CardHeader>
+                                <CardContent className="space-y-5 p-6">
+                                    {players.length > 0 ? (
+                                        <div className="space-y-4">
+                                            {players.slice(0, 5).map((player) => (
+                                                <div
+                                                    key={player.id}
+                                                    className="flex flex-col gap-4 rounded-3xl border border-slate-200 bg-slate-50 p-4 sm:flex-row sm:items-center sm:justify-between"
+                                                >
+                                                    <div className="flex items-center gap-4">
+                                                        <img
+                                                            src={player.avatarUrl}
+                                                            alt={player.gamerTag}
+                                                            className="h-14 w-14 rounded-2xl object-cover"
+                                                        />
+                                                        <div>
+                                                            <p className="text-sm font-semibold text-slate-700">
+                                                                {player.gamerTag}
+                                                            </p>
+                                                            <p className="text-xs text-slate-500">
+                                                                {player.mainGame}
+                                                            </p>
+                                                            <p className="text-xs text-slate-400">
+                                                                Med siden {formatDate(player.joinDate)}
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                    <div className="flex items-center gap-2 self-end sm:self-auto">
+                                                        <Button
+                                                            asChild
+                                                            size="sm"
+                                                            className="rounded-xl bg-cyan-500 px-3 text-xs font-semibold text-cyan-950 hover:bg-cyan-400"
+                                                        >
+                                                            <a href={`/players/${player.slug}`}>
+                                                                <ArrowUpRight className="mr-1 h-4 w-4" /> Åpne profil
+                                                            </a>
+                                                        </Button>
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    ) : (
+                                        <p className="rounded-3xl border border-dashed border-slate-200 bg-slate-50 p-6 text-center text-sm text-slate-500">
+                                            Ingen spillere registrert ennå. Legg til via medlemsadministrasjonen.
+                                        </p>
+                                    )}
+                                    {players.length > 4 ? (
+                                        <p className="text-xs text-slate-400">
+                                            Vis hele listen og gjør endringer under «Administrer medlemmer».
+                                        </p>
+                                    ) : null}
+                                </CardContent>
+                            </Card>
+                            <Card className="border-slate-200 bg-white shadow-sm">
+                                <CardHeader className="gap-1">
+                                    <CardTitle className="flex items-center gap-2 text-lg font-semibold text-slate-900">
+                                        <ShieldCheck className="h-5 w-5 text-emerald-500" /> Sponsorelementer
+                                    </CardTitle>
+                                    <p className="text-sm text-slate-500">
+                                        Hvor mange spillere som har registrert partner-lenker.
+                                    </p>
+                                </CardHeader>
+                                <CardContent className="space-y-4 p-6">
+                                    <div className="rounded-3xl border border-slate-200 bg-slate-50 p-4 text-sm text-slate-600">
+                                        Totalt {sponsorSegments.totalPlayers} profiler med komplette sponsorsett.
+                                    </div>
+                                    <div className="space-y-3">
+                                        {sponsorSegments.segments.map((segment) => (
+                                            <div key={segment.key} className="space-y-1">
+                                                <div className="flex items-center justify-between text-sm font-medium text-slate-600">
+                                                    <span>{segment.label}</span>
+                                                    <span>{segment.members} profiler</span>
+                                                </div>
+                                                <div className="h-2 rounded-full bg-slate-200">
+                                                    <div
+                                                        className="h-full rounded-full bg-indigo-400"
+                                                        style={{ width: `${segment.percent}%` }}
+                                                    />
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                    <div className="rounded-2xl border border-slate-200 bg-white p-4 text-sm text-slate-600">
+                                        <p className="font-semibold text-slate-700">Tips</p>
+                                        <p>
+                                            Oppdater kontaktinfo og sosiale lenker direkte på medlemssidene for å holde oversikten oppdatert.
+                                        </p>
+                                    </div>
+                                </CardContent>
+                            </Card>
+                        </section>
+                    </main>
+                </div>
+            </div>
+        </div>
+    );
+}
+
 function normalizeSectionOrder(order) {
-    const fallback = DEFAULT_SECTION_ORDER;
     const incoming = Array.isArray(order) ? order : [];
-    const combined = [...incoming, ...fallback];
+    const combined = [...incoming, ...DEFAULT_SECTION_ORDER];
     const seen = new Set();
     const result = [];
     for (const key of combined) {
-        if (fallback.includes(key) && !seen.has(key)) {
+        if (DEFAULT_SECTION_ORDER.includes(key) && !seen.has(key)) {
             seen.add(key);
             result.push(key);
         }
     }
     return result;
 }
+
 function reorderSectionKeys(order, source, target) {
     const sourceIndex = order.indexOf(source);
     const targetIndex = order.indexOf(target);
@@ -734,12 +1564,14 @@ function reorderSectionKeys(order, source, target) {
     next.splice(targetIndex, 0, source);
     return next;
 }
+
 function generateLocalId(prefix) {
     if (typeof crypto !== "undefined" && typeof crypto.randomUUID === "function") {
         return `${prefix}-${crypto.randomUUID()}`;
     }
     return `${prefix}-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`;
 }
+
 function readFileAsDataUrl(file) {
     return new Promise((resolve, reject) => {
         const reader = new FileReader();
@@ -750,17 +1582,18 @@ function readFileAsDataUrl(file) {
         reader.readAsDataURL(file);
     });
 }
+
 function formatDateTime(input) {
     if (!input) {
         return "";
     }
     try {
         return new Date(input).toLocaleString("no-NO", { dateStyle: "medium", timeStyle: "short" });
-    }
-    catch (error) {
+    } catch (error) {
         return input;
     }
 }
+
 function computeGrowth(history) {
     if (history.length < 2) {
         return 0;
@@ -772,6 +1605,7 @@ function computeGrowth(history) {
     }
     return Math.round(((last - first) / first) * 100);
 }
+
 function buildAnalyticsOverview(history) {
     if (history.length === 0) {
         return {
@@ -789,7 +1623,10 @@ function buildAnalyticsOverview(history) {
     const pageViewsChange = percentageChange(last.watchHours, prev.watchHours);
     const averageSeconds = Math.max(60, Math.round((last.watchHours * 3600) / Math.max(last.members * 18, 1)));
     const averageTimeValue = formatDuration(averageSeconds);
-    const averageTimeChange = percentageChange(last.watchHours / Math.max(last.members || 1, 1), prev.watchHours / Math.max(prev.members || 1, 1));
+    const averageTimeChange = percentageChange(
+        last.watchHours / Math.max(last.members || 1, 1),
+        prev.watchHours / Math.max(prev.members || 1, 1),
+    );
     const visitorValue = Math.round(last.watchHours * 14 + last.newMembers * 45);
     const visitorPrev = Math.round(prev.watchHours * 14 + prev.newMembers * 45);
     const conversionRate = Math.min(100, (last.newMembers / Math.max(last.members || 1, 1)) * 100);
@@ -804,13 +1641,34 @@ function buildAnalyticsOverview(history) {
         averageTime: { value: averageTimeValue, change: averageTimeChange },
         latestNewMembers: last.newMembers,
         quickStats: [
-            { label: "Besøksverdi", value: `${visitorValue.toLocaleString("no-NO")} kr`, change: percentageChange(visitorValue, visitorPrev), caption: "Gjennomsnittlig verdi per besøk" },
-            { label: "Konverteringsrate", value: `${conversionRate.toFixed(1)}%`, change: percentageChange(conversionRate, conversionPrev), caption: "Registreringer / totalt besøk" },
-            { label: "Kampanjeklikk", value: campaignClicks.toLocaleString("no-NO"), change: percentageChange(campaignClicks, campaignPrev), caption: "Fra pågående annonse" },
-            { label: "Måloppnåelse", value: `${goalProgress}%`, change: percentageChange(goalProgress, goalPrev), caption: "Mot månedsmålet" },
+            {
+                label: "Besøksverdi",
+                value: `${visitorValue.toLocaleString("no-NO")} kr`,
+                change: percentageChange(visitorValue, visitorPrev),
+                caption: "Gjennomsnittlig verdi per besøk",
+            },
+            {
+                label: "Konverteringsrate",
+                value: `${conversionRate.toFixed(1)}%`,
+                change: percentageChange(conversionRate, conversionPrev),
+                caption: "Registreringer / totalt besøk",
+            },
+            {
+                label: "Kampanjeklikk",
+                value: campaignClicks.toLocaleString("no-NO"),
+                change: percentageChange(campaignClicks, campaignPrev),
+                caption: "Fra pågående annonse",
+            },
+            {
+                label: "Måloppnåelse",
+                value: `${goalProgress}%`,
+                change: percentageChange(goalProgress, goalPrev),
+                caption: "Mot månedsmålet",
+            },
         ],
     };
 }
+
 function buildTopPageStats(siteSettings, history) {
     const last = history.at(-1) || { members: 0, newMembers: 0 };
     const base = Math.max(last.members * 8 + last.newMembers * 40, 1800);
@@ -832,6 +1690,7 @@ function buildTopPageStats(siteSettings, history) {
         };
     });
 }
+
 function buildDeviceBreakdown(history) {
     const last = history.at(-1) || { members: 0 };
     const totalSessions = Math.max(Math.round(last.members * 2.4), 0);
@@ -842,6 +1701,7 @@ function buildDeviceBreakdown(history) {
     ];
     return { totalSessions, segments };
 }
+
 function buildChannelBreakdown(history) {
     const last = history.at(-1) || { members: 0, watchHours: 0, newMembers: 0 };
     const prev = history.length > 1 ? history[history.length - 2] : last;
@@ -861,6 +1721,7 @@ function buildChannelBreakdown(history) {
     }));
     return { totalVisitors, change: baseChange, channels };
 }
+
 function buildTrafficTable(history) {
     const last = history.at(-1) || { members: 0, newMembers: 0, watchHours: 0 };
     const baseVisits = Math.max(last.members * 45, 2200);
@@ -879,6 +1740,7 @@ function buildTrafficTable(history) {
         progress: row.progress,
     }));
 }
+
 function buildTrafficChart(history) {
     if (history.length === 0) {
         return { months: [], series: [] };
@@ -910,6 +1772,7 @@ function buildTrafficChart(history) {
         ],
     };
 }
+
 function buildSponsorSegments(players) {
     const definitions = [
         { key: "fortnite", label: "Fortnite" },
@@ -920,8 +1783,7 @@ function buildSponsorSegments(players) {
     ];
     const segments = definitions.map((definition) => {
         const members = players.filter((player) => {
-            var _a;
-            const handle = (_a = player.socials) === null || _a === void 0 ? void 0 : _a[definition.key];
+            const handle = player.socials?.[definition.key];
             return Boolean(handle && handle.trim());
         }).length;
         return { key: definition.key, label: definition.label, members };
@@ -935,41 +1797,30 @@ function buildSponsorSegments(players) {
         })),
     };
 }
+
 function formatDate(input) {
     if (!input) {
         return "Ukjent";
     }
     try {
-        return new Date(input).toLocaleDateString("no-NO", { year: "numeric", month: "short" });
-    }
-    catch (error) {
+        return new Date(input).toLocaleDateString("no-NO", {
+            year: "numeric",
+            month: "short",
+        });
+    } catch (error) {
         return input;
     }
 }
-function StatTile({ icon, label, value, description }) {
-    return (React.createElement("div", { className: "rounded-2xl border border-white/10 bg-white/5 p-4" },
-        React.createElement("div", { className: "flex items-center justify-between text-xs uppercase tracking-wide text-slate-300" },
-            React.createElement("span", null, label),
-            icon),
-        React.createElement("p", { className: "mt-3 text-2xl font-semibold text-white" }, value),
-        React.createElement("p", { className: "text-xs text-slate-300" }, description)));
+
+function percentageChange(current, previous) {
+    if (previous === 0) {
+        return current === 0 ? 0 : 100;
+    }
+    return ((current - previous) / Math.abs(previous)) * 100;
 }
-function Milestone({ title, date, description }) {
-    return (React.createElement("div", { className: "rounded-2xl border border-white/10 bg-white/5 p-4" },
-        React.createElement("div", { className: "flex items-center justify-between text-xs uppercase tracking-wide text-slate-300" },
-            React.createElement("span", null, title),
-            React.createElement("span", { className: "text-emerald-200" }, date)),
-        React.createElement("p", { className: "mt-2 text-sm text-slate-200" }, description)));
-}
+
 function formatDuration(seconds) {
     const minutes = Math.floor(seconds / 60);
     const remainder = seconds % 60;
-    return `${minutes}m ${remainder.toString().padStart(2, "0")}s`;
+    return `${minutes}m ${String(remainder).padStart(2, "0")}s`;
 }
-function percentageChange(current, previous) {
-    if (previous === 0) {
-        return current ? 100 : 0;
-    }
-    return Math.round(((current - previous) / Math.abs(previous)) * 10) / 10;
-}
-
