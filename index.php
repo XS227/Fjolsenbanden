@@ -19,8 +19,8 @@
     </style>
   </head>
   <body class="text-white">
-    <div id="fjolsenbanden-home" class="min-h-screen">
-<div class="relative min-h-screen overflow-x-hidden bg-gradient-to-b from-[#131A49] via-[#0B163F] to-[#050B24] text-white">
+    <div id="fjolsenbanden-home">
+      <div class="relative overflow-x-hidden bg-gradient-to-b from-[#131A49] via-[#0B163F] to-[#050B24] text-white">
 <div class="pointer-events-none fixed inset-0 -z-10 opacity-60" style="background:radial-gradient(circle at 18% 12%, rgba(19,160,249,0.3), transparent 55%), radial-gradient(circle at 80% 0%, rgba(255,47,156,0.18), transparent 50%)">
 </div>
 <nav class="relative z-50 flex items-center justify-between px-6 py-4">

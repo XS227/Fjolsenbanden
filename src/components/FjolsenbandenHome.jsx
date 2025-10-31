@@ -532,7 +532,7 @@ export default function FjolsenbandenHome() {
     const [firstName, ...remainingNameParts] = resolvedName ? resolvedName.split(/\s+/) : [""];
     const lastName = remainingNameParts.join(" ");
     const estimatedUnboxingReach = new Intl.NumberFormat("no-NO").format(2500 + 3200 + 4200);
-    return (React.createElement("div", { className: "relative min-h-screen overflow-x-hidden bg-gradient-to-b from-[#131A49] via-[#0B163F] to-[#050B24] text-white" },
+    return (React.createElement("div", { className: "relative overflow-x-hidden bg-gradient-to-b from-[#131A49] via-[#0B163F] to-[#050B24] text-white" },
         showUnboxingVideo ? (React.createElement(VideoLightbox, { videoUrl: unboxingVideoUrl, onClose: () => setShowUnboxingVideo(false), title: "Se hvordan vi pakker ut og presenterer produkter for communityet" })) : null,
         React.createElement("div", { className: "pointer-events-none fixed inset-0 -z-10 opacity-60", style: {
                 background: "radial-gradient(circle at 18% 12%, rgba(19,160,249,0.3), transparent 55%), radial-gradient(circle at 80% 0%, rgba(255,47,156,0.18), transparent 50%)",
