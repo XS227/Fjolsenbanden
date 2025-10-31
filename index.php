@@ -319,7 +319,7 @@
 <img src="/assets/partners/samsung.svg" alt="Samsung" class="h-full w-full object-contain" loading="lazy"/>
 </div>
 <div class="flex items-center justify-center rounded-2xl border border-white/10 bg-white/5 shadow-[0_12px_24px_rgba(8,18,40,0.35)] transition hover:bg-white/10 h-20 w-full px-4 py-3">
-<img src="/assets/partners/philips.svg" alt="Philips" class="h-full w-full object-contain" loading="lazy"/>
+<img src="https://setaei.com/Fjolsen/philips.jpg" alt="Philips" class="h-full w-full object-contain" loading="lazy"/>
 </div>
 <div class="flex items-center justify-center rounded-2xl border border-white/10 bg-white/5 shadow-[0_12px_24px_rgba(8,18,40,0.35)] transition hover:bg-white/10 h-20 w-full px-4 py-3">
 <img src="/assets/partners/komplett.svg" alt="Komplett.no" class="h-full w-full object-contain" loading="lazy"/>
@@ -572,7 +572,7 @@
 <img src="/assets/partners/samsung.svg" alt="Samsung" class="h-full w-full object-contain" loading="lazy"/>
 </div>
 <div class="flex items-center justify-center rounded-2xl border border-white/10 bg-white/5 shadow-[0_12px_24px_rgba(8,18,40,0.35)] transition hover:bg-white/10 h-24 w-48 p-5">
-<img src="/assets/partners/philips.svg" alt="Philips" class="h-full w-full object-contain" loading="lazy"/>
+<img src="https://setaei.com/Fjolsen/philips.jpg" alt="Philips" class="h-full w-full object-contain" loading="lazy"/>
 </div>
 <div class="flex items-center justify-center rounded-2xl border border-white/10 bg-white/5 shadow-[0_12px_24px_rgba(8,18,40,0.35)] transition hover:bg-white/10 h-24 w-48 p-5">
 <img src="/assets/partners/komplett.svg" alt="Komplett.no" class="h-full w-full object-contain" loading="lazy"/>
