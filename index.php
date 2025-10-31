@@ -14,7 +14,12 @@
     <style>
       body {
         font-family: 'Nunito', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-        background-color: #0e0b1a;
+        background-color: #050b24;
+        color: #ffffff;
+      }
+
+      a {
+        color: inherit;
       }
     </style>
   </head>
