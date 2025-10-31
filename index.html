@@ -16,7 +16,7 @@
     <meta name="twitter:image" content="/og-image.svg" />
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
-  <body>
+  <body class="m-0 bg-[#050B24]">
     <div class="relative min-h-screen overflow-x-hidden bg-gradient-to-b from-[#131A49] via-[#0B163F] to-[#050B24] text-white">
       <div
         class="pointer-events-none absolute inset-0"
@@ -47,153 +47,11 @@
             <li><a class="transition-colors duration-150 hover:text-[#13A0F9]" href="#kontakt">Kontakt</a></li>
           </ul>
           <div class="flex items-center gap-3 md:ml-4">
-            <div class="relative" data-preview-mode-wrapper>
-              <button
-                type="button"
-                id="profile-preview-button"
-                class="inline-flex items-center gap-2 rounded-xl border border-white/15 bg-white/10 px-3 py-2 text-xs font-semibold text-white shadow-sm transition duration-150 hover:-translate-y-0.5 hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-[#13A0F9]"
-                aria-expanded="false"
-                aria-haspopup="true"
-                aria-controls="profile-preview-menu"
-                title="Velg forhåndsvisning"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4">
-                  <path d="M16 7a4 4 0 1 1-8 0 4 4 0 0 1 8 0"></path>
-                  <path d="M3 21a7 7 0 0 1 14 0"></path>
-                </svg>
-                <span class="hidden text-xs font-medium text-white/80 sm:inline" data-preview-mode-label>Besøkende</span>
-                <span
-                  data-preview-mode-indicator
-                  data-base-class="h-2 w-2 rounded-full transition-colors duration-200 sm:h-2.5 sm:w-2.5"
-                  class="h-2 w-2 rounded-full transition-colors duration-200 sm:h-2.5 sm:w-2.5 bg-sky-400"
-                  aria-hidden="true"
-                ></span>
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-3 w-3 text-white/60">
-                  <path d="m6 9 6 6 6-6"></path>
-                </svg>
-              </button>
-              <div
-                id="profile-preview-menu"
-                role="menu"
-                class="absolute right-0 top-full z-40 mt-2 hidden w-56 rounded-xl border border-white/10 bg-[#101c37]/95 p-2 text-xs shadow-lg backdrop-blur"
-              >
-                <p class="px-2 pb-2 text-[11px] font-semibold uppercase tracking-wide text-slate-400">Forhåndsvis som</p>
-                <div class="space-y-1">
-                  <button
-                    type="button"
-                    class="flex items-center justify-between gap-2 rounded-lg px-3 py-2 text-left text-xs font-medium text-slate-200 transition hover:bg-white/10 hover:text-white focus:outline-none focus:ring-2 focus:ring-[#13A0F9]"
-                    data-preview-mode-option="visitor"
-                    data-preview-mode-option-scope="menu"
-                  >
-                    <span class="flex items-center gap-2">
-                      <span class="grid h-6 w-6 place-content-center rounded-full bg-sky-500/15 text-sky-200 font-semibold">V</span>
-                      <span class="flex flex-col leading-tight">
-                        <span class="font-semibold text-white">Besøkende</span>
-                        <span class="text-[10px] font-normal text-slate-400">Ser nettsiden som gjest</span>
-                      </span>
-                    </span>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      data-preview-mode-check
-                      data-base-class="h-3.5 w-3.5 text-emerald-400 transition-opacity duration-200"
-                      class="h-3.5 w-3.5 text-emerald-400 transition-opacity duration-200 opacity-0"
-                    >
-                      <path d="m5 12 5 5 9-11"></path>
-                    </svg>
-                  </button>
-                  <button
-                    type="button"
-                    class="flex items-center justify-between gap-2 rounded-lg px-3 py-2 text-left text-xs font-medium text-slate-200 transition hover:bg-white/10 hover:text-white focus:outline-none focus:ring-2 focus:ring-[#13A0F9]"
-                    data-preview-mode-option="user"
-                    data-preview-mode-option-scope="menu"
-                    data-preview-url="preview/player-profile-preview.html"
-                  >
-                    <span class="flex items-center gap-2">
-                      <span class="grid h-6 w-6 place-content-center rounded-full bg-emerald-500/15 text-emerald-200 font-semibold">M</span>
-                      <span class="flex flex-col leading-tight">
-                        <span class="font-semibold text-white">Medlem</span>
-                        <span class="text-[10px] font-normal text-slate-400">Åpner medlemsprofil i ny fane</span>
-                      </span>
-                    </span>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      data-preview-mode-check
-                      data-base-class="h-3.5 w-3.5 text-emerald-400 transition-opacity duration-200"
-                      class="h-3.5 w-3.5 text-emerald-400 transition-opacity duration-200 opacity-0"
-                    >
-                      <path d="m5 12 5 5 9-11"></path>
-                    </svg>
-                  </button>
-                  <button
-                    type="button"
-                    class="flex items-center justify-between gap-2 rounded-lg px-3 py-2 text-left text-xs font-medium text-slate-200 transition hover:bg-white/10 hover:text-white focus:outline-none focus:ring-2 focus:ring-[#13A0F9]"
-                    data-preview-mode-option="admin"
-                    data-preview-mode-option-scope="menu"
-                    data-preview-url="preview/admin-dashboard-preview.html"
-                  >
-                    <span class="flex items-center gap-2">
-                      <span class="grid h-6 w-6 place-content-center rounded-full bg-amber-500/15 text-amber-200 font-semibold">A</span>
-                      <span class="flex flex-col leading-tight">
-                        <span class="font-semibold text-white">Administrator</span>
-                        <span class="text-[10px] font-normal text-slate-400">Viser kontrollpanelet</span>
-                      </span>
-                    </span>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      data-preview-mode-check
-                      data-base-class="h-3.5 w-3.5 text-emerald-400 transition-opacity duration-200"
-                      class="h-3.5 w-3.5 text-emerald-400 transition-opacity duration-200 opacity-0"
-                    >
-                      <path d="m5 12 5 5 9-11"></path>
-                    </svg>
-                  </button>
-                </div>
-                <div class="mt-3 space-y-1 rounded-lg border border-white/10 bg-white/5 p-3 text-[11px] text-slate-300">
-                  <p class="font-semibold text-white/90">Innloggingsdetaljer</p>
-                  <p>
-                    <span class="font-semibold text-white">Medlem</span>:
-                    Brukernavn <span class="font-mono text-slate-100">User</span> • Passord
-                    <span class="font-mono text-slate-100">User</span>
-                  </p>
-                  <p>
-                    <span class="font-semibold text-white">Administrator</span>:
-                    Brukernavn <span class="font-mono text-slate-100">Admin</span> • Passord
-                    <span class="font-mono text-slate-100">Admin</span>
-                  </p>
-                </div>
-              </div>
-            </div>
             <a
-              href="preview/admin-dashboard-preview.html"
-              target="_blank"
-              rel="noreferrer"
-              class="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-white/15 bg-white/10 text-white shadow-sm transition duration-150 hover:-translate-y-0.5 hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-[#13A0F9]"
-              aria-label="Åpne adminpanel"
-              title="Åpne adminpanel"
+              href="#medlemskap"
+              class="hidden items-center gap-2 rounded-full bg-gradient-to-r from-[#13A0F9] to-[#FF2F9C] px-4 py-2 text-sm font-semibold text-white shadow-[0_10px_24px_rgba(19,160,249,0.35)] transition hover:from-[#0d8bd6] hover:to-[#e12585] md:inline-flex"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5">
-                <path d="M12 12a5 5 0 1 0-5-5 5 5 0 0 0 5 5Z"></path>
-                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                <path d="M15.5 10.5 18 13l3.5-3.5"></path>
-              </svg>
+              Bli medlem
             </a>
             <button
               type="button"
@@ -252,79 +110,14 @@
               <li><a class="block rounded-md px-4 py-2 transition hover:bg-white/10" href="#premier" data-nav-close="true">Premier</a></li>
               <li><a class="block rounded-md px-4 py-2 transition hover:bg-white/10" href="#partners" data-nav-close="true">Samarbeid</a></li>
               <li><a class="block rounded-md px-4 py-2 transition hover:bg-white/10" href="#kontakt" data-nav-close="true">Kontakt</a></li>
-              <li>
-                <a
-                  class="flex items-center gap-2 rounded-md px-4 py-2 transition hover:bg-white/10"
-                  href="preview/admin-dashboard-preview.html"
-                  target="_blank"
-                  rel="noreferrer"
-                  data-nav-close="true"
-                >
-                  <span aria-hidden="true">🔐</span>
-                  <span>Adminpanel (forhåndsvisning)</span>
-                </a>
-              </li>
             </ul>
             <a
               class="mt-4 block rounded-full border border-white/20 px-4 py-2 text-center font-semibold text-white transition hover:border-white/40 hover:bg-white/10"
-              href="#bli-medlem"
+              href="#medlemskap"
               data-nav-close="true"
             >
               Bli medlem
             </a>
-            <div class="mt-4 border-t border-white/10 pt-3">
-              <p class="px-2 text-xs font-semibold uppercase tracking-wide text-zinc-400">Velg modus</p>
-              <div class="mt-2 flex flex-col gap-2">
-                <button
-                  type="button"
-                  class="flex items-center justify-between rounded-md px-4 py-2 text-left text-xs font-medium text-zinc-200 transition hover:bg-white/10 hover:text-white focus:outline-none focus:ring-2 focus:ring-[#13A0F9]"
-                  data-preview-mode-option="visitor"
-                  data-preview-mode-option-scope="mobile"
-                >
-                  <span class="flex items-center gap-2">
-                    <span aria-hidden="true">👀</span>
-                    <span>Besøkende-modus</span>
-                  </span>
-                </button>
-                <button
-                  type="button"
-                  class="flex items-center justify-between rounded-md px-4 py-2 text-left text-xs font-medium text-zinc-200 transition hover:bg-white/10 hover:text-white focus:outline-none focus:ring-2 focus:ring-[#13A0F9]"
-                  data-preview-mode-option="user"
-                  data-preview-mode-option-scope="mobile"
-                  data-preview-url="preview/player-profile-preview.html"
-                >
-                  <span class="flex items-center gap-2">
-                    <span aria-hidden="true">🧑‍🤝‍🧑</span>
-                    <span>Medlemsprofil (ny fane)</span>
-                  </span>
-                </button>
-                <button
-                  type="button"
-                  class="flex items-center justify-between rounded-md px-4 py-2 text-left text-xs font-medium text-zinc-200 transition hover:bg-white/10 hover:text-white focus:outline-none focus:ring-2 focus:ring-[#13A0F9]"
-                  data-preview-mode-option="admin"
-                  data-preview-mode-option-scope="mobile"
-                  data-preview-url="preview/admin-dashboard-preview.html"
-                >
-                  <span class="flex items-center gap-2">
-                    <span aria-hidden="true">🛠️</span>
-                    <span>Adminpanel (ny fane)</span>
-                  </span>
-                </button>
-                </div>
-                <div class="mt-3 space-y-1 rounded-lg border border-white/10 bg-white/5 p-3 text-[11px] text-slate-300">
-                  <p class="font-semibold text-white/90">Innloggingsdetaljer</p>
-                  <p>
-                    <span class="font-semibold text-white">Medlem</span>:
-                    Brukernavn <span class="font-mono text-slate-100">User</span> • Passord
-                    <span class="font-mono text-slate-100">User</span>
-                  </p>
-                  <p>
-                    <span class="font-semibold text-white">Administrator</span>:
-                    Brukernavn <span class="font-mono text-slate-100">Admin</span> • Passord
-                    <span class="font-mono text-slate-100">Admin</span>
-                  </p>
-                </div>
-                </div>
               </div>
             </div>
           </div>
@@ -333,7 +126,7 @@
           
 
         <main class="relative z-10 pb-40">
-        <section id="community" class="section-shell mt-6">
+        <section id="community" class="section-shell pt-6">
           <div class="mx-auto grid max-w-6xl gap-10 lg:grid-cols-2 lg:items-start">
             <div class="space-y-6">
               <div class="space-y-4 text-center lg:text-left">
@@ -459,51 +252,11 @@
               <div class="relative overflow-hidden rounded-2xl border border-white/10 shadow-2xl">
                 <span class="absolute left-3 top-3 rounded-full bg-rose-500 px-4 py-1 text-xs font-semibold text-white shadow animate-pulse">🔴 LIVE</span>
                 <iframe
-                  data-preview-frame
                   src="https://player.twitch.tv/?channel=FjOlsenFN&parent=fjolsenbanden.setaei.com&muted=true"
                   title="Fjolsenbanden Twitch Player"
                   allowfullscreen
                   class="aspect-video w-full bg-black"
                 ></iframe>
-                <div
-                  data-preview-overlay
-                  class="absolute inset-0 flex flex-col items-center justify-center gap-4 bg-black/70 p-6 text-center"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="h-12 w-12 text-[#13A0F9]"
-                  >
-                    <polygon points="6 3 20 12 6 21 6 3"></polygon>
-                  </svg>
-                  <p class="text-sm text-zinc-300">
-                    1-minutt forhåndsvisning –<span data-preview-timer class="ml-1">60</span>s igjen
-                  </p>
-                  <button
-                    type="button"
-                    data-video-unmute
-                    class="rounded-full bg-gradient-to-r from-[#13A0F9] to-[#FF2F9C] px-6 py-3 font-semibold text-white shadow-[0_16px_28px_rgba(19,160,249,0.35)] transition hover:from-[#0d8bd6] hover:to-[#e12585]"
-                  >
-                    Se full stream
-                  </button>
-                  <div class="flex gap-3 text-xs text-zinc-400">
-                    <span>
-                      eller fortsett på
-                  <a href="https://www.twitch.tv/FjOlsenFN" target="_blank" rel="noopener noreferrer" class="ml-1 text-[#13A0F9]">Twitch</a>
-                    </span>
-                    <span>|</span>
-                    <span>
-                      <a href="https://youtube.com/@fjolsenbanden" target="_blank" rel="noopener noreferrer" class="text-[#13A0F9]">YouTube</a>
-                    </span>
-                  </div>
-                </div>
               </div>
             </div>
             <div class="flex max-h-[640px] flex-col rounded-2xl border border-white/10 bg-[#1f2940] p-4">
@@ -524,101 +277,6 @@
                 placeholder="Skriv en kommentar..."
                 class="mt-3 w-full rounded-lg border border-white/20 bg-white/10 px-3 py-2 text-sm text-white placeholder-zinc-400 outline-none focus:ring-2 focus:ring-[#13A0F9]"
               />
-            </div>
-          </div>
-        </section>
-
-        <section id="showcase" class="section-shell mt-20">
-          <div class="mx-auto max-w-6xl space-y-10">
-            <div class="space-y-3 text-center">
-              <span
-                class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1 text-xs font-semibold uppercase tracking-[0.24em] text-[#13A0F9]/90"
-              >
-                Walkthrough
-              </span>
-              <h2 class="text-3xl font-bold text-white">Slik fremstår hele plattformen</h2>
-              <p class="lead-clamp mx-auto max-w-3xl text-zinc-300">
-                Vi har bygget en gjennomgående opplevelse som viser frem både den lekne frontend-opplevelsen og den solide backend-motoren.
-                Under får du en rask presentasjon av hva som møter besøkende, medlemmer og administratorer.
-              </p>
-            </div>
-
-            <div class="grid gap-6 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)]">
-              <div class="space-y-4 rounded-3xl border border-white/10 bg-[#101c37]/85 p-6 shadow-[0_18px_42px_rgba(12,21,45,0.4)]">
-                <h3 class="text-xl font-semibold text-[#13A0F9]">Frontend-opplevelsen</h3>
-                <p class="text-sm leading-relaxed text-zinc-200">
-                  Vi viser frem et moderne, familievennlig design bygget med Tailwind og komponenter som fremhever fellesskap, premier og livesendinger.
-                  Navigasjon, modaler og korte tekster gjør det enkelt å finne medlemskap, samarbeidspartnere og kontaktpunkter.
-                </p>
-                <ul class="space-y-3 text-sm text-zinc-200">
-                  <li class="flex gap-3">
-                    <span aria-hidden="true" class="mt-1.5 h-2 w-2 rounded-full bg-[#13A0F9]"></span>
-                    <span><span class="font-semibold text-white">Responsiv landingsside:</span> Hero, videoembed og sosiale kanaler presentert i et sømløst grid.</span>
-                  </li>
-                  <li class="flex gap-3">
-                    <span aria-hidden="true" class="mt-1.5 h-2 w-2 rounded-full bg-emerald-400"></span>
-                    <span><span class="font-semibold text-white">Interaktive menyer:</span> Besøkende kan forhåndsvise medlems- og adminopplevelsen direkte fra navigasjonen.</span>
-                  </li>
-                  <li class="flex gap-3">
-                    <span aria-hidden="true" class="mt-1.5 h-2 w-2 rounded-full bg-pink-400"></span>
-                    <span><span class="font-semibold text-white">Storytelling-kort:</span> Seksjoner for community, premier og samarbeidspartnere gjør det lett å vise verdiforslaget.</span>
-                  </li>
-                </ul>
-              </div>
-
-              <div class="space-y-4 rounded-3xl border border-[#2b3760]/60 bg-[#060d26]/90 p-6 shadow-[0_18px_42px_rgba(6,12,28,0.4)]">
-                <h3 class="text-xl font-semibold text-white">Backend-motoren</h3>
-                <p class="text-sm leading-relaxed text-zinc-300">
-                  Bak kulissene sørger PHP-endepunkter og tilpassede scripts for at dataen som vises på forsiden er oppdatert, trygg og klar for videreutvikling.
-                </p>
-                <dl class="space-y-3 text-sm text-zinc-200">
-                  <div class="rounded-2xl border border-white/10 bg-white/5 p-3">
-                    <dt class="font-semibold text-white">Sanntidsoppdateringer</dt>
-                    <dd>Oppdateringsscriptet <span class="font-mono text-white/80">updates.php</span> trekker inn nye events og premier uten å forstyrre frontenden.</dd>
-                  </div>
-                  <div class="rounded-2xl border border-white/10 bg-white/5 p-3">
-                    <dt class="font-semibold text-white">Integrasjoner</dt>
-                    <dd>Sømløs støtte for Vipps Login, Discord-webhooks og fremtidige CMS-integrasjoner gjennom modulære Node-scripts.</dd>
-                  </div>
-                  <div class="rounded-2xl border border-white/10 bg-white/5 p-3">
-                    <dt class="font-semibold text-white">Forhåndsvisning</dt>
-                    <dd>Egne forhåndsvisningsmaler i <span class="font-mono text-white/80">preview/</span> gir stakeholders innsyn i medlems- og adminløsningene.</dd>
-                  </div>
-                </dl>
-              </div>
-            </div>
-
-            <div class="rounded-3xl border border-white/10 bg-[#0b163f]/70 p-8 shadow-[0_24px_48px_rgba(5,11,24,0.5)]">
-              <h3 class="text-lg font-semibold text-white">Opplevelsen steg for steg</h3>
-              <div class="mt-6 grid gap-4 lg:grid-cols-3">
-                <article class="flex h-full flex-col gap-3 rounded-2xl border border-white/10 bg-[#101c37]/80 p-5">
-                  <div class="flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-[#13A0F9]">
-                    <span class="grid h-7 w-7 place-content-center rounded-full bg-[#13A0F9]/15 text-[#13A0F9]">1</span>
-                    Førsteinntrykk
-                  </div>
-                  <p class="text-sm text-zinc-200">
-                    Brukeren lander på forsiden, ser videoen og sosial bevisning og klikker seg videre via de tydelige CTA-ene.
-                  </p>
-                </article>
-                <article class="flex h-full flex-col gap-3 rounded-2xl border border-white/10 bg-[#101c37]/80 p-5">
-                  <div class="flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-emerald-300">
-                    <span class="grid h-7 w-7 place-content-center rounded-full bg-emerald-400/15 text-emerald-300">2</span>
-                    Registrering
-                  </div>
-                  <p class="text-sm text-zinc-200">
-                    Når medlemsskjemaet åpnes sender frontenden trygg informasjon til backend som håndterer Vipps-login, samtykke og lagring.
-                  </p>
-                </article>
-                <article class="flex h-full flex-col gap-3 rounded-2xl border border-white/10 bg-[#101c37]/80 p-5">
-                  <div class="flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-pink-300">
-                    <span class="grid h-7 w-7 place-content-center rounded-full bg-pink-400/15 text-pink-300">3</span>
-                    Oppfølging
-                  </div>
-                  <p class="text-sm text-zinc-200">
-                    Adminpanelet og scripts sørger for at nye konkurranser, premier og sendinger blir synlige på forsiden og delt i communityet.
-                  </p>
-                </article>
-              </div>
             </div>
           </div>
         </section>
@@ -672,49 +330,56 @@
           </div>
         </section>
 
-        <section id="partners" class="partners">
-          <div class="partners__inner">
-            <h2 id="premier" class="partners__title">Samarbeidspartnere</h2>
-            <p class="partners__lead">
-              Vi har allerede hatt samarbeid med flere kjente merkevarer.
-            </p>
+        <section id="partners" class="section-shell mt-20">
+          <div class="mx-auto max-w-6xl space-y-10 rounded-3xl border border-white/10 bg-white/5 p-8 text-center shadow-[0_24px_48px_rgba(6,14,35,0.45)]">
+            <div class="space-y-3">
+              <h2 id="premier" class="text-3xl font-bold text-white">Samarbeidspartnere</h2>
+              <p class="text-lg text-zinc-300">
+                Vi har allerede hatt samarbeid med flere kjente merkevarer.
+              </p>
+            </div>
 
-            <!-- LOGO-LISTE (midtstilt) -->
-            <ul class="partners__logos" aria-label="Våre samarbeidspartnere">
-              <li>
+            <ul class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4" aria-label="Våre samarbeidspartnere">
+              <li class="flex items-center justify-center rounded-2xl border border-white/10 bg-[#0b163f]/70 p-6 shadow-[0_12px_28px_rgba(6,12,28,0.4)]">
                 <img
                   src="http://fjolsenbanden.setaei.com/Images/lenova1.jpg"
                   alt="Lenovo"
-                  class="logo"
+                  class="max-h-12 w-full object-contain"
                   loading="lazy"
                 />
               </li>
-              <li>
+              <li class="flex items-center justify-center rounded-2xl border border-white/10 bg-[#0b163f]/70 p-6 shadow-[0_12px_28px_rgba(6,12,28,0.4)]">
                 <img
                   src="http://fjolsenbanden.setaei.com/Images/komplett1.jpg"
                   alt="Komplett"
-                  class="logo"
+                  class="max-h-12 w-full object-contain"
                   loading="lazy"
                 />
               </li>
-              <li>
-                <img src="/assets/partners/philips.svg" alt="Philips" class="logo" />
+              <li class="flex items-center justify-center rounded-2xl border border-white/10 bg-[#0b163f]/70 p-6 shadow-[0_12px_28px_rgba(6,12,28,0.4)]">
+                <img src="/assets/partners/philips.svg" alt="Philips" class="max-h-12 w-full object-contain" />
               </li>
-              <li>
+              <li class="flex items-center justify-center rounded-2xl border border-white/10 bg-[#0b163f]/70 p-6 shadow-[0_12px_28px_rgba(6,12,28,0.4)]">
                 <img
                   src="http://fjolsenbanden.setaei.com/Images/samsung1.jpg"
                   alt="Samsung"
-                  class="logo"
+                  class="max-h-12 w-full object-contain"
                   loading="lazy"
                 />
               </li>
             </ul>
 
-            <!-- CTA -->
-            <p class="partners__cta-text">
-              Ønsker du å synliggjøre din merkevare for vårt engasjerte gaming-publikum?
-            </p>
-            <a href="#kontakt" class="partners__btn">Kontakt oss</a>
+            <div class="space-y-4">
+              <p class="text-base text-zinc-300">
+                Ønsker du å synliggjøre din merkevare for vårt engasjerte gaming-publikum?
+              </p>
+              <a
+                href="#kontakt"
+                class="inline-flex items-center justify-center rounded-full bg-gradient-to-r from-[#13A0F9] to-[#FF2F9C] px-6 py-3 text-sm font-semibold text-white shadow-[0_16px_32px_rgba(19,160,249,0.35)] transition hover:from-[#0d8bd6] hover:to-[#e12585]"
+              >
+                Kontakt oss
+              </a>
+            </div>
           </div>
         </section>
 
@@ -817,34 +482,8 @@
         </main>
 
         <footer class="mt-20 border-t border-white/10 py-8 text-center text-sm text-zinc-500">
-        <div class="flex flex-col items-center justify-center gap-2 text-sm md:flex-row">
           <span>© <span id="current-year"></span> Fjolsenbanden. Alle rettigheter reservert.</span>
-          <a href="preview/admin-dashboard-preview.html" target="_blank" rel="noreferrer" class="flex items-center gap-2 font-medium text-zinc-300 transition hover:text-white">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="h-4 w-4"
-              aria-hidden="true"
-            >
-              <circle cx="18" cy="15" r="3"></circle>
-              <path d="M19.5 12.5v-2.2a2.3 2.3 0 0 0-.7-1.6l-3.1-3.1a2.3 2.3 0 0 0-1.6-.7H8.8a2.3 2.3 0 0 0-2.3 2.3v2.2"></path>
-              <path d="M2 15.8a2.3 2.3 0 0 0 2.3 2.3h6"></path>
-              <circle cx="6" cy="15" r="3"></circle>
-              <path d="m21.7 16.4-.9.9"></path>
-              <path d="m21.7 13.6-.9-.9"></path>
-              <path d="m16.3 16.4.9.9"></path>
-              <path d="m16.3 13.6.9-.9"></path>
-              <path d="M9 7V4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3"></path>
-            </svg>
-            <span>Admin</span>
-          </a>
-        </div>
-      </footer>
+        </footer>
 
       <div id="registration-modal" class="fixed inset-0 z-[100] hidden flex items-center justify-center px-4 py-10">
         <button
@@ -1151,164 +790,6 @@
           closeMenu();
         }
       });
-
-      const profilePreviewWrapper = document.querySelector("[data-preview-mode-wrapper]");
-      const profilePreviewButton = document.getElementById("profile-preview-button");
-      const profilePreviewMenu = document.getElementById("profile-preview-menu");
-      const profilePreviewLabel = document.querySelector("[data-preview-mode-label]");
-      const profilePreviewIndicator = document.querySelector("[data-preview-mode-indicator]");
-      const profilePreviewOptions = document.querySelectorAll("[data-preview-mode-option]");
-      const previewModeStorageKey = "fjolsen-preview-mode";
-      const previewModeConfig = {
-        visitor: { label: "Besøkende", indicatorClass: "bg-sky-400" },
-        user: { label: "Medlem", indicatorClass: "bg-emerald-400", url: "preview/player-profile-preview.html" },
-        admin: { label: "Administrator", indicatorClass: "bg-amber-400", url: "preview/admin-dashboard-preview.html" },
-      };
-      const indicatorBaseClass = profilePreviewIndicator
-        ? (profilePreviewIndicator.dataset.baseClass || profilePreviewIndicator.className || "")
-        : "";
-
-      const applyMenuSelectionState = (mode) => {
-        profilePreviewOptions.forEach((option) => {
-          const optionMode = option.dataset.previewModeOption;
-          if (!optionMode) {
-            return;
-          }
-          const isActive = optionMode === mode;
-          if (option.dataset.previewModeOptionScope === "menu") {
-            option.classList.toggle("bg-white/10", isActive);
-            option.classList.toggle("text-white", isActive);
-            option.classList.toggle("text-slate-200", !isActive);
-            option.classList.toggle("ring-1", isActive);
-            option.classList.toggle("ring-emerald-400/60", isActive);
-            const check = option.querySelector("[data-preview-mode-check]");
-            if (check) {
-              const baseClass = (check.dataset.baseClass || "").trim();
-              check.setAttribute("class", `${baseClass} ${isActive ? "opacity-100" : "opacity-0"}`.trim());
-            }
-          }
-        });
-      };
-
-      const setPreviewMode = (mode) => {
-        if (!Object.prototype.hasOwnProperty.call(previewModeConfig, mode)) {
-          mode = "visitor";
-        }
-        const config = previewModeConfig[mode];
-        if (profilePreviewLabel) {
-          profilePreviewLabel.textContent = config.label;
-        }
-        if (profilePreviewIndicator) {
-          const classes = [indicatorBaseClass, config.indicatorClass].filter(Boolean).join(" ");
-          profilePreviewIndicator.setAttribute("class", classes);
-        }
-        if (profilePreviewButton) {
-          profilePreviewButton.setAttribute("data-active-mode", mode);
-          profilePreviewButton.setAttribute("aria-label", `Velg forhåndsvisning – aktivt: ${config.label}`);
-        }
-        applyMenuSelectionState(mode);
-        try {
-          window.localStorage.setItem(previewModeStorageKey, mode);
-        } catch (error) {
-          console.warn("Kunne ikke lagre forhåndsvisningsmodus", error);
-        }
-      };
-
-      const closeProfileMenu = () => {
-        if (profilePreviewMenu && profilePreviewButton) {
-          profilePreviewMenu.classList.add("hidden");
-          profilePreviewButton.setAttribute("aria-expanded", "false");
-        }
-      };
-
-      const openProfileMenu = () => {
-        if (profilePreviewMenu && profilePreviewButton) {
-          profilePreviewMenu.classList.remove("hidden");
-          profilePreviewButton.setAttribute("aria-expanded", "true");
-          const firstOption = profilePreviewMenu.querySelector("[data-preview-mode-option]");
-          if (firstOption instanceof HTMLElement) {
-            firstOption.focus();
-          }
-        }
-      };
-
-      if (profilePreviewButton && profilePreviewMenu) {
-        profilePreviewButton.addEventListener("click", () => {
-          const isOpen = !profilePreviewMenu.classList.contains("hidden");
-          if (isOpen) {
-            closeProfileMenu();
-          } else {
-            openProfileMenu();
-          }
-        });
-      }
-
-      document.addEventListener("click", (event) => {
-        if (!profilePreviewWrapper) {
-          return;
-        }
-        if (!(event.target instanceof Node)) {
-          return;
-        }
-        if (!profilePreviewWrapper.contains(event.target)) {
-          closeProfileMenu();
-        }
-      });
-
-      document.addEventListener("keydown", (event) => {
-        if (event.key === "Escape") {
-          closeProfileMenu();
-        }
-      });
-
-      profilePreviewOptions.forEach((option) => {
-        option.addEventListener("click", (event) => {
-          event.preventDefault();
-          const mode = option.dataset.previewModeOption || "visitor";
-          setPreviewMode(mode);
-          closeProfileMenu();
-          const targetUrl = option.dataset.previewUrl;
-          if (targetUrl) {
-            window.open(targetUrl, "_blank", "noopener");
-          }
-          if (option.dataset.previewModeOptionScope === "mobile" && menu) {
-            menu.classList.add("hidden");
-          }
-        });
-      });
-
-      let initialPreviewMode = "visitor";
-      try {
-        const storedMode = window.localStorage.getItem(previewModeStorageKey);
-        if (storedMode && Object.prototype.hasOwnProperty.call(previewModeConfig, storedMode)) {
-          initialPreviewMode = storedMode;
-        }
-      } catch (error) {
-        console.warn("Kunne ikke lese forhåndsvisningsmodus", error);
-      }
-      setPreviewMode(initialPreviewMode);
-
-      const previewFrame = document.querySelector("[data-preview-frame]");
-      const previewOverlay = document.querySelector("[data-preview-overlay]");
-      const previewTimer = document.querySelector("[data-preview-timer]");
-      const unmuteButton = document.querySelector("[data-video-unmute]");
-      let countdown = 60;
-
-      if (previewTimer) {
-        setInterval(() => {
-          countdown = Math.max(countdown - 1, 0);
-          previewTimer.textContent = String(countdown);
-        }, 1000);
-      }
-
-      if (unmuteButton && previewOverlay && previewFrame) {
-        unmuteButton.addEventListener("click", () => {
-          previewOverlay.classList.add("hidden");
-          const url = new URL(previewFrame.src);
-          url.searchParams.set("muted", "false");
-          previewFrame.src = url.toString();
-        });
-      }
 
       const contactForm = document.getElementById("contact-form");
       if (contactForm) {
