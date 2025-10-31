@@ -565,7 +565,7 @@ export default function FjolsenbandenHome() {
                             React.createElement("p", { className: "text-base text-zinc-300 sm:text-lg" }, heroTagline)),
                         React.createElement("div", { className: "space-y-4 rounded-3xl border border-white/10 bg-white/5 p-6 text-left shadow-[0_18px_42px_rgba(12,21,45,0.45)]" },
                             React.createElement("h2", { className: "text-xl font-semibold text-[#13A0F9]" }, "\uD83C\uDFAE Hva er FjOlsenbanden?"),
-                            React.createElement("p", { className: "text-sm leading-relaxed text-zinc-200 sm:text-base" }, "FjOlsenbanden er et raskt voksende gaming-community med over 2500 medlemmer p\u00E5 Discord, 3200+ f\u00F8lgere p\u00E5 Twitch og 4200+ p\u00E5 TikTok \u2013 b\u00E5de barn, ungdom og foreldre!"),
+                            React.createElement("p", { className: "text-sm leading-relaxed text-zinc-200 sm:text-base" }, "FjOlsenbanden er et raskt voksende gaming-community med over 2500 medlemmer p\u00E5 Discord, 3200++ f\u00F8lgere p\u00E5 Twitch og 4200+ p\u00E5 TikTok \u2013 b\u00E5de barn, ungdom og foreldre!"),
                             React.createElement("p", { className: "text-sm leading-relaxed text-zinc-200 sm:text-base" },
                                 React.createElement("span", { className: "font-semibold text-white" }, "M\u00E5let v\u00E5rt er enkelt:"),
                                 React.createElement("br", { className: "hidden sm:block" }),

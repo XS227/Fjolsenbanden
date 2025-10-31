@@ -100,7 +100,7 @@
 </div>
 <div class="space-y-4 rounded-3xl border border-white/10 bg-white/5 p-6 text-left shadow-[0_18px_42px_rgba(12,21,45,0.45)]">
 <h2 class="text-xl font-semibold text-[#13A0F9]">🎮 Hva er FjOlsenbanden?</h2>
-<p class="text-sm leading-relaxed text-zinc-200 sm:text-base">FjOlsenbanden er et raskt voksende gaming-community med over 2500 medlemmer på Discord, 3200+ følgere på Twitch og 4200+ på TikTok – både barn, ungdom og foreldre!</p>
+<p class="text-sm leading-relaxed text-zinc-200 sm:text-base">FjOlsenbanden er et raskt voksende gaming-community med over 2500 medlemmer på Discord, 3200++ følgere på Twitch og 4200++ på TikTok – både barn, ungdom og foreldre!</p>
 <p class="text-sm leading-relaxed text-zinc-200 sm:text-base">
 <span class="font-semibold text-white">Målet vårt er enkelt:</span>
 <br class="hidden sm:block"/>Å skape et trygt, positivt og inkluderende miljø der alle kan game uten hets, mobbing eller negativ adferd.</p>
