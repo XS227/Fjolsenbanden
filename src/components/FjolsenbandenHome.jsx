@@ -335,7 +335,7 @@ export default function FjolsenbandenHome() {
         const message = (_f = (_e = formData.get("message")) === null || _e === void 0 ? void 0 : _e.toString().trim()) !== null && _f !== void 0 ? _f : "";
         const subject = encodeURIComponent("Kontakt via fjolsenbanden.no");
         const body = encodeURIComponent(`${message}\n\nNavn: ${name || "Ukjent"}\nE-post: ${email || "Ikke oppgitt"}`);
-        window.location.href = `mailto:kontakt@fjolsenbanden.no?subject=${subject}&body=${body}`;
+        window.location.href = `mailto:fjolsenfn@gmail.com?subject=${subject}&body=${body}`;
         event.currentTarget.reset();
     };
     useEffect(() => {
@@ -537,7 +537,8 @@ export default function FjolsenbandenHome() {
         React.createElement("div", { className: "pointer-events-none fixed inset-0 -z-10 opacity-60", style: {
                 background: "radial-gradient(circle at 18% 12%, rgba(19,160,249,0.3), transparent 55%), radial-gradient(circle at 80% 0%, rgba(255,47,156,0.18), transparent 50%)",
             } }),
-        React.createElement("nav", { className: "relative sticky top-0 z-50 border-b border-white/10 bg-[#050B24]/80 backdrop-blur" },
+        React.createElement("div", { className: "flex flex-1 flex-col" },
+            React.createElement("nav", { className: "relative sticky top-0 z-50 border-b border-white/10 bg-[#050B24]/80 backdrop-blur" },
             React.createElement("div", { className: "mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-4" },
                 React.createElement("a", { className: "flex items-center gap-3", href: "#", "aria-label": "Fjolsenbanden hjem" },
                     React.createElement("img", { src: logoUrl, alt: `${heroTitle} logo`, className: "h-10 w-10 rounded-xl object-cover" }),
@@ -580,7 +581,7 @@ export default function FjolsenbandenHome() {
                                 " F\u00F8lg FjOlsenbanden"),
                             React.createElement("div", { className: "flex flex-wrap justify-center gap-2 sm:justify-start" }, platformLinks.map(({ icon, label, href }) => (React.createElement(PlatformButton, { key: label, icon: icon, label: label, href: href })))),
                             React.createElement("p", { className: "mt-3 text-center text-xs text-zinc-400 sm:text-left" }, announcement)))))),
-        React.createElement("main", { className: "flex flex-col gap-28 pb-24" },
+        React.createElement("main", { className: "flex flex-1 flex-col gap-28 pb-16" },
             React.createElement("section", { id: "hva-er", className: "px-6", style: sectionOrderStyle("heroIntro") },
                 React.createElement("div", { className: "mx-auto grid max-w-6xl gap-12 lg:grid-cols-2 lg:items-center" },
                     React.createElement("div", { className: "space-y-6" },
@@ -679,8 +680,8 @@ export default function FjolsenbandenHome() {
                             React.createElement("textarea", { id: "message", name: "message", rows: 4, required: true, className: "w-full rounded-xl border border-white/15 bg-white/5 px-4 py-3 text-sm text-white placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-[#13A0F9]" })),
                         React.createElement("div", { className: "md:col-span-2 flex flex-col gap-2 text-sm text-zinc-400 md:flex-row md:items-center md:justify-between" },
                             React.createElement("span", null, "Vi svarer s\u00E5 snart vi kan, som regel innen 1\u20132 virkedager."),
-                            React.createElement(Button, { type: "submit", size: "lg", className: "rounded-full bg-gradient-to-r from-[#13A0F9] to-[#FF2F9C] px-6 font-semibold text-white shadow-[0_16px_28px_rgba(19,160,249,0.35)] transition hover:from-[#0d8bd6] hover:to-[#e12585]" }, "Send melding")))))) : null),
-        React.createElement("footer", { className: "mt-20 border-t border-white/10 py-8 text-center text-sm text-zinc-500" },
+                            React.createElement(Button, { type: "submit", size: "lg", className: "rounded-full bg-gradient-to-r from-[#13A0F9] to-[#FF2F9C] px-6 font-semibold text-white shadow-[0_16px_28px_rgba(19,160,249,0.35)] transition hover:from-[#0d8bd6] hover:to-[#e12585]" }, "Send melding")))))) : null)),
+        React.createElement("footer", { className: "mt-12 border-t border-white/10 py-8 text-center text-sm text-zinc-500" },
             React.createElement("div", { className: "flex flex-col items-center justify-center gap-2 text-sm md:flex-row" },
                 React.createElement("span", null,
                     "\u00A9 ",
@@ -688,7 +689,7 @@ export default function FjolsenbandenHome() {
                     " Fjolsenbanden. Alle rettigheter reservert."),
                 React.createElement("a", { href: "/admin", className: "flex items-center gap-2 font-medium text-zinc-300 transition hover:text-white" },
                     React.createElement(UserCog, { className: "h-4 w-4", "aria-hidden": "true" }),
-                    React.createElement("span", null, "Admin")))),
+                    React.createElement("span", null, "Admin"))))),
         registrationOpen ? (React.createElement("div", { className: "fixed inset-0 z-[100] flex items-center justify-center px-4 py-10" },
             React.createElement("button", { type: "button", "aria-label": "Lukk registrering", onClick: closeRegistration, className: "absolute inset-0 h-full w-full bg-black/70" }),
             React.createElement("div", { className: "relative z-[101] w-full max-w-2xl overflow-hidden rounded-3xl border border-white/10 bg-[#0d1733] shadow-[0_32px_80px_rgba(4,8,20,0.7)]" },
