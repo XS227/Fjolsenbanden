@@ -1,10 +1,6 @@
 # syntax=docker/dockerfile:1
 
-###
-### Builder — Use Debian-based for full Vite/Rollup support
-###
-FROM node:20 AS builder
-
+FROM node:20-bullseye-slim AS builder
 WORKDIR /app
 
 COPY package*.json ./
@@ -14,10 +10,6 @@ COPY . .
 ENV NODE_ENV=production
 RUN npm run build
 
-
-###
-### Artifact — extract static build artifacts only
-###
-FROM alpine AS runner
-WORKDIR /out
-COPY --from=builder /app/dist/. .
+FROM nginx:stable-alpine AS runner
+WORKDIR /usr/share/nginx/html
+COPY --from=builder /app/dist/ .
