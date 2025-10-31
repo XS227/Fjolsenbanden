@@ -18,9 +18,9 @@
       }
     </style>
   </head>
-  <body class="text-white">
-    <div id="fjolsenbanden-home">
-      <div class="relative overflow-x-hidden bg-gradient-to-b from-[#131A49] via-[#0B163F] to-[#050B24] text-white">
+  <body class="flex min-h-screen flex-col text-white">
+    <div id="fjolsenbanden-home" class="flex flex-1 flex-col">
+      <div class="relative flex flex-1 flex-col overflow-x-hidden bg-gradient-to-b from-[#131A49] via-[#0B163F] to-[#050B24] text-white">
 <div class="pointer-events-none fixed inset-0 -z-10 opacity-60" style="background:radial-gradient(circle at 18% 12%, rgba(19,160,249,0.3), transparent 55%), radial-gradient(circle at 80% 0%, rgba(255,47,156,0.18), transparent 50%)">
 </div>
 <nav class="relative z-50 flex items-center justify-between px-6 py-4">
@@ -316,7 +316,7 @@
 <img src="https://setaei.com/Fjolsen/lenova.jpg" alt="Lenovo" class="h-full w-full object-contain" loading="lazy"/>
 </div>
 <div class="flex items-center justify-center rounded-2xl border border-white/10 bg-white/5 shadow-[0_12px_24px_rgba(8,18,40,0.35)] transition hover:bg-white/10 h-20 w-full px-4 py-3">
-<img src="/assets/partners/samsung.svg" alt="Samsung" class="h-full w-full object-contain" loading="lazy"/>
+<img src="https://setaei.com/Fjolsen/samsung.jpg" alt="Samsung" class="h-full w-full object-contain" loading="lazy"/>
 </div>
 <div class="flex items-center justify-center rounded-2xl border border-white/10 bg-white/5 shadow-[0_12px_24px_rgba(8,18,40,0.35)] transition hover:bg-white/10 h-20 w-full px-4 py-3">
 <img src="https://setaei.com/Fjolsen/philips.jpg" alt="Philips" class="h-full w-full object-contain" loading="lazy"/>
@@ -569,7 +569,7 @@
 <img src="https://setaei.com/Fjolsen/lenova.jpg" alt="Lenovo" class="h-full w-full object-contain" loading="lazy"/>
 </div>
 <div class="flex items-center justify-center rounded-2xl border border-white/10 bg-white/5 shadow-[0_12px_24px_rgba(8,18,40,0.35)] transition hover:bg-white/10 h-24 w-48 p-5">
-<img src="/assets/partners/samsung.svg" alt="Samsung" class="h-full w-full object-contain" loading="lazy"/>
+<img src="https://setaei.com/Fjolsen/samsung.jpg" alt="Samsung" class="h-full w-full object-contain" loading="lazy"/>
 </div>
 <div class="flex items-center justify-center rounded-2xl border border-white/10 bg-white/5 shadow-[0_12px_24px_rgba(8,18,40,0.35)] transition hover:bg-white/10 h-24 w-48 p-5">
 <img src="https://setaei.com/Fjolsen/philips.jpg" alt="Philips" class="h-full w-full object-contain" loading="lazy"/>
@@ -738,7 +738,7 @@
 </div>
 </section>
 </main>
-<footer class="mt-20 border-t border-white/10 py-8 text-center text-sm text-zinc-500">
+<footer class="mt-auto border-t border-white/10 py-8 text-center text-sm text-zinc-500">
 <div class="flex flex-col items-center justify-center gap-2 text-sm md:flex-row">
 <span>© 2025 Fjolsenbanden. Alle rettigheter reservert.</span>
 <a href="/admin" class="flex items-center gap-2 font-medium text-zinc-300 transition hover:text-white">
