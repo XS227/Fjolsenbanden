@@ -319,7 +319,7 @@
   }, 5000);
 })();
 </script>
-<p class="text-xs text-slate-400">Oppdater lenken i adminpanelet for å endre hvilken Twitch-kanal som vises.</p>
+<p class="mt-3 text-xs text-slate-400">Oppdater lenken i adminpanelet for å endre hvilken Twitch-kanal som vises.</p>
 </div>
 <div class="flex max-h-[640px] flex-col rounded-2xl border border-white/10 bg-[#1f2940] p-4">
 <h3 class="mb-3 flex items-center gap-2 font-semibold text-[#13A0F9]">Live chat</h3>
