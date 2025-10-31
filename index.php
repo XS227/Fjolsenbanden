@@ -269,8 +269,9 @@
 </div>
 <div class="rounded-3xl border border-white/10 bg-white/5 p-6 text-sm text-slate-200">🎥 Se FjOlsen LIVE! Til venstre: Stream-vindu. Til høyre: Chat-feed. 👉 Følg oss her: Discord · Twitch · YouTube · TikTok · Instagram</div>
 </div>
-<div class="grid gap-4 lg:grid-cols-2">
-<div class="relative col-span-2 overflow-hidden rounded-2xl border border-white/10 bg-black/70 p-6">
+<div class="grid gap-6 lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
+<div class="space-y-4">
+<div class="relative overflow-hidden rounded-2xl border border-white/10 bg-black/70 p-6">
 <span class="inline-flex items-center gap-2 rounded-full bg-rose-500/20 px-3 py-1 text-xs font-semibold text-rose-200">🔴 Live preview</span>
 <p class="mt-4 text-sm text-slate-300">Stream-vindu – se FjOlsen ta communityet gjennom nye utfordringer og konkurranser.</p>
 <div class="mt-4 overflow-hidden rounded-xl border border-white/10 bg-black/80">
@@ -320,21 +321,71 @@
 </script>
 <p class="mt-3 text-xs text-slate-400">Oppdater lenken i adminpanelet for å endre hvilken Twitch-kanal som vises.</p>
 </div>
-<div class="rounded-2xl border border-white/10 bg-black/60 p-6">
-<p class="text-xs font-semibold uppercase tracking-[0.3em] text-slate-400">Chat</p>
-<ul class="mt-4 space-y-3 text-sm text-slate-200">
-<li>💬 Lina: «Haha, den bossen var vilt!»</li>
-<li>💬 Jonas: «Gleder meg til premie-trekningen 🔥»</li>
-<li>💬 Sara: «Hei fra TikTok 😎»</li>
-<li>💬 Marius: «Bra lyd i dag!»</li>
-</ul>
+<div class="flex max-h-[640px] flex-col rounded-2xl border border-white/10 bg-[#1f2940] p-4">
+<h3 class="mb-3 flex items-center gap-2 font-semibold text-[#13A0F9]">Live chat</h3>
+<div id="custom-chat" class="flex-1 overflow-y-auto space-y-2 pr-1 text-sm"></div>
 </div>
-<div class="rounded-2xl border border-white/10 bg-black/60 p-6">
+<div class="rounded-2xl border border-white/10 bg-black/60 p-6 lg:col-span-2">
 <p class="text-xs font-semibold uppercase tracking-[0.3em] text-slate-400">Fellesskap</p>
 <p class="mt-4 text-sm text-slate-200">Vi holder chatten trygg med dedikerte moderatorer og tydelige regler mot hets, mobbing og negativ adferd.</p>
 </div>
 </div>
-</div>
+<script src="https://unpkg.com/tmi.js@1.8.5/dist/tmi.min.js"></script>
+<script>
+(() => {
+  const channel = "FjOlsenFN";
+  const el = document.getElementById("custom-chat");
+  const maxItems = 200;
+
+  if (!el) return;
+
+  const client = new tmi.Client({
+    connection: { secure: true, reconnect: true },
+    channels: [channel],
+  });
+
+  client.connect().catch(console.error);
+
+  function addMsg({ user, text, color }) {
+    const item = document.createElement("div");
+    item.className = "rounded-lg bg-white/5 px-3 py-2";
+
+    const name = document.createElement("span");
+    name.className = "mr-2 font-semibold";
+    name.style.color = color || "#13A0F9";
+    name.textContent = user;
+
+    const body = document.createElement("span");
+    body.className = "text-slate-200";
+    body.textContent = text;
+
+    item.appendChild(name);
+    item.appendChild(body);
+    el.appendChild(item);
+
+    while (el.children.length > maxItems) {
+      el.removeChild(el.firstChild);
+    }
+    el.scrollTop = el.scrollHeight;
+  }
+
+  client.on("message", (channel, tags, message, self) => {
+    if (self) return;
+    addMsg({
+      user: tags["display-name"] || tags.username,
+      text: message,
+      color: tags.color,
+    });
+  });
+
+  client.on("connected", () =>
+    addMsg({ user: "System", text: "Tilkoblet Twitch-chat ✅", color: "#4ade80" })
+  );
+  client.on("disconnected", () =>
+    addMsg({ user: "System", text: "Frakoblet fra chat ❌", color: "#f87171" })
+  );
+})();
+</script>
 </section>
 <section id="bli-medlem" class="px-6" style="order:0">
 <div class="mx-auto max-w-6xl rounded-[2.5rem] border border-white/10 bg-white/5 p-12 shadow-2xl">
