@@ -263,6 +263,7 @@ export default function FjolsenbandenHome() {
     const [paymentInitiated, setPaymentInitiated] = useState(false);
     const [profileDraft, setProfileDraft] = useState(createDefaultProfileDraft);
     const [profileSubmitted, setProfileSubmitted] = useState(false);
+    const [navScrolled, setNavScrolled] = useState(false);
     const [showUnboxingVideo, setShowUnboxingVideo] = useState(false);
     const { state } = useAdminState();
     const { siteSettings } = state;
@@ -300,6 +301,7 @@ export default function FjolsenbandenHome() {
     const announcement = ((_c = siteSettings.announcement) === null || _c === void 0 ? void 0 : _c.trim()) ||
         "Neste livesending starter 20:00 med co-op i Mario Kart og premier fra Lenovo!";
     const fallbackLogoUrl = "https://setaei.com/Fjolsen/Liggende-M%E2%94%9C%E2%95%95rk.png";
+    const scrolledLogoUrl = "https://setaei.com/Fjolsen/Glad%20tunge.png";
     const logoUrl = ((_d = siteSettings.logoUrl) === null || _d === void 0 ? void 0 : _d.trim()) || fallbackLogoUrl;
     const presentationVideoUrl = ((_e = siteSettings.presentationVideoUrl) === null || _e === void 0 ? void 0 : _e.trim()) ||
         "https://www.youtube.com/embed/8EgRIkmvmtM?si=qMzmEaMfP-2ODMbc";
@@ -457,6 +459,16 @@ export default function FjolsenbandenHome() {
             return { ...previous, parentPhone };
         });
     }, [parentPhone, vippsFlow]);
+    useEffect(() => {
+        const handleScroll = () => {
+            setNavScrolled(window.scrollY > 40);
+        };
+        handleScroll();
+        window.addEventListener("scroll", handleScroll, { passive: true });
+        return () => {
+            window.removeEventListener("scroll", handleScroll);
+        };
+    }, []);
     const calculateAge = (dateOfBirth) => {
         if (!dateOfBirth) {
             return 0;
@@ -590,6 +602,13 @@ export default function FjolsenbandenHome() {
                 background: overlayBackground,
             } }),
         React.createElement("div", { className: "flex flex-1 flex-col" },
+            React.createElement("nav", { className: "fj-nav section-shell grid grid-cols-1 items-center gap-4 border-b border-white/10 bg-[#050B24]/75 py-4 backdrop-blur supports-[backdrop-filter]:bg-[#050B24]/60 sm:grid-cols-[1fr_auto_1fr]", "data-scrolled": navScrolled ? "true" : "false" },
+                React.createElement("div", { className: "hidden items-center justify-start sm:flex" },
+                    React.createElement("img", { src: scrolledLogoUrl, alt: "Fjolsenbanden ikon", "aria-hidden": "true", className: `h-12 w-auto transition-all duration-300 ease-out ${navScrolled ? "translate-y-0 opacity-100" : "-translate-y-1 opacity-0"}` })),
+                React.createElement("a", { href: "#", className: "group block w-full justify-self-stretch rounded-none border border-transparent p-0 transition hover:border-white/20 hover:bg-white/5 sm:flex sm:w-auto sm:items-center sm:gap-3 sm:justify-self-center sm:rounded-full sm:px-3 sm:py-2", "aria-label": "Fjolsenbanden hjem" },
+                    React.createElement("img", { src: logoUrl, alt: "Fjolsenbanden logo", className: "h-auto w-full max-w-full sm:h-12 sm:w-auto sm:max-w-[220px]", loading: "lazy" }),
+                    React.createElement("span", { className: "sr-only" }, "Fjolsenbanden")),
+                React.createElement("div", { className: "hidden items-center justify-end gap-3 sm:flex" })),
             React.createElement("header", { className: "relative z-10 pb-40" },
                 React.createElement("section", { id: "community", className: "mt-6 px-6 sm:px-8 lg:px-10" },
                 React.createElement("div", { className: "mx-auto grid max-w-6xl gap-10 lg:grid-cols-2 lg:items-start" },
@@ -643,15 +662,12 @@ export default function FjolsenbandenHome() {
                             link.icon,
                             React.createElement("span", null, link.label))))),
                         React.createElement("div", { className: "rounded-3xl border border-white/10 bg-white/5 p-6 text-sm text-slate-100" }, "\uD83C\uDFA5 Se FjOlsen LIVE! Stream-vinduet finner du nedenfor. \uD83D\uDC49 F\u00F8lg oss her: Discord \u00B7 Twitch \u00B7 YouTube \u00B7 TikTok \u00B7 Instagram")),
-                    React.createElement("div", { className: "relative overflow-hidden rounded-2xl border border-white/10 bg-black/70 p-6" },
+                    React.createElement("div", { className: "relative overflow-hidden rounded-2xl border border-white/10 bg-black/70 p-6 lg:mx-auto lg:max-w-[90%]" },
                         React.createElement("span", { className: "inline-flex items-center gap-2 rounded-full bg-rose-500/20 px-3 py-1 text-xs font-semibold text-rose-200" }, "\uD83D\uDD34 Live preview"),
                         React.createElement("p", { className: "mt-4 text-sm text-slate-300" }, "Stream-vindu \u2013 se FjOlsen ta communityet gjennom nye utfordringer og konkurranser."),
                         React.createElement("div", { className: "mt-4 overflow-hidden rounded-xl border border-white/10 bg-black/80" },
                             React.createElement("iframe", { title: "FjOlsenbanden live", src: twitchEmbedUrl, allow: "accelerometer; autoplay; clipboard-write; encrypted-media; picture-in-picture", allowFullScreen: true, referrerPolicy: "strict-origin-when-cross-origin", className: "aspect-video w-full" })),
-                        React.createElement("p", { className: "mt-3 text-xs text-slate-400" }, "Oppdater lenken i adminpanelet for \u00E5 endre hvilken Twitch-kanal som vises.")),
-                    React.createElement("div", { className: "rounded-2xl border border-white/10 bg-black/60 p-6" },
-                        React.createElement("p", { className: "text-xs font-semibold uppercase tracking-[0.3em] text-slate-400" }, "Fellesskap"),
-                        React.createElement("p", { className: "mt-4 text-sm text-slate-100" }, "Vi holder chatten trygg med dedikerte moderatorer og tydelige regler mot hets, mobbing og negativ adferd."))))) : null,
+                        React.createElement("p", { className: "mt-3 text-xs text-slate-400" }, "Oppdater lenken i adminpanelet for \u00E5 endre hvilken Twitch-kanal som vises.")))))) : null,
             React.createElement("section", { id: "bli-medlem", className: "px-6 sm:px-8 lg:px-10", style: sectionOrderStyle("heroIntro") },
                 React.createElement("div", { className: "mx-auto max-w-6xl rounded-[2.5rem] border border-white/10 bg-white/5 p-12 shadow-2xl" },
                     React.createElement("h2", { className: "text-3xl font-bold sm:text-4xl" }, "Bli medlem"),
