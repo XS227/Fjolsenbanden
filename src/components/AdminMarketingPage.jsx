@@ -688,26 +688,6 @@ function CTASection() {
           React.createElement(ArrowRight, { className: "h-4 w-4" })
         )
       ),
-      React.createElement(
-        Button,
-        {
-          size: "lg",
-          variant: "outline",
-          className:
-            "rounded-2xl border-white/30 bg-white/10 px-8 text-base text-white hover:bg-white/20",
-          onClick: () => {
-            if (typeof window !== "undefined") {
-              window.open("/admin-dashboard-preview.html", "_blank", "noopener,noreferrer");
-            }
-          },
-        },
-        React.createElement(
-          "span",
-          { className: "flex items-center gap-2" },
-          "Se interaktiv demo",
-          React.createElement(ArrowRight, { className: "h-4 w-4" })
-        )
-      )
     )
   );
 }
@@ -776,26 +756,6 @@ export default function AdminMarketingPage() {
               React.createElement(ArrowRight, { className: "h-4 w-4" })
             )
           ),
-          React.createElement(
-            Button,
-            {
-              size: "lg",
-              variant: "outline",
-              className:
-                "rounded-2xl border-white/20 bg-white/10 px-8 text-base text-white hover:bg-white/20",
-              onClick: () => {
-                if (typeof window !== "undefined") {
-                  window.open("/admin-dashboard-preview.html", "_blank", "noopener,noreferrer");
-                }
-              },
-            },
-            React.createElement(
-              "span",
-              { className: "flex items-center gap-2" },
-              "Se demo",
-              React.createElement(ArrowRight, { className: "h-4 w-4" })
-            )
-          )
         ),
         React.createElement(HeroStats, null)
       ),

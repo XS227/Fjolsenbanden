@@ -248,7 +248,6 @@ const createDefaultProfileDraft = () => ({
 });
 export default function FjolsenbandenHome() {
     var _a, _b, _c, _d, _e, _f, _g, _h, _j;
-    const [menuOpen, setMenuOpen] = useState(false);
     const [footerMenuOpen, setFooterMenuOpen] = useState(false);
     const [skin, setSkin] = useState(() => "dark");
     const [unmuted, setUnmuted] = useState(false);
@@ -300,9 +299,7 @@ export default function FjolsenbandenHome() {
         "Spillglede for hele familien – trygge streams, turneringer og premier.";
     const announcement = ((_c = siteSettings.announcement) === null || _c === void 0 ? void 0 : _c.trim()) ||
         "Neste livesending starter 20:00 med co-op i Mario Kart og premier fra Lenovo!";
-    const fallbackLogoUrl = skin === "light"
-        ? "/assets/branding/fjolsenbanden-logo-light.svg"
-        : "/assets/branding/fjolsenbanden-logo-dark.svg";
+    const fallbackLogoUrl = "https://setaei.com/Fjolsen/Liggende-M%E2%94%9C%E2%95%95rk.png";
     const logoUrl = ((_d = siteSettings.logoUrl) === null || _d === void 0 ? void 0 : _d.trim()) || fallbackLogoUrl;
     const presentationVideoUrl = ((_e = siteSettings.presentationVideoUrl) === null || _e === void 0 ? void 0 : _e.trim()) ||
         "https://www.youtube.com/embed/8EgRIkmvmtM?si=qMzmEaMfP-2ODMbc";
@@ -344,12 +341,6 @@ export default function FjolsenbandenHome() {
         return true;
     }), [contactForm, liveStream, partnersEnabled]);
     const hasContactLink = useMemo(() => filteredNavLinks.some((link) => link.href === "#kontakt"), [filteredNavLinks]);
-    const toggleMenu = () => {
-        setMenuOpen((previous) => !previous);
-    };
-    const closeMenu = () => {
-        setMenuOpen(false);
-    };
     const toggleSkin = () => {
         setSkin((previous) => (previous === "dark" ? "light" : "dark"));
     };
@@ -379,27 +370,6 @@ export default function FjolsenbandenHome() {
         event.currentTarget.reset();
     };
     useEffect(() => {
-        if (!menuOpen) {
-            return undefined;
-        }
-        const handleKeyDown = (event) => {
-            if (event.key === "Escape") {
-                setMenuOpen(false);
-            }
-        };
-        const handleResize = () => {
-            if (window.innerWidth >= 768) {
-                setMenuOpen(false);
-            }
-        };
-        window.addEventListener("keydown", handleKeyDown);
-        window.addEventListener("resize", handleResize);
-        return () => {
-            window.removeEventListener("keydown", handleKeyDown);
-            window.removeEventListener("resize", handleResize);
-        };
-    }, [menuOpen]);
-    useEffect(() => {
         if (!footerMenuOpen) {
             return undefined;
         }
@@ -414,7 +384,7 @@ export default function FjolsenbandenHome() {
         };
     }, [footerMenuOpen]);
     useEffect(() => {
-        if (!menuOpen && !footerMenuOpen) {
+        if (!footerMenuOpen) {
             return;
         }
         const body = document.body;
@@ -426,7 +396,7 @@ export default function FjolsenbandenHome() {
             body.style.overflow = previousOverflow;
             body.style.touchAction = previousTouchAction;
         };
-    }, [footerMenuOpen, menuOpen]);
+    }, [footerMenuOpen]);
     useEffect(() => {
         document.body.dataset.fjTheme = skin;
     }, [skin]);
@@ -620,52 +590,8 @@ export default function FjolsenbandenHome() {
                 background: overlayBackground,
             } }),
         React.createElement("div", { className: "flex flex-1 flex-col" },
-        React.createElement("nav", { className: "fj-nav relative sticky top-0 z-50 border-b border-white/10 bg-[#050B24]/75 backdrop-blur supports-[backdrop-filter]:bg-[#050B24]/60" },
-        (() => {
-            const renderBrand = () => (React.createElement("a", { className: "group flex items-center gap-3 rounded-full border border-transparent px-3 py-2 text-white transition hover:border-white/20 hover:bg-white/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#13A0F9]", href: "#", "aria-label": "Fjolsenbanden hjem" },
-                React.createElement("img", { src: logoUrl, alt: `${heroTitle} logo`, className: "h-9 w-auto max-w-[200px] sm:h-10" }),
-                React.createElement("div", { className: "flex flex-col leading-tight" },
-                    React.createElement("span", { className: "text-base font-semibold tracking-tight sm:hidden" }, heroTitle),
-                    React.createElement("span", { className: "hidden text-lg font-semibold tracking-tight sm:block" }, heroTitle),
-                    React.createElement("span", { className: "hidden text-[0.65rem] font-semibold uppercase tracking-[0.35em] text-[#13A0F9] sm:block" }, "Gaming community"))));
-            const desktopNavigation = filteredNavLinks.length > 0 ? (React.createElement("ul", { className: "flex items-center gap-1 rounded-full border border-white/10 bg-white/5 px-2 py-1 text-sm font-medium text-white/80 shadow-[0_18px_42px_rgba(12,21,45,0.45)]" }, filteredNavLinks.map((link, index) => (React.createElement("li", { key: link.name },
-                React.createElement("a", { className: "group relative inline-flex items-center gap-2 rounded-full px-4 py-2 transition hover:bg-white/15 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#13A0F9] focus-visible:ring-offset-2 focus-visible:ring-offset-transparent", href: link.href },
-                    React.createElement("span", { className: "hidden text-[0.65rem] font-semibold uppercase tracking-[0.35em] text-[#13A0F9]/80 xl:block" }, String(index + 1).padStart(2, "0")),
-                    React.createElement("span", null, link.name))))))) : null;
-            const themeToggleButton = React.createElement("button", { type: "button", onClick: toggleSkin, className: "fj-ring-offset inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/20 text-white transition hover:border-white/40 hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#13A0F9]", "aria-label": skin === "light" ? "Bytt til nattmodus" : "Bytt til dagmodus", "aria-pressed": skin === "light" }, skin === "light"
-                ? React.createElement(Moon, { className: "h-5 w-5", "aria-hidden": "true" })
-                : React.createElement(Sun, { className: "h-5 w-5", "aria-hidden": "true" }));
-            return (React.createElement(React.Fragment, null,
-                React.createElement("div", { className: "mx-auto hidden w-full max-w-6xl items-center justify-between gap-6 px-4 py-5 sm:px-6 md:flex" },
-                    renderBrand(),
-                    React.createElement("div", { className: "flex flex-1 items-center justify-center" }, desktopNavigation),
-                    React.createElement("div", { className: "flex items-center justify-end gap-3" },
-                        themeToggleButton,
-                        contactForm && !hasContactLink ? (React.createElement("a", { href: "#kontakt", className: "inline-flex items-center rounded-full border border-white/15 px-4 py-2 text-sm font-semibold text-white/80 transition hover:border-white/30 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#13A0F9]" }, "Kontakt oss")) : null,
-                        React.createElement("a", { href: "#bli-medlem", className: "fj-ring-offset inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#13A0F9] to-[#FF2F9C] px-6 py-2 text-sm font-semibold text-white shadow-[0_16px_32px_rgba(19,160,249,0.35)] transition hover:from-[#0d8bd6] hover:to-[#e12585] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#13A0F9] focus-visible:ring-offset-2" },
-                            "Bli medlem",
-                            React.createElement(ArrowRight, { className: "h-4 w-4", "aria-hidden": "true" })))),
-                React.createElement("div", { className: "mx-auto flex w-full max-w-6xl items-center justify-between px-4 py-4 sm:px-6 md:hidden" },
-                    renderBrand(),
-                    React.createElement("div", { className: "flex items-center gap-2" },
-                        themeToggleButton,
-                        React.createElement("button", { type: "button", onClick: toggleMenu, "aria-expanded": menuOpen, "aria-controls": "mobile-navigation", "aria-label": menuOpen ? "Lukk meny" : "Åpne meny", className: "inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/20 text-white transition hover:border-white/40 hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/40" }, menuOpen ? React.createElement(X, { className: "h-5 w-5", "aria-hidden": "true" }) : React.createElement(Menu, { className: "h-5 w-5", "aria-hidden": "true" }))))) );
-        })(),
-            React.createElement("div", { id: "mobile-navigation", className: `absolute left-0 right-0 top-full z-[60] px-4 sm:px-6 md:hidden ${menuOpen ? "mt-3" : "hidden"}` },
-                React.createElement("div", { className: "rounded-3xl border border-white/10 bg-gradient-to-br from-[#0b1539]/95 via-[#101c37]/95 to-[#050B24]/95 p-5 shadow-[0_24px_52px_rgba(5,12,30,0.55)]" },
-                    React.createElement("p", { className: "mb-3 text-xs font-semibold uppercase tracking-[0.35em] text-[#13A0F9]/80" }, "Navigasjon"),
-                    React.createElement("ul", { className: "flex flex-col gap-2 text-base font-medium text-white/80" }, filteredNavLinks.map((link, index) => (React.createElement("li", { key: link.name },
-                        React.createElement("a", { className: "flex items-center justify-between gap-3 rounded-2xl border border-transparent bg-white/5 px-4 py-3 text-white/85 transition hover:border-white/20 hover:bg-white/10", href: link.href, onClick: closeMenu },
-                            React.createElement("span", null, link.name),
-                            React.createElement("span", { className: "text-xs font-semibold uppercase tracking-[0.35em] text-[#13A0F9]/70" }, String(index + 1).padStart(2, "0")))))),
-                    React.createElement("div", { className: "mt-5 flex flex-col gap-3" },
-                        contactForm && !hasContactLink ? (React.createElement("a", { href: "#kontakt", className: "inline-flex items-center justify-center rounded-full border border-white/15 px-4 py-2 text-sm font-semibold text-white/80 transition hover:border-white/30 hover:text-white", onClick: closeMenu }, "Kontakt oss")) : null,
-                        React.createElement("a", { href: "#bli-medlem", className: "inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#13A0F9] to-[#FF2F9C] px-5 py-2 text-sm font-semibold text-white shadow-[0_16px_32px_rgba(19,160,249,0.35)] transition hover:from-[#0d8bd6] hover:to-[#e12585]", onClick: closeMenu },
-                            "Bli medlem",
-                            React.createElement(ArrowRight, { className: "h-4 w-4", "aria-hidden": "true" })))))),
-        menuOpen ? (React.createElement("div", { role: "presentation", "aria-hidden": "true", className: "fixed inset-0 z-50 overflow-y-auto overscroll-contain bg-black/60 backdrop-blur-sm md:hidden", onClick: closeMenu })) : null,
-        React.createElement("header", { className: "relative z-10 pb-40" },
-            React.createElement("section", { id: "community", className: "mt-6 px-6 sm:px-8 lg:px-10" },
+            React.createElement("header", { className: "relative z-10 pb-40" },
+                React.createElement("section", { id: "community", className: "mt-6 px-6 sm:px-8 lg:px-10" },
                 React.createElement("div", { className: "mx-auto grid max-w-6xl gap-10 lg:grid-cols-2 lg:items-start" },
                     React.createElement("div", { className: "space-y-6" },
                         React.createElement("div", { className: "space-y-4 text-center lg:text-left" },

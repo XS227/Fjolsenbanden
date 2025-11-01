@@ -427,11 +427,11 @@
 
       <div class="brand">
         <img
-          src="/assets/branding/fjolsenbanden-logo-dark.svg"
+          src="https://setaei.com/Fjolsen/Liggende-M%E2%94%9C%E2%95%95rk.png"
           alt="Fjolsenbanden"
           data-brand-logo
-          data-logo-dark="/assets/branding/fjolsenbanden-logo-dark.svg"
-          data-logo-light="/assets/branding/fjolsenbanden-logo-light.svg"
+          data-logo-dark="https://setaei.com/Fjolsen/Liggende-M%E2%94%9C%E2%95%95rk.png"
+          data-logo-light="https://setaei.com/Fjolsen/Liggende-M%E2%94%9C%E2%95%95rk.png"
         />
         <h1>Laster Fjolsenbanden-portalen…</h1>
         <div class="dots">
@@ -505,12 +505,12 @@
             aria-label="Fjolsenbanden hjem"
           >
             <img
-              src="/assets/branding/fjolsenbanden-logo-dark.svg"
+              src="https://setaei.com/Fjolsen/Liggende-M%E2%94%9C%E2%95%95rk.png"
               alt="Fjolsenbanden logo"
               class="h-10 w-auto max-w-[180px]"
               data-brand-logo
-              data-logo-dark="/assets/branding/fjolsenbanden-logo-dark.svg"
-              data-logo-light="/assets/branding/fjolsenbanden-logo-light.svg"
+              data-logo-dark="https://setaei.com/Fjolsen/Liggende-M%E2%94%9C%E2%95%95rk.png"
+              data-logo-light="https://setaei.com/Fjolsen/Liggende-M%E2%94%9C%E2%95%95rk.png"
               loading="lazy"
               decoding="async"
             />
