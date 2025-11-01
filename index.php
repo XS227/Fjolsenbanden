@@ -117,7 +117,7 @@
 </ul>
 </div>
 <a class="flex items-center gap-3 text-white md:justify-self-center" href="#" aria-label="Fjolsenbanden hjem">
-<img src="/assets/branding/Liggende-Mork.svg" alt="FJOLSENBANDEN logo" class="h-8 w-auto max-w-[180px] sm:h-10 md:h-12"/>
+            <img src="/assets/branding/Liggende-Lys.svg" alt="FJOLSENBANDEN logo" class="h-8 w-auto max-w-[180px] sm:h-10 md:h-12"/>
 <span class="hidden text-lg font-semibold sm:block">FJOLSENBANDEN</span>
 </a>
 <div class="hidden items-center justify-start gap-6 md:flex">
@@ -132,12 +132,11 @@
 <a class="transition-colors duration-150 hover:text-[#13A0F9]" href="#kontakt">Kontakt</a>
 </li>
 </ul>
-<a href="#bli-medlem" class="inline-flex items-center gap-2 rounded-full border border-white/20 px-6 py-3 font-semibold text-white transition hover:border-white/40 hover:bg-white/10">Bli medlem</a>
-</div>
+                    </div>
 </div>
 <div class="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-4 md:hidden">
 <a class="flex items-center gap-3 text-white" href="#" aria-label="Fjolsenbanden hjem">
-<img src="/assets/branding/Liggende-Mork.svg" alt="FJOLSENBANDEN logo" class="h-8 w-auto max-w-[180px] sm:h-10"/>
+                <img src="/assets/branding/Liggende-Lys.svg" alt="FJOLSENBANDEN logo" class="h-8 w-auto max-w-[180px] sm:h-10"/>
 <span class="hidden text-lg font-semibold sm:block">FJOLSENBANDEN</span>
 </a>
 <div class="flex items-center gap-3">
@@ -175,8 +174,7 @@
 <a class="block rounded-lg px-4 py-2 transition hover:bg-white/10 hover:text-white" href="#kontakt">Kontakt</a>
 </li>
 </ul>
-<a href="#bli-medlem" class="mt-4 block rounded-full border border-white/20 px-4 py-2 text-center font-semibold text-white transition hover:border-white/40 hover:bg-white/10">Bli medlem</a>
-</div>
+                </div>
 </div>
 </nav>
 <header class="relative z-10 pb-40">
