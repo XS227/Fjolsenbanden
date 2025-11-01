@@ -200,7 +200,13 @@ const offerings = [
     {
         title: "Streamer for hire",
         description: "Ønsker du at FjOlsen skal streame på vegne av din merkevare? Han er tilgjengelig for co-streams, produktlanseringer og kampanjer – der ditt budskap blir formidlet på en autentisk og engasjerende måte til tusenvis av følgere.",
-        emoji: "🎥",
+        emoji: React.createElement("img", {
+            src: "https://setaei.com/Fjolsen/Morsom.png",
+            alt: "",
+            loading: "lazy",
+            className: "h-9 w-9",
+            "aria-hidden": "true",
+        }),
     },
     {
         title: "Coaching",
@@ -948,10 +954,15 @@ function VideoLightbox({ videoUrl, onClose, title, }) {
                 React.createElement("h3", { className: "text-lg font-semibold text-white" }, title),
                 React.createElement("p", { className: "text-sm text-zinc-100" }, "Videoen viser hvordan vi pakker ut, iscenesetter og presenterer produkter slik at f\u00F8lgerne v\u00E5re f\u00E5r lyst til \u00E5 kj\u00F8pe dem.")))));
 }
+function OfferingIcon({ icon, }) {
+    const isStringIcon = typeof icon === "string";
+    const className = `grid h-12 w-12 place-content-center overflow-hidden rounded-xl bg-gradient-to-br from-[#13A0F9] to-[#FF2F9C] ${isStringIcon ? "text-2xl text-white" : "p-1.5"}`.trim();
+    return (React.createElement("span", { className: className, "aria-hidden": "true" }, icon));
+}
 function UnboxingOfferingCard({ title, description, emoji, onWatchVideo, reachLabel, audienceStats, }) {
     return (React.createElement("div", { className: "flex h-full flex-col gap-5 rounded-2xl border border-white/10 bg-gradient-to-br from-[#161f33] via-[#101a33] to-[#0a1329] p-6 shadow-[0_20px_36px_rgba(6,14,35,0.55)]" },
         React.createElement("div", { className: "flex items-center gap-3" },
-            React.createElement("span", { className: "grid h-12 w-12 place-content-center rounded-xl bg-gradient-to-br from-[#13A0F9] to-[#FF2F9C] text-2xl text-white" }, emoji),
+            React.createElement(OfferingIcon, { icon: emoji }),
             React.createElement("div", null,
                 React.createElement("h3", { className: "text-xl font-semibold text-white" }, title),
                 React.createElement("p", { className: "text-sm text-zinc-100" }, description))),
@@ -972,7 +983,7 @@ function UnboxingOfferingCard({ title, description, emoji, onWatchVideo, reachLa
 function OfferingCard({ title, description, emoji, }) {
     return (React.createElement("div", { className: "flex h-full flex-col gap-4 rounded-2xl border border-white/10 bg-[#101a33]/80 p-6 shadow-[0_16px_32px_rgba(6,14,35,0.45)]" },
         React.createElement("div", { className: "flex items-center gap-3" },
-            React.createElement("span", { className: "grid h-12 w-12 place-content-center rounded-xl bg-gradient-to-br from-[#13A0F9] to-[#FF2F9C] text-2xl text-white" }, emoji),
+            React.createElement(OfferingIcon, { icon: emoji }),
             React.createElement("h3", { className: "text-xl font-semibold text-white" }, title)),
         React.createElement("p", { className: "text-sm leading-relaxed text-zinc-100" }, description)));
 }
