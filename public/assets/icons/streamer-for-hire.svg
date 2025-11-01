@@ -1,0 +1,49 @@
+<svg width="128" height="128" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="paint0_linear" x1="20" y1="18" x2="108" y2="112" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#13A0F9"/>
+      <stop offset="1" stop-color="#FF2F9C"/>
+    </linearGradient>
+    <linearGradient id="paint1_linear" x1="36" y1="34" x2="96" y2="92" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#172054"/>
+      <stop offset="1" stop-color="#040C35"/>
+    </linearGradient>
+    <linearGradient id="paint2_linear" x1="44" y1="54" x2="88" y2="90" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFE5F6"/>
+      <stop offset="1" stop-color="#FFC4E8"/>
+    </linearGradient>
+    <linearGradient id="paint3_linear" x1="48" y1="40" x2="88" y2="76" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#1C64F2"/>
+      <stop offset="1" stop-color="#E11D8C"/>
+    </linearGradient>
+    <radialGradient id="paint4_radial" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(64 88) rotate(90) scale(20 26)">
+      <stop stop-color="#521155"/>
+      <stop offset="1" stop-color="#1B0C38"/>
+    </radialGradient>
+    <filter id="shadow" x="0" y="4" width="128" height="132" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feOffset dy="6"/>
+      <feGaussianBlur stdDeviation="8"/>
+      <feColorMatrix type="matrix" values="0 0 0 0 0.047 0 0 0 0 0.082 0 0 0 0 0.196 0 0 0 0.35 0"/>
+      <feBlend in2="SourceGraphic" result="shape"/>
+    </filter>
+  </defs>
+  <g filter="url(#shadow)">
+    <rect x="16" y="12" width="96" height="104" rx="36" fill="url(#paint0_linear)"/>
+    <rect x="24" y="24" width="80" height="88" rx="32" fill="#050F3C"/>
+  </g>
+  <g>
+    <path d="M31 66C31 51 42 40 57 40H71C86 40 97 51 97 66V84C97 96 87 106 75 106H53C41 106 31 96 31 84V66Z" fill="url(#paint1_linear)"/>
+    <path d="M26 70C26 60.0589 34.0589 52 44 52H48C57.9411 52 66 60.0589 66 70V74C66 83.9411 57.9411 92 48 92H44C34.0589 92 26 83.9411 26 74V70Z" fill="url(#paint0_linear)"/>
+    <path d="M102 70C102 60.0589 93.9411 52 84 52H80C70.0589 52 62 60.0589 62 70V74C62 83.9411 70.0589 92 80 92H84C93.9411 92 102 83.9411 102 74V70Z" fill="url(#paint0_linear)"/>
+    <path d="M42 66C42 55.5066 50.5066 47 61 47H67C77.4934 47 86 55.5066 86 66V82C86 92.4934 77.4934 101 67 101H61C50.5066 101 42 92.4934 42 82V66Z" fill="url(#paint2_linear)"/>
+    <path d="M48 58C48 53.5817 51.5817 50 56 50H72C76.4183 50 80 53.5817 80 58V59.5C80 63.0899 77.0899 66 73.5 66H54.5C50.9101 66 48 63.0899 48 59.5V58Z" fill="#fff" fill-opacity="0.9"/>
+    <path d="M50 82C50 74.268 56.268 68 64 68C71.732 68 78 74.268 78 82C78 89.732 71.732 96 64 96C56.268 96 50 89.732 50 82Z" fill="url(#paint4_radial)"/>
+    <path d="M56 82C56 80.3431 57.3431 79 59 79H69C70.6569 79 72 80.3431 72 82C72 83.6569 70.6569 85 69 85H59C57.3431 85 56 83.6569 56 82Z" fill="#F8A4D3"/>
+    <circle cx="54" cy="72" r="4" fill="#2B154F"/>
+    <circle cx="74" cy="72" r="4" fill="#2B154F"/>
+    <path d="M47 56C47 49.3726 52.3726 44 59 44H69C75.6274 44 81 49.3726 81 56V58C81 58 77.5 56 75 56H53C50.5 56 47 58 47 58V56Z" fill="url(#paint3_linear)"/>
+    <path d="M45 98C47 102 51 106 57 107.5C63 109 69 109 75 107.5C81 106 85 102 87 98" stroke="#11092C" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M40 42C42.5 37 47 32 54 29L58 39" stroke="#13A0F9" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M88 42C85.5 37 81 32 74 29L70 39" stroke="#FF2F9C" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+</svg>
