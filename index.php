@@ -842,13 +842,8 @@
 </div>
 <div class="flex h-full flex-col gap-4 rounded-2xl border border-white/10 bg-[#101a33]/80 p-6 shadow-[0_16px_32px_rgba(6,14,35,0.45)]">
 <div class="flex items-center gap-3">
-<span class="grid h-12 w-12 place-content-center rounded-xl bg-gradient-to-br from-[#13A0F9] to-[#FF2F9C] text-black">
-<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-video h-6 w-6">
-<path d="m16 13 5.223 3.482a.5.5 0 0 0 .777-.416V7.87a.5.5 0 0 0-.752-.432L16 10.5">
-</path>
-<rect x="2" y="6" width="14" height="12" rx="2">
-</rect>
-</svg>
+<span class="grid h-12 w-12 place-content-center overflow-hidden rounded-xl bg-gradient-to-br from-[#13A0F9] to-[#FF2F9C] p-1.5" aria-hidden="true">
+<img src="/assets/icons/streamer-for-hire.svg" alt="" loading="lazy" class="h-9 w-9"/>
 </span>
 <h3 class="text-xl font-semibold text-white">Streamer for hire</h3>
 </div>
