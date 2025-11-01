@@ -82,7 +82,7 @@
         flex-wrap: wrap;
         justify-content: center;
         gap: 1.5rem;
-        margin: 2rem auto 0;
+        margin: 2rem auto 2.5rem;
       }
 
       .partner-logos img {
@@ -90,13 +90,15 @@
         width: auto;
         max-width: 12rem;
         object-fit: contain;
-        opacity: 0.9;
-        transition: transform 0.2s ease, opacity 0.2s ease;
+        opacity: 0.95;
+        filter: drop-shadow(0 0 14px rgba(93, 154, 255, 0.35));
+        transition: transform 0.2s ease, opacity 0.2s ease, filter 0.2s ease;
       }
 
       .partner-logos img:hover {
         opacity: 1;
-        transform: scale(1.03);
+        transform: scale(1.04);
+        filter: drop-shadow(0 0 18px rgba(125, 211, 252, 0.55));
       }
 
       .partners .cta {
