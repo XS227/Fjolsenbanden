@@ -21,6 +21,79 @@
       a {
         color: inherit;
       }
+
+      .partners {
+        margin: 5rem auto 0;
+        max-width: 64rem;
+        border-radius: 2.5rem;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        background: rgba(4, 17, 73, 0.7);
+        padding: 3rem 2rem;
+        text-align: center;
+        box-shadow: 0 24px 48px rgba(6, 14, 35, 0.45);
+        backdrop-filter: blur(6px);
+      }
+
+      .partners h2 {
+        margin-bottom: 1rem;
+        font-size: clamp(1.875rem, 3vw, 2.5rem);
+        font-weight: 700;
+        color: #ffffff;
+      }
+
+      .partners p {
+        margin: 0 auto;
+        max-width: 42rem;
+        color: rgba(224, 231, 255, 0.85);
+        line-height: 1.6;
+      }
+
+      .partners p + p {
+        margin-top: 1.5rem;
+      }
+
+      .partner-logos {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1.5rem;
+        margin: 2rem auto 0;
+      }
+
+      .partner-logos img {
+        height: 4.5rem;
+        width: auto;
+        max-width: 12rem;
+        object-fit: contain;
+        opacity: 0.9;
+        transition: transform 0.2s ease, opacity 0.2s ease;
+      }
+
+      .partner-logos img:hover {
+        opacity: 1;
+        transform: scale(1.03);
+      }
+
+      .partners .cta {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 1.5rem;
+        padding: 0.75rem 1.75rem;
+        border-radius: 9999px;
+        font-weight: 600;
+        background: linear-gradient(90deg, #13a0f9, #ff2f9c);
+        color: #ffffff;
+        box-shadow: 0 16px 32px rgba(19, 160, 249, 0.35);
+        text-decoration: none;
+        transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+      }
+
+      .partners .cta:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 20px 40px rgba(19, 160, 249, 0.45);
+        opacity: 0.95;
+      }
     </style>
   </head>
   <body class="flex min-h-screen flex-col text-white">
@@ -664,32 +737,17 @@
 </div>
 </div>
 </section>
-<section id="premier" class="mt-20 px-6 text-center" style="order:3">
-<h2 class="mb-4 text-3xl font-bold">Samarbeidspartnere</h2>
-<p class="mx-auto max-w-3xl text-zinc-300">Vi har allerede hatt samarbeid med flere kjente merkevarer.</p>
-<div id="sponsorer" class="mt-8 flex flex-wrap justify-center gap-6">
-<div class="flex items-center justify-center rounded-2xl border border-white/10 bg-white/5 shadow-[0_12px_24px_rgba(8,18,40,0.35)] transition hover:bg-white/10 h-72 w-full max-w-[36rem] p-5">
-<img src="https://setaei.com/Fjolsen/lenova.jpg" alt="Lenovo" class="h-full w-full object-contain" loading="lazy"/>
+<section id="premier" class="partners px-6" style="order:3">
+<h2>Samarbeidspartnere</h2>
+<p>Vi har allerede hatt samarbeid med flere kjente merkevarer.</p>
+<div id="sponsorer" class="partner-logos">
+<img src="/assets/partners/lenovo.svg" alt="Lenovo" loading="lazy"/>
+<img src="/assets/partners/komplett.svg" alt="Komplett" loading="lazy"/>
+<img src="/assets/partners/philips.svg" alt="Philips" loading="lazy"/>
+<img src="/assets/partners/samsung.svg" alt="Samsung" loading="lazy"/>
 </div>
-<div class="flex items-center justify-center rounded-2xl border border-white/10 bg-white/5 shadow-[0_12px_24px_rgba(8,18,40,0.35)] transition hover:bg-white/10 h-72 w-full max-w-[36rem] p-5">
-<img src="https://setaei.com/Fjolsen/samsung.jpg" alt="Samsung" class="h-full w-full object-contain" loading="lazy"/>
-</div>
-<div class="flex items-center justify-center rounded-2xl border border-white/10 bg-white/5 shadow-[0_12px_24px_rgba(8,18,40,0.35)] transition hover:bg-white/10 h-72 w-full max-w-[36rem] p-5">
-<img src="https://setaei.com/Fjolsen/philips.jpg" alt="Philips" class="h-full w-full object-contain" loading="lazy"/>
-</div>
-<div class="flex items-center justify-center rounded-2xl border border-white/10 bg-white/5 shadow-[0_12px_24px_rgba(8,18,40,0.35)] transition hover:bg-white/10 h-72 w-full max-w-[36rem] p-5">
-<img src="/assets/partners/komplett.svg" alt="Komplett.no" class="h-full w-full object-contain" loading="lazy"/>
-</div>
-</div>
-<div class="mt-8 space-y-4">
-<p class="mx-auto max-w-2xl text-zinc-300">Ønsker du å synliggjøre din merkevare for vårt engasjerte og voksende gaming-publikum?</p>
-<p class="mx-auto max-w-2xl text-zinc-300">Ta kontakt for samarbeid!</p>
-<div class="flex justify-center">
-<button type="button" class="inline-flex items-center justify-center font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-60 bg-zinc-900 text-white hover:bg-zinc-800 focus-visible:ring-zinc-900 h-10 px-4 text-sm rounded-xl rounded-full bg-gradient-to-r from-[#13A0F9] to-[#FF2F9C] px-8 py-3 font-semibold text-white shadow-[0_16px_28px_rgba(19,160,249,0.35)] transition hover:from-[#0d8bd6] hover:to-[#e12585]">
-<a href="#kontakt">Kontakt oss</a>
-</button>
-</div>
-</div>
+<p>Ønsker du å synliggjøre din merkevare for vårt engasjerte gaming-publikum?</p>
+<a href="#kontakt" class="cta">Kontakt oss</a>
 </section>
 <section id="tilbud" class="mt-20 px-6">
 <div class="mx-auto max-w-6xl space-y-6 rounded-3xl border border-white/10 bg-white/5 p-8 text-center shadow-[0_24px_48px_rgba(6,14,35,0.45)]">
