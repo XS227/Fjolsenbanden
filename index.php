@@ -117,7 +117,7 @@
 </ul>
 </div>
 <a class="flex items-center gap-3 text-white md:justify-self-center" href="#" aria-label="Fjolsenbanden hjem">
-            <img src="/assets/branding/Liggende-Lys.svg" alt="FJOLSENBANDEN logo" class="h-8 w-auto max-w-[180px] sm:h-10 md:h-12"/>
+            <img src="https://setaei.com/Fjolsen/Liggende-M%C3%B8rk.png" alt="FJOLSENBANDEN logo" class="h-8 w-auto max-w-[180px] sm:h-10 md:h-12"/>
 <span class="hidden text-lg font-semibold sm:block">FJOLSENBANDEN</span>
 </a>
 <div class="hidden items-center justify-start gap-6 md:flex">
@@ -137,7 +137,7 @@
 </div>
 <div class="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-4 md:hidden">
 <a class="flex items-center gap-3 text-white" href="#" aria-label="Fjolsenbanden hjem">
-                <img src="/assets/branding/Liggende-Lys.svg" alt="FJOLSENBANDEN logo" class="h-8 w-auto max-w-[180px] sm:h-10"/>
+                <img src="https://setaei.com/Fjolsen/Liggende-M%C3%B8rk.png" alt="FJOLSENBANDEN logo" class="h-8 w-auto max-w-[180px] sm:h-10"/>
 <span class="hidden text-lg font-semibold sm:block">FJOLSENBANDEN</span>
 </a>
 <div class="flex items-center gap-3">
