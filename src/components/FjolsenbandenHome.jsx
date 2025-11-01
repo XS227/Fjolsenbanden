@@ -299,9 +299,7 @@ export default function FjolsenbandenHome() {
         "Spillglede for hele familien – trygge streams, turneringer og premier.";
     const announcement = ((_c = siteSettings.announcement) === null || _c === void 0 ? void 0 : _c.trim()) ||
         "Neste livesending starter 20:00 med co-op i Mario Kart og premier fra Lenovo!";
-    const fallbackLogoUrl = skin === "light"
-        ? "/assets/branding/fjolsenbanden-logo-light.svg"
-        : "/assets/branding/fjolsenbanden-logo-dark.svg";
+    const fallbackLogoUrl = "https://setaei.com/Fjolsen/Liggende-M%E2%94%9C%E2%95%95rk.png";
     const logoUrl = ((_d = siteSettings.logoUrl) === null || _d === void 0 ? void 0 : _d.trim()) || fallbackLogoUrl;
     const presentationVideoUrl = ((_e = siteSettings.presentationVideoUrl) === null || _e === void 0 ? void 0 : _e.trim()) ||
         "https://www.youtube.com/embed/8EgRIkmvmtM?si=qMzmEaMfP-2ODMbc";
