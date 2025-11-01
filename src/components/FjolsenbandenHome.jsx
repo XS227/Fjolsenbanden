@@ -1,6 +1,5 @@
 "use client";
 import React, { useEffect, useMemo, useState } from "react";
-import { ArrowRight, CheckCircle2, CreditCard, Gift, Instagram, Lock, Menu, Phone, ShieldCheck, Smartphone, Trophy, Twitch, X, Youtube, UserCog, } from "lucide-react";
 import { createPortal } from "react-dom";
 import { ArrowRight, CheckCircle2, CreditCard, Gift, Instagram, Lock, Menu, MessageCircle, Moon, Phone, ShieldCheck, Smartphone, Sun, Trophy, Twitch, X, Youtube, UserCog, } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -302,8 +301,8 @@ export default function FjolsenbandenHome() {
     const announcement = ((_c = siteSettings.announcement) === null || _c === void 0 ? void 0 : _c.trim()) ||
         "Neste livesending starter 20:00 med co-op i Mario Kart og premier fra Lenovo!";
     const fallbackLogoUrl = skin === "light"
-        ? "https://setaei.com/Fjolsen/Liggende-Lys.png"
-        : "https://setaei.com/Fjolsen/Liggende-M%C3%B8rk.png";
+        ? "/assets/branding/fjolsenbanden-logo-light.svg"
+        : "/assets/branding/fjolsenbanden-logo-dark.svg";
     const logoUrl = ((_d = siteSettings.logoUrl) === null || _d === void 0 ? void 0 : _d.trim()) || fallbackLogoUrl;
     const presentationVideoUrl = ((_e = siteSettings.presentationVideoUrl) === null || _e === void 0 ? void 0 : _e.trim()) ||
         "https://www.youtube.com/embed/8EgRIkmvmtM?si=qMzmEaMfP-2ODMbc";
