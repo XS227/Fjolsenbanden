@@ -57,7 +57,7 @@ export default function FjolsenbandenBrandMock() {
         React.createElement("header", { className: "sticky top-0 z-50 border-b border-white/10 backdrop-blur", style: { background: "rgba(3, 12, 42, 0.82)" } },
             React.createElement("div", { className: "mx-auto flex h-16 max-w-7xl items-center justify-between px-4" },
                 React.createElement("div", { className: "flex items-center gap-3" },
-                    React.createElement("img", { src: siteSettings.logoUrl || "/assets/branding/Liggende-Mork.svg", alt: siteSettings.heroTitle || "Fjolsenbanden", className: "hidden h-8 w-auto sm:block" }),
+                    React.createElement("img", { src: siteSettings.logoUrl || "/assets/branding/Liggende-Lys.svg", alt: siteSettings.heroTitle || "Fjolsenbanden", className: "hidden h-8 w-auto sm:block" }),
                     React.createElement("div", { className: "grid h-10 w-10 place-items-center rounded-xl font-black sm:hidden", style: { background: BRAND.blue, color: BRAND.navy } }, "FB")),
                 React.createElement("nav", { className: "hidden items-center gap-6 text-sm md:flex" }, navItems.map((label) => (React.createElement("a", { key: label, href: `#${label.toLowerCase()}`, className: "transition hover:text-white/80" }, label)))),
                 React.createElement("div", { className: "flex items-center gap-3" },
