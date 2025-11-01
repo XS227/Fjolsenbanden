@@ -1,0 +1,32 @@
+<svg width="512" height="168" viewBox="0 0 512 168" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Fjolsenbanden logo dark skin</title>
+  <desc id="desc">Neon gradient Fjolsenbanden logotype for dark mode</desc>
+  <defs>
+    <linearGradient id="logoGradientDark" x1="64" y1="16" x2="448" y2="152" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#3BD0FF" />
+      <stop offset="50%" stop-color="#7A5CFF" />
+      <stop offset="100%" stop-color="#FF3DA7" />
+    </linearGradient>
+    <linearGradient id="faceGradientDark" x1="48" y1="20" x2="176" y2="156" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#12A0F9" />
+      <stop offset="100%" stop-color="#FF2F9C" />
+    </linearGradient>
+    <linearGradient id="panelStroke" x1="12" y1="16" x2="500" y2="152" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#12A0F9" />
+      <stop offset="100%" stop-color="#FF2F9C" />
+    </linearGradient>
+    <filter id="darkGlow" x="0" y="0" width="220" height="180" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="14" stdDeviation="22" flood-color="#12A0F9" flood-opacity="0.35" />
+      <feDropShadow dx="0" dy="22" stdDeviation="32" flood-color="#FF2F9C" flood-opacity="0.22" />
+    </filter>
+  </defs>
+  <rect x="12" y="16" width="488" height="136" rx="68" fill="#050B24" stroke="url(#panelStroke)" stroke-width="8" />
+  <g filter="url(#darkGlow)" transform="translate(20 8)">
+    <path d="M120 28C86 28 58 56 58 90C58 124 86 152 120 152C154 152 182 124 182 90C182 56 154 28 120 28Z" fill="url(#faceGradientDark)" />
+    <path d="M120 44C101.908 44 88 63.1929 88 86V118C88 135.673 102.327 150 120 150C137.673 150 152 135.673 152 118V86C152 63.1929 138.092 44 120 44Z" fill="#061333" />
+    <path d="M100 108C100 100.268 106.268 94 114 94H126C133.732 94 140 100.268 140 108C140 115.732 133.732 122 126 122H114C106.268 122 100 115.732 100 108Z" fill="#F8FCFF" />
+    <path d="M112 76C112 80.4183 108.418 84 104 84C99.5817 84 96 80.4183 96 76C96 71.5817 99.5817 68 104 68C108.418 68 112 71.5817 112 76Z" fill="#F8FCFF" />
+    <path d="M144 76C144 80.4183 140.418 84 136 84C131.582 84 128 80.4183 128 76C128 71.5817 131.582 68 136 68C140.418 68 144 71.5817 144 76Z" fill="#F8FCFF" />
+  </g>
+  <text x="200" y="110" font-family="'Baloo 2', 'Nunito', 'Segoe UI', sans-serif" font-size="72" font-weight="800" letter-spacing="0.04em" fill="url(#logoGradientDark)">FJOLSENBANDEN</text>
+</svg>
