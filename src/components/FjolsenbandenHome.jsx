@@ -204,7 +204,7 @@ const offerings = [
         title: "Streamer for hire",
         description: "Ønsker du at FjOlsen skal streame på vegne av din merkevare? Han er tilgjengelig for co-streams, produktlanseringer og kampanjer – der ditt budskap blir formidlet på en autentisk og engasjerende måte til tusenvis av følgere.",
         emoji: React.createElement("img", {
-            src: "/assets/icons/streamer-for-hire.svg",
+            src: "https://setaei.com/Fjolsen/Morsom.png",
             alt: "",
             loading: "lazy",
             className: "h-9 w-9",
