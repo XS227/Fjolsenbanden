@@ -302,8 +302,8 @@ export default function FjolsenbandenHome() {
     const announcement = ((_c = siteSettings.announcement) === null || _c === void 0 ? void 0 : _c.trim()) ||
         "Neste livesending starter 20:00 med co-op i Mario Kart og premier fra Lenovo!";
     const fallbackLogoUrl = skin === "light"
-        ? "/assets/branding/fjolsenbanden-logo-light.svg"
-        : "/assets/branding/fjolsenbanden-logo-dark.svg";
+        ? "https://setaei.com/Fjolsen/Liggende-Lys.png"
+        : "https://setaei.com/Fjolsen/Liggende-M%C3%B8rk.png";
     const logoUrl = ((_d = siteSettings.logoUrl) === null || _d === void 0 ? void 0 : _d.trim()) || fallbackLogoUrl;
     const presentationVideoUrl = ((_e = siteSettings.presentationVideoUrl) === null || _e === void 0 ? void 0 : _e.trim()) ||
         "https://www.youtube.com/embed/8EgRIkmvmtM?si=qMzmEaMfP-2ODMbc";
