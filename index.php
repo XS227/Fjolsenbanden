@@ -289,7 +289,7 @@
 </div>
 </section>
 <section id="live" class="px-6" style="order:1">
-<div class="mx-auto grid max-w-6xl gap-12 rounded-[2.5rem] border border-white/5 bg-gradient-to-br from-[#121a4b]/80 via-[#10153b]/80 to-[#0c122d]/80 p-12 shadow-2xl lg:grid-cols-[1.1fr_0.9fr]">
+<div class="mx-auto max-w-7xl space-y-10 rounded-[2.5rem] border border-white/5 bg-gradient-to-br from-[#121a4b]/80 via-[#10153b]/80 to-[#0c122d]/80 p-12 shadow-2xl">
 <div class="space-y-6">
 <h2 class="text-3xl font-bold sm:text-4xl">📈 Følg FjOlsenbanden</h2>
 <p class="text-lg text-slate-200">Totalt over 10 000 følgere på tvers av alle plattformer! Finn oss der du liker å se gaming-innhold – og bli en del av et hyggelig og støttende fellesskap.</p>
@@ -352,10 +352,8 @@
 <span>Instagram</span>
 </a>
 </div>
-<div class="rounded-3xl border border-white/10 bg-white/5 p-6 text-sm text-slate-200">🎥 Se FjOlsen LIVE! Til venstre: Stream-vindu. Til høyre: Chat-feed. 👉 Følg oss her: Discord · Twitch · YouTube · TikTok · Instagram</div>
+<div class="rounded-3xl border border-white/10 bg-white/5 p-6 text-sm text-slate-200">🎥 Se FjOlsen LIVE! Stream-vinduet finner du nedenfor. 👉 Følg oss her: Discord · Twitch · YouTube · TikTok · Instagram</div>
 </div>
-<div class="grid gap-6 lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
-<div class="space-y-4">
 <div class="relative overflow-hidden rounded-2xl border border-white/10 bg-black/70 p-6">
 <span class="inline-flex items-center gap-2 rounded-full bg-rose-500/20 px-3 py-1 text-xs font-semibold text-rose-200">🔴 Live preview</span>
 <p class="mt-4 text-sm text-slate-300">Stream-vindu – se FjOlsen ta communityet gjennom nye utfordringer og konkurranser.</p>
@@ -405,76 +403,15 @@
 })();
 </script>
 <p class="mt-3 text-xs text-slate-400">Oppdater lenken i adminpanelet for å endre hvilken Twitch-kanal som vises.</p>
-</div>
-<div class="flex max-h-[640px] flex-col rounded-2xl border border-white/10 bg-[#1f2940] p-4">
-<h3 class="mb-3 flex items-center gap-2 font-semibold text-[#13A0F9]">Live chat</h3>
-<div id="custom-chat" class="flex-1 overflow-y-auto space-y-2 pr-1 text-sm"></div>
-</div>
-<div class="rounded-2xl border border-white/10 bg-black/60 p-6 lg:col-span-2">
+<div class="rounded-2xl border border-white/10 bg-black/60 p-6">
 <p class="text-xs font-semibold uppercase tracking-[0.3em] text-slate-400">Fellesskap</p>
 <p class="mt-4 text-sm text-slate-200">Vi holder chatten trygg med dedikerte moderatorer og tydelige regler mot hets, mobbing og negativ adferd.</p>
 </div>
 </div>
-<script src="https://unpkg.com/tmi.js@1.8.5/dist/tmi.min.js"></script>
-<script>
-(() => {
-  const channel = "FjOlsenFN";
-  const el = document.getElementById("custom-chat");
-  const maxItems = 200;
-
-  if (!el) return;
-
-  const client = new tmi.Client({
-    connection: { secure: true, reconnect: true },
-    channels: [channel],
-  });
-
-  client.connect().catch(console.error);
-
-  function addMsg({ user, text, color }) {
-    const item = document.createElement("div");
-    item.className = "rounded-lg bg-white/5 px-3 py-2";
-
-    const name = document.createElement("span");
-    name.className = "mr-2 font-semibold";
-    name.style.color = color || "#13A0F9";
-    name.textContent = user;
-
-    const body = document.createElement("span");
-    body.className = "text-slate-200";
-    body.textContent = text;
-
-    item.appendChild(name);
-    item.appendChild(body);
-    el.appendChild(item);
-
-    while (el.children.length > maxItems) {
-      el.removeChild(el.firstChild);
-    }
-    el.scrollTop = el.scrollHeight;
-  }
-
-  client.on("message", (channel, tags, message, self) => {
-    if (self) return;
-    addMsg({
-      user: tags["display-name"] || tags.username,
-      text: message,
-      color: tags.color,
-    });
-  });
-
-  client.on("connected", () =>
-    addMsg({ user: "System", text: "Tilkoblet Twitch-chat ✅", color: "#4ade80" })
-  );
-  client.on("disconnected", () =>
-    addMsg({ user: "System", text: "Frakoblet fra chat ❌", color: "#f87171" })
-  );
-})();
-</script>
 </section>
 <section id="bli-medlem" class="px-6" style="order:0">
 <div class="mx-auto max-w-6xl rounded-[2.5rem] border border-white/10 bg-white/5 p-12 shadow-2xl">
-<h2 class="text-3xl font-bold sm:text-4xl">Bli medlem</h2>
+<h2 class="text-3xl font-bold sm:text-4xl">Et levende community</h2>
 <p class="mt-4 text-lg text-slate-200">Det er gratis å bli medlem i FjOlsenbanden! Alle kan delta i konkurranser, men for å vinne premier må du være registrert medlem.</p>
 <p class="mt-6 text-base text-slate-200 sm:text-lg">Velg alder for å bli med:</p>
 <div class="mt-6 flex flex-wrap gap-4">
@@ -500,36 +437,6 @@
 <div class="flex items-center justify-center rounded-2xl border border-white/10 bg-white/5 shadow-[0_12px_24px_rgba(8,18,40,0.35)] transition hover:bg-white/10 h-60 w-full px-4 py-3">
 <img src="/assets/partners/komplett.svg" alt="Komplett.no" class="h-full w-full object-contain" loading="lazy"/>
 </div>
-</div>
-</div>
-</section>
-<section id="live-chat" class="px-6" style="order:1">
-<div class="mx-auto max-w-6xl">
-<div class="flex max-h-[640px] flex-col rounded-2xl border border-white/10 bg-[#1f2940] p-4">
-<h3 class="mb-3 flex items-center gap-2 font-semibold text-[#13A0F9]">
-<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-circle h-4 w-4">
-<path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z">
-</path>
-</svg> Live chat</h3>
-<div class="flex-1 space-y-3 overflow-y-auto pr-1 text-sm">
-<div class="rounded-lg bg-white/5 px-3 py-2">
-<span class="mr-2 font-semibold text-[#13A0F9]">Lina</span>
-<span class="text-zinc-200">Haha, den bossen var vilt!</span>
-</div>
-<div class="rounded-lg bg-white/5 px-3 py-2">
-<span class="mr-2 font-semibold text-[#13A0F9]">Jonas</span>
-<span class="text-zinc-200">Gleder meg til premie-trekningen 🔥</span>
-</div>
-<div class="rounded-lg bg-white/5 px-3 py-2">
-<span class="mr-2 font-semibold text-[#13A0F9]">Sara</span>
-<span class="text-zinc-200">Hei fra TikTok 😎</span>
-</div>
-<div class="rounded-lg bg-white/5 px-3 py-2">
-<span class="mr-2 font-semibold text-[#13A0F9]">Marius</span>
-<span class="text-zinc-200">Bra lyd i dag!</span>
-</div>
-</div>
-<input type="text" placeholder="Skriv en kommentar..." class="mt-3 w-full rounded-lg border border-white/20 bg-white/10 px-3 py-2 text-sm text-white placeholder-zinc-400 outline-none focus:ring-2 focus:ring-[#13A0F9]"/>
 </div>
 </div>
 </section>
