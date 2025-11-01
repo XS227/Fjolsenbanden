@@ -153,9 +153,10 @@
         color: #fff;
       }
       .brand img {
-        width: 84px;
-        height: 84px;
-        border-radius: 20px;
+        width: min(70vw, 280px);
+        height: auto;
+        max-height: 320px;
+        border-radius: 24px;
         box-shadow: 0 12px 36px rgba(0, 0, 0, 0.35);
       }
       .brand h1 {
@@ -427,11 +428,11 @@
 
       <div class="brand">
         <img
-          src="https://setaei.com/Fjolsen/Liggende-M%E2%94%9C%E2%95%95rk.png"
-          alt="Fjolsenbanden"
+          src="https://setaei.com/Fjolsen/Love.png"
+          alt="Fjolsenbanden loader"
           data-brand-logo
-          data-logo-dark="https://setaei.com/Fjolsen/Liggende-M%E2%94%9C%E2%95%95rk.png"
-          data-logo-light="https://setaei.com/Fjolsen/Liggende-M%E2%94%9C%E2%95%95rk.png"
+          data-logo-dark="https://setaei.com/Fjolsen/Love.png"
+          data-logo-light="https://setaei.com/Fjolsen/Love.png"
         />
         <h1>Laster Fjolsenbanden-portalen…</h1>
         <div class="dots">
