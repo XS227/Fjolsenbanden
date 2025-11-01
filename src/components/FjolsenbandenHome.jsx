@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useMemo, useState } from "react";
-import { ArrowRight, Box, CalendarDays, CheckCircle2, CreditCard, Gift, GraduationCap, Instagram, Lock, Megaphone, Menu, MessageCircle, Mic, Phone, Rocket, ShieldCheck, Smartphone, Sparkles, Trophy, Twitch, Users, Video, X, Youtube, UserCog, } from "lucide-react";
+import { ArrowRight, CheckCircle2, CreditCard, Gift, Instagram, Lock, Menu, MessageCircle, Phone, ShieldCheck, Smartphone, Trophy, Twitch, X, Youtube, UserCog, } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { DEFAULT_SECTION_ORDER, DEFAULT_SITE_MODULES, DEFAULT_TWITCH_EMBED_URL, useAdminState, } from "@/lib/admin-state";
@@ -70,33 +70,6 @@ const stats = [
     { label: "Discord", value: "2 500+" },
     { label: "Twitch", value: "3 200+" },
     { label: "TikTok", value: "4 200+" },
-];
-const offerCards = [
-    {
-        icon: React.createElement(Megaphone, { className: "h-6 w-6 text-cyan-300", "aria-hidden": "true" }),
-        title: "Foredrag",
-        description: "FjOlsen besøker skoler, idrettslag og e-sportklubber for å snakke om streaming, gaming-kultur og nettvett.",
-    },
-    {
-        icon: React.createElement(Trophy, { className: "h-6 w-6 text-emerald-300", "aria-hidden": "true" }),
-        title: "Events",
-        description: "Vi arrangerer gaming-konkurranser for bedrifter, skoler og klubber – både digitalt og fysisk.",
-    },
-    {
-        icon: React.createElement(Sparkles, { className: "h-6 w-6 text-pink-300", "aria-hidden": "true" }),
-        title: "Unboxing",
-        description: "Profesjonelle unboxing-videoer som kan brukes i markedsføring og deles med communityet vårt.",
-    },
-    {
-        icon: React.createElement(Rocket, { className: "h-6 w-6 text-purple-300", "aria-hidden": "true" }),
-        title: "Streamer for hire",
-        description: "Co-streams, produktlanseringer og kampanjer der FjOlsen løfter budskapet ditt til tusenvis av følgere.",
-    },
-    {
-        icon: React.createElement(Users, { className: "h-6 w-6 text-sky-300", "aria-hidden": "true" }),
-        title: "Fortnite Coaching",
-        description: "1-til-1 coaching med Norges dyktigste Fortnite-spillere – fokus på strategi, samarbeid og trygg nettkultur.",
-    },
 ];
 const PARTNER_LOGO_BASE_URLS = [
     "https://setaei.com/Fjolsen",
@@ -212,27 +185,27 @@ const offerings = [
     {
         title: "Foredrag",
         description: "FjOlsen besøker skoler, idrettslag og e-sportklubber for å snakke om streaming, gaming-kultur og nettvett.",
-        Icon: Mic,
+        emoji: "🎤",
     },
     {
         title: "Events",
         description: "Vi arrangerer gaming-konkurranser for bedrifter, skoler og klubber – både digitalt og fysisk.",
-        Icon: CalendarDays,
+        emoji: "🎉",
     },
     {
         title: "Unboxing",
         description: "FjOlsen lager profesjonelle unboxing-videoer av dine produkter som kan brukes i deres markedsføring og deles med vårt community.",
-        Icon: Box,
+        emoji: "📦",
     },
     {
         title: "Streamer for hire",
         description: "Ønsker du at FjOlsen skal streame på vegne av din merkevare? Han er tilgjengelig for co-streams, produktlanseringer og kampanjer – der ditt budskap blir formidlet på en autentisk og engasjerende måte til tusenvis av følgere.",
-        Icon: Video,
+        emoji: "🎥",
     },
     {
         title: "Coaching",
         description: "I FjOlsenbanden finner du flere av Norges dyktigste Fortnite-spillere. Sammen tilbyr vi 1-til-1 coaching for barn og unge som ønsker å utvikle seg som spillere – med fokus på strategi, samarbeid, kommunikasjon og trygg nettkultur. Ta kontakt hvis du ønsker mer informasjon eller vil booke en økt.",
-        Icon: GraduationCap,
+        emoji: "🎮",
     },
 ];
 const createDefaultVippsUser = () => ({
@@ -727,7 +700,7 @@ export default function FjolsenbandenHome() {
                     React.createElement("div", { className: "space-y-3" },
                         React.createElement("h2", { className: "text-3xl font-bold text-white" }, "Andre tilbud"),
                         React.createElement("p", { className: "text-lg text-zinc-100" }, "FjOlsenbanden tilbyr mer enn bare streaming!")),
-                    React.createElement("div", { className: "grid gap-6 text-left sm:grid-cols-2" }, offerings.map(({ title, description, Icon }) => title === "Unboxing" ? (React.createElement(UnboxingOfferingCard, { key: title, title: title, description: description, Icon: Icon, onWatchVideo: () => setShowUnboxingVideo(true), reachLabel: estimatedUnboxingReach, audienceStats: stats })) : (React.createElement(OfferingCard, { key: title, title: title, description: description, Icon: Icon })))))),
+                    React.createElement("div", { className: "grid gap-6 text-left sm:grid-cols-2" }, offerings.map(({ title, description, emoji }) => title === "Unboxing" ? (React.createElement(UnboxingOfferingCard, { key: title, title: title, description: description, emoji: emoji, onWatchVideo: () => setShowUnboxingVideo(true), reachLabel: estimatedUnboxingReach, audienceStats: stats })) : (React.createElement(OfferingCard, { key: title, title: title, description: description, emoji: emoji })))))),
             contactForm ? (React.createElement("section", { id: "kontakt", className: "mt-20 px-6 sm:px-8 lg:px-10", style: sectionOrderStyle("contact") },
                 React.createElement("div", { className: "mx-auto max-w-5xl space-y-6 rounded-3xl border border-white/10 bg-[#161f33]/90 p-8 text-center shadow-2xl" },
                     React.createElement("h2", { className: "text-3xl font-bold" }, "Kontakt oss"),
@@ -975,11 +948,10 @@ function VideoLightbox({ videoUrl, onClose, title, }) {
                 React.createElement("h3", { className: "text-lg font-semibold text-white" }, title),
                 React.createElement("p", { className: "text-sm text-zinc-100" }, "Videoen viser hvordan vi pakker ut, iscenesetter og presenterer produkter slik at f\u00F8lgerne v\u00E5re f\u00E5r lyst til \u00E5 kj\u00F8pe dem.")))));
 }
-function UnboxingOfferingCard({ title, description, Icon, onWatchVideo, reachLabel, audienceStats, }) {
+function UnboxingOfferingCard({ title, description, emoji, onWatchVideo, reachLabel, audienceStats, }) {
     return (React.createElement("div", { className: "flex h-full flex-col gap-5 rounded-2xl border border-white/10 bg-gradient-to-br from-[#161f33] via-[#101a33] to-[#0a1329] p-6 shadow-[0_20px_36px_rgba(6,14,35,0.55)]" },
         React.createElement("div", { className: "flex items-center gap-3" },
-            React.createElement("span", { className: "grid h-12 w-12 place-content-center rounded-xl bg-gradient-to-br from-[#13A0F9] to-[#FF2F9C] text-black" },
-                React.createElement(Icon, { className: "h-6 w-6" })),
+            React.createElement("span", { className: "grid h-12 w-12 place-content-center rounded-xl bg-gradient-to-br from-[#13A0F9] to-[#FF2F9C] text-2xl text-white" }, emoji),
             React.createElement("div", null,
                 React.createElement("h3", { className: "text-xl font-semibold text-white" }, title),
                 React.createElement("p", { className: "text-sm text-zinc-100" }, description))),
@@ -997,11 +969,10 @@ function UnboxingOfferingCard({ title, description, Icon, onWatchVideo, reachLab
         React.createElement(Button, { size: "lg", className: "rounded-full bg-gradient-to-r from-[#13A0F9] to-[#FF2F9C] font-semibold text-white shadow-[0_16px_28px_rgba(19,160,249,0.35)] transition hover:from-[#0d8bd6] hover:to-[#e12585]", onClick: onWatchVideo }, "Se unboxing-eksempel"),
         React.createElement("p", { className: "text-xs text-zinc-100" }, "Trykk p\u00E5 knappen for \u00E5 se en full unboxing-produksjon slik samarbeidspartnerne v\u00E5re f\u00E5r den levert.")));
 }
-function OfferingCard({ title, description, Icon, }) {
+function OfferingCard({ title, description, emoji, }) {
     return (React.createElement("div", { className: "flex h-full flex-col gap-4 rounded-2xl border border-white/10 bg-[#101a33]/80 p-6 shadow-[0_16px_32px_rgba(6,14,35,0.45)]" },
         React.createElement("div", { className: "flex items-center gap-3" },
-            React.createElement("span", { className: "grid h-12 w-12 place-content-center rounded-xl bg-gradient-to-br from-[#13A0F9] to-[#FF2F9C] text-black" },
-                React.createElement(Icon, { className: "h-6 w-6" })),
+            React.createElement("span", { className: "grid h-12 w-12 place-content-center rounded-xl bg-gradient-to-br from-[#13A0F9] to-[#FF2F9C] text-2xl text-white" }, emoji),
             React.createElement("h3", { className: "text-xl font-semibold text-white" }, title)),
         React.createElement("p", { className: "text-sm leading-relaxed text-zinc-100" }, description)));
 }
