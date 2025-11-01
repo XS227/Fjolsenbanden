@@ -85,11 +85,11 @@ const SECTION_ITEMS = [
 ];
 
 const ADMIN_NAV_ITEMS = [
+    { id: "statistics", label: "Statistikk", Icon: BarChart3 },
     { id: "sections", label: "Oppdater sideinnhold", Icon: GripVertical },
-    { id: "members", label: "Medlemmer", Icon: Users },
     { id: "membership", label: "Medlemskap", Icon: ShieldCheck },
     { id: "partners", label: "Sponsorer & partnere", Icon: Crown },
-    { id: "statistics", label: "Statistikk", Icon: BarChart3 },
+    { id: "members", label: "Team & profiler", Icon: Users },
 ];
 
 export default function AdminDashboard() {
@@ -554,7 +554,7 @@ function AdminDashboardContent({ auth }) {
                         </div>
                     </header>
                     <main className="flex-1 overflow-y-auto px-6 py-10">
-                        <section id="overview" className="space-y-6">
+                        <section id="statistics" className="space-y-6">
                             <div className="flex flex-col gap-1">
                                 <p className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-400">
                                     Oversikt
@@ -921,7 +921,7 @@ function AdminDashboardContent({ auth }) {
                                 </CardContent>
                             </Card>
                         </section>
-                        <section id="site" className="mt-12 space-y-6">
+                        <section id="sections" className="mt-12 space-y-6">
                             <div className="flex flex-col gap-1">
                                 <p className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-400">
                                     Nettside og moduler
@@ -1237,7 +1237,7 @@ function AdminDashboardContent({ auth }) {
                                 </div>
                             </div>
                         </section>
-                        <section id="memberships" className="mt-12 grid gap-6 xl:grid-cols-[1.6fr,1fr]">
+                        <section id="membership" className="mt-12 grid gap-6 xl:grid-cols-[1.6fr,1fr]">
                             <Card className="border-slate-200 bg-white shadow-sm">
                                 <CardHeader className="gap-1">
                                     <CardTitle className="flex items-center gap-2 text-lg font-semibold text-slate-900">
@@ -1344,7 +1344,7 @@ function AdminDashboardContent({ auth }) {
                                     </Button>
                                 </CardContent>
                             </Card>
-                            <Card className="border-slate-200 bg-white shadow-sm">
+                            <Card id="partners" className="border-slate-200 bg-white shadow-sm">
                                 <CardHeader className="gap-1">
                                     <CardTitle className="flex items-center gap-2 text-lg font-semibold text-slate-900">
                                         <Crown className="h-5 w-5 text-emerald-500" /> Partnere
@@ -1432,7 +1432,7 @@ function AdminDashboardContent({ auth }) {
                             </Card>
                         </section>
 
-                        <section id="team" className="mt-12 grid gap-6 xl:grid-cols-[1.6fr,1fr]">
+                        <section id="members" className="mt-12 grid gap-6 xl:grid-cols-[1.6fr,1fr]">
                             <Card className="border-slate-200 bg-white shadow-sm">
                                 <CardHeader className="gap-1">
                                     <CardTitle className="flex items-center gap-2 text-lg font-semibold text-slate-900">
