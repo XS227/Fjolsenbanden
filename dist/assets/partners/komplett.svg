@@ -1,7 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="220" height="80" viewBox="0 0 220 80" role="img" aria-labelledby="title">
   <title id="title">Komplett logo</title>
-  <rect width="220" height="80" rx="14" fill="#ffcc00" />
-  <path d="M46 20 70 34v12L46 60 22 46V34Z" fill="#1c1c1c" opacity="0.9" />
+  <path d="M46 20 70 34v12L46 60 22 46V34Z" fill="#ffffff" opacity="0.92" />
   <text
     x="140"
     y="52"
@@ -10,7 +9,7 @@
     font-size="32"
     font-weight="700"
     letter-spacing="2"
-    fill="#1c1c1c"
+    fill="#ffffff"
   >
     Komplett
   </text>
