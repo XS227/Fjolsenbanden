@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="no">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Showcase – Klar streaming-landingpage</title>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/favicon.svg" />
+    <meta
+      name="description"
+      content="Klar landingpage for streamere – komplett løsning med hosting, design og domeneintegrasjon."
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      :root {
+        color-scheme: dark;
+      }
+      body {
+        background: radial-gradient(circle at top, #192a56 0%, #050b24 55%, #020611 100%);
+        color: #f8f9ff;
+        min-height: 100vh;
+      }
+      .glow-border {
+        position: relative;
+        border-radius: 1.5rem;
+        overflow: hidden;
+        border: 1px solid rgba(82, 167, 255, 0.18);
+        background: rgba(8, 19, 54, 0.82);
+        backdrop-filter: blur(16px);
+      }
+      .glow-border::before {
+        content: "";
+        position: absolute;
+        inset: -30%;
+        background: conic-gradient(
+          from 120deg,
+          rgba(82, 167, 255, 0.7),
+          rgba(255, 47, 156, 0.7),
+          rgba(82, 167, 255, 0.7)
+        );
+        filter: blur(45px);
+        opacity: 0.35;
+        z-index: 0;
+      }
+      .glow-border > * {
+        position: relative;
+        z-index: 1;
+      }
+      .section-shell {
+        width: 100%;
+        margin-left: auto;
+        margin-right: auto;
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+        max-width: 1200px;
+      }
+      .feature-icon {
+        background: linear-gradient(135deg, rgba(82, 167, 255, 0.14), rgba(255, 47, 156, 0.14));
+        border: 1px solid rgba(82, 167, 255, 0.2);
+      }
+    </style>
+  </head>
+  <body class="font-sans">
+    <header class="section-shell pt-16 pb-12">
+      <nav class="flex flex-wrap items-center justify-between gap-4">
+        <a href="/" class="flex items-center gap-3 text-xl font-semibold tracking-tight">
+          <span class="inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-sky-400/80 to-pink-500/80 shadow-lg shadow-sky-500/30">FB</span>
+          Fjolsenbanden
+        </a>
+        <div class="flex flex-wrap items-center gap-3 text-sm text-slate-200/80">
+          <a href="#features" class="transition hover:text-white">Dette får du</a>
+          <a href="#pricing" class="transition hover:text-white">Månedsabonnement</a>
+          <a href="#hosting" class="transition hover:text-white">Hosting &amp; domene</a>
+          <a href="#cta" class="inline-flex items-center rounded-full bg-gradient-to-r from-sky-400 via-indigo-400 to-pink-500 px-5 py-2 font-semibold text-white shadow-lg shadow-indigo-500/30 transition hover:scale-[1.02]">Book demo</a>
+        </div>
+      </nav>
+      <section class="mt-20 grid items-center gap-16 lg:grid-cols-[1.05fr_0.95fr]">
+        <div>
+          <span class="inline-flex items-center rounded-full border border-white/20 bg-white/5 px-4 py-2 text-sm uppercase tracking-[0.3em] text-slate-200/70">Landingpage for streamere</span>
+          <h1 class="mt-6 text-4xl font-bold leading-tight sm:text-5xl lg:text-6xl">
+            Ferdig rigget streaming-landingpage klar til å skape flere fans.
+          </h1>
+          <p class="mt-6 max-w-2xl text-lg text-slate-200/80">
+            Vi har pakket all erfaringen vår inn i en komplett showcase-side for streamere. Du får profesjonell
+            design, integrasjoner med kanalene dine og klare konverteringspunkter – levert og driftet av oss.
+          </p>
+          <div class="mt-10 flex flex-wrap gap-4 text-sm font-semibold">
+            <a
+              href="#pricing"
+              class="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-sky-400 to-pink-500 px-6 py-3 text-base text-white shadow-xl shadow-sky-500/40 transition hover:translate-y-[-2px]"
+            >
+              Se pakke og pris
+              <span aria-hidden="true">→</span>
+            </a>
+            <span class="flex items-center gap-2 rounded-full border border-white/10 px-5 py-3 text-slate-200/80">
+              <svg class="h-5 w-5 text-sky-300" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+              </svg>
+              Lanseringsklar på under én uke
+            </span>
+          </div>
+        </div>
+        <div class="glow-border p-10">
+          <div class="grid gap-6 text-sm text-slate-200/80">
+            <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+              <p class="text-sky-200 font-semibold uppercase tracking-widest text-xs">Resultater</p>
+              <p class="mt-3 text-lg text-white">32% flere abonnenter per stream</p>
+              <p class="mt-2 text-sm text-slate-300/80">Konverteringsoptimalisert CTA og Vipps-integrasjon gjør det lett å støtte deg.</p>
+            </div>
+            <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+              <p class="text-sky-200 font-semibold uppercase tracking-widest text-xs">Integrasjoner</p>
+              <ul class="mt-3 space-y-2 text-sm">
+                <li class="flex items-center gap-2">
+                  <span class="h-2.5 w-2.5 rounded-full bg-sky-400"></span>
+                  Twitch &amp; YouTube live-status
+                </li>
+                <li class="flex items-center gap-2">
+                  <span class="h-2.5 w-2.5 rounded-full bg-pink-400"></span>
+                  Kalender for kommende streams
+                </li>
+                <li class="flex items-center gap-2">
+                  <span class="h-2.5 w-2.5 rounded-full bg-indigo-400"></span>
+                  Integrert merch- og sponsorseksjon
+                </li>
+              </ul>
+            </div>
+            <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+              <p class="text-sky-200 font-semibold uppercase tracking-widest text-xs">Support</p>
+              <p class="mt-3 text-lg text-white">Personlig onboarding &amp; løpende support</p>
+              <p class="mt-2 text-sm text-slate-300/80">Vi holder siden oppdatert og følger opp deg og teamet ditt.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </header>
+
+    <main class="space-y-32 pb-32">
+      <section id="features" class="section-shell">
+        <div class="mx-auto max-w-3xl text-center">
+          <h2 class="text-3xl font-bold sm:text-4xl">Dette får du i løsningen</h2>
+          <p class="mt-4 text-lg text-slate-200/80">
+            Vi kombinerer custom design, teknisk drift og strategisk innhold slik at du kan fokusere på streaming.
+          </p>
+        </div>
+        <div class="mt-16 grid gap-8 md:grid-cols-2 xl:grid-cols-3">
+          <article class="feature-icon rounded-3xl p-7">
+            <div class="text-lg font-semibold text-white">Eksklusiv designpakke</div>
+            <p class="mt-3 text-sm text-slate-200/80">
+              Landingpage tilpasset din merkevare, med hero, highlights, galleri og sponsorflater klare til bruk.
+            </p>
+          </article>
+          <article class="feature-icon rounded-3xl p-7">
+            <div class="text-lg font-semibold text-white">Klar CTA-struktur</div>
+            <p class="mt-3 text-sm text-slate-200/80">
+              Få fans til å abonnere, donere eller kjøpe merch med tydelige handlinger og automatiske oppdateringer.
+            </p>
+          </article>
+          <article class="feature-icon rounded-3xl p-7">
+            <div class="text-lg font-semibold text-white">Strømmetracker</div>
+            <p class="mt-3 text-sm text-slate-200/80">
+              Live-indikatorer og tidsplan som henter data direkte fra kanalene dine – alltid oppdatert.
+            </p>
+          </article>
+          <article class="feature-icon rounded-3xl p-7">
+            <div class="text-lg font-semibold text-white">Innholdsmoduler</div>
+            <p class="mt-3 text-sm text-slate-200/80">
+              Fremhev sponsorsamarbeid, highlight-videos og community-mål med blokker du kan redigere selv.
+            </p>
+          </article>
+          <article class="feature-icon rounded-3xl p-7">
+            <div class="text-lg font-semibold text-white">Analytics &amp; innsikt</div>
+            <p class="mt-3 text-sm text-slate-200/80">
+              Tilgang til dashbord med trafikk, konvertering og subscriber-trender levert månedsvis.
+            </p>
+          </article>
+          <article class="feature-icon rounded-3xl p-7">
+            <div class="text-lg font-semibold text-white">Community-verktøy</div>
+            <p class="mt-3 text-sm text-slate-200/80">
+              Integrasjon med Discord og automatiske oppdateringer på nye mål, events og giveaways.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section id="pricing" class="section-shell">
+        <div class="glow-border px-8 py-16">
+          <div class="mx-auto grid max-w-5xl gap-14 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
+            <div>
+              <h2 class="text-3xl font-bold sm:text-4xl">Månedsabonnement uten binding</h2>
+              <p class="mt-4 text-lg text-slate-200/80">
+                Fast pris som inkluderer design, hosting, oppdateringer og support. Alt er driftet av oss, og du får et
+                dedikert team å sparre med.
+              </p>
+              <ul class="mt-8 space-y-3 text-sm text-slate-200/90">
+                <li class="flex items-start gap-3">
+                  <svg class="mt-0.5 h-5 w-5 flex-none text-sky-300" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+                  </svg>
+                  Full installasjon, copywriting og premium designtilpasning inkludert i onboardingen.
+                </li>
+                <li class="flex items-start gap-3">
+                  <svg class="mt-0.5 h-5 w-5 flex-none text-sky-300" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+                  </svg>
+                  Løpende publisering av highlights, sponsorinnhold og kampanjer håndtert av vårt team.
+                </li>
+                <li class="flex items-start gap-3">
+                  <svg class="mt-0.5 h-5 w-5 flex-none text-sky-300" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+                  </svg>
+                  Månedlige rapporter på trafikk, abonnenter og sponsorvisninger i et dedikert dashboard.
+                </li>
+              </ul>
+            </div>
+            <div class="rounded-3xl border border-white/15 bg-white/10 p-10 text-center shadow-2xl shadow-sky-500/20">
+              <p class="text-sm font-semibold uppercase tracking-[0.4em] text-slate-200/70">Én plan</p>
+              <p class="mt-4 text-5xl font-bold">7 990,-</p>
+              <p class="mt-3 text-sm text-slate-200/80">per måned eks. mva</p>
+              <div class="mt-8 space-y-3 text-sm text-slate-200/90">
+                <p>Ingen oppstartskost – vi setter opp alt for deg.</p>
+                <p>Inkluderer hosting, SSL, CDN og daglig backup.</p>
+                <p>Kan skalere med ekstra språk, landingssider og kampanjer ved behov.</p>
+              </div>
+              <a
+                href="#cta"
+                class="mt-8 inline-flex w-full items-center justify-center rounded-full bg-gradient-to-r from-sky-400 to-pink-500 px-6 py-3 text-base font-semibold text-white shadow-lg shadow-sky-500/30 transition hover:translate-y-[-2px]"
+              >
+                Start abonnement
+              </a>
+              <p class="mt-4 text-xs text-slate-200/60">30 dagers fornøydgaranti – avslutt når som helst.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="hosting" class="section-shell">
+        <div class="mx-auto max-w-4xl text-center">
+          <h2 class="text-3xl font-bold sm:text-4xl">Vi hoster alt for deg</h2>
+          <p class="mt-4 text-lg text-slate-200/80">
+            Slipp alt teknisk stress. Vi drifter løsningen på vår sikre plattform, sørger for lynrask ytelse og hjelper
+            deg koble på ditt eget domene.
+          </p>
+        </div>
+        <div class="mt-16 grid gap-8 md:grid-cols-3">
+          <article class="feature-icon rounded-3xl p-8">
+            <h3 class="text-lg font-semibold text-white">Domene &amp; DNS</h3>
+            <p class="mt-3 text-sm text-slate-200/80">
+              Pek eksisterende domene til oss, eller la oss hjelpe deg registrere nytt. Vi håndterer SSL og DNS-endringer.
+            </p>
+          </article>
+          <article class="feature-icon rounded-3xl p-8">
+            <h3 class="text-lg font-semibold text-white">Skalerbar hosting</h3>
+            <p class="mt-3 text-sm text-slate-200/80">
+              Global CDN, caching og sanntidsmonitorering gjør at fans får en rask opplevelse – uansett hvor de er.
+            </p>
+          </article>
+          <article class="feature-icon rounded-3xl p-8">
+            <h3 class="text-lg font-semibold text-white">Kontinuerlige oppdateringer</h3>
+            <p class="mt-3 text-sm text-slate-200/80">
+              Vi legger inn nye seksjoner, kampanjer og integrasjoner når du trenger det, uten ekstra riggkostnader.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section-shell">
+        <div class="glow-border px-8 py-12">
+          <div class="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-center">
+            <div>
+              <p class="text-sm font-semibold uppercase tracking-[0.35em] text-slate-200/70">Case</p>
+              <h2 class="mt-4 text-3xl font-bold sm:text-4xl">Resultater for vår pilot-streamer</h2>
+              <p class="mt-4 text-lg text-slate-200/80">
+                Etter lansering av showcase-løsningen fikk streameren vår raskt frem sponsorer og nye medlemskap.
+              </p>
+            </div>
+            <dl class="grid grid-cols-1 gap-6 sm:grid-cols-3">
+              <div class="rounded-3xl border border-white/15 bg-white/5 p-6 text-center">
+                <dt class="text-sm uppercase tracking-widest text-slate-200/60">Merch-salg</dt>
+                <dd class="mt-3 text-3xl font-bold text-white">+58%</dd>
+              </div>
+              <div class="rounded-3xl border border-white/15 bg-white/5 p-6 text-center">
+                <dt class="text-sm uppercase tracking-widest text-slate-200/60">Nye medlemmer</dt>
+                <dd class="mt-3 text-3xl font-bold text-white">+41%</dd>
+              </div>
+              <div class="rounded-3xl border border-white/15 bg-white/5 p-6 text-center">
+                <dt class="text-sm uppercase tracking-widest text-slate-200/60">Sponsordeksning</dt>
+                <dd class="mt-3 text-3xl font-bold text-white">3x</dd>
+              </div>
+            </dl>
+          </div>
+        </div>
+      </section>
+
+      <section id="cta" class="section-shell">
+        <div class="glow-border px-8 py-16 text-center">
+          <p class="text-sm font-semibold uppercase tracking-[0.35em] text-slate-200/70">Klar for neste steg?</p>
+          <h2 class="mt-4 text-3xl font-bold sm:text-4xl">La oss bygge din streaming-hub</h2>
+          <p class="mt-4 text-lg text-slate-200/80">
+            Book en gjennomgang med teamet vårt, så viser vi deg nøyaktig hvordan vi tilpasser løsningen til ditt
+            community og merkevare.
+          </p>
+          <div class="mt-8 flex flex-wrap items-center justify-center gap-4">
+            <a
+              href="mailto:hei@fjolsenbanden.no"
+              class="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-sky-400 to-pink-500 px-6 py-3 text-base font-semibold text-white shadow-lg shadow-sky-500/30 transition hover:translate-y-[-2px]"
+            >
+              Book demo
+              <span aria-hidden="true">→</span>
+            </a>
+            <a
+              href="https://cal.com"
+              class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-6 py-3 text-base font-semibold text-white/80 transition hover:text-white"
+            >
+              Se kalender
+            </a>
+          </div>
+          <p class="mt-6 text-xs text-slate-200/60">
+            Vi svarer innen 24 timer og tilpasser demoen etter dine mål.
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="section-shell pb-12 text-sm text-slate-200/60">
+      <div class="border-t border-white/5 pt-8">
+        <p>© <span id="year"></span> Fjolsenbanden. Alle rettigheter forbeholdt.</p>
+        <p class="mt-2">Vi bygger digitale opplevelser for streamere, skapere og gamingmerker i Norden.</p>
+      </div>
+    </footer>
+
+    <script>
+      document.getElementById("year").textContent = new Date().getFullYear();
+    </script>
+  </body>
+</html>
