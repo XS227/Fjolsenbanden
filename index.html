@@ -503,12 +503,11 @@
         </section>
 
         <section id="live" class="section-shell relative mt-12">
-          <div class="mx-auto grid max-w-7xl items-start gap-8 lg:grid-cols-3">
-            <div class="space-y-4 lg:col-span-2">
-              <div class="relative overflow-hidden rounded-2xl border border-white/10 shadow-2xl">
-                <span class="absolute left-3 top-3 rounded-full bg-rose-500 px-4 py-1 text-xs font-semibold text-white shadow animate-pulse">🔴 LIVE</span>
-                <!-- Dynamisk Twitch-embed med fallback -->
-                <div id="playerWrap" class="relative bg-black aspect-video rounded-2xl overflow-hidden">
+          <div class="mx-auto max-w-7xl space-y-6">
+            <div class="relative overflow-hidden rounded-2xl border border-white/10 shadow-2xl">
+              <span class="absolute left-3 top-3 rounded-full bg-rose-500 px-4 py-1 text-xs font-semibold text-white shadow animate-pulse">🔴 LIVE</span>
+              <!-- Dynamisk Twitch-embed med fallback -->
+              <div id="playerWrap" class="relative bg-black aspect-video rounded-2xl overflow-hidden">
                   <div id="fallback" class="absolute inset-0 grid place-items-center text-center p-6">
                     <div>
                       <img id="thumb" class="w-full max-w-md mx-auto rounded-lg border border-white/10" alt="Twitch forhåndsvisning" />
@@ -557,75 +556,20 @@
                 })();
               </script>
             </div>
-            <div class="flex max-h-[640px] flex-col rounded-2xl border border-white/10 bg-[#1f2940] p-4">
-              <h3 class="mb-3 flex items-center gap-2 font-semibold text-[#13A0F9]">Live chat</h3>
-              <div id="custom-chat" class="flex-1 overflow-y-auto space-y-2 pr-1 text-sm"></div>
+            <div class="rounded-2xl border border-white/10 bg-white/5 p-6 shadow-2xl">
+              <p class="text-xs font-semibold uppercase tracking-[0.3em] text-white/70">Fellesskap</p>
+              <p class="mt-4 text-sm text-zinc-200">
+                Vi holder miljøet trygt med dedikerte moderatorer og tydelige regler mot hets, mobbing og negativ adferd.
+              </p>
             </div>
           </div>
         </section>
 
-        <script src="https://unpkg.com/tmi.js@1.8.5/dist/tmi.min.js"></script>
-        <script>
-          (() => {
-            const channel = "FjOlsenFN";
-            const el = document.getElementById("custom-chat");
-            const maxItems = 200;
-
-            if (!el) return;
-
-            const client = new tmi.Client({
-              connection: { secure: true, reconnect: true },
-              channels: [channel],
-            });
-
-            client.connect().catch(console.error);
-
-            function addMsg({ user, text, color }) {
-              const item = document.createElement("div");
-              item.className = "rounded-lg bg-white/5 px-3 py-2";
-
-              const name = document.createElement("span");
-              name.className = "mr-2 font-semibold";
-              name.style.color = color || "#13A0F9";
-              name.textContent = user;
-
-              const body = document.createElement("span");
-              body.className = "text-zinc-200";
-              body.textContent = text;
-
-              item.appendChild(name);
-              item.appendChild(body);
-              el.appendChild(item);
-
-              while (el.children.length > maxItems) {
-                el.removeChild(el.firstChild);
-              }
-              el.scrollTop = el.scrollHeight;
-            }
-
-            client.on("message", (channel, tags, message, self) => {
-              if (self) return;
-              addMsg({
-                user: tags["display-name"] || tags.username,
-                text: message,
-                color: tags.color,
-              });
-            });
-
-            client.on("connected", () =>
-              addMsg({ user: "System", text: "Tilkoblet Twitch-chat ✅", color: "#4ade80" })
-            );
-            client.on("disconnected", () =>
-              addMsg({ user: "System", text: "Frakoblet fra chat ❌", color: "#f87171" })
-            );
-          })();
-        </script>
-
         <section id="medlemskap" class="section-shell mt-20 text-center">
-          <h2 class="mb-4 text-3xl font-bold">Bli medlem</h2>
+          <h2 class="mb-4 text-3xl font-bold">Et levende community</h2>
           <div class="mx-auto mt-6 max-w-6xl rounded-3xl border border-white/10 bg-[#0B163F]/80 p-6 shadow-[0_24px_60px_rgba(6,14,35,0.55)] sm:p-8">
             <div class="mx-auto max-w-2xl text-center">
-              <h3 class="text-2xl font-bold text-white">Et levende community</h3>
+              <h3 class="text-2xl font-bold text-white">Bli medlem</h3>
               <p class="mt-2 text-sm text-zinc-300 sm:text-base">
                 Fjolsenbanden vokser hver dag. Se hvor mange vi er og bli en del av eventyret!
               </p>
