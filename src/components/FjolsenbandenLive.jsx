@@ -1,7 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
-import LiveChat from "@/components/LiveChat";
 import LivePlayer from "@/components/LivePlayer";
 import PlatformButtons from "@/components/PlatformButtons";
 import { DEMO_STREAM_URL } from "@/lib/demoStream";
@@ -71,8 +70,8 @@ export default function FjolsenbandenLive() {
             React.createElement("button", { onClick: () => setMenuOpen((open) => !open), className: "p-2 md:hidden", "aria-label": "Toggle menu" }, menuOpen ? React.createElement(X, { size: 24 }) : React.createElement(Menu, { size: 24 })),
             React.createElement("nav", { className: `absolute right-0 top-16 rounded-xl border border-white/10 bg-[#0d0d1a]/90 p-4 shadow-xl transition-all md:static md:flex md:border-none md:bg-transparent md:p-0 md:shadow-none ${menuOpen ? "block" : "hidden md:flex"}` },
                 React.createElement("ul", { className: "flex flex-col gap-4 text-sm font-medium md:flex-row" }, NAV_LINKS.map((item) => (React.createElement("li", { key: item, className: "cursor-pointer hover:text-cyan-300" }, item)))))),
-        React.createElement("main", { className: "relative mx-auto grid max-w-6xl gap-8 px-4 py-12 lg:grid-cols-3" },
-            React.createElement("div", { className: "relative space-y-4 lg:col-span-2" },
+        React.createElement("main", { className: "relative mx-auto max-w-4xl gap-8 px-4 py-12" },
+            React.createElement("div", { className: "relative space-y-4" },
                 React.createElement(LivePlayer, { channel: FJOLSEN_TWITCH_CHANNEL, status: twitchStatus, demoUrl: DEMO_STREAM_URL }),
                 React.createElement("div", { className: "flex flex-wrap items-center justify-between gap-3 text-xs text-zinc-300" },
                     React.createElement("div", { className: "flex items-center gap-2" },
@@ -93,8 +92,7 @@ export default function FjolsenbandenLive() {
                         React.createElement("a", { href: DEMO_STREAM_URL, target: "_blank", rel: "noopener noreferrer", className: "text-cyan-300 underline-offset-2 hover:underline" }, "demo-streamen i nytt vindu"),
                         " ",
                         "for \u00E5 verifisere avspilleren n\u00E5r hovedkanalen er offline."))),
-            React.createElement("div", { className: "lg:col-span-1" },
-                React.createElement(LiveChat, null))),
+            )),
         React.createElement("footer", { className: "border-t border-white/10 py-6 text-center text-xs text-zinc-400" },
             "\u00A9 ",
             new Date().getFullYear(),
