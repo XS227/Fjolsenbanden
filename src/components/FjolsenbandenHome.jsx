@@ -199,7 +199,13 @@ const offerings = [
     {
         title: "Events",
         description: "Vi arrangerer gaming-konkurranser for bedrifter, skoler og klubber – både digitalt og fysisk.",
-        emoji: "🎉",
+        emoji: React.createElement("img", {
+            src: "https://setaei.com/Fjolsen/Penger.png",
+            alt: "",
+            loading: "lazy",
+            className: "h-9 w-9",
+            "aria-hidden": "true",
+        }),
     },
     {
         title: "Unboxing",
