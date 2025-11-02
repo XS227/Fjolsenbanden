@@ -166,7 +166,7 @@ export default function FjolsenbandenBrandMock() {
                         React.createElement("li", null,
                             React.createElement("a", { href: "#live", className: "hover:underline" }, "Live")),
                         React.createElement("li", null,
-                            React.createElement("a", { href: "#medlemskap", className: "hover:underline" }, "Medlemskap")),
+                            React.createElement("a", { href: "#bli-medlem", className: "hover:underline" }, "Medlemskap")),
                         React.createElement("li", null,
                             React.createElement("a", { href: "#premier", className: "hover:underline" }, "Premier")),
                         React.createElement("li", null,
