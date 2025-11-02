@@ -1,16 +1,12 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="220" height="80" viewBox="0 0 220 80" role="img" aria-labelledby="title">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 220" role="img" aria-labelledby="title" width="220" height="220">
   <title id="title">Komplett logo</title>
-  <path d="M46 20 70 34v12L46 60 22 46V34Z" fill="#ffffff" opacity="0.92" />
-  <text
-    x="140"
-    y="52"
-    text-anchor="middle"
-    font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif"
-    font-size="32"
-    font-weight="700"
-    letter-spacing="2"
-    fill="#ffffff"
-  >
-    Komplett
-  </text>
+  <rect width="640" height="220" fill="#0a0a0a" rx="24" />
+  <image
+    href="https://cdn.worldvectorlogo.com/logos/komplett.svg"
+    width="480"
+    height="140"
+    x="80"
+    y="40"
+    preserveAspectRatio="xMidYMid meet"
+  />
 </svg>
