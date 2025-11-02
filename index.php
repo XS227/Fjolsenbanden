@@ -1039,7 +1039,9 @@
             </div>
             <div class="flex h-full flex-col gap-4 rounded-2xl border border-white/10 bg-[#101a33]/80 p-6 shadow-[0_16px_32px_rgba(6,14,35,0.45)] sm:col-span-2">
               <div class="flex items-center gap-3">
-                <span class="grid h-12 w-12 place-content-center rounded-xl bg-gradient-to-br from-[#13A0F9] to-[#FF2F9C] text-2xl">🎓</span>
+                <span class="grid h-12 w-12 place-content-center overflow-hidden rounded-xl bg-gradient-to-br from-[#13A0F9] to-[#FF2F9C] p-1.5" aria-hidden="true">
+                  <img src="https://setaei.com/Fjolsen/Glad%20tenner.png" alt="" loading="lazy" class="h-9 w-9" />
+                </span>
                 <h3 class="text-xl font-semibold text-white">Fortnite Coaching</h3>
               </div>
               <p class="text-sm leading-relaxed text-zinc-300">I FjOlsenbanden finner du flere av Norges dyktigste Fortnite-spillere. Sammen tilbyr vi 1-til-1 coaching for barn og unge som ønsker å utvikle seg som spillere – med fokus på strategi, samarbeid, kommunikasjon og trygg nettkultur. Ta kontakt hvis du ønsker mer informasjon eller vil booke en økt.</p>
