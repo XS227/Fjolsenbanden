@@ -192,7 +192,7 @@ const offerings = [
             src: "https://setaei.com/Fjolsen/Glad%20tenner.png",
             alt: "",
             loading: "lazy",
-            className: "h-9 w-9",
+            className: "h-12 w-12 shrink-0",
             "aria-hidden": "true",
         }),
     },
@@ -203,14 +203,20 @@ const offerings = [
             src: "https://setaei.com/Fjolsen/Penger.png",
             alt: "",
             loading: "lazy",
-            className: "h-9 w-9",
+            className: "h-12 w-12 shrink-0",
             "aria-hidden": "true",
         }),
     },
     {
         title: "Unboxing",
         description: "FjOlsen lager profesjonelle unboxing-videoer av dine produkter som kan brukes i deres markedsføring og deles med vårt community.",
-        emoji: "📦",
+        emoji: React.createElement("img", {
+            src: "https://setaei.com/Fjolsen/Love.png",
+            alt: "",
+            loading: "lazy",
+            className: "h-12 w-12 shrink-0",
+            "aria-hidden": "true",
+        }),
     },
     {
         title: "Streamer for hire",
@@ -219,7 +225,7 @@ const offerings = [
             src: "https://setaei.com/Fjolsen/Morsom.png",
             alt: "",
             loading: "lazy",
-            className: "h-9 w-9",
+            className: "h-12 w-12 shrink-0",
             "aria-hidden": "true",
         }),
     },
@@ -230,7 +236,8 @@ const offerings = [
             src: "https://setaei.com/Fjolsen/Glad%20tenner.png",
             alt: "",
             loading: "lazy",
-            className: "h-9 w-9",
+            className: "h-12 w-12 shrink-0",
+            "aria-hidden": "true",
         }),
     },
 ];
@@ -963,9 +970,10 @@ function VideoLightbox({ videoUrl, onClose, title, }) {
                 React.createElement("p", { className: "text-sm text-zinc-100" }, "Videoen viser hvordan vi pakker ut, iscenesetter og presenterer produkter slik at f\u00F8lgerne v\u00E5re f\u00E5r lyst til \u00E5 kj\u00F8pe dem.")))));
 }
 function OfferingIcon({ icon, }) {
-    const isStringIcon = typeof icon === "string";
-    const className = `grid h-12 w-12 place-content-center overflow-hidden rounded-xl bg-gradient-to-br from-[#13A0F9] to-[#FF2F9C] ${isStringIcon ? "text-2xl text-white" : "p-1.5"}`.trim();
-    return (React.createElement("span", { className: className, "aria-hidden": "true" }, icon));
+    if (typeof icon === "string") {
+        return (React.createElement("span", { className: "shrink-0 text-2xl leading-none text-white", "aria-hidden": "true" }, icon));
+    }
+    return icon;
 }
 function UnboxingOfferingCard({ title, description, emoji, onWatchVideo, reachLabel, audienceStats, }) {
     return (React.createElement("div", { className: "flex h-full flex-col gap-5 rounded-2xl border border-white/10 bg-gradient-to-br from-[#161f33] via-[#101a33] to-[#0a1329] p-6 shadow-[0_20px_36px_rgba(6,14,35,0.55)]" },
