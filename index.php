@@ -86,18 +86,25 @@
       }
 
       .partner-logos {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        justify-items: center;
         gap: 1.5rem;
         margin: 2rem auto 2.5rem;
+      }
+
+      @media (min-width: 768px) {
+        .partner-logos {
+          grid-template-columns: repeat(4, minmax(0, 1fr));
+        }
       }
 
       .partner-logos .partner-logo-tile {
         display: flex;
         align-items: center;
         justify-content: center;
-        width: 13.875rem;
+        width: 100%;
+        max-width: 13.875rem;
         height: 13.875rem;
         border-radius: 1rem;
         border: 1px solid rgba(255, 255, 255, 0.15);
@@ -1013,16 +1020,16 @@
           <p>Vi har allerede hatt samarbeid med flere kjente merkevarer.</p>
           <div id="sponsorer" class="partner-logos">
             <div class="partner-logo-tile">
-              <img src="/assets/partners/lenovo.svg" alt="Lenovo" loading="lazy" class="partner-logo-image" />
+              <img src="https://cdn.worldvectorlogo.com/logos/lenovo-logo-2015.svg" alt="Lenovo" loading="lazy" class="partner-logo-image" />
             </div>
             <div class="partner-logo-tile">
-              <img src="/assets/partners/komplett.svg" alt="Komplett" loading="lazy" class="partner-logo-image" />
+              <img src="https://cdn.worldvectorlogo.com/logos/komplett.svg" alt="Komplett" loading="lazy" class="partner-logo-image" />
             </div>
             <div class="partner-logo-tile">
-              <img src="/assets/partners/philips.svg" alt="Philips" loading="lazy" class="partner-logo-image" />
+              <img src="https://cdn.worldvectorlogo.com/logos/philips-7.svg" alt="Philips" loading="lazy" class="partner-logo-image" />
             </div>
             <div class="partner-logo-tile">
-              <img src="/assets/partners/samsung.svg" alt="Samsung" loading="lazy" class="partner-logo-image" />
+              <img src="https://cdn.worldvectorlogo.com/logos/samsung-8.svg" alt="Samsung" loading="lazy" class="partner-logo-image" />
             </div>
           </div>
           <p>Ønsker du å synliggjøre din merkevare for vårt engasjerte gaming-publikum?</p>
