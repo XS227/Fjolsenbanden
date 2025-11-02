@@ -1,15 +1,12 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="220" height="220" viewBox="0 0 220 80" role="img" aria-labelledby="title">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 220" role="img" aria-labelledby="title" width="220" height="220">
   <title id="title">Lenovo logo</title>
-  <text
-    x="110"
+  <rect width="640" height="220" fill="#e2231a" rx="24" />
+  <image
+    href="https://cdn.worldvectorlogo.com/logos/lenovo-logo-2015.svg"
+    width="480"
+    height="120"
+    x="80"
     y="50"
-    text-anchor="middle"
-    font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif"
-    font-size="44"
-    font-weight="700"
-    letter-spacing="1"
-    fill="#ffffff"
-  >
-    Lenovo
-  </text>
+    preserveAspectRatio="xMidYMid meet"
+  />
 </svg>
