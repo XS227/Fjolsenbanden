@@ -175,12 +175,13 @@ const SimplePartnerLogo = ({ partner, fallback, className = "" }) => {
     const safeIndex = Math.min(sourceIndex, Math.max(0, sources.length - 1));
     const currentSource = sources[safeIndex];
     if (!currentSource) {
-        return (React.createElement("span", { className: `inline-flex h-16 min-w-[8rem] items-center justify-center rounded-xl border border-white/20 px-6 text-sm font-semibold text-white/70 ${className}`.trim() }, partner.name));
+        return (React.createElement("div", { className: `flex h-[222px] w-[222px] items-center justify-center rounded-2xl border border-white/10 bg-white/5 p-6 text-center text-sm font-semibold text-white/80 shadow-inner ${className}`.trim() }, partner.name));
     }
-    return (React.createElement("img", { src: currentSource, alt: partner.name, loading: "lazy", className: `partner-logo-image h-16 w-auto max-w-[12rem] object-contain opacity-90 transition hover:opacity-100 ${className}`.trim(), onError: () => setSourceIndex((previous) => {
-            const nextIndex = previous + 1;
-            return nextIndex < sources.length ? nextIndex : previous;
-        }) }));
+    return (React.createElement("div", { className: `flex h-[222px] w-[222px] items-center justify-center rounded-2xl border border-white/10 bg-white/5 p-6 shadow-inner transition hover:bg-white/10 ${className}`.trim() },
+        React.createElement("img", { src: currentSource, alt: partner.name, loading: "lazy", className: "partner-logo-image max-h-full w-full object-contain opacity-90 transition hover:opacity-100", onError: () => setSourceIndex((previous) => {
+                const nextIndex = previous + 1;
+                return nextIndex < sources.length ? nextIndex : previous;
+            }) })));
 };
 const unboxingVideoUrl = "https://www.youtube.com/embed/v_8kKWD0K84?si=KzawWGqmMEQA7n78";
 const offerings = [
