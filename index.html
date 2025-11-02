@@ -102,20 +102,39 @@
         margin: 2rem auto 2.5rem;
       }
 
-      .partner-logos img {
-        height: 4.5rem;
-        width: auto;
-        max-width: 12rem;
-        object-fit: contain;
-        opacity: 0.95;
-        filter: drop-shadow(0 0 14px rgba(93, 154, 255, 0.35));
-        transition: transform 0.2s ease, opacity 0.2s ease, filter 0.2s ease;
+      .partner-logos .partner-logo-tile {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 13.875rem;
+        height: 13.875rem;
+        border-radius: 1rem;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        background: #000000;
+        padding: 1.5rem;
+        text-align: center;
+        font-weight: 600;
+        color: #ffffff;
+        box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+        transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
       }
 
-      .partner-logos img:hover {
+      .partner-logos .partner-logo-tile:hover {
+        border-color: rgba(255, 255, 255, 0.25);
+        box-shadow: 0 16px 36px rgba(0, 0, 0, 0.45);
+        transform: translateY(-2px);
+      }
+
+      .partner-logos .partner-logo-image {
+        width: 100%;
+        max-height: 100%;
+        object-fit: contain;
+        opacity: 0.95;
+        transition: opacity 0.2s ease;
+      }
+
+      .partner-logos .partner-logo-tile:hover .partner-logo-image {
         opacity: 1;
-        transform: scale(1.04);
-        filter: drop-shadow(0 0 18px rgba(125, 211, 252, 0.55));
       }
 
       .partners .cta {
@@ -825,10 +844,18 @@
           <h2>Samarbeidspartnere</h2>
           <p>Vi har allerede hatt samarbeid med flere kjente merkevarer.</p>
           <div id="sponsorer" class="partner-logos">
-            <img src="/assets/partners/lenovo.svg" alt="Lenovo" loading="lazy" />
-            <img src="/assets/partners/komplett.svg" alt="Komplett" loading="lazy" />
-            <img src="/assets/partners/philips.svg" alt="Philips" loading="lazy" />
-            <img src="/assets/partners/samsung.svg" alt="Samsung" loading="lazy" />
+            <div class="partner-logo-tile">
+              <img src="/assets/partners/lenovo.svg" alt="Lenovo" loading="lazy" class="partner-logo-image" />
+            </div>
+            <div class="partner-logo-tile">
+              <img src="/assets/partners/komplett.svg" alt="Komplett" loading="lazy" class="partner-logo-image" />
+            </div>
+            <div class="partner-logo-tile">
+              <img src="/assets/partners/philips.svg" alt="Philips" loading="lazy" class="partner-logo-image" />
+            </div>
+            <div class="partner-logo-tile">
+              <img src="/assets/partners/samsung.svg" alt="Samsung" loading="lazy" class="partner-logo-image" />
+            </div>
           </div>
           <p>Ønsker du å synliggjøre din merkevare for vårt engasjerte gaming-publikum?</p>
           <a href="#kontakt" class="cta">Kontakt oss</a>
