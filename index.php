@@ -123,16 +123,40 @@
         transform: translateY(-2px);
       }
 
-      .partner-logos .partner-logo-image {
+      .partner-logos .partner-logo-mask {
         width: 100%;
-        max-height: 100%;
-        object-fit: contain;
+        height: 100%;
+        background-color: #ffffff;
+        mask-image: var(--logo-url);
+        -webkit-mask-image: var(--logo-url);
+        mask-repeat: no-repeat;
+        -webkit-mask-repeat: no-repeat;
+        mask-position: center;
+        -webkit-mask-position: center;
+        mask-size: contain;
+        -webkit-mask-size: contain;
         opacity: 0.95;
         transition: opacity 0.2s ease;
       }
 
-      .partner-logos .partner-logo-tile:hover .partner-logo-image {
+      .partner-logos .partner-logo-tile:hover .partner-logo-mask {
         opacity: 1;
+      }
+
+      .partner-logos .partner-logo-fallback {
+        display: none;
+        color: #ffffff;
+        font-weight: 600;
+      }
+
+      @supports not (mask-image: url("")) {
+        .partner-logos .partner-logo-mask {
+          display: none;
+        }
+
+        .partner-logos .partner-logo-fallback {
+          display: inline;
+        }
       }
 
       .partners .cta {
@@ -1020,16 +1044,24 @@
           <p>Vi har allerede hatt samarbeid med flere kjente merkevarer.</p>
           <div id="sponsorer" class="partner-logos">
             <div class="partner-logo-tile">
-              <img src="https://cdn.worldvectorlogo.com/logos/lenovo-logo-2015.svg" alt="Lenovo" loading="lazy" class="partner-logo-image" />
+              <span class="sr-only">Lenovo</span>
+              <div class="partner-logo-mask" style="--logo-url: url('https://cdn.worldvectorlogo.com/logos/lenovo-logo-2015.svg');" aria-hidden="true"></div>
+              <span class="partner-logo-fallback" aria-hidden="true">Lenovo</span>
             </div>
             <div class="partner-logo-tile">
-              <img src="https://cdn.worldvectorlogo.com/logos/komplett.svg" alt="Komplett" loading="lazy" class="partner-logo-image" />
+              <span class="sr-only">Komplett</span>
+              <div class="partner-logo-mask" style="--logo-url: url('https://cdn.worldvectorlogo.com/logos/komplett.svg');" aria-hidden="true"></div>
+              <span class="partner-logo-fallback" aria-hidden="true">Komplett</span>
             </div>
             <div class="partner-logo-tile">
-              <img src="https://cdn.worldvectorlogo.com/logos/philips-7.svg" alt="Philips" loading="lazy" class="partner-logo-image" />
+              <span class="sr-only">Philips</span>
+              <div class="partner-logo-mask" style="--logo-url: url('https://cdn.worldvectorlogo.com/logos/philips-7.svg');" aria-hidden="true"></div>
+              <span class="partner-logo-fallback" aria-hidden="true">Philips</span>
             </div>
             <div class="partner-logo-tile">
-              <img src="https://cdn.worldvectorlogo.com/logos/samsung-8.svg" alt="Samsung" loading="lazy" class="partner-logo-image" />
+              <span class="sr-only">Samsung</span>
+              <div class="partner-logo-mask" style="--logo-url: url('https://cdn.worldvectorlogo.com/logos/samsung-8.svg');" aria-hidden="true"></div>
+              <span class="partner-logo-fallback" aria-hidden="true">Samsung</span>
             </div>
           </div>
           <p>Ønsker du å synliggjøre din merkevare for vårt engasjerte gaming-publikum?</p>
