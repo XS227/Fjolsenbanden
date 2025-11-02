@@ -188,7 +188,13 @@ const offerings = [
     {
         title: "Foredrag",
         description: "FjOlsen besøker skoler, idrettslag og e-sportklubber for å snakke om streaming, gaming-kultur og nettvett.",
-        emoji: "🎤",
+        emoji: React.createElement("img", {
+            src: "https://setaei.com/Fjolsen/Glad%20tenner.png",
+            alt: "",
+            loading: "lazy",
+            className: "h-9 w-9",
+            "aria-hidden": "true",
+        }),
     },
     {
         title: "Events",
