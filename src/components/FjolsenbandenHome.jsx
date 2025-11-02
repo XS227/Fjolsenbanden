@@ -173,6 +173,7 @@ const buildSponsorLogoSources = (sponsor) => {
 };
 const SimplePartnerLogo = ({ partner, fallback, className = "" }) => {
     const [sourceIndex, setSourceIndex] = useState(0);
+    const [isLoaded, setIsLoaded] = useState(false);
     const sources = useMemo(() => {
         if (partner.logoUrl && partner.logoUrl.trim()) {
             return [partner.logoUrl];
@@ -184,14 +185,39 @@ const SimplePartnerLogo = ({ partner, fallback, className = "" }) => {
     }, [fallback, partner.logoUrl]);
     const safeIndex = Math.min(sourceIndex, Math.max(0, sources.length - 1));
     const currentSource = sources[safeIndex];
+
+    useEffect(() => {
+        setIsLoaded(false);
+    }, [currentSource]);
     if (!currentSource) {
         return (React.createElement("div", { className: `flex h-[200px] w-full max-w-[222px] items-center justify-center rounded-2xl border border-white/15 bg-black p-6 text-center text-sm font-semibold text-white shadow-[0_12px_32px_rgba(0,0,0,0.35)] ${className}`.trim() }, partner.name));
     }
-    return (React.createElement("div", { className: `flex h-[200px] w-full max-w-[222px] items-center justify-center rounded-2xl border border-white/15 bg-black p-6 shadow-[0_12px_32px_rgba(0,0,0,0.35)] transition hover:border-white/25 hover:shadow-[0_16px_36px_rgba(0,0,0,0.45)] ${className}`.trim() },
-        React.createElement("img", { src: currentSource, alt: partner.name, loading: "lazy", className: "partner-logo-image max-h-full w-full object-contain opacity-95 transition hover:opacity-100", style: { filter: "brightness(0) invert(1)" }, onError: () => setSourceIndex((previous) => {
-                const nextIndex = previous + 1;
-                return nextIndex < sources.length ? nextIndex : previous;
-            }) })));
+    return (React.createElement("div", { className: `flex h-[200px] w-full max-w-[222px] items-center justify-center overflow-hidden rounded-2xl border border-white/15 bg-black p-6 text-center shadow-[0_12px_32px_rgba(0,0,0,0.35)] transition hover:border-white/25 hover:shadow-[0_16px_36px_rgba(0,0,0,0.45)] ${className}`.trim() },
+        React.createElement("span", { className: "sr-only" }, partner.name),
+        !isLoaded && React.createElement("span", { className: "text-sm font-semibold text-white" }, partner.name),
+        currentSource && (React.createElement("div", { className: `partner-logo-mask h-full w-full ${isLoaded ? "opacity-95" : "opacity-0"}`.trim(), "aria-hidden": "true", style: {
+                backgroundColor: "#ffffff",
+                maskImage: `url(${currentSource})`,
+                WebkitMaskImage: `url(${currentSource})`,
+                maskRepeat: "no-repeat",
+                WebkitMaskRepeat: "no-repeat",
+                maskPosition: "center",
+                WebkitMaskPosition: "center",
+                maskSize: "contain",
+                WebkitMaskSize: "contain",
+                pointerEvents: "none",
+                transition: "opacity 0.2s ease",
+            } })),
+        currentSource && (React.createElement("img", { src: currentSource, alt: "", loading: "eager", "aria-hidden": "true", className: "hidden", onLoad: () => setIsLoaded(true), onError: () => {
+                setIsLoaded(false);
+                setSourceIndex((previous) => {
+                    const nextIndex = previous + 1;
+                    if (nextIndex < sources.length) {
+                        return nextIndex;
+                    }
+                    return previous;
+                });
+            } }))));
 };
 const unboxingVideoUrl = "https://www.youtube.com/embed/v_8kKWD0K84?si=KzawWGqmMEQA7n78";
 const offerings = [
