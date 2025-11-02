@@ -226,7 +226,12 @@ const offerings = [
     {
         title: "Coaching",
         description: "I FjOlsenbanden finner du flere av Norges dyktigste Fortnite-spillere. Sammen tilbyr vi 1-til-1 coaching for barn og unge som ønsker å utvikle seg som spillere – med fokus på strategi, samarbeid, kommunikasjon og trygg nettkultur. Ta kontakt hvis du ønsker mer informasjon eller vil booke en økt.",
-        emoji: "🎮",
+        emoji: React.createElement("img", {
+            src: "https://setaei.com/Fjolsen/Glad%20tenner.png",
+            alt: "",
+            loading: "lazy",
+            className: "h-9 w-9",
+        }),
     },
 ];
 const createDefaultVippsUser = () => ({
