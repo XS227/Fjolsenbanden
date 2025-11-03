@@ -123,40 +123,18 @@
         transform: translateY(-2px);
       }
 
-      .partner-logos .partner-logo-mask {
+      .partner-logos .partner-logo-img {
+        display: block;
         width: 100%;
         height: 100%;
-        background-color: #ffffff;
-        mask-image: var(--logo-url);
-        -webkit-mask-image: var(--logo-url);
-        mask-repeat: no-repeat;
-        -webkit-mask-repeat: no-repeat;
-        mask-position: center;
-        -webkit-mask-position: center;
-        mask-size: contain;
-        -webkit-mask-size: contain;
-        opacity: 0.95;
+        object-fit: contain;
+        filter: brightness(0) saturate(100%) invert(1);
+        opacity: 0.92;
         transition: opacity 0.2s ease;
       }
 
-      .partner-logos .partner-logo-tile:hover .partner-logo-mask {
+      .partner-logos .partner-logo-tile:hover .partner-logo-img {
         opacity: 1;
-      }
-
-      .partner-logos .partner-logo-fallback {
-        display: none;
-        color: #ffffff;
-        font-weight: 600;
-      }
-
-      @supports not (mask-image: url("")) {
-        .partner-logos .partner-logo-mask {
-          display: none;
-        }
-
-        .partner-logos .partner-logo-fallback {
-          display: inline;
-        }
       }
 
       .partners .cta {
@@ -1045,23 +1023,19 @@
           <div id="sponsorer" class="partner-logos">
             <div class="partner-logo-tile">
               <span class="sr-only">Lenovo</span>
-              <div class="partner-logo-mask" style="--logo-url: url('https://cdn.worldvectorlogo.com/logos/lenovo-logo-2015.svg');" aria-hidden="true"></div>
-              <span class="partner-logo-fallback" aria-hidden="true">Lenovo</span>
+              <img src="/assets/partners/lenovo-logo-2015.svg" alt="Lenovo logo" loading="lazy" class="partner-logo-img" />
             </div>
             <div class="partner-logo-tile">
               <span class="sr-only">Komplett</span>
-              <div class="partner-logo-mask" style="--logo-url: url('https://iconlogovector.com/uploads/images/2025/03/lg-67c40c256361e-Komplett.webp');" aria-hidden="true"></div>
-              <span class="partner-logo-fallback" aria-hidden="true">Komplett</span>
+              <img src="/assets/partners/komplett.svg" alt="Komplett logo" loading="lazy" class="partner-logo-img" />
             </div>
             <div class="partner-logo-tile">
               <span class="sr-only">Philips</span>
-              <div class="partner-logo-mask" style="--logo-url: url('https://cdn.worldvectorlogo.com/logos/philips-7.svg');" aria-hidden="true"></div>
-              <span class="partner-logo-fallback" aria-hidden="true">Philips</span>
+              <img src="/assets/partners/philips-7.svg" alt="Philips logo" loading="lazy" class="partner-logo-img" />
             </div>
             <div class="partner-logo-tile">
               <span class="sr-only">Samsung</span>
-              <div class="partner-logo-mask" style="--logo-url: url('https://cdn.worldvectorlogo.com/logos/samsung-8.svg');" aria-hidden="true"></div>
-              <span class="partner-logo-fallback" aria-hidden="true">Samsung</span>
+              <img src="/assets/partners/samsung-8.svg" alt="Samsung logo" loading="lazy" class="partner-logo-img" />
             </div>
           </div>
           <p>Ønsker du å synliggjøre din merkevare for vårt engasjerte gaming-publikum?</p>
