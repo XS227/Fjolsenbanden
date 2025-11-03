@@ -52,22 +52,22 @@ export const DEFAULT_PARTNER_LOGOS = [
     {
         id: "partner-lenovo",
         name: "Lenovo",
-        logoUrl: "/assets/partners/lenovo.png",
+        logoUrl: "/assets/partners/lenovo-logo.png",
     },
     {
         id: "partner-samsung",
         name: "Samsung",
-        logoUrl: "/assets/partners/samsung1.png",
+        logoUrl: "/assets/partners/samsung-logo.png",
     },
     {
         id: "partner-philips",
         name: "Philips",
-        logoUrl: "/assets/partners/philips1.png",
+        logoUrl: "/assets/partners/philips-logo.png",
     },
     {
         id: "partner-komplett",
         name: "Komplett.no",
-        logoUrl: "/assets/partners/komplett.png",
+        logoUrl: "/assets/partners/komplett-logo.png",
     },
 ];
 export const DEFAULT_TWITCH_EMBED_URL = "https://player.twitch.tv/?channel=FjOlsenFN&parent=localhost";
