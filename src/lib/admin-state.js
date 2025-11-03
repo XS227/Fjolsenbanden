@@ -49,9 +49,21 @@ export const DEFAULT_MEMBERSHIP_TIERS = [
     },
 ];
 export const DEFAULT_PARTNER_LOGOS = [
-    { id: "partner-lenovo", name: "Lenovo", logoUrl: "https://setaei.com/Fjolsen/lenova.jpg" },
-    { id: "partner-samsung", name: "Samsung", logoUrl: "https://setaei.com/Fjolsen/samsung.jpg" },
-    { id: "partner-philips", name: "Philips", logoUrl: "https://setaei.com/Fjolsen/philips.jpg" },
+    {
+        id: "partner-lenovo",
+        name: "Lenovo",
+        logoUrl: "https://cdn.worldvectorlogo.com/logos/lenovo-logo-2015.svg",
+    },
+    {
+        id: "partner-samsung",
+        name: "Samsung",
+        logoUrl: "https://cdn.worldvectorlogo.com/logos/samsung-8.svg",
+    },
+    {
+        id: "partner-philips",
+        name: "Philips",
+        logoUrl: "https://cdn.worldvectorlogo.com/logos/philips-7.svg",
+    },
     { id: "partner-komplett", name: "Komplett.no", logoUrl: "/assets/partners/komplett.svg" },
 ];
 export const DEFAULT_TWITCH_EMBED_URL = "https://player.twitch.tv/?channel=FjOlsenFN&parent=localhost";
