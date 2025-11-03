@@ -189,3 +189,21 @@
 .fj-theme.theme-light .backdrop-blur-sm {
   --tw-backdrop-blur: blur(12px);
 }
+
+.fj-theme .fj-button-outline {
+  background-color: var(--fj-surface) !important;
+  border-color: var(--fj-border-soft) !important;
+  color: var(--fj-text-primary) !important;
+}
+
+.fj-theme .fj-button-outline:hover,
+.fj-theme .fj-button-outline:focus-visible {
+  background-color: var(--fj-surface-strong) !important;
+  border-color: var(--fj-border-strong) !important;
+}
+
+.fj-theme.theme-light .fj-button-outline {
+  background-color: var(--fj-surface-strong) !important;
+  border-color: var(--fj-border-strong) !important;
+  color: var(--fj-text-primary) !important;
+}
