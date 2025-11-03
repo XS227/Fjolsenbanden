@@ -81,14 +81,26 @@ export const DEFAULT_SITE_CONFIG = {
                 {
                     id: "philips",
                     name: "Philips",
-                    image: "/uploads/fjolsen-khabat/philips.svg",
+                    image: "/assets/partners/philips1.png",
                     url: "https://philips.no",
                 },
                 {
                     id: "lenovo",
                     name: "Lenovo",
-                    image: "/uploads/fjolsen-khabat/lenovo.svg",
+                    image: "/assets/partners/lenovo.png",
                     url: "https://lenovo.com",
+                },
+                {
+                    id: "samsung",
+                    name: "Samsung",
+                    image: "/assets/partners/samsung1.png",
+                    url: "https://www.samsung.com/no/",
+                },
+                {
+                    id: "komplett",
+                    name: "Komplett.no",
+                    image: "/assets/partners/komplett.png",
+                    url: "https://www.komplett.no/",
                 },
             ],
         },
