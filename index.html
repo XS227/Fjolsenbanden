@@ -132,40 +132,58 @@
         transform: translateY(-2px);
       }
 
-      .partner-logos .partner-logo-mask {
-        width: 100%;
-        height: 100%;
-        background-color: #ffffff;
-        mask-image: var(--logo-url);
-        -webkit-mask-image: var(--logo-url);
-        mask-repeat: no-repeat;
-        -webkit-mask-repeat: no-repeat;
-        mask-position: center;
-        -webkit-mask-position: center;
-        mask-size: contain;
-        -webkit-mask-size: contain;
-        opacity: 0.95;
-        transition: opacity 0.2s ease;
+      .partner-logos .partner-logo-tile {
+        position: relative;
+        overflow: hidden;
       }
 
-      .partner-logos .partner-logo-tile:hover .partner-logo-mask {
+      .partner-logos .partner-logo-svg {
+        display: block;
+        width: 100%;
+        height: 100%;
+        opacity: 0.95;
+        transition: opacity 0.2s ease;
+        flex: 1 1 auto;
+      }
+
+      .partner-logos .partner-logo-tile:hover .partner-logo-svg {
         opacity: 1;
       }
 
-      .partner-logos .partner-logo-fallback {
+      .partner-logos .partner-logo-hidden-img {
         display: none;
-        color: #ffffff;
-        font-weight: 600;
       }
 
-      @supports not (mask-image: url("")) {
-        .partner-logos .partner-logo-mask {
+      .partner-logos .partner-logo-fallback {
+        position: absolute;
+        inset: 0;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        font-weight: 600;
+        color: #ffffff;
+      }
+
+      @supports not (filter: url("#partner-logo-white")) {
+        .partner-logos .partner-logo-fallback {
+          display: inline-flex;
+        }
+        .partner-logos .partner-logo-svg {
           display: none;
         }
-
-        .partner-logos .partner-logo-fallback {
-          display: inline;
+        .partner-logos .partner-logo-hidden-img {
+          display: block;
+          width: 100%;
+          height: 100%;
+          object-fit: contain;
         }
+      }
+
+      .partner-logo-filter-defs {
+        position: absolute;
+        width: 0;
+        height: 0;
+        overflow: hidden;
       }
 
       .partners .cta {
@@ -875,25 +893,98 @@
           <h2>Samarbeidspartnere</h2>
           <p>Vi har allerede hatt samarbeid med flere kjente merkevarer.</p>
           <div id="sponsorer" class="partner-logos">
+            <svg class="partner-logo-filter-defs" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <filter id="partner-logo-white" color-interpolation-filters="sRGB">
+                  <feColorMatrix
+                    type="matrix"
+                    values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0.2126 0.7152 0.0722 0 0"
+                  ></feColorMatrix>
+                  <feComponentTransfer>
+                    <feFuncA type="table" tableValues="0 0 0.3 1"></feFuncA>
+                  </feComponentTransfer>
+                </filter>
+              </defs>
+            </svg>
             <div class="partner-logo-tile">
               <span class="sr-only">Lenovo</span>
-              <div class="partner-logo-mask" style="--logo-url: url('https://cdn.worldvectorlogo.com/logos/lenovo-logo-2015.svg');" aria-hidden="true"></div>
               <span class="partner-logo-fallback" aria-hidden="true">Lenovo</span>
+              <svg class="partner-logo-svg" aria-hidden="true" role="presentation" viewBox="0 0 100 100">
+                <image
+                  href="https://cdn.worldvectorlogo.com/logos/lenovo-logo-2015.svg"
+                  width="100%"
+                  height="100%"
+                  preserveAspectRatio="xMidYMid meet"
+                  filter="url(#partner-logo-white)"
+                ></image>
+              </svg>
+              <img
+                src="https://cdn.worldvectorlogo.com/logos/lenovo-logo-2015.svg"
+                alt=""
+                loading="lazy"
+                aria-hidden="true"
+                class="partner-logo-hidden-img"
+              />
             </div>
             <div class="partner-logo-tile">
               <span class="sr-only">Komplett</span>
-              <div class="partner-logo-mask" style="--logo-url: url('https://cdn.worldvectorlogo.com/logos/komplett.svg');" aria-hidden="true"></div>
               <span class="partner-logo-fallback" aria-hidden="true">Komplett</span>
+              <svg class="partner-logo-svg" aria-hidden="true" role="presentation" viewBox="0 0 100 100">
+                <image
+                  href="https://cdn.worldvectorlogo.com/logos/komplett.svg"
+                  width="100%"
+                  height="100%"
+                  preserveAspectRatio="xMidYMid meet"
+                  filter="url(#partner-logo-white)"
+                ></image>
+              </svg>
+              <img
+                src="https://cdn.worldvectorlogo.com/logos/komplett.svg"
+                alt=""
+                loading="lazy"
+                aria-hidden="true"
+                class="partner-logo-hidden-img"
+              />
             </div>
             <div class="partner-logo-tile">
               <span class="sr-only">Philips</span>
-              <div class="partner-logo-mask" style="--logo-url: url('https://cdn.worldvectorlogo.com/logos/philips-7.svg');" aria-hidden="true"></div>
               <span class="partner-logo-fallback" aria-hidden="true">Philips</span>
+              <svg class="partner-logo-svg" aria-hidden="true" role="presentation" viewBox="0 0 100 100">
+                <image
+                  href="https://cdn.worldvectorlogo.com/logos/philips-7.svg"
+                  width="100%"
+                  height="100%"
+                  preserveAspectRatio="xMidYMid meet"
+                  filter="url(#partner-logo-white)"
+                ></image>
+              </svg>
+              <img
+                src="https://cdn.worldvectorlogo.com/logos/philips-7.svg"
+                alt=""
+                loading="lazy"
+                aria-hidden="true"
+                class="partner-logo-hidden-img"
+              />
             </div>
             <div class="partner-logo-tile">
               <span class="sr-only">Samsung</span>
-              <div class="partner-logo-mask" style="--logo-url: url('https://cdn.worldvectorlogo.com/logos/samsung-8.svg');" aria-hidden="true"></div>
               <span class="partner-logo-fallback" aria-hidden="true">Samsung</span>
+              <svg class="partner-logo-svg" aria-hidden="true" role="presentation" viewBox="0 0 100 100">
+                <image
+                  href="https://cdn.worldvectorlogo.com/logos/samsung-8.svg"
+                  width="100%"
+                  height="100%"
+                  preserveAspectRatio="xMidYMid meet"
+                  filter="url(#partner-logo-white)"
+                ></image>
+              </svg>
+              <img
+                src="https://cdn.worldvectorlogo.com/logos/samsung-8.svg"
+                alt=""
+                loading="lazy"
+                aria-hidden="true"
+                class="partner-logo-hidden-img"
+              />
             </div>
           </div>
           <p>Ønsker du å synliggjøre din merkevare for vårt engasjerte gaming-publikum?</p>
