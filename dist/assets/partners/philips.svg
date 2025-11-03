@@ -1,12 +1,17 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 220" role="img" aria-labelledby="title" width="220" height="220">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 140" role="img" aria-labelledby="title">
   <title id="title">Philips logo</title>
-  <rect width="640" height="220" fill="#003ca6" rx="24" />
-  <image
-    href="https://cdn.worldvectorlogo.com/logos/philips-7.svg"
-    width="520"
-    height="120"
-    x="60"
-    y="50"
-    preserveAspectRatio="xMidYMid meet"
-  />
+  <rect width="320" height="140" rx="24" fill="#003087" />
+  <text
+    x="50%"
+    y="50%"
+    fill="#ffffff"
+    font-family="'Segoe UI', 'Open Sans', system-ui, sans-serif"
+    font-size="48"
+    font-weight="700"
+    text-anchor="middle"
+    dominant-baseline="central"
+    letter-spacing="4"
+  >
+    PHILIPS
+  </text>
 </svg>
