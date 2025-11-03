@@ -200,9 +200,11 @@ const SimplePartnerLogo = ({ partner, fallback, className = "" }) => {
     useEffect(() => {
         setIsLoaded(false);
     }, [currentSource]);
+    const showTextFallback = !currentSource || !isLoaded;
     if (!currentSource) {
-        return (React.createElement("div", { className: `flex min-h-[120px] w-full max-w-[222px] items-center justify-center ${className}`.trim() },
-            React.createElement("span", { className: "sr-only" }, partner.name)));
+        return (React.createElement("div", { className: `relative flex min-h-[120px] w-full items-center justify-center rounded-2xl bg-black/70 px-6 py-8 text-center text-white shadow-[0_20px_45px_rgba(8,8,20,0.55)] transition duration-300 hover:-translate-y-1 hover:bg-black/80 ${className}`.trim() },
+            React.createElement("span", { className: "sr-only" }, partner.name),
+            React.createElement("span", { className: "text-lg font-semibold uppercase tracking-[0.3em] text-white/80" }, partner.name)));
     }
     const handleLogoError = () => {
         setIsLoaded(false);
@@ -215,9 +217,10 @@ const SimplePartnerLogo = ({ partner, fallback, className = "" }) => {
         });
     };
     const handleLogoLoad = () => setIsLoaded(true);
-    return (React.createElement("div", { className: `flex min-h-[120px] w-full max-w-[222px] items-center justify-center ${className}`.trim() },
+    return (React.createElement("div", { className: `relative flex min-h-[120px] w-full items-center justify-center rounded-2xl bg-black/70 px-6 py-8 text-center text-white shadow-[0_20px_45px_rgba(8,8,20,0.55)] transition duration-300 hover:-translate-y-1 hover:bg-black/80 ${className}`.trim() },
         React.createElement("span", { className: "sr-only" }, partner.name),
-        currentSource && (React.createElement("img", { src: currentSource, alt: `${partner.name} logo`, loading: "eager", onLoad: handleLogoLoad, onError: handleLogoError, className: `max-h-full w-full object-contain transition-opacity duration-300 ${isLoaded ? "opacity-100" : "opacity-0"}`.trim() }))));
+        currentSource && (React.createElement("img", { src: currentSource, alt: `${partner.name} logo`, loading: "eager", onLoad: handleLogoLoad, onError: handleLogoError, className: `max-h-16 w-full object-contain transition-opacity duration-300 ${isLoaded ? "opacity-100" : "opacity-0"}`.trim() })),
+        showTextFallback ? (React.createElement("span", { className: `pointer-events-none absolute inset-0 flex items-center justify-center text-lg font-semibold uppercase tracking-[0.3em] text-white/80 transition-opacity duration-300 ${isLoaded ? "opacity-0" : "opacity-100"}`.trim(), "aria-hidden": "true" }, partner.name)) : null));
 };
 const unboxingVideoUrl = "https://www.youtube.com/embed/v_8kKWD0K84?si=KzawWGqmMEQA7n78";
 const offerings = [
@@ -413,10 +416,26 @@ export default function FjolsenbandenHome() {
     const closeFooterMenu = () => {
         setFooterMenuOpen(false);
     };
-    const renderPartnerSection = (sectionId, orderKey, { includeLogosId = false } = {}) => (React.createElement("section", { id: sectionId, className: "px-6 sm:px-8 lg:px-10", style: sectionOrderStyle(orderKey) },
-        React.createElement("div", { className: "mx-auto max-w-5xl" },
-            React.createElement("h2", { className: "sr-only" }, "Samarbeidspartnere"),
-            React.createElement("div", { className: "partner-logos grid grid-cols-2 justify-items-center gap-6 sm:grid-cols-2 md:grid-cols-4", id: includeLogosId ? "sponsorer" : undefined }, resolvedPartnerLogos.map(({ partner, fallback }) => (React.createElement(SimplePartnerLogo, { key: (partner === null || partner === void 0 ? void 0 : partner.id) || partner.name, partner: partner, fallback: fallback, className: "w-full" })))))));
+    const renderPartnerSection = (sectionId, orderKey, { includeLogosId = false, variant = "default" } = {}) => {
+        if (variant === "showcase") {
+            const contactHref = hasContactLink ? "#kontakt" : "mailto:fjolsenfn@gmail.com";
+            return (React.createElement("section", { id: sectionId, className: "px-6 py-16 sm:px-8 lg:px-10", style: sectionOrderStyle(orderKey) },
+                React.createElement("div", { className: "mx-auto max-w-6xl" },
+                    React.createElement("div", { className: "overflow-hidden rounded-[2.5rem] border border-white/10 bg-gradient-to-br from-[#08081d]/95 via-[#10143a]/95 to-[#161f4d]/95 px-6 py-12 text-white shadow-[0_0_60px_rgba(88,54,255,0.35)] sm:px-12" },
+                        React.createElement("div", { className: "flex flex-col gap-10" },
+                            React.createElement("div", { className: "flex flex-col items-center gap-4 text-center" },
+                                React.createElement("span", { className: "inline-flex items-center rounded-full border border-white/20 bg-white/10 px-4 py-1 text-xs font-semibold uppercase tracking-[0.35em] text-white/70" }, "Samarbeidspartnere"),
+                                React.createElement("h2", { className: "text-3xl font-semibold sm:text-4xl" }, "Vi har allerede hatt samarbeid med flere kjente merkevarer.")),
+                            React.createElement("div", { className: "partner-logos grid grid-cols-2 gap-4 sm:grid-cols-2 md:grid-cols-4", id: includeLogosId ? "sponsorer" : undefined }, resolvedPartnerLogos.map(({ partner, fallback }) => (React.createElement(SimplePartnerLogo, { key: (partner === null || partner === void 0 ? void 0 : partner.id) || partner.name, partner: partner, fallback: fallback, className: "w-full" })))),
+                            React.createElement("div", { className: "flex flex-col items-center gap-6 text-center" },
+                                React.createElement("p", { className: "max-w-2xl text-sm text-white/70 sm:text-base" }, "\u00d8nsker du \u00e5 synliggj\u00f8re din merkevare for v\u00e5rt engasjerte gaming-publikum?"),
+                                React.createElement("a", { href: contactHref, className: "inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-sm font-semibold text-[#0c0b28] shadow-lg shadow-black/30 transition-transform duration-300 hover:-translate-y-0.5 hover:bg-white/90 sm:px-8 sm:text-base" }, "Kontakt oss")))))));
+        }
+        return (React.createElement("section", { id: sectionId, className: "px-6 sm:px-8 lg:px-10", style: sectionOrderStyle(orderKey) },
+            React.createElement("div", { className: "mx-auto max-w-5xl" },
+                React.createElement("h2", { className: "sr-only" }, "Samarbeidspartnere"),
+                React.createElement("div", { className: "partner-logos grid grid-cols-2 justify-items-center gap-6 sm:grid-cols-2 md:grid-cols-4", id: includeLogosId ? "sponsorer" : undefined }, resolvedPartnerLogos.map(({ partner, fallback }) => (React.createElement(SimplePartnerLogo, { key: (partner === null || partner === void 0 ? void 0 : partner.id) || partner.name, partner: partner, fallback: fallback, className: "w-full" })))))));
+    };
     const handleContactSubmit = (event) => {
         var _a, _b, _c, _d, _e, _f;
         event.preventDefault();
@@ -748,7 +767,7 @@ export default function FjolsenbandenHome() {
                                 React.createElement("span", { className: "grid h-12 w-12 place-content-center rounded-2xl bg-emerald-500 text-2xl shadow-[0_14px_30px_rgba(16,185,129,0.45)]" }, "\uD83D\uDFE2"),
                                 React.createElement("span", null, "Over 18 \u00E5r")),
                             React.createElement(ArrowRight, { className: "h-5 w-5 transition-transform group-hover:translate-x-1", "aria-hidden": "true" })))),
-            partnersEnabled ? renderPartnerSection("samarbeid", "partners", { includeLogosId: true }) : null,
+            partnersEnabled ? renderPartnerSection("samarbeid", "partners", { includeLogosId: true, variant: "showcase" }) : null,
             React.createElement("section", { id: "medlemskap", className: "mt-20 px-6 text-center sm:px-8 lg:px-10", style: sectionOrderStyle("membership") },
                 React.createElement("h2", { className: "mb-4 text-3xl font-bold" }, "Velg medlemskap"),
                 React.createElement("p", { className: "mx-auto mb-8 max-w-2xl text-zinc-100" }, "Bli med i konkurranser, streams og fellesskapet v\u00E5rt p\u00E5 noen f\u00E5 klikk."),
