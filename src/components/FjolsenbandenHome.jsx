@@ -757,6 +757,13 @@ export default function FjolsenbandenHome() {
                 React.createElement("div", { className: "mx-auto max-w-5xl space-y-6 rounded-3xl border border-white/10 bg-[#161f33]/90 p-8 text-center shadow-2xl" },
                     React.createElement("h2", { className: "text-3xl font-bold" }, "Kontakt oss"),
                     React.createElement("p", { className: "text-zinc-100" }, "Har du sp\u00F8rsm\u00E5l om medlemskap, samarbeid eller events? Send oss en melding s\u00E5 kommer vi tilbake til deg."),
+                    React.createElement("div", { className: "flex justify-center" },
+                        React.createElement("a", {
+                            href: "/admin",
+                            className: "inline-flex items-center gap-2 rounded-full border border-white/15 px-4 py-2 text-sm font-semibold text-white/80 transition hover:border-white/30 hover:text-white",
+                        },
+                            React.createElement(UserCog, { className: "h-4 w-4", "aria-hidden": "true" }),
+                            React.createElement("span", null, "CTO"))),
                     React.createElement("form", { className: "grid gap-4 text-left md:grid-cols-2", onSubmit: handleContactSubmit },
                         React.createElement("div", null,
                             React.createElement("label", { className: "mb-1 block text-sm font-semibold text-zinc-100", htmlFor: "name" }, "Navn"),
