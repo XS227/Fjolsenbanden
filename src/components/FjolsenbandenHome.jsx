@@ -195,20 +195,10 @@ const SimplePartnerLogo = ({ partner, fallback, className = "" }) => {
     return (React.createElement("div", { className: `flex h-[200px] w-full max-w-[222px] items-center justify-center overflow-hidden rounded-2xl border border-white/15 bg-black p-6 text-center shadow-[0_12px_32px_rgba(0,0,0,0.35)] transition hover:border-white/25 hover:shadow-[0_16px_36px_rgba(0,0,0,0.45)] ${className}`.trim() },
         React.createElement("span", { className: "sr-only" }, partner.name),
         !isLoaded && React.createElement("span", { className: "text-sm font-semibold text-white" }, partner.name),
-        currentSource && (React.createElement("div", { className: `partner-logo-mask h-full w-full ${isLoaded ? "opacity-95" : "opacity-0"}`.trim(), "aria-hidden": "true", style: {
-                backgroundColor: "#ffffff",
-                maskImage: `url(${currentSource})`,
-                WebkitMaskImage: `url(${currentSource})`,
-                maskRepeat: "no-repeat",
-                WebkitMaskRepeat: "no-repeat",
-                maskPosition: "center",
-                WebkitMaskPosition: "center",
-                maskSize: "contain",
-                WebkitMaskSize: "contain",
-                pointerEvents: "none",
-                transition: "opacity 0.2s ease",
-            } })),
-        currentSource && (React.createElement("img", { src: currentSource, alt: "", loading: "eager", "aria-hidden": "true", className: "hidden", onLoad: () => setIsLoaded(true), onError: () => {
+        currentSource && (React.createElement("img", { src: currentSource, alt: "", loading: "eager", "aria-hidden": "true", className: `max-h-full w-full object-contain transition-opacity duration-200 ${isLoaded ? "opacity-95" : "opacity-0"}`.trim(), style: {
+                filter: "brightness(0) invert(1)",
+                mixBlendMode: "screen",
+            }, onLoad: () => setIsLoaded(true), onError: () => {
                 setIsLoaded(false);
                 setSourceIndex((previous) => {
                     const nextIndex = previous + 1;
