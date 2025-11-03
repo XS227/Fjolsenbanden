@@ -11,6 +11,7 @@ export const DEFAULT_SECTION_ORDER = [
     "membership",
     "prizes",
     "partners",
+    "feedback",
     "contact",
 ];
 export const DEFAULT_MEMBERSHIP_TIERS = [
