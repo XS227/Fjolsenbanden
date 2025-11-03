@@ -1,0 +1,14 @@
+:root{
+  --bg:#fff; --ink:#0d1321; --muted:#6b7280;
+  --brand:#13A0F9; --brand-ink:#041149; --card:#f6f7fb; --ring:rgba(19,160,249,.25);
+}
+html,body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui;}
+.section{padding:clamp(40px,6vw,96px) 0;}
+.container{width:min(1100px,92%);margin:0 auto;}
+.grid{display:grid;gap:20px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));}
+.card{background:var(--card);border-radius:16px;padding:20px;}
+.btn{padding:.9rem 1.2rem;border-radius:12px;border:1px solid transparent;cursor:pointer}
+.btn--primary{background:var(--brand);color:#fff;}
+.btn--ghost{border-color:var(--brand);color:var(--brand);background:#fff;}
+.kpi{font:700 clamp(24px,4vw,36px)/1 Inter,system-ui;}
+.muted{color:var(--muted);}
