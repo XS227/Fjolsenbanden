@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="no">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fjolsenbanden – Oppdatering: Quest-board</title>
+    <meta
+      name="description"
+      content="Lansering av Fjolsenbandens Quest-board med ukens aktiviteter, premier og trygghetsinformasjon."
+    />
+    <meta property="og:title" content="Fjolsenbanden – Oppdatering: Quest-board" />
+    <meta
+      property="og:description"
+      content="Få oversikt over Quest-boardet for hele familien, med tidsplan, tips og Vipps-innlogging."
+    />
+    <meta property="og:image" content="/og-image.svg" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      :root {
+        font-family: "Nunito", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      }
+
+      body {
+        margin: 0;
+      }
+
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+      }
+    </style>
+  </head>
+  <body id="top" class="relative min-h-screen overflow-x-hidden bg-gradient-to-br from-[#FFF5F7] via-[#F6F7FF] to-[#ECFEFF] text-slate-900">
+    <div id="root"></div>
+    <script type="module" src="/src/updates-main.jsx"></script>
+  </body>
+</html>
