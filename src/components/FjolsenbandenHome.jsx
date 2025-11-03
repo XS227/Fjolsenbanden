@@ -206,7 +206,7 @@ const SimplePartnerLogo = ({ partner, fallback, className = "" }) => {
     return (React.createElement("div", { className: `flex h-[200px] w-full max-w-[222px] items-center justify-center overflow-hidden rounded-2xl border border-white/15 bg-black p-6 text-center ${className}`.trim() },
         React.createElement("span", { className: "sr-only" }, partner.name),
         React.createElement("span", { className: `text-sm font-semibold text-white ${isLoaded ? "hidden" : ""}`.trim(), "aria-hidden": "true" }, partner.name),
-        currentSource && (React.createElement("img", { src: currentSource, alt: `${partner.name} logo`, loading: "eager", onLoad: handleLogoLoad, onError: handleLogoError, className: `max-h-full w-full object-contain ${isLoaded ? "" : "hidden"}`.trim() }))));
+        currentSource && (React.createElement("img", { src: currentSource, alt: `${partner.name} logo`, loading: "eager", onLoad: handleLogoLoad, onError: handleLogoError, className: `max-h-full w-full object-contain filter brightness-0 invert ${isLoaded ? "" : "hidden"}`.trim() }))));
 };
 const unboxingVideoUrl = "https://www.youtube.com/embed/v_8kKWD0K84?si=KzawWGqmMEQA7n78";
 const offerings = [
