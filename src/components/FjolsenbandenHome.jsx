@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useId, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { createPortal } from "react-dom";
 import { ArrowRight, CheckCircle2, CreditCard, Gift, Instagram, Lock, Menu, MessageCircle, Moon, Phone, ShieldCheck, Smartphone, Sun, Trophy, Twitch, X, Youtube, UserCog, } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -171,20 +171,9 @@ const buildSponsorLogoSources = (sponsor) => {
     const preferred = sponsor.defaultLogoUrl ? [sponsor.defaultLogoUrl] : [];
     return Array.from(new Set([...preferred, ...remoteSources, `/assets/partners/${sponsor.slug}.svg`]));
 };
-const buildWhiteSilhouetteFilter = (filterId) => ({
-    filterId,
-    element: (React.createElement("defs", null,
-        React.createElement("filter", { id: filterId, colorInterpolationFilters: "sRGB" },
-            React.createElement("feColorMatrix", { type: "matrix", values: "0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0.2126 0.7152 0.0722 0 0" }),
-            React.createElement("feComponentTransfer", null,
-                React.createElement("feFuncA", { type: "table", tableValues: "0 0 0.3 1" }))))),
-});
 const SimplePartnerLogo = ({ partner, fallback, className = "" }) => {
     const [sourceIndex, setSourceIndex] = useState(0);
     const [isLoaded, setIsLoaded] = useState(false);
-    const rawFilterId = useId();
-    const filterId = `partner-logo-filter-${String(rawFilterId).replace(/[^a-zA-Z0-9_-]/g, "")}`;
-    const { element: filterElement } = useMemo(() => buildWhiteSilhouetteFilter(filterId), [filterId]);
     const sources = useMemo(() => {
         if (partner.logoUrl && partner.logoUrl.trim()) {
             return [partner.logoUrl];
@@ -216,12 +205,8 @@ const SimplePartnerLogo = ({ partner, fallback, className = "" }) => {
     const handleLogoLoad = () => setIsLoaded(true);
     return (React.createElement("div", { className: `flex h-[200px] w-full max-w-[222px] items-center justify-center overflow-hidden rounded-2xl border border-white/15 bg-black p-6 text-center shadow-[0_12px_32px_rgba(0,0,0,0.35)] transition hover:border-white/25 hover:shadow-[0_16px_36px_rgba(0,0,0,0.45)] ${className}`.trim() },
         React.createElement("span", { className: "sr-only" }, partner.name),
-        !isLoaded && React.createElement("span", { className: "text-sm font-semibold text-white" }, partner.name),
-        currentSource && (React.createElement(React.Fragment, null,
-            React.createElement("svg", { role: "presentation", "aria-hidden": "true", viewBox: "0 0 100 100", className: `h-full w-full transition-opacity duration-200 ${isLoaded ? "opacity-95" : "opacity-0"}`.trim() },
-                filterElement,
-                React.createElement("image", { href: currentSource, width: "100%", height: "100%", preserveAspectRatio: "xMidYMid meet", filter: `url(#${filterId})` })),
-            React.createElement("img", { src: currentSource, alt: "", loading: "eager", "aria-hidden": "true", className: "hidden", onLoad: handleLogoLoad, onError: handleLogoError })))));
+        React.createElement("span", { className: `text-sm font-semibold text-white transition-opacity duration-200 ${isLoaded ? "opacity-0" : "opacity-100"}`.trim(), "aria-hidden": "true" }, partner.name),
+        currentSource && (React.createElement("img", { src: currentSource, alt: `${partner.name} logo`, loading: "eager", onLoad: handleLogoLoad, onError: handleLogoError, className: `max-h-full w-full object-contain transition-opacity duration-200 ${isLoaded ? "opacity-100" : "opacity-0"}`.trim() }))));
 };
 const unboxingVideoUrl = "https://www.youtube.com/embed/v_8kKWD0K84?si=KzawWGqmMEQA7n78";
 const offerings = [
