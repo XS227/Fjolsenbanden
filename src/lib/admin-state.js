@@ -64,7 +64,11 @@ export const DEFAULT_PARTNER_LOGOS = [
         name: "Philips",
         logoUrl: "https://cdn.worldvectorlogo.com/logos/philips-7.svg",
     },
-    { id: "partner-komplett", name: "Komplett.no", logoUrl: "/assets/partners/komplett.svg" },
+    {
+        id: "partner-komplett",
+        name: "Komplett.no",
+        logoUrl: "https://iconlogovector.com/uploads/images/2025/03/lg-67c40c256361e-Komplett.webp",
+    },
 ];
 export const DEFAULT_TWITCH_EMBED_URL = "https://player.twitch.tv/?channel=FjOlsenFN&parent=localhost";
 const DEFAULT_STATE = {

@@ -1050,7 +1050,7 @@
             </div>
             <div class="partner-logo-tile">
               <span class="sr-only">Komplett</span>
-              <div class="partner-logo-mask" style="--logo-url: url('https://cdn.worldvectorlogo.com/logos/komplett.svg');" aria-hidden="true"></div>
+              <div class="partner-logo-mask" style="--logo-url: url('https://iconlogovector.com/uploads/images/2025/03/lg-67c40c256361e-Komplett.webp');" aria-hidden="true"></div>
               <span class="partner-logo-fallback" aria-hidden="true">Komplett</span>
             </div>
             <div class="partner-logo-tile">
