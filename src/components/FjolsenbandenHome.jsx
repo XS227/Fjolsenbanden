@@ -201,7 +201,7 @@ const SimplePartnerLogo = ({ partner, fallback, className = "" }) => {
         setIsLoaded(false);
     }, [currentSource]);
     if (!currentSource) {
-        return (React.createElement("div", { className: `flex h-[200px] w-full max-w-[222px] items-center justify-center rounded-2xl border border-white/15 bg-black p-6 text-center text-sm font-semibold text-white ${className}`.trim() }, partner.name));
+        return (React.createElement("div", { className: `flex h-[200px] w-full max-w-[222px] items-center justify-center p-6 text-center text-sm font-semibold text-white ${className}`.trim() }, partner.name));
     }
     const handleLogoError = () => {
         setIsLoaded(false);
@@ -214,7 +214,7 @@ const SimplePartnerLogo = ({ partner, fallback, className = "" }) => {
         });
     };
     const handleLogoLoad = () => setIsLoaded(true);
-    return (React.createElement("div", { className: `flex h-[200px] w-full max-w-[222px] items-center justify-center overflow-hidden rounded-2xl border border-white/15 bg-black p-6 text-center ${className}`.trim() },
+    return (React.createElement("div", { className: `flex h-[200px] w-full max-w-[222px] items-center justify-center p-6 text-center ${className}`.trim() },
         React.createElement("span", { className: "sr-only" }, partner.name),
         React.createElement("span", { className: `text-sm font-semibold text-white ${isLoaded ? "hidden" : ""}`.trim(), "aria-hidden": "true" }, partner.name),
         currentSource && (React.createElement("img", { src: currentSource, alt: `${partner.name} logo`, loading: "eager", onLoad: handleLogoLoad, onError: handleLogoError, className: `max-h-full w-full object-contain ${isLoaded ? "" : "hidden"}`.trim() }))));
