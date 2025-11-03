@@ -20,6 +20,7 @@ export default defineConfig({
         main: path.resolve(__dirname, "index.html"),
         admin: path.resolve(__dirname, "admin.html"),
         portal: path.resolve(__dirname, "portal.html"),
+        updates: path.resolve(__dirname, "updates.html"),
       },
     },
   },
