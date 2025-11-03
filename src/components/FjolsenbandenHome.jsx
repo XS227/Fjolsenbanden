@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useId, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { createPortal } from "react-dom";
 import { ArrowRight, CheckCircle2, CreditCard, Gift, Instagram, Lock, Menu, MessageCircle, Moon, Phone, ShieldCheck, Smartphone, Sun, Trophy, Twitch, X, Youtube, UserCog, } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -171,20 +171,9 @@ const buildSponsorLogoSources = (sponsor) => {
     const preferred = sponsor.defaultLogoUrl ? [sponsor.defaultLogoUrl] : [];
     return Array.from(new Set([...preferred, ...remoteSources, `/assets/partners/${sponsor.slug}.svg`]));
 };
-const buildWhiteSilhouetteFilter = (filterId) => ({
-    filterId,
-    element: (React.createElement("defs", null,
-        React.createElement("filter", { id: filterId, colorInterpolationFilters: "sRGB" },
-            React.createElement("feColorMatrix", { type: "matrix", values: "0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0.2126 0.7152 0.0722 0 0" }),
-            React.createElement("feComponentTransfer", null,
-                React.createElement("feFuncA", { type: "table", tableValues: "0 0 0.3 1" }))))),
-});
 const SimplePartnerLogo = ({ partner, fallback, className = "" }) => {
     const [sourceIndex, setSourceIndex] = useState(0);
     const [isLoaded, setIsLoaded] = useState(false);
-    const rawFilterId = useId();
-    const filterId = `partner-logo-filter-${String(rawFilterId).replace(/[^a-zA-Z0-9_-]/g, "")}`;
-    const { element: filterElement } = useMemo(() => buildWhiteSilhouetteFilter(filterId), [filterId]);
     const sources = useMemo(() => {
         if (partner.logoUrl && partner.logoUrl.trim()) {
             return [partner.logoUrl];
@@ -201,7 +190,7 @@ const SimplePartnerLogo = ({ partner, fallback, className = "" }) => {
         setIsLoaded(false);
     }, [currentSource]);
     if (!currentSource) {
-        return (React.createElement("div", { className: `flex h-[200px] w-full max-w-[222px] items-center justify-center rounded-2xl border border-white/15 bg-black p-6 text-center text-sm font-semibold text-white shadow-[0_12px_32px_rgba(0,0,0,0.35)] ${className}`.trim() }, partner.name));
+        return (React.createElement("div", { className: `flex h-[200px] w-full max-w-[222px] items-center justify-center rounded-2xl border border-white/15 bg-black p-6 text-center text-sm font-semibold text-white ${className}`.trim() }, partner.name));
     }
     const handleLogoError = () => {
         setIsLoaded(false);
@@ -214,14 +203,10 @@ const SimplePartnerLogo = ({ partner, fallback, className = "" }) => {
         });
     };
     const handleLogoLoad = () => setIsLoaded(true);
-    return (React.createElement("div", { className: `flex h-[200px] w-full max-w-[222px] items-center justify-center overflow-hidden rounded-2xl border border-white/15 bg-black p-6 text-center shadow-[0_12px_32px_rgba(0,0,0,0.35)] transition hover:border-white/25 hover:shadow-[0_16px_36px_rgba(0,0,0,0.45)] ${className}`.trim() },
+    return (React.createElement("div", { className: `flex h-[200px] w-full max-w-[222px] items-center justify-center overflow-hidden rounded-2xl border border-white/15 bg-black p-6 text-center ${className}`.trim() },
         React.createElement("span", { className: "sr-only" }, partner.name),
-        !isLoaded && React.createElement("span", { className: "text-sm font-semibold text-white" }, partner.name),
-        currentSource && (React.createElement(React.Fragment, null,
-            React.createElement("svg", { role: "presentation", "aria-hidden": "true", viewBox: "0 0 100 100", className: `h-full w-full transition-opacity duration-200 ${isLoaded ? "opacity-95" : "opacity-0"}`.trim() },
-                filterElement,
-                React.createElement("image", { href: currentSource, width: "100%", height: "100%", preserveAspectRatio: "xMidYMid meet", filter: `url(#${filterId})` })),
-            React.createElement("img", { src: currentSource, alt: "", loading: "eager", "aria-hidden": "true", className: "hidden", onLoad: handleLogoLoad, onError: handleLogoError })))));
+        React.createElement("span", { className: `text-sm font-semibold text-white ${isLoaded ? "hidden" : ""}`.trim(), "aria-hidden": "true" }, partner.name),
+        currentSource && (React.createElement("img", { src: currentSource, alt: `${partner.name} logo`, loading: "eager", onLoad: handleLogoLoad, onError: handleLogoError, className: `max-h-full w-full object-contain ${isLoaded ? "" : "hidden"}`.trim() }))));
 };
 const unboxingVideoUrl = "https://www.youtube.com/embed/v_8kKWD0K84?si=KzawWGqmMEQA7n78";
 const offerings = [
@@ -418,7 +403,7 @@ export default function FjolsenbandenHome() {
         setFooterMenuOpen(false);
     };
     const renderPartnerSection = (sectionId, orderKey, { includeLogosId = false } = {}) => (React.createElement("section", { id: sectionId, className: "px-6 text-center sm:px-8 lg:px-10", style: sectionOrderStyle(orderKey) },
-        React.createElement("div", { className: "partners mx-auto max-w-5xl rounded-[2.5rem] border border-white/10 bg-[#041149]/70 p-10 text-center shadow-[0_24px_48px_rgba(4,17,73,0.45)] backdrop-blur" },
+        React.createElement("div", { className: "partners mx-auto max-w-5xl rounded-[2.5rem] border border-white/10 bg-[#041149]/70 p-10 text-center" },
             React.createElement("h2", { className: "text-3xl font-bold" }, "Samarbeidspartnere"),
             React.createElement("p", { className: "mx-auto max-w-3xl text-zinc-100" }, "Vi har allerede hatt samarbeid med flere kjente merkevarer."),
             React.createElement("div", { className: "partner-logos mt-8 grid grid-cols-2 justify-items-center gap-6 sm:grid-cols-2 md:grid-cols-4", id: includeLogosId ? "sponsorer" : undefined }, resolvedPartnerLogos.map(({ partner, fallback }) => (React.createElement(SimplePartnerLogo, { key: (partner === null || partner === void 0 ? void 0 : partner.id) || partner.name, partner: partner, fallback: fallback, className: "w-full" })))),
