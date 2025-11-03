@@ -55,42 +55,17 @@
         }
       }
 
-      .partners {
+      .partner-section {
         margin: 5rem auto 0;
         max-width: 64rem;
-        border-radius: 2.5rem;
-        border: 1px solid rgba(255, 255, 255, 0.12);
-        background: rgba(4, 17, 73, 0.7);
-        padding: 3rem 2rem;
-        text-align: center;
-        box-shadow: 0 24px 48px rgba(6, 14, 35, 0.45);
-        backdrop-filter: blur(6px);
-      }
-
-      .partners h2 {
-        margin-bottom: 1rem;
-        font-size: clamp(1.875rem, 3vw, 2.5rem);
-        font-weight: 700;
-        color: #ffffff;
-      }
-
-      .partners p {
-        margin: 0 auto;
-        max-width: 42rem;
-        color: rgba(224, 231, 255, 0.85);
-        line-height: 1.6;
-      }
-
-      .partners p + p {
-        margin-top: 1.5rem;
       }
 
       .partner-logos {
         display: grid;
         grid-template-columns: repeat(2, minmax(0, 1fr));
         justify-items: center;
-        gap: 1.5rem;
-        margin: 2rem auto 2.5rem;
+        gap: 2rem;
+        margin: 0 auto;
       }
 
       @media (min-width: 768px) {
@@ -105,57 +80,16 @@
         justify-content: center;
         width: 100%;
         max-width: 13.875rem;
-        height: 13.875rem;
-        border-radius: 1rem;
-        border: 1px solid rgba(255, 255, 255, 0.15);
-        background: #000000;
-        padding: 1.5rem;
-        text-align: center;
-        font-weight: 600;
-        color: #ffffff;
-        box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
-        transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
-      }
-
-      .partner-logos .partner-logo-tile:hover {
-        border-color: rgba(255, 255, 255, 0.25);
-        box-shadow: 0 16px 36px rgba(0, 0, 0, 0.45);
-        transform: translateY(-2px);
+        min-height: 7.5rem;
       }
 
       .partner-logos .partner-logo-img {
         display: block;
-        width: 100%;
-        height: 100%;
+        max-width: 100%;
+        max-height: 7.5rem;
+        width: auto;
+        height: auto;
         object-fit: contain;
-        filter: brightness(0) saturate(100%) invert(1);
-        opacity: 0.92;
-        transition: opacity 0.2s ease;
-      }
-
-      .partner-logos .partner-logo-tile:hover .partner-logo-img {
-        opacity: 1;
-      }
-
-      .partners .cta {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        margin-top: 1.5rem;
-        padding: 0.75rem 1.75rem;
-        border-radius: 9999px;
-        font-weight: 600;
-        background: linear-gradient(90deg, #13a0f9, #ff2f9c);
-        color: #ffffff;
-        box-shadow: 0 16px 32px rgba(19, 160, 249, 0.35);
-        text-decoration: none;
-        transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
-      }
-
-      .partners .cta:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 20px 40px rgba(19, 160, 249, 0.45);
-        opacity: 0.95;
       }
 
       .loader {
@@ -1017,29 +951,26 @@
           </div>
         </section>
 
-        <section id="premier" class="partners section-shell">
-          <h2>Samarbeidspartnere</h2>
-          <p>Vi har allerede hatt samarbeid med flere kjente merkevarer.</p>
+        <section id="premier" class="partner-section section-shell">
+          <h2 class="sr-only">Samarbeidspartnere</h2>
           <div id="sponsorer" class="partner-logos">
             <div class="partner-logo-tile">
               <span class="sr-only">Lenovo</span>
-              <img src="/assets/partners/lenovo-logo-2015.svg" alt="Lenovo logo" loading="lazy" class="partner-logo-img" />
+              <img src="/assets/partners/lenovo.png" alt="Lenovo logo" loading="lazy" class="partner-logo-img" />
             </div>
             <div class="partner-logo-tile">
               <span class="sr-only">Komplett</span>
-              <img src="/assets/partners/komplett.svg" alt="Komplett logo" loading="lazy" class="partner-logo-img" />
+              <img src="/assets/partners/komplett.png" alt="Komplett logo" loading="lazy" class="partner-logo-img" />
             </div>
             <div class="partner-logo-tile">
               <span class="sr-only">Philips</span>
-              <img src="/assets/partners/philips-7.svg" alt="Philips logo" loading="lazy" class="partner-logo-img" />
+              <img src="/assets/partners/philips1.png" alt="Philips logo" loading="lazy" class="partner-logo-img" />
             </div>
             <div class="partner-logo-tile">
               <span class="sr-only">Samsung</span>
-              <img src="/assets/partners/samsung-8.svg" alt="Samsung logo" loading="lazy" class="partner-logo-img" />
+              <img src="/assets/partners/samsung1.png" alt="Samsung logo" loading="lazy" class="partner-logo-img" />
             </div>
           </div>
-          <p>Ønsker du å synliggjøre din merkevare for vårt engasjerte gaming-publikum?</p>
-          <a href="#kontakt" class="cta">Kontakt oss</a>
         </section>
 
       <section id="tilbud" class="section-shell mt-20">

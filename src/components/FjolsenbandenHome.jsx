@@ -80,11 +80,17 @@ const PARTNER_LOGO_BASE_URLS = [
     "https://fjolsenbanden.setaei.com/Images",
     "http://fjolsenbanden.setaei.com/Images",
 ];
+const LOCAL_PARTNER_LOGOS = {
+    lenovo: "/assets/partners/lenovo.png",
+    samsung: "/assets/partners/samsung1.png",
+    philips: "/assets/partners/philips1.png",
+    komplett: "/assets/partners/komplett.png",
+};
 const sponsors = [
     {
         name: "Lenovo",
         slug: "lenovo",
-        defaultLogoUrl: "https://cdn.worldvectorlogo.com/logos/lenovo-logo-2015.svg",
+        defaultLogoUrl: LOCAL_PARTNER_LOGOS.lenovo,
         remoteFileNames: [
             "lenova1.jpg",
             "Lenova1.jpg",
@@ -108,7 +114,7 @@ const sponsors = [
     {
         name: "Samsung",
         slug: "samsung",
-        defaultLogoUrl: "https://cdn.worldvectorlogo.com/logos/samsung-8.svg",
+        defaultLogoUrl: LOCAL_PARTNER_LOGOS.samsung,
         remoteFileNames: [
             "samsung1.jpg",
             "Samsung1.jpg",
@@ -123,12 +129,13 @@ const sponsors = [
             "Samsung.jpeg",
             "samsung.jpeg",
             "samsung-8.svg",
+            "samsung1.png",
         ],
     },
     {
         name: "Philips",
         slug: "philips",
-        defaultLogoUrl: "https://cdn.worldvectorlogo.com/logos/philips-7.svg",
+        defaultLogoUrl: LOCAL_PARTNER_LOGOS.philips,
         remoteFileNames: [
             "Philips.svg",
             "philips.svg",
@@ -141,12 +148,13 @@ const sponsors = [
             "Philips.jpeg",
             "philips.jpeg",
             "philips-7.svg",
+            "philips1.png",
         ],
     },
     {
         name: "Komplett.no",
         slug: "komplett",
-        defaultLogoUrl: "https://iconlogovector.com/uploads/images/2025/03/lg-67c40c256361e-Komplett.webp",
+        defaultLogoUrl: LOCAL_PARTNER_LOGOS.komplett,
         remoteFileNames: [
             "komplett1.jpg",
             "Komplett1.jpg",
@@ -169,7 +177,10 @@ const sponsors = [
 const buildSponsorLogoSources = (sponsor) => {
     const remoteSources = PARTNER_LOGO_BASE_URLS.flatMap((baseUrl) => sponsor.remoteFileNames.map((fileName) => `${baseUrl}/${fileName}`));
     const preferred = sponsor.defaultLogoUrl ? [sponsor.defaultLogoUrl] : [];
-    return Array.from(new Set([...preferred, ...remoteSources, `/assets/partners/${sponsor.slug}.svg`]));
+    const localFallback = LOCAL_PARTNER_LOGOS[sponsor.slug]
+        ? [LOCAL_PARTNER_LOGOS[sponsor.slug]]
+        : [`/assets/partners/${sponsor.slug}.svg`];
+    return Array.from(new Set([...preferred, ...remoteSources, ...localFallback]));
 };
 const SimplePartnerLogo = ({ partner, fallback, className = "" }) => {
     const [sourceIndex, setSourceIndex] = useState(0);
@@ -190,7 +201,8 @@ const SimplePartnerLogo = ({ partner, fallback, className = "" }) => {
         setIsLoaded(false);
     }, [currentSource]);
     if (!currentSource) {
-        return (React.createElement("div", { className: `flex h-[200px] w-full max-w-[222px] items-center justify-center rounded-2xl border border-white/15 bg-black p-6 text-center text-sm font-semibold text-white ${className}`.trim() }, partner.name));
+        return (React.createElement("div", { className: `flex min-h-[120px] w-full max-w-[222px] items-center justify-center ${className}`.trim() },
+            React.createElement("span", { className: "sr-only" }, partner.name)));
     }
     const handleLogoError = () => {
         setIsLoaded(false);
@@ -203,10 +215,9 @@ const SimplePartnerLogo = ({ partner, fallback, className = "" }) => {
         });
     };
     const handleLogoLoad = () => setIsLoaded(true);
-    return (React.createElement("div", { className: `flex h-[200px] w-full max-w-[222px] items-center justify-center overflow-hidden rounded-2xl border border-white/15 bg-black p-6 text-center ${className}`.trim() },
+    return (React.createElement("div", { className: `flex min-h-[120px] w-full max-w-[222px] items-center justify-center ${className}`.trim() },
         React.createElement("span", { className: "sr-only" }, partner.name),
-        React.createElement("span", { className: `text-sm font-semibold text-white ${isLoaded ? "hidden" : ""}`.trim(), "aria-hidden": "true" }, partner.name),
-        currentSource && (React.createElement("img", { src: currentSource, alt: `${partner.name} logo`, loading: "eager", onLoad: handleLogoLoad, onError: handleLogoError, className: `max-h-full w-full object-contain ${isLoaded ? "" : "hidden"}`.trim() }))));
+        currentSource && (React.createElement("img", { src: currentSource, alt: `${partner.name} logo`, loading: "eager", onLoad: handleLogoLoad, onError: handleLogoError, className: `max-h-full w-full object-contain transition-opacity duration-300 ${isLoaded ? "opacity-100" : "opacity-0"}`.trim() }))));
 };
 const unboxingVideoUrl = "https://www.youtube.com/embed/v_8kKWD0K84?si=KzawWGqmMEQA7n78";
 const offerings = [
@@ -402,13 +413,10 @@ export default function FjolsenbandenHome() {
     const closeFooterMenu = () => {
         setFooterMenuOpen(false);
     };
-    const renderPartnerSection = (sectionId, orderKey, { includeLogosId = false } = {}) => (React.createElement("section", { id: sectionId, className: "px-6 text-center sm:px-8 lg:px-10", style: sectionOrderStyle(orderKey) },
-        React.createElement("div", { className: "partners mx-auto max-w-5xl rounded-[2.5rem] border border-white/10 bg-[#041149]/70 p-10 text-center" },
-            React.createElement("h2", { className: "text-3xl font-bold" }, "Samarbeidspartnere"),
-            React.createElement("p", { className: "mx-auto max-w-3xl text-zinc-100" }, "Vi har allerede hatt samarbeid med flere kjente merkevarer."),
-            React.createElement("div", { className: "partner-logos mt-8 grid grid-cols-2 justify-items-center gap-6 sm:grid-cols-2 md:grid-cols-4", id: includeLogosId ? "sponsorer" : undefined }, resolvedPartnerLogos.map(({ partner, fallback }) => (React.createElement(SimplePartnerLogo, { key: (partner === null || partner === void 0 ? void 0 : partner.id) || partner.name, partner: partner, fallback: fallback, className: "w-full" })))),
-            React.createElement("p", { className: "mx-auto max-w-2xl text-zinc-100" }, "Ønsker du å synliggjøre din merkevare for vårt engasjerte gaming-publikum?"),
-            React.createElement("a", { href: "#kontakt", className: "cta inline-flex items-center justify-center rounded-full bg-gradient-to-r from-[#13A0F9] to-[#FF2F9C] px-6 py-3 text-sm font-semibold text-white shadow-[0_16px_32px_rgba(19,160,249,0.35)] transition hover:from-[#0d8bd6] hover:to-[#e12585]" }, "Kontakt oss"))));
+    const renderPartnerSection = (sectionId, orderKey, { includeLogosId = false } = {}) => (React.createElement("section", { id: sectionId, className: "px-6 sm:px-8 lg:px-10", style: sectionOrderStyle(orderKey) },
+        React.createElement("div", { className: "mx-auto max-w-5xl" },
+            React.createElement("h2", { className: "sr-only" }, "Samarbeidspartnere"),
+            React.createElement("div", { className: "partner-logos grid grid-cols-2 justify-items-center gap-6 sm:grid-cols-2 md:grid-cols-4", id: includeLogosId ? "sponsorer" : undefined }, resolvedPartnerLogos.map(({ partner, fallback }) => (React.createElement(SimplePartnerLogo, { key: (partner === null || partner === void 0 ? void 0 : partner.id) || partner.name, partner: partner, fallback: fallback, className: "w-full" })))))));
     const handleContactSubmit = (event) => {
         var _a, _b, _c, _d, _e, _f;
         event.preventDefault();
