@@ -146,7 +146,7 @@ const sponsors = [
     {
         name: "Komplett.no",
         slug: "komplett",
-        defaultLogoUrl: "https://cdn.worldvectorlogo.com/logos/komplett.svg",
+        defaultLogoUrl: "https://iconlogovector.com/uploads/images/2025/03/lg-67c40c256361e-Komplett.webp",
         remoteFileNames: [
             "komplett1.jpg",
             "Komplett1.jpg",
