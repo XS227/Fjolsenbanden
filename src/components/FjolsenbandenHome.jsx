@@ -210,9 +210,9 @@ const SimplePartnerLogo = ({ partner, fallback, className = "" }) => {
     }, [currentSource]);
     const showTextFallback = !currentSource || !isLoaded;
     if (!currentSource) {
-        return (React.createElement("div", { className: `relative flex min-h-[120px] w-full items-center justify-center rounded-2xl bg-black/70 px-6 py-8 text-center text-white shadow-[0_20px_45px_rgba(8,8,20,0.55)] transition duration-300 hover:-translate-y-1 hover:bg-black/80 ${className}`.trim() },
+        return (React.createElement("div", { className: `relative flex min-h-[120px] w-full items-center justify-center px-6 py-8 text-center ${className}`.trim() },
             React.createElement("span", { className: "sr-only" }, partner.name),
-            React.createElement("span", { className: "text-lg font-semibold uppercase tracking-[0.3em] text-white/80" }, partner.name)));
+            React.createElement("span", { className: "text-lg font-semibold uppercase tracking-[0.3em] text-white" }, partner.name)));
     }
     const handleLogoError = () => {
         setIsLoaded(false);
@@ -225,10 +225,10 @@ const SimplePartnerLogo = ({ partner, fallback, className = "" }) => {
         });
     };
     const handleLogoLoad = () => setIsLoaded(true);
-    return (React.createElement("div", { className: `relative flex min-h-[120px] w-full items-center justify-center rounded-2xl bg-black/70 px-6 py-8 text-center text-white shadow-[0_20px_45px_rgba(8,8,20,0.55)] transition duration-300 hover:-translate-y-1 hover:bg-black/80 ${className}`.trim() },
+    return (React.createElement("div", { className: `relative flex min-h-[120px] w-full items-center justify-center px-6 py-8 text-center ${className}`.trim() },
         React.createElement("span", { className: "sr-only" }, partner.name),
         currentSource && (React.createElement("img", { src: currentSource, alt: `${partner.name} logo`, loading: "eager", onLoad: handleLogoLoad, onError: handleLogoError, className: `max-h-16 w-full object-contain transition-opacity duration-300 ${isLoaded ? "opacity-100" : "opacity-0"}`.trim() })),
-        showTextFallback ? (React.createElement("span", { className: `pointer-events-none absolute inset-0 flex items-center justify-center text-lg font-semibold uppercase tracking-[0.3em] text-white/80 transition-opacity duration-300 ${isLoaded ? "opacity-0" : "opacity-100"}`.trim(), "aria-hidden": "true" }, partner.name)) : null));
+        showTextFallback ? (React.createElement("span", { className: `pointer-events-none absolute inset-0 flex items-center justify-center text-lg font-semibold uppercase tracking-[0.3em] text-white transition-opacity duration-300 ${isLoaded ? "opacity-0" : "opacity-100"}`.trim(), "aria-hidden": "true" }, partner.name)) : null));
 };
 const unboxingVideoUrl = "https://www.youtube.com/embed/v_8kKWD0K84?si=KzawWGqmMEQA7n78";
 const offerings = [
