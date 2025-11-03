@@ -1023,7 +1023,7 @@
           <div id="sponsorer" class="partner-logos">
             <div class="partner-logo-tile">
               <span class="sr-only">Lenovo</span>
-              <img src="/assets/partners/lenovo.svg" alt="Lenovo logo" loading="lazy" class="partner-logo-img" />
+              <img src="/assets/partners/lenovo-logo-2015.svg" alt="Lenovo logo" loading="lazy" class="partner-logo-img" />
             </div>
             <div class="partner-logo-tile">
               <span class="sr-only">Komplett</span>
@@ -1031,11 +1031,11 @@
             </div>
             <div class="partner-logo-tile">
               <span class="sr-only">Philips</span>
-              <img src="/assets/partners/philips.svg" alt="Philips logo" loading="lazy" class="partner-logo-img" />
+              <img src="/assets/partners/philips-7.svg" alt="Philips logo" loading="lazy" class="partner-logo-img" />
             </div>
             <div class="partner-logo-tile">
               <span class="sr-only">Samsung</span>
-              <img src="/assets/partners/samsung.svg" alt="Samsung logo" loading="lazy" class="partner-logo-img" />
+              <img src="/assets/partners/samsung-8.svg" alt="Samsung logo" loading="lazy" class="partner-logo-img" />
             </div>
           </div>
           <p>Ønsker du å synliggjøre din merkevare for vårt engasjerte gaming-publikum?</p>
