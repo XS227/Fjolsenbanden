@@ -106,21 +106,10 @@
         width: 100%;
         max-width: 13.875rem;
         height: 13.875rem;
-        border-radius: 1rem;
-        border: 1px solid rgba(255, 255, 255, 0.15);
-        background: #000000;
         padding: 1.5rem;
         text-align: center;
         font-weight: 600;
         color: #ffffff;
-        box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
-        transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
-      }
-
-      .partner-logos .partner-logo-tile:hover {
-        border-color: rgba(255, 255, 255, 0.25);
-        box-shadow: 0 16px 36px rgba(0, 0, 0, 0.45);
-        transform: translateY(-2px);
       }
 
       .partner-logos .partner-logo-img {
@@ -128,13 +117,6 @@
         width: 100%;
         height: 100%;
         object-fit: contain;
-        filter: brightness(0) saturate(100%) invert(1);
-        opacity: 0.92;
-        transition: opacity 0.2s ease;
-      }
-
-      .partner-logos .partner-logo-tile:hover .partner-logo-img {
-        opacity: 1;
       }
 
       .partners .cta {
@@ -1023,19 +1005,19 @@
           <div id="sponsorer" class="partner-logos">
             <div class="partner-logo-tile">
               <span class="sr-only">Lenovo</span>
-              <img src="/assets/partners/lenovo-logo-2015.svg" alt="Lenovo logo" loading="lazy" class="partner-logo-img" />
+              <img src="/assets/partners/lenovo.png" alt="Lenovo logo" loading="lazy" class="partner-logo-img" />
             </div>
             <div class="partner-logo-tile">
               <span class="sr-only">Komplett</span>
-              <img src="/assets/partners/komplett.svg" alt="Komplett logo" loading="lazy" class="partner-logo-img" />
+              <img src="/assets/partners/komplett.png" alt="Komplett logo" loading="lazy" class="partner-logo-img" />
             </div>
             <div class="partner-logo-tile">
               <span class="sr-only">Philips</span>
-              <img src="/assets/partners/philips-7.svg" alt="Philips logo" loading="lazy" class="partner-logo-img" />
+              <img src="/assets/partners/philips1.png" alt="Philips logo" loading="lazy" class="partner-logo-img" />
             </div>
             <div class="partner-logo-tile">
               <span class="sr-only">Samsung</span>
-              <img src="/assets/partners/samsung-8.svg" alt="Samsung logo" loading="lazy" class="partner-logo-img" />
+              <img src="/assets/partners/samsung1.png" alt="Samsung logo" loading="lazy" class="partner-logo-img" />
             </div>
           </div>
           <p>Ønsker du å synliggjøre din merkevare for vårt engasjerte gaming-publikum?</p>

@@ -80,11 +80,17 @@ const PARTNER_LOGO_BASE_URLS = [
     "https://fjolsenbanden.setaei.com/Images",
     "http://fjolsenbanden.setaei.com/Images",
 ];
+const LOCAL_PARTNER_LOGOS = {
+    lenovo: "/assets/partners/lenovo.png",
+    samsung: "/assets/partners/samsung1.png",
+    philips: "/assets/partners/philips1.png",
+    komplett: "/assets/partners/komplett.png",
+};
 const sponsors = [
     {
         name: "Lenovo",
         slug: "lenovo",
-        defaultLogoUrl: "https://cdn.worldvectorlogo.com/logos/lenovo-logo-2015.svg",
+        defaultLogoUrl: LOCAL_PARTNER_LOGOS.lenovo,
         remoteFileNames: [
             "lenova1.jpg",
             "Lenova1.jpg",
@@ -108,7 +114,7 @@ const sponsors = [
     {
         name: "Samsung",
         slug: "samsung",
-        defaultLogoUrl: "https://cdn.worldvectorlogo.com/logos/samsung-8.svg",
+        defaultLogoUrl: LOCAL_PARTNER_LOGOS.samsung,
         remoteFileNames: [
             "samsung1.jpg",
             "Samsung1.jpg",
@@ -123,12 +129,13 @@ const sponsors = [
             "Samsung.jpeg",
             "samsung.jpeg",
             "samsung-8.svg",
+            "samsung1.png",
         ],
     },
     {
         name: "Philips",
         slug: "philips",
-        defaultLogoUrl: "https://cdn.worldvectorlogo.com/logos/philips-7.svg",
+        defaultLogoUrl: LOCAL_PARTNER_LOGOS.philips,
         remoteFileNames: [
             "Philips.svg",
             "philips.svg",
@@ -141,12 +148,13 @@ const sponsors = [
             "Philips.jpeg",
             "philips.jpeg",
             "philips-7.svg",
+            "philips1.png",
         ],
     },
     {
         name: "Komplett.no",
         slug: "komplett",
-        defaultLogoUrl: "https://iconlogovector.com/uploads/images/2025/03/lg-67c40c256361e-Komplett.webp",
+        defaultLogoUrl: LOCAL_PARTNER_LOGOS.komplett,
         remoteFileNames: [
             "komplett1.jpg",
             "Komplett1.jpg",
@@ -169,7 +177,10 @@ const sponsors = [
 const buildSponsorLogoSources = (sponsor) => {
     const remoteSources = PARTNER_LOGO_BASE_URLS.flatMap((baseUrl) => sponsor.remoteFileNames.map((fileName) => `${baseUrl}/${fileName}`));
     const preferred = sponsor.defaultLogoUrl ? [sponsor.defaultLogoUrl] : [];
-    return Array.from(new Set([...preferred, ...remoteSources, `/assets/partners/${sponsor.slug}.svg`]));
+    const localFallback = LOCAL_PARTNER_LOGOS[sponsor.slug]
+        ? [LOCAL_PARTNER_LOGOS[sponsor.slug]]
+        : [`/assets/partners/${sponsor.slug}.svg`];
+    return Array.from(new Set([...preferred, ...remoteSources, ...localFallback]));
 };
 const SimplePartnerLogo = ({ partner, fallback, className = "" }) => {
     const [sourceIndex, setSourceIndex] = useState(0);
@@ -190,7 +201,7 @@ const SimplePartnerLogo = ({ partner, fallback, className = "" }) => {
         setIsLoaded(false);
     }, [currentSource]);
     if (!currentSource) {
-        return (React.createElement("div", { className: `flex h-[200px] w-full max-w-[222px] items-center justify-center rounded-2xl border border-white/15 bg-black p-6 text-center text-sm font-semibold text-white ${className}`.trim() }, partner.name));
+        return (React.createElement("div", { className: `flex h-[200px] w-full max-w-[222px] items-center justify-center p-6 text-center text-sm font-semibold text-white ${className}`.trim() }, partner.name));
     }
     const handleLogoError = () => {
         setIsLoaded(false);
@@ -203,7 +214,7 @@ const SimplePartnerLogo = ({ partner, fallback, className = "" }) => {
         });
     };
     const handleLogoLoad = () => setIsLoaded(true);
-    return (React.createElement("div", { className: `flex h-[200px] w-full max-w-[222px] items-center justify-center overflow-hidden rounded-2xl border border-white/15 bg-black p-6 text-center ${className}`.trim() },
+    return (React.createElement("div", { className: `flex h-[200px] w-full max-w-[222px] items-center justify-center p-6 text-center ${className}`.trim() },
         React.createElement("span", { className: "sr-only" }, partner.name),
         React.createElement("span", { className: `text-sm font-semibold text-white ${isLoaded ? "hidden" : ""}`.trim(), "aria-hidden": "true" }, partner.name),
         currentSource && (React.createElement("img", { src: currentSource, alt: `${partner.name} logo`, loading: "eager", onLoad: handleLogoLoad, onError: handleLogoError, className: `max-h-full w-full object-contain ${isLoaded ? "" : "hidden"}`.trim() }))));
