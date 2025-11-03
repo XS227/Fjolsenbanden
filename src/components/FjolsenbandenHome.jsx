@@ -210,9 +210,9 @@ const SimplePartnerLogo = ({ partner, fallback, className = "" }) => {
     }, [currentSource]);
     const showTextFallback = !currentSource || !isLoaded;
     if (!currentSource) {
-        return (React.createElement("div", { className: `relative flex min-h-[120px] w-full items-center justify-center rounded-2xl bg-black/70 px-6 py-8 text-center text-white shadow-[0_20px_45px_rgba(8,8,20,0.55)] transition duration-300 hover:-translate-y-1 hover:bg-black/80 ${className}`.trim() },
+        return (React.createElement("div", { className: `relative flex min-h-[120px] w-full items-center justify-center px-6 py-8 text-center ${className}`.trim() },
             React.createElement("span", { className: "sr-only" }, partner.name),
-            React.createElement("span", { className: "text-lg font-semibold uppercase tracking-[0.3em] text-white/80" }, partner.name)));
+            React.createElement("span", { className: "text-lg font-semibold uppercase tracking-[0.3em] text-white" }, partner.name)));
     }
     const handleLogoError = () => {
         setIsLoaded(false);
@@ -225,10 +225,10 @@ const SimplePartnerLogo = ({ partner, fallback, className = "" }) => {
         });
     };
     const handleLogoLoad = () => setIsLoaded(true);
-    return (React.createElement("div", { className: `relative flex min-h-[120px] w-full items-center justify-center rounded-2xl bg-black/70 px-6 py-8 text-center text-white shadow-[0_20px_45px_rgba(8,8,20,0.55)] transition duration-300 hover:-translate-y-1 hover:bg-black/80 ${className}`.trim() },
+    return (React.createElement("div", { className: `relative flex min-h-[120px] w-full items-center justify-center px-6 py-8 text-center ${className}`.trim() },
         React.createElement("span", { className: "sr-only" }, partner.name),
         currentSource && (React.createElement("img", { src: currentSource, alt: `${partner.name} logo`, loading: "eager", onLoad: handleLogoLoad, onError: handleLogoError, className: `max-h-16 w-full object-contain transition-opacity duration-300 ${isLoaded ? "opacity-100" : "opacity-0"}`.trim() })),
-        showTextFallback ? (React.createElement("span", { className: `pointer-events-none absolute inset-0 flex items-center justify-center text-lg font-semibold uppercase tracking-[0.3em] text-white/80 transition-opacity duration-300 ${isLoaded ? "opacity-0" : "opacity-100"}`.trim(), "aria-hidden": "true" }, partner.name)) : null));
+        showTextFallback ? (React.createElement("span", { className: `pointer-events-none absolute inset-0 flex items-center justify-center text-lg font-semibold uppercase tracking-[0.3em] text-white transition-opacity duration-300 ${isLoaded ? "opacity-0" : "opacity-100"}`.trim(), "aria-hidden": "true" }, partner.name)) : null));
 };
 const unboxingVideoUrl = "https://www.youtube.com/embed/v_8kKWD0K84?si=KzawWGqmMEQA7n78";
 const offerings = [
@@ -286,6 +286,32 @@ const offerings = [
             className: "h-12 w-12 shrink-0",
             "aria-hidden": "true",
         }),
+    },
+];
+const feedbackVoices = [
+    {
+        id: "players",
+        title: "Spillere",
+        quote: "\u201CJeg kjenner alltid på spilleglede her. Vi backer hverandre, lærer nye triks og heier på alle seirene.\u201D",
+        highlight: "Fellesskap først",
+        color: "from-[#FF2F9C] to-[#FBBF24]",
+        icon: "⚡",
+    },
+    {
+        id: "parents",
+        title: "Foreldre",
+        quote: "\u201CFjOlsenbanden gir oss en trygg arena der barna kan utforske gaming med sunne rammer og voksne rollemodeller.\u201D",
+        highlight: "Trygge rammer",
+        color: "from-[#13A0F9] to-[#34D399]",
+        icon: "🛡️",
+    },
+    {
+        id: "partners",
+        title: "Samarbeidspartnere",
+        quote: "\u201CDet kreative universet deres gjør det enkelt for oss å skape opplevelser som engasjerer både familier og fans.\u201D",
+        highlight: "Kreative opplevelser",
+        color: "from-[#8B5CF6] to-[#EC4899]",
+        icon: "✨",
     },
 ];
 const createDefaultVippsUser = () => ({
@@ -787,6 +813,20 @@ export default function FjolsenbandenHome() {
                         React.createElement("h2", { className: "text-3xl font-bold text-white" }, "Andre tilbud"),
                         React.createElement("p", { className: "text-lg text-zinc-100" }, "FjOlsenbanden tilbyr mer enn bare streaming!")),
                     React.createElement("div", { className: "grid gap-6 text-left sm:grid-cols-2" }, offerings.map(({ title, description, emoji }) => title === "Unboxing" ? (React.createElement(UnboxingOfferingCard, { key: title, title: title, description: description, emoji: emoji, onWatchVideo: () => setShowUnboxingVideo(true), reachLabel: estimatedUnboxingReach, audienceStats: stats })) : (React.createElement(OfferingCard, { key: title, title: title, description: description, emoji: emoji })))))),
+            React.createElement("section", { id: "tilbakemeldinger", className: "mt-20 px-6 sm:px-8 lg:px-10", style: sectionOrderStyle("feedback") },
+                React.createElement("div", { className: "mx-auto max-w-6xl space-y-6 rounded-[2.5rem] border border-white/10 bg-white/5 p-8 text-center shadow-[0_28px_52px_rgba(6,14,35,0.55)]" },
+                    React.createElement("span", { className: "inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-1 text-xs font-semibold uppercase tracking-[0.3em] text-white/70" }, "Stemmer fra banden"),
+                    React.createElement("h2", { className: "text-3xl font-bold text-white sm:text-4xl" }, "Tilbakemeldinger i 8-bit og stjernestøv"),
+                    React.createElement("p", { className: "mx-auto max-w-3xl text-lg text-zinc-100" }, "Spillere, foreldre og samarbeidspartnere deler hva FjOlsenbanden betyr for dem. Hver stemme er en power-up i reisen vår."),
+                    React.createElement("div", { className: "grid gap-6 text-left md:grid-cols-3" }, feedbackVoices.map(({ id, title, quote, highlight, color, icon }) => (React.createElement("div", { key: id, className: `group relative overflow-hidden rounded-3xl border border-white/10 bg-[#0d1230]/80 p-6 shadow-[0_22px_46px_rgba(5,11,36,0.6)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_32px_64px_rgba(19,160,249,0.35)]` },
+                        React.createElement("div", { className: `absolute -right-10 -top-10 h-36 w-36 rounded-full bg-gradient-to-br blur-3xl opacity-40 transition duration-300 group-hover:opacity-70 ${color}`.trim() }),
+                        React.createElement("div", { className: "relative flex flex-col gap-4" },
+                            React.createElement("span", { className: "text-3xl" }, icon),
+                            React.createElement("div", { className: "flex flex-col gap-1" },
+                                React.createElement("span", { className: "text-xs font-semibold uppercase tracking-[0.2em] text-white/70" }, title),
+                                React.createElement("span", { className: "text-sm font-medium text-white/80" }, highlight)),
+                            React.createElement("p", { className: "text-base font-semibold text-white" }, quote),
+                            React.createElement("span", { className: "text-xs text-white/60" }, "\u2728 Del din opplevelse i Discord-kanalen vår for å bli med i neste showcase!"))))))),
             contactForm ? (React.createElement("section", { id: "kontakt", className: "mt-20 px-6 sm:px-8 lg:px-10", style: sectionOrderStyle("contact") },
                 React.createElement("div", { className: "mx-auto max-w-5xl space-y-6 rounded-3xl border border-white/10 bg-[#161f33]/90 p-8 text-center shadow-2xl" },
                     React.createElement("h2", { className: "text-3xl font-bold" }, "Kontakt oss"),

@@ -21,7 +21,7 @@ export default function PlayersIndexPage() {
     return (React.createElement("div", { className: "min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 text-slate-100" },
         React.createElement("div", { className: "mx-auto flex w-full max-w-5xl flex-col gap-10 px-6 py-12" },
             React.createElement("div", { className: "flex justify-end" },
-                React.createElement(Button, { variant: "outline", className: "border-white/15 bg-white/5 text-white hover:bg-white/15", onClick: memberAuth.logout }, "Logg ut")),
+                React.createElement(Button, { variant: "outline", onClick: memberAuth.logout }, "Logg ut")),
             React.createElement("header", { className: "space-y-6 text-center" },
                 React.createElement("p", { className: "inline-flex items-center gap-2 rounded-full border border-cyan-500/30 bg-cyan-500/10 px-4 py-1 text-xs font-medium uppercase tracking-wide text-cyan-100" },
                     React.createElement(Users, { className: "h-3.5 w-3.5" }),
@@ -53,9 +53,10 @@ export default function PlayersIndexPage() {
                         React.createElement("div", { className: "text-xs uppercase tracking-wide text-slate-300" },
                             "Med siden ",
                             new Date(player.joinDate).toLocaleDateString("no-NO", { month: "short", year: "numeric" })),
-                        React.createElement("a", { href: `/players/${player.slug}`, className: "inline-flex w-full items-center justify-center rounded-2xl bg-cyan-500 px-4 py-3 text-sm font-semibold text-cyan-950 shadow transition hover:bg-cyan-400" },
-                            "Se profil ",
-                            React.createElement(ArrowRight, { className: "ml-2 h-4 w-4" })))))),
+                        React.createElement(Button, { asChild: true, className: "w-full rounded-2xl px-4 py-3 text-sm" },
+                            React.createElement("a", { href: `/players/${player.slug}` },
+                                "Se profil ",
+                                React.createElement(ArrowRight, { className: "ml-2 h-4 w-4" }))))),
                 featuredPlayers.length === 0 ? (React.createElement(Card, { className: "border-white/10 bg-white/5 text-white" },
                     React.createElement(CardContent, { className: "p-8 text-center text-sm text-slate-300" }, "Ingen spillere er registrert enn\u00E5. Opprett deres f\u00F8rste profil i adminpanelet."))) : null))));
 }

@@ -102,15 +102,11 @@ export default function PortalLandingPage() {
             Vis frem streams, premier og medlemskap i en portal som er klar «på en, to, tre». Vi håndterer teknikken – partneren får et komplett landingpage-oppsett som konverterer nye medlemmer.
           </p>
           <div className="flex flex-wrap justify-center gap-3">
-            <Button size="lg" className="rounded-full bg-white px-6 py-5 text-base font-semibold text-slate-900 shadow-[0_18px_40px_rgba(148,221,255,0.25)] hover:bg-slate-100">
+            <Button size="lg" className="rounded-full px-7">
               Book en demo
               <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
             </Button>
-            <Button
-              size="lg"
-              variant="outline"
-              className="rounded-full border-white/30 bg-transparent px-6 py-5 text-base text-white hover:border-white hover:bg-white/10"
-            >
+            <Button size="lg" variant="outline" className="rounded-full px-7">
               Se eksempelportal
             </Button>
           </div>
@@ -220,14 +216,10 @@ export default function PortalLandingPage() {
               Send oss en melding, så er dere i gang i løpet av få dager.
             </p>
             <div className="flex flex-wrap justify-center gap-3">
-              <Button size="lg" className="rounded-full bg-sky-500 px-6 py-5 text-base font-semibold text-white hover:bg-sky-400">
+              <Button size="lg" className="rounded-full px-7">
                 Avtal et møte
               </Button>
-              <Button
-                size="lg"
-                variant="outline"
-                className="rounded-full border-white/40 bg-white/10 px-6 py-5 text-base text-white hover:bg-white/20"
-              >
+              <Button size="lg" variant="outline" className="rounded-full px-7">
                 Kontakt oss
               </Button>
             </div>

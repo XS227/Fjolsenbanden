@@ -46,7 +46,7 @@ function ProfilePreviewContent() {
                             " (",
                             player.mainGame,
                             ")"))))),
-                    selectedPlayer ? (React.createElement(Button, { variant: "outline", className: "border-white/20 bg-white/5 text-white hover:bg-white/15", onClick: () => {
+                    selectedPlayer ? (React.createElement(Button, { variant: "outline", onClick: () => {
                             if (typeof window !== "undefined") {
                                 window.open(`/players/${selectedPlayer.slug}`, "_blank", "noopener,noreferrer");
                             }
@@ -61,7 +61,7 @@ function ProfilePreviewContent() {
                     React.createElement("p", null,
                         "G\u00E5 til ",
                         React.createElement("a", { href: "/admin", className: "text-cyan-300 underline" }, "adminpanelet"),
-                        " og bruk \u00ABLegg til spiller\u00BB-skjemaet for \u00E5 komme i gang.")))) : selectedPlayer ? (React.createElement(PlayerProfileView, { player: selectedPlayer, siteSettings: siteSettings, extraActions: React.createElement(Button, { className: "rounded-full bg-gradient-to-r from-[#13A0F9] to-[#FF2F9C] px-6 py-2 text-sm font-semibold text-white shadow-[0_12px_28px_rgba(19,160,249,0.35)] transition hover:from-[#0d8bd6] hover:to-[#e12585]", onClick: () => {
+                        " og bruk \u00ABLegg til spiller\u00BB-skjemaet for \u00E5 komme i gang.")))) : selectedPlayer ? (React.createElement(PlayerProfileView, { player: selectedPlayer, siteSettings: siteSettings, extraActions: React.createElement(Button, { className: "rounded-full px-6 py-2 text-sm font-semibold", onClick: () => {
                         if (typeof window !== "undefined") {
                             window.open(`/players/${selectedPlayer.slug}`, "_blank", "noopener,noreferrer");
                         }
@@ -78,7 +78,7 @@ function PreviewGate({ hint }) {
                     React.createElement("p", { className: "text-sm text-slate-300" }, "Denne siden er for administratorer. Logg inn via adminpanelet for \u00E5 forh\u00E5ndsvise spillerprofiler.")),
                 React.createElement(CardContent, { className: "space-y-4 text-sm text-slate-300" },
                     React.createElement("p", null, hint),
-                    React.createElement(Button, { className: "w-full bg-cyan-500 text-cyan-950 hover:bg-cyan-400", onClick: () => {
+                    React.createElement(Button, { className: "w-full", onClick: () => {
                             if (typeof window !== "undefined") {
                                 window.location.href = "/admin";
                             }
