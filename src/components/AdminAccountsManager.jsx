@@ -157,19 +157,12 @@ function AdminAccountsContent() {
               <Lock className="h-3.5 w-3.5" /> Innlogget som administrator
             </div>
             <div className="flex flex-wrap justify-end gap-2">
-              <Button
-                asChild
-                variant="outline"
-                className="border-white/20 bg-white/5 text-white hover:bg-white/15"
-              >
+              <Button asChild variant="outline">
                 <a href="/admin">
                   <ArrowLeft className="mr-2 h-4 w-4" /> Tilbake til kontrollpanelet
                 </a>
               </Button>
-              <Button
-                asChild
-                className="bg-cyan-500 text-cyan-950 hover:bg-cyan-400"
-              >
+              <Button asChild>
                 <a href="/admin/profile-preview">
                   <ArrowUpRight className="mr-2 h-4 w-4" /> Forhåndsvis roller
                 </a>
@@ -213,7 +206,7 @@ function AdminAccountsContent() {
                 Filtrer på roller eller søk etter navn og e-post for å finne personen du trenger.
               </p>
             </div>
-            <Button className="bg-emerald-500 text-emerald-950 hover:bg-emerald-400">
+            <Button>
               <UserPlus className="mr-2 h-4 w-4" /> Inviter ny administrator
             </Button>
           </CardHeader>
@@ -305,10 +298,7 @@ function AdminAccountsContent() {
                               <span className="h-2 w-2 rounded-full bg-current"></span>
                               {account.status}
                             </span>
-                            <Button
-                              variant="outline"
-                              className="border-white/20 bg-white/5 text-xs text-slate-200 hover:bg-white/15"
-                            >
+                            <Button variant="outline" size="sm" className="text-xs">
                               Behandle
                             </Button>
                           </div>
@@ -348,7 +338,7 @@ function AdminAccountsContent() {
                   <p className="font-medium text-white">Totrinnskrav for nye roller</p>
                   <p className="text-xs text-slate-400">Foreslått av sikkerhetsgruppa 12. juni</p>
                 </div>
-                <Button className="bg-emerald-500 px-4 text-emerald-950 hover:bg-emerald-400" size="sm">
+                <Button size="sm" className="px-4">
                   Aktiver
                 </Button>
               </div>

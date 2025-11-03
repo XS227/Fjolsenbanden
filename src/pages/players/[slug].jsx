@@ -30,12 +30,12 @@ export default function PlayerProfilePage() {
                 React.createElement(Shield, { className: "h-12 w-12 text-emerald-300" }),
                 React.createElement("h1", { className: "text-3xl font-semibold text-white" }, "Profilen er ikke klar enn\u00E5"),
                 React.createElement("p", { className: "max-w-lg text-sm text-slate-300" }, "Vi fant ingen spiller med denne adressen. Oppdater adminpanelet og lag en ny profil for spilleren, eller del en gyldig lenke."),
-                React.createElement(Button, { className: "bg-cyan-500 text-cyan-950 hover:bg-cyan-400" },
+                React.createElement(Button, { asChild: true, className: "gap-2" },
                     React.createElement("a", { href: "/admin", className: "flex items-center gap-2" },
                         React.createElement(ArrowLeft, { className: "h-4 w-4" }),
                         " Tilbake til admin")))));
     }
-    return (React.createElement(PlayerProfileView, { player: player, siteSettings: siteSettings, backLink: { href: "/players", label: "Til spilleroversikt" }, extraActions: React.createElement(Button, { variant: "outline", className: "border-white/15 bg-white/5 text-white hover:bg-white/15", onClick: memberAuth.logout },
+    return (React.createElement(PlayerProfileView, { player: player, siteSettings: siteSettings, backLink: { href: "/players", label: "Til spilleroversikt" }, extraActions: React.createElement(Button, { variant: "outline", onClick: memberAuth.logout },
             React.createElement(LogOut, { className: "mr-2 h-4 w-4" }),
             " Logg ut") }));
 }
