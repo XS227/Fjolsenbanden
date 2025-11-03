@@ -52,22 +52,22 @@ export const DEFAULT_PARTNER_LOGOS = [
     {
         id: "partner-lenovo",
         name: "Lenovo",
-        logoUrl: "https://cdn.worldvectorlogo.com/logos/lenovo-logo-2015.svg",
+        logoUrl: "/assets/partners/lenovo.png",
     },
     {
         id: "partner-samsung",
         name: "Samsung",
-        logoUrl: "https://cdn.worldvectorlogo.com/logos/samsung-8.svg",
+        logoUrl: "/assets/partners/samsung1.png",
     },
     {
         id: "partner-philips",
         name: "Philips",
-        logoUrl: "https://cdn.worldvectorlogo.com/logos/philips-7.svg",
+        logoUrl: "/assets/partners/philips1.png",
     },
     {
         id: "partner-komplett",
         name: "Komplett.no",
-        logoUrl: "https://iconlogovector.com/uploads/images/2025/03/lg-67c40c256361e-Komplett.webp",
+        logoUrl: "/assets/partners/komplett.png",
     },
 ];
 export const DEFAULT_TWITCH_EMBED_URL = "https://player.twitch.tv/?channel=FjOlsenFN&parent=localhost";
