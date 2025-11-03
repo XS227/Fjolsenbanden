@@ -956,19 +956,19 @@
           <div id="sponsorer" class="partner-logos">
             <div class="partner-logo-tile">
               <span class="sr-only">Lenovo</span>
-              <img src="/assets/partners/lenovo.png" alt="Lenovo logo" loading="lazy" class="partner-logo-img" />
+              <img src="/assets/partners/lenovo-logo.png" alt="Lenovo logo" loading="lazy" class="partner-logo-img" />
             </div>
             <div class="partner-logo-tile">
               <span class="sr-only">Komplett</span>
-              <img src="/assets/partners/komplett.png" alt="Komplett logo" loading="lazy" class="partner-logo-img" />
+              <img src="/assets/partners/komplett-logo.png" alt="Komplett logo" loading="lazy" class="partner-logo-img" />
             </div>
             <div class="partner-logo-tile">
               <span class="sr-only">Philips</span>
-              <img src="/assets/partners/philips1.png" alt="Philips logo" loading="lazy" class="partner-logo-img" />
+              <img src="/assets/partners/philips-logo.png" alt="Philips logo" loading="lazy" class="partner-logo-img" />
             </div>
             <div class="partner-logo-tile">
               <span class="sr-only">Samsung</span>
-              <img src="/assets/partners/samsung1.png" alt="Samsung logo" loading="lazy" class="partner-logo-img" />
+              <img src="/assets/partners/samsung-logo.png" alt="Samsung logo" loading="lazy" class="partner-logo-img" />
             </div>
           </div>
         </section>

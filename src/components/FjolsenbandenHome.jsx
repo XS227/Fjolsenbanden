@@ -81,10 +81,10 @@ const PARTNER_LOGO_BASE_URLS = [
     "http://fjolsenbanden.setaei.com/Images",
 ];
 const LOCAL_PARTNER_LOGOS = {
-    lenovo: "/assets/partners/lenovo.png",
-    samsung: "/assets/partners/samsung1.png",
-    philips: "/assets/partners/philips1.png",
-    komplett: "/assets/partners/komplett.png",
+    lenovo: "/assets/partners/lenovo-logo.png",
+    samsung: "/assets/partners/samsung-logo.png",
+    philips: "/assets/partners/philips-logo.png",
+    komplett: "/assets/partners/komplett-logo.png",
 };
 const sponsors = [
     {
@@ -92,6 +92,8 @@ const sponsors = [
         slug: "lenovo",
         defaultLogoUrl: LOCAL_PARTNER_LOGOS.lenovo,
         remoteFileNames: [
+            "lenovo-logo.png",
+            "Lenovo-logo.png",
             "lenova1.jpg",
             "Lenova1.jpg",
             "Lenovo1.jpg",
@@ -116,6 +118,8 @@ const sponsors = [
         slug: "samsung",
         defaultLogoUrl: LOCAL_PARTNER_LOGOS.samsung,
         remoteFileNames: [
+            "samsung-logo.png",
+            "Samsung-logo.png",
             "samsung1.jpg",
             "Samsung1.jpg",
             "Samsung.svg",
@@ -137,6 +141,8 @@ const sponsors = [
         slug: "philips",
         defaultLogoUrl: LOCAL_PARTNER_LOGOS.philips,
         remoteFileNames: [
+            "philips-logo.png",
+            "Philips-logo.png",
             "Philips.svg",
             "philips.svg",
             "Philips.png",
@@ -156,6 +162,8 @@ const sponsors = [
         slug: "komplett",
         defaultLogoUrl: LOCAL_PARTNER_LOGOS.komplett,
         remoteFileNames: [
+            "komplett-logo.png",
+            "Komplett-logo.png",
             "komplett1.jpg",
             "Komplett1.jpg",
             "Komplett.svg",
