@@ -457,7 +457,7 @@
               <li><a class="transition-colors duration-150 hover:text-[#13A0F9]" href="#" data-nav-link>Hjem</a></li>
               <li><a class="transition-colors duration-150 hover:text-[#13A0F9]" href="#live" data-nav-link>Live</a></li>
               <li><a class="transition-colors duration-150 hover:text-[#13A0F9]" href="#medlemskap" data-nav-link>Medlemskap</a></li>
-              <li><a class="transition-colors duration-150 hover:text-[#13A0F9]" href="#premier" data-nav-link>Premier</a></li>
+              <li><a class="transition-colors duration-150 hover:text-[#13A0F9]" href="#partnere" data-nav-link>Samarbeidspartnere</a></li>
               <li><a class="transition-colors duration-150 hover:text-[#13A0F9]" href="#partners" data-nav-link>Samarbeid</a></li>
               <li><a class="transition-colors duration-150 hover:text-[#13A0F9]" href="#kontakt" data-nav-link>Kontakt</a></li>
             </ul>
@@ -549,7 +549,7 @@
               <li><a class="block rounded-md px-4 py-2 transition hover:bg-white/10" href="#" data-nav-close="true">Hjem</a></li>
               <li><a class="block rounded-md px-4 py-2 transition hover:bg-white/10" href="#live" data-nav-close="true">Live</a></li>
               <li><a class="block rounded-md px-4 py-2 transition hover:bg-white/10" href="#medlemskap" data-nav-close="true">Medlemskap</a></li>
-              <li><a class="block rounded-md px-4 py-2 transition hover:bg-white/10" href="#premier" data-nav-close="true">Premier</a></li>
+              <li><a class="block rounded-md px-4 py-2 transition hover:bg-white/10" href="#partnere" data-nav-close="true">Samarbeidspartnere</a></li>
               <li><a class="block rounded-md px-4 py-2 transition hover:bg-white/10" href="#partners" data-nav-close="true">Samarbeid</a></li>
               <li><a class="block rounded-md px-4 py-2 transition hover:bg-white/10" href="#kontakt" data-nav-close="true">Kontakt</a></li>
             </ul>
@@ -951,24 +951,37 @@
           </div>
         </section>
 
-        <section id="premier" class="partner-section section-shell">
-          <h2 class="sr-only">Samarbeidspartnere</h2>
-          <div id="sponsorer" class="partner-logos">
-            <div class="partner-logo-tile">
-              <span class="sr-only">Lenovo</span>
-              <img src="/assets/partners/lenovo-logo.png" alt="Lenovo logo" loading="lazy" class="partner-logo-img" />
+        <section id="partnere" class="px-6">
+          <div class="mx-auto max-w-7xl text-center">
+            <h2 class="mb-6 text-3xl font-bold text-white">Samarbeidspartnere</h2>
+            <p class="mb-8 text-slate-300">
+              Ønsker du å synliggjøre din merkevare sammen med oss i FjOlsenbanden?
+              <br />
+              Send oss en e-post, så tar vi kontakt for samarbeid!
+            </p>
+
+            <div class="grid grid-cols-2 gap-6 sm:grid-cols-4 md:gap-8">
+              <div class="flex items-center justify-center rounded-xl border border-white/10 bg-[#101a2e] p-4">
+                <img src="assets/partners/philips-logo.png" alt="Philips logo" class="h-16 object-contain" />
+              </div>
+              <div class="flex items-center justify-center rounded-xl border border-white/10 bg-[#101a2e] p-4">
+                <img src="assets/partners/samsung-logo.png" alt="Samsung logo" class="h-16 object-contain" />
+              </div>
+              <div class="flex items-center justify-center rounded-xl border border-white/10 bg-[#101a2e] p-4">
+                <img src="assets/partners/lenovo-logo.png" alt="Lenovo logo" class="h-16 object-contain" />
+              </div>
+              <div class="flex items-center justify-center rounded-xl border border-white/10 bg-[#101a2e] p-4">
+                <img src="assets/partners/komplett-logo.png" alt="Komplett logo" class="h-16 object-contain" />
+              </div>
             </div>
-            <div class="partner-logo-tile">
-              <span class="sr-only">Komplett</span>
-              <img src="/assets/partners/komplett-logo.png" alt="Komplett logo" loading="lazy" class="partner-logo-img" />
-            </div>
-            <div class="partner-logo-tile">
-              <span class="sr-only">Philips</span>
-              <img src="/assets/partners/philips-logo.png" alt="Philips logo" loading="lazy" class="partner-logo-img" />
-            </div>
-            <div class="partner-logo-tile">
-              <span class="sr-only">Samsung</span>
-              <img src="/assets/partners/samsung-logo.png" alt="Samsung logo" loading="lazy" class="partner-logo-img" />
+
+            <div class="mt-10">
+              <a
+                href="mailto:kontakt@fjolsenbanden.no"
+                class="inline-flex items-center justify-center rounded-full bg-[#22d3ee] px-6 py-3 font-semibold text-[#0f172a] transition hover:bg-[#0ea5e9]"
+              >
+                Kontakt oss for samarbeid
+              </a>
             </div>
           </div>
         </section>
@@ -1415,8 +1428,8 @@
           </a>
         </li>
         <li>
-          <a class="flex items-center justify-between gap-3 rounded-2xl border border-transparent bg-white/5 px-4 py-3 text-base font-semibold text-white/85 transition hover:border-white/20 hover:bg-white/10" href="#premier" data-footer-link>
-            <span>Premier</span>
+          <a class="flex items-center justify-between gap-3 rounded-2xl border border-transparent bg-white/5 px-4 py-3 text-base font-semibold text-white/85 transition hover:border-white/20 hover:bg-white/10" href="#partnere" data-footer-link>
+            <span>Samarbeidspartnere</span>
             <span class="text-xs font-semibold uppercase tracking-[0.35em] text-[#13A0F9]/70">04</span>
           </a>
         </li>
