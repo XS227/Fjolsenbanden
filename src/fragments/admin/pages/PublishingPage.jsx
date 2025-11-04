@@ -27,52 +27,87 @@ export default function PublishingPage() {
     const isPendingApproval = workflow.status === "pending";
     const requiresApproval = workflow.requireApproval;
 
-    return (
-        React.createElement("div", { className: "grid gap-6 lg:grid-cols-[2fr_1fr]" },
-            React.createElement(Card, { className: "border-slate-800 bg-slate-900/70" },
-                React.createElement(CardHeader, null,
-                    React.createElement(CardTitle, { className: "text-lg text-slate-100" }, "Publiser kladd"),
-                    React.createElement("p", { className: "text-sm text-slate-400" }, "Forhåndsvis, send til godkjenning eller publiser endringene")),
-                React.createElement(CardContent, { className: "space-y-4" },
-                    React.createElement(Field, {
-                        label: "Oppsummering",
-                        description: "Legg ved en kort kommentar til loggen",
-                        renderInput: (props) => React.createElement(Textarea, { ...props, rows: 3 }),
-                        value: note,
-                        onChange: setNote,
-                    }),
-                    React.createElement("div", { className: "flex flex-wrap gap-2" },
-                        React.createElement(Button, {
+    const approvalButton =
+        requiresApproval && !isPendingApproval
+            ? React.createElement(Button, {
+                type: "button",
+                className: "bg-amber-500 text-amber-950 hover:bg-amber-400",
+                onClick: () => submitForApproval(note),
+            },
+                React.createElement(AlertTriangle, { size: 16, className: "mr-2" }),
+                "Send til godkjenning")
+            : null;
+
+    const publishButton =
+        !requiresApproval || isPendingApproval
+            ? React.createElement(Button, {
+                type: "button",
+                className: "bg-emerald-500 text-emerald-950 hover:bg-emerald-400",
+                onClick: () => publishDraft(note),
+            },
+                React.createElement(Rocket, { size: 16, className: "mr-2" }),
+                isPendingApproval ? "Godkjenn og publiser" : "Publiser nå")
+            : null;
+
+    return React.createElement(
+        "div",
+        { className: "grid gap-6 lg:grid-cols-[2fr_1fr]" },
+        React.createElement(
+            Card,
+            { className: "border-slate-800 bg-slate-900/70" },
+            React.createElement(
+                CardHeader,
+                null,
+                React.createElement(CardTitle, { className: "text-lg text-slate-100" }, "Publiser kladd"),
+                React.createElement(
+                    "p",
+                    { className: "text-sm text-slate-400" },
+                    "Forhåndsvis, send til godkjenning eller publiser endringene"
+                )
+            ),
+            React.createElement(
+                CardContent,
+                { className: "space-y-4" },
+                React.createElement(Field, {
+                    label: "Oppsummering",
+                    description: "Legg ved en kort kommentar til loggen",
+                    renderInput: (props) => React.createElement(Textarea, { ...props, rows: 3 }),
+                    value: note,
+                    onChange: setNote,
+                }),
+                React.createElement(
+                    "div",
+                    { className: "flex flex-wrap gap-2" },
+                    React.createElement(
+                        Button,
+                        {
                             type: "button",
                             className: "bg-slate-800 text-slate-200 hover:bg-slate-700",
                             onClick: () => requestPreview(),
                         },
-                            React.createElement(Eye, { size: 16, className: "mr-2" }),
-                            "Forhåndsvis"),
-                        requiresApproval && !isPendingApproval && (
-                            React.createElement(Button, {
-                                type: "button",
-                                className: "bg-amber-500 text-amber-950 hover:bg-amber-400",
-                                onClick: () => submitForApproval(note),
-                            },
-                                React.createElement(AlertTriangle, { size: 16, className: "mr-2" }),
-                                "Send til godkjenning")),
-                        (!requiresApproval || isPendingApproval) && (
-                            React.createElement(Button, {
-                                type: "button",
-                                className: "bg-emerald-500 text-emerald-950 hover:bg-emerald-400",
-                                onClick: () => publishDraft(note),
-                            },
-                                React.createElement(Rocket, { size: 16, className: "mr-2" }),
-                                isPendingApproval ? "Godkjenn og publiser" : "Publiser nå")),
-                        React.createElement(Button, {
+                        React.createElement(Eye, { size: 16, className: "mr-2" }),
+                        "Forhåndsvis"
+                    ),
+                    approvalButton,
+                    publishButton,
+                    React.createElement(
+                        Button,
+                        {
                             type: "button",
                             className: "bg-rose-500/10 text-rose-300 hover:bg-rose-500/20",
                             onClick: () => discardDraftChanges(),
                         },
-                            React.createElement(Undo2, { size: 16, className: "mr-2" }),
-                            "Forkast endringer"))),
-            React.createElement(StatusCard, { workflow: workflow, draft: draft, onToggleApproval: toggleApprovalRequirement }))
+                        React.createElement(Undo2, { size: 16, className: "mr-2" }),
+                        "Forkast endringer"
+                    )
+                )
+            )
+        ),
+        React.createElement(StatusCard, {
+            workflow: workflow,
+            draft: draft,
+            onToggleApproval: toggleApprovalRequirement,
+        })
     );
 }
 
