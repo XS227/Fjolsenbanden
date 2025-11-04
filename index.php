@@ -707,124 +707,190 @@
           </div>
         </section>
 
-        <section id="live" class="section-shell relative mt-12">
-          <div class="mx-auto grid max-w-7xl items-start gap-8 lg:grid-cols-3">
+        <section id="live" class="px-6">
+          <div class="mx-auto grid max-w-7xl gap-8 lg:grid-cols-3">
             <div class="space-y-4 lg:col-span-2">
-              <div class="relative overflow-hidden rounded-2xl border border-white/10 shadow-2xl">
-                <span class="absolute left-3 top-3 rounded-full bg-rose-500 px-4 py-1 text-xs font-semibold text-white shadow animate-pulse">🔴 LIVE</span>
-                <!-- Dynamisk Twitch-embed med fallback -->
-                <div id="playerWrap" class="relative bg-black aspect-video rounded-2xl overflow-hidden">
-                  <div id="fallback" class="absolute inset-0 grid place-items-center text-center p-6">
-                    <div>
-                      <img id="thumb" class="w-full max-w-md mx-auto rounded-lg border border-white/10" alt="Twitch forhåndsvisning" />
-                      <p class="mt-3 text-zinc-300 text-sm">Hvis spilleren ikke vises, åpne streamen direkte på Twitch.</p>
-                      <a
-                        id="cta"
-                        target="_blank"
-                        rel="noopener"
-                        class="inline-block mt-4 px-6 py-2 rounded-full bg-gradient-to-r from-[#13A0F9] to-[#FF2F9C]
-                               font-semibold text-white shadow-[0_0_20px_rgba(19,160,249,0.35)] hover:from-[#0d8bd6] hover:to-[#e12585] transition"
-                      >
-                        Åpne på Twitch
-                      </a>
-                    </div>
+              <div class="relative overflow-hidden rounded-2xl border border-white/10 bg-[#101a2e]">
+                <span class="absolute left-4 top-4 rounded-full bg-rose-500 px-3 py-1 text-xs font-semibold text-white">🔴 LIVE</span>
+                <iframe
+                  data-preview-frame="true"
+                  src="https://player.twitch.tv/?channel=fjOlseFN&parent=fjolsenbanden.setaei.com&muted=true"
+                  title="Fjolsenbanden Twitch Player"
+                  allowfullscreen=""
+                  class="aspect-video w-full bg-black"
+                ></iframe>
+                <div
+                  data-preview-overlay="true"
+                  class="absolute inset-0 flex flex-col items-center justify-center gap-4 bg-black/75 p-6 text-center"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="lucide lucide-play h-12 w-12 text-[#38bdf8]"
+                  >
+                    <polygon points="6 3 20 12 6 21 6 3"></polygon>
+                  </svg>
+                  <p class="text-sm text-slate-200">
+                    1-minutt forhåndsvisning –<span data-preview-timer="true" class="ml-1">60</span>s igjen
+                  </p>
+                  <button
+                    type="button"
+                    class="inline-flex items-center justify-center rounded-full bg-[#22d3ee] px-6 py-2.5 font-semibold text-[#0f172a] transition hover:bg-[#0ea5e9]"
+                    data-video-unmute="true"
+                  >
+                    Se full stream
+                  </button>
+                  <div class="flex gap-3 text-xs text-slate-300">
+                    <span>eller fortsett på<a href="https://www.twitch.tv/fjOlsenFN" target="_blank" rel="noopener noreferrer" class="ml-1 text-[#38bdf8]">Twitch</a></span>
+                    <span>|</span>
+                    <a href="https://youtube.com/@fjolsenbanden" target="_blank" rel="noopener noreferrer" class="text-[#38bdf8]">YouTube</a>
                   </div>
                 </div>
               </div>
-              <script>
-                (() => {
-                  const channel = "FjOlsenFN";
-                  const parentHost = location.hostname || "localhost";
-                  const src = `https://player.twitch.tv/?channel=${encodeURIComponent(channel)}&parent=${encodeURIComponent(parentHost)}&muted=false&autoplay=true`;
-
-                  const iframe = document.createElement("iframe");
-                  iframe.src = src;
-                  iframe.allowFullscreen = true;
-                  iframe.className = "absolute inset-0 w-full h-full border-0";
-                  const wrap = document.getElementById("playerWrap");
-                  if (!wrap) return;
-                  wrap.appendChild(iframe);
-
-                  const thumb = document.getElementById("thumb");
-                  const cta = document.getElementById("cta");
-                  if (thumb) thumb.src = `https://static-cdn.jtvnw.net/previews-ttv/live_user_${channel}-640x360.jpg`;
-                  if (cta) cta.href = `https://www.twitch.tv/${channel}`;
-
-                  let loaded = false;
-                  iframe.addEventListener("load", () => {
-                    loaded = true;
-                    const fallback = document.getElementById("fallback");
-                    if (fallback) fallback.style.display = "none";
-                  });
-                  setTimeout(() => {
-                    if (!loaded) console.warn("Twitch embed ble blokkert — viser fallback.");
-                  }, 5000);
-                })();
-              </script>
+              <div class="flex flex-wrap justify-center gap-3">
+                <a
+                  href="https://www.twitch.tv/fjolsenbanden"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="flex items-center gap-2 rounded-full border border-white/10 px-4 py-2 text-sm transition hover:bg-white/10"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="lucide lucide-twitch h-5 w-5 text-purple-500"
+                  >
+                    <path d="M21 2H3v16h5v4l4-4h5l4-4V2zm-10 9V7m5 4V7"></path>
+                  </svg>
+                  <span>Twitch</span>
+                </a>
+                <a
+                  href="https://youtube.com/@fjolsenbanden"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="flex items-center gap-2 rounded-full border border-white/10 px-4 py-2 text-sm transition hover:bg-white/10"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="lucide lucide-youtube h-5 w-5 text-red-500"
+                  >
+                    <path d="M2.5 17a24.12 24.12 0 0 1 0-10 a2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1 16.2 0A2 2 0 0 1 2.5 17"></path>
+                    <path d="m10 15 5-3-5-3z"></path>
+                  </svg>
+                  <span>YouTube</span>
+                </a>
+                <a
+                  href="https://www.tiktok.com/@fjolsenbanden"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="flex items-center gap-2 rounded-full border border-white/10 px-4 py-2 text-sm transition hover:bg-white/10"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="lucide lucide-smartphone h-5 w-5 text-pink-500"
+                  >
+                    <rect width="14" height="20" x="5" y="2" rx="2" ry="2"></rect>
+                    <path d="M12 18h.01"></path>
+                  </svg>
+                  <span>TikTok</span>
+                </a>
+                <a
+                  href="https://www.facebook.com/fjolsenbanden"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="flex items-center gap-2 rounded-full border border-white/10 px-4 py-2 text-sm transition hover:bg-white/10"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="lucide lucide-facebook h-5 w-5 text-blue-500"
+                  >
+                    <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+                  </svg>
+                  <span>Facebook Gaming</span>
+                </a>
+              </div>
             </div>
-            <div class="flex max-h-[640px] flex-col rounded-2xl border border-white/10 bg-[#1f2940] p-4">
-              <h3 class="mb-3 flex items-center gap-2 font-semibold text-[#13A0F9]">Live chat</h3>
-              <div id="custom-chat" class="flex-1 overflow-y-auto space-y-2 pr-1 text-sm"></div>
+            <div class="flex max-h-[640px] flex-col rounded-2xl border border-white/10 bg-[#13203b] p-4">
+              <h3 class="mb-3 flex items-center gap-2 text-sm font-semibold text-[#38bdf8]">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="lucide lucide-message-circle h-4 w-4"
+                >
+                  <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"></path>
+                </svg>
+                Live chat
+              </h3>
+              <div class="flex-1 space-y-3 overflow-y-auto pr-1 text-sm">
+                <div class="rounded-lg border border-white/10 bg-[#101a2e] px-3 py-2">
+                  <span class="mr-2 font-semibold text-[#38bdf8]">Lina</span>
+                  <span class="text-slate-200">Haha, den bossen var vilt!</span>
+                </div>
+                <div class="rounded-lg border border-white/10 bg-[#101a2e] px-3 py-2">
+                  <span class="mr-2 font-semibold text-[#38bdf8]">Jonas</span>
+                  <span class="text-slate-200">Gleder meg til premie-trekningen 🔥</span>
+                </div>
+                <div class="rounded-lg border border-white/10 bg-[#101a2e] px-3 py-2">
+                  <span class="mr-2 font-semibold text-[#38bdf8]">Sara</span>
+                  <span class="text-slate-200">Hei fra TikTok 😎</span>
+                </div>
+                <div class="rounded-lg border border-white/10 bg-[#101a2e] px-3 py-2">
+                  <span class="mr-2 font-semibold text-[#38bdf8]">Marius</span>
+                  <span class="text-slate-200">Bra lyd i dag!</span>
+                </div>
+              </div>
+              <input
+                type="text"
+                placeholder="Skriv en kommentar..."
+                class="mt-3 w-full rounded-lg border border-white/20 bg-[#0f172a] px-3 py-2 text-sm text-white placeholder-slate-400 outline-none focus:ring-2 focus:ring-[#38bdf8]"
+              />
             </div>
           </div>
         </section>
-
-        <script src="https://unpkg.com/tmi.js@1.8.5/dist/tmi.min.js"></script>
-        <script>
-          (() => {
-            const channel = "FjOlsenFN";
-            const el = document.getElementById("custom-chat");
-            const maxItems = 200;
-
-            if (!el) return;
-
-            const client = new tmi.Client({
-              connection: { secure: true, reconnect: true },
-              channels: [channel],
-            });
-
-            client.connect().catch(console.error);
-
-            function addMsg({ user, text, color }) {
-              const item = document.createElement("div");
-              item.className = "rounded-lg bg-white/5 px-3 py-2";
-
-              const name = document.createElement("span");
-              name.className = "mr-2 font-semibold";
-              name.style.color = color || "#13A0F9";
-              name.textContent = user;
-
-              const body = document.createElement("span");
-              body.className = "text-zinc-200";
-              body.textContent = text;
-
-              item.appendChild(name);
-              item.appendChild(body);
-              el.appendChild(item);
-
-              while (el.children.length > maxItems) {
-                el.removeChild(el.firstChild);
-              }
-              el.scrollTop = el.scrollHeight;
-            }
-
-            client.on("message", (channel, tags, message, self) => {
-              if (self) return;
-              addMsg({
-                user: tags["display-name"] || tags.username,
-                text: message,
-                color: tags.color,
-              });
-            });
-
-            client.on("connected", () =>
-              addMsg({ user: "System", text: "Tilkoblet Twitch-chat ✅", color: "#4ade80" })
-            );
-            client.on("disconnected", () =>
-              addMsg({ user: "System", text: "Frakoblet fra chat ❌", color: "#f87171" })
-            );
-          })();
-        </script>
 
         <section id="medlemskap" class="section-shell mt-20 text-center">
           <h2 class="mb-4 text-3xl font-bold">Et levende community</h2>
@@ -1888,6 +1954,40 @@
           if (vippsPhonePlaceholder && vippsPhoneInput) {
             vippsPhonePlaceholder.textContent = vippsPhoneInput.value;
           }
+        });
+      }
+
+      const previewOverlay = document.querySelector('[data-preview-overlay]');
+      const previewFrame = document.querySelector('[data-preview-frame]');
+      const previewTimer = document.querySelector('[data-preview-timer]');
+      const previewUnmuteButton = document.querySelector('[data-video-unmute]');
+      if (previewOverlay && previewFrame && previewTimer && previewUnmuteButton) {
+        let remaining = Number.parseInt(previewTimer.textContent || '60', 10) || 60;
+        const interval = window.setInterval(() => {
+          remaining = Math.max(remaining - 1, 0);
+          previewTimer.textContent = String(remaining);
+          if (remaining === 0) {
+            window.clearInterval(interval);
+          }
+        }, 1000);
+
+        const enableFullStream = () => {
+          previewOverlay.remove();
+          window.clearInterval(interval);
+          try {
+            const url = new URL(previewFrame.src);
+            url.searchParams.set('muted', 'false');
+            previewFrame.src = url.toString();
+          } catch (error) {
+            previewFrame.src = previewFrame.src.includes('muted=true')
+              ? previewFrame.src.replace('muted=true', 'muted=false')
+              : `${previewFrame.src}${previewFrame.src.includes('?') ? '&' : '?'}muted=false`;
+          }
+        };
+
+        previewUnmuteButton.addEventListener('click', (event) => {
+          event.preventDefault();
+          enableFullStream();
         });
       }
 
