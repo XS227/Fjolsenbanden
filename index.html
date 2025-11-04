@@ -440,6 +440,48 @@
       .fj-menu-list a {
         color: inherit;
       }
+
+      .spotify-demo {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        text-align: left;
+        margin: 0;
+      }
+
+      .spotify-demo .spotify-play {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.7rem;
+        background: linear-gradient(90deg, #13a0f9, #ff2f9c);
+        color: #fff;
+        font-weight: 600;
+        padding: 0.9rem 1.4rem;
+        border: 0;
+        border-radius: 50px;
+        cursor: pointer;
+        font-size: 1rem;
+        box-shadow: 0 0 20px rgba(19, 160, 249, 0.3);
+        transition: opacity 0.2s ease, transform 0.2s ease;
+      }
+
+      .spotify-demo .spotify-play:hover {
+        opacity: 0.92;
+        transform: translateY(-1px);
+      }
+
+      .spotify-demo .spotify-play canvas {
+        width: 22px;
+        height: 22px;
+        image-rendering: pixelated;
+        display: block;
+      }
+
+      .spotify-demo .spotify-player {
+        margin-top: 0.75rem;
+        width: min(320px, 90vw);
+      }
     </style>
   </head>
   <body class="fj-theme theme-dark m-0 flex min-h-screen flex-col" data-skin="dark">
@@ -480,7 +522,7 @@
       <div class="fj-overlay pointer-events-none absolute inset-0 -z-10"></div>
       <div class="relative flex flex-1 flex-col">
         <nav class="fj-nav section-shell grid grid-cols-1 items-center gap-4 border-b border-white/10 bg-[#050B24]/75 py-4 backdrop-blur supports-[backdrop-filter]:bg-[#050B24]/60 sm:grid-cols-[1fr_auto_1fr]" data-scrolled="false">
-          <div class="hidden items-center justify-start sm:flex">
+          <div class="hidden items-center justify-start gap-4 sm:flex">
             <img
               src="https://setaei.com/Fjolsen/Glad%20tunge.png"
               alt="Fjolsenbanden ikon"
@@ -493,6 +535,24 @@
               loading="lazy"
               decoding="async"
             />
+            <div class="spotify-demo" data-spotify-demo>
+              <button id="fjolsenPlay" class="spotify-play" type="button">
+                <canvas id="fj-ape" width="160" height="160" aria-hidden="true"></canvas>
+                <span>Spill Fjolsenbandens demo-sang</span>
+              </button>
+
+              <div id="fjolsenPlayer" class="spotify-player" hidden>
+                <iframe
+                  style="border-radius: 12px"
+                  src="https://open.spotify.com/embed/album/4SCoc6YF4yGXuvpNppbibQ?utm_source=generator&theme=0"
+                  width="100%"
+                  height="152"
+                  frameborder="0"
+                  allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                  loading="lazy"
+                ></iframe>
+              </div>
+            </div>
           </div>
           <a
             class="group block w-full justify-self-stretch rounded-none border border-transparent p-0 transition hover:border-white/20 hover:bg-white/5 sm:flex sm:w-auto sm:items-center sm:gap-3 sm:justify-self-center sm:rounded-full sm:px-3 sm:py-2"
@@ -1716,6 +1776,89 @@
   </div>
   <script>
     // Åpne modal: document.getElementById('regler-modal').style.display='block'
+  </script>
+
+  <script>
+    (function () {
+      const canvas = document.getElementById("fj-ape");
+      const playButton = document.getElementById("fjolsenPlay");
+      const player = document.getElementById("fjolsenPlayer");
+
+      if (!canvas || !playButton || !player) {
+        return;
+      }
+
+      const ctx = canvas.getContext("2d");
+      if (!ctx) {
+        return;
+      }
+
+      ctx.imageSmoothingEnabled = false;
+      const pixelSize = 10;
+      canvas.width = 16 * pixelSize;
+      canvas.height = 16 * pixelSize;
+
+      const colors = {
+        ink: "#0c0f1a",
+        hair1: "#3a2a1e",
+        face1: "#e8c29a",
+        face2: "#c99b74",
+        eyeW: "#eaf2ff",
+        eyeB: "#101417",
+        band1: "#13A0F9",
+        band2: "#6cc3ff",
+        pad1: "#FF2F9C",
+        pad2: "#FF83CA",
+      };
+
+      const sprite = [
+        0, 0, 0, 7, 7, 7, 7, 7, 7, 7, 7, 0, 0, 0, 0, 0,
+        0, 0, 9, 9, 7, 7, 7, 7, 7, 7, 9, 9, 0, 0, 0, 0,
+        0, 9, 10, 9, 2, 2, 2, 2, 2, 2, 9, 10, 9, 0, 0, 0,
+        7, 7, 9, 7, 2, 2, 2, 2, 2, 2, 7, 9, 7, 7, 0, 0,
+        0, 2, 2, 2, 3, 3, 3, 3, 3, 3, 2, 2, 2, 0, 0, 0,
+        0, 2, 3, 3, 3, 5, 6, 3, 3, 5, 6, 3, 3, 2, 0, 0,
+        0, 2, 3, 3, 3, 5, 6, 3, 3, 5, 6, 3, 3, 2, 0, 0,
+        0, 2, 3, 3, 4, 4, 4, 3, 3, 4, 4, 4, 3, 2, 0, 0,
+        0, 2, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 3, 2, 0, 0,
+        0, 2, 2, 3, 4, 4, 1, 1, 1, 4, 4, 3, 2, 2, 0, 0,
+        0, 0, 2, 2, 3, 4, 4, 4, 4, 4, 3, 2, 2, 0, 0, 0,
+        0, 0, 7, 7, 1, 1, 0, 0, 0, 1, 1, 7, 7, 0, 0, 0,
+        0, 0, 7, 7, 0, 0, 0, 0, 0, 0, 0, 7, 7, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+      ];
+
+      const palette = [
+        null,
+        colors.ink,
+        colors.hair1,
+        colors.face1,
+        colors.face2,
+        colors.eyeW,
+        colors.eyeB,
+        colors.band1,
+        colors.band2,
+        colors.pad1,
+        colors.pad2,
+      ];
+
+      for (let y = 0; y < 16; y += 1) {
+        for (let x = 0; x < 16; x += 1) {
+          const value = sprite[y * 16 + x];
+          if (!value) {
+            continue;
+          }
+          ctx.fillStyle = palette[value];
+          ctx.fillRect(x * pixelSize, y * pixelSize, pixelSize, pixelSize);
+        }
+      }
+
+      playButton.addEventListener("click", () => {
+        player.hidden = !player.hidden;
+      });
+    })();
   </script>
 
   <script>
