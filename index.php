@@ -714,7 +714,7 @@
                 <span class="absolute left-4 top-4 rounded-full bg-rose-500 px-3 py-1 text-xs font-semibold text-white">🔴 LIVE</span>
                 <iframe
                   data-preview-frame="true"
-                  src="https://player.twitch.tv/?channel=fjOlseFN&parent=fjolsenbanden.setaei.com&muted=true"
+                  src="https://player.twitch.tv/?channel=FjOlsenFN&parent=fjolsenbanden.setaei.com&muted=true"
                   title="Fjolsenbanden Twitch Player"
                   allowfullscreen=""
                   class="aspect-video w-full bg-black"
@@ -748,7 +748,7 @@
                     Se full stream
                   </button>
                   <div class="flex gap-3 text-xs text-slate-300">
-                    <span>eller fortsett på<a href="https://www.twitch.tv/fjOlsenFN" target="_blank" rel="noopener noreferrer" class="ml-1 text-[#38bdf8]">Twitch</a></span>
+                    <span>eller fortsett på<a href="https://www.twitch.tv/FjOlsenFN" target="_blank" rel="noopener noreferrer" class="ml-1 text-[#38bdf8]">Twitch</a></span>
                     <span>|</span>
                     <a href="https://youtube.com/@fjolsenbanden" target="_blank" rel="noopener noreferrer" class="text-[#38bdf8]">YouTube</a>
                   </div>
