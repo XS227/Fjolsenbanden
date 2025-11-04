@@ -353,61 +353,92 @@ function RewardsSectionForm({ draft, updateDraftConfig }) {
         });
     };
 
-    return (
-        React.createElement("div", { className: "space-y-4" },
-            items.map((item, index) => (
-                React.createElement(Card, { key: item.id, className: "border-slate-800 bg-slate-900/60" },
-                    React.createElement(CardHeader, { className: "flex flex-col gap-2 border-b border-slate-800/60 pb-3 sm:flex-row sm:items-center sm:justify-between" },
-                        React.createElement(CardTitle, { className: "text-base text-slate-100" }, item.title || "Premie"),
-                        React.createElement("div", { className: "flex gap-2" },
-                            React.createElement(Button, {
-                                type: "button",
-                                className: "bg-slate-800 text-slate-200 hover:bg-slate-700",
-                                onClick: () => moveItem(index, -1),
-                                disabled: index === 0,
-                            }, React.createElement(ArrowUp, { size: 16 })),
-                            React.createElement(Button, {
-                                type: "button",
-                                className: "bg-slate-800 text-slate-200 hover:bg-slate-700",
-                                onClick: () => moveItem(index, 1),
-                                disabled: index === items.length - 1,
-                            }, React.createElement(ArrowDown, { size: 16 })),
-                            React.createElement(Button, {
-                                type: "button",
-                                className: "bg-rose-500/10 text-rose-300 hover:bg-rose-500/20",
-                                onClick: () => removeItem(index),
-                            },
-                                React.createElement(Trash2, { size: 16, className: "mr-1" }),
-                                "Fjern"))),
-                    React.createElement(CardContent, { className: "grid gap-4 sm:grid-cols-2" },
-                        React.createElement(Field, {
-                            label: "Tittel",
-                            value: item.title,
-                            onChange: (value) => updateItem(index, (entry) => (entry.title = value)),
-                        }),
-                        React.createElement(Field, {
-                            label: "Lenke",
-                            value: item.link,
-                            onChange: (value) => updateItem(index, (entry) => (entry.link = value)),
-                        }),
-                        React.createElement(Field, {
-                            label: "Bilde",
-                            value: item.image,
-                            onChange: (value) => updateItem(index, (entry) => (entry.image = value)),
-                        }),
-                        React.createElement(Field, {
-                            label: "Alt-tekst",
-                            value: item.alt ?? "",
-                            onChange: (value) => updateItem(index, (entry) => (entry.alt = value)),
-                        }))))
-            )),
-            React.createElement(Button, {
+    const rewardCards = items.map((item, index) =>
+        React.createElement(
+            Card,
+            { key: item.id, className: "border-slate-800 bg-slate-900/60" },
+            React.createElement(
+                CardHeader,
+                {
+                    className: "flex flex-col gap-2 border-b border-slate-800/60 pb-3 sm:flex-row sm:items-center sm:justify-between",
+                },
+                React.createElement(CardTitle, { className: "text-base text-slate-100" }, item.title || "Premie"),
+                React.createElement(
+                    "div",
+                    { className: "flex gap-2" },
+                    React.createElement(
+                        Button,
+                        {
+                            type: "button",
+                            className: "bg-slate-800 text-slate-200 hover:bg-slate-700",
+                            onClick: () => moveItem(index, -1),
+                            disabled: index === 0,
+                        },
+                        React.createElement(ArrowUp, { size: 16 })
+                    ),
+                    React.createElement(
+                        Button,
+                        {
+                            type: "button",
+                            className: "bg-slate-800 text-slate-200 hover:bg-slate-700",
+                            onClick: () => moveItem(index, 1),
+                            disabled: index === items.length - 1,
+                        },
+                        React.createElement(ArrowDown, { size: 16 })
+                    ),
+                    React.createElement(
+                        Button,
+                        {
+                            type: "button",
+                            className: "bg-rose-500/10 text-rose-300 hover:bg-rose-500/20",
+                            onClick: () => removeItem(index),
+                        },
+                        React.createElement(Trash2, { size: 16, className: "mr-1" }),
+                        "Fjern"
+                    )
+                )
+            ),
+            React.createElement(
+                CardContent,
+                { className: "grid gap-4 sm:grid-cols-2" },
+                React.createElement(Field, {
+                    label: "Tittel",
+                    value: item.title,
+                    onChange: (value) => updateItem(index, (entry) => (entry.title = value)),
+                }),
+                React.createElement(Field, {
+                    label: "Lenke",
+                    value: item.link,
+                    onChange: (value) => updateItem(index, (entry) => (entry.link = value)),
+                }),
+                React.createElement(Field, {
+                    label: "Bilde",
+                    value: item.image,
+                    onChange: (value) => updateItem(index, (entry) => (entry.image = value)),
+                }),
+                React.createElement(Field, {
+                    label: "Alt-tekst",
+                    value: item.alt ?? "",
+                    onChange: (value) => updateItem(index, (entry) => (entry.alt = value)),
+                })
+            )
+        )
+    );
+
+    return React.createElement(
+        "div",
+        { className: "space-y-4" },
+        rewardCards,
+        React.createElement(
+            Button,
+            {
                 type: "button",
                 className: "bg-emerald-500 text-emerald-950 hover:bg-emerald-400",
                 onClick: addItem,
             },
-                React.createElement(Plus, { size: 16, className: "mr-2" }),
-                "Legg til premie"))
+            React.createElement(Plus, { size: 16, className: "mr-2" }),
+            "Legg til premie"
+        )
     );
 }
 
@@ -456,56 +487,87 @@ function PartnersSectionForm({ draft, updateDraftConfig }) {
         });
     };
 
-    return (
-        React.createElement("div", { className: "space-y-4" },
-            logos.map((logo, index) => (
-                React.createElement(Card, { key: logo.id, className: "border-slate-800 bg-slate-900/60" },
-                    React.createElement(CardHeader, { className: "flex flex-col gap-2 border-b border-slate-800/60 pb-3 sm:flex-row sm:items-center sm:justify-between" },
-                        React.createElement(CardTitle, { className: "text-base text-slate-100" }, logo.name || "Partner"),
-                        React.createElement("div", { className: "flex gap-2" },
-                            React.createElement(Button, {
-                                type: "button",
-                                className: "bg-slate-800 text-slate-200 hover:bg-slate-700",
-                                onClick: () => moveLogo(index, -1),
-                                disabled: index === 0,
-                            }, React.createElement(ArrowUp, { size: 16 })),
-                            React.createElement(Button, {
-                                type: "button",
-                                className: "bg-slate-800 text-slate-200 hover:bg-slate-700",
-                                onClick: () => moveLogo(index, 1),
-                                disabled: index === logos.length - 1,
-                            }, React.createElement(ArrowDown, { size: 16 })),
-                            React.createElement(Button, {
-                                type: "button",
-                                className: "bg-rose-500/10 text-rose-300 hover:bg-rose-500/20",
-                                onClick: () => removeLogo(index),
-                            },
-                                React.createElement(Trash2, { size: 16, className: "mr-1" }),
-                                "Fjern"))),
-                    React.createElement(CardContent, { className: "grid gap-4 sm:grid-cols-2" },
-                        React.createElement(Field, {
-                            label: "Navn",
-                            value: logo.name,
-                            onChange: (value) => updateLogo(index, (entry) => (entry.name = value)),
-                        }),
-                        React.createElement(Field, {
-                            label: "Lenke",
-                            value: logo.url,
-                            onChange: (value) => updateLogo(index, (entry) => (entry.url = value)),
-                        }),
-                        React.createElement(Field, {
-                            label: "Logo-URL",
-                            value: logo.image,
-                            onChange: (value) => updateLogo(index, (entry) => (entry.image = value)),
-                        })))))
+    const partnerCards = logos.map((logo, index) =>
+        React.createElement(
+            Card,
+            { key: logo.id, className: "border-slate-800 bg-slate-900/60" },
+            React.createElement(
+                CardHeader,
+                {
+                    className: "flex flex-col gap-2 border-b border-slate-800/60 pb-3 sm:flex-row sm:items-center sm:justify-between",
+                },
+                React.createElement(CardTitle, { className: "text-base text-slate-100" }, logo.name || "Partner"),
+                React.createElement(
+                    "div",
+                    { className: "flex gap-2" },
+                    React.createElement(
+                        Button,
+                        {
+                            type: "button",
+                            className: "bg-slate-800 text-slate-200 hover:bg-slate-700",
+                            onClick: () => moveLogo(index, -1),
+                            disabled: index === 0,
+                        },
+                        React.createElement(ArrowUp, { size: 16 })
+                    ),
+                    React.createElement(
+                        Button,
+                        {
+                            type: "button",
+                            className: "bg-slate-800 text-slate-200 hover:bg-slate-700",
+                            onClick: () => moveLogo(index, 1),
+                            disabled: index === logos.length - 1,
+                        },
+                        React.createElement(ArrowDown, { size: 16 })
+                    ),
+                    React.createElement(
+                        Button,
+                        {
+                            type: "button",
+                            className: "bg-rose-500/10 text-rose-300 hover:bg-rose-500/20",
+                            onClick: () => removeLogo(index),
+                        },
+                        React.createElement(Trash2, { size: 16, className: "mr-1" }),
+                        "Fjern"
+                    )
+                )
             ),
-            React.createElement(Button, {
+            React.createElement(
+                CardContent,
+                { className: "grid gap-4 sm:grid-cols-2" },
+                React.createElement(Field, {
+                    label: "Navn",
+                    value: logo.name,
+                    onChange: (value) => updateLogo(index, (entry) => (entry.name = value)),
+                }),
+                React.createElement(Field, {
+                    label: "Lenke",
+                    value: logo.url,
+                    onChange: (value) => updateLogo(index, (entry) => (entry.url = value)),
+                }),
+                React.createElement(Field, {
+                    label: "Logo-URL",
+                    value: logo.image,
+                    onChange: (value) => updateLogo(index, (entry) => (entry.image = value)),
+                })
+            )
+        )
+    );
+
+    return React.createElement(
+        "div",
+        { className: "space-y-4" },
+        partnerCards,
+        React.createElement(
+            Button,
+            {
                 type: "button",
                 className: "bg-emerald-500 text-emerald-950 hover:bg-emerald-400",
                 onClick: addLogo,
             },
-                React.createElement(Plus, { size: 16, className: "mr-2" }),
-                "Legg til partner"))
+            React.createElement(Plus, { size: 16, className: "mr-2" }),
+            "Legg til partner"
+        )
     );
 }
 
