@@ -979,7 +979,12 @@
               </p>
             </div>
             <div class="mt-6 grid gap-4 sm:grid-cols-2 lg:mt-8 lg:grid-cols-4">
-              <div class="flex flex-col items-center gap-3 rounded-2xl border border-white/10 bg-white/5 p-5 text-center shadow-inner">
+              <a
+                href="https://www.twitch.tv/fjolsenbanden"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="flex flex-col items-center gap-3 rounded-2xl border border-white/10 bg-white/5 p-5 text-center shadow-inner no-underline transition hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#38bdf8]"
+              >
                 <span class="flex h-14 w-14 items-center justify-center rounded-full bg-[#9146FF]/20">
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="h-8 w-8 text-[#9146FF]" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                     <path d="M21 2H3v16h5v4l4-4h5l4-4V2zm-10 9V7m5 4V7"></path>
@@ -991,8 +996,13 @@
                   </p>
                   <p class="text-xs uppercase tracking-wide text-zinc-300">Twitch følgere</p>
                 </div>
-              </div>
-              <div class="flex flex-col items-center gap-3 rounded-2xl border border-white/10 bg-white/5 p-5 text-center shadow-inner">
+              </a>
+              <a
+                href="https://www.tiktok.com/@fjolsenbanden"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="flex flex-col items-center gap-3 rounded-2xl border border-white/10 bg-white/5 p-5 text-center shadow-inner no-underline transition hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#38bdf8]"
+              >
                 <span class="flex h-14 w-14 items-center justify-center rounded-full bg-[#69C9D0]/20">
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="h-8 w-8 text-[#69C9D0]" fill="currentColor" aria-hidden="true">
                     <path d="M14 3a1 1 0 0 1 1-1h1.25a1 1 0 0 1 1 .88 4.3 4.3 0 0 0 3.87 3.74 1 1 0 0 1 .88 1V9.7a1 1 0 0 1-1.14 1 7.6 7.6 0 0 1-2.1-.52v1.57a6.25 6.25 0 1 1-6.25-6.25h.5V5a1 1 0 0 0-.86-1H11A4.75 4.75 0 1 0 15.75 8v-2a6.3 6.3 0 0 1-1.75-.75V3Z" />
@@ -1004,8 +1014,13 @@
                   </p>
                   <p class="text-xs uppercase tracking-wide text-zinc-300">TikTok følgere</p>
                 </div>
-              </div>
-              <div class="flex flex-col items-center gap-3 rounded-2xl border border-white/10 bg-white/5 p-5 text-center shadow-inner">
+              </a>
+              <a
+                href="https://discord.gg/fjolsenbanden"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="flex flex-col items-center gap-3 rounded-2xl border border-white/10 bg-white/5 p-5 text-center shadow-inner no-underline transition hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#38bdf8]"
+              >
                 <span class="flex h-14 w-14 items-center justify-center rounded-full bg-[#5865F2]/20">
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="h-8 w-8 text-[#5865F2]" fill="currentColor" aria-hidden="true">
                     <path d="M20.317 4.369a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037 12.9 12.9 0 0 0-.608 1.249 15.7 15.7 0 0 0-5.486 0 10.5 10.5 0 0 0-.626-1.249.077.077 0 0 0-.079-.037 19.736 19.736 0 0 0-4.885 1.515.07.07 0 0 0-.032.028c-3.218 4.676-3.835 9.211-3.409 13.69a.082.082 0 0 0 .031.056 19.9 19.9 0 0 0 5.993 3.047.079.079 0 0 0 .084-.028 13 13 0 0 0 1.226-1.994.077.077 0 0 0-.041-.105 12.1 12.1 0 0 1-1.872-.892.078.078 0 0 1-.008-.13c.125-.094.25-.192.37-.291a.074.074 0 0 1 .077-.01c3.927 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .078.01c.12.099.245.198.37.291a.078.078 0 0 1-.008.13 13.09 13.09 0 0 1-1.873.892.077.077 0 0 0-.04.105 12.9 12.9 0 0 0 1.225 1.994.079.079 0 0 0 .084.028 19.876 19.876 0 0 0 6.002-3.047.077.077 0 0 0 .03-.055c.5-5.177-.838-9.673-3.548-13.662a.061.061 0 0 0-.031-.028Zm-12.052 9.91c-1.18 0-2.158-1.085-2.158-2.419 0-1.333.955-2.418 2.158-2.418 1.213 0 2.182 1.095 2.158 2.418-.001 1.334-.955 2.419-2.158 2.419Zm7.472 0c-1.18 0-2.158-1.085-2.158-2.419 0-1.333.955-2.418 2.158-2.418 1.213 0 2.182 1.095 2.158 2.418 0 1.334-.945 2.419-2.158 2.419Z" />
@@ -1017,7 +1032,7 @@
                   </p>
                   <p class="text-xs uppercase tracking-wide text-zinc-300">Discord medlemmer</p>
                 </div>
-              </div>
+              </a>
               <div class="flex flex-col items-center gap-3 rounded-2xl border border-white/10 bg-white/5 p-5 text-center shadow-inner">
                 <span class="flex h-14 w-14 items-center justify-center rounded-full bg-[#FACC15]/20">
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="h-8 w-8 text-[#FACC15]" fill="currentColor" aria-hidden="true">
@@ -1645,6 +1660,9 @@
       };
 
       const formatCompact = (value) => {
+        if (value < 100000) {
+          return plainFormatter.format(value);
+        }
         if (value >= 1000000) {
           const millions = value / 1000000;
           const decimals = millions >= 10 ? 0 : 1;
