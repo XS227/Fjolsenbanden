@@ -93,6 +93,48 @@
   </head>
   <body class="bg-slate-950 text-slate-100">
     <div id="root"></div>
-    <script type="module" src="/src/admin-main.jsx"></script>
+    <script type="module">
+      const DEV_ENTRY = "/src/admin-main.jsx";
+      const PROD_ENTRY = "/admin-assets/admin-app.js";
+
+      const loadModule = async (specifier) => {
+        try {
+          await import(specifier);
+          return true;
+        } catch (error) {
+          console.warn(`Kunne ikke laste modul: ${specifier}`, error);
+          return false;
+        }
+      };
+
+      const loadAdminApp = async () => {
+        const loadedDevBundle = await loadModule(DEV_ENTRY);
+        if (loadedDevBundle) {
+          return;
+        }
+
+        const loadedProdBundle = await loadModule(PROD_ENTRY);
+        if (!loadedProdBundle) {
+          throw new Error("Ingen av admin-bundlene kunne lastes.");
+        }
+      };
+
+      loadAdminApp().catch((error) => {
+        console.error("Kunne ikke laste admin-panelet", error);
+        const root = document.getElementById("root");
+        if (!root) {
+          return;
+        }
+
+        root.innerHTML = `
+          <div class="flex min-h-screen flex-col items-center justify-center gap-3 bg-slate-950 px-6 text-center text-slate-100">
+            <div class="text-lg font-semibold">Vi klarte ikke å laste admin-panelet.</div>
+            <p class="max-w-md text-sm text-slate-400">
+              Last inn siden på nytt eller ta kontakt med utvikler hvis problemet vedvarer.
+            </p>
+          </div>
+        `;
+      });
+    </script>
   </body>
 </html>
