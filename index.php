@@ -55,41 +55,105 @@
         }
       }
 
-      .partner-section {
-        margin: 5rem auto 0;
-        max-width: 64rem;
+      :root {
+        --fj-section-gap: clamp(3.5rem, 7vw, 6rem);
       }
 
-      .partner-logos {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        justify-items: center;
-        gap: 2rem;
+      [data-section] {
+        scroll-margin-top: 6.5rem;
+      }
+
+      [data-section] + [data-section] {
+        margin-top: var(--fj-section-gap);
+      }
+
+      .partners {
+        background: #041149;
+        text-align: center;
+        padding: 4rem 1rem;
+        border-radius: 2rem;
+        max-width: 64rem;
         margin: 0 auto;
       }
 
-      @media (min-width: 768px) {
-        .partner-logos {
-          grid-template-columns: repeat(4, minmax(0, 1fr));
-        }
+      .partners h2 {
+        font-size: 2rem;
+        font-weight: 800;
+        margin-bottom: 0.5rem;
       }
 
-      .partner-logos .partner-logo-tile {
+      .partners p {
+        color: #c9d4ff;
+        font-size: 1.1rem;
+        margin-bottom: 2rem;
+      }
+
+      .partner-logos {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 2rem;
+        margin-bottom: 2rem;
+      }
+
+      .partner-logos .logo {
+        position: relative;
+        overflow: hidden;
+        background: rgba(255, 255, 255, 0.04);
+        border-radius: 1rem;
+        width: 220px;
+        height: 160px;
         display: flex;
         align-items: center;
         justify-content: center;
-        width: 100%;
-        max-width: 13.875rem;
-        min-height: 7.5rem;
       }
 
-      .partner-logos .partner-logo-img {
-        display: block;
-        max-width: 100%;
-        max-height: 7.5rem;
-        width: auto;
-        height: auto;
+      .partner-logos img {
+        max-width: 80%;
+        max-height: 80%;
         object-fit: contain;
+        display: block;
+      }
+
+      .partner-logos .logo .logo-fallback {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 1.5rem;
+        font-size: 0.95rem;
+        font-weight: 600;
+        letter-spacing: 0.3em;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.78);
+      }
+
+      .partners .cta {
+        display: inline-block;
+        background: linear-gradient(90deg, #13a0f9, #ff2f9c);
+        color: #fff;
+        text-decoration: none;
+        font-weight: 600;
+        padding: 0.9rem 2.2rem;
+        border-radius: 50px;
+      }
+
+      body.theme-light .partners {
+        background: #e9f2ff;
+        color: #0b143f;
+      }
+
+      body.theme-light .partners p {
+        color: rgba(11, 20, 63, 0.75);
+      }
+
+      body.theme-light .partner-logos .logo {
+        background: rgba(11, 20, 63, 0.06);
+      }
+
+      body.theme-light .partner-logos .logo .logo-fallback {
+        color: rgba(11, 20, 63, 0.65);
       }
 
       .loader {
@@ -457,7 +521,7 @@
               <li><a class="transition-colors duration-150 hover:text-[#13A0F9]" href="#" data-nav-link>Hjem</a></li>
               <li><a class="transition-colors duration-150 hover:text-[#13A0F9]" href="#live" data-nav-link>Live</a></li>
               <li><a class="transition-colors duration-150 hover:text-[#13A0F9]" href="#medlemskap" data-nav-link>Medlemskap</a></li>
-              <li><a class="transition-colors duration-150 hover:text-[#13A0F9]" href="#premier" data-nav-link>Premier</a></li>
+              <li><a class="transition-colors duration-150 hover:text-[#13A0F9]" href="#partnere" data-nav-link>Samarbeidspartnere</a></li>
               <li><a class="transition-colors duration-150 hover:text-[#13A0F9]" href="#partners" data-nav-link>Samarbeid</a></li>
               <li><a class="transition-colors duration-150 hover:text-[#13A0F9]" href="#kontakt" data-nav-link>Kontakt</a></li>
             </ul>
@@ -549,7 +613,7 @@
               <li><a class="block rounded-md px-4 py-2 transition hover:bg-white/10" href="#" data-nav-close="true">Hjem</a></li>
               <li><a class="block rounded-md px-4 py-2 transition hover:bg-white/10" href="#live" data-nav-close="true">Live</a></li>
               <li><a class="block rounded-md px-4 py-2 transition hover:bg-white/10" href="#medlemskap" data-nav-close="true">Medlemskap</a></li>
-              <li><a class="block rounded-md px-4 py-2 transition hover:bg-white/10" href="#premier" data-nav-close="true">Premier</a></li>
+              <li><a class="block rounded-md px-4 py-2 transition hover:bg-white/10" href="#partnere" data-nav-close="true">Samarbeidspartnere</a></li>
               <li><a class="block rounded-md px-4 py-2 transition hover:bg-white/10" href="#partners" data-nav-close="true">Samarbeid</a></li>
               <li><a class="block rounded-md px-4 py-2 transition hover:bg-white/10" href="#kontakt" data-nav-close="true">Kontakt</a></li>
             </ul>
@@ -561,7 +625,7 @@
 
 
         <main class="relative z-10 flex flex-1 flex-col pb-28">
-        <section id="community" class="section-shell pt-6">
+        <section id="community" class="section-shell pt-6" data-section>
           <div class="mx-auto grid max-w-6xl gap-10 lg:grid-cols-2 lg:items-start">
             <div class="space-y-6">
               <div class="space-y-4 text-center lg:text-left">
@@ -575,7 +639,10 @@
               <div class="space-y-4 rounded-3xl border border-white/10 bg-white/5 p-6 text-left shadow-[0_18px_42px_rgba(12,21,45,0.45)]">
                 <h2 class="text-xl font-semibold text-[#13A0F9]">🎮 Hva er FjOlsenbanden?</h2>
                 <p class="text-sm leading-relaxed text-zinc-200 sm:text-base">
-                  FjOlsenbanden er et raskt voksende gaming-community med over 2.5k medlemmer på Discord, 3.2k følgere på Twitch og 4.2k på TikTok – både barn, ungdom og foreldre!
+                  FjOlsenbanden er et raskt voksende gaming-community med over
+                  <span data-followers="discord" data-format="compact">2.5k</span>&nbsp;medlemmer på Discord,
+                  <span data-followers="twitch" data-format="compact">3.2k</span>&nbsp;følgere på Twitch og
+                  <span data-followers="tiktok" data-format="compact">4.2k</span>&nbsp;på TikTok – både barn, ungdom og foreldre!
                 </p>
                 <p class="text-sm leading-relaxed text-zinc-200 sm:text-base">
                   <span class="font-semibold text-white">Målet vårt er enkelt:</span><br class="hidden sm:block" />Å skape et trygt, positivt og inkluderende miljø der alle kan game uten hets, mobbing eller negativ adferd.
@@ -700,133 +767,210 @@
                   </a>
                 </div>
                 <p class="mt-3 text-center text-xs text-zinc-400 sm:text-left">
-                  Totalt over 10 000 følgere på tvers av Discord, Twitch, YouTube, TikTok og Instagram.
+                  Totalt over
+                  <span
+                    data-followers-total="discord,twitch,youtube,tiktok,instagram"
+                    data-format="plain"
+                    data-round="up-1000"
+                    data-min="10000"
+                  >
+                    10 000
+                  </span>
+                  følgere på tvers av Discord, Twitch, YouTube, TikTok og Instagram.
                 </p>
               </div>
             </div>
           </div>
         </section>
 
-        <section id="live" class="section-shell relative mt-12">
-          <div class="mx-auto grid max-w-7xl items-start gap-8 lg:grid-cols-3">
+        <section id="live" class="section-shell" data-section>
+          <div class="mx-auto grid max-w-7xl gap-8 lg:grid-cols-3">
             <div class="space-y-4 lg:col-span-2">
-              <div class="relative overflow-hidden rounded-2xl border border-white/10 shadow-2xl">
-                <span class="absolute left-3 top-3 rounded-full bg-rose-500 px-4 py-1 text-xs font-semibold text-white shadow animate-pulse">🔴 LIVE</span>
-                <!-- Dynamisk Twitch-embed med fallback -->
-                <div id="playerWrap" class="relative bg-black aspect-video rounded-2xl overflow-hidden">
-                  <div id="fallback" class="absolute inset-0 grid place-items-center text-center p-6">
-                    <div>
-                      <img id="thumb" class="w-full max-w-md mx-auto rounded-lg border border-white/10" alt="Twitch forhåndsvisning" />
-                      <p class="mt-3 text-zinc-300 text-sm">Hvis spilleren ikke vises, åpne streamen direkte på Twitch.</p>
-                      <a
-                        id="cta"
-                        target="_blank"
-                        rel="noopener"
-                        class="inline-block mt-4 px-6 py-2 rounded-full bg-gradient-to-r from-[#13A0F9] to-[#FF2F9C]
-                               font-semibold text-white shadow-[0_0_20px_rgba(19,160,249,0.35)] hover:from-[#0d8bd6] hover:to-[#e12585] transition"
-                      >
-                        Åpne på Twitch
-                      </a>
-                    </div>
+              <div class="relative overflow-hidden rounded-2xl border border-white/10 bg-[#101a2e]">
+                <span class="absolute left-4 top-4 rounded-full bg-rose-500 px-3 py-1 text-xs font-semibold text-white">🔴 LIVE</span>
+                <iframe
+                  data-preview-frame="true"
+                  src="https://player.twitch.tv/?channel=FjOlsenFN&parent=fjolsenbanden.setaei.com&muted=true"
+                  title="Fjolsenbanden Twitch Player"
+                  allowfullscreen=""
+                  class="aspect-video w-full bg-black"
+                ></iframe>
+                <div
+                  data-preview-overlay="true"
+                  class="absolute inset-0 flex flex-col items-center justify-center gap-4 bg-black/75 p-6 text-center"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="lucide lucide-play h-12 w-12 text-[#38bdf8]"
+                  >
+                    <polygon points="6 3 20 12 6 21 6 3"></polygon>
+                  </svg>
+                  <p class="text-sm text-slate-200">
+                    1-minutt forhåndsvisning –<span data-preview-timer="true" class="ml-1">60</span>s igjen
+                  </p>
+                  <button
+                    type="button"
+                    class="inline-flex items-center justify-center rounded-full bg-[#22d3ee] px-6 py-2.5 font-semibold text-[#0f172a] transition hover:bg-[#0ea5e9]"
+                    data-video-unmute="true"
+                  >
+                    Se full stream
+                  </button>
+                  <div class="flex gap-3 text-xs text-slate-300">
+                    <span>eller fortsett på<a href="https://www.twitch.tv/FjOlsenFN" target="_blank" rel="noopener noreferrer" class="ml-1 text-[#38bdf8]">Twitch</a></span>
+                    <span>|</span>
+                    <a href="https://youtube.com/@fjolsenbanden" target="_blank" rel="noopener noreferrer" class="text-[#38bdf8]">YouTube</a>
                   </div>
                 </div>
               </div>
-              <script>
-                (() => {
-                  const channel = "FjOlsenFN";
-                  const parentHost = location.hostname || "localhost";
-                  const src = `https://player.twitch.tv/?channel=${encodeURIComponent(channel)}&parent=${encodeURIComponent(parentHost)}&muted=false&autoplay=true`;
-
-                  const iframe = document.createElement("iframe");
-                  iframe.src = src;
-                  iframe.allowFullscreen = true;
-                  iframe.className = "absolute inset-0 w-full h-full border-0";
-                  const wrap = document.getElementById("playerWrap");
-                  if (!wrap) return;
-                  wrap.appendChild(iframe);
-
-                  const thumb = document.getElementById("thumb");
-                  const cta = document.getElementById("cta");
-                  if (thumb) thumb.src = `https://static-cdn.jtvnw.net/previews-ttv/live_user_${channel}-640x360.jpg`;
-                  if (cta) cta.href = `https://www.twitch.tv/${channel}`;
-
-                  let loaded = false;
-                  iframe.addEventListener("load", () => {
-                    loaded = true;
-                    const fallback = document.getElementById("fallback");
-                    if (fallback) fallback.style.display = "none";
-                  });
-                  setTimeout(() => {
-                    if (!loaded) console.warn("Twitch embed ble blokkert — viser fallback.");
-                  }, 5000);
-                })();
-              </script>
+              <div class="flex flex-wrap justify-center gap-3">
+                <a
+                  href="https://www.twitch.tv/fjolsenbanden"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="flex items-center gap-2 rounded-full border border-white/10 px-4 py-2 text-sm transition hover:bg-white/10"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="lucide lucide-twitch h-5 w-5 text-purple-500"
+                  >
+                    <path d="M21 2H3v16h5v4l4-4h5l4-4V2zm-10 9V7m5 4V7"></path>
+                  </svg>
+                  <span>Twitch</span>
+                </a>
+                <a
+                  href="https://youtube.com/@fjolsenbanden"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="flex items-center gap-2 rounded-full border border-white/10 px-4 py-2 text-sm transition hover:bg-white/10"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="lucide lucide-youtube h-5 w-5 text-red-500"
+                  >
+                    <path d="M2.5 17a24.12 24.12 0 0 1 0-10 a2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1 16.2 0A2 2 0 0 1 2.5 17"></path>
+                    <path d="m10 15 5-3-5-3z"></path>
+                  </svg>
+                  <span>YouTube</span>
+                </a>
+                <a
+                  href="https://www.tiktok.com/@fjolsenbanden"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="flex items-center gap-2 rounded-full border border-white/10 px-4 py-2 text-sm transition hover:bg-white/10"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="lucide lucide-smartphone h-5 w-5 text-pink-500"
+                  >
+                    <rect width="14" height="20" x="5" y="2" rx="2" ry="2"></rect>
+                    <path d="M12 18h.01"></path>
+                  </svg>
+                  <span>TikTok</span>
+                </a>
+                <a
+                  href="https://www.instagram.com/fjolsenbanden"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="flex items-center gap-2 rounded-full border border-white/10 px-4 py-2 text-sm transition hover:bg-white/10"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="lucide lucide-instagram h-5 w-5 text-fuchsia-400"
+                  >
+                    <rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect>
+                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                  </svg>
+                  <span>Instagram</span>
+                </a>
+              </div>
             </div>
-            <div class="flex max-h-[640px] flex-col rounded-2xl border border-white/10 bg-[#1f2940] p-4">
-              <h3 class="mb-3 flex items-center gap-2 font-semibold text-[#13A0F9]">Live chat</h3>
-              <div id="custom-chat" class="flex-1 overflow-y-auto space-y-2 pr-1 text-sm"></div>
+            <div class="flex max-h-[640px] flex-col rounded-2xl border border-white/10 bg-[#13203b] p-4">
+              <h3 class="mb-3 flex items-center gap-2 text-sm font-semibold text-[#38bdf8]">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="lucide lucide-message-circle h-4 w-4"
+                >
+                  <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"></path>
+                </svg>
+                Live chat
+              </h3>
+              <div class="flex-1 space-y-3 overflow-y-auto pr-1 text-sm">
+                <div class="rounded-lg border border-white/10 bg-[#101a2e] px-3 py-2">
+                  <span class="mr-2 font-semibold text-[#38bdf8]">Lina</span>
+                  <span class="text-slate-200">Haha, den bossen var vilt!</span>
+                </div>
+                <div class="rounded-lg border border-white/10 bg-[#101a2e] px-3 py-2">
+                  <span class="mr-2 font-semibold text-[#38bdf8]">Jonas</span>
+                  <span class="text-slate-200">Gleder meg til premie-trekningen 🔥</span>
+                </div>
+                <div class="rounded-lg border border-white/10 bg-[#101a2e] px-3 py-2">
+                  <span class="mr-2 font-semibold text-[#38bdf8]">Sara</span>
+                  <span class="text-slate-200">Hei fra TikTok 😎</span>
+                </div>
+                <div class="rounded-lg border border-white/10 bg-[#101a2e] px-3 py-2">
+                  <span class="mr-2 font-semibold text-[#38bdf8]">Marius</span>
+                  <span class="text-slate-200">Bra lyd i dag!</span>
+                </div>
+              </div>
+              <input
+                type="text"
+                placeholder="Skriv en kommentar..."
+                class="mt-3 w-full rounded-lg border border-white/20 bg-[#0f172a] px-3 py-2 text-sm text-white placeholder-slate-400 outline-none focus:ring-2 focus:ring-[#38bdf8]"
+              />
             </div>
           </div>
         </section>
 
-        <script src="https://unpkg.com/tmi.js@1.8.5/dist/tmi.min.js"></script>
-        <script>
-          (() => {
-            const channel = "FjOlsenFN";
-            const el = document.getElementById("custom-chat");
-            const maxItems = 200;
-
-            if (!el) return;
-
-            const client = new tmi.Client({
-              connection: { secure: true, reconnect: true },
-              channels: [channel],
-            });
-
-            client.connect().catch(console.error);
-
-            function addMsg({ user, text, color }) {
-              const item = document.createElement("div");
-              item.className = "rounded-lg bg-white/5 px-3 py-2";
-
-              const name = document.createElement("span");
-              name.className = "mr-2 font-semibold";
-              name.style.color = color || "#13A0F9";
-              name.textContent = user;
-
-              const body = document.createElement("span");
-              body.className = "text-zinc-200";
-              body.textContent = text;
-
-              item.appendChild(name);
-              item.appendChild(body);
-              el.appendChild(item);
-
-              while (el.children.length > maxItems) {
-                el.removeChild(el.firstChild);
-              }
-              el.scrollTop = el.scrollHeight;
-            }
-
-            client.on("message", (channel, tags, message, self) => {
-              if (self) return;
-              addMsg({
-                user: tags["display-name"] || tags.username,
-                text: message,
-                color: tags.color,
-              });
-            });
-
-            client.on("connected", () =>
-              addMsg({ user: "System", text: "Tilkoblet Twitch-chat ✅", color: "#4ade80" })
-            );
-            client.on("disconnected", () =>
-              addMsg({ user: "System", text: "Frakoblet fra chat ❌", color: "#f87171" })
-            );
-          })();
-        </script>
-
-        <section id="medlemskap" class="section-shell mt-20 text-center">
+        <section id="medlemskap" class="section-shell text-center" data-section>
           <h2 class="mb-4 text-3xl font-bold">Et levende community</h2>
           <div class="mx-auto mt-6 max-w-6xl rounded-3xl border border-white/10 bg-[#0B163F]/80 p-6 shadow-[0_24px_60px_rgba(6,14,35,0.55)] sm:p-8">
             <div class="mx-auto max-w-2xl text-center">
@@ -842,7 +986,9 @@
                   </svg>
                 </span>
                 <div>
-                  <p class="text-2xl font-bold text-white">3.2k</p>
+                  <p class="text-2xl font-bold text-white">
+                    <span data-followers="twitch" data-format="compact">3.2k</span>
+                  </p>
                   <p class="text-xs uppercase tracking-wide text-zinc-300">Twitch følgere</p>
                 </div>
               </div>
@@ -853,7 +999,9 @@
                   </svg>
                 </span>
                 <div>
-                  <p class="text-2xl font-bold text-white">4.2k</p>
+                  <p class="text-2xl font-bold text-white">
+                    <span data-followers="tiktok" data-format="compact">4.2k</span>
+                  </p>
                   <p class="text-xs uppercase tracking-wide text-zinc-300">TikTok følgere</p>
                 </div>
               </div>
@@ -864,7 +1012,9 @@
                   </svg>
                 </span>
                 <div>
-                  <p class="text-2xl font-bold text-white">2.5k</p>
+                  <p class="text-2xl font-bold text-white">
+                    <span data-followers="discord" data-format="compact">2.5k</span>
+                  </p>
                   <p class="text-xs uppercase tracking-wide text-zinc-300">Discord medlemmer</p>
                 </div>
               </div>
@@ -951,29 +1101,30 @@
           </div>
         </section>
 
-        <section id="premier" class="partner-section section-shell">
-          <h2 class="sr-only">Samarbeidspartnere</h2>
-          <div id="sponsorer" class="partner-logos">
-            <div class="partner-logo-tile">
-              <span class="sr-only">Lenovo</span>
-              <img src="/assets/partners/lenovo-logo.png" alt="Lenovo logo" loading="lazy" class="partner-logo-img" />
+        <section id="partnere" class="partners" data-section>
+          <h2>Samarbeidspartnere</h2>
+          <p>Vi har allerede hatt samarbeid med flere kjente merkevarer.</p>
+
+          <div class="partner-logos">
+            <div class="logo">
+              <img src="/assets/partners/lenovo-logo.png" alt="Lenovo" />
             </div>
-            <div class="partner-logo-tile">
-              <span class="sr-only">Komplett</span>
-              <img src="/assets/partners/komplett-logo.png" alt="Komplett logo" loading="lazy" class="partner-logo-img" />
+            <div class="logo">
+              <img src="/assets/partners/komplett-logo.png" alt="Komplett" />
             </div>
-            <div class="partner-logo-tile">
-              <span class="sr-only">Philips</span>
-              <img src="/assets/partners/philips-logo.png" alt="Philips logo" loading="lazy" class="partner-logo-img" />
+            <div class="logo">
+              <img src="/assets/partners/philips-logo.png" alt="Philips" />
             </div>
-            <div class="partner-logo-tile">
-              <span class="sr-only">Samsung</span>
-              <img src="/assets/partners/samsung-logo.png" alt="Samsung logo" loading="lazy" class="partner-logo-img" />
+            <div class="logo">
+              <img src="/assets/partners/samsung-logo.png" alt="Samsung" />
             </div>
           </div>
+
+          <p>Ønsker du å synliggjøre din merkevare for vårt engasjerte gaming-publikum?</p>
+          <a href="#kontakt" class="cta">Kontakt oss</a>
         </section>
 
-      <section id="tilbud" class="section-shell mt-20">
+      <section id="tilbud" class="section-shell" data-section>
         <div class="mx-auto max-w-6xl space-y-6 rounded-3xl border border-white/10 bg-white/5 p-8 text-center shadow-[0_24px_48px_rgba(6,14,35,0.45)]">
           <div class="space-y-3">
             <h2 class="text-3xl font-bold text-white">Andre tilbud</h2>
@@ -1019,7 +1170,7 @@
         </div>
       </section>
 
-      <section id="kontakt" class="section-shell mt-20">
+      <section id="kontakt" class="section-shell" data-section>
         <div class="mx-auto max-w-5xl space-y-6 rounded-3xl border border-white/10 bg-[#161f33]/90 p-8 text-center shadow-2xl">
           <h2 class="text-3xl font-bold">Kontakt oss</h2>
             <p class="text-zinc-300">
@@ -1415,8 +1566,8 @@
           </a>
         </li>
         <li>
-          <a class="flex items-center justify-between gap-3 rounded-2xl border border-transparent bg-white/5 px-4 py-3 text-base font-semibold text-white/85 transition hover:border-white/20 hover:bg-white/10" href="#premier" data-footer-link>
-            <span>Premier</span>
+          <a class="flex items-center justify-between gap-3 rounded-2xl border border-transparent bg-white/5 px-4 py-3 text-base font-semibold text-white/85 transition hover:border-white/20 hover:bg-white/10" href="#partnere" data-footer-link>
+            <span>Samarbeidspartnere</span>
             <span class="text-xs font-semibold uppercase tracking-[0.35em] text-[#13A0F9]/70">04</span>
           </a>
         </li>
@@ -1460,6 +1611,137 @@
       </div>
     </div>
   </section>
+
+  <script>
+    (() => {
+      const plainFormatter = new Intl.NumberFormat("no-NO");
+      const defaultFollowers = {
+        discord: { count: 2500, label: "medlemmer" },
+        twitch: { count: 3200, label: "følgere" },
+        youtube: { count: 0, label: "abonnenter" },
+        tiktok: { count: 4200, label: "følgere" },
+        instagram: { count: 0, label: "følgere" },
+      };
+
+      const mergeFollowers = (base, overrides) => {
+        const merged = { ...base };
+        if (!overrides || typeof overrides !== "object") {
+          return merged;
+        }
+        Object.entries(overrides).forEach(([key, value]) => {
+          if (!value || typeof value !== "object") {
+            return;
+          }
+          const existing = merged[key] || {};
+          const nextCount =
+            typeof value.count === "number"
+              ? value.count
+              : typeof existing.count === "number"
+              ? existing.count
+              : 0;
+          merged[key] = { ...existing, ...value, count: nextCount };
+        });
+        return merged;
+      };
+
+      const formatCompact = (value) => {
+        if (value >= 1000000) {
+          const millions = value / 1000000;
+          const decimals = millions >= 10 ? 0 : 1;
+          return `${Number(millions.toFixed(decimals))}m`;
+        }
+        if (value >= 1000) {
+          const thousands = value / 1000;
+          const decimals = thousands >= 10 ? 0 : 1;
+          return `${Number(thousands.toFixed(decimals))}k`;
+        }
+        return String(value);
+      };
+
+      const formatValue = (value, format) => {
+        switch (format) {
+          case "compact":
+            return formatCompact(value);
+          case "plain":
+            return plainFormatter.format(value);
+          default:
+            return String(value);
+        }
+      };
+
+      let followersConfig =
+        typeof window !== "undefined" && window.fjCommunityFollowers
+          ? mergeFollowers(defaultFollowers, window.fjCommunityFollowers)
+          : { ...defaultFollowers };
+
+      const applyFollowerValues = () => {
+        document.querySelectorAll("[data-followers]").forEach((element) => {
+          const key = element.dataset.followers;
+          if (!key) {
+            return;
+          }
+          const config = followersConfig[key];
+          if (!config) {
+            return;
+          }
+          const format = element.dataset.format || "compact";
+          const prefix = element.dataset.prefix ?? "";
+          const suffix = element.dataset.suffix ?? "";
+          element.textContent = `${prefix}${formatValue(config.count, format)}${suffix}`;
+        });
+
+        document.querySelectorAll("[data-followers-total]").forEach((element) => {
+          const keys = element.dataset.followersTotal
+            ? element.dataset.followersTotal
+                .split(",")
+                .map((value) => value.trim())
+                .filter(Boolean)
+            : Object.keys(followersConfig);
+
+          const totalValue = keys.reduce(
+            (accumulator, key) => accumulator + (followersConfig[key]?.count ?? 0),
+            0
+          );
+
+          const roundStrategy = element.dataset.round || "none";
+          let valueToFormat = totalValue;
+          if (roundStrategy === "up-1000") {
+            valueToFormat = Math.ceil(totalValue / 1000) * 1000;
+          } else if (roundStrategy === "up-100") {
+            valueToFormat = Math.ceil(totalValue / 100) * 100;
+          } else if (roundStrategy === "down-100") {
+            valueToFormat = Math.floor(totalValue / 100) * 100;
+          }
+
+          const minValue = element.dataset.min ? Number.parseInt(element.dataset.min, 10) : null;
+          if (typeof minValue === "number" && !Number.isNaN(minValue)) {
+            valueToFormat = Math.max(valueToFormat, minValue);
+          }
+
+          const format = element.dataset.format || "plain";
+          const prefix = element.dataset.prefix ?? "";
+          const suffix = element.dataset.suffix ?? "";
+          element.textContent = `${prefix}${formatValue(valueToFormat, format)}${suffix}`;
+        });
+      };
+
+      const updateFollowers = (overrides) => {
+        followersConfig = mergeFollowers(followersConfig, overrides);
+        applyFollowerValues();
+      };
+
+      if (typeof window !== "undefined") {
+        window.updateFjCommunityFollowers = updateFollowers;
+        window.fjCommunityFollowers = followersConfig;
+      }
+
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", applyFollowerValues, { once: true });
+      } else {
+        applyFollowerValues();
+      }
+    })();
+  </script>
 
   <script>
       const SKIN_STORAGE_KEY = "fjolsenbanden-skin";
@@ -1891,6 +2173,40 @@
         });
       }
 
+      const previewOverlay = document.querySelector('[data-preview-overlay]');
+      const previewFrame = document.querySelector('[data-preview-frame]');
+      const previewTimer = document.querySelector('[data-preview-timer]');
+      const previewUnmuteButton = document.querySelector('[data-video-unmute]');
+      if (previewOverlay && previewFrame && previewTimer && previewUnmuteButton) {
+        let remaining = Number.parseInt(previewTimer.textContent || '60', 10) || 60;
+        const interval = window.setInterval(() => {
+          remaining = Math.max(remaining - 1, 0);
+          previewTimer.textContent = String(remaining);
+          if (remaining === 0) {
+            window.clearInterval(interval);
+          }
+        }, 1000);
+
+        const enableFullStream = () => {
+          previewOverlay.remove();
+          window.clearInterval(interval);
+          try {
+            const url = new URL(previewFrame.src);
+            url.searchParams.set('muted', 'false');
+            previewFrame.src = url.toString();
+          } catch (error) {
+            previewFrame.src = previewFrame.src.includes('muted=true')
+              ? previewFrame.src.replace('muted=true', 'muted=false')
+              : `${previewFrame.src}${previewFrame.src.includes('?') ? '&' : '?'}muted=false`;
+          }
+        };
+
+        previewUnmuteButton.addEventListener('click', (event) => {
+          event.preventDefault();
+          enableFullStream();
+        });
+      }
+
       const yearValue = String(new Date().getFullYear());
       const currentYear = document.getElementById("current-year");
       if (currentYear) {
@@ -1898,15 +2214,28 @@
       }
     </script>
     <script>
-      window.addEventListener("load", () => {
-        const loader = document.getElementById("loader");
-        if (!loader) {
-          return;
+      (() => {
+        const dismissLoader = () => {
+          const loader = document.getElementById("loader");
+          if (!loader || loader.dataset.dismissed === "true") {
+            return;
+          }
+          loader.dataset.dismissed = "true";
+          loader.style.transition = "opacity .4s ease";
+          loader.style.opacity = "0";
+          window.setTimeout(() => loader.remove(), 450);
+        };
+
+        if (document.readyState === "complete" || document.readyState === "interactive") {
+          window.setTimeout(dismissLoader, 0);
+        } else {
+          document.addEventListener("DOMContentLoaded", dismissLoader, { once: true });
         }
-        loader.style.transition = "opacity .4s ease";
-        loader.style.opacity = "0";
-        window.setTimeout(() => loader.remove(), 450);
-      });
+
+        window.addEventListener("load", dismissLoader, { once: true });
+
+        window.setTimeout(dismissLoader, 4000);
+      })();
     </script>
   </body>
 </html>

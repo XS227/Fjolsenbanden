@@ -63,79 +63,151 @@ export default function BrandingPage() {
         }
     };
 
-    return (
-        React.createElement("div", { className: "grid gap-6 lg:grid-cols-[2fr_1fr]" },
-            React.createElement(Card, { className: "border-slate-800 bg-slate-900/70" },
-                React.createElement(CardHeader, null,
-                    React.createElement(CardTitle, { className: "flex items-center gap-2 text-lg text-slate-100" },
-                        React.createElement(Palette, { size: 18, className: "text-emerald-400" }),
-                        "Branding"),
-                    React.createElement("p", { className: "text-sm text-slate-400" }, "Last opp logo, sett farger og skrifttyper")),
-                React.createElement(CardContent, { className: "space-y-6" },
-                    React.createElement("div", { className: "grid gap-4 sm:grid-cols-2" },
-                        React.createElement(BrandingField, {
-                            label: "Primærfarge",
-                            value: branding.colors.primary,
-                            onChange: (value) => handleColorChange("primary", value),
+    const themeButtons = THEMES.map((theme) =>
+        React.createElement(Button, {
+            key: theme.id,
+            type: "button",
+            onClick: () => handleThemeSelect(theme.id),
+            className: `w-full justify-start border ${activeSite?.theme === theme.id
+                ? "border-emerald-400 bg-emerald-500/10 text-emerald-300"
+                : "border-slate-800 bg-slate-900 text-slate-200 hover:bg-slate-800"}`,
+        },
+            React.createElement("div", { className: "flex flex-col" },
+                React.createElement("span", { className: "text-sm font-semibold" }, theme.label),
+                React.createElement("span", { className: "text-xs text-slate-400" }, theme.description))
+        )
+    );
+
+    return React.createElement(
+        "div",
+        { className: "grid gap-6 lg:grid-cols-[2fr_1fr]" },
+        React.createElement(
+            Card,
+            { className: "border-slate-800 bg-slate-900/70" },
+            React.createElement(
+                CardHeader,
+                null,
+                React.createElement(
+                    CardTitle,
+                    { className: "flex items-center gap-2 text-lg text-slate-100" },
+                    React.createElement(Palette, { size: 18, className: "text-emerald-400" }),
+                    "Branding"
+                ),
+                React.createElement(
+                    "p",
+                    { className: "text-sm text-slate-400" },
+                    "Last opp logo, sett farger og skrifttyper"
+                )
+            ),
+            React.createElement(
+                CardContent,
+                { className: "space-y-6" },
+                React.createElement(
+                    "div",
+                    { className: "grid gap-4 sm:grid-cols-2" },
+                    React.createElement(BrandingField, {
+                        label: "Primærfarge",
+                        value: branding.colors.primary,
+                        onChange: (value) => handleColorChange("primary", value),
+                    }),
+                    React.createElement(BrandingField, {
+                        label: "Aksentfarge",
+                        value: branding.colors.accent,
+                        onChange: (value) => handleColorChange("accent", value),
+                    })
+                ),
+                React.createElement(
+                    "div",
+                    { className: "grid gap-4 sm:grid-cols-2" },
+                    React.createElement(BrandingField, {
+                        label: "Display-font",
+                        value: branding.fonts.display,
+                        onChange: (value) => handleFontChange("display", value),
+                    }),
+                    React.createElement(BrandingField, {
+                        label: "Brødtekst-font",
+                        value: branding.fonts.text,
+                        onChange: (value) => handleFontChange("text", value),
+                    })
+                ),
+                React.createElement(
+                    "div",
+                    { className: "space-y-2" },
+                    React.createElement(Label, { className: "text-xs uppercase text-slate-400" }, "Logo"),
+                    React.createElement(
+                        "div",
+                        { className: "flex items-center gap-3" },
+                        React.createElement(Input, {
+                            type: "file",
+                            accept: "image/png,image/svg+xml,image/jpeg",
+                            onChange: (event) => handleFileUpload(event, "logo"),
+                            className: "border-slate-800 bg-slate-900 text-slate-200",
                         }),
-                        React.createElement(BrandingField, {
-                            label: "Aksentfarge",
-                            value: branding.colors.accent,
-                            onChange: (value) => handleColorChange("accent", value),
-                        })),
-                    React.createElement("div", { className: "grid gap-4 sm:grid-cols-2" },
-                        React.createElement(BrandingField, {
-                            label: "Display-font",
-                            value: branding.fonts.display,
-                            onChange: (value) => handleFontChange("display", value),
+                        uploadState.isUploading &&
+                            React.createElement(Loader2, { className: "h-4 w-4 animate-spin text-emerald-400" })
+                    ),
+                    React.createElement(
+                        "p",
+                        { className: "text-xs text-slate-500" },
+                        "PNG, JPG eller SVG, maks 2MB"
+                    ),
+                    branding.logo &&
+                        React.createElement(
+                            "p",
+                            { className: "text-xs text-emerald-400" },
+                            `Gjeldende logo: ${branding.logo}`
+                        )
+                ),
+                React.createElement(
+                    "div",
+                    { className: "space-y-2" },
+                    React.createElement(Label, { className: "text-xs uppercase text-slate-400" }, "OpenGraph-bilde"),
+                    React.createElement(
+                        "div",
+                        { className: "flex items-center gap-3" },
+                        React.createElement(Input, {
+                            type: "file",
+                            accept: "image/png,image/jpeg",
+                            onChange: (event) => handleFileUpload(event, "og"),
+                            className: "border-slate-800 bg-slate-900 text-slate-200",
                         }),
-                        React.createElement(BrandingField, {
-                            label: "Brødtekst-font",
-                            value: branding.fonts.text,
-                            onChange: (value) => handleFontChange("text", value),
-                        })),
-                    React.createElement("div", { className: "space-y-2" },
-                        React.createElement(Label, { className: "text-xs uppercase text-slate-400" }, "Logo"),
-                        React.createElement("div", { className: "flex items-center gap-3" },
-                            React.createElement(Input, {
-                                type: "file",
-                                accept: "image/png,image/svg+xml,image/jpeg",
-                                onChange: (event) => handleFileUpload(event, "logo"),
-                                className: "border-slate-800 bg-slate-900 text-slate-200",
-                            }),
-                            uploadState.isUploading && React.createElement(Loader2, { className: "h-4 w-4 animate-spin text-emerald-400" })),
-                        React.createElement("p", { className: "text-xs text-slate-500" }, "PNG, JPG eller SVG, maks 2MB"),
-                        branding.logo && React.createElement("p", { className: "text-xs text-emerald-400" }, `Gjeldende logo: ${branding.logo}`)),
-                    React.createElement("div", { className: "space-y-2" },
-                        React.createElement(Label, { className: "text-xs uppercase text-slate-400" }, "OpenGraph-bilde"),
-                        React.createElement("div", { className: "flex items-center gap-3" },
-                            React.createElement(Input, {
-                                type: "file",
-                                accept: "image/png,image/jpeg",
-                                onChange: (event) => handleFileUpload(event, "og"),
-                                className: "border-slate-800 bg-slate-900 text-slate-200",
-                            }),
-                            uploadState.isUploading && React.createElement(Loader2, { className: "h-4 w-4 animate-spin text-emerald-400" })),
-                        React.createElement("p", { className: "text-xs text-slate-500" }, "Anbefalt størrelse 1200x675"),
-                        activeSiteState?.draft.seo.image && React.createElement("p", { className: "text-xs text-emerald-400" }, `Lagrer som ${activeSiteState.draft.seo.image}`))),
-            React.createElement(Card, { className: "border-slate-800 bg-slate-900/70" },
-                React.createElement(CardHeader, null,
-                    React.createElement(CardTitle, { className: "flex items-center gap-2 text-lg text-slate-100" },
-                        React.createElement(Sparkles, { size: 18, className: "text-emerald-400" }),
-                        "Tema"),
-                    React.createElement("p", { className: "text-sm text-slate-400" }, "Velg tema for landingssiden")),
-                React.createElement(CardContent, { className: "space-y-3" }, THEMES.map((theme) => (
-                    React.createElement(Button, {
-                        key: theme.id,
-                        type: "button",
-                        onClick: () => handleThemeSelect(theme.id),
-                        className: `w-full justify-start border ${activeSite?.theme === theme.id
-                            ? "border-emerald-400 bg-emerald-500/10 text-emerald-300"
-                            : "border-slate-800 bg-slate-900 text-slate-200 hover:bg-slate-800"}`,
-                    },
-                        React.createElement("div", { className: "flex flex-col" },
-                            React.createElement("span", { className: "text-sm font-semibold" }, theme.label),
-                            React.createElement("span", { className: "text-xs text-slate-400" }, theme.description)))))))
+                        uploadState.isUploading &&
+                            React.createElement(Loader2, { className: "h-4 w-4 animate-spin text-emerald-400" })
+                    ),
+                    React.createElement(
+                        "p",
+                        { className: "text-xs text-slate-500" },
+                        "Anbefalt størrelse 1200x675"
+                    ),
+                    activeSiteState?.draft.seo.image &&
+                        React.createElement(
+                            "p",
+                            { className: "text-xs text-emerald-400" },
+                            `Lagrer som ${activeSiteState.draft.seo.image}`
+                        )
+                )
+            )
+        ),
+        React.createElement(
+            Card,
+            { className: "border-slate-800 bg-slate-900/70" },
+            React.createElement(
+                CardHeader,
+                null,
+                React.createElement(
+                    CardTitle,
+                    { className: "flex items-center gap-2 text-lg text-slate-100" },
+                    React.createElement(Sparkles, { size: 18, className: "text-emerald-400" }),
+                    "Tema"
+                ),
+                React.createElement(
+                    "p",
+                    { className: "text-sm text-slate-400" },
+                    "Velg tema for landingssiden"
+                )
+            ),
+            React.createElement(CardContent, { className: "space-y-3" }, themeButtons)
+        )
     );
 }
 

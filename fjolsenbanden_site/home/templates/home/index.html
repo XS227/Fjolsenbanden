@@ -167,152 +167,72 @@
                 </a>
               </div>
               <div class="flex flex-wrap justify-center gap-6 text-sm text-slate-400">
-                <span>3200++ følgere på Twitch</span>
-                <span>4200+ følgere på TikTok</span>
-                <span>2500+ medlemmer i Discord</span>
-              </div>
-            </div>
-          </section>
-
-          <section id="oppdateringer" class="px-6">
-            <div
-              class="mx-auto max-w-6xl rounded-3xl border border-white/10 bg-[#13203b] p-6 shadow-[0_24px_48px_rgba(8,16,32,0.45)] transition duration-300 hover:border-white/20 hover:shadow-[0_28px_60px_rgba(8,16,32,0.5)] sm:p-8"
-            >
-              <div class="grid gap-6 lg:grid-cols-[minmax(0,1fr)_260px]">
-                <div class="space-y-4 text-left">
-                  <span
-                    class="inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-1 text-xs font-semibold uppercase tracking-[0.35em] text-white/70"
-                  >
-                    <span class="inline-flex h-2 w-2 animate-pulse rounded-full bg-[#22d3ee]"></span>
-                    Synk alltid
-                  </span>
-                  <h2 class="text-3xl font-bold">Se de siste oppdateringene live</h2>
-                  <p class="max-w-2xl text-sm text-slate-200 sm:text-base">
-                    Oppdater Fjolsenbanden-portalen med ferske nyheter fra Quest-boardet. Her samles høydepunkter, premier og
-                    trygghetsinformasjon så foreldre og spillere kan følge med fra første sekund.
-                  </p>
-                  <div class="flex flex-wrap gap-3">
-                    <a
-                      href="/updates.html"
-                      class="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#22d3ee] to-[#ff5b24] px-5 py-2 text-sm font-semibold text-[#0f172a] shadow-lg shadow-[#22d3ee]/30 transition hover:from-[#0ea5e9] hover:to-[#ff784d]"
-                    >
-                      Les siste oppdatering
-                      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4">
-                        <path d="M5 12h14"></path>
-                        <path d="m12 5 7 7-7 7"></path>
-                      </svg>
-                    </a>
-                    <a
-                      href="#live"
-                      class="inline-flex items-center justify-center gap-2 rounded-full border border-white/20 px-5 py-2 text-sm font-semibold text-white/85 transition hover:border-white/40 hover:text-white"
-                    >
-                      Se streamplanen
-                      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4">
-                        <path d="M12 20v-8"></path>
-                        <path d="m7 12 5-5 5 5"></path>
-                      </svg>
-                    </a>
-                  </div>
-                  <p class="text-xs text-slate-400">
-                    Seksjonen hentes direkte fra oppdateringsarkivet – ingen ekstra manuelt arbeid trengs for å holde siden i synk med lanseringer.
-                  </p>
-                </div>
-                <div class="space-y-3 rounded-2xl border border-white/10 bg-[#101a2e] p-5 shadow-inner">
-                  <div class="flex items-center justify-between text-[0.65rem] font-semibold uppercase tracking-[0.3em] text-white/60">
-                    <span>Mai 2024</span>
-                    <span class="inline-flex items-center gap-2 text-[#22d3ee]">
-                      <span class="inline-flex h-2 w-2 animate-pulse rounded-full bg-current"></span>
-                      Live
-                    </span>
-                  </div>
-                  <h3 class="text-xl font-semibold text-white">Quest-board er lansert</h3>
-                  <p class="text-sm text-slate-200">
-                    Ukentlige quester, digitale badges og varsler for hele familien – Vipps-verifiseringen gjør det enkelt å komme i gang.
-                  </p>
-                  <a href="/updates.html" class="inline-flex items-center gap-2 text-sm font-semibold text-[#22d3ee] transition hover:text-white">
-                    Les oppdateringen
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4">
-                      <path d="M5 12h14"></path>
-                      <path d="m12 5 7 7-7 7"></path>
-                    </svg>
-                  </a>
-                </div>
+                <span>
+                  <span data-followers="twitch" data-format="compact">3.2k</span>
+                  følgere på Twitch
+                </span>
+                <span>
+                  <span data-followers="tiktok" data-format="compact">4.2k</span>
+                  følgere på TikTok
+                </span>
+                <span>
+                  <span data-followers="discord" data-format="compact">2.5k</span>
+                  medlemmer i Discord
+                </span>
               </div>
             </div>
           </section>
 
           <section id="live" class="px-6">
-            <div class="mx-auto max-w-7xl space-y-6">
-              <div class="space-y-4">
-                <div class="relative overflow-hidden rounded-2xl border border-white/10 bg-[#101a2e]">
-                  <span class="absolute left-4 top-4 rounded-full bg-rose-500 px-3 py-1 text-xs font-semibold text-white">🔴 LIVE</span>
-                  <iframe
-                    data-preview-frame="true"
-                    src="https://player.twitch.tv/?channel=FjOlsenFN&parent=fjolsenbanden.setaei.com&muted=true"
-                    title="Fjolsenbanden Twitch Player"
-                    allowfullscreen=""
-                    class="aspect-video w-full bg-black"
-                  ></iframe>
-                  <div
-                    data-preview-overlay="true"
-                    class="absolute inset-0 flex flex-col items-center justify-center gap-4 bg-black/75 p-6 text-center"
+          <div class="mx-auto grid max-w-7xl gap-8 lg:grid-cols-3">
+            <div class="space-y-4 lg:col-span-2">
+              <div class="relative overflow-hidden rounded-2xl border border-white/10 bg-[#101a2e]">
+                <span class="absolute left-4 top-4 rounded-full bg-rose-500 px-3 py-1 text-xs font-semibold text-white">🔴 LIVE</span>
+                <iframe
+                  data-preview-frame="true"
+                  src="https://player.twitch.tv/?channel=FjOlsenFN&parent=fjolsenbanden.setaei.com&muted=true"
+                  title="Fjolsenbanden Twitch Player"
+                  allowfullscreen=""
+                  class="aspect-video w-full bg-black"
+                ></iframe>
+                <div
+                  data-preview-overlay="true"
+                  class="absolute inset-0 flex flex-col items-center justify-center gap-4 bg-black/75 p-6 text-center"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="lucide lucide-play h-12 w-12 text-[#38bdf8]"
                   >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      class="lucide lucide-play h-12 w-12 text-[#38bdf8]"
-                    >
-                      <polygon points="6 3 20 12 6 21 6 3"></polygon>
-                    </svg>
-                    <p class="text-sm text-slate-200">
-                      1-minutt forhåndsvisning –<span data-preview-timer="true" class="ml-1">60</span>s igjen
-                    </p>
-                    <button
-                      type="button"
-                      class="inline-flex items-center justify-center rounded-full bg-[#22d3ee] px-6 py-2.5 font-semibold text-[#0f172a] transition hover:bg-[#0ea5e9]"
-                      data-video-unmute="true"
-                    >
-                      Se full stream
-                    </button>
-                    <div class="flex gap-3 text-xs text-slate-300">
-                      <span>eller fortsett på<a href="https://www.twitch.tv/FjOlsenFN" target="_blank" rel="noopener noreferrer" class="ml-1 text-[#38bdf8]">Twitch</a></span>
-                      <span>|</span>
-                      <a href="https://youtube.com/@fjolsenbanden" target="_blank" rel="noopener noreferrer" class="text-[#38bdf8]">YouTube</a>
-                    </div>
+                    <polygon points="6 3 20 12 6 21 6 3"></polygon>
+                  </svg>
+                  <p class="text-sm text-slate-200">
+                    1-minutt forhåndsvisning –<span data-preview-timer="true" class="ml-1">60</span>s igjen
+                  </p>
+                  <button
+                    type="button"
+                    class="inline-flex items-center justify-center rounded-full bg-[#22d3ee] px-6 py-2.5 font-semibold text-[#0f172a] transition hover:bg-[#0ea5e9]"
+                    data-video-unmute="true"
+                  >
+                    Se full stream
+                  </button>
+                  <div class="flex gap-3 text-xs text-slate-300">
+                    <span>eller fortsett på<a href="https://www.twitch.tv/FjOlsenFN" target="_blank" rel="noopener noreferrer" class="ml-1 text-[#38bdf8]">Twitch</a></span>
+                    <span>|</span>
+                    <a href="https://youtube.com/@fjolsenbanden" target="_blank" rel="noopener noreferrer" class="text-[#38bdf8]">YouTube</a>
                   </div>
                 </div>
-                <div class="flex flex-wrap justify-center gap-3">
+              </div>
+              <div class="flex flex-wrap justify-center gap-3">
                 <a
-                  href="https://www.twitch.tv/FjOlsenFN"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="flex items-center gap-2 rounded-full border border-white/10 px-4 py-2 text-sm transition hover:bg-white/10"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      class="lucide lucide-twitch h-5 w-5 text-purple-500"
-                    >
-                      <path d="M21 2H3v16h5v4l4-4h5l4-4V2zm-10 9V7m5 4V7"></path>
-                    </svg>
-                    <span>Twitch</span>
-                </a>
-                <a
-                  href="https://discord.gg/fjolsenbanden"
+                  href="https://www.twitch.tv/fjolsenbanden"
                   target="_blank"
                   rel="noopener noreferrer"
                   class="flex items-center gap-2 rounded-full border border-white/10 px-4 py-2 text-sm transition hover:bg-white/10"
@@ -327,75 +247,130 @@
                     stroke-width="2"
                     stroke-linecap="round"
                     stroke-linejoin="round"
-                    class="lucide lucide-discord h-5 w-5 text-indigo-400"
+                    class="lucide lucide-twitch h-5 w-5 text-purple-500"
                   >
-                    <path d="M20 8c-1.7-.8-3.5-1.3-5.3-1.5L13.4 5c-1.6-.4-3.2-.4-4.8 0L9.3 6.5C7.5 6.7 5.7 7.2 4 8c-1.4 2.1-2 4.5-1.7 6.9 1.9 1.4 3.9 2.4 6.1 3.1l.8-1.8c.7.2 1.3.3 2 .4-.1-.6-.3-1.1-.4-1.6a5.3 5.3 0 0 1-3.2-1.6c.7-.6 1.3-1.3 1.9-2 1.7.9 3.5.9 5.2 0 .6.7 1.2 1.4 1.9 2a5.3 5.3 0 0 1-3.2 1.6c-.1.5-.3 1-.4 1.6.7-.1 1.3-.2 2-.4l.8 1.8c2.2-.7 4.2-1.7 6.1-3.1.3-2.4-.3-4.8-1.7-6.9Z"></path>
-                    <path d="M9 13c.5.5 1.5.5 2 0"></path>
-                    <path d="M13 13c.5.5 1.5.5 2 0"></path>
+                    <path d="M21 2H3v16h5v4l4-4h5l4-4V2zm-10 9V7m5 4V7"></path>
                   </svg>
-                  <span>Discord</span>
+                  <span>Twitch</span>
                 </a>
-                  <a
-                    href="https://youtube.com/@fjolsenbanden"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="flex items-center gap-2 rounded-full border border-white/10 px-4 py-2 text-sm transition hover:bg-white/10"
+                <a
+                  href="https://youtube.com/@fjolsenbanden"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="flex items-center gap-2 rounded-full border border-white/10 px-4 py-2 text-sm transition hover:bg-white/10"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="lucide lucide-youtube h-5 w-5 text-red-500"
                   >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      class="lucide lucide-youtube h-5 w-5 text-red-500"
-                    >
-                      <path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17"></path>
-                      <path d="m10 15 5-3-5-3z"></path>
-                    </svg>
-                    <span>YouTube</span>
-                  </a>
-                  <a
-                    href="https://www.tiktok.com/@fjolsenbanden"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="flex items-center gap-2 rounded-full border border-white/10 px-4 py-2 text-sm transition hover:bg-white/10"
+                    <path d="M2.5 17a24.12 24.12 0 0 1 0-10 a2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1 16.2 0A2 2 0 0 1 2.5 17"></path>
+                    <path d="m10 15 5-3-5-3z"></path>
+                  </svg>
+                  <span>YouTube</span>
+                </a>
+                <a
+                  href="https://www.tiktok.com/@fjolsenbanden"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="flex items-center gap-2 rounded-full border border-white/10 px-4 py-2 text-sm transition hover:bg-white/10"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="lucide lucide-smartphone h-5 w-5 text-pink-500"
                   >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      class="lucide lucide-smartphone h-5 w-5 text-pink-500"
-                    >
-                      <rect width="14" height="20" x="5" y="2" rx="2" ry="2"></rect>
-                      <path d="M12 18h.01"></path>
-                    </svg>
-                    <span>TikTok</span>
-                  </a>
-                  <div class="rounded-3xl border border-white/10 bg-white/5 px-4 py-3 text-center text-xs text-slate-200 md:text-sm">
-                    🎥 Se FjOlsen LIVE! Stream-vinduet finner du rett over. 👉 Følg oss her: Discord · Twitch · YouTube · TikTok · Instagram
-                  </div>
-                </div>
-                <div class="rounded-2xl border border-white/10 bg-[#13203b] p-5 text-left">
-                  <p class="text-xs font-semibold uppercase tracking-[0.3em] text-slate-300">Fellesskap</p>
-                  <p class="mt-3 text-sm text-slate-200">
-                    Vi holder miljøet trygt med dedikerte moderatorer og tydelige regler mot hets, mobbing og negativ adferd.
-                  </p>
-                </div>
+                    <rect width="14" height="20" x="5" y="2" rx="2" ry="2"></rect>
+                    <path d="M12 18h.01"></path>
+                  </svg>
+                  <span>TikTok</span>
+                </a>
+                <a
+                  href="https://www.instagram.com/fjolsenbanden"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="flex items-center gap-2 rounded-full border border-white/10 px-4 py-2 text-sm transition hover:bg-white/10"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="lucide lucide-instagram h-5 w-5 text-fuchsia-400"
+                  >
+                    <rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect>
+                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                  </svg>
+                  <span>Instagram</span>
+                </a>
               </div>
             </div>
-          </section>
+            <div class="flex max-h-[640px] flex-col rounded-2xl border border-white/10 bg-[#13203b] p-4">
+              <h3 class="mb-3 flex items-center gap-2 text-sm font-semibold text-[#38bdf8]">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="lucide lucide-message-circle h-4 w-4"
+                >
+                  <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"></path>
+                </svg>
+                Live chat
+              </h3>
+              <div class="flex-1 space-y-3 overflow-y-auto pr-1 text-sm">
+                <div class="rounded-lg border border-white/10 bg-[#101a2e] px-3 py-2">
+                  <span class="mr-2 font-semibold text-[#38bdf8]">Lina</span>
+                  <span class="text-slate-200">Haha, den bossen var vilt!</span>
+                </div>
+                <div class="rounded-lg border border-white/10 bg-[#101a2e] px-3 py-2">
+                  <span class="mr-2 font-semibold text-[#38bdf8]">Jonas</span>
+                  <span class="text-slate-200">Gleder meg til premie-trekningen 🔥</span>
+                </div>
+                <div class="rounded-lg border border-white/10 bg-[#101a2e] px-3 py-2">
+                  <span class="mr-2 font-semibold text-[#38bdf8]">Sara</span>
+                  <span class="text-slate-200">Hei fra TikTok 😎</span>
+                </div>
+                <div class="rounded-lg border border-white/10 bg-[#101a2e] px-3 py-2">
+                  <span class="mr-2 font-semibold text-[#38bdf8]">Marius</span>
+                  <span class="text-slate-200">Bra lyd i dag!</span>
+                </div>
+              </div>
+              <input
+                type="text"
+                placeholder="Skriv en kommentar..."
+                class="mt-3 w-full rounded-lg border border-white/20 bg-[#0f172a] px-3 py-2 text-sm text-white placeholder-slate-400 outline-none focus:ring-2 focus:ring-[#38bdf8]"
+              />
+            </div>
+          </div>
+        </section>
 
-          <section id="medlemskap" class="px-6 py-20 text-center">
+        <section id="medlemskap" class="px-6 py-20 text-center">
             <h2 class="mb-4 text-3xl font-bold">Velg ditt medlemskap</h2>
             <p class="mx-auto mb-10 max-w-2xl text-slate-300">
               Bli med i Fjolsenbanden og lås opp premier, turneringer og unike perks. Foreldre verifiserer via Vipps.
@@ -538,7 +513,9 @@
                     <path d="M21 2H3v16h5v4l4-4h5l4-4V2zm-10 9V7m5 4V7"></path>
                   </svg>
                 </span>
-                <div class="text-2xl font-extrabold text-white">3.2k</div>
+                <div class="text-2xl font-extrabold text-white">
+                  <span data-followers="twitch" data-format="compact">3.2k</span>
+                </div>
                 <div class="text-sm text-slate-300">Twitch følgere</div>
               </div>
               <div class="flex flex-col items-center space-y-3 rounded-2xl border border-white/10 bg-[#13203b] p-6">
@@ -553,7 +530,9 @@
                     <path d="M14 3a1 1 0 0 1 1-1h1.25a1 1 0 0 1 1 .88 4.3 4.3 0 0 0 3.87 3.74 1 1 0 0 1 .88 1V9.7a1 1 0 0 1-1.14 1 7.6 7.6 0 0 1-2.1-.52v1.57a6.25 6.25 0 1 1-6.25-6.25h.5V5a1 1 0 0 0-.86-1H11A4.75 4.75 0 1 0 15.75 8v-2a6.3 6.3 0 0 1-1.75-.75V3Z" />
                   </svg>
                 </span>
-                <div class="text-2xl font-extrabold text-white">4.2k</div>
+                <div class="text-2xl font-extrabold text-white">
+                  <span data-followers="tiktok" data-format="compact">4.2k</span>
+                </div>
                 <div class="text-sm text-slate-300">TikTok følgere</div>
               </div>
               <div class="flex flex-col items-center space-y-3 rounded-2xl border border-white/10 bg-[#13203b] p-6">
@@ -568,7 +547,9 @@
                     <path d="M20.317 4.369a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037 12.9 12.9 0 0 0-.608 1.249 15.7 15.7 0 0 0-5.486 0 10.5 10.5 0 0 0-.626-1.249.077.077 0 0 0-.079-.037 19.736 19.736 0 0 0-4.885 1.515.07.07 0 0 0-.032.028c-3.218 4.676-3.835 9.211-3.409 13.69a.082.082 0 0 0 .031.056 19.9 19.9 0 0 0 5.993 3.047.079.079 0 0 0 .084-.028 13 13 0 0 0 1.226-1.994.077.077 0 0 0-.041-.105 12.1 12.1 0 0 1-1.872-.892.078.078 0 0 1-.008-.13c.125-.094.25-.192.37-.291a.074.074 0 0 1 .077-.01c3.927 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .078.01c.12.099.245.198.37.291a.078.078 0 0 1-.008.13 13.09 13.09 0 0 1-1.873.892.077.077 0 0 0-.04.105 12.9 12.9 0 0 0 1.225 1.994.079.079 0 0 0 .084.028 19.876 19.876 0 0 0 6.002-3.047.077.077 0 0 0 .03-.055c.5-5.177-.838-9.673-3.548-13.662a.061.061 0 0 0-.031-.028Zm-12.052 9.91c-1.18 0-2.158-1.085-2.158-2.419 0-1.333.955-2.418 2.158-2.418 1.213 0 2.182 1.095 2.158 2.418-.001 1.334-.955 2.419-2.158 2.419Zm7.472 0c-1.18 0-2.158-1.085-2.158-2.419 0-1.333.955-2.418 2.158-2.418 1.213 0 2.182 1.095 2.158 2.418 0 1.334-.945 2.419-2.158 2.419Z" />
                   </svg>
                 </span>
-                <div class="text-2xl font-extrabold text-white">2.5k</div>
+                <div class="text-2xl font-extrabold text-white">
+                  <span data-followers="discord" data-format="compact">2.5k</span>
+                </div>
                 <div class="text-sm text-slate-300">Discord medlemmer</div>
               </div>
               <div class="flex flex-col items-center space-y-3 rounded-2xl border border-white/10 bg-[#13203b] p-6">
@@ -676,6 +657,142 @@
             </div>
           </section>
 
+          <section id="oppdateringer" class="px-6 pt-4">
+            <div
+              class="mx-auto grid max-w-6xl gap-6 rounded-3xl border border-white/10 bg-[#13203b] p-6 shadow-[0_24px_48px_rgba(8,16,32,0.45)] transition duration-300 hover:border-white/20 hover:shadow-[0_28px_60px_rgba(8,16,32,0.5)] lg:grid-cols-[minmax(0,1fr)_260px] lg:p-8"
+            >
+              <div class="space-y-4 text-left">
+                <span
+                  class="inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-1 text-xs font-semibold uppercase tracking-[0.35em] text-white/70"
+                >
+                  <span class="inline-flex h-2 w-2 animate-pulse rounded-full bg-[#22d3ee]"></span>
+                  Synk alltid
+                </span>
+                <h2 class="text-3xl font-bold">Se de siste oppdateringene live</h2>
+                <p class="max-w-2xl text-sm text-slate-200 sm:text-base">
+                  Oppdater Fjolsenbanden-portalen med ferske nyheter fra Quest-boardet. Her samles høydepunkter, premier og
+                  trygghetsinformasjon så foreldre og spillere kan følge med fra første sekund.
+                </p>
+                <div class="flex flex-wrap gap-3">
+                  <a
+                    href="/updates.html"
+                    class="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#22d3ee] to-[#ff5b24] px-5 py-2 text-sm font-semibold text-[#0f172a] shadow-lg shadow-[#22d3ee]/30 transition hover:from-[#0ea5e9] hover:to-[#ff784d]"
+                  >
+                    Les siste oppdatering
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4">
+                      <path d="M5 12h14"></path>
+                      <path d="m12 5 7 7-7 7"></path>
+                    </svg>
+                  </a>
+                  <a
+                    href="#live"
+                    class="inline-flex items-center justify-center gap-2 rounded-full border border-white/20 px-5 py-2 text-sm font-semibold text-white/85 transition hover:border-white/40 hover:text-white"
+                  >
+                    Se streamplanen
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4">
+                      <path d="M12 20v-8"></path>
+                      <path d="m7 12 5-5 5 5"></path>
+                    </svg>
+                  </a>
+                </div>
+                <p class="text-xs text-slate-400">
+                  Seksjonen hentes direkte fra oppdateringsarkivet – ingen ekstra manuelt arbeid trengs for å holde siden i synk med lanseringer.
+                </p>
+              </div>
+              <div class="space-y-3 rounded-2xl border border-white/10 bg-[#101a2e] p-5 shadow-inner">
+                <div class="flex items-center justify-between text-[0.65rem] font-semibold uppercase tracking-[0.3em] text-white/60">
+                  <span>Mai 2024</span>
+                  <span class="inline-flex items-center gap-2 text-[#22d3ee]">
+                    <span class="inline-flex h-2 w-2 animate-pulse rounded-full bg-current"></span>
+                    Live
+                  </span>
+                </div>
+                <h3 class="text-xl font-semibold text-white">Quest-board er lansert</h3>
+                <p class="text-sm text-slate-200">
+                  Ukentlige quester, digitale badges og varsler for hele familien – Vipps-verifiseringen gjør det enkelt å komme i gang.
+                </p>
+                <a href="/updates.html" class="inline-flex items-center gap-2 text-sm font-semibold text-[#22d3ee] transition hover:text-white">
+                  Les oppdateringen
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4">
+                    <path d="M5 12h14"></path>
+                    <path d="m12 5 7 7-7 7"></path>
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </section>
+
+          <section id="tilbakemeldinger" class="px-6 pt-8">
+            <div
+              class="mx-auto grid max-w-6xl gap-6 rounded-3xl border border-white/10 bg-[#111C3A] p-6 shadow-[0_24px_48px_rgba(8,16,32,0.45)] transition duration-300 hover:border-white/20 hover:shadow-[0_28px_60px_rgba(8,16,32,0.5)] lg:grid-cols-[minmax(0,1fr)_260px] lg:p-8"
+            >
+              <div class="space-y-4 text-left">
+                <span
+                  class="inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-1 text-xs font-semibold uppercase tracking-[0.35em] text-white/70"
+                >
+                  <span class="inline-flex h-2 w-2 animate-pulse rounded-full bg-[#ff9b6a]"></span>
+                  Hør fra gjengen
+                </span>
+                <h2 class="text-3xl font-bold">Tilbakemeldinger fra barn og foreldre</h2>
+                <p class="max-w-2xl text-sm text-slate-200 sm:text-base">
+                  Vi utvikler Quest-boardet sammen med fellesskapet. Disse historiene viser hvordan barn og foreldre bruker portalen hver uke.
+                </p>
+                <div class="grid gap-4 sm:grid-cols-2">
+                  <article class="rounded-2xl border border-white/15 bg-white/5 p-4 shadow-[0_16px_32px_rgba(8,16,32,0.45)]">
+                    <div class="flex items-center gap-3 text-sm font-semibold text-[#ff9b6a]">
+                      <span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-[#ff9b6a]/10 text-base text-[#ff9b6a]">🎮</span>
+                      Barnas stemmer
+                    </div>
+                    <p class="mt-3 text-sm text-slate-100">
+                      «Ukens quest er favoritten min! Vi velger oppdrag sammen, og jeg får badges med en gang teamet godkjenner bragden min.»
+                    </p>
+                    <p class="mt-2 text-xs uppercase tracking-[0.25em] text-white/60">Aksel, 12 år</p>
+                  </article>
+                  <article class="rounded-2xl border border-white/15 bg-white/5 p-4 shadow-[0_16px_32px_rgba(8,16,32,0.45)]">
+                    <div class="flex items-center gap-3 text-sm font-semibold text-[#34d399]">
+                      <span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-[#34d399]/10 text-base text-[#34d399]">🛡️</span>
+                      Foreldrenes erfaring
+                    </div>
+                    <p class="mt-3 text-sm text-slate-100">
+                      «Dashboardet gir oss full kontroll på aktivitetene. Vi ser planen, godkjenner deltakelse og sender heiarop direkte i feeden.»
+                    </p>
+                    <p class="mt-2 text-xs uppercase tracking-[0.25em] text-white/60">Camilla, mamma til to gamere</p>
+                  </article>
+                </div>
+              </div>
+              <div class="space-y-4 rounded-2xl border border-white/10 bg-white/5 p-5 shadow-inner">
+                <h3 class="text-xl font-semibold text-white">Derfor samler vi tilbakemeldinger</h3>
+                <p class="text-sm text-slate-200">
+                  Innsikt fra familienettverket vårt hjelper oss å bygge funksjoner som skaper trygg og morsom spilling for alle.
+                </p>
+                <ul class="space-y-3 text-sm text-slate-200">
+                  <li class="flex items-start gap-2">
+                    <span class="mt-1 text-[#ff9b6a]">★</span>
+                    Ukentlige spørreundersøkelser der barna stemmer på nye quest-temaer.
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <span class="mt-1 text-[#34d399]">★</span>
+                    Foreldrepanel som deler tips til sunne rutiner og trygg kommunikasjon.
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <span class="mt-1 text-[#22d3ee]">★</span>
+                    Direktekanal til teamet for raske forbedringsforslag.
+                  </li>
+                </ul>
+                <a
+                  href="mailto:kontakt@fjolsenbanden.no"
+                  class="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#ff9b6a] to-[#22d3ee] px-5 py-2 text-sm font-semibold text-[#0f172a] shadow-lg shadow-[#22d3ee]/30 transition hover:from-[#ff7ad9] hover:to-[#0ea5e9]"
+                >
+                  Del din tilbakemelding
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4">
+                    <path d="M5 12h14"></path>
+                    <path d="m12 5 7 7-7 7"></path>
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </section>
+
           <section id="foreldre" class="grid gap-12 px-6 pb-20 lg:grid-cols-2 lg:items-center">
             <div class="space-y-5">
               <h2 class="text-3xl font-bold">Informasjon til foreldre</h2>
@@ -737,6 +854,141 @@
         </footer>
       </div>
     </div>
+
+    <script>
+      (function () {
+        var plainFormatter = new Intl.NumberFormat("no-NO");
+        var defaultFollowers = {
+          discord: { count: 2500, label: "medlemmer" },
+          twitch: { count: 3200, label: "følgere" },
+          youtube: { count: 0, label: "abonnenter" },
+          tiktok: { count: 4200, label: "følgere" },
+          instagram: { count: 0, label: "følgere" },
+        };
+
+        var mergeFollowers = function (base, overrides) {
+          var merged = Object.assign({}, base);
+          if (!overrides || typeof overrides !== "object") {
+            return merged;
+          }
+          Object.keys(overrides).forEach(function (key) {
+            var value = overrides[key];
+            if (!value || typeof value !== "object") {
+              return;
+            }
+            var existing = merged[key] || {};
+            var nextCount =
+              typeof value.count === "number"
+                ? value.count
+                : typeof existing.count === "number"
+                ? existing.count
+                : 0;
+            merged[key] = Object.assign({}, existing, value, { count: nextCount });
+          });
+          return merged;
+        };
+
+        var formatCompact = function (value) {
+          if (value >= 1000000) {
+            var millions = value / 1000000;
+            var decimals = millions >= 10 ? 0 : 1;
+            return String(Number(millions.toFixed(decimals))) + "m";
+          }
+          if (value >= 1000) {
+            var thousands = value / 1000;
+            var decimals = thousands >= 10 ? 0 : 1;
+            return String(Number(thousands.toFixed(decimals))) + "k";
+          }
+          return String(value);
+        };
+
+        var formatValue = function (value, format) {
+          switch (format) {
+            case "compact":
+              return formatCompact(value);
+            case "plain":
+              return plainFormatter.format(value);
+            default:
+              return String(value);
+          }
+        };
+
+        var followersConfig =
+          typeof window !== "undefined" && window.fjCommunityFollowers
+            ? mergeFollowers(defaultFollowers, window.fjCommunityFollowers)
+            : Object.assign({}, defaultFollowers);
+
+        var applyFollowerValues = function () {
+          document.querySelectorAll("[data-followers]").forEach(function (element) {
+            var key = element.getAttribute("data-followers");
+            if (!key || !followersConfig[key]) {
+              return;
+            }
+            var format = element.getAttribute("data-format") || "compact";
+            var prefix = element.getAttribute("data-prefix") || "";
+            var suffix = element.getAttribute("data-suffix") || "";
+            element.textContent = prefix + formatValue(followersConfig[key].count, format) + suffix;
+          });
+
+          document.querySelectorAll("[data-followers-total]").forEach(function (element) {
+            var keys = element.getAttribute("data-followers-total");
+            var resolvedKeys = keys
+              ? keys
+                  .split(",")
+                  .map(function (value) {
+                    return value.trim();
+                  })
+                  .filter(Boolean)
+              : Object.keys(followersConfig);
+
+            var totalValue = resolvedKeys.reduce(function (accumulator, key) {
+              return accumulator + (followersConfig[key] && typeof followersConfig[key].count === "number"
+                ? followersConfig[key].count
+                : 0);
+            }, 0);
+
+            var roundStrategy = element.getAttribute("data-round") || "none";
+            var valueToFormat = totalValue;
+            if (roundStrategy === "up-1000") {
+              valueToFormat = Math.ceil(totalValue / 1000) * 1000;
+            } else if (roundStrategy === "up-100") {
+              valueToFormat = Math.ceil(totalValue / 100) * 100;
+            } else if (roundStrategy === "down-100") {
+              valueToFormat = Math.floor(totalValue / 100) * 100;
+            }
+
+            var minValueAttr = element.getAttribute("data-min");
+            if (minValueAttr) {
+              var minValue = Number.parseInt(minValueAttr, 10);
+              if (!Number.isNaN(minValue)) {
+                valueToFormat = Math.max(valueToFormat, minValue);
+              }
+            }
+
+            var format = element.getAttribute("data-format") || "plain";
+            var prefix = element.getAttribute("data-prefix") || "";
+            var suffix = element.getAttribute("data-suffix") || "";
+            element.textContent = prefix + formatValue(valueToFormat, format) + suffix;
+          });
+        };
+
+        var updateFollowers = function (overrides) {
+          followersConfig = mergeFollowers(followersConfig, overrides);
+          applyFollowerValues();
+        };
+
+        if (typeof window !== "undefined") {
+          window.updateFjCommunityFollowers = updateFollowers;
+          window.fjCommunityFollowers = followersConfig;
+        }
+
+        if (document.readyState === "loading") {
+          document.addEventListener("DOMContentLoaded", applyFollowerValues, { once: true });
+        } else {
+          applyFollowerValues();
+        }
+      })();
+    </script>
 
     <script>
       (function () {
