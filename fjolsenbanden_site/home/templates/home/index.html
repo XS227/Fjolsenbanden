@@ -497,7 +497,12 @@
               Fjolsenbanden vokser hver dag. Se hvor mange vi er og bli en del av eventyret!
             </p>
             <div class="mx-auto grid max-w-5xl gap-6 sm:grid-cols-2 md:grid-cols-4">
-              <div class="flex flex-col items-center space-y-3 rounded-2xl border border-white/10 bg-[#13203b] p-6">
+              <a
+                href="https://www.twitch.tv/fjolsenbanden"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="flex flex-col items-center space-y-3 rounded-2xl border border-white/10 bg-[#13203b] p-6 no-underline transition hover:bg-[#1a2d4f] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0B163F] focus-visible:ring-[#38bdf8]"
+              >
                 <span class="flex h-14 w-14 items-center justify-center rounded-full bg-[#9146FF]/20">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -517,8 +522,13 @@
                   <span data-followers="twitch" data-format="compact">3.2k</span>
                 </div>
                 <div class="text-sm text-slate-300">Twitch følgere</div>
-              </div>
-              <div class="flex flex-col items-center space-y-3 rounded-2xl border border-white/10 bg-[#13203b] p-6">
+              </a>
+              <a
+                href="https://www.tiktok.com/@fjolsenbanden"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="flex flex-col items-center space-y-3 rounded-2xl border border-white/10 bg-[#13203b] p-6 no-underline transition hover:bg-[#1a2d4f] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0B163F] focus-visible:ring-[#38bdf8]"
+              >
                 <span class="flex h-14 w-14 items-center justify-center rounded-full bg-[#69C9D0]/20">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -534,8 +544,13 @@
                   <span data-followers="tiktok" data-format="compact">4.2k</span>
                 </div>
                 <div class="text-sm text-slate-300">TikTok følgere</div>
-              </div>
-              <div class="flex flex-col items-center space-y-3 rounded-2xl border border-white/10 bg-[#13203b] p-6">
+              </a>
+              <a
+                href="https://discord.gg/fjolsenbanden"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="flex flex-col items-center space-y-3 rounded-2xl border border-white/10 bg-[#13203b] p-6 no-underline transition hover:bg-[#1a2d4f] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0B163F] focus-visible:ring-[#38bdf8]"
+              >
                 <span class="flex h-14 w-14 items-center justify-center rounded-full bg-[#5865F2]/20">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -551,7 +566,7 @@
                   <span data-followers="discord" data-format="compact">2.5k</span>
                 </div>
                 <div class="text-sm text-slate-300">Discord medlemmer</div>
-              </div>
+              </a>
               <div class="flex flex-col items-center space-y-3 rounded-2xl border border-white/10 bg-[#13203b] p-6">
                 <span class="flex h-14 w-14 items-center justify-center rounded-full bg-[#FACC15]/20">
                   <svg
@@ -889,6 +904,9 @@
         };
 
         var formatCompact = function (value) {
+          if (value < 100000) {
+            return plainFormatter.format(value);
+          }
           if (value >= 1000000) {
             var millions = value / 1000000;
             var decimals = millions >= 10 ? 0 : 1;
