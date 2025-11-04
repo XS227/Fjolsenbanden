@@ -64,6 +64,18 @@
         }
       }
 
+      :root {
+        --fj-section-gap: clamp(3.5rem, 7vw, 6rem);
+      }
+
+      [data-section] {
+        scroll-margin-top: 6.5rem;
+      }
+
+      [data-section] + [data-section] {
+        margin-top: var(--fj-section-gap);
+      }
+
       .partners {
         background: #041149;
         text-align: center;
@@ -509,7 +521,7 @@
 
 
         <main class="relative z-10 flex flex-1 flex-col pb-28">
-        <section id="community" class="section-shell pt-6">
+        <section id="community" class="section-shell pt-6" data-section>
           <div class="mx-auto grid max-w-6xl gap-10 lg:grid-cols-2 lg:items-start">
             <div class="space-y-6">
               <div class="space-y-4 text-center lg:text-left">
@@ -523,7 +535,10 @@
               <div class="space-y-4 rounded-3xl border border-white/10 bg-white/5 p-6 text-left shadow-[0_18px_42px_rgba(12,21,45,0.45)]">
                 <h2 class="text-xl font-semibold text-[#13A0F9]">🎮 Hva er FjOlsenbanden?</h2>
                 <p class="text-sm leading-relaxed text-zinc-200 sm:text-base">
-                  FjOlsenbanden er et raskt voksende gaming-community med over 2.5k medlemmer på Discord, 3.2k følgere på Twitch og 4.2k på TikTok – både barn, ungdom og foreldre!
+                  FjOlsenbanden er et raskt voksende gaming-community med over
+                  <span data-followers="discord" data-format="compact">2.5k</span>&nbsp;medlemmer på Discord,
+                  <span data-followers="twitch" data-format="compact">3.2k</span>&nbsp;følgere på Twitch og
+                  <span data-followers="tiktok" data-format="compact">4.2k</span>&nbsp;på TikTok – både barn, ungdom og foreldre!
                 </p>
                 <p class="text-sm leading-relaxed text-zinc-200 sm:text-base">
                   <span class="font-semibold text-white">Målet vårt er enkelt:</span><br class="hidden sm:block" />Å skape et trygt, positivt og inkluderende miljø der alle kan game uten hets, mobbing eller negativ adferd.
@@ -648,14 +663,23 @@
                   </a>
                 </div>
                 <p class="mt-3 text-center text-xs text-zinc-400 sm:text-left">
-                  Totalt over 10 000 følgere på tvers av Discord, Twitch, YouTube, TikTok og Instagram.
+                  Totalt over
+                  <span
+                    data-followers-total="discord,twitch,youtube,tiktok,instagram"
+                    data-format="plain"
+                    data-round="up-1000"
+                    data-min="10000"
+                  >
+                    10 000
+                  </span>
+                  følgere på tvers av Discord, Twitch, YouTube, TikTok og Instagram.
                 </p>
               </div>
             </div>
           </div>
         </section>
 
-        <section id="live" class="px-6">
+        <section id="live" class="section-shell" data-section>
           <div class="mx-auto grid max-w-7xl gap-8 lg:grid-cols-3">
             <div class="space-y-4 lg:col-span-2">
               <div class="relative overflow-hidden rounded-2xl border border-white/10 bg-[#101a2e]">
@@ -772,7 +796,7 @@
                   <span>TikTok</span>
                 </a>
                 <a
-                  href="https://www.facebook.com/fjolsenbanden"
+                  href="https://www.instagram.com/fjolsenbanden"
                   target="_blank"
                   rel="noopener noreferrer"
                   class="flex items-center gap-2 rounded-full border border-white/10 px-4 py-2 text-sm transition hover:bg-white/10"
@@ -787,11 +811,13 @@
                     stroke-width="2"
                     stroke-linecap="round"
                     stroke-linejoin="round"
-                    class="lucide lucide-facebook h-5 w-5 text-blue-500"
+                    class="lucide lucide-instagram h-5 w-5 text-fuchsia-400"
                   >
-                    <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+                    <rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect>
+                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
                   </svg>
-                  <span>Facebook Gaming</span>
+                  <span>Instagram</span>
                 </a>
               </div>
             </div>
@@ -840,7 +866,7 @@
           </div>
         </section>
 
-        <section id="medlemskap" class="section-shell mt-20 text-center">
+        <section id="medlemskap" class="section-shell text-center" data-section>
           <h2 class="mb-4 text-3xl font-bold">Et levende community</h2>
           <div class="mx-auto mt-6 max-w-6xl rounded-3xl border border-white/10 bg-[#0B163F]/80 p-6 shadow-[0_24px_60px_rgba(6,14,35,0.55)] sm:p-8">
             <div class="mx-auto max-w-2xl text-center">
@@ -856,7 +882,9 @@
                   </svg>
                 </span>
                 <div>
-                  <p class="text-2xl font-bold text-white">3.2k</p>
+                  <p class="text-2xl font-bold text-white">
+                    <span data-followers="twitch" data-format="compact">3.2k</span>
+                  </p>
                   <p class="text-xs uppercase tracking-wide text-zinc-300">Twitch følgere</p>
                 </div>
               </div>
@@ -867,7 +895,9 @@
                   </svg>
                 </span>
                 <div>
-                  <p class="text-2xl font-bold text-white">4.2k</p>
+                  <p class="text-2xl font-bold text-white">
+                    <span data-followers="tiktok" data-format="compact">4.2k</span>
+                  </p>
                   <p class="text-xs uppercase tracking-wide text-zinc-300">TikTok følgere</p>
                 </div>
               </div>
@@ -878,7 +908,9 @@
                   </svg>
                 </span>
                 <div>
-                  <p class="text-2xl font-bold text-white">2.5k</p>
+                  <p class="text-2xl font-bold text-white">
+                    <span data-followers="discord" data-format="compact">2.5k</span>
+                  </p>
                   <p class="text-xs uppercase tracking-wide text-zinc-300">Discord medlemmer</p>
                 </div>
               </div>
@@ -965,7 +997,7 @@
           </div>
         </section>
 
-        <section id="partnere" class="partners">
+        <section id="partnere" class="partners" data-section>
           <h2>Samarbeidspartnere</h2>
           <p>Vi har allerede hatt samarbeid med flere kjente merkevarer.</p>
 
@@ -988,7 +1020,7 @@
           <a href="#kontakt" class="cta">Kontakt oss</a>
         </section>
 
-      <section id="tilbud" class="section-shell mt-20">
+      <section id="tilbud" class="section-shell" data-section>
         <div class="mx-auto max-w-6xl space-y-6 rounded-3xl border border-white/10 bg-white/5 p-8 text-center shadow-[0_24px_48px_rgba(6,14,35,0.45)]">
           <div class="space-y-3">
             <h2 class="text-3xl font-bold text-white">Andre tilbud</h2>
@@ -1034,7 +1066,7 @@
         </div>
       </section>
 
-      <section id="oppdateringer" class="section-shell mt-20">
+      <section id="oppdateringer" class="section-shell" data-section>
         <div
           class="mx-auto grid max-w-6xl gap-6 rounded-3xl border border-white/10 bg-[#0B163F]/80 p-6 shadow-[0_28px_60px_rgba(7,12,28,0.55)] transition-all duration-300 hover:border-white/20 hover:shadow-[0_32px_70px_rgba(7,12,28,0.6)] lg:grid-cols-[minmax(0,1fr)_280px] lg:p-8"
         >
@@ -1102,7 +1134,7 @@
         </div>
       </section>
 
-      <section id="tilbakemeldinger" class="section-shell mt-12">
+      <section id="tilbakemeldinger" class="section-shell" data-section>
         <div
           class="mx-auto grid max-w-6xl gap-6 rounded-3xl border border-white/10 bg-[#111C3A]/85 p-6 shadow-[0_28px_60px_rgba(7,12,28,0.55)] transition-all duration-300 hover:border-white/20 hover:shadow-[0_32px_70px_rgba(7,12,28,0.6)] lg:grid-cols-[minmax(0,1fr)_280px] lg:p-8"
         >
@@ -1173,7 +1205,7 @@
         </div>
       </section>
 
-      <section id="kontakt" class="section-shell mt-20">
+      <section id="kontakt" class="section-shell" data-section>
         <div class="mx-auto max-w-5xl space-y-6 rounded-3xl border border-white/10 bg-[#161f33]/90 p-8 text-center shadow-2xl">
           <h2 class="text-3xl font-bold">Kontakt oss</h2>
             <p class="text-zinc-300">
@@ -1620,6 +1652,137 @@
       </div>
     </div>
   </section>
+
+  <script>
+    (() => {
+      const plainFormatter = new Intl.NumberFormat("no-NO");
+      const defaultFollowers = {
+        discord: { count: 2500, label: "medlemmer" },
+        twitch: { count: 3200, label: "følgere" },
+        youtube: { count: 0, label: "abonnenter" },
+        tiktok: { count: 4200, label: "følgere" },
+        instagram: { count: 0, label: "følgere" },
+      };
+
+      const mergeFollowers = (base, overrides) => {
+        const merged = { ...base };
+        if (!overrides || typeof overrides !== "object") {
+          return merged;
+        }
+        Object.entries(overrides).forEach(([key, value]) => {
+          if (!value || typeof value !== "object") {
+            return;
+          }
+          const existing = merged[key] || {};
+          const nextCount =
+            typeof value.count === "number"
+              ? value.count
+              : typeof existing.count === "number"
+              ? existing.count
+              : 0;
+          merged[key] = { ...existing, ...value, count: nextCount };
+        });
+        return merged;
+      };
+
+      const formatCompact = (value) => {
+        if (value >= 1000000) {
+          const millions = value / 1000000;
+          const decimals = millions >= 10 ? 0 : 1;
+          return `${Number(millions.toFixed(decimals))}m`;
+        }
+        if (value >= 1000) {
+          const thousands = value / 1000;
+          const decimals = thousands >= 10 ? 0 : 1;
+          return `${Number(thousands.toFixed(decimals))}k`;
+        }
+        return String(value);
+      };
+
+      const formatValue = (value, format) => {
+        switch (format) {
+          case "compact":
+            return formatCompact(value);
+          case "plain":
+            return plainFormatter.format(value);
+          default:
+            return String(value);
+        }
+      };
+
+      let followersConfig =
+        typeof window !== "undefined" && window.fjCommunityFollowers
+          ? mergeFollowers(defaultFollowers, window.fjCommunityFollowers)
+          : { ...defaultFollowers };
+
+      const applyFollowerValues = () => {
+        document.querySelectorAll("[data-followers]").forEach((element) => {
+          const key = element.dataset.followers;
+          if (!key) {
+            return;
+          }
+          const config = followersConfig[key];
+          if (!config) {
+            return;
+          }
+          const format = element.dataset.format || "compact";
+          const prefix = element.dataset.prefix ?? "";
+          const suffix = element.dataset.suffix ?? "";
+          element.textContent = `${prefix}${formatValue(config.count, format)}${suffix}`;
+        });
+
+        document.querySelectorAll("[data-followers-total]").forEach((element) => {
+          const keys = element.dataset.followersTotal
+            ? element.dataset.followersTotal
+                .split(",")
+                .map((value) => value.trim())
+                .filter(Boolean)
+            : Object.keys(followersConfig);
+
+          const totalValue = keys.reduce(
+            (accumulator, key) => accumulator + (followersConfig[key]?.count ?? 0),
+            0
+          );
+
+          const roundStrategy = element.dataset.round || "none";
+          let valueToFormat = totalValue;
+          if (roundStrategy === "up-1000") {
+            valueToFormat = Math.ceil(totalValue / 1000) * 1000;
+          } else if (roundStrategy === "up-100") {
+            valueToFormat = Math.ceil(totalValue / 100) * 100;
+          } else if (roundStrategy === "down-100") {
+            valueToFormat = Math.floor(totalValue / 100) * 100;
+          }
+
+          const minValue = element.dataset.min ? Number.parseInt(element.dataset.min, 10) : null;
+          if (typeof minValue === "number" && !Number.isNaN(minValue)) {
+            valueToFormat = Math.max(valueToFormat, minValue);
+          }
+
+          const format = element.dataset.format || "plain";
+          const prefix = element.dataset.prefix ?? "";
+          const suffix = element.dataset.suffix ?? "";
+          element.textContent = `${prefix}${formatValue(valueToFormat, format)}${suffix}`;
+        });
+      };
+
+      const updateFollowers = (overrides) => {
+        followersConfig = mergeFollowers(followersConfig, overrides);
+        applyFollowerValues();
+      };
+
+      if (typeof window !== "undefined") {
+        window.updateFjCommunityFollowers = updateFollowers;
+        window.fjCommunityFollowers = followersConfig;
+      }
+
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", applyFollowerValues, { once: true });
+      } else {
+        applyFollowerValues();
+      }
+    })();
+  </script>
 
   <script>
       const SKIN_STORAGE_KEY = "fjolsenbanden-skin";
