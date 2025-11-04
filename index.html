@@ -2028,15 +2028,28 @@
       }
     </script>
     <script>
-      window.addEventListener("load", () => {
-        const loader = document.getElementById("loader");
-        if (!loader) {
-          return;
+      (() => {
+        const dismissLoader = () => {
+          const loader = document.getElementById("loader");
+          if (!loader || loader.dataset.dismissed === "true") {
+            return;
+          }
+          loader.dataset.dismissed = "true";
+          loader.style.transition = "opacity .4s ease";
+          loader.style.opacity = "0";
+          window.setTimeout(() => loader.remove(), 450);
+        };
+
+        if (document.readyState === "complete" || document.readyState === "interactive") {
+          window.setTimeout(dismissLoader, 0);
+        } else {
+          document.addEventListener("DOMContentLoaded", dismissLoader, { once: true });
         }
-        loader.style.transition = "opacity .4s ease";
-        loader.style.opacity = "0";
-        window.setTimeout(() => loader.remove(), 450);
-      });
+
+        window.addEventListener("load", dismissLoader, { once: true });
+
+        window.setTimeout(dismissLoader, 4000);
+      })();
     </script>
   </body>
 </html>
