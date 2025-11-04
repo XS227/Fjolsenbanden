@@ -476,7 +476,20 @@
             />
             <span class="sr-only">Fjolsenbanden</span>
           </a>
-          <div class="hidden items-center justify-end gap-3 sm:flex"></div>
+          <div class="hidden items-center justify-end gap-3 text-sm sm:flex">
+            <a
+              href="/personvernerklaering.html"
+              class="font-semibold text-zinc-300 transition hover:text-white"
+            >
+              Personvernerklæring
+            </a>
+            <a
+              href="/regler.html"
+              class="font-semibold text-zinc-300 transition hover:text-white"
+            >
+              Regler
+            </a>
+          </div>
         </nav>
       </div>
     </div>
@@ -861,6 +874,13 @@
                   </svg>
                   Se reglene i Discord
                 </a>
+                <button
+                  type="button"
+                  onclick="document.getElementById('regler-modal').style.display='block'"
+                  class="inline-flex items-center justify-center gap-2 rounded-full border border-white/15 px-5 py-2 text-sm font-semibold text-white transition hover:border-white/30 hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/40"
+                >
+                  Les reglene
+                </button>
               </div>
               <div class="mt-4 space-y-3 text-sm text-zinc-200">
                 <p class="rounded-xl border border-white/10 bg-[#131f3f]/80 p-3">
@@ -1062,6 +1082,18 @@
         <footer class="mt-12 border-t border-white/10 py-8 text-center text-sm text-zinc-500">
           <div class="flex flex-col items-center justify-center gap-2 text-sm md:flex-row">
             <span>© <span id="current-year"></span> Fjolsenbanden. Alle rettigheter reservert.</span>
+            <a
+              href="/personvernerklaering.html"
+              class="font-medium text-zinc-300 transition hover:text-white"
+            >
+              Personvernerklæring
+            </a>
+            <a
+              href="/regler.html"
+              class="font-medium text-zinc-300 transition hover:text-white"
+            >
+              Regler
+            </a>
             <a
               href="/admin"
               class="flex items-center gap-2 font-medium text-zinc-300 transition hover:text-white"
@@ -1426,6 +1458,18 @@
             <span class="text-xs font-semibold uppercase tracking-[0.35em] text-[#13A0F9]/70">07</span>
           </a>
         </li>
+        <li>
+          <a class="flex items-center justify-between gap-3 rounded-2xl border border-transparent bg-white/5 px-4 py-3 text-base font-semibold text-white/85 transition hover:border-white/20 hover:bg-white/10" href="/personvernerklaering.html" data-footer-link>
+            <span>Personvernerklæring</span>
+            <span class="text-xs font-semibold uppercase tracking-[0.35em] text-[#13A0F9]/70">08</span>
+          </a>
+        </li>
+        <li>
+          <a class="flex items-center justify-between gap-3 rounded-2xl border border-transparent bg-white/5 px-4 py-3 text-base font-semibold text-white/85 transition hover:border-white/20 hover:bg-white/10" href="/regler.html" data-footer-link>
+            <span>Regler</span>
+            <span class="text-xs font-semibold uppercase tracking-[0.35em] text-[#13A0F9]/70">09</span>
+          </a>
+        </li>
       </ul>
       <div class="grid gap-3 sm:grid-cols-2">
         <a
@@ -1454,6 +1498,29 @@
       </div>
     </div>
   </section>
+
+  <!-- Modal: Regler i FjOlsenbanden -->
+  <div id="regler-modal" aria-hidden="true" role="dialog" aria-labelledby="regler-title" style="position:fixed;inset:0;display:none;background:rgba(0,0,0,.6)">
+    <div style="max-width:760px;margin:5vh auto;background:#121b34;border:1px solid #1a2648;border-radius:16px;padding:1rem;color:#e9eef9">
+      <header style="display:flex;justify-content:space-between;align-items:center">
+        <h2 id="regler-title" style="margin:.5rem 0">Regler i FjOlsenbanden</h2>
+        <button onclick="document.getElementById('regler-modal').style.display='none'" aria-label="Lukk" style="background:#1a2648;color:#fff;border:none;border-radius:8px;padding:.4rem .7rem">Lukk</button>
+      </header>
+      <div style="max-height:70vh;overflow:auto">
+        <ul>
+          <li>Nulltoleranse for mobbing og trakassering</li>
+          <li>Respekt for moderatorer</li>
+          <li>Fair play – juks er forbudt</li>
+          <li>Ikke del personlig informasjon</li>
+          <li>Hold språk og innhold ryddig</li>
+        </ul>
+        <p>Se fullstendige regler på <a href="/regler.html">/regler.html</a>.</p>
+      </div>
+    </div>
+  </div>
+  <script>
+    // Åpne modal: document.getElementById('regler-modal').style.display='block'
+  </script>
 
   <script>
       const SKIN_STORAGE_KEY = "fjolsenbanden-skin";
