@@ -64,53 +64,56 @@
         }
       }
 
-      .partner-logos {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 1.5rem;
+      .partners {
+        background: #041149;
+        text-align: center;
+        padding: 4rem 1rem;
+        border-radius: 2rem;
+        max-width: 64rem;
         margin: 0 auto;
       }
 
-      @media (min-width: 768px) {
-        .partner-logos {
-          grid-template-columns: repeat(4, minmax(0, 1fr));
-        }
+      .partners h2 {
+        font-size: 2rem;
+        font-weight: 800;
+        margin-bottom: 0.5rem;
       }
 
-      .partner-logo-tile {
+      .partners p {
+        color: #c9d4ff;
+        font-size: 1.1rem;
+        margin-bottom: 2rem;
+      }
+
+      .partner-logos {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 2rem;
+        margin-bottom: 2rem;
+      }
+
+      .partner-logos .logo {
         position: relative;
+        overflow: hidden;
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 1rem;
+        width: 220px;
+        height: 160px;
         display: flex;
         align-items: center;
         justify-content: center;
-        min-height: 7.5rem;
-        width: 100%;
-        border-radius: 1.5rem;
-        border: 1px solid rgba(255, 255, 255, 0.15);
-        background: rgba(0, 0, 0, 0.7);
-        padding: 2rem;
-        text-align: center;
-        color: #fff;
-        box-shadow: 0 20px 45px rgba(8, 8, 20, 0.55);
-        transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
       }
 
-      .partner-logo-tile:hover {
-        transform: translateY(-4px);
-        background: rgba(5, 12, 32, 0.85);
-        box-shadow: 0 30px 65px rgba(8, 8, 20, 0.65);
-      }
-
-      .partner-logo-img {
-        display: block;
-        max-width: 100%;
-        max-height: 4.5rem;
-        width: auto;
-        height: auto;
+      .partner-logos img {
+        max-width: 80%;
+        max-height: 80%;
         object-fit: contain;
-        transition: opacity 0.3s ease;
+        display: block;
       }
 
-      .partner-logo-fallback {
+      .partner-logos .logo .logo-fallback {
         position: absolute;
         inset: 0;
         display: flex;
@@ -122,12 +125,34 @@
         letter-spacing: 0.3em;
         text-transform: uppercase;
         color: rgba(255, 255, 255, 0.78);
-        transition: opacity 0.3s ease;
-        pointer-events: none;
       }
 
-      .partner-logo-tile.logo-loaded .partner-logo-fallback {
-        opacity: 0;
+      .partners .cta {
+        display: inline-block;
+        background: linear-gradient(90deg, #13a0f9, #ff2f9c);
+        color: #fff;
+        text-decoration: none;
+        font-weight: 600;
+        padding: 0.9rem 2.2rem;
+        border-radius: 50px;
+      }
+
+      body.theme-light .partners {
+        background: #e9f2ff;
+        color: #0b143f;
+      }
+
+      body.theme-light .partners p {
+        color: rgba(11, 20, 63, 0.75);
+      }
+
+      body.theme-light .partner-logos .logo {
+        background: rgba(11, 20, 63, 0.06);
+        border: 1px solid rgba(11, 20, 63, 0.12);
+      }
+
+      body.theme-light .partner-logos .logo .logo-fallback {
+        color: rgba(11, 20, 63, 0.65);
       }
 
       .loader {
@@ -940,39 +965,27 @@
           </div>
         </section>
 
-        <section id="partnere" class="px-6">
-          <div class="mx-auto max-w-7xl text-center">
-            <h2 class="mb-6 text-3xl font-bold text-white">Samarbeidspartnere</h2>
-            <p class="mb-8 text-slate-300">
-              Ønsker du å synliggjøre din merkevare sammen med oss i FjOlsenbanden?
-              <br />
-              Send oss en e-post, så tar vi kontakt for samarbeid!
-            </p>
+        <section id="partnere" class="partners">
+          <h2>Samarbeidspartnere</h2>
+          <p>Vi har allerede hatt samarbeid med flere kjente merkevarer.</p>
 
-            <div class="grid grid-cols-2 gap-6 sm:grid-cols-4 md:gap-8">
-              <div class="flex items-center justify-center rounded-xl border border-white/10 bg-[#101a2e] p-4">
-                <img src="assets/partners/philips-logo.png" alt="Philips logo" class="h-16 object-contain" />
-              </div>
-              <div class="flex items-center justify-center rounded-xl border border-white/10 bg-[#101a2e] p-4">
-                <img src="assets/partners/samsung-logo.png" alt="Samsung logo" class="h-16 object-contain" />
-              </div>
-              <div class="flex items-center justify-center rounded-xl border border-white/10 bg-[#101a2e] p-4">
-                <img src="assets/partners/lenovo-logo.png" alt="Lenovo logo" class="h-16 object-contain" />
-              </div>
-              <div class="flex items-center justify-center rounded-xl border border-white/10 bg-[#101a2e] p-4">
-                <img src="assets/partners/komplett-logo.png" alt="Komplett logo" class="h-16 object-contain" />
-              </div>
+          <div class="partner-logos">
+            <div class="logo">
+              <img src="assets/partners/lenovo-logo.png" alt="Lenovo" />
             </div>
-
-            <div class="mt-10">
-              <a
-                href="mailto:kontakt@fjolsenbanden.no"
-                class="inline-flex items-center justify-center rounded-full bg-[#22d3ee] px-6 py-3 font-semibold text-[#0f172a] transition hover:bg-[#0ea5e9]"
-              >
-                Kontakt oss for samarbeid
-              </a>
+            <div class="logo">
+              <img src="assets/partners/komplett-logo.png" alt="Komplett" />
+            </div>
+            <div class="logo">
+              <img src="assets/partners/philips-logo.png" alt="Philips" />
+            </div>
+            <div class="logo">
+              <img src="assets/partners/samsung-logo.png" alt="Samsung" />
             </div>
           </div>
+
+          <p>Ønsker du å synliggjøre din merkevare for vårt engasjerte gaming-publikum?</p>
+          <a href="#kontakt" class="cta">Kontakt oss</a>
         </section>
 
       <section id="tilbud" class="section-shell mt-20">
