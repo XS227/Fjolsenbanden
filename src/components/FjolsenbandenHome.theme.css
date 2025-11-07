@@ -122,19 +122,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: transparent;
-  box-shadow: 0 0 28px rgba(19, 160, 249, 0.35);
-}
-
-.fj-theme .partner-logos .logo::before {
-  content: "";
-  position: absolute;
-  inset: 10px;
-  border-radius: inherit;
-  background: linear-gradient(135deg, rgba(19, 160, 249, 0.3), rgba(255, 47, 156, 0.25));
-  filter: blur(18px);
-  opacity: 0.9;
-  z-index: 0;
 }
 
 .fj-theme .partner-logos img {
@@ -179,10 +166,6 @@
 
 .fj-theme.theme-light .partners p {
   color: rgba(11, 20, 63, 0.75);
-}
-
-.fj-theme.theme-light .partner-logos .logo {
-  box-shadow: 0 0 22px rgba(19, 72, 167, 0.35);
 }
 
 .fj-theme.theme-light .partner-logos .logo .logo-fallback {
