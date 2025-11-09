@@ -16,7 +16,7 @@ export default function AdminDashboard() {
                     open: true,
                     auth: auth,
                     title: "Admininnlogging",
-                    description: "Oppgi e-post for å motta magic-link eller logg inn med OAuth.",
+                    description: "Logg inn med oppgitt brukernavn og passord for å administrere siden.",
                     accent: "emerald",
                 }))
         );
