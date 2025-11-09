@@ -133,57 +133,43 @@
       }
 
       .partner-logos {
-        display: flex;
-        justify-content: center;
-        flex-wrap: wrap;
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: clamp(1.5rem, 5vw, 2.5rem);
         margin-bottom: clamp(2.25rem, 6vw, 3rem);
+        justify-items: center;
+        align-items: center;
+      }
+
+      @media (min-width: 1024px) {
+        .partner-logos {
+          grid-template-columns: repeat(4, minmax(0, 1fr));
+        }
       }
 
       .partner-logos .logo {
         position: relative;
-        overflow: hidden;
-        border-radius: 1.5rem;
-        width: clamp(200px, 26vw, 240px);
-        height: clamp(150px, 20vw, 170px);
-        display: flex;
+        display: inline-flex;
         align-items: center;
         justify-content: center;
-        background: rgba(255, 255, 255, 0.03);
-        transition: transform 0.4s ease, box-shadow 0.4s ease, background 0.4s ease;
+        width: min(180px, 100%);
         text-decoration: none;
-      }
-
-      .partner-logos .logo::after {
-        content: "";
-        position: absolute;
-        inset: -35%;
-        background: radial-gradient(circle, rgba(19, 160, 249, 0.45), rgba(255, 47, 156, 0.4));
-        opacity: 0;
-        transition: opacity 0.4s ease;
-        filter: blur(40px);
-        z-index: 0;
+        background: none;
+        border-radius: 0;
+        box-shadow: none;
+        transition: transform 0.3s ease;
       }
 
       .partner-logos .logo:hover,
       .partner-logos .logo:focus-visible {
-        transform: translateY(-6px);
-        box-shadow: 0 24px 40px rgba(19, 160, 249, 0.28), 0 0 0 1px rgba(255, 47, 156, 0.3);
-        background: rgba(255, 255, 255, 0.05);
-      }
-
-      .partner-logos .logo:hover::after,
-      .partner-logos .logo:focus-visible::after {
-        opacity: 0.9;
+        transform: translateY(-4px);
       }
 
       .partner-logos img {
-        max-width: 82%;
-        max-height: 82%;
+        width: 100%;
+        height: auto;
         object-fit: contain;
         display: block;
-        position: relative;
-        z-index: 1;
       }
 
       .partner-logos .logo .logo-fallback {
@@ -241,15 +227,6 @@
 
       body.theme-light .partners p {
         color: rgba(11, 20, 63, 0.74);
-      }
-
-      body.theme-light .partner-logos .logo {
-        background: rgba(11, 20, 63, 0.06);
-      }
-
-      body.theme-light .partner-logos .logo:hover,
-      body.theme-light .partner-logos .logo:focus-visible {
-        box-shadow: 0 20px 34px rgba(19, 160, 249, 0.25), 0 0 0 1px rgba(255, 47, 156, 0.25);
       }
 
       body.theme-light .partner-logos .logo .logo-fallback {
