@@ -855,11 +855,16 @@ export default function FjolsenbandenHome() {
                 React.createElement("div", { className: "mx-auto grid max-w-7xl gap-8 md:grid-cols-3" }, membershipTiers.map((tier) => (React.createElement(MembershipCard, { key: tier.id, title: tier.title, price: tier.price, color: tier.color, features: tier.features, onSelect: openRegistration }))))),
             partnersEnabled ? renderPartnerSection("premier", "prizes") : null,
             React.createElement("section", { id: "tilbud", className: "mt-20 px-6 sm:px-8 lg:px-10" },
-                React.createElement("div", { className: "mx-auto max-w-6xl space-y-6 rounded-3xl border border-white/10 bg-white/5 p-8 text-center shadow-[0_24px_48px_rgba(6,14,35,0.45)]" },
+                React.createElement("div", { className: "mx-auto max-w-6xl space-y-8 rounded-3xl border border-white/10 bg-white/5 p-8 text-center shadow-[0_24px_48px_rgba(6,14,35,0.45)] lg:p-10" },
                     React.createElement("div", { className: "space-y-3" },
                         React.createElement("h2", { className: "text-3xl font-bold text-white" }, "Andre tilbud"),
                         React.createElement("p", { className: "text-lg text-zinc-100" }, "FjOlsenbanden tilbyr mer enn bare streaming!")),
-                    React.createElement("div", { className: "grid gap-6 text-left sm:grid-cols-2" }, offerings.map(({ title, description, emoji }) => title === "Unboxing" ? (React.createElement(UnboxingOfferingCard, { key: title, title: title, description: description, emoji: emoji, onWatchVideo: () => setShowUnboxingVideo(true), reachLabel: estimatedUnboxingReach, audienceStats: stats })) : (React.createElement(OfferingCard, { key: title, title: title, description: description, emoji: emoji })))))),
+                    React.createElement("div", { className: "grid gap-6 text-left sm:grid-cols-2 md:gap-8 lg:gap-10" }, offerings.map(({ title, description, emoji }) => title === "Unboxing" ? (React.createElement(UnboxingOfferingCard, { key: title, title: title, description: description, emoji: emoji, onWatchVideo: () => setShowUnboxingVideo(true), reachLabel: estimatedUnboxingReach, audienceStats: stats })) : (React.createElement(OfferingCard, { key: title, title: title, description: description, emoji: emoji })))))),
+                    React.createElement("div", { className: "space-y-2" },
+                        React.createElement("a", { href: "#kontakt", className: "inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#13A0F9] to-[#FF2F9C] px-6 py-3 text-sm font-semibold uppercase tracking-[0.2em] text-white shadow-[0_18px_36px_rgba(19,160,249,0.35)] transition hover:from-[#0d8bd6] hover:to-[#e12585]" },
+                            "Kontakt oss",
+                            React.createElement(ArrowRight, { className: "h-4 w-4", "aria-hidden": "true" })),
+                        React.createElement("p", { className: "text-sm text-zinc-100" }, "Ta kontakt hvis du ønsker mer informasjon eller vil booke en økt."))),
             React.createElement("section", { id: "tilbakemeldinger", className: "mt-20 px-6 sm:px-8 lg:px-10", style: sectionOrderStyle("feedback") },
                 React.createElement("div", { className: "mx-auto max-w-6xl space-y-6 rounded-[2.5rem] border border-white/10 bg-white/5 p-8 text-center shadow-[0_28px_52px_rgba(6,14,35,0.55)]" },
                     React.createElement("span", { className: "inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-1 text-xs font-semibold uppercase tracking-[0.3em] text-white/70" }, "Stemmer fra banden"),
@@ -1144,7 +1149,7 @@ function OfferingIcon({ icon, }) {
     return icon;
 }
 function UnboxingOfferingCard({ title, description, emoji, onWatchVideo, reachLabel, audienceStats, }) {
-    return (React.createElement("div", { className: "flex h-full flex-col gap-5 rounded-2xl border border-white/10 bg-gradient-to-br from-[#161f33] via-[#101a33] to-[#0a1329] p-6 shadow-[0_20px_36px_rgba(6,14,35,0.55)]" },
+    return (React.createElement("div", { className: "flex h-full flex-col gap-5 rounded-2xl border border-white/10 bg-gradient-to-br from-[#161f33] via-[#101a33] to-[#0a1329] p-6 shadow-[0_20px_36px_rgba(6,14,35,0.55)] transition-all duration-300 hover:-translate-y-1 hover:border-[#FF2F9C]/40 hover:shadow-[0_28px_56px_rgba(255,47,156,0.35)]" },
         React.createElement("div", { className: "flex items-center gap-3" },
             React.createElement(OfferingIcon, { icon: emoji }),
             React.createElement("div", null,
@@ -1165,7 +1170,7 @@ function UnboxingOfferingCard({ title, description, emoji, onWatchVideo, reachLa
         React.createElement("p", { className: "text-xs text-zinc-100" }, "Trykk p\u00E5 knappen for \u00E5 se en full unboxing-produksjon slik samarbeidspartnerne v\u00E5re f\u00E5r den levert.")));
 }
 function OfferingCard({ title, description, emoji, }) {
-    return (React.createElement("div", { className: "flex h-full flex-col gap-4 rounded-2xl border border-white/10 bg-[#101a33]/80 p-6 shadow-[0_16px_32px_rgba(6,14,35,0.45)]" },
+    return (React.createElement("div", { className: "flex h-full flex-col gap-4 rounded-2xl border border-white/10 bg-[#101a33]/80 p-6 shadow-[0_16px_32px_rgba(6,14,35,0.45)] transition-all duration-300 hover:-translate-y-1 hover:border-[#13A0F9]/40 hover:shadow-[0_24px_48px_rgba(19,160,249,0.35)]" },
         React.createElement("div", { className: "flex items-center gap-3" },
             React.createElement(OfferingIcon, { icon: emoji }),
             React.createElement("h3", { className: "text-xl font-semibold text-white" }, title)),
