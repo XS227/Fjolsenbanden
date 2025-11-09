@@ -54,21 +54,25 @@ export const DEFAULT_PARTNER_LOGOS = [
         id: "partner-lenovo",
         name: "Lenovo",
         logoUrl: "/assets/partners/lenovo-logo.png",
+        url: "https://www.lenovo.com/no/no/",
     },
     {
         id: "partner-samsung",
         name: "Samsung",
         logoUrl: "/assets/partners/samsung-logo.png",
+        url: "https://www.samsung.com/no/",
     },
     {
         id: "partner-philips",
         name: "Philips",
         logoUrl: "/assets/partners/philips-logo.png",
+        url: "https://www.philips.no/",
     },
     {
         id: "partner-komplett",
-        name: "Komplett.no",
+        name: "Komplett",
         logoUrl: "/assets/partners/komplett-logo.png",
+        url: "https://www.komplett.no/",
     },
 ];
 export const DEFAULT_TWITCH_EMBED_URL = "https://player.twitch.tv/?channel=FjOlsenFN&parent=localhost";
@@ -347,10 +351,13 @@ function ensurePartnerLogoArray(input) {
     return source.map((partner, index) => {
         var _a, _b, _c, _d;
         const fallback = (_a = DEFAULT_PARTNER_LOGOS[index]) !== null && _a !== void 0 ? _a : DEFAULT_PARTNER_LOGOS[0];
+        const rawUrl = typeof partner.url === "string" ? partner.url.trim() : "";
+        const fallbackUrl = typeof fallback.url === "string" ? fallback.url : "";
         return {
             id: ((_b = partner.id) === null || _b === void 0 ? void 0 : _b.trim()) || fallback.id || `partner-${index}`,
             name: ((_c = partner.name) === null || _c === void 0 ? void 0 : _c.trim()) || fallback.name,
             logoUrl: ((_d = partner.logoUrl) === null || _d === void 0 ? void 0 : _d.trim()) || fallback.logoUrl,
+            url: rawUrl || fallbackUrl,
         };
     });
 }
