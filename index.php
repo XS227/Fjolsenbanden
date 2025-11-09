@@ -33,6 +33,18 @@
         color: inherit;
       }
 
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+      }
+
       .section-shell {
         width: 100%;
         margin-left: auto;
@@ -68,51 +80,88 @@
       }
 
       .partners {
-        background: #041149;
+        background:
+          radial-gradient(circle at 15% 15%, rgba(19, 160, 249, 0.25), transparent 60%),
+          radial-gradient(circle at 85% 25%, rgba(255, 47, 156, 0.22), transparent 58%),
+          #041149;
         text-align: center;
-        padding: 4rem 1rem;
-        border-radius: 2rem;
+        padding: clamp(4.5rem, 8vw, 6.5rem) clamp(1.5rem, 5vw, 3.5rem);
+        border-radius: 2.5rem;
         max-width: 64rem;
         margin: 0 auto;
+        box-shadow: 0 26px 52px rgba(7, 12, 28, 0.55);
       }
 
       .partners h2 {
-        font-size: 2rem;
+        font-size: clamp(2rem, 3.5vw, 2.5rem);
         font-weight: 800;
-        margin-bottom: 0.5rem;
+        letter-spacing: 0.06em;
+        margin-bottom: 0.75rem;
       }
 
       .partners p {
         color: #c9d4ff;
-        font-size: 1.1rem;
+        font-size: 1.05rem;
         margin-bottom: 2rem;
+      }
+
+      .partners p.lead {
+        font-size: clamp(1.1rem, 2.5vw, 1.35rem);
+        margin-bottom: 2.75rem;
       }
 
       .partner-logos {
         display: flex;
         justify-content: center;
         flex-wrap: wrap;
-        gap: 2rem;
-        margin-bottom: 2rem;
+        gap: clamp(1.5rem, 5vw, 2.5rem);
+        margin-bottom: clamp(2.25rem, 6vw, 3rem);
       }
 
       .partner-logos .logo {
         position: relative;
         overflow: hidden;
-        background: transparent;
-        border-radius: 1rem;
-        width: 220px;
-        height: 160px;
+        border-radius: 1.5rem;
+        width: clamp(200px, 26vw, 240px);
+        height: clamp(150px, 20vw, 170px);
         display: flex;
         align-items: center;
         justify-content: center;
+        background: rgba(255, 255, 255, 0.03);
+        transition: transform 0.4s ease, box-shadow 0.4s ease, background 0.4s ease;
+        text-decoration: none;
+      }
+
+      .partner-logos .logo::after {
+        content: "";
+        position: absolute;
+        inset: -35%;
+        background: radial-gradient(circle, rgba(19, 160, 249, 0.45), rgba(255, 47, 156, 0.4));
+        opacity: 0;
+        transition: opacity 0.4s ease;
+        filter: blur(40px);
+        z-index: 0;
+      }
+
+      .partner-logos .logo:hover,
+      .partner-logos .logo:focus-visible {
+        transform: translateY(-6px);
+        box-shadow: 0 24px 40px rgba(19, 160, 249, 0.28), 0 0 0 1px rgba(255, 47, 156, 0.3);
+        background: rgba(255, 255, 255, 0.05);
+      }
+
+      .partner-logos .logo:hover::after,
+      .partner-logos .logo:focus-visible::after {
+        opacity: 0.9;
       }
 
       .partner-logos img {
-        max-width: 80%;
-        max-height: 80%;
+        max-width: 82%;
+        max-height: 82%;
         object-fit: contain;
         display: block;
+        position: relative;
+        z-index: 1;
       }
 
       .partner-logos .logo .logo-fallback {
@@ -124,32 +173,61 @@
         padding: 1.5rem;
         font-size: 0.95rem;
         font-weight: 600;
-        letter-spacing: 0.3em;
+        letter-spacing: 0.32em;
         text-transform: uppercase;
         color: rgba(255, 255, 255, 0.78);
+        z-index: 1;
       }
 
       .partners .cta {
-        display: inline-block;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
         background: linear-gradient(90deg, #13a0f9, #ff2f9c);
         color: #fff;
         text-decoration: none;
-        font-weight: 600;
-        padding: 0.9rem 2.2rem;
-        border-radius: 50px;
+        font-weight: 700;
+        font-size: 1rem;
+        padding: 0.95rem 2.5rem;
+        border-radius: 999px;
+        box-shadow: 0 18px 36px rgba(19, 160, 249, 0.35);
+        transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+      }
+
+      .partners .cta:hover,
+      .partners .cta:focus-visible {
+        transform: translateY(-3px);
+        box-shadow: 0 22px 42px rgba(255, 47, 156, 0.35);
+        opacity: 0.95;
+      }
+
+      .partners .cta-support {
+        margin-top: 0.75rem;
+        font-size: 0.95rem;
+        color: rgba(201, 212, 255, 0.9);
       }
 
       body.theme-light .partners {
-        background: #e9f2ff;
+        background:
+          radial-gradient(circle at 15% 15%, rgba(19, 160, 249, 0.18), transparent 60%),
+          radial-gradient(circle at 85% 25%, rgba(255, 47, 156, 0.18), transparent 58%),
+          #e9f2ff;
         color: #0b143f;
+        box-shadow: 0 20px 44px rgba(11, 20, 63, 0.18);
       }
 
       body.theme-light .partners p {
-        color: rgba(11, 20, 63, 0.75);
+        color: rgba(11, 20, 63, 0.74);
       }
 
       body.theme-light .partner-logos .logo {
-        background: transparent;
+        background: rgba(11, 20, 63, 0.06);
+      }
+
+      body.theme-light .partner-logos .logo:hover,
+      body.theme-light .partner-logos .logo:focus-visible {
+        box-shadow: 0 20px 34px rgba(19, 160, 249, 0.25), 0 0 0 1px rgba(255, 47, 156, 0.25);
       }
 
       body.theme-light .partner-logos .logo .logo-fallback {
@@ -1048,7 +1126,7 @@
             
           </div>
           <div id="medlemskap-registrering" class="mx-auto mt-12 grid max-w-6xl gap-6 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)]">
-            <div class="rounded-2xl bg-zinc-900/60 p-5 text-left text-white shadow-lg ring-1 ring-white/10">
+            <div class="rounded-2xl bg-zinc-900/60 px-5 py-6 text-left text-white shadow-lg ring-1 ring-white/10">
               <h3 class="mb-2 text-xl font-bold">Bli medlem</h3>
               <p class="mb-4 text-sm text-zinc-300">
                 Det er gratis å bli medlem i FjOlsenbanden! Alle kan delta i konkurranser, men for å vinne premier må du være registrert medlem.
@@ -1057,12 +1135,16 @@
               <div class="grid gap-3 sm:grid-cols-2">
                 <a
                   href="https://forms.gle/sq4mUf7s6e6UY7R58"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   class="rounded-xl bg-sky-600 px-4 py-3 text-center text-sm font-semibold text-white transition hover:bg-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-300"
                 >
                   🔵 Under 18 år
                 </a>
                 <a
                   href="https://forms.gle/ZrbXCggnUY8FTT7t9"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   class="rounded-xl bg-emerald-600 px-4 py-3 text-center text-sm font-semibold text-white transition hover:bg-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-300"
                 >
                   🟢 Over 18 år
@@ -1070,8 +1152,8 @@
               </div>
             </div>
 
-            <div class="rounded-2xl border border-white/10 bg-white/5 p-5 text-left shadow-lg">
-              <h3 class="text-lg font-semibold uppercase tracking-wide text-white">Regler FjOlsenbanden</h3>
+            <div class="rounded-2xl border border-white/10 bg-white/5 px-5 py-6 text-left shadow-lg">
+              <h3 class="text-2xl font-extrabold uppercase tracking-[0.2em] text-white">REGLER FJOLSENBANDEN</h3>
               <p class="mt-2 text-sm text-zinc-300">
                 For å opprettholde et trygt og godt miljø har vi flere regler i FjOlsenbanden. Se alle reglene på Discord.
               </p>
@@ -1118,69 +1200,107 @@
 
         <section id="partnere" class="partners" data-section>
           <h2>Samarbeidspartnere</h2>
-          <p>Vi har allerede hatt samarbeid med flere kjente merkevarer.</p>
+          <p class="lead">Vi har allerede hatt samarbeid med flere kjente merkevarer.</p>
 
           <div class="partner-logos">
-            <div class="logo">
+            <a
+              class="logo"
+              href="https://www.lenovo.com/no/no/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span class="sr-only">Lenovo</span>
               <img src="/assets/partners/lenovo-logo.png" alt="Lenovo" />
-            </div>
-            <div class="logo">
+            </a>
+            <a
+              class="logo"
+              href="https://www.komplett.no/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span class="sr-only">Komplett</span>
               <img src="/assets/partners/komplett-logo.png" alt="Komplett" />
-            </div>
-            <div class="logo">
+            </a>
+            <a
+              class="logo"
+              href="https://www.philips.no/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span class="sr-only">Philips</span>
               <img src="/assets/partners/philips-logo.png" alt="Philips" />
-            </div>
-            <div class="logo">
+            </a>
+            <a
+              class="logo"
+              href="https://www.samsung.com/no/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span class="sr-only">Samsung</span>
               <img src="/assets/partners/samsung-logo.png" alt="Samsung" />
-            </div>
+            </a>
           </div>
 
           <p>Ønsker du å synliggjøre din merkevare for vårt engasjerte gaming-publikum?</p>
           <a href="#kontakt" class="cta">Kontakt oss</a>
+          <p class="cta-support">Ta kontakt for samarbeid!</p>
         </section>
 
       <section id="tilbud" class="section-shell" data-section>
-        <div class="mx-auto max-w-6xl space-y-6 rounded-3xl border border-white/10 bg-white/5 p-8 text-center shadow-[0_24px_48px_rgba(6,14,35,0.45)]">
+        <div class="mx-auto max-w-6xl space-y-8 rounded-3xl border border-white/10 bg-white/5 p-8 text-center shadow-[0_24px_48px_rgba(6,14,35,0.45)] lg:p-10">
           <div class="space-y-3">
             <h2 class="text-3xl font-bold text-white">Andre tilbud</h2>
             <p class="lead-clamp text-lg text-zinc-200">FjOlsenbanden tilbyr mer enn bare streaming!</p>
           </div>
-          <div class="grid gap-6 text-left sm:grid-cols-2">
-            <div class="flex h-full flex-col gap-4 rounded-2xl border border-white/10 bg-[#101a33]/80 p-6 shadow-[0_16px_32px_rgba(6,14,35,0.45)]">
+          <div class="grid gap-6 text-left sm:grid-cols-2 md:gap-8 lg:gap-10">
+            <div class="flex h-full flex-col gap-4 rounded-2xl border border-white/10 bg-[#101a33]/80 p-6 shadow-[0_16px_32px_rgba(6,14,35,0.45)] transition-all duration-300 hover:-translate-y-1 hover:border-[#13A0F9]/40 hover:shadow-[0_24px_48px_rgba(19,160,249,0.35)]">
               <div class="flex items-center gap-3">
                 <img src="https://setaei.com/Fjolsen/Glad%20tenner.png" alt="" loading="lazy" class="h-12 w-12 shrink-0" aria-hidden="true" />
                 <h3 class="text-xl font-semibold text-white">Foredrag</h3>
               </div>
               <p class="text-sm leading-relaxed text-zinc-300">FjOlsen besøker skoler, idrettslag og e-sportklubber for å snakke om streaming, gaming-kultur og nettvett.</p>
             </div>
-            <div class="flex h-full flex-col gap-4 rounded-2xl border border-white/10 bg-[#101a33]/80 p-6 shadow-[0_16px_32px_rgba(6,14,35,0.45)]">
+            <div class="flex h-full flex-col gap-4 rounded-2xl border border-white/10 bg-[#101a33]/80 p-6 shadow-[0_16px_32px_rgba(6,14,35,0.45)] transition-all duration-300 hover:-translate-y-1 hover:border-[#13A0F9]/40 hover:shadow-[0_24px_48px_rgba(19,160,249,0.35)]">
               <div class="flex items-center gap-3">
                 <img src="https://setaei.com/Fjolsen/Penger.png" alt="" loading="lazy" class="h-12 w-12 shrink-0" aria-hidden="true" />
                 <h3 class="text-xl font-semibold text-white">Events</h3>
               </div>
               <p class="text-sm leading-relaxed text-zinc-300">Vi arrangerer gaming-konkurranser for bedrifter, skoler og klubber – både digitalt og fysisk.</p>
             </div>
-            <div class="flex h-full flex-col gap-4 rounded-2xl border border-white/10 bg-[#101a33]/80 p-6 shadow-[0_16px_32px_rgba(6,14,35,0.45)]">
+            <div class="flex h-full flex-col gap-4 rounded-2xl border border-white/10 bg-[#101a33]/80 p-6 shadow-[0_16px_32px_rgba(6,14,35,0.45)] transition-all duration-300 hover:-translate-y-1 hover:border-[#13A0F9]/40 hover:shadow-[0_24px_48px_rgba(19,160,249,0.35)]">
               <div class="flex items-center gap-3">
                 <img src="https://setaei.com/Fjolsen/Love.png" alt="" loading="lazy" class="h-12 w-12 shrink-0" aria-hidden="true" />
                 <h3 class="text-xl font-semibold text-white">Unboxing</h3>
               </div>
               <p class="text-sm leading-relaxed text-zinc-300">FjOlsen lager profesjonelle unboxing-videoer av dine produkter som kan brukes i deres markedsføring og deles med vårt community.</p>
             </div>
-            <div class="flex h-full flex-col gap-4 rounded-2xl border border-white/10 bg-[#101a33]/80 p-6 shadow-[0_16px_32px_rgba(6,14,35,0.45)]">
+            <div class="flex h-full flex-col gap-4 rounded-2xl border border-white/10 bg-[#101a33]/80 p-6 shadow-[0_16px_32px_rgba(6,14,35,0.45)] transition-all duration-300 hover:-translate-y-1 hover:border-[#13A0F9]/40 hover:shadow-[0_24px_48px_rgba(19,160,249,0.35)]">
               <div class="flex items-center gap-3">
                 <img src="https://setaei.com/Fjolsen/Morsom.png" alt="" loading="lazy" class="h-12 w-12 shrink-0" aria-hidden="true" />
                 <h3 class="text-xl font-semibold text-white">Streamer for hire</h3>
               </div>
               <p class="text-sm leading-relaxed text-zinc-300">Ønsker du at FjOlsen skal streame på vegne av din merkevare? Han er tilgjengelig for co-streams, produktlanseringer og kampanjer – der ditt budskap blir formidlet på en autentisk og engasjerende måte til tusenvis av følgere.</p>
             </div>
-            <div class="flex h-full flex-col gap-4 rounded-2xl border border-white/10 bg-[#101a33]/80 p-6 shadow-[0_16px_32px_rgba(6,14,35,0.45)] sm:col-span-2">
+            <div class="flex h-full flex-col gap-4 rounded-2xl border border-white/10 bg-[#101a33]/80 p-6 shadow-[0_16px_32px_rgba(6,14,35,0.45)] transition-all duration-300 hover:-translate-y-1 hover:border-[#13A0F9]/40 hover:shadow-[0_24px_48px_rgba(19,160,249,0.35)] sm:col-span-2">
               <div class="flex items-center gap-3">
                 <img src="https://setaei.com/Fjolsen/Glad%20tenner.png" alt="" loading="lazy" class="h-12 w-12 shrink-0" aria-hidden="true" />
                 <h3 class="text-xl font-semibold text-white">Fortnite Coaching</h3>
               </div>
               <p class="text-sm leading-relaxed text-zinc-300">I FjOlsenbanden finner du flere av Norges dyktigste Fortnite-spillere. Sammen tilbyr vi 1-til-1 coaching for barn og unge som ønsker å utvikle seg som spillere – med fokus på strategi, samarbeid, kommunikasjon og trygg nettkultur. Ta kontakt hvis du ønsker mer informasjon eller vil booke en økt.</p>
             </div>
+          </div>
+          <div class="space-y-2">
+            <a
+              href="#kontakt"
+              class="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#13A0F9] to-[#FF2F9C] px-6 py-3 text-sm font-semibold uppercase tracking-[0.2em] text-white shadow-[0_18px_36px_rgba(19,160,249,0.35)] transition hover:from-[#0d8bd6] hover:to-[#e12585]"
+            >
+              Kontakt oss
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4" aria-hidden="true">
+                <path d="M5 12h14"></path>
+                <path d="m12 5 7 7-7 7"></path>
+              </svg>
+            </a>
+            <p class="text-sm text-zinc-300">Ta kontakt hvis du ønsker mer informasjon eller vil booke en økt.</p>
           </div>
         </div>
       </section>

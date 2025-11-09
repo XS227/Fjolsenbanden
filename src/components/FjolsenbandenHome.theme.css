@@ -85,48 +85,84 @@
 }
 
 .fj-theme .partners {
-  background: #041149;
+  background:
+    radial-gradient(circle at 15% 15%, rgba(19, 160, 249, 0.25), transparent 60%),
+    radial-gradient(circle at 85% 25%, rgba(255, 47, 156, 0.22), transparent 58%),
+    #041149;
   text-align: center;
-  padding: 4rem 1rem;
-  border-radius: 2rem;
+  padding: clamp(4.5rem, 8vw, 6.5rem) clamp(1.5rem, 5vw, 3.5rem);
+  border-radius: 2.5rem;
   max-width: 64rem;
   margin: 0 auto;
+  box-shadow: 0 26px 52px rgba(7, 12, 28, 0.55);
 }
 
 .fj-theme .partners h2 {
-  font-size: 2rem;
+  font-size: clamp(2rem, 3.5vw, 2.5rem);
   font-weight: 800;
-  margin-bottom: 0.5rem;
+  letter-spacing: 0.06em;
+  margin-bottom: 0.75rem;
 }
 
 .fj-theme .partners p {
   color: #c9d4ff;
-  font-size: 1.1rem;
+  font-size: 1.05rem;
   margin-bottom: 2rem;
+}
+
+.fj-theme .partners p.lead {
+  font-size: clamp(1.1rem, 2.5vw, 1.35rem);
+  margin-bottom: 2.75rem;
 }
 
 .fj-theme .partner-logos {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-  gap: 2rem;
-  margin-bottom: 2rem;
+  gap: clamp(1.5rem, 5vw, 2.5rem);
+  margin-bottom: clamp(2.25rem, 6vw, 3rem);
 }
 
 .fj-theme .partner-logos .logo {
   position: relative;
   overflow: hidden;
   border-radius: 1.5rem;
-  width: 248px;
-  height: 176px;
+  width: clamp(200px, 26vw, 240px);
+  height: clamp(150px, 20vw, 170px);
   display: flex;
   align-items: center;
   justify-content: center;
+  background: rgba(255, 255, 255, 0.03);
+  transition: transform 0.4s ease, box-shadow 0.4s ease, background 0.4s ease;
+  text-decoration: none;
+}
+
+.fj-theme .partner-logos .logo::after {
+  content: "";
+  position: absolute;
+  inset: -35%;
+  background: radial-gradient(circle, rgba(19, 160, 249, 0.45), rgba(255, 47, 156, 0.4));
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  filter: blur(40px);
+  z-index: 0;
+}
+
+.fj-theme .partner-logos .logo:hover,
+.fj-theme .partner-logos .logo:focus-visible {
+  transform: translateY(-6px);
+  box-shadow: 0 24px 40px rgba(19, 160, 249, 0.28), 0 0 0 1px rgba(255, 47, 156, 0.3);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.fj-theme .partner-logos .logo:hover::after,
+.fj-theme .partner-logos .logo:focus-visible::after {
+  opacity: 0.9;
 }
 
 .fj-theme .partner-logos img {
-  max-width: 88%;
-  max-height: 88%;
+  max-width: 82%;
+  max-height: 82%;
   object-fit: contain;
   display: block;
   position: relative;
@@ -143,29 +179,61 @@
   padding: 1.5rem;
   font-size: 0.95rem;
   font-weight: 600;
-  letter-spacing: 0.3em;
+  letter-spacing: 0.32em;
   text-transform: uppercase;
   color: rgba(255, 255, 255, 0.78);
   z-index: 1;
 }
 
 .fj-theme .partners .cta {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
   background: linear-gradient(90deg, #13a0f9, #ff2f9c);
   color: #fff;
   text-decoration: none;
-  font-weight: 600;
-  padding: 0.9rem 2.2rem;
-  border-radius: 50px;
+  font-weight: 700;
+  font-size: 1rem;
+  padding: 0.95rem 2.5rem;
+  border-radius: 999px;
+  box-shadow: 0 18px 36px rgba(19, 160, 249, 0.35);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+}
+
+.fj-theme .partners .cta:hover,
+.fj-theme .partners .cta:focus-visible {
+  transform: translateY(-3px);
+  box-shadow: 0 22px 42px rgba(255, 47, 156, 0.35);
+  opacity: 0.95;
+}
+
+.fj-theme .partners .cta-support {
+  margin-top: 0.75rem;
+  font-size: 0.95rem;
+  color: rgba(201, 212, 255, 0.9);
 }
 
 .fj-theme.theme-light .partners {
-  background: #e9f2ff;
+  background:
+    radial-gradient(circle at 15% 15%, rgba(19, 160, 249, 0.18), transparent 60%),
+    radial-gradient(circle at 85% 25%, rgba(255, 47, 156, 0.18), transparent 58%),
+    #e9f2ff;
   color: #0b143f;
+  box-shadow: 0 20px 44px rgba(11, 20, 63, 0.18);
 }
 
 .fj-theme.theme-light .partners p {
-  color: rgba(11, 20, 63, 0.75);
+  color: rgba(11, 20, 63, 0.74);
+}
+
+.fj-theme.theme-light .partner-logos .logo {
+  background: rgba(11, 20, 63, 0.06);
+}
+
+.fj-theme.theme-light .partner-logos .logo:hover,
+.fj-theme.theme-light .partner-logos .logo:focus-visible {
+  box-shadow: 0 20px 34px rgba(19, 160, 249, 0.25), 0 0 0 1px rgba(255, 47, 156, 0.25);
 }
 
 .fj-theme.theme-light .partner-logos .logo .logo-fallback {
