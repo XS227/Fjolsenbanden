@@ -831,16 +831,15 @@
         </section>
 
         <section id="live" class="section-shell" data-section>
-          <div class="mx-auto max-w-7xl space-y-10 rounded-[2.5rem] border border-white/5 bg-gradient-to-br from-[#081f7d]/80 via-[#071a63]/80 to-[#051249]/80 p-12 shadow-2xl">
-            <div class="space-y-4 text-center lg:text-left">
-              <h2 class="text-3xl font-bold sm:text-4xl">🎥 Live med FjOlsen</h2>
-              <p class="text-lg text-slate-100">Følg sendingene direkte fra studioet vårt med turneringer, gaming-utfordringer og overraskelser fra communityet.</p>
-              <p class="text-sm text-slate-300">Klikk på forhåndsvisningen for å se hele streamen på Twitch, eller hopp inn i chatten og heie på spillerne.</p>
-            </div>
-            <div class="relative overflow-hidden rounded-2xl border border-white/10 bg-black/70 p-6 lg:mx-auto lg:max-w-[90%]">
-              <span class="inline-flex items-center gap-2 rounded-full bg-rose-500/20 px-3 py-1 text-xs font-semibold text-rose-200">🔴 Live preview</span>
-              <p class="mt-4 text-sm text-slate-300">Stream-vindu – se FjOlsen ta communityet gjennom nye utfordringer og konkurranser.</p>
-              <div class="mt-4 overflow-hidden rounded-xl border border-white/10 bg-black/80">
+          <div class="mx-auto grid max-w-7xl gap-8 lg:grid-cols-3">
+            <div class="space-y-6 lg:col-span-2">
+              <div class="space-y-4 text-center lg:text-left">
+                <h2 class="text-3xl font-bold sm:text-4xl">🎥 Live med FjOlsen</h2>
+                <p class="text-lg text-slate-100">Følg sendingene direkte fra studioet vårt med turneringer, gaming-utfordringer og overraskelser fra communityet.</p>
+                <p class="text-sm text-slate-300">Klikk på forhåndsvisningen for å se hele streamen på Twitch, eller hopp inn i chatten og heie på spillerne.</p>
+              </div>
+              <div class="relative overflow-hidden rounded-2xl border border-white/10 bg-[#071d6f]">
+                <span class="absolute left-4 top-4 rounded-full bg-rose-500 px-3 py-1 text-xs font-semibold text-white">🔴 LIVE</span>
                 <iframe
                   data-preview-frame="true"
                   src="https://player.twitch.tv/?channel=FjOlsenFN&parent=fjolsenbanden.setaei.com&muted=true"
@@ -849,10 +848,103 @@
                   class="aspect-video w-full bg-black"
                 ></iframe>
               </div>
-              <div
-                data-preview-overlay="true"
-                class="absolute inset-0 flex flex-col items-center justify-center gap-4 bg-black/75 p-6 text-center"
-              >
+              <div class="flex flex-wrap justify-center gap-3">
+                <a
+                  href="https://www.twitch.tv/fjolsenbanden"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="flex items-center gap-2 rounded-full border border-white/10 px-4 py-2 text-sm transition hover:bg-white/10"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="lucide lucide-twitch h-5 w-5 text-purple-500"
+                  >
+                    <path d="M21 2H3v16h5v4l4-4h5l4-4V2zm-10 9V7m5 4V7"></path>
+                  </svg>
+                  <span>Twitch</span>
+                </a>
+                <a
+                  href="https://youtube.com/@fjolsenbanden"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="flex items-center gap-2 rounded-full border border-white/10 px-4 py-2 text-sm transition hover:bg-white/10"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="lucide lucide-youtube h-5 w-5 text-red-500"
+                  >
+                    <path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17"></path>
+                    <path d="m10 15 5-3-5-3z"></path>
+                  </svg>
+                  <span>YouTube</span>
+                </a>
+                <a
+                  href="https://www.tiktok.com/@fjolsenbanden"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="flex items-center gap-2 rounded-full border border-white/10 px-4 py-2 text-sm transition hover:bg-white/10"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="lucide lucide-smartphone h-5 w-5 text-pink-500"
+                  >
+                    <rect width="14" height="20" x="5" y="2" rx="2" ry="2"></rect>
+                    <path d="M12 18h.01"></path>
+                  </svg>
+                  <span>TikTok</span>
+                </a>
+                <a
+                  href="https://www.instagram.com/fjolsenbanden"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="flex items-center gap-2 rounded-full border border-white/10 px-4 py-2 text-sm transition hover:bg-white/10"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="lucide lucide-instagram h-5 w-5 text-fuchsia-400"
+                  >
+                    <rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect>
+                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                  </svg>
+                  <span>Instagram</span>
+                </a>
+              </div>
+            </div>
+            <div class="flex max-h-[640px] flex-col rounded-2xl border border-white/10 bg-[#071d6f] p-4">
+              <h3 class="mb-3 flex items-center gap-2 text-sm font-semibold text-[#13A0F9]">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="24"

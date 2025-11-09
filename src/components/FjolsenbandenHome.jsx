@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useMemo, useState } from "react";
 import { createPortal } from "react-dom";
-import { ArrowRight, CheckCircle2, CreditCard, Gift, Instagram, Lock, Menu, MessageCircle, Moon, Phone, ShieldCheck, Smartphone, Sun, Trophy, Twitch, X, Youtube, UserCog, } from "lucide-react";
+import { ArrowRight, CheckCircle2, CreditCard, Gift, Instagram, Lock, Menu, MessageCircle, Moon, Phone, Play, ShieldCheck, Smartphone, Sun, Trophy, Twitch, X, Youtube, UserCog, } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { DEFAULT_SECTION_ORDER, DEFAULT_SITE_MODULES, DEFAULT_TWITCH_EMBED_URL, useAdminState, } from "@/lib/admin-state";
@@ -77,6 +77,34 @@ const stats = [
     { label: "Discord", value: "2 500+" },
     { label: "Twitch", value: "3 200+" },
     { label: "TikTok", value: "4 200+" },
+];
+const liveFollowLinks = [
+    {
+        label: "Twitch",
+        href: "https://www.twitch.tv/fjolsenbanden",
+        icon: React.createElement(Twitch, { className: "h-5 w-5 text-purple-500", "aria-hidden": "true" }),
+    },
+    {
+        label: "YouTube",
+        href: "https://youtube.com/@fjolsenbanden",
+        icon: React.createElement(Youtube, { className: "h-5 w-5 text-red-500", "aria-hidden": "true" }),
+    },
+    {
+        label: "TikTok",
+        href: "https://www.tiktok.com/@fjolsenbanden",
+        icon: React.createElement(Smartphone, { className: "h-5 w-5 text-pink-500", "aria-hidden": "true" }),
+    },
+    {
+        label: "Instagram",
+        href: "https://www.instagram.com/fjolsenbanden",
+        icon: React.createElement(Instagram, { className: "h-5 w-5 text-fuchsia-400", "aria-hidden": "true" }),
+    },
+];
+const liveChatMessages = [
+    { id: "lina", author: "Lina", message: "Haha, den bossen var vilt!" },
+    { id: "jonas", author: "Jonas", message: "Gleder meg til premie-trekningen 🔥" },
+    { id: "sara", author: "Sara", message: "Hei fra TikTok 😎" },
+    { id: "marius", author: "Marius", message: "Bra lyd i dag!" },
 ];
 const communityHighlights = [
     {
@@ -810,17 +838,36 @@ export default function FjolsenbandenHome() {
                             React.createElement("p", { className: "mt-3 text-center text-xs text-zinc-400 sm:text-left" }, announcement))))),
             liveStream
                 ? (React.createElement("section", { id: "live", className: "px-6 sm:px-8 lg:px-10", style: sectionOrderStyle("liveStream") },
-                    React.createElement("div", { className: "mx-auto max-w-7xl space-y-10 rounded-[2.5rem] border border-white/5 bg-gradient-to-br from-[#081f7d]/80 via-[#071a63]/80 to-[#051249]/80 p-12 shadow-2xl" },
-                        React.createElement("div", { className: "space-y-4 text-center lg:text-left" },
-                            React.createElement("h2", { className: "text-3xl font-bold sm:text-4xl" }, "\uD83C\uDFA5 Live med FjOlsen"),
-                            React.createElement("p", { className: "text-lg text-slate-100" }, "F\u00F8lg sendingene direkte fra studioet v\u00E5rt med turneringer, gaming-utfordringer og overraskelser fra communityet."),
-                            React.createElement("p", { className: "text-sm text-slate-300" }, announcement)),
-                        React.createElement("div", { className: "relative overflow-hidden rounded-2xl border border-white/10 bg-black/70 p-6 lg:mx-auto lg:max-w-[90%]" },
-                            React.createElement("span", { className: "inline-flex items-center gap-2 rounded-full bg-rose-500/20 px-3 py-1 text-xs font-semibold text-rose-200" }, "\uD83D\uDD34 Live preview"),
-                            React.createElement("p", { className: "mt-4 text-sm text-slate-300" }, "Stream-vindu \u2013 se FjOlsen ta communityet gjennom nye utfordringer og konkurranser."),
-                            React.createElement("div", { className: "mt-4 overflow-hidden rounded-xl border border-white/10 bg-black/80" },
-                                React.createElement("iframe", { title: "FjOlsenbanden live", src: twitchEmbedUrl, allow: "accelerometer; autoplay; clipboard-write; encrypted-media; picture-in-picture", allowFullScreen: true, referrerPolicy: "strict-origin-when-cross-origin", className: "aspect-video w-full" })),
-                            React.createElement("p", { className: "mt-3 text-xs text-slate-400" }, "Oppdater lenken i adminpanelet for \u00E5 endre hvilken Twitch-kanal som vises.")))))
+                    React.createElement("div", { className: "mx-auto grid max-w-7xl gap-8 lg:grid-cols-3" },
+                        React.createElement("div", { className: "space-y-6 lg:col-span-2" },
+                            React.createElement("div", { className: "space-y-4 text-center lg:text-left" },
+                                React.createElement("h2", { className: "text-3xl font-bold sm:text-4xl" }, "\uD83C\uDFA5 Live med FjOlsen"),
+                                React.createElement("p", { className: "text-lg text-slate-100" }, "F\u00F8lg sendingene direkte fra studioet v\u00E5rt med turneringer, gaming-utfordringer og overraskelser fra communityet."),
+                                React.createElement("p", { className: "text-sm text-slate-300" }, "Klikk p\u00E5 forh\u00E5ndsvisningen for \u00E5 se hele streamen p\u00E5 Twitch, eller hopp inn i chatten og heie p\u00E5 spillerne."),
+                                announcement ? React.createElement("p", { className: "text-sm text-slate-300" }, announcement) : null),
+                            React.createElement("div", { className: "relative overflow-hidden rounded-2xl border border-white/10 bg-[#071d6f]" },
+                                React.createElement("span", { className: "absolute left-4 top-4 rounded-full bg-rose-500 px-3 py-1 text-xs font-semibold text-white" }, "\uD83D\uDD34 LIVE"),
+                                React.createElement("iframe", { title: "FjOlsenbanden live", src: twitchEmbedUrl, allow: "accelerometer; autoplay; clipboard-write; encrypted-media; picture-in-picture", allowFullScreen: true, referrerPolicy: "strict-origin-when-cross-origin", className: "aspect-video w-full bg-black", "data-preview-frame": "true" }),
+                                React.createElement("div", { className: "absolute inset-0 flex flex-col items-center justify-center gap-4 bg-black/75 p-6 text-center", "data-preview-overlay": "true" },
+                                    React.createElement(Play, { className: "h-12 w-12 text-[#13A0F9]" }),
+                                    React.createElement("p", { className: "text-sm text-slate-200" }, "1-minutt forh\u00E5ndsvisning ", React.createElement("span", { className: "ml-1", "data-preview-timer": "true" }, "60"), "s igjen"),
+                                    React.createElement("button", { type: "button", className: "inline-flex items-center justify-center rounded-full bg-[#13A0F9] px-6 py-2.5 font-semibold text-white transition hover:bg-[#2bb5ff]", "data-video-unmute": "true" }, "Se full stream"),
+                                    React.createElement("div", { className: "flex gap-3 text-xs text-slate-300" },
+                                        React.createElement("span", null, "eller fortsett p\u00E5",
+                                            React.createElement("a", { href: "https://www.twitch.tv/FjOlsenFN", target: "_blank", rel: "noopener noreferrer", className: "ml-1 text-[#13A0F9]" }, "Twitch")),
+                                        React.createElement("span", null, "|"),
+                                        React.createElement("a", { href: "https://youtube.com/@fjolsenbanden", target: "_blank", rel: "noopener noreferrer", className: "text-[#13A0F9]" }, "YouTube")))),
+                            React.createElement("div", { className: "flex flex-wrap justify-center gap-3" },
+                                liveFollowLinks.map(({ label, href, icon }) => (React.createElement("a", { key: label, href: href, target: "_blank", rel: "noopener noreferrer", className: "flex items-center gap-2 rounded-full border border-white/10 px-4 py-2 text-sm transition hover:bg-white/10" }, icon, React.createElement("span", null, label)))))),
+                        React.createElement("div", { className: "flex max-h-[640px] flex-col rounded-2xl border border-white/10 bg-[#071d6f] p-4" },
+                            React.createElement("h3", { className: "mb-3 flex items-center gap-2 text-sm font-semibold text-[#13A0F9]" },
+                                React.createElement(MessageCircle, { className: "h-4 w-4", "aria-hidden": "true" }),
+                                "Live chat"),
+                            React.createElement("div", { className: "flex-1 space-y-3 overflow-y-auto pr-1 text-sm" },
+                                liveChatMessages.map(({ id, author, message }) => (React.createElement("div", { key: id, className: "rounded-lg border border-white/10 bg-[#071d6f] px-3 py-2" },
+                                    React.createElement("span", { className: "mr-2 font-semibold text-[#13A0F9]" }, author),
+                                    React.createElement("span", { className: "text-slate-200" }, message))))),
+                            React.createElement("input", { type: "text", placeholder: "Skriv en kommentar...", className: "mt-3 w-full rounded-lg border border-white/20 bg-[#041149] px-3 py-2 text-sm text-white placeholder-slate-400 outline-none focus:ring-2 focus:ring-[#13A0F9]" }))))
                 : null,
             React.createElement("section", { id: "community", className: "px-6 sm:px-8 lg:px-10", style: sectionOrderStyle("community") },
                 React.createElement("div", { className: "mx-auto grid max-w-6xl gap-10 lg:grid-cols-2 lg:items-start" },
