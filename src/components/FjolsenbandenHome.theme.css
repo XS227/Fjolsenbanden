@@ -1,18 +1,33 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Luckiest+Guy&display=swap");
+
 .fj-theme {
-  --fj-gradient: linear-gradient(180deg, #131a49 0%, #0b163f 55%, #050b24 100%);
+  --fj-gradient: linear-gradient(180deg, #041149 0%, #06155f 55%, #030b3a 100%);
   --fj-text-primary: #ffffff;
   --fj-text-muted: rgba(226, 232, 240, 0.78);
-  --fj-surface: rgba(255, 255, 255, 0.05);
-  --fj-surface-strong: rgba(16, 28, 55, 0.85);
+  --fj-surface: rgba(255, 255, 255, 0.06);
+  --fj-surface-strong: rgba(12, 28, 88, 0.85);
   --fj-border-soft: rgba(255, 255, 255, 0.14);
-  --fj-border-strong: rgba(255, 255, 255, 0.18);
-  --fj-nav-bg: rgba(5, 11, 36, 0.75);
+  --fj-border-strong: rgba(255, 255, 255, 0.22);
+  --fj-nav-bg: rgba(4, 17, 73, 0.82);
   --fj-nav-border: rgba(255, 255, 255, 0.12);
-  --fj-footer-bg: rgba(5, 11, 36, 0.86);
-  --fj-footer-border: rgba(255, 255, 255, 0.12);
-  --fj-sheet-bg: rgba(5, 11, 36, 0.95);
-  --fj-sheet-shadow: 0 24px 48px rgba(5, 11, 36, 0.45);
-  --fj-ring-offset: #050b24;
+  --fj-footer-bg: rgba(4, 17, 73, 0.9);
+  --fj-footer-border: rgba(255, 255, 255, 0.15);
+  --fj-sheet-bg: rgba(4, 17, 73, 0.95);
+  --fj-sheet-shadow: 0 24px 48px rgba(4, 17, 73, 0.5);
+  --fj-ring-offset: #041149;
+  font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  line-height: 1.6;
+}
+
+.fj-theme h1,
+.fj-theme h2,
+.fj-theme h3,
+.fj-theme h4,
+.fj-theme h5,
+.fj-theme h6,
+.fj-theme .font-display {
+  font-family: "Luckiest Guy", "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  letter-spacing: 0.02em;
 }
 
 .fj-theme.theme-light {

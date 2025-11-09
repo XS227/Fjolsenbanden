@@ -15,15 +15,40 @@
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:image" content="/og-image.svg" />
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Luckiest+Guy&display=swap"
+      rel="stylesheet"
+    />
     <style>
+      :root {
+        --fj-midnight: #041149;
+        --fj-blue: #13a0f9;
+        --fj-pink: #ff2f9c;
+      }
+
       body {
-        background-color: #050b24;
+        background-color: var(--fj-midnight);
         color: var(--fj-text-primary, #ffffff);
         transition: background-color 0.4s ease, color 0.4s ease;
+        font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        line-height: 1.6;
       }
 
       body.theme-light {
         background-color: #e9f2ff;
+      }
+
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6,
+      .font-display {
+        font-family: "Luckiest Guy", "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        letter-spacing: 0.02em;
       }
 
       a {
@@ -340,7 +365,7 @@
       }
 
       .fj-theme {
-        --fj-gradient: linear-gradient(180deg, #131a49 0%, #0b163f 55%, #050b24 100%);
+        --fj-gradient: linear-gradient(180deg, #131a49 0%, #0b163f 55%, #041149 100%);
         --fj-text-primary: #ffffff;
         --fj-text-muted: rgba(226, 232, 240, 0.78);
         --fj-surface: rgba(255, 255, 255, 0.05);
@@ -353,7 +378,7 @@
         --fj-footer-border: rgba(255, 255, 255, 0.12);
         --fj-sheet-bg: rgba(5, 11, 36, 0.95);
         --fj-sheet-shadow: 0 24px 48px rgba(5, 11, 36, 0.45);
-        --fj-ring-offset: #050b24;
+        --fj-ring-offset: #041149;
         --fj-overlay: radial-gradient(circle at 18% 12%, rgba(19, 160, 249, 0.3), transparent 55%),
           radial-gradient(circle at 80% 0%, rgba(255, 47, 156, 0.18), transparent 50%);
       }
@@ -456,13 +481,13 @@
         border-color: var(--fj-border-soft) !important;
       }
 
-      .fj-theme.theme-light .bg-[#101c37]\/80,
+      .fj-theme.theme-light .bg-[#071d6f]\/80,
       .fj-theme.theme-light .bg-[#1f2940],
       .fj-theme.theme-light .bg-[#161f33]\/90,
       .fj-theme.theme-light .bg-[#0d1733],
       .fj-theme.theme-light .bg-[#0b163f],
-      .fj-theme.theme-light .bg-[#050B24]\/75,
-      .fj-theme.theme-light .supports-\[backdrop-filter\]:bg-\[#050B24\]\/60 {
+      .fj-theme.theme-light .bg-[#041149]\/75,
+      .fj-theme.theme-light .supports-\[backdrop-filter\]:bg-\[#041149\]\/60 {
         background-color: var(--fj-surface-strong) !important;
       }
 
@@ -587,7 +612,7 @@
     <div class="fj-page relative flex flex-1 flex-col overflow-x-hidden text-white">
       <div class="fj-overlay pointer-events-none absolute inset-0 -z-10"></div>
       <div class="relative flex flex-1 flex-col">
-        <nav class="fj-nav section-shell grid grid-cols-1 items-center gap-4 border-b border-white/10 bg-[#050B24]/75 py-4 backdrop-blur supports-[backdrop-filter]:bg-[#050B24]/60 sm:grid-cols-[1fr_auto_1fr]" data-scrolled="false">
+        <nav class="fj-nav section-shell grid grid-cols-1 items-center gap-4 border-b border-white/10 bg-[#041149]/75 py-4 backdrop-blur supports-[backdrop-filter]:bg-[#041149]/60 sm:grid-cols-[1fr_auto_1fr]" data-scrolled="false">
           <div class="hidden items-center justify-start gap-4 sm:flex">
             <img
               src="https://setaei.com/Fjolsen/Glad%20tunge.png"
@@ -667,7 +692,7 @@
               loading="lazy"
               decoding="async"
             />
-            <div class="absolute inset-0 bg-gradient-to-b from-[#050B24]/40 via-[#050B24]/70 to-[#050B24]/85"></div>
+            <div class="absolute inset-0 bg-gradient-to-b from-[#041149]/40 via-[#041149]/70 to-[#041149]/85"></div>
           </div>
           <div class="mx-auto grid max-w-6xl gap-10 lg:grid-cols-2 lg:items-start">
             <div class="space-y-6">
@@ -681,7 +706,7 @@
                 <div class="flex flex-col gap-3 sm:flex-row sm:justify-center lg:justify-start">
                   <a
                     href="#live"
-                    class="inline-flex items-center justify-center gap-2 rounded-full border border-white/20 bg-white/10 px-6 py-2 text-sm font-semibold text-white transition hover:border-white/35 hover:bg-white/15 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#13A0F9] focus-visible:ring-offset-2"
+                    class="inline-flex items-center justify-center gap-2 rounded-full bg-[#13A0F9] px-6 py-2 text-sm font-semibold text-white shadow-[0_12px_28px_rgba(19,160,249,0.35)] transition hover:bg-[#2bb5ff] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#13A0F9] focus-visible:ring-offset-2"
                   >
                     Se FjOlsen Live
                     <svg
@@ -702,7 +727,7 @@
                   </a>
                   <a
                     href="#bli-medlem"
-                    class="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#13A0F9] to-[#FF2F9C] px-6 py-2 text-sm font-semibold text-white shadow-[0_14px_32px_rgba(19,160,249,0.35)] transition hover:from-[#0d8bd6] hover:to-[#e12585] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#13A0F9] focus-visible:ring-offset-2"
+                    class="inline-flex items-center justify-center gap-2 rounded-full bg-[#FF2F9C] px-6 py-2 text-sm font-semibold text-white shadow-[0_12px_28px_rgba(255,47,156,0.35)] transition hover:bg-[#ff4fb0] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FF2F9C] focus-visible:ring-offset-2"
                   >
                     Bli medlem
                     <svg
@@ -753,7 +778,7 @@
                   allowfullscreen
                 ></iframe>
               </div>
-              <div class="w-full rounded-3xl border border-white/10 bg-[#101c37]/80 p-5 shadow-[0_18px_42px_rgba(12,21,45,0.45)]">
+              <div class="w-full rounded-3xl border border-white/10 bg-[#071d6f]/80 p-5 shadow-[0_18px_42px_rgba(12,21,45,0.45)]">
                 <div class="mb-3 flex items-center gap-2 text-sm font-semibold uppercase tracking-wide text-white/80">
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-[#13A0F9]"><path d="M12 15l-3-3m0 0l3-3m-3 3h8"></path><path d="M5 19V5"></path><path d="M19 5v14"></path></svg>
                   Følg FjOlsenbanden
@@ -873,7 +898,7 @@
         <section id="live" class="section-shell" data-section>
           <div class="mx-auto grid max-w-7xl gap-8 lg:grid-cols-3">
             <div class="space-y-4 lg:col-span-2">
-              <div class="relative overflow-hidden rounded-2xl border border-white/10 bg-[#101a2e]">
+              <div class="relative overflow-hidden rounded-2xl border border-white/10 bg-[#071d6f]">
                 <span class="absolute left-4 top-4 rounded-full bg-rose-500 px-3 py-1 text-xs font-semibold text-white">🔴 LIVE</span>
                 <iframe
                   data-preview-frame="true"
@@ -896,7 +921,7 @@
                     stroke-width="2"
                     stroke-linecap="round"
                     stroke-linejoin="round"
-                    class="lucide lucide-play h-12 w-12 text-[#38bdf8]"
+                    class="lucide lucide-play h-12 w-12 text-[#13A0F9]"
                   >
                     <polygon points="6 3 20 12 6 21 6 3"></polygon>
                   </svg>
@@ -905,15 +930,15 @@
                   </p>
                   <button
                     type="button"
-                    class="inline-flex items-center justify-center rounded-full bg-[#22d3ee] px-6 py-2.5 font-semibold text-[#0f172a] transition hover:bg-[#0ea5e9]"
+                    class="inline-flex items-center justify-center rounded-full bg-[#13A0F9] px-6 py-2.5 font-semibold text-white transition hover:bg-[#2bb5ff]"
                     data-video-unmute="true"
                   >
                     Se full stream
                   </button>
                   <div class="flex gap-3 text-xs text-slate-300">
-                    <span>eller fortsett på<a href="https://www.twitch.tv/FjOlsenFN" target="_blank" rel="noopener noreferrer" class="ml-1 text-[#38bdf8]">Twitch</a></span>
+                    <span>eller fortsett på<a href="https://www.twitch.tv/FjOlsenFN" target="_blank" rel="noopener noreferrer" class="ml-1 text-[#13A0F9]">Twitch</a></span>
                     <span>|</span>
-                    <a href="https://youtube.com/@fjolsenbanden" target="_blank" rel="noopener noreferrer" class="text-[#38bdf8]">YouTube</a>
+                    <a href="https://youtube.com/@fjolsenbanden" target="_blank" rel="noopener noreferrer" class="text-[#13A0F9]">YouTube</a>
                   </div>
                 </div>
               </div>
@@ -1012,8 +1037,8 @@
                 </a>
               </div>
             </div>
-            <div class="flex max-h-[640px] flex-col rounded-2xl border border-white/10 bg-[#13203b] p-4">
-              <h3 class="mb-3 flex items-center gap-2 text-sm font-semibold text-[#38bdf8]">
+            <div class="flex max-h-[640px] flex-col rounded-2xl border border-white/10 bg-[#071d6f] p-4">
+              <h3 class="mb-3 flex items-center gap-2 text-sm font-semibold text-[#13A0F9]">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="24"
@@ -1031,27 +1056,27 @@
                 Live chat
               </h3>
               <div class="flex-1 space-y-3 overflow-y-auto pr-1 text-sm">
-                <div class="rounded-lg border border-white/10 bg-[#101a2e] px-3 py-2">
-                  <span class="mr-2 font-semibold text-[#38bdf8]">Lina</span>
+                <div class="rounded-lg border border-white/10 bg-[#071d6f] px-3 py-2">
+                  <span class="mr-2 font-semibold text-[#13A0F9]">Lina</span>
                   <span class="text-slate-200">Haha, den bossen var vilt!</span>
                 </div>
-                <div class="rounded-lg border border-white/10 bg-[#101a2e] px-3 py-2">
-                  <span class="mr-2 font-semibold text-[#38bdf8]">Jonas</span>
+                <div class="rounded-lg border border-white/10 bg-[#071d6f] px-3 py-2">
+                  <span class="mr-2 font-semibold text-[#13A0F9]">Jonas</span>
                   <span class="text-slate-200">Gleder meg til premie-trekningen 🔥</span>
                 </div>
-                <div class="rounded-lg border border-white/10 bg-[#101a2e] px-3 py-2">
-                  <span class="mr-2 font-semibold text-[#38bdf8]">Sara</span>
+                <div class="rounded-lg border border-white/10 bg-[#071d6f] px-3 py-2">
+                  <span class="mr-2 font-semibold text-[#13A0F9]">Sara</span>
                   <span class="text-slate-200">Hei fra TikTok 😎</span>
                 </div>
-                <div class="rounded-lg border border-white/10 bg-[#101a2e] px-3 py-2">
-                  <span class="mr-2 font-semibold text-[#38bdf8]">Marius</span>
+                <div class="rounded-lg border border-white/10 bg-[#071d6f] px-3 py-2">
+                  <span class="mr-2 font-semibold text-[#13A0F9]">Marius</span>
                   <span class="text-slate-200">Bra lyd i dag!</span>
                 </div>
               </div>
               <input
                 type="text"
                 placeholder="Skriv en kommentar..."
-                class="mt-3 w-full rounded-lg border border-white/20 bg-[#0f172a] px-3 py-2 text-sm text-white placeholder-slate-400 outline-none focus:ring-2 focus:ring-[#38bdf8]"
+                class="mt-3 w-full rounded-lg border border-white/20 bg-[#041149] px-3 py-2 text-sm text-white placeholder-slate-400 outline-none focus:ring-2 focus:ring-[#13A0F9]"
               />
             </div>
           </div>
@@ -1071,7 +1096,7 @@
                 href="https://www.twitch.tv/fjolsenbanden"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="flex flex-col items-center gap-3 rounded-2xl border border-white/10 bg-white/5 p-5 text-center shadow-inner no-underline transition hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#38bdf8]"
+                class="flex flex-col items-center gap-3 rounded-2xl border border-white/10 bg-white/5 p-5 text-center shadow-inner no-underline transition hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#13A0F9]"
               >
                 <span class="flex h-14 w-14 items-center justify-center rounded-full bg-[#9146FF]/20">
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="h-8 w-8 text-[#9146FF]" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -1089,7 +1114,7 @@
                 href="https://www.tiktok.com/@fjolsenbanden"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="flex flex-col items-center gap-3 rounded-2xl border border-white/10 bg-white/5 p-5 text-center shadow-inner no-underline transition hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#38bdf8]"
+                class="flex flex-col items-center gap-3 rounded-2xl border border-white/10 bg-white/5 p-5 text-center shadow-inner no-underline transition hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#13A0F9]"
               >
                 <span class="flex h-14 w-14 items-center justify-center rounded-full bg-[#69C9D0]/20">
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="h-8 w-8 text-[#69C9D0]" fill="currentColor" aria-hidden="true">
@@ -1107,7 +1132,7 @@
                 href="https://discord.gg/fjolsenbanden"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="flex flex-col items-center gap-3 rounded-2xl border border-white/10 bg-white/5 p-5 text-center shadow-inner no-underline transition hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#38bdf8]"
+                class="flex flex-col items-center gap-3 rounded-2xl border border-white/10 bg-white/5 p-5 text-center shadow-inner no-underline transition hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#13A0F9]"
               >
                 <span class="flex h-14 w-14 items-center justify-center rounded-full bg-[#5865F2]/20">
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="h-8 w-8 text-[#5865F2]" fill="currentColor" aria-hidden="true">
@@ -1207,7 +1232,7 @@
                   Enhver form for mobbing, trakassering eller hatefulle ytringer er strengt forbudt. Gjentagelser vil føre til utestengelse fra FjOlsenbanden!
                 </p>
                 <p class="rounded-xl border border-white/10 bg-[#131f3f]/80 p-3">
-                  <span class="block text-xs font-semibold uppercase tracking-wide text-[#38bdf8]">Ha det gøy, stay positive:</span>
+                  <span class="block text-xs font-semibold uppercase tracking-wide text-[#13A0F9]">Ha det gøy, stay positive:</span>
                   Viktigst av alt, ha det gøy og nyt den positive spillopplevelsen vi skaper sammen! Hold chatten positiv og behandle alle i chatten inkludert moderatorer, med respekt.
                 </p>
               </div>
@@ -1391,71 +1416,56 @@
       </section>
 
       <section id="tilbakemeldinger" class="section-shell" data-section>
-        <div
-          class="mx-auto grid max-w-6xl gap-6 rounded-3xl border border-white/10 bg-[#111C3A]/85 p-6 shadow-[0_28px_60px_rgba(7,12,28,0.55)] transition-all duration-300 hover:border-white/20 hover:shadow-[0_32px_70px_rgba(7,12,28,0.6)] lg:grid-cols-[minmax(0,1fr)_280px] lg:p-8"
-        >
-          <div class="space-y-4">
-            <span
-              class="inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-1 text-xs font-semibold uppercase tracking-[0.35em] text-white/75"
-            >
-              <span class="inline-flex h-2 w-2 animate-pulse rounded-full bg-[#FF9B6A]"></span>
-              Hør fra gjengen
-            </span>
-            <h2 class="text-3xl font-bold text-white">Tilbakemeldinger fra barn og foreldre</h2>
-            <p class="max-w-2xl text-sm text-white/80 sm:text-base">
-              Vi bygger Fjolsenbanden sammen med medlemmene våre. Her deler både barn og foreldre hvordan Quest-boardet gjør spillhverdagen tryggere og mer gøy.
-            </p>
-            <div class="grid gap-4 sm:grid-cols-2">
-              <article class="rounded-2xl border border-white/15 bg-white/5 p-4 text-left shadow-[0_14px_32px_rgba(12,21,45,0.45)]">
-                <div class="flex items-center gap-3 text-sm font-semibold text-[#FF9B6A]">
-                  <span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-[#FF9B6A]/10 text-base text-[#FF9B6A]">
-                    <img src="https://setaei.com/Fjolsen/Love.png" alt="Barnas stemmer ikon" class="h-5 w-5" />
-                  </span>
-                  Barnas stemmer
-                </div>
-                <p class="mt-3 text-sm text-white/85">
-                  «Jeg digger at vi kan velge ukens quest sammen! Når jeg fullfører oppdrag får jeg badges med en gang, og teamet heier i Discord.»
-                </p>
-                <p class="mt-2 text-xs uppercase tracking-[0.25em] text-white/60">Aksel, 12 år</p>
-              </article>
-              <article class="rounded-2xl border border-white/15 bg-white/5 p-4 text-left shadow-[0_14px_32px_rgba(12,21,45,0.45)]">
-                <div class="flex items-center gap-3 text-sm font-semibold text-[#34D399]">
-                  <span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-[#34D399]/10 text-base text-[#34D399]">
-                    <img src="https://setaei.com/Fjolsen/Sjokk.png" alt="Foreldrenes erfaring ikon" class="h-5 w-5" />
-                  </span>
-                  Foreldrenes erfaring
-                </div>
-                <p class="mt-3 text-sm text-white/85">
-                  «Dashboardet gir oss full kontroll. Vi ser hvilke aktiviteter som er planlagt, kan godkjenne deltakelse og sende små heiarop når barna spiller.»
-                </p>
-                <p class="mt-2 text-xs uppercase tracking-[0.25em] text-white/60">Camilla, mamma til to gamere</p>
-              </article>
-            </div>
+        <div class="mx-auto max-w-6xl space-y-8 rounded-[2.5rem] border border-white/10 bg-[#111C3A]/85 p-8 text-center shadow-[0_30px_70px_rgba(7,12,28,0.6)] transition-all duration-300 hover:border-white/20 hover:shadow-[0_36px_84px_rgba(7,12,28,0.65)] lg:p-10">
+          <span class="inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-1 text-xs font-semibold uppercase tracking-[0.35em] text-white/80">
+            Tusen takk <span aria-hidden="true">❤</span>
+          </span>
+          <h2 class="text-3xl font-bold text-white sm:text-4xl">Feedback fra FjOlsenbanden</h2>
+          <p class="mx-auto max-w-3xl text-base text-white/80 sm:text-lg">
+            Her er ekte stemmer fra barn, ungdom og foreldre som har sendt varme ord til FjOlsenbanden. Vi setter enorm pris på alle som deler!
+          </p>
+          <div class="grid gap-6 text-left md:grid-cols-2">
+            <article class="flex h-full flex-col justify-between gap-4 rounded-3xl border border-white/15 bg-white/5 p-6 shadow-[0_20px_44px_rgba(7,12,28,0.55)]">
+              <p class="text-base font-semibold text-white">
+                “♥ Tusen takk for at jeg har fått muligheten til å spille hos FjOlsenbanden. Kan ikke takke nok for alt du har gjort for meg og alle andre. ♥”
+              </p>
+              <p class="text-sm font-medium text-[#FF9B6A]">Filip</p>
+            </article>
+            <article class="flex h-full flex-col justify-between gap-4 rounded-3xl border border-white/15 bg-white/5 p-6 shadow-[0_20px_44px_rgba(7,12,28,0.55)]">
+              <p class="text-base font-semibold text-white">
+                “Jeg elsker å spille customs-a dine, det er min favoritt. Jeg spiller ikke annet enn dine customs!”
+              </p>
+              <p class="text-sm font-medium text-[#13A0F9]">Rasmus</p>
+            </article>
+            <article class="flex h-full flex-col justify-between gap-4 rounded-3xl border border-white/15 bg-white/5 p-6 shadow-[0_20px_44px_rgba(7,12,28,0.55)]">
+              <p class="text-base font-semibold text-white">
+                “Uansett er vi takknemlige for innsatsen du legger i trygge og engasjerende rammer for barn og ungdom – og veldig flott at du arrangerer egne jentekvelder.”
+              </p>
+              <p class="text-sm font-medium text-[#34D399]">Pernille &amp; Terje, foreldre</p>
+            </article>
+            <article class="flex h-full flex-col justify-between gap-4 rounded-3xl border border-white/15 bg-white/5 p-6 shadow-[0_20px_44px_rgba(7,12,28,0.55)]">
+              <p class="text-base font-semibold text-white">
+                “Du gjør en forskjell! Du har så mye peiling på how to – overfor barn! Respekt.”
+              </p>
+              <p class="text-sm font-medium text-[#FF2F9C]">Merethe, mamma</p>
+            </article>
           </div>
-          <div class="space-y-4 rounded-2xl border border-white/10 bg-white/5 p-5 shadow-[0_18px_42px_rgba(12,21,45,0.45)] text-left">
-            <h3 class="text-xl font-semibold text-white">Derfor deler vi historier</h3>
-            <p class="text-sm text-zinc-300">
-              Felles tilbakemeldinger hjelper oss å prioritere nye funksjoner og sørger for at Quest-boardet passer hele familien.
-            </p>
-            <ul class="space-y-3 text-sm text-zinc-300">
-              <li class="flex items-start gap-2">
-                <span class="mt-1 text-[#FF9B6A]">★</span>
-                Ukentlige spørreundersøkelser der barna stemmer frem nye quest-temaer.
-              </li>
-              <li class="flex items-start gap-2">
-                <span class="mt-1 text-[#34D399]">★</span>
-                Foreldrepanel med forslag til trygge rutiner og skjermtidsbalanse.
-              </li>
-              <li class="flex items-start gap-2">
-                <span class="mt-1 text-[#13A0F9]">★</span>
-                Direkte tilbakemelding til teamet via portalen når noe kan bli bedre.
-              </li>
-            </ul>
+          <div class="flex flex-wrap items-center justify-center gap-4 pt-2">
             <a
               href="mailto:kontakt@fjolsenbanden.no"
-              class="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#FF9B6A] to-[#13A0F9] px-5 py-2 text-sm font-semibold text-white shadow-[0_16px_28px_rgba(19,160,249,0.35)] transition hover:from-[#FF7AD9] hover:to-[#0d8bd6]"
+              class="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#FF9B6A] to-[#13A0F9] px-6 py-3 text-sm font-semibold uppercase tracking-[0.2em] text-white shadow-[0_18px_36px_rgba(19,160,249,0.35)] transition hover:from-[#FF7AD9] hover:to-[#0d8bd6]"
             >
               Del din tilbakemelding
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4" aria-hidden="true">
+                <path d="M5 12h14"></path>
+                <path d="m12 5 7 7-7 7"></path>
+              </svg>
+            </a>
+            <a
+              href="#kontakt"
+              class="inline-flex items-center gap-2 rounded-full border border-white/20 px-6 py-3 text-sm font-semibold uppercase tracking-[0.2em] text-white transition hover:border-white/40 hover:text-white"
+            >
+              Kontakt oss
               <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4" aria-hidden="true">
                 <path d="M5 12h14"></path>
                 <path d="m12 5 7 7-7 7"></path>
@@ -1545,7 +1555,7 @@
           </div>
         </footer>
 
-        <div class="fj-footer fixed inset-x-0 bottom-0 z-50 border-t border-white/10 bg-[#050B24]/80 backdrop-blur supports-[backdrop-filter]:bg-[#050B24]/60">
+        <div class="fj-footer fixed inset-x-0 bottom-0 z-50 border-t border-white/10 bg-[#041149]/80 backdrop-blur supports-[backdrop-filter]:bg-[#041149]/60">
           <div class="mx-auto flex w-full max-w-4xl items-center gap-3 px-4 pb-[calc(0.9rem+env(safe-area-inset-bottom))] pt-3 sm:gap-4">
             <button
               type="button"
@@ -1933,9 +1943,9 @@
             <path d="m12 5 7 7-7 7"></path>
           </svg>
         </a>
-      </div>
-    </div>
-  </section>
+          </div>
+        </div>
+      </section>
 
   <!-- Modal: Regler i FjOlsenbanden -->
   <div
