@@ -9,10 +9,12 @@ import "./FjolsenbandenHome.theme.css";
 const navLinks = [
     { name: "Hjem", href: "#" },
     { name: "Live", href: "#live" },
-    { name: "Medlemskap", href: "#bli-medlem" },
-    { name: "Premier", href: "#premier" },
-    { name: "Samarbeid", href: "#sponsorer" },
+    { name: "Medlemskap", href: "#medlemskap" },
+    { name: "Samarbeidspartnere", href: "#samarbeid" },
+    { name: "Samarbeid", href: "#tilbud" },
     { name: "Kontakt", href: "#kontakt" },
+    { name: "Personvernerklæring", href: "/personvernerklaering.html" },
+    { name: "Regler", href: "/regler.html" },
 ];
 const platformLinks = [
     {
@@ -476,7 +478,7 @@ export default function FjolsenbandenHome() {
         if (link.href === "#live") {
             return liveStream;
         }
-        if (link.href === "#sponsorer" || link.href === "#premier") {
+        if (link.href === "#samarbeid") {
             return partnersEnabled;
         }
         if (link.href === "#kontakt") {
