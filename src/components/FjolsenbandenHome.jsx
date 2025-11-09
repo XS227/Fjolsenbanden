@@ -90,6 +90,7 @@ const sponsors = [
     {
         name: "Lenovo",
         slug: "lenovo",
+        website: "https://www.lenovo.com/no/no/",
         defaultLogoUrl: LOCAL_PARTNER_LOGOS.lenovo,
         remoteFileNames: [
             "lenovo-logo.png",
@@ -116,6 +117,7 @@ const sponsors = [
     {
         name: "Samsung",
         slug: "samsung",
+        website: "https://www.samsung.com/no/",
         defaultLogoUrl: LOCAL_PARTNER_LOGOS.samsung,
         remoteFileNames: [
             "samsung-logo.png",
@@ -139,6 +141,7 @@ const sponsors = [
     {
         name: "Philips",
         slug: "philips",
+        website: "https://www.philips.no/",
         defaultLogoUrl: LOCAL_PARTNER_LOGOS.philips,
         remoteFileNames: [
             "philips-logo.png",
@@ -158,8 +161,9 @@ const sponsors = [
         ],
     },
     {
-        name: "Komplett.no",
+        name: "Komplett",
         slug: "komplett",
+        website: "https://www.komplett.no/",
         defaultLogoUrl: LOCAL_PARTNER_LOGOS.komplett,
         remoteFileNames: [
             "komplett-logo.png",
@@ -209,6 +213,9 @@ const SimplePartnerLogo = ({ partner, fallback, className = "" }) => {
         setIsLoaded(false);
     }, [currentSource]);
     const showTextFallback = !currentSource || !isLoaded;
+    const rawUrl = typeof partner.url === "string" ? partner.url.trim() : "";
+    const href = rawUrl && /^(https?:)?\/\//i.test(rawUrl) ? rawUrl : rawUrl.startsWith("mailto:") ? rawUrl : "";
+    const classNames = `logo ${className}`.trim();
     const handleLogoError = () => {
         setIsLoaded(false);
         setSourceIndex((previous) => {
@@ -220,10 +227,26 @@ const SimplePartnerLogo = ({ partner, fallback, className = "" }) => {
         });
     };
     const handleLogoLoad = () => setIsLoaded(true);
-    return (React.createElement("div", { className: `logo ${className}`.trim() },
-        React.createElement("span", { className: "sr-only" }, partner.name),
-        currentSource && (React.createElement("img", { src: currentSource, alt: `${partner.name} logo`, loading: "eager", onLoad: handleLogoLoad, onError: handleLogoError })),
-        showTextFallback ? (React.createElement("span", { className: "logo-fallback", "aria-hidden": "true" }, partner.name)) : null));
+    const children = [
+        React.createElement("span", { key: "sr", className: "sr-only" }, partner.name),
+        currentSource
+            ? React.createElement("img", {
+                key: currentSource,
+                src: currentSource,
+                alt: `${partner.name} logo`,
+                loading: "eager",
+                onLoad: handleLogoLoad,
+                onError: handleLogoError,
+            })
+            : null,
+        showTextFallback
+            ? React.createElement("span", { key: "fallback", className: "logo-fallback", "aria-hidden": "true" }, partner.name)
+            : null,
+    ].filter(Boolean);
+    if (href) {
+        return (React.createElement("a", { className: classNames, href: href, target: "_blank", rel: "noopener noreferrer" }, children));
+    }
+    return React.createElement("div", { className: classNames }, children);
 };
 const unboxingVideoUrl = "https://www.youtube.com/embed/v_8kKWD0K84?si=KzawWGqmMEQA7n78";
 const offerings = [
@@ -423,10 +446,18 @@ export default function FjolsenbandenHome() {
         sponsors.forEach((sponsor) => map.set(sponsor.name.toLowerCase(), sponsor));
         return map;
     }, []);
-    const partnerLogoData = useMemo(() => partnerLogos.map((partner) => ({
-        partner,
-        fallback: sponsorFallbackMap.get(partner.name.toLowerCase()),
-    })), [partnerLogos, sponsorFallbackMap]);
+    const partnerLogoData = useMemo(() => partnerLogos.map((partner) => {
+        var _a;
+        const fallback = sponsorFallbackMap.get(partner.name.toLowerCase());
+        const trimmedUrl = typeof partner.url === "string" ? partner.url.trim() : "";
+        return {
+            partner: {
+                ...partner,
+                url: trimmedUrl || ((_a = fallback === null || fallback === void 0 ? void 0 : fallback.website) !== null && _a !== void 0 ? _a : ""),
+            },
+            fallback,
+        };
+    }), [partnerLogos, sponsorFallbackMap]);
     const resolvedPartnerLogos = useMemo(() => {
         if (partnerLogoData.length > 0) {
             return partnerLogoData;
@@ -436,6 +467,7 @@ export default function FjolsenbandenHome() {
                 id: sponsor.slug,
                 name: sponsor.name,
                 logoUrl: sponsor.defaultLogoUrl || `/assets/partners/${sponsor.slug}.svg`,
+                url: sponsor.website || "",
             },
             fallback: sponsor,
         }));
@@ -467,10 +499,11 @@ export default function FjolsenbandenHome() {
         if (variant === "showcase") {
             return (React.createElement("section", { id: sectionId, className: "partners", style: sectionOrderStyle(orderKey) },
                 React.createElement("h2", null, "Samarbeidspartnere"),
-                React.createElement("p", null, "Vi har allerede hatt samarbeid med flere kjente merkevarer."),
+                React.createElement("p", { className: "lead" }, "Vi har allerede hatt samarbeid med flere kjente merkevarer."),
                 React.createElement("div", { className: "partner-logos", id: includeLogosId ? "sponsorer" : undefined }, resolvedPartnerLogos.map(({ partner, fallback }) => (React.createElement(SimplePartnerLogo, { key: (partner === null || partner === void 0 ? void 0 : partner.id) || partner.name, partner: partner, fallback: fallback })))),
                 React.createElement("p", null, "\u00d8nsker du \u00e5 synliggj\u00f8re din merkevare for v\u00e5rt engasjerte gaming-publikum?"),
-                React.createElement("a", { href: contactHref, className: "cta" }, "Kontakt oss")));
+                React.createElement("a", { href: contactHref, className: "cta" }, "Kontakt oss"),
+                React.createElement("p", { className: "cta-support" }, "Ta kontakt for samarbeid!")));
         }
         return (React.createElement("section", { id: sectionId, className: "partners", style: sectionOrderStyle(orderKey) },
             React.createElement("h2", { className: "sr-only" }, "Samarbeidspartnere"),
@@ -797,6 +830,8 @@ export default function FjolsenbandenHome() {
                     React.createElement("div", { className: "mt-6 grid gap-4 sm:grid-cols-2" },
                         React.createElement("a", {
                             href: "https://forms.gle/sq4mUf7s6e6UY7R58",
+                            target: "_blank",
+                            rel: "noopener noreferrer",
                             className: "group flex items-center justify-between gap-4 rounded-3xl border border-indigo-400/30 bg-indigo-500/20 p-6 text-lg font-semibold text-white shadow-[0_20px_44px_rgba(99,102,241,0.35)] transition hover:-translate-y-1 hover:border-indigo-300/40 hover:bg-indigo-500/30",
                         },
                             React.createElement("span", { className: "flex items-center gap-4" },
@@ -805,6 +840,8 @@ export default function FjolsenbandenHome() {
                             React.createElement(ArrowRight, { className: "h-5 w-5 transition-transform group-hover:translate-x-1", "aria-hidden": "true" })),
                         React.createElement("a", {
                             href: "https://forms.gle/ZrbXCggnUY8FTT7t9",
+                            target: "_blank",
+                            rel: "noopener noreferrer",
                             className: "group flex items-center justify-between gap-4 rounded-3xl border border-emerald-400/30 bg-emerald-500/20 p-6 text-lg font-semibold text-white shadow-[0_20px_44px_rgba(16,185,129,0.35)] transition hover:-translate-y-1 hover:border-emerald-300/40 hover:bg-emerald-500/30",
                         },
                             React.createElement("span", { className: "flex items-center gap-4" },
