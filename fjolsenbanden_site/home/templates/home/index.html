@@ -121,64 +121,115 @@
         </div>
       </div>
       <main class="pb-20">
-          <section class="px-6 py-16 text-center">
-            <div class="mx-auto max-w-4xl space-y-6">
-              <h1 class="text-4xl font-extrabold sm:text-5xl">
-                Spillglede for hele familien med <span class="text-[#38bdf8]">Fjolsenbanden</span>
-              </h1>
-              <p class="mx-auto max-w-2xl text-base text-slate-300 sm:text-lg">
-                Trygge streams, ukentlige turneringer og en leken verden for barn og unge. Foreldre logger inn via Vipps for enkel, trygg verifisering.
-              </p>
-              <div class="flex flex-wrap justify-center gap-3">
-                <button
-                  type="button"
-                  class="inline-flex items-center justify-center rounded-full bg-[#22d3ee] px-6 py-2.5 font-semibold text-[#0f172a] transition hover:bg-[#0ea5e9]"
-                  data-scroll-to="#medlemskap"
-                >
-                  Meld inn barn
-                </button>
-                <button
-                  type="button"
-                  class="inline-flex items-center justify-center rounded-full border border-white/20 px-6 py-2.5 font-semibold text-white transition hover:bg-white/10"
-                  data-scroll-to="#live"
-                >
-                  Se neste stream
-                </button>
-                <a
-                  href="#foreldre"
-                  class="inline-flex items-center justify-center gap-2 rounded-full bg-[#ff5b24] px-6 py-2.5 font-semibold text-[#0f172a] transition hover:bg-[#ff784d]"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="20"
-                    height="20"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="h-5 w-5"
+          <section class="relative overflow-hidden px-6 py-16">
+            <div aria-hidden="true" class="absolute inset-0 -z-10">
+              <img
+                src="https://static-cdn.jtvnw.net/previews-ttv/live_user_fjolsenfn-1920x1080.jpg"
+                alt=""
+                class="h-full w-full object-cover"
+                loading="lazy"
+                decoding="async"
+              />
+              <div class="absolute inset-0 bg-gradient-to-b from-[#0f172a]/40 via-[#0f172a]/70 to-[#0f172a]/90"></div>
+            </div>
+            <div class="mx-auto grid max-w-6xl gap-10 lg:grid-cols-2 lg:items-start">
+              <div class="space-y-6">
+                <div class="space-y-4 text-center lg:text-left">
+                  <h1 class="text-4xl font-extrabold sm:text-5xl">
+                    Velkommen til <span class="text-[#38bdf8]">FjOlsenbanden</span> – Norges mest inkluderende gaming-community.
+                  </h1>
+                  <p class="mx-auto max-w-2xl text-base text-slate-200 sm:text-lg lg:mx-0">
+                    Spillglede for hele familien med trygge streams, premier og fellesskap.
+                  </p>
+                </div>
+                <div class="flex flex-col gap-3 sm:flex-row sm:justify-center lg:justify-start">
+                  <a
+                    href="#live"
+                    data-scroll-to="#live"
+                    class="inline-flex items-center justify-center gap-2 rounded-full border border-white/20 bg-white/10 px-6 py-2 text-sm font-semibold text-white transition hover:border-white/35 hover:bg-white/15 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#38bdf8] focus-visible:ring-offset-2"
                   >
-                    <path d="M5 12h14"></path>
-                    <path d="m12 5 7 7-7 7"></path>
-                  </svg>
-                  Logg inn med Vipps
-                </a>
+                    Se FjOlsen Live
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="20"
+                      height="20"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      class="h-4 w-4"
+                    >
+                      <path d="M5 12h14"></path>
+                      <path d="m12 5 7 7-7 7"></path>
+                    </svg>
+                  </a>
+                  <a
+                    href="#bli-medlem"
+                    data-scroll-to="#medlemskap"
+                    class="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#38bdf8] to-[#ff2f9c] px-6 py-2 text-sm font-semibold text-white shadow-[0_14px_32px_rgba(56,189,248,0.35)] transition hover:from-[#1d9bd0] hover:to-[#e12585] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#38bdf8] focus-visible:ring-offset-2"
+                  >
+                    Bli medlem
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="20"
+                      height="20"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      class="h-4 w-4"
+                    >
+                      <path d="M5 12h14"></path>
+                      <path d="m12 5 7 7-7 7"></path>
+                    </svg>
+                  </a>
+                </div>
+                <div class="space-y-4 rounded-3xl border border-white/10 bg-white/5 p-6 text-left shadow-[0_18px_42px_rgba(9,18,36,0.45)]">
+                  <h2 class="text-xl font-semibold text-[#38bdf8]">🎮 Hva er FjOlsenbanden?</h2>
+                  <p class="text-sm leading-relaxed text-slate-100 sm:text-base">
+                    FjOlsenbanden er et raskt voksende gaming-community med over
+                    <span data-followers="discord" data-format="compact">2.5k</span>&nbsp;medlemmer på Discord,
+                    <span data-followers="twitch" data-format="compact">3.2k</span>&nbsp;følgere på Twitch og
+                    <span data-followers="tiktok" data-format="compact">4.2k</span>&nbsp;på TikTok – både barn, ungdom og foreldre!
+                  </p>
+                  <p class="text-sm leading-relaxed text-slate-100 sm:text-base">
+                    <span class="font-semibold text-white">Målet vårt er enkelt:</span>
+                    Å skape et trygt, positivt og inkluderende miljø der alle kan game uten hets, mobbing eller negativ adferd.
+                  </p>
+                </div>
+                <div class="flex flex-wrap justify-center gap-6 text-sm text-slate-300 lg:justify-start">
+                  <span>
+                    <span data-followers="twitch" data-format="compact">3.2k</span>
+                    følgere på Twitch
+                  </span>
+                  <span>
+                    <span data-followers="tiktok" data-format="compact">4.2k</span>
+                    følgere på TikTok
+                  </span>
+                  <span>
+                    <span data-followers="discord" data-format="compact">2.5k</span>
+                    medlemmer i Discord
+                  </span>
+                </div>
               </div>
-              <div class="flex flex-wrap justify-center gap-6 text-sm text-slate-400">
-                <span>
-                  <span data-followers="twitch" data-format="compact">3.2k</span>
-                  følgere på Twitch
-                </span>
-                <span>
-                  <span data-followers="tiktok" data-format="compact">4.2k</span>
-                  følgere på TikTok
-                </span>
-                <span>
-                  <span data-followers="discord" data-format="compact">2.5k</span>
-                  medlemmer i Discord
-                </span>
+              <div class="flex w-full flex-col items-center gap-6 lg:items-start">
+                <div class="relative w-full overflow-hidden rounded-3xl border border-white/10 shadow-[0_28px_60px_rgba(6,12,30,0.6)]">
+                  <iframe
+                    class="aspect-video w-full"
+                    width="560"
+                    height="315"
+                    src="https://www.youtube.com/embed/8EgRIkmvmtM"
+                    title="YouTube video player"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    referrerpolicy="strict-origin-when-cross-origin"
+                    allowfullscreen
+                  ></iframe>
+                </div>
               </div>
             </div>
           </section>
@@ -371,6 +422,7 @@
         </section>
 
         <section id="medlemskap" class="px-6 py-20 text-center">
+            <span id="bli-medlem" class="sr-only" aria-hidden="true"></span>
             <h2 class="mb-4 text-3xl font-bold">Velg ditt medlemskap</h2>
             <p class="mx-auto mb-10 max-w-2xl text-slate-300">
               Bli med i Fjolsenbanden og lås opp premier, turneringer og unike perks. Foreldre verifiserer via Vipps.

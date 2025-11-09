@@ -388,19 +388,36 @@ export default function FjolsenbandenHome() {
             order: (_a = sectionOrderMap.get(key)) !== null && _a !== void 0 ? _a : normalizedSectionOrder.length,
         });
     };
-    const heroTitle = ((_a = siteSettings.heroTitle) === null || _a === void 0 ? void 0 : _a.trim()) || "FJOLSENBANDEN";
-    const heroTagline = ((_b = siteSettings.heroTagline) === null || _b === void 0 ? void 0 : _b.trim()) ||
+    const heroHeadline = [siteSettings.heroHeadline, siteSettings.heroTagline, siteSettings.heroTitle]
+        .map((value) => (typeof value === "string" ? value.trim() : ""))
+        .find((value) => value.length > 0) ||
         "Velkommen til FjOlsenbanden – Norges mest inkluderende gaming-community.";
-    const announcement = ((_c = siteSettings.announcement) === null || _c === void 0 ? void 0 : _c.trim()) ||
+    const heroSubtitle = (typeof siteSettings.heroSubtitle === "string" && siteSettings.heroSubtitle.trim()) ||
+        "Spillglede for hele familien med trygge streams, premier og fellesskap.";
+    const announcement = (typeof siteSettings.announcement === "string" && siteSettings.announcement.trim()) ||
         "Neste livesending starter 20:00 med co-op i Mario Kart og premier fra Lenovo!";
     const fallbackLogoUrl = "https://setaei.com/Fjolsen/Liggende-M%E2%94%9C%E2%95%95rk.png";
     const scrolledLogoUrl = "https://setaei.com/Fjolsen/Glad%20tunge.png";
-    const logoUrl = ((_d = siteSettings.logoUrl) === null || _d === void 0 ? void 0 : _d.trim()) || fallbackLogoUrl;
-    const presentationVideoUrl = ((_e = siteSettings.presentationVideoUrl) === null || _e === void 0 ? void 0 : _e.trim()) ||
+    const logoUrl = (typeof siteSettings.logoUrl === "string" && siteSettings.logoUrl.trim()) || fallbackLogoUrl;
+    const presentationVideoUrl = (typeof siteSettings.presentationVideoUrl === "string" && siteSettings.presentationVideoUrl.trim()) ||
         "https://www.youtube.com/embed/8EgRIkmvmtM";
-    const twitchEmbedUrl = ((_f = siteSettings.twitchEmbedUrl) === null || _f === void 0 ? void 0 : _f.trim()) || DEFAULT_TWITCH_EMBED_URL;
-    const membershipTiers = (_g = siteSettings.membershipTiers) !== null && _g !== void 0 ? _g : [];
-    const partnerLogos = (_h = siteSettings.partnerLogos) !== null && _h !== void 0 ? _h : [];
+    const heroBackgroundImage = (typeof siteSettings.heroBackgroundImage === "string" && siteSettings.heroBackgroundImage.trim()) ||
+        "https://static-cdn.jtvnw.net/previews-ttv/live_user_fjolsenfn-1920x1080.jpg";
+    const twitchEmbedUrl = (typeof siteSettings.twitchEmbedUrl === "string" && siteSettings.twitchEmbedUrl.trim()) || DEFAULT_TWITCH_EMBED_URL;
+    const membershipTiers = Array.isArray(siteSettings.membershipTiers) ? siteSettings.membershipTiers : [];
+    const partnerLogos = Array.isArray(siteSettings.partnerLogos) ? siteSettings.partnerLogos : [];
+    const heroHighlightTerm = "FjOlsenbanden";
+    const heroHeadlineContent = heroHeadline.includes(heroHighlightTerm)
+        ? heroHeadline.split(heroHighlightTerm).reduce((nodes, segment, index, segments) => {
+            if (segment.length > 0) {
+                nodes.push(segment);
+            }
+            if (index < segments.length - 1) {
+                nodes.push(React.createElement("span", { key: `hero-highlight-${index}`, className: "text-[#13A0F9]" }, heroHighlightTerm));
+            }
+            return nodes;
+        }, [])
+        : [heroHeadline];
     const sponsorFallbackMap = useMemo(() => {
         const map = new Map();
         sponsors.forEach((sponsor) => map.set(sponsor.name.toLowerCase(), sponsor));
@@ -709,15 +726,16 @@ export default function FjolsenbandenHome() {
                     React.createElement("img", { src: logoUrl, alt: "Fjolsenbanden logo", className: "mx-auto h-16 w-auto max-w-[260px] sm:mx-0 sm:h-12 sm:max-w-none", loading: "lazy" }),
                     React.createElement("span", { className: "sr-only" }, "Fjolsenbanden")),
                 React.createElement("div", { className: "hidden items-center justify-end gap-3 sm:flex" })),
-            React.createElement("header", { className: "relative z-10 pb-40" },
+            React.createElement("header", { className: "relative z-10 overflow-hidden pb-40" },
+                React.createElement("div", { className: "absolute inset-0 -z-10" },
+                    React.createElement("img", { src: heroBackgroundImage, alt: "", "aria-hidden": "true", className: "h-full w-full object-cover", loading: "lazy" }),
+                    React.createElement("div", { className: "absolute inset-0 bg-gradient-to-b from-[#050B24]/40 via-[#050B24]/65 to-[#050B24]/85" })),
                 React.createElement("section", { id: "community", className: "mt-6 px-6 sm:px-8 lg:px-10" },
                 React.createElement("div", { className: "mx-auto grid max-w-6xl gap-10 lg:grid-cols-2 lg:items-start" },
                     React.createElement("div", { className: "space-y-6" },
                         React.createElement("div", { className: "space-y-4 text-center lg:text-left" },
-                            React.createElement("h1", { className: "text-4xl font-extrabold sm:text-5xl" },
-                                "Velkommen til ",
-                                React.createElement("span", { className: "text-[#13A0F9]" }, heroTitle)),
-                            React.createElement("p", { className: "text-base text-zinc-100 sm:text-lg" }, heroTagline)),
+                            React.createElement("h1", { className: "text-4xl font-extrabold sm:text-5xl" }, heroHeadlineContent),
+                            React.createElement("p", { className: "text-base text-zinc-100 sm:text-lg" }, heroSubtitle)),
                         React.createElement("div", { className: "space-y-4 rounded-3xl border border-white/10 bg-white/5 p-6 text-left shadow-[0_18px_42px_rgba(12,21,45,0.45)]" },
                             React.createElement("h2", { className: "text-xl font-semibold text-[#13A0F9]" }, "\uD83C\uDFAE Hva er FjOlsenbanden?"),
                             React.createElement("p", { className: "text-sm leading-relaxed text-zinc-100 sm:text-base" }, "FjOlsenbanden er et raskt voksende gaming-community med over 2500 medlemmer p\u00E5 Discord, 3200++ f\u00F8lgere p\u00E5 Twitch og 4200+ p\u00E5 TikTok \u2013 b\u00E5de barn, ungdom og foreldre!"),
