@@ -3,7 +3,7 @@ import { useMemo, useState } from "react";
 import { usePersistentState } from "@/lib/persistent-state";
 const AUTH_STORAGE_KEY = "fjolsenbanden-admin-auth";
 const ADMIN_USERNAME = "Admin";
-const ADMIN_PASSWORD = "Admin";
+const ADMIN_PASSWORD = "Admin123";
 export function useAdminAuth() {
     const [state, setState] = usePersistentState(AUTH_STORAGE_KEY, {
         isAuthenticated: false,
@@ -36,7 +36,10 @@ export function useAdminAuth() {
     const logout = () => {
         setState({ isAuthenticated: false });
     };
-    const hint = useMemo(() => "Brukernavn: Admin • Passord: Admin (store forbokstaver).", []);
+    const hint = useMemo(
+        () => "Brukernavn: Admin • Passord: Admin123 (store forbokstaver).",
+        [],
+    );
     return {
         state,
         login,

@@ -73,18 +73,18 @@ export default function SectionsPage() {
                     }, tab.label)
                 ))),
                 React.createElement("div", { className: "flex items-center justify-between rounded-2xl border border-slate-800 bg-slate-900/60 px-4 py-3" },
-                    React.createElement("div", null,
-                        React.createElement("p", { className: "text-sm font-semibold text-slate-100" }, "Moderering"),
-                        React.createElement("p", { className: "text-xs text-slate-400" }, "Moderatorer kan skjule seksjoner uten å slette dem")),
-                    React.createElement(Button, {
-                        type: "button",
-                        className: moderation[activeTab]?.hidden
-                            ? "bg-emerald-500 text-emerald-950 hover:bg-emerald-400"
-                            : "bg-slate-800 text-slate-200 hover:bg-slate-700",
-                        onClick: () => toggleVisibility(activeTab),
-                    },
-                        React.createElement(EyeOff, { size: 16, className: "mr-2" }),
-                        moderation[activeTab]?.hidden ? "Aktiver seksjon" : "Skjul seksjon")),
+                React.createElement("div", null,
+                    React.createElement("p", { className: "text-sm font-semibold text-slate-100" }, "Moderering"),
+                    React.createElement("p", { className: "text-xs text-slate-400" }, "Moderatorer kan aktivere eller deaktivere seksjoner uten å slette dem")),
+                React.createElement(Button, {
+                    type: "button",
+                    className: moderation[activeTab]?.hidden
+                        ? "bg-emerald-500 text-emerald-950 hover:bg-emerald-400"
+                        : "bg-slate-800 text-slate-200 hover:bg-slate-700",
+                    onClick: () => toggleVisibility(activeTab),
+                },
+                    React.createElement(EyeOff, { size: 16, className: "mr-2" }),
+                    moderation[activeTab]?.hidden ? "Aktiver seksjon" : "Deaktiver seksjon")),
                 React.createElement("div", { className: "space-y-4" }, renderTabContent(activeTab)))
         )
     );
