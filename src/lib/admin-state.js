@@ -8,11 +8,12 @@ export const DEFAULT_SITE_MODULES = {
 export const DEFAULT_SECTION_ORDER = [
     "heroIntro",
     "liveStream",
+    "community",
     "membership",
-    "prizes",
     "partners",
-    "feedback",
+    "offerings",
     "contact",
+    "feedback",
 ];
 export const DEFAULT_MEMBERSHIP_TIERS = [
     {
