@@ -1444,7 +1444,7 @@
 
         <footer class="mt-12 border-t border-white/10 py-8 text-center text-sm text-zinc-500">
           <div class="flex flex-col items-center justify-center gap-2 text-sm md:flex-row">
-            <span>© <span id="current-year"></span> Fjolsenbanden. Alle rettigheter reservert.</span>
+            <span>© 2025 Fjolsenbanden v/Fair Share Invest AS - Org.nr. 926 963 023. Alle rettigheter reservert.</span>
             <a
               href="/admin"
               class="flex items-center gap-2 font-medium text-zinc-300 transition hover:text-white"
@@ -2430,11 +2430,6 @@
         });
       }
 
-      const yearValue = String(new Date().getFullYear());
-      const currentYear = document.getElementById("current-year");
-      if (currentYear) {
-        currentYear.textContent = yearValue;
-      }
     </script>
     <script>
       (() => {
