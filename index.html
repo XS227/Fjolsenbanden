@@ -384,10 +384,37 @@
         color: var(--fj-text-primary);
       }
 
+      :root {
+        --fj-nav-height: clamp(4.5rem, 10vw, 6rem);
+      }
+
       .fj-theme .fj-nav {
+        background-color: transparent;
+        border-color: transparent;
+        color: inherit;
+        min-height: var(--fj-nav-height);
+        transition: background-color 0.3s ease, border-color 0.3s ease,
+          backdrop-filter 0.3s ease;
+      }
+
+      .fj-theme .fj-nav[data-scrolled="true"] {
         background-color: var(--fj-nav-bg);
         border-color: var(--fj-nav-border);
-        color: inherit;
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+      }
+
+      #hero {
+        min-height: calc(100vh + var(--fj-nav-height));
+        margin-top: calc(var(--fj-nav-height) * -1);
+        padding-top: calc(var(--fj-nav-height) + clamp(2.5rem, 8vw, 4.5rem));
+        padding-bottom: clamp(3rem, 8vw, 4rem);
+      }
+
+      @media (min-width: 1024px) {
+        #hero {
+          padding-top: calc(var(--fj-nav-height) + clamp(3.5rem, 6vw, 5rem));
+        }
       }
 
       .fj-theme .fj-footer {
@@ -589,7 +616,7 @@
     <div class="fj-page relative flex flex-1 flex-col overflow-x-hidden text-white">
       <div class="fj-overlay pointer-events-none absolute inset-0 -z-10"></div>
       <div class="relative flex flex-1 flex-col">
-        <nav class="fj-nav section-shell grid grid-cols-1 items-center gap-4 border-b border-white/10 bg-[#041149]/75 py-4 backdrop-blur supports-[backdrop-filter]:bg-[#041149]/60 sm:grid-cols-[1fr_auto_1fr]" data-scrolled="false">
+        <nav class="fj-nav section-shell grid grid-cols-1 items-center gap-4 border-b border-transparent py-4 transition sm:grid-cols-[1fr_auto_1fr]" data-scrolled="false">
           <div class="hidden items-center justify-start gap-4 sm:flex">
             <img
               src="https://setaei.com/Fjolsen/Glad%20tunge.png"
@@ -660,7 +687,7 @@
 
 
         <main class="relative z-10 flex flex-1 flex-col pb-28">
-        <section id="hero" class="section-shell relative overflow-hidden pt-16 pb-12" data-section>
+        <section id="hero" class="section-shell relative flex flex-col justify-center overflow-hidden pb-12 pt-16" data-section>
           <div aria-hidden="true" class="absolute inset-0 -z-10">
             <img
               src="https://static-cdn.jtvnw.net/previews-ttv/live_user_fjolsenfn-1920x1080.jpg"
