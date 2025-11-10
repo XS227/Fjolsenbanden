@@ -28,6 +28,10 @@
         --fj-pink: #ff2f9c;
       }
 
+      :root {
+        --fj-footer-offset: 0px;
+      }
+
       body {
         background-color: var(--fj-midnight);
         color: var(--fj-text-primary, #ffffff);
@@ -386,6 +390,10 @@
 
       :root {
         --fj-nav-height: clamp(4.5rem, 10vw, 6rem);
+      }
+
+      .fj-main {
+        padding-bottom: calc(var(--fj-footer-offset, 0px) + clamp(5rem, 10vw, 7rem));
       }
 
       .fj-theme .fj-nav {
@@ -851,7 +859,7 @@
 
 
 
-        <main class="relative z-10 flex flex-1 flex-col pb-28">
+        <main class="fj-main relative z-10 flex flex-1 flex-col" data-main>
         <section id="hero" class="section-shell relative flex flex-col justify-center overflow-hidden pb-12 pt-16" data-section>
           <div aria-hidden="true" class="absolute inset-0 -z-10">
             <img
@@ -1773,7 +1781,7 @@
 
         <footer class="mt-12 border-t border-white/10 py-8 text-center text-sm text-zinc-500">
           <div class="flex flex-col items-center justify-center gap-2 text-sm md:flex-row">
-            <span>© <span id="current-year"></span> Fjolsenbanden. Alle rettigheter reservert.</span>
+            <span>© 2025 Fjolsenbanden v/Fair Share Invest AS - Org.nr. 926 963 023. Alle rettigheter reservert.</span>
             <a
               href="/personvernerklaering.html"
               class="font-medium text-zinc-300 transition hover:text-white"
@@ -2479,6 +2487,21 @@
       const footerToggleIcons = footerMenuToggle ? footerMenuToggle.querySelectorAll("[data-footer-icon]") : [];
       const footerLinks = document.querySelectorAll("[data-footer-link]");
       const footerClosers = document.querySelectorAll("[data-footer-close]");
+      const stickyFooter = document.querySelector(".fj-footer");
+
+      const updateFooterOffset = () => {
+        const offset = stickyFooter ? stickyFooter.offsetHeight : 0;
+        document.documentElement.style.setProperty("--fj-footer-offset", `${offset}px`);
+      };
+
+      updateFooterOffset();
+
+      if (stickyFooter && "ResizeObserver" in window) {
+        const footerObserver = new ResizeObserver(() => updateFooterOffset());
+        footerObserver.observe(stickyFooter);
+      }
+
+      window.addEventListener("resize", updateFooterOffset);
 
       if (footerSheet) {
         footerSheet.setAttribute("data-open", "false");
@@ -2522,6 +2545,8 @@
             }
           }, 250);
         }
+
+        updateFooterOffset();
       };
 
       const openFooterMenu = () => setFooterMenuState(true);
@@ -2865,11 +2890,6 @@
         });
       }
 
-      const yearValue = String(new Date().getFullYear());
-      const currentYear = document.getElementById("current-year");
-      if (currentYear) {
-        currentYear.textContent = yearValue;
-      }
     </script>
     <script>
       (() => {
