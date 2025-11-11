@@ -1,4 +1,5 @@
 "use client";
+import { INLINE_PARTNER_BADGES } from "@/lib/partner-badges";
 import { usePersistentState } from "@/lib/persistent-state";
 export const DEFAULT_SITE_MODULES = {
     liveStream: true,
@@ -54,25 +55,25 @@ export const DEFAULT_PARTNER_LOGOS = [
     {
         id: "partner-lenovo",
         name: "Lenovo",
-        logoUrl: "/assets/partners/lenovo-logo.png",
+        logoUrl: INLINE_PARTNER_BADGES.lenovo,
         url: "https://www.lenovo.com/no/no/",
     },
     {
         id: "partner-samsung",
         name: "Samsung",
-        logoUrl: "/assets/partners/samsung-logo.png",
+        logoUrl: INLINE_PARTNER_BADGES.samsung,
         url: "https://www.samsung.com/no/",
     },
     {
         id: "partner-philips",
         name: "Philips",
-        logoUrl: "/assets/partners/philips-logo.png",
+        logoUrl: INLINE_PARTNER_BADGES.philips,
         url: "https://www.philips.no/",
     },
     {
         id: "partner-komplett",
         name: "Komplett",
-        logoUrl: "/assets/partners/komplett-logo.png",
+        logoUrl: INLINE_PARTNER_BADGES.komplett,
         url: "https://www.komplett.no/",
     },
 ];
