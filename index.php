@@ -623,8 +623,7 @@
             <ul class="hidden items-center gap-6 text-sm font-medium md:flex">
               <li><a class="transition-colors duration-150 hover:text-[#13A0F9]" href="#" data-nav-link>Hjem</a></li>
               <li><a class="transition-colors duration-150 hover:text-[#13A0F9]" href="#live" data-nav-link>Live</a></li>
-              <li><a class="transition-colors duration-150 hover:text-[#13A0F9]" href="#medlemskap" data-nav-link>Medlemskap</a></li>
-              <li><a class="transition-colors duration-150 hover:text-[#13A0F9]" href="#partnere" data-nav-link>Samarbeidspartnere</a></li>
+<li><a class="transition-colors duration-150 hover:text-[#13A0F9]" href="#partnere" data-nav-link>Samarbeidspartnere</a></li>
               <li><a class="transition-colors duration-150 hover:text-[#13A0F9]" href="#partners" data-nav-link>Samarbeid</a></li>
               <li><a class="transition-colors duration-150 hover:text-[#13A0F9]" href="#kontakt" data-nav-link>Kontakt</a></li>
             </ul>
@@ -697,11 +696,11 @@
               </svg>
             </button>
             <a
-              href="#bli-medlem"
+              href="#kontakt"
               class="fj-ring-offset hidden items-center gap-2 rounded-full bg-[#13A0F9] px-5 py-2 text-sm font-semibold text-white shadow-[0_14px_28px_rgba(19,160,249,0.35)] transition hover:bg-[#2bb5ff] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#13A0F9] focus-visible:ring-offset-2 md:inline-flex"
               data-nav-link
             >
-              Bli medlem
+              Kontakt oss
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4" aria-hidden="true">
                 <path d="M5 12h14"></path>
                 <path d="m12 5 7 7-7 7"></path>
@@ -715,8 +714,7 @@
             <ul class="flex flex-col gap-2">
               <li><a class="block rounded-md px-4 py-2 transition hover:bg-white/10" href="#" data-nav-close="true">Hjem</a></li>
               <li><a class="block rounded-md px-4 py-2 transition hover:bg-white/10" href="#live" data-nav-close="true">Live</a></li>
-              <li><a class="block rounded-md px-4 py-2 transition hover:bg-white/10" href="#medlemskap" data-nav-close="true">Medlemskap</a></li>
-              <li><a class="block rounded-md px-4 py-2 transition hover:bg-white/10" href="#partnere" data-nav-close="true">Samarbeidspartnere</a></li>
+<li><a class="block rounded-md px-4 py-2 transition hover:bg-white/10" href="#partnere" data-nav-close="true">Samarbeidspartnere</a></li>
               <li><a class="block rounded-md px-4 py-2 transition hover:bg-white/10" href="#partners" data-nav-close="true">Samarbeid</a></li>
               <li><a class="block rounded-md px-4 py-2 transition hover:bg-white/10" href="#kontakt" data-nav-close="true">Kontakt</a></li>
             </ul>
@@ -1072,158 +1070,7 @@
             </div>
           </div>
         </section>
-
-        <section id="medlemskap" class="section-shell text-center" data-section>
-          <h2 class="mb-4 text-3xl font-bold">Et levende community</h2>
-          <div class="mx-auto mt-6 max-w-6xl rounded-3xl border border-white/10 bg-[#0B163F]/80 p-6 shadow-[0_24px_60px_rgba(6,14,35,0.55)] sm:p-8">
-            <div class="mx-auto max-w-2xl text-center">
-              <p class="mt-2 text-sm text-zinc-300 sm:text-base">
-                Fjolsenbanden vokser hver dag. Se hvor mange vi er og bli en del av eventyret!
-              </p>
-            </div>
-            <div class="mt-6 grid gap-4 sm:grid-cols-2 lg:mt-8 lg:grid-cols-4">
-              <a
-                href="https://www.twitch.tv/fjolsenbanden"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="flex flex-col items-center gap-3 rounded-2xl border border-white/10 bg-white/5 p-5 text-center shadow-inner no-underline transition hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#13A0F9]"
-              >
-                <span class="flex h-14 w-14 items-center justify-center rounded-full bg-[#9146FF]/20">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="h-8 w-8 text-[#9146FF]" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <path d="M21 2H3v16h5v4l4-4h5l4-4V2zm-10 9V7m5 4V7"></path>
-                  </svg>
-                </span>
-                <div>
-                  <p class="text-2xl font-bold text-white">
-                    <span data-followers="twitch" data-format="compact">3.2k</span>
-                  </p>
-                  <p class="text-xs uppercase tracking-wide text-zinc-300">Twitch følgere</p>
-                </div>
-              </a>
-              <a
-                href="https://www.tiktok.com/@fjolsenbanden"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="flex flex-col items-center gap-3 rounded-2xl border border-white/10 bg-white/5 p-5 text-center shadow-inner no-underline transition hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#13A0F9]"
-              >
-                <span class="flex h-14 w-14 items-center justify-center rounded-full bg-[#69C9D0]/20">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="h-8 w-8 text-[#69C9D0]" fill="currentColor" aria-hidden="true">
-                    <path d="M14 3a1 1 0 0 1 1-1h1.25a1 1 0 0 1 1 .88 4.3 4.3 0 0 0 3.87 3.74 1 1 0 0 1 .88 1V9.7a1 1 0 0 1-1.14 1 7.6 7.6 0 0 1-2.1-.52v1.57a6.25 6.25 0 1 1-6.25-6.25h.5V5a1 1 0 0 0-.86-1H11A4.75 4.75 0 1 0 15.75 8v-2a6.3 6.3 0 0 1-1.75-.75V3Z" />
-                  </svg>
-                </span>
-                <div>
-                  <p class="text-2xl font-bold text-white">
-                    <span data-followers="tiktok" data-format="compact">4.2k</span>
-                  </p>
-                  <p class="text-xs uppercase tracking-wide text-zinc-300">TikTok følgere</p>
-                </div>
-              </a>
-              <a
-                href="https://discord.gg/fjolsenbanden"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="flex flex-col items-center gap-3 rounded-2xl border border-white/10 bg-white/5 p-5 text-center shadow-inner no-underline transition hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#13A0F9]"
-              >
-                <span class="flex h-14 w-14 items-center justify-center rounded-full bg-[#5865F2]/20">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="h-8 w-8 text-[#5865F2]" fill="currentColor" aria-hidden="true">
-                    <path d="M20.317 4.369a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037 12.9 12.9 0 0 0-.608 1.249 15.7 15.7 0 0 0-5.486 0 10.5 10.5 0 0 0-.626-1.249.077.077 0 0 0-.079-.037 19.736 19.736 0 0 0-4.885 1.515.07.07 0 0 0-.032.028c-3.218 4.676-3.835 9.211-3.409 13.69a.082.082 0 0 0 .031.056 19.9 19.9 0 0 0 5.993 3.047.079.079 0 0 0 .084-.028 13 13 0 0 0 1.226-1.994.077.077 0 0 0-.041-.105 12.1 12.1 0 0 1-1.872-.892.078.078 0 0 1-.008-.13c.125-.094.25-.192.37-.291a.074.074 0 0 1 .077-.01c3.927 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .078.01c.12.099.245.198.37.291a.078.078 0 0 1-.008.13 13.09 13.09 0 0 1-1.873.892.077.077 0 0 0-.04.105 12.9 12.9 0 0 0 1.225 1.994.079.079 0 0 0 .084.028 19.876 19.876 0 0 0 6.002-3.047.077.077 0 0 0 .03-.055c.5-5.177-.838-9.673-3.548-13.662a.061.061 0 0 0-.031-.028Zm-12.052 9.91c-1.18 0-2.158-1.085-2.158-2.419 0-1.333.955-2.418 2.158-2.418 1.213 0 2.182 1.095 2.158 2.418-.001 1.334-.955 2.419-2.158 2.419Zm7.472 0c-1.18 0-2.158-1.085-2.158-2.419 0-1.333.955-2.418 2.158-2.418 1.213 0 2.182 1.095 2.158 2.418 0 1.334-.945 2.419-2.158 2.419Z" />
-                  </svg>
-                </span>
-                <div>
-                  <p class="text-2xl font-bold text-white">
-                    <span data-followers="discord" data-format="compact">2.5k</span>
-                  </p>
-                  <p class="text-xs uppercase tracking-wide text-zinc-300">Discord medlemmer</p>
-                </div>
-              </a>
-              <div class="flex flex-col items-center gap-3 rounded-2xl border border-white/10 bg-white/5 p-5 text-center shadow-inner">
-                <span class="flex h-14 w-14 items-center justify-center rounded-full bg-[#FACC15]/20">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="h-8 w-8 text-[#FACC15]" fill="currentColor" aria-hidden="true">
-                    <path d="M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2zm6 3v10l7-5z" />
-                  </svg>
-                </span>
-                <div>
-                  <p class="text-2xl font-bold text-white">50+</p>
-                  <p class="text-xs uppercase tracking-wide text-zinc-300">Live seere</p>
-                </div>
-              </div>
-            </div>
-            
-          </div>
-          <div id="medlemskap-registrering" class="mx-auto mt-12 grid max-w-6xl gap-6 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)]">
-            <div class="rounded-2xl bg-zinc-900/60 px-5 py-6 text-left text-white shadow-lg ring-1 ring-white/10">
-              <h3 class="mb-2 text-xl font-bold">Bli medlem</h3>
-              <p class="mb-4 text-sm text-zinc-300">
-                Det er gratis å bli medlem i FjOlsenbanden! Alle kan delta i konkurranser, men for å vinne premier må du være registrert medlem.
-              </p>
-              <p class="mb-4 text-sm text-zinc-300">Velg alder for å bli med:</p>
-              <div class="grid gap-3 sm:grid-cols-2">
-                <a
-                  href="https://forms.gle/sq4mUf7s6e6UY7R58"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="rounded-xl bg-sky-600 px-4 py-3 text-center text-sm font-semibold text-white transition hover:bg-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-300"
-                >
-                  🔵 Under 18 år
-                </a>
-                <a
-                  href="https://forms.gle/ZrbXCggnUY8FTT7t9"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="rounded-xl bg-emerald-600 px-4 py-3 text-center text-sm font-semibold text-white transition hover:bg-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-300"
-                >
-                  🟢 Over 18 år
-                </a>
-              </div>
-            </div>
-
-            <div class="rounded-2xl border border-white/10 bg-white/5 px-5 py-6 text-left shadow-lg">
-              <h3 class="text-2xl font-extrabold uppercase tracking-[0.2em] text-white">REGLER FJOLSENBANDEN</h3>
-              <p class="mt-2 text-sm text-zinc-300">
-                For å opprettholde et trygt og godt miljø har vi flere regler i FjOlsenbanden. Se alle reglene på Discord.
-              </p>
-              <div class="mt-4 flex flex-wrap gap-3">
-                <a
-                  href="https://discord.com/channels/1150105334187311154/1217560685232259072"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="inline-flex items-center justify-center gap-2 rounded-full bg-[#5865F2] px-5 py-2 text-sm font-semibold text-white shadow-[0_10px_24px_rgba(88,101,242,0.35)] transition hover:bg-[#4753d9] focus:outline-none focus:ring-2 focus:ring-[#5865F2]/60"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="20"
-                    height="20"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                    aria-hidden="true"
-                    class="h-4 w-4"
-                  >
-                    <path
-                      d="M20 4h-3l-.6 1.2a12.44 12.44 0 0 0-8.8 0L7 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h3l.6-1.2a12.44 12.44 0 0 0 8.8 0L17 20h3a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2Zm-8.5 12.1-1.3-1.7H7.8a.8.8 0 0 1 0-1.6h2.7a.8.8 0 0 1 .6.3l1.4 1.8 1.4-1.8a.8.8 0 0 1 .6-.3h2.7a.8.8 0 1 1 0 1.6h-2.4l-1.3 1.7a1.8 1.8 0 0 1-2.8 0ZM10 11.5a1.25 1.25 0 1 1-1.25-1.25A1.25 1.25 0 0 1 10 11.5Zm5.25 1.25A1.25 1.25 0 1 1 16.5 11.5a1.25 1.25 0 0 1-1.25 1.25Z"
-                    />
-                  </svg>
-                  Se reglene i Discord
-                </a>
-              </div>
-              <div class="mt-4 space-y-3 text-sm text-zinc-200">
-                <p class="rounded-xl border border-white/10 bg-[#131f3f]/80 p-3">
-                  <span class="block text-xs font-semibold uppercase tracking-wide text-[#4ade80]">Premier:</span>
-                  Alle som vil kan delta på OPEN CUSTOMS, men for å vinne premier MÅ du ha meldt deg inn i FjOlsenbanden!
-                </p>
-                <p class="rounded-xl border border-white/10 bg-[#131f3f]/80 p-3">
-                  <span class="block text-xs font-semibold uppercase tracking-wide text-[#facc15]">Ingen mobbing/trakassering!:</span>
-                  Enhver form for mobbing, trakassering eller hatefulle ytringer er strengt forbudt. Gjentagelser vil føre til utestengelse fra FjOlsenbanden!
-                </p>
-                <p class="rounded-xl border border-white/10 bg-[#131f3f]/80 p-3">
-                  <span class="block text-xs font-semibold uppercase tracking-wide text-[#13A0F9]">Ha det gøy, stay positive:</span>
-                  Viktigst av alt, ha det gøy og nyt den positive spillopplevelsen vi skaper sammen! Hold chatten positiv og behandle alle i chatten inkludert moderatorer, med respekt.
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section id="partnere" class="partners" data-section>
+<section id="partnere" class="partners" data-section>
           <h2>Samarbeidspartnere</h2>
           <p class="lead">Vi har allerede hatt samarbeid med flere kjente merkevarer.</p>
 
@@ -1505,11 +1352,11 @@
               <span data-footer-toggle-label>Meny</span>
             </button>
             <a
-              href="#bli-medlem"
+              href="#kontakt"
               class="fj-ring-offset inline-flex flex-1 items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#13A0F9] to-[#FF2F9C] px-4 py-3 text-sm font-semibold text-white shadow-[0_16px_32px_rgba(19,160,249,0.35)] transition hover:from-[#0d8bd6] hover:to-[#e12585] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#13A0F9] focus-visible:ring-offset-2"
               data-footer-close
             >
-              Bli medlem
+              Kontakt oss
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4" aria-hidden="true">
                 <path d="M5 12h14"></path>
                 <path d="m12 5 7 7-7 7"></path>
@@ -1779,13 +1626,7 @@
             <span class="text-xs font-semibold uppercase tracking-[0.35em] text-[#13A0F9]/70">02</span>
           </a>
         </li>
-        <li>
-          <a class="flex items-center justify-between gap-3 rounded-2xl border border-transparent bg-white/5 px-4 py-3 text-base font-semibold text-white/85 transition hover:border-white/20 hover:bg-white/10" href="#medlemskap" data-footer-link>
-            <span>Medlemskap</span>
-            <span class="text-xs font-semibold uppercase tracking-[0.35em] text-[#13A0F9]/70">03</span>
-          </a>
-        </li>
-        <li>
+<li>
           <a class="flex items-center justify-between gap-3 rounded-2xl border border-transparent bg-white/5 px-4 py-3 text-base font-semibold text-white/85 transition hover:border-white/20 hover:bg-white/10" href="#partnere" data-footer-link>
             <span>Samarbeidspartnere</span>
             <span class="text-xs font-semibold uppercase tracking-[0.35em] text-[#13A0F9]/70">04</span>
@@ -1818,11 +1659,11 @@
           Kontakt oss
         </a>
         <a
-          href="#bli-medlem"
+          href="#kontakt"
           class="fj-ring-offset inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#13A0F9] to-[#FF2F9C] px-4 py-3 text-sm font-semibold text-white shadow-[0_16px_28px_rgba(19,160,249,0.35)] transition hover:from-[#0d8bd6] hover:to-[#e12585] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#13A0F9] focus-visible:ring-offset-2"
           data-footer-close
         >
-          Bli medlem
+          Kontakt oss
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4" aria-hidden="true">
             <path d="M5 12h14"></path>
             <path d="m12 5 7 7-7 7"></path>
