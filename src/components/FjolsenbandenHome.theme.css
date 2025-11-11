@@ -197,6 +197,27 @@
   isolation: isolate;
 }
 
+.fj-theme .partner-logos .logo::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(19, 160, 249, 0.8), rgba(255, 47, 156, 0.8));
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0.65;
+  transition: opacity 0.4s ease;
+  z-index: -1;
+  pointer-events: none;
+}
+
 .fj-theme .partner-logos .logo::after {
   content: "";
   position: absolute;
@@ -205,7 +226,8 @@
   opacity: 0;
   transition: opacity 0.4s ease;
   filter: blur(40px);
-  z-index: -1;
+  z-index: -2;
+  pointer-events: none;
 }
 
 .fj-theme .partner-logos .logo:hover,
@@ -214,6 +236,11 @@
   box-shadow: 0 24px 40px rgba(19, 160, 249, 0.28), 0 0 0 1px rgba(255, 47, 156, 0.35), 0 0 26px rgba(19, 160, 249, 0.4);
   background: rgba(255, 255, 255, 0.05);
   border-image: linear-gradient(135deg, rgba(19, 160, 249, 0.9), rgba(255, 47, 156, 0.9)) 1;
+}
+
+.fj-theme .partner-logos .logo:hover::before,
+.fj-theme .partner-logos .logo:focus-visible::before {
+  opacity: 1;
 }
 
 .fj-theme .partner-logos .logo:hover::after,
@@ -292,6 +319,11 @@
   background: rgba(11, 20, 63, 0.06);
   border-image: linear-gradient(135deg, rgba(19, 160, 249, 0.55), rgba(255, 47, 156, 0.55)) 1;
   box-shadow: 0 0 0 1px rgba(19, 160, 249, 0.18), 0 12px 26px rgba(11, 20, 63, 0.22);
+}
+
+.fj-theme.theme-light .partner-logos .logo::before {
+  background: linear-gradient(135deg, rgba(19, 160, 249, 0.65), rgba(255, 47, 156, 0.65));
+  opacity: 0.5;
 }
 
 .fj-theme.theme-light .partner-logos .logo:hover,
