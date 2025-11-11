@@ -44,6 +44,20 @@ Remember to collect static files for production deployments:
 python fjolsenbanden_site/manage.py collectstatic
 ```
 
+## Frontend build outputs
+
+The React marketing site lives in [`src/`](src/) and is bundled with Vite. The
+generated files in `dist/` are deployment artefacts only and are **not** kept in
+version control. Run the usual build command locally whenever you need the
+static output:
+
+```bash
+npm run build
+```
+
+Continuous integration already performs this step before publishing assets, so
+pull requests are no longer blocked by large binary bundles.
+
 ## Running Tests
 
 ```bash
