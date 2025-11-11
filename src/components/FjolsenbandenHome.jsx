@@ -5,6 +5,7 @@ import { ArrowRight, CheckCircle2, CreditCard, Gift, Instagram, Lock, Menu, Mess
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { DEFAULT_SECTION_ORDER, DEFAULT_SITE_MODULES, DEFAULT_TWITCH_EMBED_URL, useAdminState, } from "@/lib/admin-state";
+import { INLINE_PARTNER_BADGES, getPartnerBadge } from "@/lib/partner-badges";
 import "./FjolsenbandenHome.theme.css";
 const navLinks = [
     { name: "Hjem", href: "#hero" },
@@ -150,18 +151,12 @@ const PARTNER_LOGO_BASE_URLS = [
     "https://fjolsenbanden.setaei.com/Images",
     "http://fjolsenbanden.setaei.com/Images",
 ];
-const LOCAL_PARTNER_LOGOS = {
-    lenovo: "/assets/partners/lenovo-logo.png",
-    samsung: "/assets/partners/samsung-logo.png",
-    philips: "/assets/partners/philips-logo.png",
-    komplett: "/assets/partners/komplett-logo.png",
-};
 const sponsors = [
     {
         name: "Lenovo",
         slug: "lenovo",
         website: "https://www.lenovo.com/no/no/",
-        defaultLogoUrl: LOCAL_PARTNER_LOGOS.lenovo,
+        defaultLogoUrl: INLINE_PARTNER_BADGES.lenovo,
         remoteFileNames: [
             "lenovo-logo.png",
             "Lenovo-logo.png",
@@ -188,7 +183,7 @@ const sponsors = [
         name: "Samsung",
         slug: "samsung",
         website: "https://www.samsung.com/no/",
-        defaultLogoUrl: LOCAL_PARTNER_LOGOS.samsung,
+        defaultLogoUrl: INLINE_PARTNER_BADGES.samsung,
         remoteFileNames: [
             "samsung-logo.png",
             "Samsung-logo.png",
@@ -212,7 +207,7 @@ const sponsors = [
         name: "Philips",
         slug: "philips",
         website: "https://www.philips.no/",
-        defaultLogoUrl: LOCAL_PARTNER_LOGOS.philips,
+        defaultLogoUrl: INLINE_PARTNER_BADGES.philips,
         remoteFileNames: [
             "philips-logo.png",
             "Philips-logo.png",
@@ -234,7 +229,7 @@ const sponsors = [
         name: "Komplett",
         slug: "komplett",
         website: "https://www.komplett.no/",
-        defaultLogoUrl: LOCAL_PARTNER_LOGOS.komplett,
+        defaultLogoUrl: INLINE_PARTNER_BADGES.komplett,
         remoteFileNames: [
             "komplett-logo.png",
             "Komplett-logo.png",
@@ -259,10 +254,9 @@ const sponsors = [
 const buildSponsorLogoSources = (sponsor) => {
     const remoteSources = PARTNER_LOGO_BASE_URLS.flatMap((baseUrl) => sponsor.remoteFileNames.map((fileName) => `${baseUrl}/${fileName}`));
     const preferred = sponsor.defaultLogoUrl ? [sponsor.defaultLogoUrl] : [];
-    const localFallback = LOCAL_PARTNER_LOGOS[sponsor.slug]
-        ? [LOCAL_PARTNER_LOGOS[sponsor.slug]]
-        : [`/assets/partners/${sponsor.slug}.svg`];
-    return Array.from(new Set([...preferred, ...remoteSources, ...localFallback]));
+    const inlineFallbackBadge = getPartnerBadge(sponsor.slug);
+    const inlineFallback = inlineFallbackBadge ? [inlineFallbackBadge] : [];
+    return Array.from(new Set([...preferred, ...remoteSources, ...inlineFallback]));
 };
 const SimplePartnerLogo = ({ partner, fallback, className = "" }) => {
     const [sourceIndex, setSourceIndex] = useState(0);
@@ -540,7 +534,7 @@ export default function FjolsenbandenHome() {
             partner: {
                 id: sponsor.slug,
                 name: sponsor.name,
-                logoUrl: sponsor.defaultLogoUrl || `/assets/partners/${sponsor.slug}.svg`,
+                logoUrl: sponsor.defaultLogoUrl || getPartnerBadge(sponsor.slug) || "",
                 url: sponsor.website || "",
             },
             fallback: sponsor,
@@ -1008,7 +1002,10 @@ export default function FjolsenbandenHome() {
                 React.createElement("section", { id: "hero", className: "px-6 pt-12 sm:px-8 lg:px-10" },
                     React.createElement("div", { className: "mx-auto max-w-4xl space-y-6 text-center lg:space-y-8" },
                         React.createElement("h1", { className: "text-4xl font-extrabold sm:text-5xl" }, heroHeadlineContent),
-                        React.createElement("p", { className: "text-base text-zinc-100 sm:text-lg" }, heroSubtitle)))),
+                        React.createElement("p", { className: "text-base text-zinc-100 sm:text-lg" }, heroSubtitle),
+                        React.createElement("div", { className: "flex flex-col items-center gap-3 text-sm text-zinc-100 sm:flex-row sm:justify-center" },
+                            React.createElement("a", { href: "/updates.html", className: "inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-2 font-semibold uppercase tracking-[0.2em] text-white transition hover:bg-white/20" }, "\uD83C\uDF1F Ny oppdatering: Quest-board"),
+                            React.createElement("span", { className: "text-xs uppercase tracking-[0.3em] text-white/70" }, "Utforsk ukens quester og premier"))))),
             React.createElement("main", { className: "flex flex-1 flex-col gap-28 pb-36" },
             React.createElement("section", { id: "hva-er", className: "px-6 sm:px-8 lg:px-10", style: sectionOrderStyle("heroIntro") },
                 React.createElement("div", { className: "mx-auto grid max-w-6xl gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:items-start" },

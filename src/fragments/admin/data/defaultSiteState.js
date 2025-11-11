@@ -1,3 +1,5 @@
+import { INLINE_PARTNER_BADGES } from "@/lib/partner-badges";
+
 export function generateId(prefix = "id") {
     return `${prefix}-${Math.random().toString(36).slice(2, 10)}`;
 }
@@ -81,25 +83,25 @@ export const DEFAULT_SITE_CONFIG = {
                 {
                     id: "philips",
                     name: "Philips",
-                    image: "/assets/partners/philips-logo.png",
+                    image: INLINE_PARTNER_BADGES.philips,
                     url: "https://philips.no",
                 },
                 {
                     id: "lenovo",
                     name: "Lenovo",
-                    image: "/assets/partners/lenovo-logo.png",
+                    image: INLINE_PARTNER_BADGES.lenovo,
                     url: "https://lenovo.com",
                 },
                 {
                     id: "samsung",
                     name: "Samsung",
-                    image: "/assets/partners/samsung-logo.png",
+                    image: INLINE_PARTNER_BADGES.samsung,
                     url: "https://www.samsung.com/no/",
                 },
                 {
                     id: "komplett",
                     name: "Komplett.no",
-                    image: "/assets/partners/komplett-logo.png",
+                    image: INLINE_PARTNER_BADGES.komplett,
                     url: "https://www.komplett.no/",
                 },
             ],
