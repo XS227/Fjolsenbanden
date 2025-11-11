@@ -207,6 +207,22 @@
         transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
       }
 
+      .partners .cta-group {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 0.75rem;
+        margin-top: 1.5rem;
+        margin-bottom: 0.5rem;
+      }
+
+      @media (min-width: 640px) {
+        .partners .cta-group {
+          flex-direction: row;
+        }
+      }
+
       .partners .cta:hover,
       .partners .cta:focus-visible {
         transform: translateY(-3px);
@@ -688,8 +704,11 @@
               <a class="rounded-full px-3 py-1 transition hover:bg-white/10 hover:text-white" href="#community" data-nav-link>
                 Community
               </a>
-<a class="rounded-full px-3 py-1 transition hover:bg-white/10 hover:text-white" href="#samarbeid" data-nav-link>
+              <a class="rounded-full px-3 py-1 transition hover:bg-white/10 hover:text-white" href="#samarbeid" data-nav-link>
                 Samarbeid
+              </a>
+              <a class="rounded-full px-3 py-1 transition hover:bg-white/10 hover:text-white" href="/partners/" data-nav-link>
+                Partnerskap
               </a>
               <a class="rounded-full px-3 py-1 transition hover:bg-white/10 hover:text-white" href="#tilbud" data-nav-link>
                 Andre tilbud
@@ -803,9 +822,15 @@
                   <span class="text-xs font-semibold uppercase tracking-[0.35em] text-[#13A0F9]/70">04</span>
                 </a>
               </li>
-<li>
+              <li>
                 <a class="flex items-center justify-between gap-3 rounded-2xl border border-transparent bg-white/5 px-4 py-3 text-base font-semibold text-white/85 transition hover:border-white/20 hover:bg-white/10" href="#samarbeid" data-nav-link data-nav-close>
                   <span>Samarbeid</span>
+                  <span class="text-xs font-semibold uppercase tracking-[0.35em] text-[#13A0F9]/70">05</span>
+                </a>
+              </li>
+              <li>
+                <a class="flex items-center justify-between gap-3 rounded-2xl border border-transparent bg-white/5 px-4 py-3 text-base font-semibold text-white/85 transition hover:border-white/20 hover:bg-white/10" href="/partners/" data-nav-link data-nav-close>
+                  <span>Partnerskap</span>
                   <span class="text-xs font-semibold uppercase tracking-[0.35em] text-[#13A0F9]/70">06</span>
                 </a>
               </li>
@@ -1345,8 +1370,11 @@
           </div>
 
           <p>Ønsker du å synliggjøre din merkevare for vårt engasjerte gaming-publikum?</p>
-          <a href="#kontakt" class="cta">Kontakt oss</a>
-          <p class="cta-support">Ta kontakt for samarbeid!</p>
+          <div class="cta-group">
+            <a href="/partners/" class="cta">Les mer om partnerskap</a>
+            <a href="#kontakt" class="cta">Kontakt oss</a>
+          </div>
+          <p class="cta-support">Utforsk partnersiden for detaljerte pakker eller ta kontakt for samarbeid!</p>
         </section>
 
       <section id="tilbud" class="section-shell" data-section>
@@ -1900,8 +1928,8 @@
           </a>
         </li>
         <li>
-          <a class="flex items-center justify-between gap-3 rounded-2xl border border-transparent bg-white/5 px-4 py-3 text-base font-semibold text-white/85 transition hover:border-white/20 hover:bg-white/10" href="#kontakt" data-footer-link>
-            <span>Kontakt</span>
+          <a class="flex items-center justify-between gap-3 rounded-2xl border border-transparent bg-white/5 px-4 py-3 text-base font-semibold text-white/85 transition hover:border-white/20 hover:bg-white/10" href="/partners/" data-footer-link>
+            <span>Partnerskap</span>
             <span class="text-xs font-semibold uppercase tracking-[0.35em] text-[#13A0F9]/70">08</span>
           </a>
         </li>
