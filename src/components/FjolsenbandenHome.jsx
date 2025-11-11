@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { ArrowRight, CheckCircle2, CreditCard, Gift, Instagram, Lock, Menu, MessageCircle, Moon, Phone, Play, ShieldCheck, Smartphone, Sun, Trophy, Twitch, X, Youtube, UserCog, } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -100,11 +100,49 @@ const liveFollowLinks = [
         icon: React.createElement(Instagram, { className: "h-5 w-5 text-fuchsia-400", "aria-hidden": "true" }),
     },
 ];
-const liveChatMessages = [
-    { id: "lina", author: "Lina", message: "Haha, den bossen var vilt!" },
-    { id: "jonas", author: "Jonas", message: "Gleder meg til premie-trekningen 🔥" },
-    { id: "sara", author: "Sara", message: "Hei fra TikTok 😎" },
-    { id: "marius", author: "Marius", message: "Bra lyd i dag!" },
+const liveRuleMessages = [
+    {
+        id: "rule-1",
+        title: "Nulltoleranse for mobbing og trakassering",
+        description: "Vis respekt i chatten og i spill. Hets, diskriminering eller personangrep gir umiddelbare reaksjoner.",
+        icon: React.createElement(ShieldCheck, { className: "h-4 w-4 text-emerald-300", "aria-hidden": "true" }),
+    },
+    {
+        id: "rule-2",
+        title: "Respekt for moderatorer",
+        description: "Moderatorenes beskjeder er endelige. Ignorerer du dem eller diskuterer avgjørelser, kan du miste tilgangen.",
+        icon: React.createElement(UserCog, { className: "h-4 w-4 text-sky-300", "aria-hidden": "true" }),
+    },
+    {
+        id: "rule-3",
+        title: "Fair play",
+        description: "Juks, glitching eller sabotasje ødelegger moroa. Brudd gir utestengelse fra events og konkurranser.",
+        icon: React.createElement(Trophy, { className: "h-4 w-4 text-amber-300", "aria-hidden": "true" }),
+    },
+    {
+        id: "rule-4",
+        title: "Trygg deling",
+        description: "Del aldri personopplysninger eller kontoinfo. Varsle oss med en gang hvis noe virker suspekt.",
+        icon: React.createElement(Lock, { className: "h-4 w-4 text-rose-300", "aria-hidden": "true" }),
+    },
+    {
+        id: "rule-5",
+        title: "Språk og innhold",
+        description: "Hold tonen vennlig og inkluderende. NSFW, ekstremt innhold eller grov banning blir fjernet umiddelbart.",
+        icon: React.createElement(MessageCircle, { className: "h-4 w-4 text-violet-300", "aria-hidden": "true" }),
+    },
+    {
+        id: "rule-6",
+        title: "Aldersgrenser og samtykke",
+        description: "Vi følger aldersgrensene i spillene og på plattformene våre. Yngre medlemmer må ha foresatt samtykke.",
+        icon: React.createElement(CheckCircle2, { className: "h-4 w-4 text-cyan-300", "aria-hidden": "true" }),
+    },
+    {
+        id: "rule-7",
+        title: "Sanksjoner",
+        description: "Regelbrudd gir advarsler, timeout eller permanent utestengelse – avhengig av alvorlighetsgrad.",
+        icon: React.createElement(X, { className: "h-4 w-4 text-rose-400", "aria-hidden": "true" }),
+    },
 ];
 const communityHighlights = [
     {
@@ -432,6 +470,9 @@ export default function FjolsenbandenHome() {
     const [navScrolled, setNavScrolled] = useState(false);
     const [mobileNavOpen, setMobileNavOpen] = useState(false);
     const [showUnboxingVideo, setShowUnboxingVideo] = useState(false);
+    const liveSectionRef = useRef(null);
+    const [typingStarted, setTypingStarted] = useState(false);
+    const [typedRuleDescriptions, setTypedRuleDescriptions] = useState(() => liveRuleMessages.map(() => ""));
     const { state } = useAdminState();
     const { siteSettings } = state;
     const moduleSettings = useMemo(() => { var _a; return ({ ...DEFAULT_SITE_MODULES, ...((_a = siteSettings.modules) !== null && _a !== void 0 ? _a : DEFAULT_SITE_MODULES) }); }, [siteSettings.modules]);
@@ -568,6 +609,69 @@ export default function FjolsenbandenHome() {
     const closeFooterMenu = () => {
         setFooterMenuOpen(false);
     };
+    useEffect(() => {
+        if (!liveStream) {
+            setTypingStarted(false);
+            setTypedRuleDescriptions(liveRuleMessages.map(() => ""));
+        }
+    }, [liveStream]);
+    useEffect(() => {
+        if (!liveStream || typingStarted) {
+            return;
+        }
+        const sectionNode = liveSectionRef.current;
+        if (!sectionNode) {
+            return;
+        }
+        const observer = new IntersectionObserver((entries) => {
+            const [entry] = entries;
+            if ((entry === null || entry === void 0 ? void 0 : entry.isIntersecting) && !typingStarted) {
+                setTypedRuleDescriptions(liveRuleMessages.map(() => ""));
+                setTypingStarted(true);
+                observer.disconnect();
+            }
+        }, { threshold: 0.35 });
+        observer.observe(sectionNode);
+        return () => observer.disconnect();
+    }, [liveStream, typingStarted]);
+    useEffect(() => {
+        if (!typingStarted) {
+            return;
+        }
+        let messageIndex = 0;
+        let charIndex = 0;
+        const timeouts = [];
+        const scheduleType = (delay) => {
+            const timeoutId = window.setTimeout(() => {
+                if (messageIndex >= liveRuleMessages.length) {
+                    return;
+                }
+                const target = liveRuleMessages[messageIndex];
+                const nextCharIndex = charIndex + 1;
+                setTypedRuleDescriptions((previous) => {
+                    const next = [...previous];
+                    next[messageIndex] = target.description.slice(0, nextCharIndex);
+                    return next;
+                });
+                charIndex = nextCharIndex;
+                if (charIndex < target.description.length) {
+                    scheduleType(24);
+                }
+                else {
+                    messageIndex += 1;
+                    charIndex = 0;
+                    if (messageIndex < liveRuleMessages.length) {
+                        scheduleType(560);
+                    }
+                }
+            }, delay);
+            timeouts.push(timeoutId);
+        };
+        scheduleType(180);
+        return () => {
+            timeouts.forEach((timeoutId) => window.clearTimeout(timeoutId));
+        };
+    }, [typingStarted]);
     const renderPartnerSection = (sectionId, orderKey, { includeLogosId = false, variant = "default" } = {}) => {
         const contactHref = hasContactLink ? "#kontakt" : "mailto:fjolsenfn@gmail.com";
         if (variant === "showcase") {
@@ -943,7 +1047,7 @@ export default function FjolsenbandenHome() {
                             React.createElement("div", { className: "grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-3 lg:grid-cols-5" }, platformLinks.map(({ icon, label, href }) => (React.createElement(PlatformButton, { key: label, icon: icon, label: label, href: href })))),
                             React.createElement("p", { className: "mt-3 text-center text-xs text-zinc-400 sm:text-left" }, announcement))))),
             liveStream
-                ? (React.createElement("section", { id: "live", className: "px-6 sm:px-8 lg:px-10", style: sectionOrderStyle("liveStream") },
+                ? (React.createElement("section", { id: "live", ref: liveSectionRef, className: "px-6 sm:px-8 lg:px-10", style: sectionOrderStyle("liveStream") },
                     React.createElement("div", { className: "mx-auto grid max-w-7xl gap-8 lg:grid-cols-3" },
                         React.createElement("div", { className: "space-y-6 lg:col-span-2" },
                             React.createElement("div", { className: "space-y-4 text-center lg:text-left" },
@@ -965,15 +1069,27 @@ export default function FjolsenbandenHome() {
                                         React.createElement("a", { href: "https://youtube.com/@fjolsenbanden", target: "_blank", rel: "noopener noreferrer", className: "text-[#13A0F9]" }, "YouTube")))),
                             React.createElement("div", { className: "flex flex-wrap justify-center gap-3" },
                                 liveFollowLinks.map(({ label, href, icon }) => (React.createElement("a", { key: label, href: href, target: "_blank", rel: "noopener noreferrer", className: "flex items-center gap-2 rounded-full border border-white/10 px-4 py-2 text-sm transition hover:bg-white/10" }, icon, React.createElement("span", null, label)))))),
-                        React.createElement("div", { className: "flex max-h-[640px] flex-col rounded-2xl border border-white/10 bg-[#071d6f] p-4" },
-                            React.createElement("h3", { className: "mb-3 flex items-center gap-2 text-sm font-semibold text-[#13A0F9]" },
+                        React.createElement("div", { className: "flex max-h-[640px] flex-col rounded-2xl border border-white/10 bg-[#071d6f]/90 p-5" },
+                            React.createElement("h3", { className: "mb-2 flex items-center gap-2 text-sm font-semibold text-[#13A0F9]" },
                                 React.createElement(MessageCircle, { className: "h-4 w-4", "aria-hidden": "true" }),
-                                "Live chat"),
-                            React.createElement("div", { className: "flex-1 space-y-3 overflow-y-auto pr-1 text-sm" },
-                                liveChatMessages.map(({ id, author, message }) => (React.createElement("div", { key: id, className: "rounded-lg border border-white/10 bg-[#071d6f] px-3 py-2" },
-                                    React.createElement("span", { className: "mr-2 font-semibold text-[#13A0F9]" }, author),
-                                    React.createElement("span", { className: "text-slate-200" }, message))))),
-                            React.createElement("input", { type: "text", placeholder: "Skriv en kommentar...", className: "mt-3 w-full rounded-lg border border-white/20 bg-[#041149] px-3 py-2 text-sm text-white placeholder-slate-400 outline-none focus:ring-2 focus:ring-[#13A0F9]" }))))
+                                "Regelbot"),
+                            React.createElement("p", { className: "mb-4 text-xs text-slate-300" }, "Se reglene v\u00E5re skrives ut i sanntid mens du scroller."),
+                            React.createElement("div", { className: "flex-1 space-y-3 overflow-y-auto pr-1 text-sm", "aria-live": typingStarted ? "polite" : "off" },
+                                liveRuleMessages.map((rule, index) => {
+                                    const typedText = typedRuleDescriptions[index] || "";
+                                    const showCursor = typedText.length > 0 && typedText.length < rule.description.length;
+                                    return (React.createElement("div", { key: rule.id, className: "group relative overflow-hidden rounded-2xl border border-white/10 bg-[#041149]/60 p-4 shadow-[0_16px_32px_rgba(8,14,45,0.5)] transition" },
+                                        React.createElement("span", { className: "pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#13A0F9]/60 to-transparent opacity-75", "aria-hidden": "true" }),
+                                        React.createElement("div", { className: "flex items-center gap-3" },
+                                            React.createElement("span", { className: "flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white/10 text-[#13A0F9]" }, rule.icon),
+                                            React.createElement("div", { className: "flex flex-col" },
+                                                React.createElement("span", { className: "text-[10px] font-semibold uppercase tracking-[0.35em] text-[#13A0F9]/80" }, `Regel ${index + 1}`),
+                                                React.createElement("span", { className: "text-sm font-semibold text-white" }, rule.title)))),
+                                        React.createElement("p", { className: "mt-3 min-h-[3.5rem] text-sm leading-relaxed text-slate-200" },
+                                            typedText || "\u00A0",
+                                            showCursor ? React.createElement("span", { className: "ml-1 inline-block h-4 w-[2px] animate-pulse bg-[#13A0F9]/80 align-baseline", "aria-hidden": "true" }) : null)));
+                                })),
+                            React.createElement("div", { className: "mt-3 rounded-lg border border-white/10 bg-[#041149]/80 px-3 py-2 text-xs text-slate-300" }, "Regelbot passer p\u00E5 at alle er klare f\u00F8r vi slipper dere l\u00F8s i chatten."))))
                 : null,
             React.createElement("section", { id: "community", className: "px-6 sm:px-8 lg:px-10", style: sectionOrderStyle("community") },
                 React.createElement("div", { className: "mx-auto grid max-w-6xl gap-10 lg:grid-cols-2 lg:items-start" },
