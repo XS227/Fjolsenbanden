@@ -978,7 +978,7 @@ export default function FjolsenbandenHome() {
                 background: overlayBackground,
             } }),
         React.createElement("div", { className: "flex flex-1 flex-col" },
-            React.createElement("nav", { className: "fj-nav section-shell grid grid-cols-1 items-center gap-4 border-b border-white/10 bg-[#041149]/75 py-4 backdrop-blur supports-[backdrop-filter]:bg-[#041149]/60 sm:grid-cols-[1fr_auto_1fr]", "data-scrolled": navScrolled ? "true" : "false" },
+            React.createElement("nav", { className: "fj-nav section-shell relative z-30 grid grid-cols-1 items-center gap-4 border-b border-white/10 bg-[#041149]/75 py-4 backdrop-blur supports-[backdrop-filter]:bg-[#041149]/60 sm:grid-cols-[1fr_auto_1fr]", "data-scrolled": navScrolled ? "true" : "false" },
                 React.createElement("div", { className: "hidden items-center justify-start gap-4 sm:flex" },
                     React.createElement("img", { src: scrolledLogoUrl, alt: "Fjolsenbanden ikon", "aria-hidden": "true", className: `h-12 w-auto transition-all duration-300 ease-out ${navScrolled ? "translate-y-0 opacity-100" : "-translate-y-1 opacity-0"}` })),
                 React.createElement("a", { href: "#", className: "group flex w-full items-center justify-center gap-3 rounded-none border border-transparent p-0 transition hover:border-white/20 hover:bg-white/5 sm:w-auto sm:justify-self-center sm:rounded-full sm:px-3 sm:py-2", "aria-label": "Fjolsenbanden hjem" },
