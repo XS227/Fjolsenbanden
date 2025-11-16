@@ -1202,7 +1202,7 @@ export default function FjolsenbandenHome() {
                         },
                             "Kontakt oss",
                             React.createElement(ArrowRight, { className: "h-4 w-4", "aria-hidden": "true" }))))),
-        React.createElement("section", { className: "fj-footer-shell relative mt-20 overflow-hidden px-6 pb-[calc(7rem+env(safe-area-inset-bottom))] sm:px-8 lg:px-10" },
+        React.createElement("section", { className: "fj-footer-shell relative mt-12 overflow-hidden px-6 pb-[calc(4rem+env(safe-area-inset-bottom))] sm:px-8 lg:px-10" },
             React.createElement("div", { className: "fj-footer-gradient pointer-events-none absolute inset-x-0 top-0 -z-10 h-full" }),
             React.createElement("footer", { className: "fj-footer-content relative z-10 mx-auto flex max-w-5xl flex-col items-center justify-center gap-3 border-t border-white/15 pt-12 text-center text-sm" },
                 React.createElement("span", { className: "text-xs font-semibold uppercase tracking-[0.35em] text-[#13A0F9]/80" }, "FjOlsenbanden"),
