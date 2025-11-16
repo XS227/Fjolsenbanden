@@ -253,6 +253,91 @@
         color: rgba(11, 20, 63, 0.65);
       }
 
+      #hero {
+        border-radius: clamp(1.5rem, 3vw, 3rem);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        background: radial-gradient(circle at 20% 20%, rgba(19, 160, 249, 0.25), transparent 55%),
+          radial-gradient(circle at 80% 0%, rgba(255, 47, 156, 0.2), transparent 60%),
+          linear-gradient(135deg, #03092b, #081b60 55%, #03103d);
+        box-shadow: 0 35px 70px rgba(5, 8, 24, 0.85);
+      }
+
+      .hero-bg {
+        position: absolute;
+        inset: 0;
+        overflow: hidden;
+        opacity: 0.7;
+      }
+
+      .hero-orb {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(30px);
+        opacity: 0.7;
+      }
+
+      .orb-one {
+        width: 320px;
+        height: 320px;
+        top: -80px;
+        left: -60px;
+        background: radial-gradient(circle, rgba(19, 160, 249, 0.65), transparent 60%);
+      }
+
+      .orb-two {
+        width: 420px;
+        height: 420px;
+        bottom: -120px;
+        right: -140px;
+        background: radial-gradient(circle, rgba(255, 47, 156, 0.5), transparent 65%);
+      }
+
+      .hero-gridlines {
+        position: absolute;
+        inset: 0;
+        background-image: linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+        background-size: 120px 120px;
+        mask-image: radial-gradient(circle at center, black, transparent 75%);
+      }
+
+      .hero-pixel-card {
+        display: flex;
+        flex-direction: column;
+        gap: 1.25rem;
+        align-items: center;
+        justify-content: center;
+        border-radius: 2rem;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        background: rgba(8, 17, 65, 0.65);
+        padding: clamp(1.75rem, 4vw, 2.5rem);
+        box-shadow: inset 0 0 25px rgba(255, 255, 255, 0.05), 0 25px 60px rgba(3, 8, 30, 0.8);
+      }
+
+      .pixel-stage {
+        position: relative;
+        border-radius: 1.5rem;
+        padding: clamp(1.25rem, 3vw, 2rem);
+        background: radial-gradient(circle at top, rgba(255, 255, 255, 0.1), transparent), rgba(3, 5, 25, 0.85);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .pixel-stage::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        pointer-events: none;
+      }
+
+      .pixel-canvas {
+        display: block;
+        width: clamp(220px, 40vw, 320px);
+        height: clamp(220px, 40vw, 320px);
+        image-rendering: pixelated;
+      }
+
       .loader {
         position: fixed;
         inset: 0;
@@ -656,7 +741,7 @@
             />
             <div class="spotify-demo" data-spotify-demo>
               <button id="fjolsenPlay" class="spotify-play" type="button">
-                <canvas id="fj-ape" width="160" height="160" aria-hidden="true"></canvas>
+                <canvas id="fj-ape" class="spotify-ape" data-fj-ape data-pixel-size="10" aria-hidden="true"></canvas>
                 <span>Spill Fjolsenbandens demo-sang</span>
               </button>
 
@@ -876,34 +961,42 @@
 
 
         <main class="fj-main relative z-10 flex flex-1 flex-col" data-main>
-        <section id="hero" class="section-shell relative flex flex-col justify-center overflow-hidden pb-12 pt-16" data-section>
-          <div aria-hidden="true" class="absolute inset-0 -z-10">
-            <img
-              src="https://static-cdn.jtvnw.net/previews-ttv/live_user_fjolsenfn-1920x1080.jpg"
-              alt=""
-              class="h-full w-full object-cover"
-              loading="lazy"
-              decoding="async"
-            />
-            <div class="absolute inset-0 bg-gradient-to-b from-[#041149]/40 via-[#041149]/70 to-[#041149]/85"></div>
+        <section id="hero" class="section-shell relative overflow-hidden pb-16 pt-20" data-section>
+          <div class="hero-bg" aria-hidden="true">
+            <div class="hero-orb orb-one"></div>
+            <div class="hero-orb orb-two"></div>
+            <div class="hero-gridlines"></div>
           </div>
-          <div class="mx-auto max-w-4xl space-y-6 text-center lg:space-y-8">
-            <h1 class="heading-clamp text-4xl font-extrabold sm:text-5xl">
-              Velkommen til <span class="text-[#13A0F9]">FjOlsenbanden</span> – Norges mest inkluderende gaming-community.
-            </h1>
-            <p class="lead-clamp text-base text-zinc-100 sm:text-lg">
-              Spillglede for hele familien med trygge streams, premier og fellesskap.
-            </p>
-            <div class="flex flex-col items-center gap-3 text-sm text-zinc-100 sm:flex-row sm:justify-center">
-              <a
-                href="/updates.html"
-                class="inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-2 font-semibold uppercase tracking-[0.2em] text-white transition hover:bg-white/20"
-              >
-                🌟 Ny oppdatering: Quest-board
-              </a>
-              <span class="text-xs uppercase tracking-[0.3em] text-white/70">
-                Utforsk ukens quester og premier
-              </span>
+          <div class="mx-auto grid max-w-6xl items-center gap-10 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)]">
+            <div class="space-y-6 text-center lg:text-left">
+              <p class="inline-flex items-center justify-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1 text-xs font-semibold uppercase tracking-[0.35em] text-white/80">
+                Velkommen
+              </p>
+              <h1 class="heading-clamp text-4xl font-extrabold sm:text-5xl">
+                FjOlsenbanden er <span class="text-[#13A0F9]">Norges mest inkluderende gaming-community</span>.
+              </h1>
+              <p class="lead-clamp text-base text-zinc-100 sm:text-lg">
+                En trygg arena for familier som elsker gaming, med fellesskap, premier og kreativitet i sentrum.
+              </p>
+              <div class="flex flex-col items-center gap-3 text-sm text-zinc-100 sm:flex-row sm:justify-start">
+                <a
+                  href="#community"
+                  class="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#13A0F9] to-[#FF2F9C] px-6 py-3 font-semibold uppercase tracking-[0.2em] text-white shadow-[0_15px_35px_rgba(19,160,249,0.35)] transition hover:from-[#0d8bd6] hover:to-[#e12585]"
+                >
+                  Bli med i communityet
+                </a>
+                <span class="text-xs uppercase tracking-[0.3em] text-white/70">
+                  Spillglede for hele familien
+                </span>
+              </div>
+            </div>
+            <div class="hero-pixel-card">
+              <div class="pixel-stage">
+                <canvas class="pixel-canvas" data-fj-ape data-pixel-size="18" aria-hidden="true"></canvas>
+              </div>
+              <p class="text-center text-sm text-white/80">
+                Minecraft-inspirert versjon av apen i FjOlsen-logoen.
+              </p>
             </div>
           </div>
         </section>
@@ -2100,23 +2193,9 @@
 
   <script>
     (function () {
-      const canvas = document.getElementById("fj-ape");
+      const canvases = document.querySelectorAll("[data-fj-ape]");
       const playButton = document.getElementById("fjolsenPlay");
       const player = document.getElementById("fjolsenPlayer");
-
-      if (!canvas || !playButton || !player) {
-        return;
-      }
-
-      const ctx = canvas.getContext("2d");
-      if (!ctx) {
-        return;
-      }
-
-      ctx.imageSmoothingEnabled = false;
-      const pixelSize = 10;
-      canvas.width = 16 * pixelSize;
-      canvas.height = 16 * pixelSize;
 
       const colors = {
         ink: "#0c0f1a",
@@ -2164,20 +2243,35 @@
         colors.pad2,
       ];
 
-      for (let y = 0; y < 16; y += 1) {
-        for (let x = 0; x < 16; x += 1) {
-          const value = sprite[y * 16 + x];
-          if (!value) {
-            continue;
+      if (canvases.length) {
+        canvases.forEach((canvas) => {
+          const ctx = canvas.getContext("2d");
+          if (!ctx) {
+            return;
           }
-          ctx.fillStyle = palette[value];
-          ctx.fillRect(x * pixelSize, y * pixelSize, pixelSize, pixelSize);
-        }
+          ctx.imageSmoothingEnabled = false;
+          const pixelSize = Number(canvas.dataset.pixelSize) || 10;
+          canvas.width = 16 * pixelSize;
+          canvas.height = 16 * pixelSize;
+
+          for (let y = 0; y < 16; y += 1) {
+            for (let x = 0; x < 16; x += 1) {
+              const value = sprite[y * 16 + x];
+              if (!value) {
+                continue;
+              }
+              ctx.fillStyle = palette[value];
+              ctx.fillRect(x * pixelSize, y * pixelSize, pixelSize, pixelSize);
+            }
+          }
+        });
       }
 
-      playButton.addEventListener("click", () => {
-        player.hidden = !player.hidden;
-      });
+      if (playButton && player) {
+        playButton.addEventListener("click", () => {
+          player.hidden = !player.hidden;
+        });
+      }
     })();
   </script>
 
