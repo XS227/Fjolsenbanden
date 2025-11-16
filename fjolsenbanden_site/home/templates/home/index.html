@@ -41,14 +41,8 @@
   <body class="bg-[#041149] text-white">
     <div id="fjolsenbanden-home">
       <div class="bg-[#041149] text-white">
-        <header class="sticky top-0 z-50 border-b border-white/10 bg-[#071d6f]">
+        <header class="border-b border-white/10 bg-[#071d6f]">
           <nav class="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-            <div class="flex items-center gap-3">
-              <div class="grid h-10 w-10 place-content-center rounded-xl bg-[#13A0F9] font-bold text-white">
-                FB
-              </div>
-              <span class="hidden text-lg font-semibold sm:block">Fjolsenbanden</span>
-            </div>
             <ul class="hidden items-center gap-6 text-sm font-medium md:flex">
               <li><a class="transition-colors duration-150 hover:text-[#13A0F9]" href="#">Hjem</a></li>
               <li><a class="transition-colors duration-150 hover:text-[#13A0F9]" href="#live">Live</a></li>
@@ -255,46 +249,11 @@
               <div class="relative overflow-hidden rounded-2xl border border-white/10 bg-[#071d6f]">
                 <span class="absolute left-4 top-4 rounded-full bg-rose-500 px-3 py-1 text-xs font-semibold text-white">🔴 LIVE</span>
                 <iframe
-                  data-preview-frame="true"
                   src="https://player.twitch.tv/?channel=FjOlsenFN&parent=fjolsenbanden.setaei.com&muted=true"
                   title="Fjolsenbanden Twitch Player"
                   allowfullscreen=""
                   class="aspect-video w-full bg-black"
                 ></iframe>
-                <div
-                  data-preview-overlay="true"
-                  class="absolute inset-0 flex flex-col items-center justify-center gap-4 bg-black/75 p-6 text-center"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="lucide lucide-play h-12 w-12 text-[#13A0F9]"
-                  >
-                    <polygon points="6 3 20 12 6 21 6 3"></polygon>
-                  </svg>
-                  <p class="text-sm text-slate-200">
-                    1-minutt forhåndsvisning –<span data-preview-timer="true" class="ml-1">60</span>s igjen
-                  </p>
-                  <button
-                    type="button"
-                    class="inline-flex items-center justify-center rounded-full bg-[#13A0F9] px-6 py-2.5 font-semibold text-white transition hover:bg-[#2bb5ff]"
-                    data-video-unmute="true"
-                  >
-                    Se full stream
-                  </button>
-                  <div class="flex gap-3 text-xs text-slate-300">
-                    <span>eller fortsett på<a href="https://www.twitch.tv/FjOlsenFN" target="_blank" rel="noopener noreferrer" class="ml-1 text-[#13A0F9]">Twitch</a></span>
-                    <span>|</span>
-                    <a href="https://youtube.com/@fjolsenbanden" target="_blank" rel="noopener noreferrer" class="text-[#13A0F9]">YouTube</a>
-                  </div>
-                </div>
               </div>
               <div class="flex flex-wrap justify-center gap-3">
                 <a
@@ -920,37 +879,6 @@
           });
         });
 
-        var overlay = document.querySelector('[data-preview-overlay]');
-        var frame = document.querySelector('[data-preview-frame]');
-        var timer = document.querySelector('[data-preview-timer]');
-        var unmuteButton = document.querySelector('[data-video-unmute]');
-        if (overlay && frame && timer && unmuteButton) {
-          var remaining = parseInt(timer.textContent || '60', 10) || 60;
-          var interval = window.setInterval(function () {
-            remaining = Math.max(remaining - 1, 0);
-            timer.textContent = String(remaining);
-            if (remaining === 0) {
-              window.clearInterval(interval);
-            }
-          }, 1000);
-
-          var enableSound = function () {
-            overlay.remove();
-            window.clearInterval(interval);
-            try {
-              var url = new URL(frame.src);
-              url.searchParams.set('muted', 'false');
-              frame.src = url.toString();
-            } catch (error) {
-              frame.src = frame.src.replace('muted=true', 'muted=false');
-            }
-          };
-
-          unmuteButton.addEventListener('click', function (event) {
-            event.preventDefault();
-            enableSound();
-          });
-        }
       })();
     </script>
   </body>
