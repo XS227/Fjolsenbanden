@@ -81,8 +81,13 @@ export const DEFAULT_TWITCH_EMBED_URL = "https://player.twitch.tv/?channel=FjOls
 const DEFAULT_STATE = {
     siteSettings: {
         logoUrl: "",
+        heroHeadline: "FJOLSENBANDEN ER NORGES MEST INKLUDERENDE GAMING-COMMUNITY.",
         heroTitle: "FJOLSENBANDEN",
         heroTagline: "Spillglede for hele familien – trygge streams, turneringer og premier.",
+        heroSubtitle: "En trygg arena for familier som elsker gaming, med fellesskap, premier og foreldre i sentrum.",
+        heroDescription: "Spillglede for hele familien med trygge streams, premier og fellesskap.",
+        heroImageUrl: "/assets/branding/fjolsenbanden-logo-light.svg",
+        heroBackgroundImage: "",
         announcement: "Neste livesending starter 20:00 med co-op i Mario Kart og premier fra Lenovo!",
         presentationVideoUrl: "https://www.youtube.com/embed/8EgRIkmvmtM?si=qMzmEaMfP-2ODMbc",
         twitchEmbedUrl: DEFAULT_TWITCH_EMBED_URL,
