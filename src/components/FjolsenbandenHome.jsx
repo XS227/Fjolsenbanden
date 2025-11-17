@@ -4,7 +4,7 @@ import { createPortal } from "react-dom";
 import { ArrowRight, CheckCircle2, CreditCard, Gift, Instagram, Lock, Menu, MessageCircle, Moon, Phone, Play, ShieldCheck, Smartphone, Sun, Trophy, Twitch, X, Youtube, UserCog, } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { DEFAULT_SECTION_ORDER, DEFAULT_SITE_MODULES, DEFAULT_TWITCH_EMBED_URL, useAdminState, } from "@/lib/admin-state";
+import { DEFAULT_MEMBERSHIP_TIERS, DEFAULT_SECTION_ORDER, DEFAULT_SITE_MODULES, DEFAULT_TWITCH_EMBED_URL, useAdminState, } from "@/lib/admin-state";
 import { INLINE_PARTNER_BADGES, getPartnerBadge } from "@/lib/partner-badges";
 import "./FjolsenbandenHome.theme.css";
 const navLinks = [
@@ -496,6 +496,7 @@ export default function FjolsenbandenHome() {
         "https://static-cdn.jtvnw.net/previews-ttv/live_user_fjolsenfn-1920x1080.jpg";
     const twitchEmbedUrl = (typeof siteSettings.twitchEmbedUrl === "string" && siteSettings.twitchEmbedUrl.trim()) || DEFAULT_TWITCH_EMBED_URL;
     const membershipTiers = Array.isArray(siteSettings.membershipTiers) ? siteSettings.membershipTiers : [];
+    const membershipPlans = membershipTiers.length > 0 ? membershipTiers.slice(0, 3) : DEFAULT_MEMBERSHIP_TIERS;
     const partnerLogos = Array.isArray(siteSettings.partnerLogos) ? siteSettings.partnerLogos : [];
     const heroHighlightTerm = "FjOlsenbanden";
     const heroHeadlineContent = heroHeadline.includes(heroHighlightTerm)
@@ -1077,31 +1078,15 @@ export default function FjolsenbandenHome() {
                             React.createElement("span", { className: "inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-4 py-1 text-xs font-semibold uppercase tracking-[0.35em] text-white/80" }, "Bli medlem"),
                             React.createElement("h2", { className: "text-3xl font-bold text-white sm:text-4xl" }, "Bli medlem"),
                             React.createElement("p", { className: "text-lg text-slate-100" }, "Det er gratis å bli medlem i FjOlsenbanden! Alle kan delta i konkurranser, men for å vinne premier må du være registrert medlem."),
-                            React.createElement("p", { className: "text-base text-slate-100 sm:text-lg" }, "Velg alder for å bli med, så sender vi deg riktig registreringsskjema.")),
+                            React.createElement("p", { className: "text-base text-slate-100 sm:text-lg" }, "Velg pakken som passer deg, og bruk knappene under for å fullføre påmeldingen.")),
                         React.createElement("div", { className: "space-y-6 lg:grid lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] lg:items-start lg:gap-6 lg:space-y-0" },
                             React.createElement("div", { className: "space-y-6 rounded-3xl border border-white/10 bg-[#0b1b4d]/70 p-6 text-left shadow-[0_24px_48px_rgba(6,14,35,0.45)] sm:p-8" },
-                                React.createElement("h3", { className: "text-xl font-semibold text-white" }, "Velg alder"),
-                                React.createElement("div", { className: "grid gap-4 sm:grid-cols-2" },
-                                    React.createElement("a", {
-                                        href: "https://forms.gle/sq4mUf7s6e6UY7R58",
-                                        target: "_blank",
-                                        rel: "noopener noreferrer",
-                                        className: "group flex items-center justify-between gap-4 rounded-3xl border border-indigo-400/30 bg-indigo-500/20 p-6 text-left text-lg font-semibold text-white shadow-[0_20px_44px_rgba(99,102,241,0.35)] transition hover:-translate-y-1 hover:border-indigo-300/40 hover:bg-indigo-500/30",
-                                    },
-                                        React.createElement("span", { className: "flex items-center gap-4" },
-                                            React.createElement("span", { className: "grid h-12 w-12 place-content-center rounded-2xl bg-indigo-500 text-2xl shadow-[0_14px_30px_rgba(99,102,241,0.45)]" }, "\uD83D\uDD35"),
-                                            React.createElement("span", null, "Under 18 år")),
-                                        React.createElement(ArrowRight, { className: "h-5 w-5 transition-transform group-hover:translate-x-1", "aria-hidden": "true" })),
-                                    React.createElement("a", {
-                                        href: "https://forms.gle/ZrbXCggnUY8FTT7t9",
-                                        target: "_blank",
-                                        rel: "noopener noreferrer",
-                                        className: "group flex items-center justify-between gap-4 rounded-3xl border border-emerald-400/30 bg-emerald-500/20 p-6 text-left text-lg font-semibold text-white shadow-[0_20px_44px_rgba(16,185,129,0.35)] transition hover:-translate-y-1 hover:border-emerald-300/40 hover:bg-emerald-500/30",
-                                    },
-                                        React.createElement("span", { className: "flex items-center gap-4" },
-                                            React.createElement("span", { className: "grid h-12 w-12 place-content-center rounded-2xl bg-emerald-500 text-2xl shadow-[0_14px_30px_rgba(16,185,129,0.45)]" }, "\uD83D\uDFE2"),
-                                            React.createElement("span", null, "Over 18 år")),
-                                        React.createElement(ArrowRight, { className: "h-5 w-5 transition-transform group-hover:translate-x-1", "aria-hidden": "true" }))),
+                                React.createElement("div", { className: "flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between" },
+                                    React.createElement("div", { className: "space-y-1" },
+                                        React.createElement("h3", { className: "text-xl font-semibold text-white" }, "Velg pakke"),
+                                        React.createElement("p", { className: "text-sm text-slate-200" }, "Opptil tre pakker kan vises samtidig, og hver kan ha egne påmeldingsknapper.")),
+                                    React.createElement("span", { className: "rounded-full border border-white/15 bg-white/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.3em] text-white/70" }, "Gratis nå")),
+                                React.createElement("div", { className: "grid gap-4" }, membershipPlans.map((plan) => (React.createElement(MembershipCard, { key: plan.id, title: plan.title, price: plan.price, color: plan.color, features: plan.features, buttons: plan.buttons })))),
                                 React.createElement("p", { className: "text-sm text-slate-200" },
                                     "Ved å registrere deg bekrefter du at du har lest ",
                                     React.createElement("a", { href: "/regler.html", className: "text-[#13A0F9] underline decoration-dotted underline-offset-4 transition hover:text-[#2bb5ff]" }, "reglene våre"),
@@ -1404,7 +1389,8 @@ function PlatformButton({ icon, label, href }) {
         React.createElement("span", { className: "text-white/90" }, icon),
         React.createElement("span", null, label)));
 }
-function MembershipCard({ title, price, color, features, onSelect, }) {
+function MembershipCard({ title, price, color, features, buttons, }) {
+    const featureList = Array.isArray(features) ? features : [];
     const colorClass = (tierColor) => {
         switch (tierColor) {
             case "green":
@@ -1417,19 +1403,34 @@ function MembershipCard({ title, price, color, features, onSelect, }) {
                 return "";
         }
     };
-    return (React.createElement(Card, { className: `rounded-2xl border bg-[#1f2940] shadow-lg transition-transform hover:-translate-y-1 ${colorClass(color)}` },
+    const actionButtons = Array.isArray(buttons)
+        ? buttons
+            .slice(0, 2)
+            .map((button, index) => ({
+            label: typeof button.label === "string" ? button.label.trim() : "",
+            url: typeof button.url === "string" ? button.url.trim() : "",
+            index,
+        }))
+            .filter((button) => button.label && button.url)
+        : [];
+    const buttonClass = (index) => (index === 0
+        ? "bg-gradient-to-r from-[#13A0F9] to-[#4ade80] hover:from-[#0d8bd6] hover:to-[#22c55e]"
+        : "bg-gradient-to-r from-[#FF2F9C] to-[#8b5cf6] hover:from-[#e12585] hover:to-[#7c3aed]");
+    return (React.createElement(Card, { className: `rounded-3xl border bg-[#0f1a36] shadow-lg transition-transform hover:-translate-y-1 ${colorClass(color)}` },
         React.createElement(CardHeader, null,
             React.createElement(CardTitle, { className: "flex items-center gap-2 text-white" },
                 React.createElement(Gift, { className: "h-6 w-6" }),
                 " ",
-                title)),
+                title),
+            React.createElement("p", { className: "text-sm text-slate-200" }, price)),
         React.createElement(CardContent, { className: "space-y-4" },
-            React.createElement("div", { className: "text-3xl font-bold text-white" }, price),
-            React.createElement("ul", { className: "space-y-2 text-sm text-zinc-100" }, features.map((feature) => (React.createElement("li", { key: feature, className: "flex items-center gap-2" },
-                React.createElement(Trophy, { className: "h-4 w-4 text-[#13A0F9]" }),
+            React.createElement("ul", { className: "space-y-2 text-sm text-zinc-100" }, featureList.map((feature) => (React.createElement("li", { key: feature, className: "flex items-start gap-2" },
+                React.createElement(Trophy, { className: "mt-1 h-4 w-4 text-[#13A0F9]" }),
                 " ",
                 feature)))),
-            React.createElement(Button, { size: "lg", className: "w-full rounded-full bg-gradient-to-r from-[#13A0F9] to-[#FF2F9C] font-semibold text-white shadow-[0_16px_28px_rgba(19,160,249,0.35)] transition hover:from-[#0d8bd6] hover:to-[#e12585]", type: "button", onClick: () => onSelect(title) }, "Velg"))));
+            actionButtons.length > 0 ? (React.createElement("div", { className: "grid gap-3 sm:grid-cols-2" }, actionButtons.map((button) => (React.createElement("a", { key: `${title}-${button.label}`, href: button.url, target: "_blank", rel: "noopener noreferrer", className: `inline-flex items-center justify-center gap-2 rounded-full px-4 py-2 text-sm font-semibold text-white shadow-[0_16px_28px_rgba(19,160,249,0.35)] transition ${buttonClass(button.index)}` },
+                React.createElement(ArrowRight, { className: "h-4 w-4" }),
+                button.label))))) : null)));
 }
 function VideoLightbox({ videoUrl, onClose, title, }) {
     return (React.createElement("div", { className: "fixed inset-0 z-[100] flex items-center justify-center bg-black/80 px-4 py-10", role: "dialog", "aria-modal": "true", "aria-label": title, onClick: onClose },

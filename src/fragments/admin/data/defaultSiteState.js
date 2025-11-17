@@ -30,32 +30,18 @@ export const DEFAULT_SITE_CONFIG = {
         membership: {
             plans: [
                 {
-                    id: "plan-basic",
-                    name: "Basic",
-                    price: "0",
+                    id: "plan-free",
+                    name: "Gratis medlemskap",
+                    price: "0 kr / mnd",
                     features: [
-                        "Tilgang til Discord",
-                        "Delta i community-kvelder",
+                        "Få digitalt medlemskort",
+                        "Delta på premier, giveaways og customs",
+                        "Tilgang til hele FjOlsenbanden på Discord",
+                        "Meld deg på arrangementer og turneringer først",
                     ],
-                },
-                {
-                    id: "plan-pro",
-                    name: "Pro",
-                    price: "399",
-                    features: [
-                        "Coaching fra FjOlsen",
-                        "Eksklusive turneringer",
-                        "Månedlige premier",
-                    ],
-                },
-                {
-                    id: "plan-vip",
-                    name: "VIP",
-                    price: "Kontakt",
-                    features: [
-                        "Skreddersydde sponsoropplevelser",
-                        "Egne partneraktiviteter",
-                        "Tilgang til backstage-streams",
+                    buttons: [
+                        { label: "Under 18 år", url: "https://forms.gle/sq4mUf7s6e6UY7R58" },
+                        { label: "Over 18 år", url: "https://forms.gle/ZrbXCggnUY8FTT7t9" },
                     ],
                 },
             ],
