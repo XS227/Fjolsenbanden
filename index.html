@@ -686,6 +686,112 @@
         margin-top: 0.75rem;
         width: min(320px, 90vw);
       }
+
+      .faq-section {
+        max-width: 70rem;
+        margin: 0 auto;
+        padding: clamp(2rem, 4vw, 3rem);
+        border-radius: 2rem;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        background: radial-gradient(circle at 12% 20%, rgba(19, 160, 249, 0.25), transparent 45%),
+          radial-gradient(circle at 88% 18%, rgba(255, 47, 156, 0.18), transparent 40%),
+          linear-gradient(145deg, rgba(10, 18, 46, 0.92), rgba(11, 19, 48, 0.88));
+        box-shadow: 0 26px 60px rgba(7, 12, 28, 0.65);
+      }
+
+      .faq-header {
+        text-align: center;
+        margin-bottom: clamp(1.5rem, 3vw, 2.5rem);
+      }
+
+      .faq-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.5rem 1rem;
+        border-radius: 999px;
+        font-size: 0.75rem;
+        font-weight: 700;
+        letter-spacing: 0.25em;
+        text-transform: uppercase;
+        color: #fff;
+        background: linear-gradient(120deg, #13a0f9, #ff2f9c);
+      }
+
+      .faq-header h2 {
+        margin: 0.75rem 0 0.35rem;
+        font-size: clamp(1.9rem, 3.2vw, 2.4rem);
+        font-weight: 800;
+      }
+
+      .faq-header p {
+        max-width: 48rem;
+        margin: 0 auto;
+        color: #c9d4ff;
+        font-size: 1rem;
+      }
+
+      .faq-accordion {
+        display: grid;
+        gap: 1rem;
+      }
+
+      .faq-item {
+        border-radius: 1.25rem;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        background: rgba(255, 255, 255, 0.03);
+        overflow: hidden;
+      }
+
+      .faq-item summary {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        width: 100%;
+        padding: 1.15rem 1.25rem;
+        cursor: pointer;
+        font-weight: 700;
+        color: #fff;
+        list-style: none;
+      }
+
+      .faq-item summary::-webkit-details-marker {
+        display: none;
+      }
+
+      .faq-question {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        font-size: 1rem;
+      }
+
+      .faq-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 2.25rem;
+        height: 2.25rem;
+        border-radius: 0.9rem;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        background: rgba(255, 255, 255, 0.05);
+        transition: transform 0.2s ease;
+      }
+
+      .faq-item[open] .faq-icon {
+        transform: rotate(180deg);
+      }
+
+      .faq-answer {
+        padding: 0 1.25rem 1.25rem;
+        color: #d5defc;
+        line-height: 1.7;
+      }
+
+      .faq-answer strong {
+        color: #ffffff;
+      }
     </style>
   </head>
   <body class="fj-theme theme-dark m-0 flex min-h-screen flex-col" data-skin="dark">
@@ -803,6 +909,9 @@
               </a>
               <a class="rounded-full px-3 py-1 transition hover:bg-white/10 hover:text-white" href="#tilbakemeldinger" data-nav-link>
                 Feedback
+              </a>
+              <a class="rounded-full px-3 py-1 transition hover:bg-white/10 hover:text-white" href="#faq" data-nav-link>
+                FAQ
               </a>
             </div>
             <div class="hidden items-center gap-3 text-sm sm:flex">
@@ -935,6 +1044,12 @@
                 <a class="flex items-center justify-between gap-3 rounded-2xl border border-transparent bg-white/5 px-4 py-3 text-base font-semibold text-white/85 transition hover:border-white/20 hover:bg-white/10" href="#tilbakemeldinger" data-nav-link data-nav-close>
                   <span>Feedback</span>
                   <span class="text-xs font-semibold uppercase tracking-[0.35em] text-[#13A0F9]/70">09</span>
+                </a>
+              </li>
+              <li>
+                <a class="flex items-center justify-between gap-3 rounded-2xl border border-transparent bg-white/5 px-4 py-3 text-base font-semibold text-white/85 transition hover:border-white/20 hover:bg-white/10" href="#faq" data-nav-link data-nav-close>
+                  <span>FAQ</span>
+                  <span class="text-xs font-semibold uppercase tracking-[0.35em] text-[#13A0F9]/70">10</span>
                 </a>
               </li>
             </ul>
@@ -1662,6 +1777,66 @@
         </div>
       </section>
 
+      <section id="faq" class="section-shell" data-section>
+        <div class="faq-section">
+          <div class="faq-header">
+            <span class="faq-badge">FAQ</span>
+            <h2>Spørsmål og svar om FjOlsenbanden</h2>
+            <p>Her finner du raske svar på det foreldre, spillere og samarbeidspartnere lurer mest på. Klikk på et spørsmål for å se svaret.</p>
+          </div>
+
+          <div class="faq-accordion">
+            <details class="faq-item" open>
+              <summary>
+                <span class="faq-question">Hva er FjOlsenbanden, og hvem passer det for?</span>
+                <span class="faq-icon" aria-hidden="true">▼</span>
+              </summary>
+              <p class="faq-answer">FjOlsenbanden er et familievennlig gaming-community med trygge livesendinger, turneringer og aktiviteter for barn, ungdom og foreldre. Vi fokuserer på fellesskap, nettvett og ekte spillglede – uansett nivå.</p>
+            </details>
+
+            <details class="faq-item">
+              <summary>
+                <span class="faq-question">Hvordan blir jeg med i communityet?</span>
+                <span class="faq-icon" aria-hidden="true">▼</span>
+              </summary>
+              <p class="faq-answer">Trykk på «Bli med i communityet» i toppen av siden eller gå direkte til <strong>Discord-serveren</strong> vår. Der får du tilgang til regler, kanaler og informasjon om kommende arrangementer.</p>
+            </details>
+
+            <details class="faq-item">
+              <summary>
+                <span class="faq-question">Er det trygt for barn å delta?</span>
+                <span class="faq-icon" aria-hidden="true">▼</span>
+              </summary>
+              <p class="faq-answer">Ja. Moderatorer og voksne medspillere følger tydelige regler for språk, oppførsel og personvern. Vi har nulltoleranse for mobbing, og foreldre kan alltid kontakte oss dersom de har spørsmål eller ønsker veiledning.</p>
+            </details>
+
+            <details class="faq-item">
+              <summary>
+                <span class="faq-question">Hva koster medlemskap?</span>
+                <span class="faq-icon" aria-hidden="true">▼</span>
+              </summary>
+              <p class="faq-answer">Det er gratis å bli med i Discorden og følge livesendingene våre. Vi tilbyr i tillegg frivillige medlemsnivåer med ekstra fordeler, premier og turneringsplasser for de som ønsker å støtte communityet.</p>
+            </details>
+
+            <details class="faq-item">
+              <summary>
+                <span class="faq-question">Hvordan melder jeg meg på turneringer og events?</span>
+                <span class="faq-icon" aria-hidden="true">▼</span>
+              </summary>
+              <p class="faq-answer">Nye eventer annonseres på Discord, i livestreames og i sosiale medier. Følg med i #annonseringer-kanalen, eller abonner på nyhetsbrevet for å få påmeldingslenker og tidspunkter først.</p>
+            </details>
+
+            <details class="faq-item">
+              <summary>
+                <span class="faq-question">Hvordan kan bedrifter samarbeide med FjOlsenbanden?</span>
+                <span class="faq-icon" aria-hidden="true">▼</span>
+              </summary>
+              <p class="faq-answer">Vi lager skreddersydde opplegg som produktlanseringer, co-streams, turneringer og foredrag om trygg gaming. Send en melding via kontaktskjemaet, så setter vi opp et forslag som passer målgruppen din.</p>
+            </details>
+          </div>
+        </div>
+      </section>
+
         </main>
 
         <footer class="mt-12 border-t border-white/10 py-8 text-center text-sm text-zinc-500">
@@ -2056,15 +2231,21 @@
           </a>
         </li>
         <li>
+          <a class="flex items-center justify-between gap-3 rounded-2xl border border-transparent bg-white/5 px-4 py-3 text-base font-semibold text-white/85 transition hover:border-white/20 hover:bg-white/10" href="#faq" data-footer-link>
+            <span>FAQ</span>
+            <span class="text-xs font-semibold uppercase tracking-[0.35em] text-[#13A0F9]/70">10</span>
+          </a>
+        </li>
+        <li>
           <a class="flex items-center justify-between gap-3 rounded-2xl border border-transparent bg-white/5 px-4 py-3 text-base font-semibold text-white/85 transition hover:border-white/20 hover:bg-white/10" href="/personvernerklaering.html" data-footer-link>
             <span>Personvernerklæring</span>
-            <span class="text-xs font-semibold uppercase tracking-[0.35em] text-[#13A0F9]/70">10</span>
+            <span class="text-xs font-semibold uppercase tracking-[0.35em] text-[#13A0F9]/70">11</span>
           </a>
         </li>
         <li>
           <a class="flex items-center justify-between gap-3 rounded-2xl border border-transparent bg-white/5 px-4 py-3 text-base font-semibold text-white/85 transition hover:border-white/20 hover:bg-white/10" href="/regler.html" data-footer-link>
             <span>Regler</span>
-            <span class="text-xs font-semibold uppercase tracking-[0.35em] text-[#13A0F9]/70">11</span>
+            <span class="text-xs font-semibold uppercase tracking-[0.35em] text-[#13A0F9]/70">12</span>
           </a>
         </li>
       </ul>
