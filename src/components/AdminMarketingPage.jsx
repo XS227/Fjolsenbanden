@@ -28,6 +28,114 @@ function normalizeHighlights(highlights) {
     });
 }
 
+function HeroContentAdminForm() {
+  const { state, updateSiteSettings } = useAdminState();
+  const { siteSettings } = state;
+
+  const handleTextChange = (key) => (event) => {
+    updateSiteSettings({ [key]: event.target.value });
+  };
+
+  const handleFileUpload = (key) => (event) => {
+    const file = event.target.files?.[0];
+    if (!file) {
+      return;
+    }
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      if (typeof reader.result === "string") {
+        updateSiteSettings({ [key]: reader.result });
+      }
+    };
+    reader.readAsDataURL(file);
+  };
+
+  return React.createElement(
+    Card,
+    { className: "border-white/10 bg-white/5 text-white" },
+    React.createElement(
+      CardHeader,
+      { className: "space-y-2" },
+      React.createElement(CardTitle, { className: "text-lg text-white" }, "Forsideinnhold"),
+      React.createElement(
+        "p",
+        { className: "text-sm text-slate-300" },
+        "Oppdater tekst og grafikk som vises i den øverste seksjonen. Endringene lagres lokalt."
+      )
+    ),
+    React.createElement(
+      CardContent,
+      { className: "grid gap-4 sm:grid-cols-2" },
+      React.createElement(
+        "div",
+        { className: "space-y-2" },
+        React.createElement(Label, { className: "text-xs uppercase text-slate-400" }, "Logo"),
+        React.createElement(Input, {
+          type: "file",
+          accept: "image/png,image/svg+xml,image/jpeg",
+          className: "border-white/10 bg-white/5 text-sm text-white",
+          onChange: handleFileUpload("heroLogoUrl"),
+        }),
+        siteSettings.heroLogoUrl &&
+          React.createElement(
+            "p",
+            { className: "text-xs text-emerald-300" },
+            "Aktiv logo: ",
+            siteSettings.heroLogoUrl
+          )
+      ),
+      React.createElement(
+        "div",
+        { className: "space-y-2" },
+        React.createElement(Label, { className: "text-xs uppercase text-slate-400" }, "Sidebilde"),
+        React.createElement(Input, {
+          type: "file",
+          accept: "image/png,image/jpeg,image/svg+xml",
+          className: "border-white/10 bg-white/5 text-sm text-white",
+          onChange: handleFileUpload("heroImageUrl"),
+        }),
+        siteSettings.heroImageUrl &&
+          React.createElement(
+            "p",
+            { className: "text-xs text-emerald-300" },
+            "Aktivt bilde: ",
+            siteSettings.heroImageUrl
+          )
+      ),
+      React.createElement(
+        "div",
+        { className: "space-y-2 sm:col-span-2" },
+        React.createElement(Label, { className: "text-xs uppercase text-slate-400" }, "Overskrift"),
+        React.createElement(Input, {
+          value: siteSettings.heroHeadline || "",
+          onChange: handleTextChange("heroHeadline"),
+          className: "border-white/10 bg-white/5 text-white",
+        })
+      ),
+      React.createElement(
+        "div",
+        { className: "space-y-2 sm:col-span-2" },
+        React.createElement(Label, { className: "text-xs uppercase text-slate-400" }, "Undertittel"),
+        React.createElement(Input, {
+          value: siteSettings.heroSubtitle || "",
+          onChange: handleTextChange("heroSubtitle"),
+          className: "border-white/10 bg-white/5 text-white",
+        })
+      ),
+      React.createElement(
+        "div",
+        { className: "space-y-2 sm:col-span-2" },
+        React.createElement(Label, { className: "text-xs uppercase text-slate-400" }, "Beskrivelse"),
+        React.createElement("textarea", {
+          value: siteSettings.heroDescription || "",
+          onChange: handleTextChange("heroDescription"),
+          className: "min-h-[96px] w-full rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-sm text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#13A0F9]",
+        })
+      )
+    )
+  );
+}
+
 export default function AdminMarketingPage() {
     const auth = useAdminAuth();
     const { state, updateSiteSettings } = useAdminState();
