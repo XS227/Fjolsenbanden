@@ -27,6 +27,12 @@ export const DEFAULT_SITE_CONFIG = {
             channel: "FjOlsenFN",
             embedUrl: "https://player.twitch.tv/?channel=FjOlsenFN&parent=setaei.com",
         },
+        about: {
+            title: "Hvem er FjOlsen?",
+            videoUrl: "https://www.youtube.com/embed/7zWWLP_pogg?si=tNRtOEWj6JV3J0vf",
+            lead: "FjOlsenFN – Familievennlig streamer og grunnlegger av FjOlsenbanden",
+            body: "FjOlsenbanden ledes av Tor Martin «FjOlsen» Olsen, 43 år. Han startet prosjektet for å gi sine egne onkelbarn et trygt og bannefri sted å game – men historien har blitt mye større. FjOlsen, med bistand fra andre, har laget den største familievennlige huben i Fortnite-miljøet med over 2500 medlemmer. Når barn og unge er hos FjOlsen er de i trygge hender. For det han selv manglet som liten har han nå skapt for hele communityet, og er svært takknemlig for muligheten til å gi tilbake.",
+        },
         membership: {
             plans: [
                 {
@@ -237,6 +243,7 @@ function createInitialSiteData(site) {
             sections: {
                 home: { hidden: false },
                 live: { hidden: false },
+                about: { hidden: false },
                 membership: { hidden: false },
                 rewards: { hidden: false },
                 partners: { hidden: false },
