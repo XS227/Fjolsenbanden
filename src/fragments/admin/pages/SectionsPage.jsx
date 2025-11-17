@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { ArrowDown, ArrowUp, EyeOff, Plus, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -25,7 +25,7 @@ const LIVE_PLATFORMS = [
 ];
 
 export default function SectionsPage() {
-    const { activeSiteState, updateDraftConfig, setSectionVisibility } = useSiteConfig();
+    const { activeSiteState, updateDraftConfig, setSectionVisibility, simulateUpload, uploadState } = useSiteConfig();
     const [activeTab, setActiveTab] = useState("home");
     const moderation = activeSiteState?.moderation.sections ?? {};
 
@@ -53,7 +53,7 @@ export default function SectionsPage() {
             case "rewards":
                 return React.createElement(RewardsSectionForm, { draft: draft, updateDraftConfig: updateDraftConfig });
             case "partners":
-                return React.createElement(PartnersSectionForm, { draft: draft, updateDraftConfig: updateDraftConfig });
+                return React.createElement(PartnersSectionForm, { draft: draft, updateDraftConfig: updateDraftConfig, simulateUpload: simulateUpload, uploadState: uploadState });
             case "contact":
                 return React.createElement(ContactSectionForm, { draft: draft, updateDraftConfig: updateDraftConfig });
             case "feedback":
@@ -550,8 +550,10 @@ function RewardsSectionForm({ draft, updateDraftConfig }) {
     );
 }
 
-function PartnersSectionForm({ draft, updateDraftConfig }) {
+function PartnersSectionForm({ draft, updateDraftConfig, simulateUpload, uploadState }) {
     const logos = draft.sections.partners.logos;
+    const section = draft.sections.partners;
+    const fileInputs = useRef([]);
 
     const moveLogo = (index, direction) => {
         const targetIndex = index + direction;
@@ -574,6 +576,22 @@ function PartnersSectionForm({ draft, updateDraftConfig }) {
             next.sections.partners.logos[index] = entry;
             return next;
         });
+    };
+
+    const handleLogoUpload = async (index, event) => {
+        var _a;
+        const file = (_a = event.target.files) === null || _a === void 0 ? void 0 : _a[0];
+        event.target.value = "";
+        if (!file) {
+            return;
+        }
+        try {
+            const path = await simulateUpload(file);
+            updateLogo(index, (entry) => (entry.image = path));
+        }
+        catch (error) {
+            window.alert((error === null || error === void 0 ? void 0 : error.message) || "Kunne ikke laste opp filen");
+        }
     };
 
     const addLogo = () => {
@@ -657,6 +675,12 @@ function PartnersSectionForm({ draft, updateDraftConfig }) {
                     label: "Logo-URL",
                     value: logo.image,
                     onChange: (value) => updateLogo(index, (entry) => (entry.image = value)),
+                    renderInput: (inputProps) => (React.createElement("div", { className: "flex gap-2" },
+                        React.createElement(Input, { ...inputProps }),
+                        React.createElement("input", { type: "file", accept: "image/png,image/jpeg,image/svg+xml", className: "hidden", ref: (node) => (fileInputs.current[index] = node), onChange: (event) => handleLogoUpload(index, event) }),
+                        React.createElement(Button, { type: "button", className: "bg-slate-800 text-slate-100 hover:bg-slate-700", onClick: () => { var _a; return (_a = fileInputs.current[index]) === null || _a === void 0 ? void 0 : _a.click(); }, disabled: uploadState === null || uploadState === void 0 ? void 0 : uploadState.isUploading },
+                            React.createElement(ArrowUp, { size: 14, className: "mr-1" }),
+                            uploadState !== null && uploadState !== void 0 && uploadState.isUploading ? "Laster..." : "Last opp")))
                 })
             )
         )
@@ -665,6 +689,25 @@ function PartnersSectionForm({ draft, updateDraftConfig }) {
     return React.createElement(
         "div",
         { className: "space-y-4" },
+        React.createElement("div", { className: "grid gap-4 sm:grid-cols-2" },
+            React.createElement(Field, {
+                label: "Seksjonstittel",
+                value: section.title,
+                onChange: (value) => updateDraftConfig((next) => {
+                    next.sections.partners.title = value;
+                    return next;
+                }),
+            }),
+            React.createElement(Field, {
+                label: "Seksjonstekst",
+                value: section.description,
+                onChange: (value) => updateDraftConfig((next) => {
+                    next.sections.partners.description = value;
+                    return next;
+                }),
+                renderInput: (inputProps) => React.createElement("textarea", { ...inputProps, rows: 2, className: `${inputProps.className} resize-none` }),
+                fullWidth: true,
+            })),
         partnerCards,
         React.createElement(
             Button,

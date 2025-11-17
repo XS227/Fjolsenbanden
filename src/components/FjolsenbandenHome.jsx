@@ -249,6 +249,34 @@ const sponsors = [
             "komplett.svg",
         ],
     },
+    {
+        name: "Kristiania",
+        slug: "kristiania",
+        website: "https://www.kristiania.no/",
+        defaultLogoUrl: INLINE_PARTNER_BADGES.kristiania,
+        remoteFileNames: ["kristiania-logo.png", "kristiania.svg", "hoyskolen-kristiania.png"],
+    },
+    {
+        name: "Saily",
+        slug: "saily",
+        website: "https://saily.no/",
+        defaultLogoUrl: INLINE_PARTNER_BADGES.saily,
+        remoteFileNames: ["saily-logo.png", "saily.svg", "saily.png"],
+    },
+    {
+        name: "NKI",
+        slug: "nki",
+        website: "https://www.nki.no/",
+        defaultLogoUrl: INLINE_PARTNER_BADGES.nki,
+        remoteFileNames: ["nki-logo.png", "nki.svg", "nki.png"],
+    },
+    {
+        name: "Trondheim Play",
+        slug: "trondheimPlay",
+        website: "https://trondheimplay.no/",
+        defaultLogoUrl: INLINE_PARTNER_BADGES.trondheimPlay,
+        remoteFileNames: ["trondheim-play.png", "trondheimplay.png", "trondheim-play.svg"],
+    },
 ];
 function normalizeCommunitySocials(socials) {
     const source = Array.isArray(socials) && socials.length > 0 ? socials : DEFAULT_COMMUNITY_SOCIALS;
@@ -715,15 +743,14 @@ export default function FjolsenbandenHome() {
         const contactHref = hasContactLink ? "#kontakt" : `mailto:${contactEmail}`;
         if (variant === "showcase") {
             return (React.createElement("section", { id: sectionId, className: "partners", style: sectionOrderStyle(orderKey) },
-                React.createElement("h2", null, "Samarbeidspartnere"),
-                React.createElement("p", { className: "lead" }, "Vi har allerede hatt samarbeid med flere kjente merkevarer."),
+                React.createElement("h2", null, partnerSectionTitle),
+                React.createElement("p", { className: "lead" }, partnerSectionDescription),
                 React.createElement("div", { className: "partner-logos", id: includeLogosId ? "sponsorer" : undefined }, resolvedPartnerLogos.map(({ partner, fallback }) => (React.createElement(SimplePartnerLogo, { key: (partner === null || partner === void 0 ? void 0 : partner.id) || partner.name, partner: partner, fallback: fallback })))),
-                React.createElement("p", null, "\u00d8nsker du \u00e5 synliggj\u00f8re din merkevare for v\u00e5rt engasjerte gaming-publikum?"),
-                React.createElement("a", { href: contactHref, className: "cta" }, "Kontakt oss"),
-                React.createElement("p", { className: "cta-support" }, "Ta kontakt for samarbeid!")));
+                React.createElement("div", { className: "partner-support" },
+                    React.createElement("a", { href: contactHref, className: "cta" }, "Kontakt oss"))));
         }
         return (React.createElement("section", { id: sectionId, className: "partners", style: sectionOrderStyle(orderKey) },
-            React.createElement("h2", { className: "sr-only" }, "Samarbeidspartnere"),
+            React.createElement("h2", { className: "sr-only" }, partnerSectionTitle),
             React.createElement("div", { className: "partner-logos", id: includeLogosId ? "sponsorer" : undefined }, resolvedPartnerLogos.map(({ partner, fallback }) => (React.createElement(SimplePartnerLogo, { key: (partner === null || partner === void 0 ? void 0 : partner.id) || partner.name, partner: partner, fallback: fallback }))))));
     };
     const handleContactSubmit = (event) => {

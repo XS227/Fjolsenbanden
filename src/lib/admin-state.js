@@ -90,10 +90,22 @@ export const DEFAULT_PARTNER_LOGOS = [
         url: "https://www.lenovo.com/no/no/",
     },
     {
+        id: "partner-komplett",
+        name: "Komplett",
+        logoUrl: INLINE_PARTNER_BADGES.komplett,
+        url: "https://www.komplett.no/",
+    },
+    {
         id: "partner-samsung",
         name: "Samsung",
         logoUrl: INLINE_PARTNER_BADGES.samsung,
         url: "https://www.samsung.com/no/",
+    },
+    {
+        id: "partner-kristiania",
+        name: "Kristiania",
+        logoUrl: INLINE_PARTNER_BADGES.kristiania,
+        url: "https://www.kristiania.no/",
     },
     {
         id: "partner-philips",
@@ -102,10 +114,22 @@ export const DEFAULT_PARTNER_LOGOS = [
         url: "https://www.philips.no/",
     },
     {
-        id: "partner-komplett",
-        name: "Komplett",
-        logoUrl: INLINE_PARTNER_BADGES.komplett,
-        url: "https://www.komplett.no/",
+        id: "partner-saily",
+        name: "Saily",
+        logoUrl: INLINE_PARTNER_BADGES.saily,
+        url: "https://saily.no/",
+    },
+    {
+        id: "partner-nki",
+        name: "NKI",
+        logoUrl: INLINE_PARTNER_BADGES.nki,
+        url: "https://www.nki.no/",
+    },
+    {
+        id: "partner-trondheim-play",
+        name: "Trondheim Play",
+        logoUrl: INLINE_PARTNER_BADGES.trondheimPlay,
+        url: "https://trondheimplay.no/",
     },
 ];
 export const DEFAULT_TWITCH_EMBED_URL = "https://player.twitch.tv/?channel=FjOlsenFN&parent=localhost";
