@@ -6,6 +6,28 @@ export const DEFAULT_SITE_MODULES = {
     partners: true,
     contactForm: true,
 };
+export const DEFAULT_ABOUT_HIGHLIGHTS = [
+    {
+        id: "about-safe",
+        title: "Trygg gamingarena",
+        description: "Alle aktiviteter overvåkes av voksne moderatorer med klare regler mot mobbing og ekskludering.",
+    },
+    {
+        id: "about-community",
+        title: "Positivt fellesskap",
+        description: "Vi dyrker et inkluderende miljø der både barn og foreldre kan dele spillglede, samarbeid og kommunikasjon.",
+    },
+    {
+        id: "about-stream",
+        title: "Familievennlig stream",
+        description: "Sendingene våre er trygge for alle aldre, med aktiviteter som bygger trygghet, læring og lagfølelse.",
+    },
+];
+export const DEFAULT_ABOUT_BULLETS = [
+    "Målet vårt er å skape et trygt, positivt og inkluderende gamingmiljø der barn, ungdom – og mange foreldre – kan oppleve ekte mestring, samhold og fellesskap.",
+    "Vi legger ned mange timer hver uke på aktiviteter, turneringer og samarbeid som øker engasjement og samhold i communityet.",
+    "Premier og arrangementer støttes av samarbeidspartnere fra næringslivet, men alt styres med nulltoleranse for dårlig adferd.",
+];
 export const DEFAULT_SECTION_ORDER = [
     "heroIntro",
     "liveStream",
@@ -89,6 +111,12 @@ const DEFAULT_STATE = {
         heroImageUrl: "/assets/branding/fjolsenbanden-logo-light.svg",
         heroBackgroundImage: "",
         announcement: "Neste livesending starter 20:00 med co-op i Mario Kart og premier fra Lenovo!",
+        aboutTitle: "Hva er FjOlsenbanden?",
+        aboutHeadline: "Spillglede for hele familien",
+        aboutDescription: "FjOlsenbanden er et raskt voksende gaming-community der barn, ungdom og foreldre kan game trygt sammen.",
+        aboutSecondaryDescription: "Målet vårt er å skape et inkluderende miljø uten hets, mobbing eller negativ adferd.",
+        aboutBullets: DEFAULT_ABOUT_BULLETS,
+        aboutHighlights: DEFAULT_ABOUT_HIGHLIGHTS,
         presentationVideoUrl: "https://www.youtube.com/embed/8EgRIkmvmtM?si=qMzmEaMfP-2ODMbc",
         twitchEmbedUrl: DEFAULT_TWITCH_EMBED_URL,
         membershipTiers: DEFAULT_MEMBERSHIP_TIERS,
