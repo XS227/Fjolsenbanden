@@ -11,6 +11,7 @@ const SECTION_TABS = [
     { id: "home", label: "Hjem" },
     { id: "live", label: "Live" },
     { id: "membership", label: "Medlemskap" },
+    { id: "offerings", label: "Andre tilbud" },
     { id: "rewards", label: "Premier" },
     { id: "partners", label: "Partnere" },
     { id: "contact", label: "Kontakt" },
@@ -45,6 +46,8 @@ export default function SectionsPage() {
                 return React.createElement(LiveSectionForm, { draft: draft, updateDraftConfig: updateDraftConfig });
             case "membership":
                 return React.createElement(MembershipSectionForm, { draft: draft, updateDraftConfig: updateDraftConfig });
+            case "offerings":
+                return React.createElement(OfferingsSectionForm, { draft: draft, updateDraftConfig: updateDraftConfig });
             case "rewards":
                 return React.createElement(RewardsSectionForm, { draft: draft, updateDraftConfig: updateDraftConfig });
             case "partners":
@@ -305,6 +308,79 @@ function MembershipSectionForm({ draft, updateDraftConfig }) {
                 React.createElement(Plus, { size: 16, className: "mr-2" }),
                 "Legg til plan"))
     );
+}
+
+function OfferingsSectionForm({ draft, updateDraftConfig }) {
+    const section = draft.sections.offerings;
+    const items = section.items ?? [];
+    const addItem = () => {
+        if (items.length >= 9) {
+            return;
+        }
+        updateDraftConfig((next) => {
+            next.sections.offerings.items.push({
+                id: generateId("offer"),
+                title: "Nytt tilbud",
+                description: "Oppdater teksten for dette tilbudet.",
+            });
+            return next;
+        });
+    };
+    const removeItem = (index) => {
+        updateDraftConfig((next) => {
+            next.sections.offerings.items.splice(index, 1);
+            return next;
+        });
+    };
+    const moveItem = (index, direction) => {
+        const targetIndex = index + direction;
+        if (targetIndex < 0 || targetIndex >= items.length) {
+            return;
+        }
+        updateDraftConfig((next) => {
+            const list = [...next.sections.offerings.items];
+            const [removed] = list.splice(index, 1);
+            list.splice(targetIndex, 0, removed);
+            next.sections.offerings.items = list;
+            return next;
+        });
+    };
+    const updateItem = (index, mutate) => {
+        updateDraftConfig((next) => {
+            const entry = { ...next.sections.offerings.items[index] };
+            mutate(entry);
+            next.sections.offerings.items[index] = entry;
+            return next;
+        });
+    };
+    const cards = items.map((item, index) => (React.createElement(Card, { key: item.id, className: "border-slate-800 bg-slate-900/60" },
+        React.createElement(CardHeader, { className: "flex flex-col gap-2 border-b border-slate-800/60 pb-3 sm:flex-row sm:items-center sm:justify-between" },
+            React.createElement(CardTitle, { className: "text-base text-slate-100" }, item.title || "Tilbud"),
+            React.createElement("div", { className: "flex gap-2" },
+                React.createElement(Button, { type: "button", className: "bg-slate-800 text-slate-200 hover:bg-slate-700", onClick: () => moveItem(index, -1), disabled: index === 0 },
+                    React.createElement(ArrowUp, { size: 16 })),
+                React.createElement(Button, { type: "button", className: "bg-slate-800 text-slate-200 hover:bg-slate-700", onClick: () => moveItem(index, 1), disabled: index === items.length - 1 },
+                    React.createElement(ArrowDown, { size: 16 })),
+                React.createElement(Button, { type: "button", className: "bg-rose-500/10 text-rose-300 hover:bg-rose-500/20", onClick: () => removeItem(index) },
+                    React.createElement(Trash2, { size: 16, className: "mr-1" }),
+                    "Fjern"))),
+        React.createElement(CardContent, { className: "grid gap-4 sm:grid-cols-2" },
+            React.createElement(Field, { label: "Tittel", value: item.title, onChange: (value) => updateItem(index, (entry) => (entry.title = value)) }),
+            React.createElement(Field, { label: "Beskrivelse", value: item.description, onChange: (value) => updateItem(index, (entry) => (entry.description = value)), fullWidth: true, renderInput: (props) => (React.createElement("textarea", { ...props, rows: 3, className: "w-full rounded-xl border border-slate-800 bg-slate-900 px-3 py-2 text-sm text-slate-100" }))) })))));
+    return (React.createElement("div", { className: "space-y-4" },
+        React.createElement("div", { className: "grid gap-4 sm:grid-cols-2" },
+            React.createElement(Field, { label: "Tittel", value: section.title, onChange: (value) => updateDraftConfig((next) => {
+                    next.sections.offerings.title = value;
+                    return next;
+                }) }),
+            React.createElement(Field, { label: "Ingress", value: section.description, onChange: (value) => updateDraftConfig((next) => {
+                    next.sections.offerings.description = value;
+                    return next;
+                }), fullWidth: true, renderInput: (props) => (React.createElement("textarea", { ...props, rows: 2, className: "w-full rounded-xl border border-slate-800 bg-slate-900 px-3 py-2 text-sm text-slate-100" }))) }),
+        cards,
+        React.createElement(Button, { type: "button", className: "bg-emerald-500 text-emerald-950 hover:bg-emerald-400", onClick: addItem, disabled: items.length >= 9 },
+            React.createElement(Plus, { size: 16, className: "mr-2" }),
+            items.length >= 9 ? "Maks 9 bokser" : "Legg til tekstboks")));
 }
 
 function RewardsSectionForm({ draft, updateDraftConfig }) {
