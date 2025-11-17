@@ -1190,6 +1190,7 @@
       </section>
 
       <section id="kontakt" class="section-shell" data-section>
+        <div id="meld-inn" class="sr-only" aria-hidden="true"></div>
         <div class="mx-auto max-w-5xl space-y-6 rounded-3xl border border-white/10 bg-[#161f33]/90 p-8 text-center shadow-2xl">
           <h2 class="text-3xl font-bold">Kontakt oss</h2>
             <p class="text-zinc-300">
@@ -1323,8 +1324,7 @@
               type="button"
               id="footer-menu-toggle"
               class="fj-ring-offset inline-flex flex-1 items-center justify-center gap-2 rounded-full border border-white/20 bg-white/5 px-4 py-3 text-sm font-semibold text-white transition hover:border-white/30 hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#13A0F9]"
-              aria-expanded="false"
-              aria-controls="footer-bottom-sheet"
+              aria-label="Gå til neste seksjon"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -1336,39 +1336,20 @@
                 stroke-width="2"
                 stroke-linecap="round"
                 stroke-linejoin="round"
-                data-footer-icon="menu"
                 class="h-5 w-5"
                 aria-hidden="true"
               >
-                <line x1="4" x2="20" y1="12" y2="12"></line>
-                <line x1="4" x2="20" y1="6" y2="6"></line>
-                <line x1="4" x2="20" y1="18" y2="18"></line>
+                <path d="M12 5v14"></path>
+                <path d="m19 12-7 7-7-7"></path>
               </svg>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                data-footer-icon="close"
-                class="hidden h-5 w-5"
-                aria-hidden="true"
-              >
-                <line x1="18" x2="6" y1="6" y2="18"></line>
-                <line x1="6" x2="18" y1="6" y2="18"></line>
-              </svg>
-              <span data-footer-toggle-label>Meny</span>
+              <span data-footer-toggle-label>Neste</span>
             </button>
             <a
-              href="#kontakt"
+              href="#meld-inn"
               class="fj-ring-offset inline-flex flex-1 items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#13A0F9] to-[#FF2F9C] px-4 py-3 text-sm font-semibold text-white shadow-[0_16px_32px_rgba(19,160,249,0.35)] transition hover:from-[#0d8bd6] hover:to-[#e12585] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#13A0F9] focus-visible:ring-offset-2"
               data-footer-close
             >
-              Kontakt oss
+              Meld inn nå
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4" aria-hidden="true">
                 <path d="M5 12h14"></path>
                 <path d="m12 5 7 7-7 7"></path>
@@ -1891,87 +1872,58 @@
       });
 
       const footerMenuToggle = document.getElementById("footer-menu-toggle");
-      const footerSheet = document.getElementById("footer-bottom-sheet");
-      const footerScrim = document.getElementById("footer-scrim");
       const footerToggleLabel = footerMenuToggle ? footerMenuToggle.querySelector("[data-footer-toggle-label]") : null;
-      const footerToggleIcons = footerMenuToggle ? footerMenuToggle.querySelectorAll("[data-footer-icon]") : [];
-      const footerLinks = document.querySelectorAll("[data-footer-link]");
-      const footerClosers = document.querySelectorAll("[data-footer-close]");
+      const stickyFooter = document.querySelector(".fj-footer");
+      const pageSections = Array.from(document.querySelectorAll("[data-section]"));
 
-      if (footerSheet) {
-        footerSheet.setAttribute("data-open", "false");
-      }
-      if (footerScrim) {
-        footerScrim.setAttribute("data-open", "false");
-      }
-
-      let footerMenuOpen = false;
-
-      const setFooterMenuState = (isOpen) => {
-        if (!footerMenuToggle || !footerSheet || !footerScrim) {
-          return;
-        }
-        footerMenuOpen = isOpen;
-        footerMenuToggle.setAttribute("aria-expanded", String(isOpen));
-        if (footerToggleLabel) {
-          footerToggleLabel.textContent = isOpen ? "Lukk" : "Meny";
-        }
-        footerToggleIcons.forEach((icon) => {
-          const shouldShow = icon.dataset.footerIcon === (isOpen ? "close" : "menu");
-          icon.classList.toggle("hidden", !shouldShow);
-        });
-
-        if (isOpen) {
-          footerSheet.classList.remove("hidden");
-          footerScrim.classList.remove("hidden");
-          requestAnimationFrame(() => {
-            footerSheet.setAttribute("data-open", "true");
-            footerScrim.setAttribute("data-open", "true");
-          });
-          document.body.classList.add("fj-lock-scroll");
-        } else {
-          footerSheet.setAttribute("data-open", "false");
-          footerScrim.setAttribute("data-open", "false");
-          document.body.classList.remove("fj-lock-scroll");
-          window.setTimeout(() => {
-            if (!footerMenuOpen) {
-              footerSheet.classList.add("hidden");
-              footerScrim.classList.add("hidden");
-            }
-          }, 250);
-        }
+      const updateFooterOffset = () => {
+        const offset = stickyFooter ? stickyFooter.offsetHeight : 0;
+        document.documentElement.style.setProperty("--fj-footer-offset", `${offset}px`);
       };
 
-      const openFooterMenu = () => setFooterMenuState(true);
-      const closeFooterMenu = () => setFooterMenuState(false);
+      updateFooterOffset();
+
+      if (stickyFooter && "ResizeObserver" in window) {
+        const footerObserver = new ResizeObserver(() => updateFooterOffset());
+        footerObserver.observe(stickyFooter);
+      }
+
+      window.addEventListener("resize", updateFooterOffset);
+
+      const getNextSection = () => {
+        if (!pageSections.length) {
+          return null;
+        }
+        const currentScroll = window.scrollY;
+        const currentIndex = pageSections.findIndex((section) => {
+          const rect = section.getBoundingClientRect();
+          const top = rect.top + window.scrollY;
+          const bottom = rect.bottom + window.scrollY;
+          return currentScroll >= top && currentScroll < bottom;
+        });
+
+        if (currentIndex === -1) {
+          return pageSections[0];
+        }
+
+        return pageSections[currentIndex + 1] || pageSections[0];
+      };
+
+      const scrollToNextSection = () => {
+        const target = getNextSection();
+        if (!target) {
+          return;
+        }
+        target.scrollIntoView({ behavior: "smooth", block: "start" });
+      };
+
+      if (footerToggleLabel) {
+        footerToggleLabel.textContent = "Neste";
+      }
 
       if (footerMenuToggle) {
-        footerMenuToggle.addEventListener("click", () => {
-          if (footerMenuOpen) {
-            closeFooterMenu();
-          } else {
-            openFooterMenu();
-          }
-        });
+        footerMenuToggle.addEventListener("click", scrollToNextSection);
       }
-
-      if (footerScrim) {
-        footerScrim.addEventListener("click", closeFooterMenu);
-      }
-
-      [...footerLinks, ...footerClosers].forEach((element) => {
-        element.addEventListener("click", closeFooterMenu);
-      });
-
-      navLinks.forEach((link) => {
-        link.addEventListener("click", closeFooterMenu);
-      });
-
-      document.addEventListener("keydown", (event) => {
-        if (event.key === "Escape") {
-          closeFooterMenu();
-        }
-      });
 
       const toggle = document.getElementById("nav-toggle");
       const menu = document.getElementById("nav-menu");
