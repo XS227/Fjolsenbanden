@@ -16,6 +16,32 @@ export const DEFAULT_SECTION_ORDER = [
     "contact",
     "feedback",
 ];
+export const DEFAULT_FEEDBACK_ENTRIES = [
+    {
+        id: "feedback-filip",
+        quote: "\u201CH\u2665 Tusen takk for at jeg har fått muligheten til å spille hos FjOlsenbanden. Kan ikke takke nok for alt du har gjort for meg og alle andre. \u2665\u201D",
+        author: "Filip",
+        accent: "text-[#FF9B6A]",
+    },
+    {
+        id: "feedback-rasmus",
+        quote: "\u201CJeg elsker å spille customs-a dine, det er min favoritt. Jeg spiller ikke annet enn dine customs!\u201D",
+        author: "Rasmus",
+        accent: "text-[#13A0F9]",
+    },
+    {
+        id: "feedback-pernille-terje",
+        quote: "\u201CUansett er vi takknemlige for innsatsen du legger i trygge og engasjerende rammer for barn og ungdom – og veldig flott at du arrangerer egne jentekvelder.\u201D",
+        author: "Pernille & Terje, foreldre",
+        accent: "text-[#34D399]",
+    },
+    {
+        id: "feedback-merethe",
+        quote: "\u201CDu gjør en forskjell! Du har så mye peiling på how to – overfor barn! Respekt.\u201D",
+        author: "Merethe, mamma",
+        accent: "text-[#FF2F9C]",
+    },
+];
 export const DEFAULT_MEMBERSHIP_TIERS = [
     {
         id: "tier-free",
@@ -88,6 +114,7 @@ const DEFAULT_STATE = {
         twitchEmbedUrl: DEFAULT_TWITCH_EMBED_URL,
         membershipTiers: DEFAULT_MEMBERSHIP_TIERS,
         partnerLogos: DEFAULT_PARTNER_LOGOS,
+        feedbackEntries: DEFAULT_FEEDBACK_ENTRIES,
         sectionOrder: DEFAULT_SECTION_ORDER,
         modules: DEFAULT_SITE_MODULES,
     },
@@ -325,6 +352,7 @@ function ensureSiteSettings(settings) {
         twitchEmbedUrl: ((_b = settings.twitchEmbedUrl) === null || _b === void 0 ? void 0 : _b.trim()) || DEFAULT_TWITCH_EMBED_URL,
         membershipTiers: ensureMembershipTierArray(settings.membershipTiers),
         partnerLogos: ensurePartnerLogoArray(settings.partnerLogos),
+        feedbackEntries: ensureFeedbackEntries(settings.feedbackEntries),
         sectionOrder: ensureSectionOrder(settings.sectionOrder),
     };
 }
@@ -360,6 +388,25 @@ function ensurePartnerLogoArray(input) {
             name: ((_c = partner.name) === null || _c === void 0 ? void 0 : _c.trim()) || fallback.name,
             logoUrl: ((_d = partner.logoUrl) === null || _d === void 0 ? void 0 : _d.trim()) || fallback.logoUrl,
             url: rawUrl || fallbackUrl,
+        };
+    });
+}
+const FEEDBACK_ACCENT_CLASSES = ["text-[#FF9B6A]", "text-[#13A0F9]", "text-[#34D399]", "text-[#FF2F9C]"];
+function ensureFeedbackEntries(input) {
+    const source = Array.isArray(input) && input.length > 0 ? input : DEFAULT_FEEDBACK_ENTRIES;
+    return source.map((entry, index) => {
+        var _a, _b, _c, _d, _e;
+        const fallback = (_a = DEFAULT_FEEDBACK_ENTRIES[index]) !== null && _a !== void 0 ? _a : DEFAULT_FEEDBACK_ENTRIES[0];
+        const quote = ((_b = entry.quote) === null || _b === void 0 ? void 0 : _b.trim()) || ((_c = fallback.quote) !== null && _c !== void 0 ? _c : "");
+        const author = ((_d = entry.author) === null || _d === void 0 ? void 0 : _d.trim()) || ((_e = fallback.author) !== null && _e !== void 0 ? _e : "Anonym");
+        const accent = entry.accent && entry.accent.trim()
+            ? entry.accent.trim()
+            : FEEDBACK_ACCENT_CLASSES[index % FEEDBACK_ACCENT_CLASSES.length];
+        return {
+            id: entry.id || fallback.id || `feedback-${index}`,
+            quote,
+            author,
+            accent,
         };
     });
 }

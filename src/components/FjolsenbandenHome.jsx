@@ -370,7 +370,7 @@ const offerings = [
         }),
     },
 ];
-const feedbackVoices = [
+const DEFAULT_FEEDBACK_VOICES = [
     {
         id: "filip",
         quote: "\u201CH\u2665 Tusen takk for at jeg har fått muligheten til å spille hos FjOlsenbanden. Kan ikke takke nok for alt du har gjort for meg og alle andre. \u2665\u201D",
@@ -497,6 +497,24 @@ export default function FjolsenbandenHome() {
     const twitchEmbedUrl = (typeof siteSettings.twitchEmbedUrl === "string" && siteSettings.twitchEmbedUrl.trim()) || DEFAULT_TWITCH_EMBED_URL;
     const membershipTiers = Array.isArray(siteSettings.membershipTiers) ? siteSettings.membershipTiers : [];
     const partnerLogos = Array.isArray(siteSettings.partnerLogos) ? siteSettings.partnerLogos : [];
+    const feedbackEntries = useMemo(() => {
+        const accentPalette = ["text-[#FF9B6A]", "text-[#13A0F9]", "text-[#34D399]", "text-[#FF2F9C]"];
+        const entries = Array.isArray(siteSettings.feedbackEntries) && siteSettings.feedbackEntries.length > 0
+            ? siteSettings.feedbackEntries
+            : DEFAULT_FEEDBACK_VOICES;
+        return entries.map((entry, index) => {
+            var _a, _b, _c, _d;
+            const fallback = (_a = DEFAULT_FEEDBACK_VOICES[index]) !== null && _a !== void 0 ? _a : DEFAULT_FEEDBACK_VOICES[0];
+            return {
+                id: (_b = entry.id) !== null && _b !== void 0 ? _b : fallback.id ?? `feedback-${index}`,
+                quote: ((_c = entry.quote) !== null && _c !== void 0 ? _c : fallback.quote).trim(),
+                author: ((_d = entry.author) !== null && _d !== void 0 ? _d : fallback.author).trim(),
+                accent: entry.accent && entry.accent.trim()
+                    ? entry.accent.trim()
+                    : accentPalette[index % accentPalette.length],
+            };
+        });
+    }, [siteSettings.feedbackEntries]);
     const heroHighlightTerm = "FjOlsenbanden";
     const heroHeadlineContent = heroHeadline.includes(heroHighlightTerm)
         ? heroHeadline.split(heroHighlightTerm).reduce((nodes, segment, index, segments) => {
@@ -1186,7 +1204,7 @@ export default function FjolsenbandenHome() {
                         React.createElement("span", { "aria-hidden": "true" }, "❤")),
                     React.createElement("h2", { className: "text-3xl font-bold text-white sm:text-4xl" }, "Feedback fra FjOlsenbanden"),
                     React.createElement("p", { className: "mx-auto max-w-3xl text-base text-white/80 sm:text-lg" }, "Her er ekte stemmer fra barn, ungdom og foreldre som har sendt varme ord til FjOlsenbanden. Vi setter enorm pris på alle som deler!"),
-                    React.createElement("div", { className: "grid gap-6 text-left md:grid-cols-2" }, feedbackVoices.map(({ id, quote, author, accent }) => (React.createElement("article", { key: id, className: "flex h-full flex-col justify-between gap-4 rounded-3xl border border-white/15 bg-white/5 p-6 text-left shadow-[0_20px_44px_rgba(6,14,35,0.55)]" },
+                    React.createElement("div", { className: "grid gap-6 text-left md:grid-cols-2" }, feedbackEntries.map(({ id, quote, author, accent }) => (React.createElement("article", { key: id, className: "flex h-full flex-col justify-between gap-4 rounded-3xl border border-white/15 bg-white/5 p-6 text-left shadow-[0_20px_44px_rgba(6,14,35,0.55)]" },
                         React.createElement("p", { className: "text-base font-semibold text-white" }, quote),
                         React.createElement("p", { className: `text-sm font-medium ${accent}` }, author))))) ,
                     React.createElement("div", { className: "flex flex-wrap items-center justify-center gap-4 pt-2" },
