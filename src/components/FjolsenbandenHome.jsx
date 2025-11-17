@@ -485,15 +485,19 @@ export default function FjolsenbandenHome() {
         "Velkommen til FjOlsenbanden – Norges mest inkluderende gaming-community.";
     const heroSubtitle = (typeof siteSettings.heroSubtitle === "string" && siteSettings.heroSubtitle.trim()) ||
         "Spillglede for hele familien med trygge streams, premier og fellesskap.";
+    const heroDescription = (typeof siteSettings.heroDescription === "string" && siteSettings.heroDescription.trim()) ||
+        "En trygg arena for familier som elsker gaming, med fellesskap, premier og foreldre i sentrum.";
     const announcement = (typeof siteSettings.announcement === "string" && siteSettings.announcement.trim()) ||
         "Neste livesending starter 20:00 med co-op i Mario Kart og premier fra Lenovo!";
     const fallbackLogoUrl = "https://setaei.com/Fjolsen/Liggende-M%E2%94%9C%E2%95%95rk.png";
     const scrolledLogoUrl = "https://setaei.com/Fjolsen/Glad%20tunge.png";
     const logoUrl = (typeof siteSettings.logoUrl === "string" && siteSettings.logoUrl.trim()) || fallbackLogoUrl;
+    const heroLogoUrl = (typeof siteSettings.heroLogoUrl === "string" && siteSettings.heroLogoUrl.trim()) || logoUrl;
     const presentationVideoUrl = (typeof siteSettings.presentationVideoUrl === "string" && siteSettings.presentationVideoUrl.trim()) ||
         "https://www.youtube.com/embed/8EgRIkmvmtM";
     const heroBackgroundImage = (typeof siteSettings.heroBackgroundImage === "string" && siteSettings.heroBackgroundImage.trim()) ||
-        "https://static-cdn.jtvnw.net/previews-ttv/live_user_fjolsenfn-1920x1080.jpg";
+        "";
+    const heroImageUrl = (typeof siteSettings.heroImageUrl === "string" && siteSettings.heroImageUrl.trim()) || heroBackgroundImage || logoUrl;
     const twitchEmbedUrl = (typeof siteSettings.twitchEmbedUrl === "string" && siteSettings.twitchEmbedUrl.trim()) || DEFAULT_TWITCH_EMBED_URL;
     const membershipTiers = Array.isArray(siteSettings.membershipTiers) ? siteSettings.membershipTiers : [];
     const partnerLogos = Array.isArray(siteSettings.partnerLogos) ? siteSettings.partnerLogos : [];
@@ -978,34 +982,27 @@ export default function FjolsenbandenHome() {
                 background: overlayBackground,
             } }),
         React.createElement("div", { className: "flex flex-1 flex-col" },
-            React.createElement("nav", { className: "fj-nav section-shell relative z-30 grid grid-cols-1 items-center gap-4 border-b border-white/10 bg-[#041149]/75 py-4 backdrop-blur supports-[backdrop-filter]:bg-[#041149]/60 sm:grid-cols-[1fr_auto_1fr]", "data-scrolled": navScrolled ? "true" : "false" },
-                React.createElement("div", { className: "hidden items-center justify-start gap-4 sm:flex" },
-                    React.createElement("img", { src: scrolledLogoUrl, alt: "Fjolsenbanden ikon", "aria-hidden": "true", className: `h-12 w-auto transition-all duration-300 ease-out ${navScrolled ? "translate-y-0 opacity-100" : "-translate-y-1 opacity-0"}` })),
-                React.createElement("a", { href: "#", className: "group flex w-full items-center justify-center gap-3 rounded-none border border-transparent p-0 transition hover:border-white/20 hover:bg-white/5 sm:w-auto sm:justify-self-center sm:rounded-full sm:px-3 sm:py-2", "aria-label": "Fjolsenbanden hjem" },
-                    React.createElement("img", { src: logoUrl, alt: "Fjolsenbanden logo", className: "mx-auto h-16 w-auto max-w-[260px] sm:mx-0 sm:h-12 sm:max-w-none", loading: "lazy" }),
-                    React.createElement("span", { className: "sr-only" }, "Fjolsenbanden")),
-                React.createElement("div", { className: "flex items-center justify-end gap-2 sm:gap-3" },
-                    React.createElement("div", { className: "hidden items-center gap-1 text-sm font-semibold text-white/80 lg:flex" }, headerPrimaryLinks.map((link) => (React.createElement("a", { key: link.href || link.name, href: link.href, onClick: closeMobileNav, className: "rounded-full px-3 py-1 transition hover:bg-white/10 hover:text-white" }, link.name)))),
-                    headerSecondaryLinks.length > 0 ? (React.createElement("div", { className: "hidden items-center gap-3 text-sm sm:flex" }, headerSecondaryLinks.map((link) => (React.createElement("a", { key: link.href || link.name, href: link.href, className: "font-semibold text-zinc-300 transition hover:text-white" }, link.name))))) : null,
-                    React.createElement("button", { type: "button", onClick: toggleSkin, className: "inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/20 text-white transition hover:border-white/30 hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#13A0F9]", "aria-pressed": skin === "light" },
-                        React.createElement(Sun, { className: `h-5 w-5 ${skin === "light" ? "hidden" : ""}`, "aria-hidden": "true" }),
-                        React.createElement(Moon, { className: `h-5 w-5 ${skin === "light" ? "" : "hidden"}`, "aria-hidden": "true" }),
-                        React.createElement("span", { className: "sr-only" }, skin === "light" ? "Bytt til nattmodus" : "Bytt til dagmodus")),
-                    React.createElement("button", { type: "button", onClick: mobileNavOpen ? closeMobileNav : openMobileNav, className: "inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/20 text-white transition hover:border-white/30 hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#13A0F9] sm:hidden", "aria-expanded": mobileNavOpen, "aria-label": mobileNavOpen ? "Lukk meny" : "Åpne meny" },
-                        React.createElement(Menu, { className: `h-5 w-5 ${mobileNavOpen ? "hidden" : ""}`, "aria-hidden": "true" }),
-                        React.createElement(X, { className: `h-5 w-5 ${mobileNavOpen ? "" : "hidden"}`, "aria-hidden": "true" }),
-                        React.createElement("span", { className: "sr-only" }, mobileNavOpen ? "Lukk meny" : "Åpne meny")))),
-            React.createElement("header", { className: "relative z-10 overflow-hidden pb-32" },
+            React.createElement("header", { className: "relative z-10 overflow-hidden pb-20" },
                 React.createElement("div", { className: "absolute inset-0 -z-10" },
-                    React.createElement("img", { src: heroBackgroundImage, alt: "", "aria-hidden": "true", className: "h-full w-full object-cover", loading: "lazy" }),
-                    React.createElement("div", { className: "absolute inset-0 bg-gradient-to-b from-[#041149]/40 via-[#041149]/65 to-[#041149]/85" })),
+                    heroBackgroundImage
+                        ? React.createElement("img", { src: heroBackgroundImage, alt: "", "aria-hidden": "true", className: "h-full w-full object-cover", loading: "lazy" })
+                        : null,
+                    React.createElement("div", { className: "absolute inset-0 bg-gradient-to-b from-[#041149]/50 via-[#041149]/75 to-[#041149]" })),
                 React.createElement("section", { id: "hero", className: "px-6 pt-12 sm:px-8 lg:px-10" },
-                    React.createElement("div", { className: "mx-auto max-w-4xl space-y-6 text-center lg:space-y-8" },
-                        React.createElement("h1", { className: "text-4xl font-extrabold sm:text-5xl" }, heroHeadlineContent),
-                        React.createElement("p", { className: "text-base text-zinc-100 sm:text-lg" }, heroSubtitle),
-                        React.createElement("div", { className: "flex flex-col items-center gap-3 text-sm text-zinc-100 sm:flex-row sm:justify-center" },
-                            React.createElement("a", { href: "/updates.html", className: "inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-2 font-semibold uppercase tracking-[0.2em] text-white transition hover:bg-white/20" }, "\uD83C\uDF1F Ny oppdatering: Quest-board"),
-                            React.createElement("span", { className: "text-xs uppercase tracking-[0.3em] text-white/70" }, "Utforsk ukens quester og premier"))))),
+                    React.createElement("div", { className: "mx-auto max-w-6xl space-y-10" },
+                        React.createElement("div", { className: "flex justify-center" },
+                            React.createElement("img", { src: heroLogoUrl, alt: "Fjolsenbanden logo", className: "h-20 w-auto sm:h-24", loading: "lazy" })),
+                        React.createElement("div", { className: "grid gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-center" },
+                            React.createElement("div", { className: "space-y-4 text-left" },
+                                React.createElement("span", { className: "inline-flex w-fit items-center gap-2 rounded-full border border-white/10 bg-white/10 px-4 py-1 text-xs font-semibold uppercase tracking-[0.35em] text-white/80" }, "Velkommen"),
+                                React.createElement("h1", { className: "text-4xl font-extrabold leading-tight sm:text-5xl" }, heroHeadlineContent),
+                                React.createElement("p", { className: "text-lg text-zinc-100 sm:text-xl" }, heroSubtitle),
+                                React.createElement("p", { className: "text-base text-zinc-100" }, heroDescription)),
+                            React.createElement("div", { className: "relative" },
+                                React.createElement("div", { className: "relative overflow-hidden rounded-[28px] border border-white/10 bg-gradient-to-br from-white/10 via-white/5 to-white/0 p-6 shadow-[0_24px_48px_rgba(6,14,35,0.55)]" },
+                                    React.createElement("div", { className: "pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(255,47,156,0.18),transparent_45%),radial-gradient(circle_at_80%_0%,rgba(19,160,249,0.2),transparent_40%)]" }),
+                                    React.createElement("div", { className: "relative aspect-[4/3] overflow-hidden rounded-2xl bg-[#0b1540] p-6" },
+                                        React.createElement("img", { src: heroImageUrl, alt: "Fjolsenbanden illustrasjon", className: "h-full w-full object-contain", loading: "lazy" }))))))))
             React.createElement("main", { className: "flex flex-1 flex-col gap-28 pb-36" },
             React.createElement("section", { id: "hva-er", className: "px-6 sm:px-8 lg:px-10", style: sectionOrderStyle("heroIntro") },
                 React.createElement("div", { className: "mx-auto grid max-w-6xl gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:items-start" },
@@ -1213,14 +1210,8 @@ export default function FjolsenbandenHome() {
                         React.createElement("span", null, "Admin")))))),
         React.createElement("div", { className: "fj-footer fixed inset-x-0 bottom-0 z-50 border-t border-white/10 bg-[#041149]/80 backdrop-blur" },
             React.createElement("div", { className: "mx-auto flex w-full max-w-4xl items-center gap-3 px-4 pb-[calc(0.9rem+env(safe-area-inset-bottom))] pt-3 sm:gap-4" },
-                React.createElement("button", { type: "button", onClick: footerMenuOpen ? closeFooterMenu : openFooterMenu, "aria-expanded": footerMenuOpen, "aria-controls": "footer-bottom-sheet", className: "fj-ring-offset inline-flex flex-1 items-center justify-center gap-2 rounded-full border border-white/20 bg-white/5 px-4 py-3 text-sm font-semibold text-white transition hover:border-white/30 hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#13A0F9]" },
-                    footerMenuOpen ? React.createElement(X, { className: "h-5 w-5", "aria-hidden": "true" }) : React.createElement(Menu, { className: "h-5 w-5", "aria-hidden": "true" }),
-                    React.createElement("span", null, footerMenuOpen ? "Lukk" : "Meny")),
-                React.createElement("a", { href: "#kontakt", onClick: closeFooterMenu, className: "fj-ring-offset inline-flex flex-1 items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#13A0F9] to-[#FF2F9C] px-4 py-3 text-sm font-semibold text-white shadow-[0_16px_32px_rgba(19,160,249,0.35)] transition hover:from-[#0d8bd6] hover:to-[#e12585] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#13A0F9] focus-visible:ring-offset-2" },
-                    "Kontakt oss",
-                    React.createElement(ArrowRight, { className: "h-4 w-4", "aria-hidden": "true" })))),
-        mobileNavPortal,
-        footerMenuPortal,
+                React.createElement("a", { href: "#hva-er", className: "fj-ring-offset inline-flex flex-1 items-center justify-center gap-2 rounded-full border border-white/20 bg-white/5 px-4 py-3 text-sm font-semibold text-white transition hover:border-white/30 hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#13A0F9]" }, "Neste"),
+                React.createElement("a", { href: "#bli-medlem", className: "fj-ring-offset inline-flex flex-1 items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#13A0F9] to-[#FF2F9C] px-4 py-3 text-sm font-semibold text-white shadow-[0_16px_32px_rgba(19,160,249,0.35)] transition hover:from-[#0d8bd6] hover:to-[#e12585] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#13A0F9] focus-visible:ring-offset-2" }, "Bli medlem"))),
         registrationOpen ? (React.createElement("div", { className: "fixed inset-0 z-[100] flex items-center justify-center px-4 py-10" },
             React.createElement("button", { type: "button", "aria-label": "Lukk registrering", onClick: closeRegistration, className: "absolute inset-0 h-full w-full bg-black/70" }),
             React.createElement("div", { className: "relative z-[101] w-full max-w-2xl overflow-hidden rounded-3xl border border-white/10 bg-[#0d1733] shadow-[0_32px_80px_rgba(4,8,20,0.7)]" },
