@@ -228,6 +228,7 @@ function MembershipSectionForm({ draft, updateDraftConfig }) {
         updateDraftConfig((next) => {
             const item = { ...next.sections.membership.plans[index] };
             mutate(item);
+            item.buttons = Array.isArray(item.buttons) ? item.buttons.slice(0, 2) : [];
             next.sections.membership.plans[index] = item;
             return next;
         });
@@ -240,6 +241,7 @@ function MembershipSectionForm({ draft, updateDraftConfig }) {
                 name: "Ny plan",
                 price: "0",
                 features: ["Ny fordel"],
+                buttons: [],
             });
             return next;
         });
@@ -269,6 +271,45 @@ function MembershipSectionForm({ draft, updateDraftConfig }) {
     const removeFeature = (index, featureIndex) => {
         updateDraftConfig((next) => {
             next.sections.membership.plans[index].features.splice(featureIndex, 1);
+            return next;
+        });
+    };
+
+    const updateButton = (planIndex, buttonIndex, field, value) => {
+        updateDraftConfig((next) => {
+            const buttons = Array.isArray(next.sections.membership.plans[planIndex].buttons)
+                ? [...next.sections.membership.plans[planIndex].buttons]
+                : [];
+            buttons[buttonIndex] = {
+                ...buttons[buttonIndex],
+                [field]: value,
+            };
+            next.sections.membership.plans[planIndex].buttons = buttons.slice(0, 2);
+            return next;
+        });
+    };
+
+    const addButton = (planIndex) => {
+        updateDraftConfig((next) => {
+            const buttons = Array.isArray(next.sections.membership.plans[planIndex].buttons)
+                ? [...next.sections.membership.plans[planIndex].buttons]
+                : [];
+            if (buttons.length >= 2) {
+                return next;
+            }
+            buttons.push({ label: "Ny knapp", url: "" });
+            next.sections.membership.plans[planIndex].buttons = buttons;
+            return next;
+        });
+    };
+
+    const removeButton = (planIndex, buttonIndex) => {
+        updateDraftConfig((next) => {
+            const buttons = Array.isArray(next.sections.membership.plans[planIndex].buttons)
+                ? [...next.sections.membership.plans[planIndex].buttons]
+                : [];
+            buttons.splice(buttonIndex, 1);
+            next.sections.membership.plans[planIndex].buttons = buttons;
             return next;
         });
     };
@@ -332,7 +373,37 @@ function MembershipSectionForm({ draft, updateDraftConfig }) {
                                 onClick: () => addFeature(index),
                             },
                                 React.createElement(Plus, { size: 16, className: "mr-2" }),
-                                "Ny fordel"))))
+                                "Ny fordel")),
+                        React.createElement("div", { className: "space-y-2" },
+                            React.createElement(Label, { className: "text-xs uppercase text-slate-400" }, "Knapper (maks 2)"),
+                            (plan.buttons || []).map((button, buttonIndex) => (
+                                React.createElement("div", { key: `${plan.id}-button-${buttonIndex}`, className: "grid gap-2 rounded-xl border border-slate-800/80 bg-slate-900/70 p-3 sm:grid-cols-[1fr,1fr,auto]" },
+                                    React.createElement(Input, {
+                                        placeholder: "Label",
+                                        value: button.label,
+                                        onChange: (event) => updateButton(index, buttonIndex, "label", event.target.value),
+                                        className: "border-slate-800 bg-slate-900 text-slate-100",
+                                    }),
+                                    React.createElement(Input, {
+                                        placeholder: "Lenke",
+                                        value: button.url,
+                                        onChange: (event) => updateButton(index, buttonIndex, "url", event.target.value),
+                                        className: "border-slate-800 bg-slate-900 text-slate-100",
+                                    }),
+                                    React.createElement(Button, {
+                                        type: "button",
+                                        className: "justify-center bg-rose-500/10 text-rose-300 hover:bg-rose-500/20",
+                                        onClick: () => removeButton(index, buttonIndex),
+                                    },
+                                        React.createElement(Trash2, { size: 14 })))),
+                            React.createElement(Button, {
+                                type: "button",
+                                className: "bg-slate-800 text-slate-200 hover:bg-slate-700",
+                                onClick: () => addButton(index),
+                                disabled: (plan.buttons || []).length >= 2,
+                            },
+                                React.createElement(Plus, { size: 16, className: "mr-2" }),
+                                "Ny knapp"))))
             )),
             React.createElement(Button, {
                 type: "button",

@@ -67,35 +67,18 @@ export const DEFAULT_FEEDBACK_ENTRIES = [
 export const DEFAULT_MEMBERSHIP_TIERS = [
     {
         id: "tier-free",
-        title: "Gratismedlem",
+        title: "Gratis medlemskap",
         price: "0 kr / mnd",
         color: "green",
         features: [
-            "Tilgang til Discord-serveren",
-            "Delta på community-events",
-            "Få nyheter og oppdateringer først",
+            "Få digitalt medlemskort",
+            "Delta på premier, giveaways og customs",
+            "Tilgang til hele FjOlsenbanden på Discord",
+            "Meld deg på arrangementer og turneringer først",
         ],
-    },
-    {
-        id: "tier-tournament",
-        title: "Turneringsmedlem",
-        price: "79 kr / mnd",
-        color: "cyan",
-        features: [
-            "Alt i Gratismedlem",
-            "Delta i eksklusive turneringer",
-            "Premier fra partnere hver måned",
-        ],
-    },
-    {
-        id: "tier-pro",
-        title: "Pro-medlem",
-        price: "149 kr / mnd",
-        color: "amber",
-        features: [
-            "Alt i Turneringsmedlem",
-            "Coaching fra FjOlsen og teamet",
-            "Tilgang til lukkede arrangementer",
+        buttons: [
+            { label: "Under 18 år", url: "https://forms.gle/sq4mUf7s6e6UY7R58" },
+            { label: "Over 18 år", url: "https://forms.gle/ZrbXCggnUY8FTT7t9" },
         ],
     },
 ];
@@ -400,12 +383,24 @@ function ensureMembershipTierArray(input) {
         const normalizedColor = tier.color === "cyan" || tier.color === "amber" || tier.color === "green"
             ? tier.color
             : fallback.color;
+        const normalizeButtons = (buttons) => {
+            const parsed = Array.isArray(buttons) ? buttons.slice(0, 2) : [];
+            return parsed
+                .map((button) => ({
+                label: typeof (button === null || button === void 0 ? void 0 : button.label) === "string" ? button.label.trim() : "",
+                url: typeof (button === null || button === void 0 ? void 0 : button.url) === "string" ? button.url.trim() : "",
+            }))
+                .filter((button) => button.label && button.url);
+        };
+        const normalizedButtons = normalizeButtons(tier.buttons);
+        const fallbackButtons = normalizeButtons(fallback.buttons);
         return {
             id: ((_b = tier.id) === null || _b === void 0 ? void 0 : _b.trim()) || fallback.id || `tier-${index}`,
             title: ((_c = tier.title) === null || _c === void 0 ? void 0 : _c.trim()) || fallback.title,
             price: ((_d = tier.price) === null || _d === void 0 ? void 0 : _d.trim()) || fallback.price,
             color: normalizedColor,
             features: features.length > 0 ? features : [...fallback.features],
+            buttons: normalizedButtons.length > 0 ? normalizedButtons : fallbackButtons,
         };
     });
 }
