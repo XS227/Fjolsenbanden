@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 import { useSiteConfig } from "@/fragments/admin/context/SiteConfigContext";
 import { generateId } from "@/fragments/admin/data/defaultSiteState";
 
@@ -15,6 +16,7 @@ const SECTION_TABS = [
     { id: "rewards", label: "Premier" },
     { id: "partners", label: "Partnere" },
     { id: "contact", label: "Kontakt" },
+    { id: "feedback", label: "Feedback" },
 ];
 
 const LIVE_PLATFORMS = [
@@ -54,6 +56,8 @@ export default function SectionsPage() {
                 return React.createElement(PartnersSectionForm, { draft: draft, updateDraftConfig: updateDraftConfig });
             case "contact":
                 return React.createElement(ContactSectionForm, { draft: draft, updateDraftConfig: updateDraftConfig });
+            case "feedback":
+                return React.createElement(FeedbackSectionForm, { draft: draft, updateDraftConfig: updateDraftConfig });
             default:
                 return null;
         }
@@ -649,6 +653,69 @@ function ContactSectionForm({ draft, updateDraftConfig }) {
                 }),
                 fullWidth: true,
             }))
+    );
+}
+
+function FeedbackSectionForm({ draft, updateDraftConfig }) {
+    var _a, _b;
+    const entries = (_b = (_a = draft.sections.feedback) === null || _a === void 0 ? void 0 : _a.entries) !== null && _b !== void 0 ? _b : [];
+
+    const addEntry = () => {
+        updateDraftConfig((next) => {
+            var _a;
+            const list = [...((_a = next.sections.feedback) === null || _a === void 0 ? void 0 : _a.entries) || []];
+            list.push({ id: generateId("feedback"), quote: "", author: "" });
+            next.sections.feedback = next.sections.feedback || { entries: [] };
+            next.sections.feedback.entries = list;
+            return next;
+        });
+    };
+
+    const updateEntry = (index, key, value) => {
+        updateDraftConfig((next) => {
+            const list = [...(next.sections.feedback?.entries ?? [])];
+            if (!list[index]) {
+                return next;
+            }
+            list[index] = { ...list[index], [key]: value };
+            next.sections.feedback = next.sections.feedback || { entries: [] };
+            next.sections.feedback.entries = list;
+            return next;
+        });
+    };
+
+    const removeEntry = (index) => {
+        updateDraftConfig((next) => {
+            const list = [...(next.sections.feedback?.entries ?? [])];
+            list.splice(index, 1);
+            next.sections.feedback = next.sections.feedback || { entries: [] };
+            next.sections.feedback.entries = list;
+            return next;
+        });
+    };
+
+    return (React.createElement("div", { className: "space-y-4" },
+        React.createElement("div", { className: "flex items-center justify-between" },
+            React.createElement("div", { className: "space-y-1" },
+                React.createElement("p", { className: "text-sm font-semibold text-slate-100" }, "Tilbakemeldinger"),
+                React.createElement("p", { className: "text-xs text-slate-400" }, "Legg til sitater fra medlemmer eller foresatte.")),
+            React.createElement(Button, { type: "button", onClick: addEntry, className: "border border-slate-800 bg-slate-900 text-slate-100 hover:bg-slate-800" },
+                React.createElement(Plus, { size: 16, className: "mr-2" }),
+                "Ny tilbakemelding")),
+        entries.length === 0
+            ? (React.createElement("p", { className: "text-sm text-slate-400" }, "Ingen tilbakemeldinger enda. Klikk \"Ny tilbakemelding\" for å starte."))
+            : (React.createElement("div", { className: "space-y-4" }, entries.map((entry, index) => (React.createElement(Card, { key: entry.id, className: "border-slate-800 bg-slate-900/60" },
+                React.createElement(CardContent, { className: "space-y-3" },
+                    React.createElement("div", { className: "flex items-center justify-between" },
+                        React.createElement("p", { className: "text-sm font-semibold text-slate-200" }, "Tilbakemelding ", index + 1),
+                        React.createElement(Button, { type: "button", size: "icon", variant: "ghost", className: "text-slate-400 hover:text-red-400", onClick: () => removeEntry(index) },
+                            React.createElement(Trash2, { size: 16 })) ),
+                    React.createElement("div", { className: "space-y-2" },
+                        React.createElement(Label, { className: "text-xs uppercase text-slate-400" }, "Tekst"),
+                        React.createElement(Textarea, { value: entry.quote, onChange: (event) => updateEntry(index, "quote", event.target.value), rows: 3, className: "border-slate-800 bg-slate-900 text-slate-100 placeholder:text-slate-500" })),
+                    React.createElement("div", { className: "space-y-2" },
+                        React.createElement(Label, { className: "text-xs uppercase text-slate-400" }, "Forfatter"),
+                        React.createElement(Input, { value: entry.author, onChange: (event) => updateEntry(index, "author", event.target.value), className: "border-slate-800 bg-slate-900 text-slate-100 placeholder:text-slate-500" }))))))))
     );
 }
 

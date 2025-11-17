@@ -119,6 +119,30 @@ export const DEFAULT_SITE_CONFIG = {
             youtube: "https://youtube.com/@fjolsenbanden",
             formEndpoint: "/api/contact",
         },
+        feedback: {
+            entries: [
+                {
+                    id: "feedback-filip",
+                    quote: "H❤ Tusen takk for at jeg har fått muligheten til å spille hos FjOlsenbanden. Kan ikke takke nok for alt du har gjort for meg og alle andre. ❤",
+                    author: "Filip",
+                },
+                {
+                    id: "feedback-rasmus",
+                    quote: "Jeg elsker å spille customs-a dine, det er min favoritt. Jeg spiller ikke annet enn dine customs!",
+                    author: "Rasmus",
+                },
+                {
+                    id: "feedback-pernille",
+                    quote: "Uansett er vi takknemlige for innsatsen du legger i trygge og engasjerende rammer for barn og ungdom – og veldig flott at du arrangerer egne jentekvelder.",
+                    author: "Pernille & Terje, foreldre",
+                },
+                {
+                    id: "feedback-merethe",
+                    quote: "Du gjør en forskjell! Du har så mye peiling på how to – overfor barn! Respekt.",
+                    author: "Merethe, mamma",
+                },
+            ],
+        },
     },
     branding: {
         logo: "/uploads/fjolsen-khabat/logo.png",
@@ -224,6 +248,7 @@ function createInitialSiteData(site) {
                 rewards: { hidden: false },
                 partners: { hidden: false },
                 contact: { hidden: false },
+                feedback: { hidden: false },
             },
         },
         domain: {
