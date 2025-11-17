@@ -16,6 +16,38 @@ export const DEFAULT_SECTION_ORDER = [
     "contact",
     "feedback",
 ];
+export const DEFAULT_COMMUNITY_SOCIALS = [
+    {
+        platform: "twitch",
+        label: "Twitch",
+        stat: "3.2k",
+        href: "https://www.twitch.tv/FjOlsenFN",
+    },
+    {
+        platform: "tiktok",
+        label: "TikTok",
+        stat: "4.2k",
+        href: "https://www.tiktok.com/@fjolsenbanden",
+    },
+    {
+        platform: "discord",
+        label: "Discord",
+        stat: "2.5k",
+        href: "https://discord.gg/fjolsenbanden",
+    },
+    {
+        platform: "youtube",
+        label: "YouTube",
+        stat: "50+",
+        href: "https://youtube.com/@fjolsenbanden",
+    },
+    {
+        platform: "instagram",
+        label: "Instagram",
+        stat: "3k",
+        href: "https://www.instagram.com/fjolsenbanden",
+    },
+];
 export const DEFAULT_MEMBERSHIP_TIERS = [
     {
         id: "tier-free",
@@ -90,6 +122,7 @@ const DEFAULT_STATE = {
         partnerLogos: DEFAULT_PARTNER_LOGOS,
         sectionOrder: DEFAULT_SECTION_ORDER,
         modules: DEFAULT_SITE_MODULES,
+        communitySocials: DEFAULT_COMMUNITY_SOCIALS,
     },
     players: [
         {
@@ -326,6 +359,7 @@ function ensureSiteSettings(settings) {
         membershipTiers: ensureMembershipTierArray(settings.membershipTiers),
         partnerLogos: ensurePartnerLogoArray(settings.partnerLogos),
         sectionOrder: ensureSectionOrder(settings.sectionOrder),
+        communitySocials: ensureCommunitySocials(settings.communitySocials),
     };
 }
 function ensureMembershipTierArray(input) {
@@ -378,6 +412,23 @@ function ensureSectionOrder(order) {
         }
     });
     return result;
+}
+function ensureCommunitySocials(input) {
+    const source = Array.isArray(input) && input.length > 0 ? input : DEFAULT_COMMUNITY_SOCIALS;
+    return source.map((item, index) => {
+        var _a, _b, _c, _d;
+        const fallback = (_a = DEFAULT_COMMUNITY_SOCIALS[index]) !== null && _a !== void 0 ? _a : DEFAULT_COMMUNITY_SOCIALS[0];
+        const platform = (_b = item.platform) === null || _b === void 0 ? void 0 : _b.toString().trim().toLowerCase();
+        const label = (_c = item.label) === null || _c === void 0 ? void 0 : _c.toString().trim();
+        const stat = (_d = item.stat) === null || _d === void 0 ? void 0 : _d.toString().trim();
+        const href = typeof item.href === "string" ? item.href.trim() : "";
+        return {
+            platform: platform && platform.length > 0 ? platform : fallback.platform,
+            label: label && label.length > 0 ? label : fallback.label,
+            stat: stat && stat.length > 0 ? stat : fallback.stat,
+            href: href.length > 0 ? href : fallback.href,
+        };
+    });
 }
 function mergeSiteSettings(base, updates) {
     const { modules: moduleUpdates, ...rest } = updates;
