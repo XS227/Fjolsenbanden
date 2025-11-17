@@ -141,136 +141,93 @@
 }
 
 .fj-theme .partners {
-  background:
-    radial-gradient(circle at 15% 15%, rgba(19, 160, 249, 0.25), transparent 60%),
-    radial-gradient(circle at 85% 25%, rgba(255, 47, 156, 0.22), transparent 58%),
-    #041149;
+  background: radial-gradient(circle at 18% 22%, rgba(18, 115, 255, 0.14), transparent 36%),
+    radial-gradient(circle at 82% 12%, rgba(101, 47, 205, 0.12), transparent 36%),
+    #071235;
   text-align: center;
-  padding: clamp(4.5rem, 8vw, 6.5rem) clamp(1.5rem, 5vw, 3.5rem);
-  border-radius: 2.5rem;
-  max-width: 64rem;
+  padding: clamp(3.5rem, 6vw, 5rem) clamp(1.25rem, 5vw, 2.5rem);
+  border-radius: 2rem;
+  max-width: 1040px;
   margin: 0 auto;
-  box-shadow: 0 26px 52px rgba(7, 12, 28, 0.55);
+  box-shadow: 0 24px 48px rgba(3, 10, 30, 0.6);
+  border: 1px solid rgba(56, 92, 178, 0.35);
 }
 
 .fj-theme .partners h2 {
-  font-size: clamp(2rem, 3.5vw, 2.5rem);
+  font-size: clamp(2rem, 3vw, 2.6rem);
   font-weight: 800;
-  letter-spacing: 0.06em;
-  margin-bottom: 0.75rem;
+  letter-spacing: 0.04em;
+  margin-bottom: 0.5rem;
+  color: #e8edff;
 }
 
 .fj-theme .partners p {
-  color: #c9d4ff;
-  font-size: 1.05rem;
+  color: #c7d5ff;
+  font-size: 1.02rem;
   margin-bottom: 2rem;
 }
 
 .fj-theme .partners p.lead {
-  font-size: clamp(1.1rem, 2.5vw, 1.35rem);
-  margin-bottom: 2.75rem;
+  font-size: clamp(1.05rem, 2vw, 1.25rem);
+  margin-bottom: 2.25rem;
 }
 
 .fj-theme .partner-logos {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: clamp(1.5rem, 5vw, 2.5rem);
-  margin-bottom: clamp(2.25rem, 6vw, 3rem);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: clamp(0.85rem, 2vw, 1.35rem);
+  margin-bottom: clamp(1.5rem, 4vw, 2.5rem);
 }
 
 .fj-theme .partner-logos .logo {
   position: relative;
   overflow: hidden;
-  border-radius: 1.5rem;
-  width: clamp(200px, 26vw, 240px);
-  height: clamp(150px, 20vw, 170px);
+  border-radius: 1.1rem;
+  height: clamp(90px, 14vw, 112px);
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid transparent;
-  border-image: linear-gradient(135deg, rgba(19, 160, 249, 0.75), rgba(255, 47, 156, 0.75)) 1;
-  box-shadow: 0 0 0 1px rgba(19, 160, 249, 0.22), 0 14px 34px rgba(4, 17, 73, 0.4);
-  transition: transform 0.4s ease, box-shadow 0.4s ease, background 0.4s ease, border-image 0.4s ease;
+  background: linear-gradient(135deg, rgba(10, 21, 53, 0.95), rgba(12, 24, 66, 0.95));
+  border: 1px solid rgba(69, 102, 180, 0.5);
+  box-shadow: 0 10px 28px rgba(5, 10, 32, 0.55);
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
   text-decoration: none;
-  isolation: isolate;
-}
-
-.fj-theme .partner-logos .logo::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  padding: 1px;
-  background: linear-gradient(135deg, rgba(19, 160, 249, 0.8), rgba(255, 47, 156, 0.8));
-  -webkit-mask:
-    linear-gradient(#fff 0 0) content-box,
-    linear-gradient(#fff 0 0);
-  mask:
-    linear-gradient(#fff 0 0) content-box,
-    linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  opacity: 0.65;
-  transition: opacity 0.4s ease;
-  z-index: -1;
-  pointer-events: none;
-}
-
-.fj-theme .partner-logos .logo::after {
-  content: "";
-  position: absolute;
-  inset: -35%;
-  background: radial-gradient(circle, rgba(19, 160, 249, 0.45), rgba(255, 47, 156, 0.4));
-  opacity: 0;
-  transition: opacity 0.4s ease;
-  filter: blur(40px);
-  z-index: -2;
-  pointer-events: none;
+  padding: 1.25rem;
 }
 
 .fj-theme .partner-logos .logo:hover,
 .fj-theme .partner-logos .logo:focus-visible {
-  transform: translateY(-6px);
-  box-shadow: 0 24px 40px rgba(19, 160, 249, 0.28), 0 0 0 1px rgba(255, 47, 156, 0.35), 0 0 26px rgba(19, 160, 249, 0.4);
-  background: rgba(255, 255, 255, 0.05);
-  border-image: linear-gradient(135deg, rgba(19, 160, 249, 0.9), rgba(255, 47, 156, 0.9)) 1;
-}
-
-.fj-theme .partner-logos .logo:hover::before,
-.fj-theme .partner-logos .logo:focus-visible::before {
-  opacity: 1;
-}
-
-.fj-theme .partner-logos .logo:hover::after,
-.fj-theme .partner-logos .logo:focus-visible::after {
-  opacity: 0.9;
+  transform: translateY(-4px);
+  border-color: rgba(116, 154, 255, 0.9);
+  box-shadow: 0 16px 30px rgba(6, 16, 46, 0.65), 0 0 0 1px rgba(116, 154, 255, 0.4);
 }
 
 .fj-theme .partner-logos img {
-  max-width: 82%;
-  max-height: 82%;
+  max-width: 100%;
+  max-height: 60%;
   object-fit: contain;
   display: block;
   position: relative;
-  border-radius: 1rem;
+  filter: brightness(1.05);
   z-index: 1;
 }
 
 .fj-theme .partner-logos .logo .logo-fallback {
-  position: absolute;
-  inset: 0;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 1.5rem;
-  font-size: 0.95rem;
-  font-weight: 600;
-  letter-spacing: 0.32em;
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: rgba(255, 255, 255, 0.78);
   z-index: 1;
+}
+
+.fj-theme .partner-support {
+  display: flex;
+  justify-content: center;
 }
 
 .fj-theme .partners .cta {
@@ -303,37 +260,30 @@
 }
 
 .fj-theme.theme-light .partners {
-  background:
-    radial-gradient(circle at 15% 15%, rgba(19, 160, 249, 0.18), transparent 60%),
-    radial-gradient(circle at 85% 25%, rgba(255, 47, 156, 0.18), transparent 58%),
-    #e9f2ff;
+  background: linear-gradient(145deg, #f3f6ff, #e5edff);
   color: #0b143f;
-  box-shadow: 0 20px 44px rgba(11, 20, 63, 0.18);
+  box-shadow: 0 20px 44px rgba(11, 20, 63, 0.14);
+  border-color: rgba(11, 20, 63, 0.08);
 }
 
 .fj-theme.theme-light .partners p {
-  color: rgba(11, 20, 63, 0.74);
+  color: rgba(11, 20, 63, 0.75);
 }
 
 .fj-theme.theme-light .partner-logos .logo {
-  background: rgba(11, 20, 63, 0.06);
-  border-image: linear-gradient(135deg, rgba(19, 160, 249, 0.55), rgba(255, 47, 156, 0.55)) 1;
-  box-shadow: 0 0 0 1px rgba(19, 160, 249, 0.18), 0 12px 26px rgba(11, 20, 63, 0.22);
-}
-
-.fj-theme.theme-light .partner-logos .logo::before {
-  background: linear-gradient(135deg, rgba(19, 160, 249, 0.65), rgba(255, 47, 156, 0.65));
-  opacity: 0.5;
+  background: linear-gradient(135deg, #f8fbff, #edf3ff);
+  border-color: rgba(11, 20, 63, 0.08);
+  box-shadow: 0 10px 24px rgba(11, 20, 63, 0.18);
 }
 
 .fj-theme.theme-light .partner-logos .logo:hover,
 .fj-theme.theme-light .partner-logos .logo:focus-visible {
-  box-shadow: 0 20px 34px rgba(19, 160, 249, 0.25), 0 0 0 1px rgba(255, 47, 156, 0.3), 0 0 24px rgba(19, 160, 249, 0.32);
-  border-image: linear-gradient(135deg, rgba(19, 160, 249, 0.7), rgba(255, 47, 156, 0.7)) 1;
+  border-color: rgba(28, 74, 182, 0.5);
+  box-shadow: 0 16px 28px rgba(11, 20, 63, 0.24), 0 0 0 1px rgba(28, 74, 182, 0.35);
 }
 
 .fj-theme.theme-light .partner-logos .logo .logo-fallback {
-  color: rgba(11, 20, 63, 0.65);
+  color: rgba(11, 20, 63, 0.7);
 }
 
 .fj-theme.theme-light .text-white,

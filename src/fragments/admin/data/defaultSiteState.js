@@ -79,18 +79,20 @@ export const DEFAULT_SITE_CONFIG = {
             ],
         },
         partners: {
+            title: "Våre samarbeidspartnere",
+            description: "Her er noen av våre samarbeidspartnere som har bidratt til å skape minneverdige øyeblikk i FjOlsenbanden!",
             logos: [
-                {
-                    id: "philips",
-                    name: "Philips",
-                    image: INLINE_PARTNER_BADGES.philips,
-                    url: "https://philips.no",
-                },
                 {
                     id: "lenovo",
                     name: "Lenovo",
                     image: INLINE_PARTNER_BADGES.lenovo,
                     url: "https://lenovo.com",
+                },
+                {
+                    id: "komplett",
+                    name: "Komplett",
+                    image: INLINE_PARTNER_BADGES.komplett,
+                    url: "https://www.komplett.no/",
                 },
                 {
                     id: "samsung",
@@ -99,10 +101,34 @@ export const DEFAULT_SITE_CONFIG = {
                     url: "https://www.samsung.com/no/",
                 },
                 {
-                    id: "komplett",
-                    name: "Komplett.no",
-                    image: INLINE_PARTNER_BADGES.komplett,
-                    url: "https://www.komplett.no/",
+                    id: "kristiania",
+                    name: "Kristiania",
+                    image: INLINE_PARTNER_BADGES.kristiania,
+                    url: "https://www.kristiania.no/",
+                },
+                {
+                    id: "philips",
+                    name: "Philips",
+                    image: INLINE_PARTNER_BADGES.philips,
+                    url: "https://philips.no",
+                },
+                {
+                    id: "saily",
+                    name: "Saily",
+                    image: INLINE_PARTNER_BADGES.saily,
+                    url: "https://saily.no",
+                },
+                {
+                    id: "nki",
+                    name: "NKI",
+                    image: INLINE_PARTNER_BADGES.nki,
+                    url: "https://www.nki.no/",
+                },
+                {
+                    id: "trondheim-play",
+                    name: "Trondheim Play",
+                    image: INLINE_PARTNER_BADGES.trondheimPlay,
+                    url: "https://trondheimplay.no/",
                 },
             ],
         },
