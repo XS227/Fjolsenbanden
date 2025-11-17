@@ -6,6 +6,28 @@ export const DEFAULT_SITE_MODULES = {
     partners: true,
     contactForm: true,
 };
+export const DEFAULT_ABOUT_HIGHLIGHTS = [
+    {
+        id: "about-safe",
+        title: "Trygg gamingarena",
+        description: "Alle aktiviteter overvåkes av voksne moderatorer med klare regler mot mobbing og ekskludering.",
+    },
+    {
+        id: "about-community",
+        title: "Positivt fellesskap",
+        description: "Vi dyrker et inkluderende miljø der både barn og foreldre kan dele spillglede, samarbeid og kommunikasjon.",
+    },
+    {
+        id: "about-stream",
+        title: "Familievennlig stream",
+        description: "Sendingene våre er trygge for alle aldre, med aktiviteter som bygger trygghet, læring og lagfølelse.",
+    },
+];
+export const DEFAULT_ABOUT_BULLETS = [
+    "Målet vårt er å skape et trygt, positivt og inkluderende gamingmiljø der barn, ungdom – og mange foreldre – kan oppleve ekte mestring, samhold og fellesskap.",
+    "Vi legger ned mange timer hver uke på aktiviteter, turneringer og samarbeid som øker engasjement og samhold i communityet.",
+    "Premier og arrangementer støttes av samarbeidspartnere fra næringslivet, men alt styres med nulltoleranse for dårlig adferd.",
+];
 export const DEFAULT_SECTION_ORDER = [
     "heroIntro",
     "liveStream",
@@ -16,38 +38,47 @@ export const DEFAULT_SECTION_ORDER = [
     "contact",
     "feedback",
 ];
+export const DEFAULT_FEEDBACK_ENTRIES = [
+    {
+        id: "feedback-filip",
+        quote: "\u201CH\u2665 Tusen takk for at jeg har fått muligheten til å spille hos FjOlsenbanden. Kan ikke takke nok for alt du har gjort for meg og alle andre. \u2665\u201D",
+        author: "Filip",
+        accent: "text-[#FF9B6A]",
+    },
+    {
+        id: "feedback-rasmus",
+        quote: "\u201CJeg elsker å spille customs-a dine, det er min favoritt. Jeg spiller ikke annet enn dine customs!\u201D",
+        author: "Rasmus",
+        accent: "text-[#13A0F9]",
+    },
+    {
+        id: "feedback-pernille-terje",
+        quote: "\u201CUansett er vi takknemlige for innsatsen du legger i trygge og engasjerende rammer for barn og ungdom – og veldig flott at du arrangerer egne jentekvelder.\u201D",
+        author: "Pernille & Terje, foreldre",
+        accent: "text-[#34D399]",
+    },
+    {
+        id: "feedback-merethe",
+        quote: "\u201CDu gjør en forskjell! Du har så mye peiling på how to – overfor barn! Respekt.\u201D",
+        author: "Merethe, mamma",
+        accent: "text-[#FF2F9C]",
+    },
+];
 export const DEFAULT_MEMBERSHIP_TIERS = [
     {
         id: "tier-free",
-        title: "Gratismedlem",
+        title: "Gratis medlemskap",
         price: "0 kr / mnd",
         color: "green",
         features: [
-            "Tilgang til Discord-serveren",
-            "Delta på community-events",
-            "Få nyheter og oppdateringer først",
+            "Få digitalt medlemskort",
+            "Delta på premier, giveaways og customs",
+            "Tilgang til hele FjOlsenbanden på Discord",
+            "Meld deg på arrangementer og turneringer først",
         ],
-    },
-    {
-        id: "tier-tournament",
-        title: "Turneringsmedlem",
-        price: "79 kr / mnd",
-        color: "cyan",
-        features: [
-            "Alt i Gratismedlem",
-            "Delta i eksklusive turneringer",
-            "Premier fra partnere hver måned",
-        ],
-    },
-    {
-        id: "tier-pro",
-        title: "Pro-medlem",
-        price: "149 kr / mnd",
-        color: "amber",
-        features: [
-            "Alt i Turneringsmedlem",
-            "Coaching fra FjOlsen og teamet",
-            "Tilgang til lukkede arrangementer",
+        buttons: [
+            { label: "Under 18 år", url: "https://forms.gle/sq4mUf7s6e6UY7R58" },
+            { label: "Over 18 år", url: "https://forms.gle/ZrbXCggnUY8FTT7t9" },
         ],
     },
 ];
@@ -105,17 +136,28 @@ export const DEFAULT_TWITCH_EMBED_URL = "https://player.twitch.tv/?channel=FjOls
 const DEFAULT_STATE = {
     siteSettings: {
         logoUrl: "",
+        heroHeadline: "FJOLSENBANDEN ER NORGES MEST INKLUDERENDE GAMING-COMMUNITY.",
         heroTitle: "FJOLSENBANDEN",
         heroTagline: "Spillglede for hele familien – trygge streams, turneringer og premier.",
-        partnerSectionTitle: "Våre samarbeidspartnere",
-        partnerSectionDescription: "Her er noen av våre samarbeidspartnere som har bidratt til å skape minneverdige øyeblikk i FjOlsenbanden!",
+        heroSubtitle: "En trygg arena for familier som elsker gaming, med fellesskap, premier og foreldre i sentrum.",
+        heroDescription: "Spillglede for hele familien med trygge streams, premier og fellesskap.",
+        heroImageUrl: "/assets/branding/fjolsenbanden-logo-light.svg",
+        heroBackgroundImage: "",
         announcement: "Neste livesending starter 20:00 med co-op i Mario Kart og premier fra Lenovo!",
+        aboutTitle: "Hva er FjOlsenbanden?",
+        aboutHeadline: "Spillglede for hele familien",
+        aboutDescription: "FjOlsenbanden er et raskt voksende gaming-community der barn, ungdom og foreldre kan game trygt sammen.",
+        aboutSecondaryDescription: "Målet vårt er å skape et inkluderende miljø uten hets, mobbing eller negativ adferd.",
+        aboutBullets: DEFAULT_ABOUT_BULLETS,
+        aboutHighlights: DEFAULT_ABOUT_HIGHLIGHTS,
         presentationVideoUrl: "https://www.youtube.com/embed/8EgRIkmvmtM?si=qMzmEaMfP-2ODMbc",
         twitchEmbedUrl: DEFAULT_TWITCH_EMBED_URL,
         membershipTiers: DEFAULT_MEMBERSHIP_TIERS,
         partnerLogos: DEFAULT_PARTNER_LOGOS,
+        feedbackEntries: DEFAULT_FEEDBACK_ENTRIES,
         sectionOrder: DEFAULT_SECTION_ORDER,
         modules: DEFAULT_SITE_MODULES,
+        communitySocials: DEFAULT_COMMUNITY_SOCIALS,
     },
     players: [
         {
@@ -351,7 +393,9 @@ function ensureSiteSettings(settings) {
         twitchEmbedUrl: ((_b = settings.twitchEmbedUrl) === null || _b === void 0 ? void 0 : _b.trim()) || DEFAULT_TWITCH_EMBED_URL,
         membershipTiers: ensureMembershipTierArray(settings.membershipTiers),
         partnerLogos: ensurePartnerLogoArray(settings.partnerLogos),
+        feedbackEntries: ensureFeedbackEntries(settings.feedbackEntries),
         sectionOrder: ensureSectionOrder(settings.sectionOrder),
+        communitySocials: ensureCommunitySocials(settings.communitySocials),
     };
 }
 function ensureMembershipTierArray(input) {
@@ -365,12 +409,24 @@ function ensureMembershipTierArray(input) {
         const normalizedColor = tier.color === "cyan" || tier.color === "amber" || tier.color === "green"
             ? tier.color
             : fallback.color;
+        const normalizeButtons = (buttons) => {
+            const parsed = Array.isArray(buttons) ? buttons.slice(0, 2) : [];
+            return parsed
+                .map((button) => ({
+                label: typeof (button === null || button === void 0 ? void 0 : button.label) === "string" ? button.label.trim() : "",
+                url: typeof (button === null || button === void 0 ? void 0 : button.url) === "string" ? button.url.trim() : "",
+            }))
+                .filter((button) => button.label && button.url);
+        };
+        const normalizedButtons = normalizeButtons(tier.buttons);
+        const fallbackButtons = normalizeButtons(fallback.buttons);
         return {
             id: ((_b = tier.id) === null || _b === void 0 ? void 0 : _b.trim()) || fallback.id || `tier-${index}`,
             title: ((_c = tier.title) === null || _c === void 0 ? void 0 : _c.trim()) || fallback.title,
             price: ((_d = tier.price) === null || _d === void 0 ? void 0 : _d.trim()) || fallback.price,
             color: normalizedColor,
             features: features.length > 0 ? features : [...fallback.features],
+            buttons: normalizedButtons.length > 0 ? normalizedButtons : fallbackButtons,
         };
     });
 }
@@ -389,6 +445,25 @@ function ensurePartnerLogoArray(input) {
         };
     });
 }
+const FEEDBACK_ACCENT_CLASSES = ["text-[#FF9B6A]", "text-[#13A0F9]", "text-[#34D399]", "text-[#FF2F9C]"];
+function ensureFeedbackEntries(input) {
+    const source = Array.isArray(input) && input.length > 0 ? input : DEFAULT_FEEDBACK_ENTRIES;
+    return source.map((entry, index) => {
+        var _a, _b, _c, _d, _e;
+        const fallback = (_a = DEFAULT_FEEDBACK_ENTRIES[index]) !== null && _a !== void 0 ? _a : DEFAULT_FEEDBACK_ENTRIES[0];
+        const quote = ((_b = entry.quote) === null || _b === void 0 ? void 0 : _b.trim()) || ((_c = fallback.quote) !== null && _c !== void 0 ? _c : "");
+        const author = ((_d = entry.author) === null || _d === void 0 ? void 0 : _d.trim()) || ((_e = fallback.author) !== null && _e !== void 0 ? _e : "Anonym");
+        const accent = entry.accent && entry.accent.trim()
+            ? entry.accent.trim()
+            : FEEDBACK_ACCENT_CLASSES[index % FEEDBACK_ACCENT_CLASSES.length];
+        return {
+            id: entry.id || fallback.id || `feedback-${index}`,
+            quote,
+            author,
+            accent,
+        };
+    });
+}
 function ensureSectionOrder(order) {
     const fallback = DEFAULT_SECTION_ORDER;
     const customOrder = Array.isArray(order)
@@ -404,6 +479,23 @@ function ensureSectionOrder(order) {
         }
     });
     return result;
+}
+function ensureCommunitySocials(input) {
+    const source = Array.isArray(input) && input.length > 0 ? input : DEFAULT_COMMUNITY_SOCIALS;
+    return source.map((item, index) => {
+        var _a, _b, _c, _d;
+        const fallback = (_a = DEFAULT_COMMUNITY_SOCIALS[index]) !== null && _a !== void 0 ? _a : DEFAULT_COMMUNITY_SOCIALS[0];
+        const platform = (_b = item.platform) === null || _b === void 0 ? void 0 : _b.toString().trim().toLowerCase();
+        const label = (_c = item.label) === null || _c === void 0 ? void 0 : _c.toString().trim();
+        const stat = (_d = item.stat) === null || _d === void 0 ? void 0 : _d.toString().trim();
+        const href = typeof item.href === "string" ? item.href.trim() : "";
+        return {
+            platform: platform && platform.length > 0 ? platform : fallback.platform,
+            label: label && label.length > 0 ? label : fallback.label,
+            stat: stat && stat.length > 0 ? stat : fallback.stat,
+            href: href.length > 0 ? href : fallback.href,
+        };
+    });
 }
 function mergeSiteSettings(base, updates) {
     const { modules: moduleUpdates, ...rest } = updates;
