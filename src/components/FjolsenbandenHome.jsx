@@ -51,6 +51,32 @@ const stats = [
     { label: "Twitch", value: "3 200+" },
     { label: "TikTok", value: "4 200+" },
 ];
+const SOCIAL_PLATFORM_STYLES = {
+    twitch: {
+        badge: "bg-purple-500/25 text-purple-100",
+        icon: React.createElement(Twitch, { className: "h-6 w-6 text-[#a970ff]", "aria-hidden": "true" }),
+    },
+    tiktok: {
+        badge: "bg-pink-500/25 text-pink-100",
+        icon: React.createElement(Smartphone, { className: "h-6 w-6 text-pink-300", "aria-hidden": "true" }),
+    },
+    discord: {
+        badge: "bg-indigo-500/25 text-indigo-100",
+        icon: React.createElement(DiscordIcon, { className: "h-6 w-6 text-indigo-200", "aria-hidden": "true" }),
+    },
+    youtube: {
+        badge: "bg-red-500/25 text-red-100",
+        icon: React.createElement(Youtube, { className: "h-6 w-6 text-red-300", "aria-hidden": "true" }),
+    },
+    instagram: {
+        badge: "bg-fuchsia-500/25 text-fuchsia-100",
+        icon: React.createElement(Instagram, { className: "h-6 w-6 text-fuchsia-200", "aria-hidden": "true" }),
+    },
+    default: {
+        badge: "bg-white/20 text-white",
+        icon: React.createElement(Smartphone, { className: "h-6 w-6 text-white", "aria-hidden": "true" }),
+    },
+};
 const liveFollowLinks = [
     {
         label: "Twitch",
@@ -224,6 +250,17 @@ const sponsors = [
         ],
     },
 ];
+function normalizeCommunitySocials(socials) {
+    const source = Array.isArray(socials) && socials.length > 0 ? socials : DEFAULT_COMMUNITY_SOCIALS;
+    return source.map((item, index) => {
+        const fallback = DEFAULT_COMMUNITY_SOCIALS[index % DEFAULT_COMMUNITY_SOCIALS.length];
+        const platform = typeof item.platform === "string" && item.platform.trim().length > 0 ? item.platform.trim().toLowerCase() : fallback.platform;
+        const label = typeof item.label === "string" && item.label.trim().length > 0 ? item.label.trim() : fallback.label;
+        const stat = typeof item.stat === "string" && item.stat.trim().length > 0 ? item.stat.trim() : fallback.stat;
+        const href = typeof item.href === "string" && item.href.trim().length > 0 ? item.href.trim() : fallback.href;
+        return { platform, label, stat, href };
+    });
+}
 const buildSponsorLogoSources = (sponsor) => {
     const remoteSources = PARTNER_LOGO_BASE_URLS.flatMap((baseUrl) => sponsor.remoteFileNames.map((fileName) => `${baseUrl}/${fileName}`));
     const preferred = sponsor.defaultLogoUrl ? [sponsor.defaultLogoUrl] : [];
@@ -565,6 +602,7 @@ export default function FjolsenbandenHome() {
             fallback: sponsor,
         }));
     }, [partnerLogoData]);
+    const communitySocials = useMemo(() => normalizeCommunitySocials(siteSettings.communitySocials), [siteSettings.communitySocials]);
     const filteredNavLinks = useMemo(() => navLinks.filter((link) => {
         if (link.href === "#live") {
             return liveStream;
