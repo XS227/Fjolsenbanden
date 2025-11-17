@@ -27,35 +27,27 @@ export const DEFAULT_SITE_CONFIG = {
             channel: "FjOlsenFN",
             embedUrl: "https://player.twitch.tv/?channel=FjOlsenFN&parent=setaei.com",
         },
+        about: {
+            title: "Hvem er FjOlsen?",
+            videoUrl: "https://www.youtube.com/embed/7zWWLP_pogg?si=tNRtOEWj6JV3J0vf",
+            lead: "FjOlsenFN – Familievennlig streamer og grunnlegger av FjOlsenbanden",
+            body: "FjOlsenbanden ledes av Tor Martin «FjOlsen» Olsen, 43 år. Han startet prosjektet for å gi sine egne onkelbarn et trygt og bannefri sted å game – men historien har blitt mye større. FjOlsen, med bistand fra andre, har laget den største familievennlige huben i Fortnite-miljøet med over 2500 medlemmer. Når barn og unge er hos FjOlsen er de i trygge hender. For det han selv manglet som liten har han nå skapt for hele communityet, og er svært takknemlig for muligheten til å gi tilbake.",
+        },
         membership: {
             plans: [
                 {
-                    id: "plan-basic",
-                    name: "Basic",
-                    price: "0",
+                    id: "plan-free",
+                    name: "Gratis medlemskap",
+                    price: "0 kr / mnd",
                     features: [
-                        "Tilgang til Discord",
-                        "Delta i community-kvelder",
+                        "Få digitalt medlemskort",
+                        "Delta på premier, giveaways og customs",
+                        "Tilgang til hele FjOlsenbanden på Discord",
+                        "Meld deg på arrangementer og turneringer først",
                     ],
-                },
-                {
-                    id: "plan-pro",
-                    name: "Pro",
-                    price: "399",
-                    features: [
-                        "Coaching fra FjOlsen",
-                        "Eksklusive turneringer",
-                        "Månedlige premier",
-                    ],
-                },
-                {
-                    id: "plan-vip",
-                    name: "VIP",
-                    price: "Kontakt",
-                    features: [
-                        "Skreddersydde sponsoropplevelser",
-                        "Egne partneraktiviteter",
-                        "Tilgang til backstage-streams",
+                    buttons: [
+                        { label: "Under 18 år", url: "https://forms.gle/sq4mUf7s6e6UY7R58" },
+                        { label: "Over 18 år", url: "https://forms.gle/ZrbXCggnUY8FTT7t9" },
                     ],
                 },
             ],
@@ -115,6 +107,30 @@ export const DEFAULT_SITE_CONFIG = {
             youtube: "https://youtube.com/@fjolsenbanden",
             formEndpoint: "/api/contact",
             buttonColor: "#FF2F9C",
+        },
+        feedback: {
+            entries: [
+                {
+                    id: "feedback-filip",
+                    quote: "H❤ Tusen takk for at jeg har fått muligheten til å spille hos FjOlsenbanden. Kan ikke takke nok for alt du har gjort for meg og alle andre. ❤",
+                    author: "Filip",
+                },
+                {
+                    id: "feedback-rasmus",
+                    quote: "Jeg elsker å spille customs-a dine, det er min favoritt. Jeg spiller ikke annet enn dine customs!",
+                    author: "Rasmus",
+                },
+                {
+                    id: "feedback-pernille",
+                    quote: "Uansett er vi takknemlige for innsatsen du legger i trygge og engasjerende rammer for barn og ungdom – og veldig flott at du arrangerer egne jentekvelder.",
+                    author: "Pernille & Terje, foreldre",
+                },
+                {
+                    id: "feedback-merethe",
+                    quote: "Du gjør en forskjell! Du har så mye peiling på how to – overfor barn! Respekt.",
+                    author: "Merethe, mamma",
+                },
+            ],
         },
     },
     branding: {
@@ -216,10 +232,12 @@ function createInitialSiteData(site) {
             sections: {
                 home: { hidden: false },
                 live: { hidden: false },
+                about: { hidden: false },
                 membership: { hidden: false },
                 rewards: { hidden: false },
                 partners: { hidden: false },
                 contact: { hidden: false },
+                feedback: { hidden: false },
             },
         },
         domain: {
