@@ -10,6 +10,7 @@ import { generateId } from "@/fragments/admin/data/defaultSiteState";
 const SECTION_TABS = [
     { id: "home", label: "Hjem" },
     { id: "live", label: "Live" },
+    { id: "about", label: "Om" },
     { id: "membership", label: "Medlemskap" },
     { id: "rewards", label: "Premier" },
     { id: "partners", label: "Partnere" },
@@ -43,6 +44,8 @@ export default function SectionsPage() {
                 return React.createElement(HomeSectionForm, { draft: draft, updateDraftConfig: updateDraftConfig });
             case "live":
                 return React.createElement(LiveSectionForm, { draft: draft, updateDraftConfig: updateDraftConfig });
+            case "about":
+                return React.createElement(AboutSectionForm, { draft: draft, updateDraftConfig: updateDraftConfig });
             case "membership":
                 return React.createElement(MembershipSectionForm, { draft: draft, updateDraftConfig: updateDraftConfig });
             case "rewards":
@@ -168,6 +171,36 @@ function LiveSectionForm({ draft, updateDraftConfig }) {
                 React.createElement("div", { className: "mt-3 aspect-video w-full overflow-hidden rounded-xl border border-slate-800 bg-slate-950" },
                     React.createElement("iframe", { title: "Live preview", src: section.embedUrl, className: "h-full w-full", allow: "autoplay; encrypted-media" }))))
     );
+}
+
+function AboutSectionForm({ draft, updateDraftConfig }) {
+    const section = draft.sections.about;
+    return (React.createElement("div", { className: "grid gap-4 sm:grid-cols-2" },
+        React.createElement(Field, { label: "Seksjonstittel", value: section.title, onChange: (value) => updateDraftConfig((next) => {
+                next.sections.about.title = value;
+                return next;
+            }), fullWidth: true }),
+        React.createElement(Field, { label: "Video-embed URL", value: section.videoUrl, onChange: (value) => updateDraftConfig((next) => {
+                next.sections.about.videoUrl = value;
+                return next;
+            }), fullWidth: true }),
+        React.createElement(Field, { label: "Ingress", value: section.lead, onChange: (value) => updateDraftConfig((next) => {
+                next.sections.about.lead = value;
+                return next;
+            }), fullWidth: true }),
+        React.createElement(Field, { label: "Hovedtekst", value: section.body, onChange: (value) => updateDraftConfig((next) => {
+                next.sections.about.body = value;
+                return next;
+            }), fullWidth: true, renderInput: (props) => (React.createElement("textarea", { ...props, rows: 4, className: "w-full rounded-xl border border-slate-800 bg-slate-900 px-3 py-2 text-sm text-slate-100" })) }),
+        React.createElement("div", { className: "rounded-2xl border border-slate-800 bg-slate-900/50 p-4 text-sm text-slate-300 sm:col-span-2" },
+            "Forhåndsvisning:",
+            React.createElement("div", { className: "mt-3 grid gap-4 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)]" },
+                React.createElement("div", { className: "overflow-hidden rounded-xl border border-slate-800 bg-slate-950" },
+                    React.createElement("iframe", { title: "Om-seksjon video", src: section.videoUrl, className: "aspect-video w-full", allow: "accelerometer; autoplay; clipboard-write; encrypted-media; picture-in-picture", allowFullScreen: true })),
+                React.createElement("div", { className: "space-y-2 rounded-xl border border-slate-800 bg-slate-950/60 p-4" },
+                    React.createElement("p", { className: "text-xs uppercase tracking-[0.3em] text-slate-400" }, section.title),
+                    React.createElement("h4", { className: "text-lg font-semibold text-white" }, section.lead),
+                    React.createElement("p", { className: "text-sm leading-relaxed text-slate-200" }, section.body)))))));
 }
 
 function MembershipSectionForm({ draft, updateDraftConfig }) {
