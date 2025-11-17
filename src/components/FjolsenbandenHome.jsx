@@ -4,7 +4,7 @@ import { createPortal } from "react-dom";
 import { ArrowRight, CheckCircle2, CreditCard, Gift, Instagram, Lock, Menu, MessageCircle, Moon, Phone, Play, ShieldCheck, Smartphone, Sun, Trophy, Twitch, X, Youtube, UserCog, } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { DEFAULT_COMMUNITY_SOCIALS, DEFAULT_SECTION_ORDER, DEFAULT_SITE_MODULES, DEFAULT_TWITCH_EMBED_URL, useAdminState, } from "@/lib/admin-state";
+import { DEFAULT_MEMBERSHIP_TIERS, DEFAULT_SECTION_ORDER, DEFAULT_SITE_MODULES, DEFAULT_TWITCH_EMBED_URL, useAdminState, } from "@/lib/admin-state";
 import { INLINE_PARTNER_BADGES, getPartnerBadge } from "@/lib/partner-badges";
 import "./FjolsenbandenHome.theme.css";
 const navLinks = [
@@ -19,31 +19,31 @@ const navLinks = [
     { name: "Personvernerklæring", href: "/personvernerklaering.html" },
     { name: "Regler", href: "/regler.html" },
 ];
-const platformLinks = [
+const socialLinks = [
     {
-        icon: React.createElement(Twitch, { className: "h-5 w-5", "aria-hidden": "true" }),
+        icon: React.createElement(DiscordIcon, { className: "h-4 w-4", "aria-hidden": "true" }),
+        label: "Discord",
+        href: "https://discord.gg/fjolsenbanden",
+    },
+    {
+        icon: React.createElement(Twitch, { className: "h-4 w-4", "aria-hidden": "true" }),
         label: "Twitch",
         href: "https://www.twitch.tv/FjOlsenFN",
     },
     {
-        icon: React.createElement(Youtube, { className: "h-5 w-5", "aria-hidden": "true" }),
+        icon: React.createElement(Youtube, { className: "h-4 w-4", "aria-hidden": "true" }),
         label: "YouTube",
         href: "https://youtube.com/@fjolsenbanden",
     },
     {
-        icon: React.createElement(Smartphone, { className: "h-5 w-5", "aria-hidden": "true" }),
+        icon: React.createElement(Smartphone, { className: "h-4 w-4", "aria-hidden": "true" }),
         label: "TikTok",
         href: "https://www.tiktok.com/@fjolsenbanden",
     },
     {
-        icon: React.createElement(Instagram, { className: "h-5 w-5", "aria-hidden": "true" }),
-        label: "Insta",
+        icon: React.createElement(Instagram, { className: "h-4 w-4", "aria-hidden": "true" }),
+        label: "Instagram",
         href: "https://www.instagram.com/fjolsenbanden",
-    },
-    {
-        icon: React.createElement(DiscordIcon, { className: "h-5 w-5", "aria-hidden": "true" }),
-        label: "Discord",
-        href: "https://discord.gg/fjolsenbanden",
     },
 ];
 const stats = [
@@ -380,7 +380,7 @@ const offerings = [
         }),
     },
 ];
-const feedbackVoices = [
+const DEFAULT_FEEDBACK_VOICES = [
     {
         id: "filip",
         quote: "\u201CH\u2665 Tusen takk for at jeg har fått muligheten til å spille hos FjOlsenbanden. Kan ikke takke nok for alt du har gjort for meg og alle andre. \u2665\u201D",
@@ -495,18 +495,70 @@ export default function FjolsenbandenHome() {
         "Velkommen til FjOlsenbanden – Norges mest inkluderende gaming-community.";
     const heroSubtitle = (typeof siteSettings.heroSubtitle === "string" && siteSettings.heroSubtitle.trim()) ||
         "Spillglede for hele familien med trygge streams, premier og fellesskap.";
+    const heroDescription = (typeof siteSettings.heroDescription === "string" && siteSettings.heroDescription.trim()) ||
+        "En trygg arena for familier som elsker gaming, med fellesskap, premier og foreldre i sentrum.";
     const announcement = (typeof siteSettings.announcement === "string" && siteSettings.announcement.trim()) ||
         "Neste livesending starter 20:00 med co-op i Mario Kart og premier fra Lenovo!";
+    const contactSettings = typeof siteSettings.contact === "object" && siteSettings.contact !== null ? siteSettings.contact : {};
+    const contactTitle = (typeof contactSettings.title === "string" && contactSettings.title.trim()) ||
+        (typeof siteSettings.contactTitle === "string" && siteSettings.contactTitle.trim()) ||
+        "Kontakt oss";
+    const contactDescription =
+        (typeof contactSettings.description === "string" && contactSettings.description.trim()) ||
+            (typeof siteSettings.contactDescription === "string" && siteSettings.contactDescription.trim()) ||
+            "Har du spørsmål om medlemskap, samarbeid eller events? Send oss en melding så kommer vi tilbake til deg.";
+    const contactEmail = (typeof contactSettings.email === "string" && contactSettings.email.trim()) ||
+        (typeof siteSettings.contactEmail === "string" && siteSettings.contactEmail.trim()) ||
+        "fjolsenfn@gmail.com";
+    const contactButtonColor =
+        (typeof contactSettings.buttonColor === "string" && contactSettings.buttonColor.trim()) ||
+            (typeof siteSettings.contactButtonColor === "string" && siteSettings.contactButtonColor.trim()) ||
+            "#FF2F9C";
+    const contactButtonShadow = useMemo(() => {
+        const match = contactButtonColor.match(/^#?([0-9a-f]{3}|[0-9a-f]{6})$/i);
+        if (!match) {
+            return "rgba(255,47,156,0.35)";
+        }
+        const hex = match[1].length === 3
+            ? match[1]
+                .split("")
+                .map((char) => char + char)
+                .join("")
+            : match[1];
+        const value = parseInt(hex, 16);
+        const r = (value >> 16) & 255;
+        const g = (value >> 8) & 255;
+        const b = value & 255;
+        return `rgba(${r}, ${g}, ${b}, 0.35)`;
+    }, [contactButtonColor]);
     const fallbackLogoUrl = "https://setaei.com/Fjolsen/Liggende-M%E2%94%9C%E2%95%95rk.png";
     const scrolledLogoUrl = "https://setaei.com/Fjolsen/Glad%20tunge.png";
     const logoUrl = (typeof siteSettings.logoUrl === "string" && siteSettings.logoUrl.trim()) || fallbackLogoUrl;
-    const presentationVideoUrl = (typeof siteSettings.presentationVideoUrl === "string" && siteSettings.presentationVideoUrl.trim()) ||
-        "https://www.youtube.com/embed/8EgRIkmvmtM";
     const heroBackgroundImage = (typeof siteSettings.heroBackgroundImage === "string" && siteSettings.heroBackgroundImage.trim()) ||
-        "https://static-cdn.jtvnw.net/previews-ttv/live_user_fjolsenfn-1920x1080.jpg";
+        "";
+    const heroImageUrl = (typeof siteSettings.heroImageUrl === "string" && siteSettings.heroImageUrl.trim()) || heroBackgroundImage || logoUrl;
     const twitchEmbedUrl = (typeof siteSettings.twitchEmbedUrl === "string" && siteSettings.twitchEmbedUrl.trim()) || DEFAULT_TWITCH_EMBED_URL;
     const membershipTiers = Array.isArray(siteSettings.membershipTiers) ? siteSettings.membershipTiers : [];
+    const membershipPlans = membershipTiers.length > 0 ? membershipTiers.slice(0, 3) : DEFAULT_MEMBERSHIP_TIERS;
     const partnerLogos = Array.isArray(siteSettings.partnerLogos) ? siteSettings.partnerLogos : [];
+    const feedbackEntries = useMemo(() => {
+        const accentPalette = ["text-[#FF9B6A]", "text-[#13A0F9]", "text-[#34D399]", "text-[#FF2F9C]"];
+        const entries = Array.isArray(siteSettings.feedbackEntries) && siteSettings.feedbackEntries.length > 0
+            ? siteSettings.feedbackEntries
+            : DEFAULT_FEEDBACK_VOICES;
+        return entries.map((entry, index) => {
+            var _a, _b, _c, _d;
+            const fallback = (_a = DEFAULT_FEEDBACK_VOICES[index]) !== null && _a !== void 0 ? _a : DEFAULT_FEEDBACK_VOICES[0];
+            return {
+                id: (_b = entry.id) !== null && _b !== void 0 ? _b : fallback.id ?? `feedback-${index}`,
+                quote: ((_c = entry.quote) !== null && _c !== void 0 ? _c : fallback.quote).trim(),
+                author: ((_d = entry.author) !== null && _d !== void 0 ? _d : fallback.author).trim(),
+                accent: entry.accent && entry.accent.trim()
+                    ? entry.accent.trim()
+                    : accentPalette[index % accentPalette.length],
+            };
+        });
+    }, [siteSettings.feedbackEntries]);
     const heroHighlightTerm = "FjOlsenbanden";
     const heroHeadlineContent = heroHeadline.includes(heroHighlightTerm)
         ? heroHeadline.split(heroHighlightTerm).reduce((nodes, segment, index, segments) => {
@@ -660,7 +712,7 @@ export default function FjolsenbandenHome() {
         };
     }, [typingStarted]);
     const renderPartnerSection = (sectionId, orderKey, { includeLogosId = false, variant = "default" } = {}) => {
-        const contactHref = hasContactLink ? "#kontakt" : "mailto:fjolsenfn@gmail.com";
+        const contactHref = hasContactLink ? "#kontakt" : `mailto:${contactEmail}`;
         if (variant === "showcase") {
             return (React.createElement("section", { id: sectionId, className: "partners", style: sectionOrderStyle(orderKey) },
                 React.createElement("h2", null, "Samarbeidspartnere"),
@@ -683,7 +735,7 @@ export default function FjolsenbandenHome() {
         const message = (_f = (_e = formData.get("message")) === null || _e === void 0 ? void 0 : _e.toString().trim()) !== null && _f !== void 0 ? _f : "";
         const subject = encodeURIComponent("Kontakt via fjolsenbanden.no");
         const body = encodeURIComponent(`${message}\n\nNavn: ${name || "Ukjent"}\nE-post: ${email || "Ikke oppgitt"}`);
-        window.location.href = `mailto:fjolsenfn@gmail.com?subject=${subject}&body=${body}`;
+        window.location.href = `mailto:${contactEmail}?subject=${subject}&body=${body}`;
         event.currentTarget.reset();
     };
     useEffect(() => {
@@ -989,53 +1041,58 @@ export default function FjolsenbandenHome() {
                 background: overlayBackground,
             } }),
         React.createElement("div", { className: "flex flex-1 flex-col" },
-            React.createElement("nav", { className: "fj-nav section-shell relative z-30 grid grid-cols-1 items-center gap-4 border-b border-white/10 bg-[#041149]/75 py-4 backdrop-blur supports-[backdrop-filter]:bg-[#041149]/60 sm:grid-cols-[1fr_auto_1fr]", "data-scrolled": navScrolled ? "true" : "false" },
-                React.createElement("div", { className: "hidden items-center justify-start gap-4 sm:flex" },
-                    React.createElement("img", { src: scrolledLogoUrl, alt: "Fjolsenbanden ikon", "aria-hidden": "true", className: `h-12 w-auto transition-all duration-300 ease-out ${navScrolled ? "translate-y-0 opacity-100" : "-translate-y-1 opacity-0"}` })),
-                React.createElement("a", { href: "#", className: "group flex w-full items-center justify-center gap-3 rounded-none border border-transparent p-0 transition hover:border-white/20 hover:bg-white/5 sm:w-auto sm:justify-self-center sm:rounded-full sm:px-3 sm:py-2", "aria-label": "Fjolsenbanden hjem" },
-                    React.createElement("img", { src: logoUrl, alt: "Fjolsenbanden logo", className: "mx-auto h-16 w-auto max-w-[260px] sm:mx-0 sm:h-12 sm:max-w-none", loading: "lazy" }),
-                    React.createElement("span", { className: "sr-only" }, "Fjolsenbanden")),
-                React.createElement("div", { className: "flex items-center justify-end gap-2 sm:gap-3" },
-                    React.createElement("div", { className: "hidden items-center gap-1 text-sm font-semibold text-white/80 lg:flex" }, headerPrimaryLinks.map((link) => (React.createElement("a", { key: link.href || link.name, href: link.href, onClick: closeMobileNav, className: "rounded-full px-3 py-1 transition hover:bg-white/10 hover:text-white" }, link.name)))),
-                    headerSecondaryLinks.length > 0 ? (React.createElement("div", { className: "hidden items-center gap-3 text-sm sm:flex" }, headerSecondaryLinks.map((link) => (React.createElement("a", { key: link.href || link.name, href: link.href, className: "font-semibold text-zinc-300 transition hover:text-white" }, link.name))))) : null,
-                    React.createElement("button", { type: "button", onClick: toggleSkin, className: "inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/20 text-white transition hover:border-white/30 hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#13A0F9]", "aria-pressed": skin === "light" },
-                        React.createElement(Sun, { className: `h-5 w-5 ${skin === "light" ? "hidden" : ""}`, "aria-hidden": "true" }),
-                        React.createElement(Moon, { className: `h-5 w-5 ${skin === "light" ? "" : "hidden"}`, "aria-hidden": "true" }),
-                        React.createElement("span", { className: "sr-only" }, skin === "light" ? "Bytt til nattmodus" : "Bytt til dagmodus")),
-                    React.createElement("button", { type: "button", onClick: mobileNavOpen ? closeMobileNav : openMobileNav, className: "inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/20 text-white transition hover:border-white/30 hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#13A0F9] sm:hidden", "aria-expanded": mobileNavOpen, "aria-label": mobileNavOpen ? "Lukk meny" : "Åpne meny" },
-                        React.createElement(Menu, { className: `h-5 w-5 ${mobileNavOpen ? "hidden" : ""}`, "aria-hidden": "true" }),
-                        React.createElement(X, { className: `h-5 w-5 ${mobileNavOpen ? "" : "hidden"}`, "aria-hidden": "true" }),
-                        React.createElement("span", { className: "sr-only" }, mobileNavOpen ? "Lukk meny" : "Åpne meny")))),
-            React.createElement("header", { className: "relative z-10 overflow-hidden pb-32" },
+            React.createElement("header", { className: "relative z-10 overflow-hidden pb-20" },
                 React.createElement("div", { className: "absolute inset-0 -z-10" },
-                    React.createElement("img", { src: heroBackgroundImage, alt: "", "aria-hidden": "true", className: "h-full w-full object-cover", loading: "lazy" }),
-                    React.createElement("div", { className: "absolute inset-0 bg-gradient-to-b from-[#041149]/40 via-[#041149]/65 to-[#041149]/85" })),
+                    heroBackgroundImage
+                        ? React.createElement("img", { src: heroBackgroundImage, alt: "", "aria-hidden": "true", className: "h-full w-full object-cover", loading: "lazy" })
+                        : null,
+                    React.createElement("div", { className: "absolute inset-0 bg-gradient-to-b from-[#041149]/50 via-[#041149]/75 to-[#041149]" })),
                 React.createElement("section", { id: "hero", className: "px-6 pt-12 sm:px-8 lg:px-10" },
-                    React.createElement("div", { className: "mx-auto max-w-4xl space-y-6 text-center lg:space-y-8" },
-                        React.createElement("h1", { className: "text-4xl font-extrabold sm:text-5xl" }, heroHeadlineContent),
-                        React.createElement("p", { className: "text-base text-zinc-100 sm:text-lg" }, heroSubtitle),
-                        React.createElement("div", { className: "flex flex-col items-center gap-3 text-sm text-zinc-100 sm:flex-row sm:justify-center" },
-                            React.createElement("a", { href: "/updates.html", className: "inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-2 font-semibold uppercase tracking-[0.2em] text-white transition hover:bg-white/20" }, "\uD83C\uDF1F Ny oppdatering: Quest-board"),
-                            React.createElement("span", { className: "text-xs uppercase tracking-[0.3em] text-white/70" }, "Utforsk ukens quester og premier"))))),
+                    React.createElement("div", { className: "mx-auto max-w-6xl space-y-10" },
+                        React.createElement("div", { className: "flex justify-center" },
+                            React.createElement("img", { src: heroLogoUrl, alt: "Fjolsenbanden logo", className: "h-20 w-auto sm:h-24", loading: "lazy" })),
+                        React.createElement("div", { className: "grid gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-center" },
+                            React.createElement("div", { className: "space-y-4 text-left" },
+                                React.createElement("span", { className: "inline-flex w-fit items-center gap-2 rounded-full border border-white/10 bg-white/10 px-4 py-1 text-xs font-semibold uppercase tracking-[0.35em] text-white/80" }, "Velkommen"),
+                                React.createElement("h1", { className: "text-4xl font-extrabold leading-tight sm:text-5xl" }, heroHeadlineContent),
+                                React.createElement("p", { className: "text-lg text-zinc-100 sm:text-xl" }, heroSubtitle),
+                                React.createElement("p", { className: "text-base text-zinc-100" }, heroDescription)),
+                            React.createElement("div", { className: "relative" },
+                                React.createElement("div", { className: "relative overflow-hidden rounded-[28px] border border-white/10 bg-gradient-to-br from-white/10 via-white/5 to-white/0 p-6 shadow-[0_24px_48px_rgba(6,14,35,0.55)]" },
+                                    React.createElement("div", { className: "pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(255,47,156,0.18),transparent_45%),radial-gradient(circle_at_80%_0%,rgba(19,160,249,0.2),transparent_40%)]" }),
+                                    React.createElement("div", { className: "relative aspect-[4/3] overflow-hidden rounded-2xl bg-[#0b1540] p-6" },
+                                        React.createElement("img", { src: heroImageUrl, alt: "Fjolsenbanden illustrasjon", className: "h-full w-full object-contain", loading: "lazy" }))))))))
             React.createElement("main", { className: "flex flex-1 flex-col gap-28 pb-36" },
             React.createElement("section", { id: "hva-er", className: "px-6 sm:px-8 lg:px-10", style: sectionOrderStyle("heroIntro") },
-                React.createElement("div", { className: "mx-auto grid max-w-6xl gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:items-start" },
-                    React.createElement("div", { className: "space-y-6 text-left" },
-                        React.createElement("span", { className: "inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-4 py-1 text-xs font-semibold uppercase tracking-[0.35em] text-white/80" }, "Hva er FjOlsenbanden?"),
-                        React.createElement("h2", { className: "text-3xl font-bold sm:text-4xl" }, "\uD83C\uDFAE Spillglede for hele familien"),
-                        React.createElement("p", { className: "text-lg text-slate-100" }, "FjOlsenbanden er et raskt voksende gaming-community med over 2\u00A0500 medlemmer p\u00E5 Discord, 3\u00A0200+ f\u00F8lgere p\u00E5 Twitch og 4\u00A0200+ p\u00E5 TikTok. Her m\u00F8tes barn, ungdom og foreldre for \u00E5 game trygt sammen."),
-                        React.createElement("p", { className: "text-lg text-slate-100" }, "M\u00E5let v\u00E5rt er enkelt: \u00E5 skape et inkluderende milj\u00F8 der alle kan spille uten hets, mobbing eller negativ adferd. FjOlsen legger ned mange timer hver uke p\u00E5 konkurranser, turneringer og aktiviteter \u2013 alltid med fellesskap og spilleglede i sentrum."),
-                        React.createElement("div", { className: "rounded-3xl border border-white/10 bg-white/5 p-6 shadow-lg" },
-                            React.createElement("p", { className: "text-base text-slate-100" }, "\uD83C\uDFA5 Se videoen for \u00E5 m\u00F8te FjOlsen og bli kjent med historien bak communityet!"))),
-                    React.createElement("div", { className: "flex w-full flex-col items-center gap-6 lg:max-w-xl lg:items-start" },
-                        React.createElement("div", { className: "relative w-full overflow-hidden rounded-3xl border border-white/10 shadow-[0_28px_60px_rgba(7,12,28,0.6)]" },
-                            React.createElement("iframe", { className: "aspect-video w-full", width: "560", height: "315", src: presentationVideoUrl, title: "YouTube video player", allow: "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share", referrerPolicy: "strict-origin-when-cross-origin", allowFullScreen: true })),
-                        React.createElement("div", { className: "w-full rounded-3xl border border-white/10 bg-[#071d6f]/80 p-6 shadow-[0_18px_42px_rgba(12,21,45,0.45)]" },
-                            React.createElement("div", { className: "mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.35em] text-white/70 sm:text-sm sm:tracking-[0.3em]" },
+                React.createElement("div", { className: "mx-auto grid max-w-6xl gap-10 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:items-start" },
+                    React.createElement("div", { className: "space-y-6 text-left rounded-[2.5rem] border border-white/10 bg-white/5 p-6 shadow-[0_24px_48px_rgba(6,14,35,0.45)] sm:p-8" },
+                        React.createElement("span", { className: "inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-4 py-1 text-xs font-semibold uppercase tracking-[0.35em] text-white/80" }, aboutTitle),
+                        React.createElement("h2", { className: "text-3xl font-bold sm:text-4xl" }, aboutHeadline),
+                        React.createElement("p", { className: "text-lg text-slate-100" }, aboutDescription),
+                        React.createElement("p", { className: "text-lg text-slate-100" }, aboutSecondaryDescription),
+                        React.createElement("div", { className: "space-y-3 rounded-3xl border border-white/10 bg-[#0b1b4d]/70 p-5" },
+                            aboutBullets.map((item, index) => (React.createElement("div", { key: `${item}-${index}`, className: "flex gap-3" },
+                                React.createElement("span", { className: "mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-2xl bg-[#13A0F9]/15 text-[#13A0F9]" },
+                                    React.createElement(CheckCircle2, { className: "h-5 w-5" })),
+                                React.createElement("p", { className: "text-sm text-slate-100" }, item)))),
+                            React.createElement("div", { className: "mt-2 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-semibold uppercase tracking-[0.3em] text-white/70" },
                                 React.createElement(ShieldCheck, { className: "h-4 w-4 text-[#13A0F9]" }),
-                                " F\u00F8lg FjOlsenbanden"),
-                            React.createElement("div", { className: "grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-3 lg:grid-cols-5" }, platformLinks.map(({ icon, label, href }) => (React.createElement(PlatformButton, { key: label, icon: icon, label: label, href: href })))),
-                            React.createElement("p", { className: "mt-3 text-center text-xs text-zinc-400 sm:text-left" }, announcement))))),
+                                "Trygghet, inkludering og fellesskap")))),
+                    React.createElement("div", { className: "grid w-full gap-4 lg:gap-5" }, aboutHighlights.map((item, index) => (React.createElement("div", { key: item.id || `about-card-${index}`, className: "relative overflow-hidden rounded-3xl border border-white/10 bg-[#071d6f]/80 p-6 shadow-[0_22px_46px_rgba(7,14,35,0.5)]" },
+                        React.createElement("div", { className: "absolute inset-0 opacity-60", "aria-hidden": "true", style: {
+                                background: "radial-gradient(circle at 20% 20%, rgba(19,160,249,0.22), transparent 45%), radial-gradient(circle at 80% 10%, rgba(255,47,156,0.18), transparent 45%)",
+                            } }),
+                        React.createElement("div", { className: "relative space-y-3" },
+                            React.createElement("div", { className: "flex items-center gap-3" },
+                                React.createElement("span", { className: "flex h-11 w-11 items-center justify-center rounded-2xl bg-white/10 text-[#13A0F9]" },
+                                    React.createElement(ShieldCheck, { className: "h-5 w-5" })),
+                                React.createElement("div", { className: "flex flex-col" },
+                                    React.createElement("span", { className: "text-[10px] font-semibold uppercase tracking-[0.35em] text-white/70" }, "Trygt og positivt"),
+                                    React.createElement("h3", { className: "text-xl font-semibold text-white" }, item.title))),
+                            React.createElement("p", { className: "text-sm leading-relaxed text-slate-100" }, item.description),
+                            React.createElement("div", { className: "inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.28em] text-[#13A0F9]" },
+                                "Kort tekst ",
+                                String(index + 1).padStart(2, "0"))))))))),
             liveStream
                 ? (React.createElement("section", { id: "live", ref: liveSectionRef, className: "px-6 sm:px-8 lg:px-10", style: sectionOrderStyle("liveStream") },
                     React.createElement("div", { className: "mx-auto grid max-w-7xl gap-8 lg:grid-cols-3" },
@@ -1082,26 +1139,64 @@ export default function FjolsenbandenHome() {
                             React.createElement("div", { className: "mt-3 rounded-lg border border-white/10 bg-[#041149]/80 px-3 py-2 text-xs text-slate-300" }, "Regelbot passer p\u00E5 at alle er klare f\u00F8r vi slipper dere l\u00F8s i chatten."))))
                 : null,
             React.createElement("section", { id: "community", className: "px-6 sm:px-8 lg:px-10", style: sectionOrderStyle("community") },
-                React.createElement("div", { id: "bli-medlem", className: "sr-only", "aria-hidden": "true" }),
-                React.createElement("div", { className: "mx-auto max-w-6xl space-y-10 rounded-[2.5rem] border border-white/10 bg-white/5 p-6 text-center shadow-[0_24px_48px_rgba(6,14,35,0.45)] sm:p-10" },
-                    React.createElement("div", { className: "space-y-3" },
-                        React.createElement("span", { className: "inline-flex items-center justify-center gap-2 rounded-full bg-white/10 px-4 py-1 text-xs font-semibold uppercase tracking-[0.35em] text-white/80" }, "Community"),
-                        React.createElement("h2", { className: "text-3xl font-bold text-white sm:text-4xl" }, "FjOlsenbanden - et community i ", React.createElement("span", { className: "text-[#13A0F9]" }, "vekst!")),
-                        React.createElement("p", { className: "mx-auto max-w-3xl text-lg text-slate-100" }, "Følg FjOlsenbanden på våre kanaler for å få med deg alle nyheter! Det kan være unike events på de forskjellige kanalene."),
-                        React.createElement("p", { className: "text-sm text-slate-300" }, "Legg til lenkene dine i adminpanelet, så oppdateres knappene automatisk.")),
-                    React.createElement("div", { className: "grid gap-4 sm:grid-cols-2 lg:grid-cols-5" },
-                        communitySocials.map((entry) => {
-                            const style = SOCIAL_PLATFORM_STYLES[entry.platform] || SOCIAL_PLATFORM_STYLES.default;
-                            return (React.createElement("a", { key: `${entry.label}-${entry.platform}`, href: entry.href, target: "_blank", rel: "noreferrer", className: "group relative flex h-full flex-col justify-between rounded-2xl border border-white/10 bg-[#0b1b4d]/70 p-4 text-left shadow-[0_18px_36px_rgba(12,21,45,0.45)] transition hover:-translate-y-1 hover:border-white/20 hover:bg-[#102869]/80" },
-                                React.createElement("div", { className: "flex items-start justify-between gap-3" },
-                                    React.createElement("div", null,
-                                        React.createElement("p", { className: "text-3xl font-bold text-white" }, entry.stat),
-                                        React.createElement("p", { className: "text-xs font-semibold uppercase tracking-[0.25em] text-white/60" }, entry.label)),
-                                    React.createElement("span", { className: `grid h-12 w-12 place-content-center rounded-xl ${style.badge}` }, style.icon)),
-                                React.createElement("p", { className: "mt-4 text-sm text-slate-200" }, "Trykk for å se siste oppdateringer"),
-                                React.createElement("span", { className: "pointer-events-none absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-40" })));
-                        }))))),
-partnersEnabled ? renderPartnerSection("samarbeid", "partners", { includeLogosId: true, variant: "showcase" }) : null,
+                React.createElement("div", { className: "mx-auto grid max-w-6xl gap-10 lg:grid-cols-2 lg:items-start" },
+                    React.createElement("div", { id: "bli-medlem", className: "space-y-8 rounded-[2.5rem] border border-white/10 bg-white/5 p-6 shadow-[0_24px_48px_rgba(6,14,35,0.45)] sm:p-8 lg:p-10" },
+                        React.createElement("div", { className: "space-y-4 text-left" },
+                            React.createElement("span", { className: "inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-4 py-1 text-xs font-semibold uppercase tracking-[0.35em] text-white/80" }, "Bli medlem"),
+                            React.createElement("h2", { className: "text-3xl font-bold text-white sm:text-4xl" }, "Bli medlem"),
+                            React.createElement("p", { className: "text-lg text-slate-100" }, "Det er gratis å bli medlem i FjOlsenbanden! Alle kan delta i konkurranser, men for å vinne premier må du være registrert medlem."),
+                            React.createElement("p", { className: "text-base text-slate-100 sm:text-lg" }, "Velg pakken som passer deg, og bruk knappene under for å fullføre påmeldingen.")),
+                        React.createElement("div", { className: "space-y-6 lg:grid lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] lg:items-start lg:gap-6 lg:space-y-0" },
+                            React.createElement("div", { className: "space-y-6 rounded-3xl border border-white/10 bg-[#0b1b4d]/70 p-6 text-left shadow-[0_24px_48px_rgba(6,14,35,0.45)] sm:p-8" },
+                                React.createElement("div", { className: "flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between" },
+                                    React.createElement("div", { className: "space-y-1" },
+                                        React.createElement("h3", { className: "text-xl font-semibold text-white" }, "Velg pakke"),
+                                        React.createElement("p", { className: "text-sm text-slate-200" }, "Opptil tre pakker kan vises samtidig, og hver kan ha egne påmeldingsknapper.")),
+                                    React.createElement("span", { className: "rounded-full border border-white/15 bg-white/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.3em] text-white/70" }, "Gratis nå")),
+                                React.createElement("div", { className: "grid gap-4" }, membershipPlans.map((plan) => (React.createElement(MembershipCard, { key: plan.id, title: plan.title, price: plan.price, color: plan.color, features: plan.features, buttons: plan.buttons })))),
+                                React.createElement("p", { className: "text-sm text-slate-200" },
+                                    "Ved å registrere deg bekrefter du at du har lest ",
+                                    React.createElement("a", { href: "/regler.html", className: "text-[#13A0F9] underline decoration-dotted underline-offset-4 transition hover:text-[#2bb5ff]" }, "reglene våre"),
+                                    " og følger dem i alle aktiviteter.")),
+                            React.createElement("div", { className: "space-y-4 rounded-3xl border border-white/10 bg-white/5 p-6 text-left shadow-[0_24px_48px_rgba(6,14,35,0.45)] sm:p-8" },
+                                React.createElement("h3", { className: "text-base font-semibold uppercase tracking-[0.25em] text-white/80" }, "Regler FjOlsenbanden"),
+                                React.createElement("p", { className: "text-sm text-slate-200" }, "For å opprettholde et trygt og godt miljø har vi flere regler i FjOlsenbanden. Se alle reglene på Discord."),
+                                React.createElement("div", { className: "flex flex-wrap gap-3" },
+                                    React.createElement("a", {
+                                        href: "https://discord.com/channels/1150105334187311154/1217560685232259072",
+                                        target: "_blank",
+                                        rel: "noopener noreferrer",
+                                        className: "inline-flex items-center justify-center gap-2 rounded-full bg-[#5865F2] px-5 py-2 text-sm font-semibold text-white shadow-[0_10px_24px_rgba(88,101,242,0.35)] transition hover:bg-[#4753d9] focus:outline-none focus:ring-2 focus:ring-[#5865F2]/60",
+                                    },
+                                        React.createElement(DiscordIcon, { className: "h-4 w-4", "aria-hidden": "true" }),
+                                        React.createElement("span", null, "Se reglene i Discord")),
+                                    React.createElement("button", {
+                                        type: "button",
+                                        "data-open-regler-modal": true,
+                                        className: "inline-flex items-center justify-center gap-2 rounded-full border border-white/15 px-5 py-2 text-sm font-semibold text-white transition hover:border-white/30 hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/40",
+                                    },
+                                        "Les reglene")),
+                                React.createElement("div", { className: "space-y-3 text-sm text-slate-200" },
+                                    React.createElement("p", { className: "rounded-xl border border-white/10 bg-[#131f3f]/80 p-3" },
+                                        React.createElement("span", { className: "block text-xs font-semibold uppercase tracking-wide text-[#4ade80]" }, "Premier:"),
+                                        "Alle som vil kan delta på OPEN CUSTOMS, men for å vinne premier MÅ du ha meldt deg inn i FjOlsenbanden!"),
+                                    React.createElement("p", { className: "rounded-xl border border-white/10 bg-[#131f3f]/80 p-3" },
+                                        React.createElement("span", { className: "block text-xs font-semibold uppercase tracking-wide text-[#facc15]" }, "Ingen mobbing/trakassering!"),
+                                        "Enhver form for mobbing, trakassering eller hatefulle ytringer er strengt forbudt. Gjentagelser vil føre til utestengelse fra FjOlsenbanden!"),
+                                    React.createElement("p", { className: "rounded-xl border border-white/10 bg-[#131f3f]/80 p-3" },
+                                        React.createElement("span", { className: "block text-xs font-semibold uppercase tracking-wide text-[#13A0F9]" }, "Ha det gøy, stay positive:"),
+                                        "Viktigst av alt, ha det gøy og nyt den positive spillopplevelsen vi skaper sammen! Hold chatten positiv og behandle alle i chatten inkludert moderatorer, med respekt."))))),
+                    React.createElement("div", { className: "space-y-6 rounded-[2.5rem] border border-white/10 bg-white/5 p-6 shadow-[0_24px_48px_rgba(6,14,35,0.45)] sm:p-8" },
+                        React.createElement("div", { className: "grid gap-4 sm:grid-cols-3" }, stats.map((stat) => (React.createElement("div", { key: stat.label, className: "rounded-2xl border border-white/10 bg-[#0b1b4d]/70 p-4 text-center" },
+                            React.createElement("p", { className: "text-2xl font-bold text-cyan-300" }, stat.value),
+                            React.createElement("p", { className: "text-xs font-medium uppercase tracking-wide text-slate-300" }, stat.label))))),
+                        React.createElement("div", { className: "rounded-3xl border border-white/10 bg-[#071d6f]/80 p-6 shadow-[0_18px_42px_rgba(12,21,45,0.45)]" },
+                            React.createElement("h3", { className: "text-base font-semibold uppercase tracking-[0.25em] text-white/80" }, "F\u00F8lg oss"),
+                            React.createElement("div", { className: "mt-4 grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-3 lg:grid-cols-5" }, socialLinks.map((link) => (React.createElement("a", { key: link.label, href: link.href, className: "inline-flex items-center justify-center gap-2 rounded-xl border border-white/15 bg-white/10 px-4 py-2 text-sm font-medium text-white/90 transition hover:bg-white/20 sm:justify-start", rel: "noreferrer", target: "_blank" },
+                                link.icon,
+                                React.createElement("span", null, link.label)))))),
+                        React.createElement("a", { href: "#bli-medlem", className: "fj-ring-offset inline-flex w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#13A0F9] to-[#FF2F9C] px-6 py-3 text-sm font-semibold uppercase tracking-[0.2em] text-white shadow-[0_18px_36px_rgba(19,160,249,0.35)] transition hover:from-[#0d8bd6] hover:to-[#e12585]" }, "Bli med i communityet", React.createElement(ArrowRight, { className: "h-4 w-4", "aria-hidden": "true" }))))),
+            partnersEnabled ? renderPartnerSection("samarbeid", "partners", { includeLogosId: true, variant: "showcase" }) : null,
             React.createElement("section", { id: "tilbud", className: "mt-20 px-6 sm:px-8 lg:px-10", style: sectionOrderStyle("offerings") },
                 React.createElement("div", { className: "mx-auto max-w-6xl space-y-8 rounded-3xl border border-white/10 bg-white/5 p-6 text-center shadow-[0_24px_48px_rgba(6,14,35,0.45)] sm:p-8 lg:p-10" },
                     React.createElement("div", { className: "space-y-3" },
@@ -1115,8 +1210,8 @@ partnersEnabled ? renderPartnerSection("samarbeid", "partners", { includeLogosId
                         React.createElement("p", { className: "text-sm text-zinc-100" }, "Ta kontakt hvis du ønsker mer informasjon eller vil booke en økt."))),
             contactForm ? (React.createElement("section", { id: "kontakt", className: "mt-20 px-6 sm:px-8 lg:px-10", style: sectionOrderStyle("contact") },
                 React.createElement("div", { className: "mx-auto max-w-5xl space-y-6 rounded-3xl border border-white/10 bg-[#161f33]/90 p-6 text-center shadow-2xl sm:p-8" },
-                    React.createElement("h2", { className: "text-3xl font-bold" }, "Kontakt oss"),
-                    React.createElement("p", { className: "text-zinc-100" }, "Har du spørsmål om medlemskap, samarbeid eller events? Send oss en melding så kommer vi tilbake til deg."),
+                    React.createElement("h2", { className: "text-3xl font-bold" }, contactTitle),
+                    React.createElement("p", { className: "text-zinc-100" }, contactDescription),
                     React.createElement("div", { className: "flex justify-center" },
                         React.createElement("a", {
                             href: "/admin",
@@ -1136,14 +1231,14 @@ partnersEnabled ? renderPartnerSection("samarbeid", "partners", { includeLogosId
                             React.createElement("textarea", { id: "message", name: "message", rows: 4, required: true, className: "w-full rounded-xl border border-white/15 bg-white/5 px-4 py-3 text-sm text-white placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-[#13A0F9]" })),
                         React.createElement("div", { className: "md:col-span-2 flex flex-col gap-2 text-sm text-zinc-100 md:flex-row md:items-center md:justify-between" },
                             React.createElement("span", null, "Vi svarer så snart vi kan, som regel innen 1–2 virkedager."),
-                            React.createElement(Button, { type: "submit", size: "lg", className: "rounded-full bg-gradient-to-r from-[#13A0F9] to-[#FF2F9C] px-6 font-semibold text-white shadow-[0_16px_28px_rgba(19,160,249,0.35)] transition hover:from-[#0d8bd6] hover:to-[#e12585]" }, "Send melding")))))) : null,
+                            React.createElement(Button, { type: "submit", size: "lg", className: "rounded-full px-6 font-semibold text-white shadow-[0_16px_28px_rgba(255,255,255,0.15)] transition hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40", style: { backgroundColor: contactButtonColor, boxShadow: `0 16px 28px ${contactButtonShadow}` } }, "Send melding")))))) : null,
             React.createElement("section", { id: "tilbakemeldinger", className: "mt-20 px-6 sm:px-8 lg:px-10", style: sectionOrderStyle("feedback") },
                 React.createElement("div", { className: "mx-auto max-w-6xl space-y-8 rounded-[2.5rem] border border-white/10 bg-white/5 p-6 text-center shadow-[0_30px_70px_rgba(6,14,35,0.6)] sm:p-8" },
                     React.createElement("span", { className: "inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-1 text-xs font-semibold uppercase tracking-[0.35em] text-white/80" }, "Tusen takk ",
                         React.createElement("span", { "aria-hidden": "true" }, "❤")),
                     React.createElement("h2", { className: "text-3xl font-bold text-white sm:text-4xl" }, "Feedback fra FjOlsenbanden"),
                     React.createElement("p", { className: "mx-auto max-w-3xl text-base text-white/80 sm:text-lg" }, "Her er ekte stemmer fra barn, ungdom og foreldre som har sendt varme ord til FjOlsenbanden. Vi setter enorm pris på alle som deler!"),
-                    React.createElement("div", { className: "grid gap-6 text-left md:grid-cols-2" }, feedbackVoices.map(({ id, quote, author, accent }) => (React.createElement("article", { key: id, className: "flex h-full flex-col justify-between gap-4 rounded-3xl border border-white/15 bg-white/5 p-6 text-left shadow-[0_20px_44px_rgba(6,14,35,0.55)]" },
+                    React.createElement("div", { className: "grid gap-6 text-left md:grid-cols-2" }, feedbackEntries.map(({ id, quote, author, accent }) => (React.createElement("article", { key: id, className: "flex h-full flex-col justify-between gap-4 rounded-3xl border border-white/15 bg-white/5 p-6 text-left shadow-[0_20px_44px_rgba(6,14,35,0.55)]" },
                         React.createElement("p", { className: "text-base font-semibold text-white" }, quote),
                         React.createElement("p", { className: `text-sm font-medium ${accent}` }, author))))) ,
                     React.createElement("div", { className: "flex flex-wrap items-center justify-center gap-4 pt-2" },
@@ -1170,14 +1265,8 @@ partnersEnabled ? renderPartnerSection("samarbeid", "partners", { includeLogosId
                         React.createElement("span", null, "Admin")))))),
         React.createElement("div", { className: "fj-footer fixed inset-x-0 bottom-0 z-50 border-t border-white/10 bg-[#041149]/80 backdrop-blur" },
             React.createElement("div", { className: "mx-auto flex w-full max-w-4xl items-center gap-3 px-4 pb-[calc(0.9rem+env(safe-area-inset-bottom))] pt-3 sm:gap-4" },
-                React.createElement("button", { type: "button", onClick: footerMenuOpen ? closeFooterMenu : openFooterMenu, "aria-expanded": footerMenuOpen, "aria-controls": "footer-bottom-sheet", className: "fj-ring-offset inline-flex flex-1 items-center justify-center gap-2 rounded-full border border-white/20 bg-white/5 px-4 py-3 text-sm font-semibold text-white transition hover:border-white/30 hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#13A0F9]" },
-                    footerMenuOpen ? React.createElement(X, { className: "h-5 w-5", "aria-hidden": "true" }) : React.createElement(Menu, { className: "h-5 w-5", "aria-hidden": "true" }),
-                    React.createElement("span", null, footerMenuOpen ? "Lukk" : "Meny")),
-                React.createElement("a", { href: "#kontakt", onClick: closeFooterMenu, className: "fj-ring-offset inline-flex flex-1 items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#13A0F9] to-[#FF2F9C] px-4 py-3 text-sm font-semibold text-white shadow-[0_16px_32px_rgba(19,160,249,0.35)] transition hover:from-[#0d8bd6] hover:to-[#e12585] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#13A0F9] focus-visible:ring-offset-2" },
-                    "Kontakt oss",
-                    React.createElement(ArrowRight, { className: "h-4 w-4", "aria-hidden": "true" })))),
-        mobileNavPortal,
-        footerMenuPortal,
+                React.createElement("a", { href: "#hva-er", className: "fj-ring-offset inline-flex flex-1 items-center justify-center gap-2 rounded-full border border-white/20 bg-white/5 px-4 py-3 text-sm font-semibold text-white transition hover:border-white/30 hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#13A0F9]" }, "Neste"),
+                React.createElement("a", { href: "#bli-medlem", className: "fj-ring-offset inline-flex flex-1 items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#13A0F9] to-[#FF2F9C] px-4 py-3 text-sm font-semibold text-white shadow-[0_16px_32px_rgba(19,160,249,0.35)] transition hover:from-[#0d8bd6] hover:to-[#e12585] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#13A0F9] focus-visible:ring-offset-2" }, "Bli medlem"))),
         registrationOpen ? (React.createElement("div", { className: "fixed inset-0 z-[100] flex items-center justify-center px-4 py-10" },
             React.createElement("button", { type: "button", "aria-label": "Lukk registrering", onClick: closeRegistration, className: "absolute inset-0 h-full w-full bg-black/70" }),
             React.createElement("div", { className: "relative z-[101] w-full max-w-2xl overflow-hidden rounded-3xl border border-white/10 bg-[#0d1733] shadow-[0_32px_80px_rgba(4,8,20,0.7)]" },
@@ -1361,7 +1450,8 @@ function PlatformButton({ icon, label, href }) {
         React.createElement("span", { className: "text-white/90" }, icon),
         React.createElement("span", null, label)));
 }
-function MembershipCard({ title, price, color, features, onSelect, }) {
+function MembershipCard({ title, price, color, features, buttons, }) {
+    const featureList = Array.isArray(features) ? features : [];
     const colorClass = (tierColor) => {
         switch (tierColor) {
             case "green":
@@ -1374,19 +1464,34 @@ function MembershipCard({ title, price, color, features, onSelect, }) {
                 return "";
         }
     };
-    return (React.createElement(Card, { className: `rounded-2xl border bg-[#1f2940] shadow-lg transition-transform hover:-translate-y-1 ${colorClass(color)}` },
+    const actionButtons = Array.isArray(buttons)
+        ? buttons
+            .slice(0, 2)
+            .map((button, index) => ({
+            label: typeof button.label === "string" ? button.label.trim() : "",
+            url: typeof button.url === "string" ? button.url.trim() : "",
+            index,
+        }))
+            .filter((button) => button.label && button.url)
+        : [];
+    const buttonClass = (index) => (index === 0
+        ? "bg-gradient-to-r from-[#13A0F9] to-[#4ade80] hover:from-[#0d8bd6] hover:to-[#22c55e]"
+        : "bg-gradient-to-r from-[#FF2F9C] to-[#8b5cf6] hover:from-[#e12585] hover:to-[#7c3aed]");
+    return (React.createElement(Card, { className: `rounded-3xl border bg-[#0f1a36] shadow-lg transition-transform hover:-translate-y-1 ${colorClass(color)}` },
         React.createElement(CardHeader, null,
             React.createElement(CardTitle, { className: "flex items-center gap-2 text-white" },
                 React.createElement(Gift, { className: "h-6 w-6" }),
                 " ",
-                title)),
+                title),
+            React.createElement("p", { className: "text-sm text-slate-200" }, price)),
         React.createElement(CardContent, { className: "space-y-4" },
-            React.createElement("div", { className: "text-3xl font-bold text-white" }, price),
-            React.createElement("ul", { className: "space-y-2 text-sm text-zinc-100" }, features.map((feature) => (React.createElement("li", { key: feature, className: "flex items-center gap-2" },
-                React.createElement(Trophy, { className: "h-4 w-4 text-[#13A0F9]" }),
+            React.createElement("ul", { className: "space-y-2 text-sm text-zinc-100" }, featureList.map((feature) => (React.createElement("li", { key: feature, className: "flex items-start gap-2" },
+                React.createElement(Trophy, { className: "mt-1 h-4 w-4 text-[#13A0F9]" }),
                 " ",
                 feature)))),
-            React.createElement(Button, { size: "lg", className: "w-full rounded-full bg-gradient-to-r from-[#13A0F9] to-[#FF2F9C] font-semibold text-white shadow-[0_16px_28px_rgba(19,160,249,0.35)] transition hover:from-[#0d8bd6] hover:to-[#e12585]", type: "button", onClick: () => onSelect(title) }, "Velg"))));
+            actionButtons.length > 0 ? (React.createElement("div", { className: "grid gap-3 sm:grid-cols-2" }, actionButtons.map((button) => (React.createElement("a", { key: `${title}-${button.label}`, href: button.url, target: "_blank", rel: "noopener noreferrer", className: `inline-flex items-center justify-center gap-2 rounded-full px-4 py-2 text-sm font-semibold text-white shadow-[0_16px_28px_rgba(19,160,249,0.35)] transition ${buttonClass(button.index)}` },
+                React.createElement(ArrowRight, { className: "h-4 w-4" }),
+                button.label))))) : null)));
 }
 function VideoLightbox({ videoUrl, onClose, title, }) {
     return (React.createElement("div", { className: "fixed inset-0 z-[100] flex items-center justify-center bg-black/80 px-4 py-10", role: "dialog", "aria-modal": "true", "aria-label": title, onClick: onClose },

@@ -4,16 +4,19 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 import { useSiteConfig } from "@/fragments/admin/context/SiteConfigContext";
 import { generateId } from "@/fragments/admin/data/defaultSiteState";
 
 const SECTION_TABS = [
     { id: "home", label: "Hjem" },
     { id: "live", label: "Live" },
+    { id: "about", label: "Om" },
     { id: "membership", label: "Medlemskap" },
     { id: "rewards", label: "Premier" },
     { id: "partners", label: "Partnere" },
     { id: "contact", label: "Kontakt" },
+    { id: "feedback", label: "Feedback" },
 ];
 
 const LIVE_PLATFORMS = [
@@ -43,6 +46,8 @@ export default function SectionsPage() {
                 return React.createElement(HomeSectionForm, { draft: draft, updateDraftConfig: updateDraftConfig });
             case "live":
                 return React.createElement(LiveSectionForm, { draft: draft, updateDraftConfig: updateDraftConfig });
+            case "about":
+                return React.createElement(AboutSectionForm, { draft: draft, updateDraftConfig: updateDraftConfig });
             case "membership":
                 return React.createElement(MembershipSectionForm, { draft: draft, updateDraftConfig: updateDraftConfig });
             case "rewards":
@@ -51,6 +56,8 @@ export default function SectionsPage() {
                 return React.createElement(PartnersSectionForm, { draft: draft, updateDraftConfig: updateDraftConfig });
             case "contact":
                 return React.createElement(ContactSectionForm, { draft: draft, updateDraftConfig: updateDraftConfig });
+            case "feedback":
+                return React.createElement(FeedbackSectionForm, { draft: draft, updateDraftConfig: updateDraftConfig });
             default:
                 return null;
         }
@@ -170,6 +177,36 @@ function LiveSectionForm({ draft, updateDraftConfig }) {
     );
 }
 
+function AboutSectionForm({ draft, updateDraftConfig }) {
+    const section = draft.sections.about;
+    return (React.createElement("div", { className: "grid gap-4 sm:grid-cols-2" },
+        React.createElement(Field, { label: "Seksjonstittel", value: section.title, onChange: (value) => updateDraftConfig((next) => {
+                next.sections.about.title = value;
+                return next;
+            }), fullWidth: true }),
+        React.createElement(Field, { label: "Video-embed URL", value: section.videoUrl, onChange: (value) => updateDraftConfig((next) => {
+                next.sections.about.videoUrl = value;
+                return next;
+            }), fullWidth: true }),
+        React.createElement(Field, { label: "Ingress", value: section.lead, onChange: (value) => updateDraftConfig((next) => {
+                next.sections.about.lead = value;
+                return next;
+            }), fullWidth: true }),
+        React.createElement(Field, { label: "Hovedtekst", value: section.body, onChange: (value) => updateDraftConfig((next) => {
+                next.sections.about.body = value;
+                return next;
+            }), fullWidth: true, renderInput: (props) => (React.createElement("textarea", { ...props, rows: 4, className: "w-full rounded-xl border border-slate-800 bg-slate-900 px-3 py-2 text-sm text-slate-100" })) }),
+        React.createElement("div", { className: "rounded-2xl border border-slate-800 bg-slate-900/50 p-4 text-sm text-slate-300 sm:col-span-2" },
+            "Forhåndsvisning:",
+            React.createElement("div", { className: "mt-3 grid gap-4 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)]" },
+                React.createElement("div", { className: "overflow-hidden rounded-xl border border-slate-800 bg-slate-950" },
+                    React.createElement("iframe", { title: "Om-seksjon video", src: section.videoUrl, className: "aspect-video w-full", allow: "accelerometer; autoplay; clipboard-write; encrypted-media; picture-in-picture", allowFullScreen: true })),
+                React.createElement("div", { className: "space-y-2 rounded-xl border border-slate-800 bg-slate-950/60 p-4" },
+                    React.createElement("p", { className: "text-xs uppercase tracking-[0.3em] text-slate-400" }, section.title),
+                    React.createElement("h4", { className: "text-lg font-semibold text-white" }, section.lead),
+                    React.createElement("p", { className: "text-sm leading-relaxed text-slate-200" }, section.body)))))));
+}
+
 function MembershipSectionForm({ draft, updateDraftConfig }) {
     const plans = draft.sections.membership.plans;
 
@@ -191,6 +228,7 @@ function MembershipSectionForm({ draft, updateDraftConfig }) {
         updateDraftConfig((next) => {
             const item = { ...next.sections.membership.plans[index] };
             mutate(item);
+            item.buttons = Array.isArray(item.buttons) ? item.buttons.slice(0, 2) : [];
             next.sections.membership.plans[index] = item;
             return next;
         });
@@ -203,6 +241,7 @@ function MembershipSectionForm({ draft, updateDraftConfig }) {
                 name: "Ny plan",
                 price: "0",
                 features: ["Ny fordel"],
+                buttons: [],
             });
             return next;
         });
@@ -232,6 +271,45 @@ function MembershipSectionForm({ draft, updateDraftConfig }) {
     const removeFeature = (index, featureIndex) => {
         updateDraftConfig((next) => {
             next.sections.membership.plans[index].features.splice(featureIndex, 1);
+            return next;
+        });
+    };
+
+    const updateButton = (planIndex, buttonIndex, field, value) => {
+        updateDraftConfig((next) => {
+            const buttons = Array.isArray(next.sections.membership.plans[planIndex].buttons)
+                ? [...next.sections.membership.plans[planIndex].buttons]
+                : [];
+            buttons[buttonIndex] = {
+                ...buttons[buttonIndex],
+                [field]: value,
+            };
+            next.sections.membership.plans[planIndex].buttons = buttons.slice(0, 2);
+            return next;
+        });
+    };
+
+    const addButton = (planIndex) => {
+        updateDraftConfig((next) => {
+            const buttons = Array.isArray(next.sections.membership.plans[planIndex].buttons)
+                ? [...next.sections.membership.plans[planIndex].buttons]
+                : [];
+            if (buttons.length >= 2) {
+                return next;
+            }
+            buttons.push({ label: "Ny knapp", url: "" });
+            next.sections.membership.plans[planIndex].buttons = buttons;
+            return next;
+        });
+    };
+
+    const removeButton = (planIndex, buttonIndex) => {
+        updateDraftConfig((next) => {
+            const buttons = Array.isArray(next.sections.membership.plans[planIndex].buttons)
+                ? [...next.sections.membership.plans[planIndex].buttons]
+                : [];
+            buttons.splice(buttonIndex, 1);
+            next.sections.membership.plans[planIndex].buttons = buttons;
             return next;
         });
     };
@@ -295,7 +373,37 @@ function MembershipSectionForm({ draft, updateDraftConfig }) {
                                 onClick: () => addFeature(index),
                             },
                                 React.createElement(Plus, { size: 16, className: "mr-2" }),
-                                "Ny fordel"))))
+                                "Ny fordel")),
+                        React.createElement("div", { className: "space-y-2" },
+                            React.createElement(Label, { className: "text-xs uppercase text-slate-400" }, "Knapper (maks 2)"),
+                            (plan.buttons || []).map((button, buttonIndex) => (
+                                React.createElement("div", { key: `${plan.id}-button-${buttonIndex}`, className: "grid gap-2 rounded-xl border border-slate-800/80 bg-slate-900/70 p-3 sm:grid-cols-[1fr,1fr,auto]" },
+                                    React.createElement(Input, {
+                                        placeholder: "Label",
+                                        value: button.label,
+                                        onChange: (event) => updateButton(index, buttonIndex, "label", event.target.value),
+                                        className: "border-slate-800 bg-slate-900 text-slate-100",
+                                    }),
+                                    React.createElement(Input, {
+                                        placeholder: "Lenke",
+                                        value: button.url,
+                                        onChange: (event) => updateButton(index, buttonIndex, "url", event.target.value),
+                                        className: "border-slate-800 bg-slate-900 text-slate-100",
+                                    }),
+                                    React.createElement(Button, {
+                                        type: "button",
+                                        className: "justify-center bg-rose-500/10 text-rose-300 hover:bg-rose-500/20",
+                                        onClick: () => removeButton(index, buttonIndex),
+                                    },
+                                        React.createElement(Trash2, { size: 14 })))),
+                            React.createElement(Button, {
+                                type: "button",
+                                className: "bg-slate-800 text-slate-200 hover:bg-slate-700",
+                                onClick: () => addButton(index),
+                                disabled: (plan.buttons || []).length >= 2,
+                            },
+                                React.createElement(Plus, { size: 16, className: "mr-2" }),
+                                "Ny knapp"))))
             )),
             React.createElement(Button, {
                 type: "button",
@@ -576,12 +684,40 @@ function ContactSectionForm({ draft, updateDraftConfig }) {
     return (
         React.createElement("div", { className: "grid gap-4 sm:grid-cols-2" },
             React.createElement(Field, {
+                label: "Tittel",
+                value: section.title,
+                onChange: (value) => updateDraftConfig((next) => {
+                    next.sections.contact.title = value;
+                    return next;
+                }),
+                fullWidth: true,
+            }),
+            React.createElement(Field, {
+                label: "Ingress",
+                value: section.description,
+                onChange: (value) => updateDraftConfig((next) => {
+                    next.sections.contact.description = value;
+                    return next;
+                }),
+                renderInput: (props) => (React.createElement("textarea", { ...props, rows: 3 })),
+                fullWidth: true,
+            }),
+            React.createElement(Field, {
                 label: "E-post",
                 value: section.email,
                 onChange: (value) => updateDraftConfig((next) => {
                     next.sections.contact.email = value;
                     return next;
                 }),
+            }),
+            React.createElement(Field, {
+                label: "Knappfarge",
+                value: section.buttonColor,
+                onChange: (value) => updateDraftConfig((next) => {
+                    next.sections.contact.buttonColor = value;
+                    return next;
+                }),
+                renderInput: (props) => (React.createElement("input", { ...props, type: "color", className: "h-10 w-full rounded-xl border border-slate-800 bg-slate-900 p-1" })),
             }),
             React.createElement(Field, {
                 label: "Discord",
@@ -616,6 +752,69 @@ function ContactSectionForm({ draft, updateDraftConfig }) {
                 }),
                 fullWidth: true,
             }))
+    );
+}
+
+function FeedbackSectionForm({ draft, updateDraftConfig }) {
+    var _a, _b;
+    const entries = (_b = (_a = draft.sections.feedback) === null || _a === void 0 ? void 0 : _a.entries) !== null && _b !== void 0 ? _b : [];
+
+    const addEntry = () => {
+        updateDraftConfig((next) => {
+            var _a;
+            const list = [...((_a = next.sections.feedback) === null || _a === void 0 ? void 0 : _a.entries) || []];
+            list.push({ id: generateId("feedback"), quote: "", author: "" });
+            next.sections.feedback = next.sections.feedback || { entries: [] };
+            next.sections.feedback.entries = list;
+            return next;
+        });
+    };
+
+    const updateEntry = (index, key, value) => {
+        updateDraftConfig((next) => {
+            const list = [...(next.sections.feedback?.entries ?? [])];
+            if (!list[index]) {
+                return next;
+            }
+            list[index] = { ...list[index], [key]: value };
+            next.sections.feedback = next.sections.feedback || { entries: [] };
+            next.sections.feedback.entries = list;
+            return next;
+        });
+    };
+
+    const removeEntry = (index) => {
+        updateDraftConfig((next) => {
+            const list = [...(next.sections.feedback?.entries ?? [])];
+            list.splice(index, 1);
+            next.sections.feedback = next.sections.feedback || { entries: [] };
+            next.sections.feedback.entries = list;
+            return next;
+        });
+    };
+
+    return (React.createElement("div", { className: "space-y-4" },
+        React.createElement("div", { className: "flex items-center justify-between" },
+            React.createElement("div", { className: "space-y-1" },
+                React.createElement("p", { className: "text-sm font-semibold text-slate-100" }, "Tilbakemeldinger"),
+                React.createElement("p", { className: "text-xs text-slate-400" }, "Legg til sitater fra medlemmer eller foresatte.")),
+            React.createElement(Button, { type: "button", onClick: addEntry, className: "border border-slate-800 bg-slate-900 text-slate-100 hover:bg-slate-800" },
+                React.createElement(Plus, { size: 16, className: "mr-2" }),
+                "Ny tilbakemelding")),
+        entries.length === 0
+            ? (React.createElement("p", { className: "text-sm text-slate-400" }, "Ingen tilbakemeldinger enda. Klikk \"Ny tilbakemelding\" for å starte."))
+            : (React.createElement("div", { className: "space-y-4" }, entries.map((entry, index) => (React.createElement(Card, { key: entry.id, className: "border-slate-800 bg-slate-900/60" },
+                React.createElement(CardContent, { className: "space-y-3" },
+                    React.createElement("div", { className: "flex items-center justify-between" },
+                        React.createElement("p", { className: "text-sm font-semibold text-slate-200" }, "Tilbakemelding ", index + 1),
+                        React.createElement(Button, { type: "button", size: "icon", variant: "ghost", className: "text-slate-400 hover:text-red-400", onClick: () => removeEntry(index) },
+                            React.createElement(Trash2, { size: 16 })) ),
+                    React.createElement("div", { className: "space-y-2" },
+                        React.createElement(Label, { className: "text-xs uppercase text-slate-400" }, "Tekst"),
+                        React.createElement(Textarea, { value: entry.quote, onChange: (event) => updateEntry(index, "quote", event.target.value), rows: 3, className: "border-slate-800 bg-slate-900 text-slate-100 placeholder:text-slate-500" })),
+                    React.createElement("div", { className: "space-y-2" },
+                        React.createElement(Label, { className: "text-xs uppercase text-slate-400" }, "Forfatter"),
+                        React.createElement(Input, { value: entry.author, onChange: (event) => updateEntry(index, "author", event.target.value), className: "border-slate-800 bg-slate-900 text-slate-100 placeholder:text-slate-500" }))))))))
     );
 }
 
