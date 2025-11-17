@@ -11,11 +11,11 @@ function clone(value) {
 export const DEFAULT_SITE_CONFIG = {
     id: "fjolsen-khabat",
     ownerId: "user_fjolsen",
-    domain: "fjolsen.setaei.com",
-    theme: "classic",
-    status: "published",
-    updatedAt: new Date().toISOString(),
-    sections: {
+        domain: "fjolsen.setaei.com",
+        theme: "classic",
+        status: "published",
+        updatedAt: new Date().toISOString(),
+        sections: {
         home: {
             title: "Fjolsenbanden",
             subtitle: "Trygge turneringer, familievennlige streams og premier fra våre partnere.",
@@ -49,6 +49,37 @@ export const DEFAULT_SITE_CONFIG = {
                         { label: "Under 18 år", url: "https://forms.gle/sq4mUf7s6e6UY7R58" },
                         { label: "Over 18 år", url: "https://forms.gle/ZrbXCggnUY8FTT7t9" },
                     ],
+                },
+            ],
+        },
+        offerings: {
+            title: "Andre tilbud",
+            description: "FjOlsenbanden tilbyr mer enn bare streaming!",
+            items: [
+                {
+                    id: "offering-foredrag",
+                    title: "Foredrag",
+                    description: "FjOlsen besøker skoler, idrettslag og e-sportklubber for å snakke om streaming, gaming-kultur og nettvett.",
+                },
+                {
+                    id: "offering-events",
+                    title: "Events",
+                    description: "Vi arrangerer gaming-konkurranser for bedrifter, skoler og klubber – både digitalt og fysisk.",
+                },
+                {
+                    id: "offering-unboxing",
+                    title: "Unboxing",
+                    description: "FjOlsen lager profesjonelle unboxing-videoer av dine produkter som kan brukes i deres markedsføring og deles med vårt community.",
+                },
+                {
+                    id: "offering-streamer",
+                    title: "Streamer for hire",
+                    description: "Ønsker du at FjOlsen skal streame på vegne av din merkevare? Han er tilgjengelig for co-streams, produktlanseringer og kampanjer – der ditt budskap blir formidlet på en autentisk og engasjerende måte til tusenvis av følgere.",
+                },
+                {
+                    id: "offering-coaching",
+                    title: "Coaching",
+                    description: "I FjOlsenbanden finner du flere av Norges dyktigste Fortnite-spillere. Sammen tilbyr vi 1-til-1 coaching for barn og unge som ønsker å utvikle seg som spillere – med fokus på strategi, samarbeid, kommunikasjon og trygg nettkultur.",
                 },
             ],
         },
