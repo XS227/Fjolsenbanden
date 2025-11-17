@@ -1,0 +1,19 @@
+<svg width="160" height="200" viewBox="0 0 160 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect x="8" y="8" width="144" height="184" rx="32" fill="white" stroke="#041149" stroke-width="8"/>
+  <g filter="url(#glow)">
+    <path d="M80 104C63.4315 104 50 90.5685 50 74C50 57.4315 63.4315 44 80 44C96.5685 44 110 57.4315 110 74C110 90.5685 96.5685 104 80 104Z" fill="#EEF1FF"/>
+    <path d="M60 74C60 62.9543 68.9543 54 80 54C91.0457 54 100 62.9543 100 74V92H60V74Z" fill="#13A0F9"/>
+    <path d="M100 74C100 62.9543 108.954 54 120 54C131.046 54 140 62.9543 140 74V92H100V74Z" fill="#FF2F9C"/>
+    <circle cx="70" cy="68" r="5" fill="#041149"/>
+    <circle cx="86" cy="68" r="5" fill="#041149"/>
+    <rect x="68" y="90" width="24" height="8" rx="4" fill="#041149"/>
+  </g>
+  <text x="80" y="140" text-anchor="middle" fill="#041149" font-family="'Nunito', 'Segoe UI', sans-serif" font-weight="800" font-size="26" letter-spacing="0.12em">FJOLSEN</text>
+  <text x="80" y="170" text-anchor="middle" fill="#13A0F9" font-family="'Nunito', 'Segoe UI', sans-serif" font-weight="900" font-size="28" letter-spacing="0.24em">BANDEN</text>
+  <defs>
+    <filter id="glow" x="42" y="36" width="106" height="76" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feBlend in="SourceGraphic" in2="blur" mode="screen"/>
+    </filter>
+  </defs>
+</svg>
