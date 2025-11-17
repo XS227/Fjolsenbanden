@@ -576,12 +576,40 @@ function ContactSectionForm({ draft, updateDraftConfig }) {
     return (
         React.createElement("div", { className: "grid gap-4 sm:grid-cols-2" },
             React.createElement(Field, {
+                label: "Tittel",
+                value: section.title,
+                onChange: (value) => updateDraftConfig((next) => {
+                    next.sections.contact.title = value;
+                    return next;
+                }),
+                fullWidth: true,
+            }),
+            React.createElement(Field, {
+                label: "Ingress",
+                value: section.description,
+                onChange: (value) => updateDraftConfig((next) => {
+                    next.sections.contact.description = value;
+                    return next;
+                }),
+                renderInput: (props) => (React.createElement("textarea", { ...props, rows: 3 })),
+                fullWidth: true,
+            }),
+            React.createElement(Field, {
                 label: "E-post",
                 value: section.email,
                 onChange: (value) => updateDraftConfig((next) => {
                     next.sections.contact.email = value;
                     return next;
                 }),
+            }),
+            React.createElement(Field, {
+                label: "Knappfarge",
+                value: section.buttonColor,
+                onChange: (value) => updateDraftConfig((next) => {
+                    next.sections.contact.buttonColor = value;
+                    return next;
+                }),
+                renderInput: (props) => (React.createElement("input", { ...props, type: "color", className: "h-10 w-full rounded-xl border border-slate-800 bg-slate-900 p-1" })),
             }),
             React.createElement(Field, {
                 label: "Discord",

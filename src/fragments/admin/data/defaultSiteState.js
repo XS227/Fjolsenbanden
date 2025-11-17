@@ -107,11 +107,14 @@ export const DEFAULT_SITE_CONFIG = {
             ],
         },
         contact: {
+            title: "Kontakt oss",
+            description: "Har du spørsmål om medlemskap, samarbeid eller events? Send oss en melding så kommer vi tilbake til deg.",
             email: "hei@fjolsenbanden.no",
             discord: "https://discord.gg/fjolsenbanden",
             tiktok: "https://www.tiktok.com/@fjolsenbanden",
             youtube: "https://youtube.com/@fjolsenbanden",
             formEndpoint: "/api/contact",
+            buttonColor: "#FF2F9C",
         },
     },
     branding: {

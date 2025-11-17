@@ -487,6 +487,38 @@ export default function FjolsenbandenHome() {
         "Spillglede for hele familien med trygge streams, premier og fellesskap.";
     const announcement = (typeof siteSettings.announcement === "string" && siteSettings.announcement.trim()) ||
         "Neste livesending starter 20:00 med co-op i Mario Kart og premier fra Lenovo!";
+    const contactSettings = typeof siteSettings.contact === "object" && siteSettings.contact !== null ? siteSettings.contact : {};
+    const contactTitle = (typeof contactSettings.title === "string" && contactSettings.title.trim()) ||
+        (typeof siteSettings.contactTitle === "string" && siteSettings.contactTitle.trim()) ||
+        "Kontakt oss";
+    const contactDescription =
+        (typeof contactSettings.description === "string" && contactSettings.description.trim()) ||
+            (typeof siteSettings.contactDescription === "string" && siteSettings.contactDescription.trim()) ||
+            "Har du spørsmål om medlemskap, samarbeid eller events? Send oss en melding så kommer vi tilbake til deg.";
+    const contactEmail = (typeof contactSettings.email === "string" && contactSettings.email.trim()) ||
+        (typeof siteSettings.contactEmail === "string" && siteSettings.contactEmail.trim()) ||
+        "fjolsenfn@gmail.com";
+    const contactButtonColor =
+        (typeof contactSettings.buttonColor === "string" && contactSettings.buttonColor.trim()) ||
+            (typeof siteSettings.contactButtonColor === "string" && siteSettings.contactButtonColor.trim()) ||
+            "#FF2F9C";
+    const contactButtonShadow = useMemo(() => {
+        const match = contactButtonColor.match(/^#?([0-9a-f]{3}|[0-9a-f]{6})$/i);
+        if (!match) {
+            return "rgba(255,47,156,0.35)";
+        }
+        const hex = match[1].length === 3
+            ? match[1]
+                .split("")
+                .map((char) => char + char)
+                .join("")
+            : match[1];
+        const value = parseInt(hex, 16);
+        const r = (value >> 16) & 255;
+        const g = (value >> 8) & 255;
+        const b = value & 255;
+        return `rgba(${r}, ${g}, ${b}, 0.35)`;
+    }, [contactButtonColor]);
     const fallbackLogoUrl = "https://setaei.com/Fjolsen/Liggende-M%E2%94%9C%E2%95%95rk.png";
     const scrolledLogoUrl = "https://setaei.com/Fjolsen/Glad%20tunge.png";
     const logoUrl = (typeof siteSettings.logoUrl === "string" && siteSettings.logoUrl.trim()) || fallbackLogoUrl;
@@ -649,7 +681,7 @@ export default function FjolsenbandenHome() {
         };
     }, [typingStarted]);
     const renderPartnerSection = (sectionId, orderKey, { includeLogosId = false, variant = "default" } = {}) => {
-        const contactHref = hasContactLink ? "#kontakt" : "mailto:fjolsenfn@gmail.com";
+        const contactHref = hasContactLink ? "#kontakt" : `mailto:${contactEmail}`;
         if (variant === "showcase") {
             return (React.createElement("section", { id: sectionId, className: "partners", style: sectionOrderStyle(orderKey) },
                 React.createElement("h2", null, "Samarbeidspartnere"),
@@ -672,7 +704,7 @@ export default function FjolsenbandenHome() {
         const message = (_f = (_e = formData.get("message")) === null || _e === void 0 ? void 0 : _e.toString().trim()) !== null && _f !== void 0 ? _f : "";
         const subject = encodeURIComponent("Kontakt via fjolsenbanden.no");
         const body = encodeURIComponent(`${message}\n\nNavn: ${name || "Ukjent"}\nE-post: ${email || "Ikke oppgitt"}`);
-        window.location.href = `mailto:fjolsenfn@gmail.com?subject=${subject}&body=${body}`;
+        window.location.href = `mailto:${contactEmail}?subject=${subject}&body=${body}`;
         event.currentTarget.reset();
     };
     useEffect(() => {
@@ -1158,8 +1190,8 @@ export default function FjolsenbandenHome() {
                         React.createElement("p", { className: "text-sm text-zinc-100" }, "Ta kontakt hvis du ønsker mer informasjon eller vil booke en økt."))),
             contactForm ? (React.createElement("section", { id: "kontakt", className: "mt-20 px-6 sm:px-8 lg:px-10", style: sectionOrderStyle("contact") },
                 React.createElement("div", { className: "mx-auto max-w-5xl space-y-6 rounded-3xl border border-white/10 bg-[#161f33]/90 p-6 text-center shadow-2xl sm:p-8" },
-                    React.createElement("h2", { className: "text-3xl font-bold" }, "Kontakt oss"),
-                    React.createElement("p", { className: "text-zinc-100" }, "Har du spørsmål om medlemskap, samarbeid eller events? Send oss en melding så kommer vi tilbake til deg."),
+                    React.createElement("h2", { className: "text-3xl font-bold" }, contactTitle),
+                    React.createElement("p", { className: "text-zinc-100" }, contactDescription),
                     React.createElement("div", { className: "flex justify-center" },
                         React.createElement("a", {
                             href: "/admin",
@@ -1179,7 +1211,7 @@ export default function FjolsenbandenHome() {
                             React.createElement("textarea", { id: "message", name: "message", rows: 4, required: true, className: "w-full rounded-xl border border-white/15 bg-white/5 px-4 py-3 text-sm text-white placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-[#13A0F9]" })),
                         React.createElement("div", { className: "md:col-span-2 flex flex-col gap-2 text-sm text-zinc-100 md:flex-row md:items-center md:justify-between" },
                             React.createElement("span", null, "Vi svarer så snart vi kan, som regel innen 1–2 virkedager."),
-                            React.createElement(Button, { type: "submit", size: "lg", className: "rounded-full bg-gradient-to-r from-[#13A0F9] to-[#FF2F9C] px-6 font-semibold text-white shadow-[0_16px_28px_rgba(19,160,249,0.35)] transition hover:from-[#0d8bd6] hover:to-[#e12585]" }, "Send melding")))))) : null,
+                            React.createElement(Button, { type: "submit", size: "lg", className: "rounded-full px-6 font-semibold text-white shadow-[0_16px_28px_rgba(255,255,255,0.15)] transition hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40", style: { backgroundColor: contactButtonColor, boxShadow: `0 16px 28px ${contactButtonShadow}` } }, "Send melding")))))) : null,
             React.createElement("section", { id: "tilbakemeldinger", className: "mt-20 px-6 sm:px-8 lg:px-10", style: sectionOrderStyle("feedback") },
                 React.createElement("div", { className: "mx-auto max-w-6xl space-y-8 rounded-[2.5rem] border border-white/10 bg-white/5 p-6 text-center shadow-[0_30px_70px_rgba(6,14,35,0.6)] sm:p-8" },
                     React.createElement("span", { className: "inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-1 text-xs font-semibold uppercase tracking-[0.35em] text-white/80" }, "Tusen takk ",
