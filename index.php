@@ -726,6 +726,46 @@
 
 
         <main class="relative z-10 flex flex-1 flex-col pb-28">
+        <section id="hero" class="section-shell relative overflow-hidden pb-14 pt-16" data-section>
+          <div class="mx-auto grid max-w-6xl items-center gap-10 lg:grid-cols-2">
+            <div class="space-y-5 text-left">
+              <img
+                src="/assets/branding/Liggende-Lys.svg"
+                alt="Fjolsenbanden logo"
+                class="h-20 w-auto sm:h-24"
+                loading="lazy"
+              />
+              <p class="inline-flex w-fit items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1 text-xs font-semibold uppercase tracking-[0.35em] text-white/80">
+                Velkommen
+              </p>
+              <h1 class="heading-clamp text-4xl font-extrabold sm:text-5xl">
+                FjOlsenbanden er <span class="text-[#13A0F9]">Norges mest inkluderende gaming-community</span>.
+              </h1>
+              <p class="lead-clamp text-base text-zinc-100 sm:text-lg">
+                En trygg arena for familier som elsker gaming, med fellesskap, premier og kreativitet i sentrum.
+              </p>
+              <div class="flex flex-col items-start gap-3 text-sm text-zinc-100 sm:flex-row sm:items-center">
+                <a
+                  href="#community"
+                  class="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#13A0F9] to-[#FF2F9C] px-6 py-3 font-semibold uppercase tracking-[0.2em] text-white shadow-[0_15px_35px_rgba(19,160,249,0.35)] transition hover:from-[#0d8bd6] hover:to-[#e12585]"
+                >
+                  Bli med i communityet
+                </a>
+                <span class="text-xs uppercase tracking-[0.3em] text-white/70">
+                  Spillglede for hele familien
+                </span>
+              </div>
+            </div>
+            <div class="flex justify-center lg:justify-end">
+              <img
+                src="/assets/branding/Staende-Lys.svg"
+                alt="Fjolsenbanden illustrasjon"
+                class="max-h-[420px] w-full max-w-xl object-contain"
+                loading="lazy"
+              />
+            </div>
+          </div>
+        </section>
         <section id="community" class="section-shell pt-6" data-section>
           <div class="mx-auto grid max-w-6xl gap-10 lg:grid-cols-2 lg:items-start">
             <div class="space-y-6">
