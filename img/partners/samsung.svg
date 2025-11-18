@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="80" viewBox="0 0 200 80" role="img" aria-labelledby="title">
+  <title id="title">Samsung logo</title>
+  <rect width="200" height="80" rx="18" fill="#1428a0" />
+  <text x="50%" y="52%" dominant-baseline="middle" text-anchor="middle"
+        fill="#ffffff" font-family="'Inter', Arial, sans-serif" font-size="32" font-weight="700">Samsung</text>
+</svg>
