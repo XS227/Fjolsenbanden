@@ -14,7 +14,6 @@
   <header class="top-nav">
     <div class="container nav-inner">
       <div class="logo">
-        <!-- Bytt til din faktiske logo-fil -->
         <img src="img/logo-fjolsenbanden.svg" alt="FjOlsenbanden logo" />
       </div>
       <nav class="nav-links">
@@ -48,7 +47,6 @@
         </div>
       </div>
       <div class="hero-card">
-        <!-- Bytt til riktig bilde -->
         <img src="img/fjolsen-card.png" alt="FjOlsen illustrasjon" />
         <p class="hero-card-caption">
           Minecraft-inspirert versjon av apen i FjOlsen-logoen.
@@ -123,7 +121,6 @@
 
       <div class="two-column">
         <div class="card video-wrapper">
-          <!-- Bytt src til riktig YouTube-lenke -->
           <iframe
             src="https://www.youtube.com/embed/VIDEO_ID"
             title="Slik deltar du på FjOlsenbanden customs"
@@ -213,7 +210,6 @@
           </ul>
 
           <div class="membership-buttons">
-            <!-- Bytt til riktige Discord-lenker -->
             <a href="https://discord.gg/..." class="btn btn-primary">Under 18 år</a>
             <a href="https://discord.gg/..." class="btn btn-secondary">Over 18 år</a>
           </div>
@@ -265,7 +261,6 @@
       </p>
 
       <div class="partners-grid">
-        <!-- Bytt til faktiske logoer -->
         <div class="card partner"><img src="img/partners/lenovo.svg" alt="Lenovo" /></div>
         <div class="card partner"><img src="img/partners/komplett.svg" alt="Komplett" /></div>
         <div class="card partner"><img src="img/partners/samsung.svg" alt="Samsung" /></div>
@@ -275,6 +270,10 @@
         <div class="card partner"><img src="img/partners/nki.svg" alt="NKI" /></div>
         <div class="card partner"><img src="img/partners/trondheimplay.svg" alt="Trondheim Play" /></div>
       </div>
+    </div>
+    <div class="center" style="margin-top:3rem;">
+      <p style="color:var(--muted); margin-bottom:1rem;">Ønsker du å synliggjøre din merkevare for vårt engasjerte gaming‑publikum?</p>
+      <a href="#contact" class="btn btn-primary">Kontakt oss</a>
     </div>
   </section>
 
@@ -324,7 +323,6 @@
           Har du spørsmål om medlemskap, samarbeid eller events? Send oss en melding så kommer vi tilbake til deg.
         </p>
 
-        <!-- Bytt action til ditt faktiske skjema-endepunkt (Formspree el.l.) -->
         <form action="#" method="POST" class="contact-form">
           <div class="form-row">
             <div class="form-group">
@@ -407,5 +405,18 @@
       </div>
     </div>
   </footer>
+  <script>
+    // FAQ: når én åpnes, lukk de andre
+    const items = document.querySelectorAll('.faq-item');
+    items.forEach((item) => {
+      item.addEventListener('toggle', () => {
+        if (item.open) {
+          items.forEach((other) => {
+            if (other !== item) other.open = false;
+          });
+        }
+      });
+    });
+  </script>
 </body>
 </html>
