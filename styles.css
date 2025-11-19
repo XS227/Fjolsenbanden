@@ -11,6 +11,7 @@
   --radius-md: 18px;
   --radius-pill: 999px;
   --shadow-soft: 0 24px 60px rgba(0, 0, 0, 0.6);
+  --section-bg: radial-gradient(circle at center, #101a3e 0, #050b2b 55%, #020317 100%);
 }
 
 *,
@@ -51,7 +52,7 @@ a {
 
 .section {
   padding: 5rem 0;
-  background: radial-gradient(circle at center, #101a3e 0, #050b2b 55%, #020317 100%);
+  background: var(--section-bg);
 }
 
 .section h2 {
@@ -561,22 +562,42 @@ textarea:focus {
 /* FAQ */
 
 .section-faq {
-  background: #02010e;
+  background: var(--section-bg);
+}
+
+.section-faq .subtitle {
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .faq-list {
   max-width: 800px;
-  margin-top: 2rem;
+  margin: 2rem auto 0;
 }
 
 .faq-item {
-  background: #050814;
-  border-radius: 14px;
-  padding: 1rem 1.4rem;
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  margin-bottom: 0.75rem;
+  background: radial-gradient(circle at top left, var(--card-alt), var(--card));
+  border-radius: 18px;
+  padding: 1.1rem 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  margin-bottom: 0.85rem;
   overflow: hidden;
-  transition: border-color 0.25s ease, background 0.25s ease;
+  box-shadow: var(--shadow-soft);
+  transition: border-color 0.25s ease, background 0.25s ease, box-shadow 0.25s ease,
+    transform 0.25s ease, filter 0.25s ease;
+}
+
+.faq-item:hover,
+.faq-item:focus-within {
+  border-color: rgba(0, 166, 255, 0.6);
+  box-shadow: var(--shadow-soft), 0 0 28px rgba(0, 166, 255, 0.35);
+  transform: translateY(-4px);
+  filter: brightness(1.03);
+}
+
+.faq-item:active {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-soft), 0 0 20px rgba(255, 45, 164, 0.35);
 }
 
 .faq-item summary {
