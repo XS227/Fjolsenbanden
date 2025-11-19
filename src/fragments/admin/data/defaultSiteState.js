@@ -8,6 +8,8 @@ function clone(value) {
     return JSON.parse(JSON.stringify(value));
 }
 
+const SITE_BASE_URL = "https://fjolsenbanden.setaei.com";
+
 export const DEFAULT_SITE_CONFIG = {
     id: "fjolsen-khabat",
     ownerId: "user_fjolsen",
@@ -88,14 +90,14 @@ export const DEFAULT_SITE_CONFIG = {
                 {
                     id: "reward-headset",
                     title: "Pro Gaming Headset",
-                    image: "/uploads/fjolsen-khabat/headset.png",
+                    image: `${SITE_BASE_URL}/uploads/fjolsen-khabat/headset.png`,
                     link: "https://partner.example/headset",
                     alt: "Svart gaming headset med Fjolsenbanden-logo",
                 },
                 {
                     id: "reward-chair",
                     title: "Comfort Gaming Chair",
-                    image: "/uploads/fjolsen-khabat/chair.png",
+                    image: `${SITE_BASE_URL}/uploads/fjolsen-khabat/chair.png`,
                     link: "https://partner.example/chair",
                     alt: "Ergonomisk gamingstol",
                 },
@@ -162,7 +164,7 @@ export const DEFAULT_SITE_CONFIG = {
             discord: "https://discord.gg/fjolsenbanden",
             tiktok: "https://www.tiktok.com/@fjolsenbanden",
             youtube: "https://youtube.com/@fjolsenbanden",
-            formEndpoint: "/api/contact",
+            formEndpoint: `${SITE_BASE_URL}/api/contact`,
             buttonColor: "#FF2F9C",
         },
         feedback: {
@@ -191,7 +193,7 @@ export const DEFAULT_SITE_CONFIG = {
         },
     },
     branding: {
-        logo: "/uploads/fjolsen-khabat/logo.png",
+        logo: `${SITE_BASE_URL}/uploads/fjolsen-khabat/logo.png`,
         colors: {
             primary: "#13A0F9",
             accent: "#FF2F9C",
@@ -204,7 +206,7 @@ export const DEFAULT_SITE_CONFIG = {
     seo: {
         title: "Fjolsenbanden – Familievennlige streams",
         description: "Bli med Fjolsenbanden for trygge turneringer, premier og familievennlig gaming.",
-        image: "/uploads/fjolsen-khabat/og.png",
+        image: `${SITE_BASE_URL}/uploads/fjolsen-khabat/og.png`,
     },
     analytics: {
         gaId: "G-SET12345",
@@ -222,7 +224,7 @@ const DEFAULT_SITE_META = [
         theme: "classic",
         ownerId: "user_fjolsen",
         updatedAt: DEFAULT_SITE_CONFIG.updatedAt,
-        avatar: "/uploads/fjolsen-khabat/logo.png",
+        avatar: `${SITE_BASE_URL}/uploads/fjolsen-khabat/logo.png`,
     },
     {
         id: "pixeline-portal",
@@ -232,7 +234,7 @@ const DEFAULT_SITE_META = [
         theme: "minecraft",
         ownerId: "user_pixeline",
         updatedAt: DEFAULT_SITE_CONFIG.updatedAt,
-        avatar: "/uploads/pixeline/logo.png",
+        avatar: `${SITE_BASE_URL}/uploads/pixeline/logo.png`,
     },
 ];
 

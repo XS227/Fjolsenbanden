@@ -185,7 +185,7 @@ export default function AdminMarketingPage() {
                     React.createElement("p", { className: "max-w-3xl text-base text-slate-300" }, "Rediger teksten som vises i seksjon nummer to på forsiden. Endringene lagres lokalt i nettleseren til du publiserer.")),
                 React.createElement("div", { className: "flex flex-wrap gap-2" },
                     React.createElement(Button, { asChild: true, variant: "outline", className: "border-white/20 bg-white/5 text-white hover:bg-white/10" },
-                        React.createElement("a", { href: "/admin" },
+                        React.createElement("a", { href: "https://fjolsenbanden.setaei.com/admin" },
                             React.createElement(ArrowLeft, { className: "mr-2 h-4 w-4" }),
                             "Tilbake til admin")),
                     React.createElement(Button, { asChild: true },

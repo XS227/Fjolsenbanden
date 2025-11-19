@@ -7,6 +7,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { DEFAULT_MEMBERSHIP_TIERS, DEFAULT_SECTION_ORDER, DEFAULT_SITE_MODULES, DEFAULT_TWITCH_EMBED_URL, useAdminState, } from "@/lib/admin-state";
 import { INLINE_PARTNER_BADGES, getPartnerBadge } from "@/lib/partner-badges";
 import "./FjolsenbandenHome.theme.css";
+
+const SITE_BASE_URL = "https://fjolsenbanden.setaei.com";
 const navLinks = [
     { name: "Hjem", href: "#hero" },
     { name: "Hva er FjOlsenbanden?", href: "#hva-er" },
@@ -16,8 +18,8 @@ const navLinks = [
     { name: "Andre tilbud", href: "#tilbud" },
     { name: "Kontakt", href: "#kontakt" },
     { name: "Feedback", href: "#tilbakemeldinger" },
-    { name: "Personvernerklæring", href: "/personvernerklaering.html" },
-    { name: "Regler", href: "/regler.html" },
+    { name: "Personvernerklæring", href: `${SITE_BASE_URL}/personvernerklaering.html` },
+    { name: "Regler", href: `${SITE_BASE_URL}/regler.html` },
 ];
 const socialLinks = [
     {
@@ -1179,7 +1181,7 @@ export default function FjolsenbandenHome() {
                                 React.createElement("div", { className: "grid gap-4" }, membershipPlans.map((plan) => (React.createElement(MembershipCard, { key: plan.id, title: plan.title, price: plan.price, color: plan.color, features: plan.features, buttons: plan.buttons })))),
                                 React.createElement("p", { className: "text-sm text-slate-200" },
                                     "Ved å registrere deg bekrefter du at du har lest ",
-                                    React.createElement("a", { href: "/regler.html", className: "text-[#13A0F9] underline decoration-dotted underline-offset-4 transition hover:text-[#2bb5ff]" }, "reglene våre"),
+                                    React.createElement("a", { href: `${SITE_BASE_URL}/regler.html`, className: "text-[#13A0F9] underline decoration-dotted underline-offset-4 transition hover:text-[#2bb5ff]" }, "reglene våre"),
                                     " og følger dem i alle aktiviteter.")),
                             React.createElement("div", { className: "space-y-4 rounded-3xl border border-white/10 bg-white/5 p-6 text-center shadow-[0_24px_48px_rgba(6,14,35,0.45)] sm:p-8" },
                                 React.createElement("h3", { className: "text-base font-semibold uppercase tracking-[0.25em] text-white/80" }, "Regler FjOlsenbanden"),
@@ -1237,7 +1239,7 @@ export default function FjolsenbandenHome() {
                     React.createElement("p", { className: "text-zinc-100" }, contactDescription),
                     React.createElement("div", { className: "flex justify-center" },
                         React.createElement("a", {
-                            href: "/admin",
+                            href: `${SITE_BASE_URL}/admin`,
                             className: "inline-flex items-center gap-2 rounded-full border border-white/15 px-4 py-2 text-sm font-semibold text-white/80 transition hover:border-white/30 hover:text-white",
                         },
                             React.createElement(UserCog, { className: "h-4 w-4", "aria-hidden": "true" }),
@@ -1283,7 +1285,7 @@ export default function FjolsenbandenHome() {
                 React.createElement("span", { className: "text-xs font-semibold uppercase tracking-[0.35em] text-[#13A0F9]/80" }, "FjOlsenbanden"),
                 React.createElement("div", { className: "flex flex-col items-center justify-center gap-2 text-sm md:flex-row" },
                     React.createElement("span", null, "\u00A9 2025 Fjolsenbanden v/Fair Share Invest AS - Org.nr. 926 963 023. Alle rettigheter reservert."),
-                    React.createElement("a", { href: "/admin", className: "flex items-center gap-2 font-medium transition" },
+                    React.createElement("a", { href: `${SITE_BASE_URL}/admin`, className: "flex items-center gap-2 font-medium transition" },
                         React.createElement(UserCog, { className: "h-4 w-4", "aria-hidden": "true" }),
                         React.createElement("span", null, "Admin")))))),
         React.createElement("div", { className: "fj-footer fixed inset-x-0 bottom-0 z-50 border-t border-white/10 bg-[#041149]/80 backdrop-blur" },
@@ -1454,12 +1456,12 @@ export default function FjolsenbandenHome() {
                                     React.createElement("input", { type: "checkbox", name: "profile-privacy", required: true, checked: profileDraft.acceptPrivacy, onChange: (event) => handleProfileCheckboxChange(event, "acceptPrivacy"), className: "mt-1 h-4 w-4 rounded border-white/30 bg-white/10 text-[#13A0F9] focus:outline-none focus:ring-2 focus:ring-[#13A0F9]" }),
                                     React.createElement("span", null,
                                         "Jeg samtykker til behandling av data iht. ",
-                                        React.createElement("a", { className: "text-[#13A0F9] underline", href: "/personvern", target: "_blank", rel: "noopener noreferrer" }, "personvernerkl\u00E6ringen"))),
+                                        React.createElement("a", { className: "text-[#13A0F9] underline", href: `${SITE_BASE_URL}/personvern`, target: "_blank", rel: "noopener noreferrer" }, "personvernerkl\u00E6ringen"))),
                                 React.createElement("label", { className: "flex items-start gap-3" },
                                     React.createElement("input", { type: "checkbox", name: "profile-rules", required: true, checked: profileDraft.acceptRules, onChange: (event) => handleProfileCheckboxChange(event, "acceptRules"), className: "mt-1 h-4 w-4 rounded border-white/30 bg-white/10 text-[#13A0F9] focus:outline-none focus:ring-2 focus:ring-[#13A0F9]" }),
                                     React.createElement("span", null,
                                         "Jeg godtar ",
-                                        React.createElement("a", { className: "text-[#13A0F9] underline", href: "/konkurranseregler", target: "_blank", rel: "noopener noreferrer" }, "konkurranseregler og premier-vilk\u00E5r")))),
+                                        React.createElement("a", { className: "text-[#13A0F9] underline", href: `${SITE_BASE_URL}/konkurranseregler`, target: "_blank", rel: "noopener noreferrer" }, "konkurranseregler og premier-vilk\u00E5r")))),
                             React.createElement(Button, { type: "submit", className: "flex w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#13A0F9] to-[#FF2F9C] px-6 py-3 font-semibold text-white shadow-[0_16px_32px_rgba(19,160,249,0.35)] transition hover:from-[#0d8bd6] hover:to-[#e12585]" },
                                 "Lagre profil",
                                 React.createElement(ArrowRight, { className: "h-4 w-4" })))))) : null)))) : null));

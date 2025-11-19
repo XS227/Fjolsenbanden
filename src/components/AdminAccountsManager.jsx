@@ -158,12 +158,12 @@ function AdminAccountsContent() {
             </div>
             <div className="flex flex-wrap justify-end gap-2">
               <Button asChild variant="outline">
-                <a href="/admin">
+                <a href="https://fjolsenbanden.setaei.com/admin">
                   <ArrowLeft className="mr-2 h-4 w-4" /> Tilbake til kontrollpanelet
                 </a>
               </Button>
               <Button asChild>
-                <a href="/admin/profile-preview">
+                <a href="https://fjolsenbanden.setaei.com/admin/profile-preview">
                   <ArrowUpRight className="mr-2 h-4 w-4" /> Forhåndsvis roller
                 </a>
               </Button>
