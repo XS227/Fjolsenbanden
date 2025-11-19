@@ -67,12 +67,14 @@ a {
 .section h2 {
   font-size: clamp(2rem, 3vw, 2.5rem);
   margin-bottom: 0.5rem;
+  text-align: center;
 }
 
 .subtitle {
   color: var(--muted);
   max-width: 720px;
-  margin-bottom: 2.5rem;
+  margin: 0 auto 2.5rem;
+  text-align: center;
 }
 
 /* Top nav */
@@ -361,6 +363,10 @@ a {
 .center {
   text-align: center;
   margin-top: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
 }
 
 /* Membership */
@@ -555,19 +561,30 @@ textarea:focus {
 .footer-inner {
   display: flex;
   flex-direction: column;
-  gap: 2.5rem;
+  gap: 2rem;
+}
+
+.footer-brand {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.footer-logo {
+  height: 40px;
+}
+
+.footer-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
 }
 
 .footer-links {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 0.6rem 2.5rem;
-}
-
-.footer-column {
-  display: flex;
-  flex-direction: column;
-  gap: 0.4rem;
+  grid-template-columns: repeat(2, minmax(0, 220px));
+  row-gap: 0.6rem;
+  column-gap: 2.5rem;
 }
 
 .footer-links a {
@@ -590,20 +607,8 @@ textarea:focus {
   padding-top: 1rem;
   border-top: 1px solid rgba(255, 255, 255, 0.08);
   display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.65rem;
-  text-align: center;
-  flex-wrap: wrap;
-}
-
-.footer-bottom p {
-  margin: 0;
-}
-
-.footer-bottom a {
-  color: var(--text);
-  font-weight: 600;
+  flex-direction: column;
+  gap: 0.35rem;
 }
 
 /* Responsive */
@@ -626,13 +631,6 @@ textarea:focus {
 
   .footer-links {
     grid-template-columns: 1fr;
-  }
-}
-
-@media (max-width: 600px) {
-  .footer-bottom {
-    flex-direction: column;
-    gap: 0.35rem;
   }
 }
 
@@ -674,7 +672,7 @@ textarea:focus {
         </div>
       </div>
       <div class="hero-card">
-        <img src="assets/mascot.svg" alt="FjOlsen illustrasjon" />
+        <img src="https://setaei.com/Fjolsen/St%E2%94%9C%D0%B5ende-M%E2%94%9C%E2%95%95rk.png" alt="FjOlsen stående maskot" />
         <p class="hero-card-caption">
           Minecraft-inspirert versjon av apen i FjOlsen-logoen.
         </p>
@@ -987,7 +985,11 @@ textarea:focus {
 
   <section id="faq" class="section section-faq">
     <div class="container">
-      <h2>Frequently Asked Questions</h2><div class="faq-list">
+      <h2>Ofte stilte spørsmål</h2>
+      <p class="subtitle">
+        Finn svar på de vanligste spørsmålene om FjOlsenbanden, medlemskap, trygghet og aktiviteter.
+      </p>
+      <div class="faq-list">
     <details class="faq-item" open>
       <summary>
         <span class="faq-question">Hva er FjOlsenbanden?</span>
@@ -1050,28 +1052,33 @@ textarea:focus {
 
   </section><footer class="site-footer">
     <div class="container footer-inner">
+      <div class="footer-brand">
+        <img
+          class="footer-logo"
+          src="https://setaei.com/Fjolsen/St%E2%94%9C%D0%B5ende-M%E2%94%9C%E2%95%95rk.png"
+          alt="FjOlsenbanden logo"
+        />
+        <div class="footer-meta">
+          <strong>FjOlsenbanden</strong>
+          <span>Trygge aktiviteter og inkluderende gamingopplevelser for hele familien.</span>
+        </div>
+      </div>
       <nav class="footer-links" aria-label="Hovedlenker i footer">
-        <div class="footer-column">
-          <a href="#about">Om FjOlsenbanden</a>
-          <a href="#video">Se FjOlsen</a>
-          <a href="#membership">Medlemskap</a>
-        </div>
-        <div class="footer-column">
-          <a href="#community">Community</a>
-          <a href="#services">Andre tilbud</a>
-          <a href="#contact">Kontakt oss</a>
-        </div>
-        <div class="footer-column">
-          <a href="#faq">FAQ</a>
-          <a href="personvernerklaering.html">Personvernerklæring</a>
-        </div>
+        <a href="#about">Om FjOlsenbanden</a>
+        <a href="#video">Se FjOlsen</a>
+        <a href="#membership">Medlemskap</a>
+        <a href="#community">Community</a>
+        <a href="#services">Andre tilbud</a>
+        <a href="#contact">Kontakt oss</a>
+        <a href="#faq">FAQ</a>
+        <a href="personvernerklaering.html">Personvernerklæring</a>
       </nav>
       <div class="footer-ctas">
         <a href="#hero" class="btn btn-ghost small">Til toppen</a>
       </div>
       <div class="footer-bottom">
-        <p>© 2025 Fjolsenbanden v/Fair Share Invest AS – Org.nr. 926 963 023</p>
-        <a href="regler.html">Les reglene våre</a>
+        <span>© 2025 Fjolsenbanden v/Fair Share Invest AS – Org.nr. 926 963 023</span>
+        <span>Alle rettigheter reservert. <a href="regler.html">Les reglene våre</a></span>
       </div>
     </div>
   </footer>
