@@ -506,39 +506,69 @@ a {
 .services-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 1.4rem;
+  gap: 1.8rem;
 }
 
 .service {
+  text-align: left;
   position: relative;
+  padding-top: 2.8rem;
 }
 
-.service-header {
-  display: flex;
-  align-items: center;
-  gap: 0.8rem;
-  margin-bottom: 0.8rem;
+.service-title {
+  font-size: 1.4rem;
+  letter-spacing: 0.02em;
+  margin: 0.8rem 0;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+/* Ikon-effekt */
+
+.service-icon-wrap {
+  position: absolute;
+  top: -24px;
+  left: 24px;
+  width: 70px;
+  height: 70px;
+}
+
+.service-icon-bg {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 30% 30%, #ffffff22, #00000000 70%);
+  filter: blur(12px);
+  border-radius: 50%;
 }
 
 .service-icon {
-  width: 42px;
-  height: 42px;
+  width: 70px;
+  height: 70px;
   object-fit: contain;
-  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.25));
+  position: relative;
+  z-index: 2;
+  filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.35))
+          drop-shadow(0 0 12px rgba(0, 150, 255, 0.25));
+  transition: transform 0.25s ease, filter 0.25s ease;
 }
 
-.service h3 {
-  margin-top: 0;
+.service:hover .service-icon {
+  transform: scale(1.05);
+  filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.45))
+          drop-shadow(0 0 18px rgba(0, 150, 255, 0.35));
 }
+
+/* Mobil */
 
 @media (max-width: 600px) {
-  .service-header {
-    gap: 0.6rem;
+  .service-icon-wrap {
+    left: 16px;
+    width: 58px;
+    height: 58px;
   }
-
   .service-icon {
-    width: 36px;
-    height: 36px;
+    width: 58px;
+    height: 58px;
   }
 }
 
@@ -1038,7 +1068,7 @@ textarea:focus {
       <div class="card service">
         <div class="service-icon-wrap">
           <div class="service-icon-bg"></div>
-          <img src="https://setaei.com/Fjolsen/Penger.png" class="service-icon" alt="Events ikon" />
+          <img src="https://setaei.com/Fjolsen/Glad%20tunge.png" class="service-icon" alt="Events ikon" />
         </div>
         <h3 class="service-title">EVENTS</h3>
         <p>
@@ -1054,8 +1084,7 @@ textarea:focus {
         </div>
         <h3 class="service-title">UNBOXING</h3>
         <p>
-          FjOlsen lager profesjonelle unboxing-videoer av dine produkter som kan brukes i deres markedsføring og deles
-          med vårt community.
+          FjOlsen lager profesjonelle unboxing-videoer av dine produkter som kan brukes i deres markedsføring og deles med vårt community.
         </p>
       </div>
 
@@ -1068,6 +1097,30 @@ textarea:focus {
         <h3 class="service-title">STREAMER FOR HIRE</h3>
         <p>
           Ønsker du at FjOlsen skal streame på vegne av din merkevare? Han er tilgjengelig for co-streams, produktlanseringer og kampanjer – der ditt budskap blir formidlet på en autentisk og engasjerende måte til tusenvis av følgere.
+        </p>
+      </div>
+
+      <!-- Brand Collabs -->
+      <div class="card service">
+        <div class="service-icon-wrap">
+          <div class="service-icon-bg"></div>
+          <img src="https://setaei.com/Fjolsen/Penger.png" class="service-icon" alt="Brand collabs ikon" />
+        </div>
+        <h3 class="service-title">BRAND COLLABS</h3>
+        <p>
+          FjOlsen samarbeider med merkevarer som ønsker trygg og familievennlig synlighet i gamingmiljøet vårt – gjennom sponsorinnhold, produktlanseringer og kampanjer tilpasset barn og foreldre.
+        </p>
+      </div>
+
+      <!-- Digital kampanjeproduksjon -->
+      <div class="card service">
+        <div class="service-icon-wrap">
+          <div class="service-icon-bg"></div>
+          <img src="https://setaei.com/Fjolsen/Sjokk.png" class="service-icon" alt="Digital kampanje ikon" />
+        </div>
+        <h3 class="service-title">DIGITAL KAMPANJEPRODUKSJON</h3>
+        <p>
+          Produksjon av gaming- og SoMe-innhold for merkevarer som vil nå et ungt publikum – som short-form videoer, highlight-klipp og kampanjeinnhold skreddersydd til deres kanaler.
         </p>
       </div>
 
