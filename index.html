@@ -563,114 +563,80 @@ textarea:focus {
 
 /* Footer */
 
-.site-footer {
-  background: #020318;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-  padding: 2rem 0 1.75rem;
-  font-size: 0.9rem;
-}
-
-.footer-main {
-  display: grid;
-  grid-template-columns: auto minmax(0, 1.7fr) auto;
-  align-items: flex-start;
-  gap: 1.5rem;
-}
-
-.footer-logo {
-  height: 32px;
-  display: block;
-}
-
-.footer-menu {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0.25rem 2rem;
-}
-
-.footer-menu a {
-  color: var(--muted);
-}
-
-.footer-menu a:hover {
-  color: var(--primary);
-}
-
-.footer-actions {
-  display: flex;
-  align-items: flex-start;
-  justify-content: flex-end;
-}
-
-.footer-actions .btn {
-  margin-top: 0.2rem;
-}
-
-.footer-bottom {
-  margin-top: 1.8rem;
-  padding-top: 1.2rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem 1.5rem;
-  justify-content: space-between;
-  align-items: center;
-  color: var(--muted);
-  font-size: 0.8rem;
-}
-
-.footer-bottom-links {
-  display: flex;
-  gap: 0.9rem;
-  flex-wrap: wrap;
-  align-items: center;
-}
-
-.footer-bottom-link {
-  color: var(--text);
-  font-weight: 600;
-}
-
-.footer-bottom-link:hover {
-  color: var(--primary);
-}
-
-/* Admin-link */
-
-.footer-admin {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
-}
-
-.footer-admin-icon {
-  width: 18px;
-  height: 18px;
-  border-radius: 999px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.75rem;
-  background: radial-gradient(circle at top, rgba(0, 166, 255, 0.35), rgba(0, 166, 255, 0.05));
-}
-
-/* Footer på mobil: én kolonne, meny i to spalter */
-
-@media (max-width: 700px) {
-  .footer-main {
-    grid-template-columns: 1fr;
-    row-gap: 1.25rem;
+  .site-footer {
+    background: #020318;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 2rem 0 1.75rem;
+    font-size: 0.9rem;
   }
 
-  .footer-actions {
-    justify-content: flex-start;
+  .footer-main {
+    display: flex;
+    justify-content: center;
+  }
+
+  .footer-menu {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 2rem 4rem;
+  }
+
+  .footer-col {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .footer-col a {
+    color: var(--muted);
+  }
+
+  .footer-col a:hover {
+    color: var(--primary);
   }
 
   .footer-bottom {
-    flex-direction: column;
-    align-items: flex-start;
+    margin-top: 1.8rem;
+    padding-top: 1.2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    color: var(--muted);
+    font-size: 0.8rem;
   }
-}
+
+  .footer-bottom-link {
+    color: var(--text);
+    font-weight: 600;
+  }
+
+  .footer-bottom-link:hover {
+    color: var(--primary);
+  }
+
+  /* Mobil */
+
+  @media (max-width: 700px) {
+    .footer-menu {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1.5rem;
+    }
+
+    .footer-bottom {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+
+  @media (max-width: 450px) {
+    .footer-menu {
+      grid-template-columns: 1fr;
+      text-align: left;
+    }
+  }
 
 /* Responsive */
 
@@ -1132,32 +1098,27 @@ textarea:focus {
 
   </section><footer class="site-footer">
   <div class="container footer-main">
-    <div class="footer-brand">
-      <img
-        src="https://setaei.com/Fjolsen/Liggende-M%E2%94%9C%E2%95%95rk.png"
-        alt="FjOlsenbanden logo"
-        class="footer-logo"
-      />
-    </div>
 
     <nav class="footer-menu">
-      <a href="#about">Om FjOlsenbanden</a>
-      <a href="#video">Se FjOlsen</a>
-      <a href="#membership">Medlemskap</a>
-      <a href="#community">Community</a>
-      <a href="#services">Andre tilbud</a>
-      <a href="#contact">Kontakt oss</a>
-      <a href="#faq">FAQ</a>
-      <a href="personvernerklaering.html">Personvernerklæring</a>
-      <a href="admin.html" class="footer-admin">
-        <span class="footer-admin-icon">⚙️</span>
-        <span>Admin</span>
-      </a>
+      <div class="footer-col">
+        <a href="#about">Om FjOlsenbanden</a>
+        <a href="#video">Se FjOlsen</a>
+        <a href="#membership">Medlemskap</a>
+      </div>
+
+      <div class="footer-col">
+        <a href="#community">Community</a>
+        <a href="#services">Andre tilbud</a>
+        <a href="#contact">Kontakt oss</a>
+      </div>
+
+      <div class="footer-col">
+        <a href="#faq">FAQ</a>
+        <a href="personvernerklaering.html">Personvernerklæring</a>
+        <a href="#hero">Til toppen</a>
+      </div>
     </nav>
 
-    <div class="footer-actions">
-      <a href="#hero" class="btn btn-ghost small">Til toppen</a>
-    </div>
   </div>
 
   <div class="container footer-bottom">
