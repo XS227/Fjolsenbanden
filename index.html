@@ -1115,7 +1115,7 @@ textarea:focus {
       return;
     }
 
-    // Seksjonsstyring (på/av + tittel/subtitle)
+    // Seksjonsstyring (på/av + innhold)
     const sections = cfg.sections || {};
     Object.entries(sections).forEach(([id, settings]) => {
       const section = document.getElementById(id);
@@ -1124,6 +1124,12 @@ textarea:focus {
       // Skru av/på seksjon
       if (settings.enabled === false) {
         section.style.display = 'none';
+        return;
+      }
+
+      if (id === 'hero') {
+        applyHeroSettings(section, settings);
+        return;
       }
 
       // Oppdater tittel (første h2 i seksjonen)
@@ -1151,14 +1157,6 @@ textarea:focus {
       document.querySelectorAll('.logo img, .footer-logo').forEach((img) => {
         img.src = global.logoUrl;
       });
-    }
-
-    // Hero-bilde
-    if (global.heroImageUrl) {
-      const heroImg = document.querySelector('#hero .hero-card img');
-      if (heroImg) {
-        heroImg.src = global.heroImageUrl;
-      }
     }
 
     // YouTube-video
@@ -1201,6 +1199,44 @@ textarea:focus {
       }
 
       return url;
+    }
+
+    function applyHeroSettings(section, settings) {
+      const pill = section.querySelector('.pill');
+      if (settings.pillText && pill) {
+        pill.textContent = settings.pillText;
+      }
+
+      const lead = section.querySelector('.lead');
+      if (settings.sectionText && lead) {
+        lead.textContent = settings.sectionText;
+      }
+
+      const h1 = section.querySelector('h1');
+      if (settings.title && h1) {
+        h1.innerHTML = settings.title;
+      }
+
+      const heroImg = section.querySelector('.hero-card img');
+      if (settings.heroImageUrl && heroImg) {
+        heroImg.src = settings.heroImageUrl;
+      }
+
+      const caption = section.querySelector('.hero-card-caption');
+      if (settings.heroImageCaption && caption) {
+        caption.textContent = settings.heroImageCaption;
+      }
+
+      const buttons = section.querySelectorAll('.hero-actions a');
+      const [btn1, btn2] = buttons;
+      if (btn1) {
+        if (settings.button1Label) btn1.textContent = settings.button1Label;
+        if (settings.button1Href) btn1.href = settings.button1Href;
+      }
+      if (btn2) {
+        if (settings.button2Label) btn2.textContent = settings.button2Label;
+        if (settings.button2Href) btn2.href = settings.button2Href;
+      }
     }
   })();
 </script>
