@@ -562,16 +562,46 @@ textarea:focus {
   padding: 1rem 1.4rem;
   border: 1px solid rgba(255, 255, 255, 0.06);
   margin-bottom: 0.75rem;
+  overflow: hidden;
+  transition: border-color 0.25s ease, background 0.25s ease;
 }
 
 .faq-item summary {
   list-style: none;
   cursor: pointer;
-  font-weight: 500;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  justify-content: space-between;
 }
 
 .faq-item summary::-webkit-details-marker {
   display: none;
+}
+
+.faq-question {
+  font-weight: 600;
+}
+
+.faq-icon {
+  transition: transform 0.3s ease;
+}
+
+.faq-item[open] .faq-icon {
+  transform: rotate(180deg);
+}
+
+.faq-content {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.35s ease, opacity 0.35s ease, padding-top 0.35s ease;
+}
+
+.faq-item[open] .faq-content {
+  opacity: 1;
+  padding-top: 0.5rem;
 }
 
 /* Footer */
@@ -584,16 +614,61 @@ textarea:focus {
 
 .footer-inner {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
-  gap: 1rem;
-  font-size: 0.85rem;
+  gap: 1.5rem;
+  font-size: 0.9rem;
   color: var(--muted);
 }
 
-.footer-links {
+.footer-left {
   display: flex;
-  gap: 1rem;
+  align-items: center;
+  gap: 0.75rem;
+  flex: 1;
+  min-width: 240px;
+}
+
+.footer-logo {
+  height: 54px;
+  width: auto;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.06);
+  padding: 0.6rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.footer-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.footer-meta a {
+  color: var(--text);
+}
+
+.footer-links {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(160px, 1fr));
+  gap: 0.75rem 1.75rem;
+  flex: 1;
+}
+
+.footer-column {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  text-align: left;
+}
+
+.footer-links a {
+  color: var(--muted);
+  transition: color 0.2s ease;
+}
+
+.footer-links a:hover {
+  color: var(--text);
 }
 
 .footer-ctas {
@@ -621,6 +696,19 @@ textarea:focus {
 
   .footer-inner {
     flex-direction: column;
+    align-items: stretch;
+  }
+
+  .footer-left {
     align-items: flex-start;
+  }
+
+  .footer-links {
+    width: 100%;
+  }
+
+  .footer-ctas {
+    width: 100%;
+    justify-content: flex-start;
   }
 }
