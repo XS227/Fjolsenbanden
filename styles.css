@@ -483,40 +483,38 @@ a {
   gap: 1.4rem;
 }
 
-.service-icon {
-  width: 52px;
-  height: 52px;
-  border-radius: 16px;
-  display: inline-flex;
+.service {
+  position: relative;
+}
+
+.service-header {
+  display: flex;
   align-items: center;
-  justify-content: center;
-  margin-bottom: 1rem;
-  color: #fff;
+  gap: 0.8rem;
+  margin-bottom: 0.8rem;
 }
 
-.service-icon svg {
-  width: 26px;
-  height: 26px;
-}
-
-.service-icon--talk {
-  background: linear-gradient(135deg, #3b82f6, #60a5fa);
-}
-
-.service-icon--events {
-  background: linear-gradient(135deg, #f59e0b, #f97316);
-}
-
-.service-icon--unboxing {
-  background: linear-gradient(135deg, #10b981, #34d399);
-}
-
-.service-icon--stream {
-  background: linear-gradient(135deg, #8b5cf6, #ec4899);
+.service-icon {
+  width: 42px;
+  height: 42px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.25));
 }
 
 .service h3 {
-  margin-top: 0;
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+@media (max-width: 600px) {
+  .service-header {
+    gap: 0.6rem;
+  }
+
+  .service-icon {
+    width: 36px;
+    height: 36px;
+  }
 }
 
 /* Contact */
