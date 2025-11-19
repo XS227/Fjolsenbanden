@@ -152,6 +152,19 @@ a {
   padding: 1.6rem 1.8rem;
   box-shadow: var(--shadow-soft);
   border: 1px solid rgba(255, 255, 255, 0.04);
+  transition: transform 0.18s ease, box-shadow 0.18s ease, filter 0.18s ease;
+}
+
+.card:hover,
+.card:focus-within {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-soft), 0 0 24px rgba(0, 166, 255, 0.28);
+  filter: brightness(1.02);
+}
+
+.card:active {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-soft), 0 0 18px rgba(255, 45, 164, 0.32);
 }
 
 /* Hero */
