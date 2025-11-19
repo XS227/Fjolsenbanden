@@ -775,7 +775,9 @@ textarea:focus {
   </div>
 </div>
 
-  </section><section id="feedback" class="section">
+  </section>
+
+  <section id="feedback" class="section">
 <div class="container">
   <h2 class="feedback-title">Tilbakemeldinger fra <span class="highlight">FjOlsenbanden</span></h2>
   <p class="subtitle feedback-intro">
@@ -1119,6 +1121,110 @@ faqDetails.forEach((detail) => {
       content.style.maxHeight = `${content.scrollHeight}px`;
     }
   });
+});
+
+// --- Admin-config integrasjon mellom admin.html og forsiden ---
+const CONFIG_STORAGE_KEY = 'fjAdminConfig';
+const DEFAULT_CONFIG = {
+  sections: {
+    hero: { enabled: true, title: 'FjOlsenbanden er Norges mest inkluderende gaming-community.', subtitle: '' },
+    about: { enabled: true, title: 'Hva er FjOlsenbanden?', subtitle: '' },
+    video: { enabled: true, title: 'Hvem er FjOlsen?', subtitle: '' },
+    feedback: { enabled: true, title: 'Tilbakemeldinger fra FjOlsenbanden', subtitle: '' },
+    membership: { enabled: true, title: 'Bli medlem i dag.', subtitle: '' },
+    community: { enabled: true, title: 'FjOlsenbanden – et community i vekst!', subtitle: '' },
+    partners: { enabled: true, title: 'Våre samarbeidspartnere', subtitle: '' },
+    services: { enabled: true, title: 'Andre tilbud', subtitle: '' },
+    contact: { enabled: true, title: 'Kontakt oss', subtitle: '' },
+    faq: { enabled: true, title: 'Ofte stilte spørsmål', subtitle: '' }
+  }
+};
+
+const SECTION_DEFAULTS = {};
+const SECTION_SELECTOR_MAP = {
+  hero: { title: 'h1', subtitle: '.lead, .subtitle' }
+};
+
+function getSectionSelectors(sectionId) {
+  return SECTION_SELECTOR_MAP[sectionId] || { title: 'h2', subtitle: '.subtitle' };
+}
+
+function loadAdminConfig() {
+  try {
+    const raw = localStorage.getItem(CONFIG_STORAGE_KEY);
+    if (!raw) return JSON.parse(JSON.stringify(DEFAULT_CONFIG));
+    const parsed = JSON.parse(raw);
+    const merged = JSON.parse(JSON.stringify(DEFAULT_CONFIG));
+    if (parsed.sections) {
+      Object.keys(parsed.sections).forEach((id) => {
+        if (!merged.sections[id]) return;
+        merged.sections[id] = { ...merged.sections[id], ...parsed.sections[id] };
+      });
+    }
+    return merged;
+  } catch (e) {
+    return JSON.parse(JSON.stringify(DEFAULT_CONFIG));
+  }
+}
+
+function captureSectionDefaults(sectionId) {
+  const section = document.getElementById(sectionId);
+  if (!section) return;
+  if (!SECTION_DEFAULTS[sectionId]) SECTION_DEFAULTS[sectionId] = {};
+  const defaults = SECTION_DEFAULTS[sectionId];
+  const selectors = getSectionSelectors(sectionId);
+
+  if (defaults.title === undefined) {
+    const titleEl = section.querySelector(selectors.title);
+    defaults.title = titleEl ? titleEl.textContent.trim() : '';
+  }
+
+  if (defaults.subtitle === undefined) {
+    const subtitleEl = selectors.subtitle ? section.querySelector(selectors.subtitle) : null;
+    defaults.subtitle = subtitleEl ? subtitleEl.textContent.trim() : '';
+  }
+}
+
+function applySectionConfig(sectionId, sectionCfg) {
+  const section = document.getElementById(sectionId);
+  if (!section) return;
+
+  captureSectionDefaults(sectionId);
+  const selectors = getSectionSelectors(sectionId);
+  const defaults = SECTION_DEFAULTS[sectionId] || {};
+
+  section.hidden = !sectionCfg.enabled;
+
+  const titleEl = section.querySelector(selectors.title);
+  if (titleEl) {
+    const nextTitle = (sectionCfg.title && sectionCfg.title.trim()) || defaults.title || '';
+    titleEl.textContent = nextTitle;
+  }
+
+  if (selectors.subtitle) {
+    const subtitleEl = section.querySelector(selectors.subtitle);
+    if (subtitleEl) {
+      const nextSubtitle = (sectionCfg.subtitle && sectionCfg.subtitle.trim()) || defaults.subtitle || '';
+      subtitleEl.textContent = nextSubtitle;
+    }
+  }
+}
+
+function applyAdminConfigToPage() {
+  const cfg = loadAdminConfig();
+  Object.keys(DEFAULT_CONFIG.sections).forEach((id) => {
+    const sectionCfg = cfg.sections[id];
+    if (!sectionCfg) return;
+    applySectionConfig(id, sectionCfg);
+  });
+}
+
+applyAdminConfigToPage();
+
+window.addEventListener('storage', (event) => {
+  if (event.key === CONFIG_STORAGE_KEY) {
+    applyAdminConfigToPage();
+  }
 });
 </script>
 </body>
