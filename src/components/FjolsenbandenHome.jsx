@@ -560,11 +560,12 @@ export default function FjolsenbandenHome() {
         return `rgba(${r}, ${g}, ${b}, 0.35)`;
     }, [contactButtonColor]);
     const fallbackLogoUrl = "https://setaei.com/Fjolsen/Liggende-M%E2%94%9C%E2%95%95rk.png";
+    const fallbackHeroImageUrl = "https://setaei.com/Fjolsen/St%C3%A5ende-M%C3%B8rk.png";
     const scrolledLogoUrl = "https://setaei.com/Fjolsen/Glad%20tunge.png";
     const logoUrl = (typeof siteSettings.logoUrl === "string" && siteSettings.logoUrl.trim()) || fallbackLogoUrl;
     const heroBackgroundImage = (typeof siteSettings.heroBackgroundImage === "string" && siteSettings.heroBackgroundImage.trim()) ||
         "";
-    const heroImageUrl = (typeof siteSettings.heroImageUrl === "string" && siteSettings.heroImageUrl.trim()) || heroBackgroundImage || logoUrl;
+    const heroImageUrl = (typeof siteSettings.heroImageUrl === "string" && siteSettings.heroImageUrl.trim()) || heroBackgroundImage || fallbackHeroImageUrl || logoUrl;
     const twitchEmbedUrl = (typeof siteSettings.twitchEmbedUrl === "string" && siteSettings.twitchEmbedUrl.trim()) || DEFAULT_TWITCH_EMBED_URL;
     const membershipTiers = Array.isArray(siteSettings.membershipTiers) ? siteSettings.membershipTiers : [];
     const membershipPlans = membershipTiers.length > 0 ? membershipTiers.slice(0, 3) : DEFAULT_MEMBERSHIP_TIERS;
@@ -1162,14 +1163,14 @@ export default function FjolsenbandenHome() {
                 : null,
             React.createElement("section", { id: "community", className: "px-6 sm:px-8 lg:px-10", style: sectionOrderStyle("community") },
                 React.createElement("div", { className: "mx-auto grid max-w-6xl gap-10 lg:grid-cols-2 lg:items-start" },
-                    React.createElement("div", { id: "bli-medlem", className: "space-y-8 rounded-[2.5rem] border border-white/10 bg-white/5 p-6 shadow-[0_24px_48px_rgba(6,14,35,0.45)] sm:p-8 lg:p-10" },
-                        React.createElement("div", { className: "space-y-4 text-left" },
+                    React.createElement("div", { id: "bli-medlem", className: "space-y-8 rounded-[2.5rem] border border-white/10 bg-white/5 p-6 text-center shadow-[0_24px_48px_rgba(6,14,35,0.45)] sm:p-8 lg:p-10" },
+                        React.createElement("div", { className: "space-y-4" },
                             React.createElement("span", { className: "inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-4 py-1 text-xs font-semibold uppercase tracking-[0.35em] text-white/80" }, "Bli medlem"),
                             React.createElement("h2", { className: "text-3xl font-bold text-white sm:text-4xl" }, "Bli medlem"),
                             React.createElement("p", { className: "text-lg text-slate-100" }, "Det er gratis å bli medlem i FjOlsenbanden! Alle kan delta i konkurranser, men for å vinne premier må du være registrert medlem."),
                             React.createElement("p", { className: "text-base text-slate-100 sm:text-lg" }, "Velg pakken som passer deg, og bruk knappene under for å fullføre påmeldingen.")),
                         React.createElement("div", { className: "space-y-6 lg:grid lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] lg:items-start lg:gap-6 lg:space-y-0" },
-                            React.createElement("div", { className: "space-y-6 rounded-3xl border border-white/10 bg-[#0b1b4d]/70 p-6 text-left shadow-[0_24px_48px_rgba(6,14,35,0.45)] sm:p-8" },
+                            React.createElement("div", { className: "space-y-6 rounded-3xl border border-white/10 bg-[#0b1b4d]/70 p-6 text-center shadow-[0_24px_48px_rgba(6,14,35,0.45)] sm:p-8" },
                                 React.createElement("div", { className: "flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between" },
                                     React.createElement("div", { className: "space-y-1" },
                                         React.createElement("h3", { className: "text-xl font-semibold text-white" }, "Velg pakke"),
@@ -1180,7 +1181,7 @@ export default function FjolsenbandenHome() {
                                     "Ved å registrere deg bekrefter du at du har lest ",
                                     React.createElement("a", { href: "/regler.html", className: "text-[#13A0F9] underline decoration-dotted underline-offset-4 transition hover:text-[#2bb5ff]" }, "reglene våre"),
                                     " og følger dem i alle aktiviteter.")),
-                            React.createElement("div", { className: "space-y-4 rounded-3xl border border-white/10 bg-white/5 p-6 text-left shadow-[0_24px_48px_rgba(6,14,35,0.45)] sm:p-8" },
+                            React.createElement("div", { className: "space-y-4 rounded-3xl border border-white/10 bg-white/5 p-6 text-center shadow-[0_24px_48px_rgba(6,14,35,0.45)] sm:p-8" },
                                 React.createElement("h3", { className: "text-base font-semibold uppercase tracking-[0.25em] text-white/80" }, "Regler FjOlsenbanden"),
                                 React.createElement("p", { className: "text-sm text-slate-200" }, "For å opprettholde et trygt og godt miljø har vi flere regler i FjOlsenbanden. Se alle reglene på Discord."),
                                 React.createElement("div", { className: "flex flex-wrap gap-3" },
@@ -1208,7 +1209,7 @@ export default function FjolsenbandenHome() {
                                     React.createElement("p", { className: "rounded-xl border border-white/10 bg-[#131f3f]/80 p-3" },
                                         React.createElement("span", { className: "block text-xs font-semibold uppercase tracking-wide text-[#13A0F9]" }, "Ha det gøy, stay positive:"),
                                         "Viktigst av alt, ha det gøy og nyt den positive spillopplevelsen vi skaper sammen! Hold chatten positiv og behandle alle i chatten inkludert moderatorer, med respekt."))))),
-                    React.createElement("div", { className: "space-y-6 rounded-[2.5rem] border border-white/10 bg-white/5 p-6 shadow-[0_24px_48px_rgba(6,14,35,0.45)] sm:p-8" },
+                    React.createElement("div", { className: "space-y-6 rounded-[2.5rem] border border-white/10 bg-white/5 p-6 text-center shadow-[0_24px_48px_rgba(6,14,35,0.45)] sm:p-8" },
                         React.createElement("div", { className: "grid gap-4 sm:grid-cols-3" }, stats.map((stat) => (React.createElement("div", { key: stat.label, className: "rounded-2xl border border-white/10 bg-[#0b1b4d]/70 p-4 text-center" },
                             React.createElement("p", { className: "text-2xl font-bold text-cyan-300" }, stat.value),
                             React.createElement("p", { className: "text-xs font-medium uppercase tracking-wide text-slate-300" }, stat.label))))),
@@ -1499,7 +1500,7 @@ function MembershipCard({ title, price, color, features, buttons, }) {
     const buttonClass = (index) => (index === 0
         ? "bg-gradient-to-r from-[#13A0F9] to-[#4ade80] hover:from-[#0d8bd6] hover:to-[#22c55e]"
         : "bg-gradient-to-r from-[#FF2F9C] to-[#8b5cf6] hover:from-[#e12585] hover:to-[#7c3aed]");
-    return (React.createElement(Card, { className: `rounded-3xl border bg-[#0f1a36] shadow-lg transition-transform hover:-translate-y-1 ${colorClass(color)}` },
+    return (React.createElement(Card, { className: `rounded-3xl border bg-[#0f1a36] text-left shadow-lg transition-transform hover:-translate-y-1 ${colorClass(color)}` },
         React.createElement(CardHeader, null,
             React.createElement(CardTitle, { className: "flex items-center gap-2 text-white" },
                 React.createElement(Gift, { className: "h-6 w-6" }),
