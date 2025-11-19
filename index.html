@@ -1088,144 +1088,119 @@ textarea:focus {
     </div>
   </footer>
 <script>
-// FAQ: når én åpnes, lukk de andre
-const items = document.querySelectorAll('.faq-item');
-items.forEach((item) => {
-  item.addEventListener('toggle', () => {
-    if (item.open) {
-      items.forEach((other) => {
-        if (other !== item) other.open = false;
+  // FAQ: når én åpnes, lukk de andre
+  const faqItems = document.querySelectorAll('.faq-item');
+  faqItems.forEach((item) => {
+    item.addEventListener('toggle', () => {
+      if (item.open) {
+        faqItems.forEach((other) => {
+          if (other !== item) other.open = false;
+        });
+      }
+    });
+  });
+
+  // Les admin-konfig fra localStorage og bruk på forsiden
+  (function () {
+    let raw = localStorage.getItem('fjAdminConfig');
+    if (!raw) return;
+
+    let cfg;
+    try {
+      cfg = JSON.parse(raw);
+    } catch (e) {
+      console.warn('Kunne ikke parse fjAdminConfig:', e);
+      return;
+    }
+
+    // Seksjonsstyring (på/av + tittel/subtitle)
+    const sections = cfg.sections || {};
+    Object.entries(sections).forEach(([id, settings]) => {
+      const section = document.getElementById(id);
+      if (!section) return;
+
+      // Skru av/på seksjon
+      if (settings.enabled === false) {
+        section.style.display = 'none';
+      }
+
+      // Oppdater tittel (første h2 i seksjonen)
+      if (settings.title) {
+        const h2 = section.querySelector('h2');
+        if (h2) {
+          h2.textContent = settings.title;
+        }
+      }
+
+      // Oppdater undertekst / subtitle
+      if (settings.subtitle) {
+        const sub = section.querySelector('.subtitle');
+        if (sub) {
+          sub.textContent = settings.subtitle;
+        }
+      }
+    });
+
+    // Globale innstillinger
+    const global = cfg.global || {};
+
+    // Logo i header + footer
+    if (global.logoUrl) {
+      document.querySelectorAll('.logo img, .footer-logo').forEach((img) => {
+        img.src = global.logoUrl;
       });
     }
-  });
-});
 
-// FAQ: smooth open/close
-const faqDetails = document.querySelectorAll('.faq-item');
-faqDetails.forEach((detail) => {
-  const content = detail.querySelector('.faq-content');
-  if (!content) return;
-
-  const setHeight = () => {
-    if (detail.open) {
-      content.style.maxHeight = `${content.scrollHeight}px`;
-    } else {
-      content.style.maxHeight = '0px';
+    // Hero-bilde
+    if (global.heroImageUrl) {
+      const heroImg = document.querySelector('#hero .hero-card img');
+      if (heroImg) {
+        heroImg.src = global.heroImageUrl;
+      }
     }
-  };
 
-  setHeight();
-  detail.addEventListener('toggle', setHeight);
-  window.addEventListener('resize', () => {
-    if (detail.open) {
-      content.style.maxHeight = `${content.scrollHeight}px`;
+    // YouTube-video
+    if (global.youtubeUrl) {
+      const iframe = document.querySelector('#video iframe');
+      if (iframe) {
+        iframe.src = normalizeYoutube(global.youtubeUrl);
+      }
     }
-  });
-});
 
-// --- Admin-config integrasjon mellom admin.html og forsiden ---
-const CONFIG_STORAGE_KEY = 'fjAdminConfig';
-const DEFAULT_CONFIG = {
-  sections: {
-    hero: { enabled: true, title: 'FjOlsenbanden er Norges mest inkluderende gaming-community.', subtitle: '' },
-    about: { enabled: true, title: 'Hva er FjOlsenbanden?', subtitle: '' },
-    video: { enabled: true, title: 'Hvem er FjOlsen?', subtitle: '' },
-    feedback: { enabled: true, title: 'Tilbakemeldinger fra FjOlsenbanden', subtitle: '' },
-    membership: { enabled: true, title: 'Bli medlem i dag.', subtitle: '' },
-    community: { enabled: true, title: 'FjOlsenbanden – et community i vekst!', subtitle: '' },
-    partners: { enabled: true, title: 'Våre samarbeidspartnere', subtitle: '' },
-    services: { enabled: true, title: 'Andre tilbud', subtitle: '' },
-    contact: { enabled: true, title: 'Kontakt oss', subtitle: '' },
-    faq: { enabled: true, title: 'Ofte stilte spørsmål', subtitle: '' }
-  }
-};
-
-const SECTION_DEFAULTS = {};
-const SECTION_SELECTOR_MAP = {
-  hero: { title: 'h1', subtitle: '.lead, .subtitle' }
-};
-
-function getSectionSelectors(sectionId) {
-  return SECTION_SELECTOR_MAP[sectionId] || { title: 'h2', subtitle: '.subtitle' };
-}
-
-function loadAdminConfig() {
-  try {
-    const raw = localStorage.getItem(CONFIG_STORAGE_KEY);
-    if (!raw) return JSON.parse(JSON.stringify(DEFAULT_CONFIG));
-    const parsed = JSON.parse(raw);
-    const merged = JSON.parse(JSON.stringify(DEFAULT_CONFIG));
-    if (parsed.sections) {
-      Object.keys(parsed.sections).forEach((id) => {
-        if (!merged.sections[id]) return;
-        merged.sections[id] = { ...merged.sections[id], ...parsed.sections[id] };
+    // Sosiale lenker
+    if (global.socials) {
+      const cards = document.querySelectorAll('.social-card');
+      cards.forEach((card) => {
+        const key = card.dataset.social;
+        if (!key) return;
+        const url = global.socials[key];
+        if (url) {
+          card.href = url;
+        }
       });
     }
-    return merged;
-  } catch (e) {
-    return JSON.parse(JSON.stringify(DEFAULT_CONFIG));
-  }
-}
 
-function captureSectionDefaults(sectionId) {
-  const section = document.getElementById(sectionId);
-  if (!section) return;
-  if (!SECTION_DEFAULTS[sectionId]) SECTION_DEFAULTS[sectionId] = {};
-  const defaults = SECTION_DEFAULTS[sectionId];
-  const selectors = getSectionSelectors(sectionId);
+    function normalizeYoutube(url) {
+      if (!url) return url;
 
-  if (defaults.title === undefined) {
-    const titleEl = section.querySelector(selectors.title);
-    defaults.title = titleEl ? titleEl.textContent.trim() : '';
-  }
+      // embed-lenke allerede
+      if (url.includes('/embed/')) return url;
 
-  if (defaults.subtitle === undefined) {
-    const subtitleEl = selectors.subtitle ? section.querySelector(selectors.subtitle) : null;
-    defaults.subtitle = subtitleEl ? subtitleEl.textContent.trim() : '';
-  }
-}
+      // youtu.be/ID
+      const shortMatch = url.match(/youtu\.be\/([^?&]+)/);
+      if (shortMatch) {
+        return 'https://www.youtube.com/embed/' + shortMatch[1];
+      }
 
-function applySectionConfig(sectionId, sectionCfg) {
-  const section = document.getElementById(sectionId);
-  if (!section) return;
+      // watch?v=ID
+      const longMatch = url.match(/[?&]v=([^&]+)/);
+      if (longMatch) {
+        return 'https://www.youtube.com/embed/' + longMatch[1];
+      }
 
-  captureSectionDefaults(sectionId);
-  const selectors = getSectionSelectors(sectionId);
-  const defaults = SECTION_DEFAULTS[sectionId] || {};
-
-  section.hidden = !sectionCfg.enabled;
-
-  const titleEl = section.querySelector(selectors.title);
-  if (titleEl) {
-    const nextTitle = (sectionCfg.title && sectionCfg.title.trim()) || defaults.title || '';
-    titleEl.textContent = nextTitle;
-  }
-
-  if (selectors.subtitle) {
-    const subtitleEl = section.querySelector(selectors.subtitle);
-    if (subtitleEl) {
-      const nextSubtitle = (sectionCfg.subtitle && sectionCfg.subtitle.trim()) || defaults.subtitle || '';
-      subtitleEl.textContent = nextSubtitle;
+      return url;
     }
-  }
-}
-
-function applyAdminConfigToPage() {
-  const cfg = loadAdminConfig();
-  Object.keys(DEFAULT_CONFIG.sections).forEach((id) => {
-    const sectionCfg = cfg.sections[id];
-    if (!sectionCfg) return;
-    applySectionConfig(id, sectionCfg);
-  });
-}
-
-applyAdminConfigToPage();
-
-window.addEventListener('storage', (event) => {
-  if (event.key === CONFIG_STORAGE_KEY) {
-    applyAdminConfigToPage();
-  }
-});
+  })();
 </script>
 </body>
 </html>
