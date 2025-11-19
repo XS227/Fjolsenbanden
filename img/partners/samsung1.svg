@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="80" viewBox="0 0 200 80" role="img" aria-labelledby="title">
+  <title id="title">Samsung partner logo</title>
+  <defs>
+    <radialGradient id="samsungGlow" cx="50%" cy="50%" r="70%">
+      <stop offset="0%" stop-color="#1f3ef5" stop-opacity="0.85" />
+      <stop offset="100%" stop-color="#0d1b6f" />
+    </radialGradient>
+  </defs>
+  <rect width="200" height="80" rx="18" fill="url(#samsungGlow)" />
+  <text x="50%" y="52%" dominant-baseline="middle" text-anchor="middle"
+        fill="#ffffff" font-family="'Inter', Arial, sans-serif" font-size="30" font-weight="700" letter-spacing="1">Samsung</text>
+</svg>
