@@ -329,6 +329,30 @@ a {
   border-radius: 26px;
   padding: 1.6rem 1.8rem;
   border: 1px solid rgba(255, 255, 255, 0.08);
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.feedback-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 20% 20%, rgba(0, 166, 255, 0.08), transparent 40%),
+    radial-gradient(circle at 80% 0%, rgba(255, 45, 164, 0.08), transparent 40%);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.feedback-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.55), 0 0 24px rgba(0, 166, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.16);
+}
+
+.feedback-card:hover::after {
+  opacity: 1;
 }
 
 .feedback-card p {
@@ -338,6 +362,7 @@ a {
 .feedback-name {
   margin-top: 1rem;
   font-weight: 600;
+  text-align: right;
 }
 
 .feedback-name--orange {
@@ -837,10 +862,10 @@ textarea:focus {
             til at jeg har blitt enda nærmere noen i real life venner. Tusen tusen takk for
             det &lt;3»
           </p>
-          <p class="feedback-name">Filip, medlem</p>
+          <p class="feedback-name feedback-name--blue">Filip, medlem</p>
         </div>
 
-        <div class="card">
+        <div class="feedback-card">
           <p>
             «Du fortjener det mann! Du er så super streamer og den personen som
             setter et smil på alle som kommer inn. Jeg som er syk ble glad med
@@ -849,7 +874,7 @@ textarea:focus {
           <p class="feedback-name">Borkærn, medlem</p>
         </div>
 
-        <div class="card">
+        <div class="feedback-card">
           <p>
             «Tusen takk for alt du gjør for barn og ungdom som digger Fortnite – og for at du
             holder strenge og trygge rammer. Du skaper stor underholdningsverdi også for
@@ -857,16 +882,16 @@ textarea:focus {
             glede seg til bursdagen sin og å skape et skikkelig lyspunkt i en ellers ganske
             tøff tilværelse. For det er vi foreldre (og storesøster) evig takknemlig.»
           </p>
-          <p class="feedback-name">Pernille &amp; Terje, foreldre</p>
+          <p class="feedback-name feedback-name--blue">Pernille &amp; Terje, foreldre</p>
         </div>
 
-        <div class="card">
+        <div class="feedback-card">
           <p>
             «Du har så mye peil på how to, overflow barn! Veldig fint og observere
             hvordan iallfall KJ tjener på FJOlsen-events!! Og jeg kjenner en del som
             hadde hatt fullt utbytte av et pedagogisk opplegg i din regi! Respect.»
           </p>
-          <p class="feedback-name">Merethe, mamma</p>
+          <p class="feedback-name feedback-name--pink">Merethe, mamma</p>
         </div>
       </div>
 
