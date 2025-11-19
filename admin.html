@@ -2,11 +2,12 @@
 <html lang="nb">
 <head>
   <meta charset="utf-8" />
-  <title>FjOlsenbanden – Admin</title>
+  <title>FjOlsenbanden – Adminpanel</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
     :root {
-      --bg: #020317;
+      --bg: #050b2b;
+      --bg-alt: #071133;
       --card: #0d1636;
       --card-alt: #101a3e;
       --text: #ffffff;
@@ -16,7 +17,7 @@
       --radius-lg: 24px;
       --radius-md: 16px;
       --radius-pill: 999px;
-      --shadow-soft: 0 18px 40px rgba(0, 0, 0, 0.65);
+      --shadow-soft: 0 24px 60px rgba(0, 0, 0, 0.65);
     }
 
     *,
@@ -34,38 +35,176 @@
       color: var(--text);
     }
 
-    .container {
-      max-width: 1040px;
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* Top bar */
+
+    .top-bar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(5, 11, 43, 0.97);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .top-bar-inner {
+      max-width: 1120px;
       margin: 0 auto;
-      padding: 2rem 1.5rem 4rem;
+      padding: 0.75rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
     }
 
-    h1 {
-      font-size: clamp(2rem, 3vw, 2.6rem);
-      margin-bottom: 0.5rem;
+    .top-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
     }
 
-    .subtitle {
-      color: var(--muted);
-      max-width: 640px;
-      margin-bottom: 2rem;
+    .top-brand img {
+      height: 32px;
     }
 
-    .section-list {
+    .top-title {
       display: flex;
       flex-direction: column;
-      gap: 1.5rem;
+      gap: 0.1rem;
     }
 
-    .section-card {
+    .top-title-main {
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+
+    .top-title-sub {
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .top-badge {
+      padding: 0.25rem 0.85rem;
+      border-radius: var(--radius-pill);
+      background: rgba(0, 166, 255, 0.18);
+      color: #b9e5ff;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    /* Layout */
+
+    .page {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem 3rem;
+    }
+
+    .page-header {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .page-header h1 {
+      font-size: clamp(2rem, 3vw, 2.4rem);
+      margin: 0;
+    }
+
+    .page-header p {
+      margin: 0;
+      color: var(--muted);
+      max-width: 640px;
+      font-size: 0.95rem;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.8fr) minmax(0, 1.1fr);
+      gap: 1.5rem;
+      align-items: flex-start;
+    }
+
+    @media (max-width: 900px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .card {
       background: radial-gradient(circle at top left, var(--card-alt), var(--card));
       border-radius: var(--radius-lg);
-      padding: 1.5rem 1.6rem 1.4rem;
+      padding: 1.5rem 1.6rem;
       box-shadow: var(--shadow-soft);
       border: 1px solid rgba(255, 255, 255, 0.06);
     }
 
-    .section-header {
+    /* Stats */
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .stat-card {
+      background: rgba(2, 4, 25, 0.7);
+      border-radius: 18px;
+      padding: 0.9rem 1rem;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .stat-label {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-bottom: 0.25rem;
+    }
+
+    .stat-value {
+      font-size: 1.4rem;
+      font-weight: 600;
+    }
+
+    .stat-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      margin-top: 0.35rem;
+      padding: 0.1rem 0.6rem;
+      border-radius: var(--radius-pill);
+      font-size: 0.75rem;
+      background: rgba(0, 166, 255, 0.12);
+      color: #b9e5ff;
+    }
+
+    .stat-pill--off {
+      background: rgba(255, 45, 164, 0.16);
+      color: #ffc4e2;
+    }
+
+    /* Sections list */
+
+    .section-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .section-card {
+      background: radial-gradient(circle at top left, #192554, #0b1433);
+      border-radius: 22px;
+      padding: 1.25rem 1.4rem 1.15rem;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .section-header-row {
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -73,23 +212,38 @@
       margin-bottom: 0.75rem;
     }
 
-    .section-title {
+    .section-header-main {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+    }
+
+    .section-label {
+      font-size: 0.95rem;
       font-weight: 600;
-      font-size: 1.05rem;
     }
 
     .section-id {
-      font-size: 0.8rem;
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    .section-tag {
+      font-size: 0.75rem;
+      padding: 0.2rem 0.6rem;
+      border-radius: var(--radius-pill);
+      background: rgba(255, 255, 255, 0.06);
       color: var(--muted);
     }
 
     .toggle {
       display: inline-flex;
       align-items: center;
-      gap: 0.5rem;
-      font-size: 0.9rem;
+      gap: 0.45rem;
+      font-size: 0.85rem;
       color: var(--muted);
       cursor: pointer;
+      white-space: nowrap;
     }
 
     .toggle input {
@@ -100,11 +254,11 @@
       display: flex;
       flex-direction: column;
       gap: 0.25rem;
-      margin-top: 0.75rem;
+      margin-top: 0.6rem;
     }
 
     .field-group label {
-      font-size: 0.85rem;
+      font-size: 0.8rem;
       color: var(--muted);
     }
 
@@ -130,8 +284,9 @@
     }
 
     .actions {
-      margin-top: 2rem;
+      margin-top: 1.25rem;
       display: flex;
+      flex-wrap: wrap;
       gap: 0.75rem;
       align-items: center;
     }
@@ -146,7 +301,7 @@
       border: none;
       cursor: pointer;
       font-weight: 600;
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       transition: transform 0.12s ease, box-shadow 0.12s ease, filter 0.12s ease;
     }
 
@@ -178,76 +333,425 @@
     }
 
     .status--ok {
-      color: #5be38b;
+      color: #63e6a5;
     }
 
     .status--error {
-      color: #ff6a6a;
+      color: #ff7a7a;
     }
 
-    @media (max-width: 700px) {
-      .section-header {
-        flex-direction: column;
-        align-items: flex-start;
+    .hint {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-top: 0.4rem;
+    }
+
+    /* Right column / global settings & info */
+
+    .info-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .info-card-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .info-card p {
+      margin: 0 0 0.35rem;
+      font-size: 0.86rem;
+      color: var(--muted);
+    }
+
+    .info-key {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New",
+        monospace;
+      font-size: 0.8rem;
+      background: rgba(2, 4, 25, 0.9);
+      padding: 0.35rem 0.6rem;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      display: inline-block;
+      margin-top: 0.25rem;
+      word-break: break-all;
+    }
+
+    .global-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin-top: 0.5rem;
+    }
+
+    .global-row {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+
+    .global-label {
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .global-input {
+      background: #070f2c;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      padding: 0.6rem 0.75rem;
+      color: var(--text);
+      font: inherit;
+    }
+
+    .global-input:focus {
+      outline: 2px solid var(--primary);
+      outline-offset: 1px;
+    }
+
+    .global-help {
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    /* Login overlay */
+
+    .auth-overlay {
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(circle at top, rgba(16, 26, 90, 0.95), rgba(2, 3, 20, 0.98));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 50;
+    }
+
+    .auth-box {
+      width: 100%;
+      max-width: 360px;
+      background: radial-gradient(circle at top left, #151f4b, #050b2b);
+      border-radius: 24px;
+      padding: 1.8rem 1.7rem 1.5rem;
+      box-shadow: var(--shadow-soft);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .auth-logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1rem;
+    }
+
+    .auth-logo img {
+      height: 32px;
+    }
+
+    .auth-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      text-align: center;
+      margin-bottom: 0.3rem;
+    }
+
+    .auth-sub {
+      font-size: 0.85rem;
+      text-align: center;
+      color: var(--muted);
+      margin-bottom: 1.1rem;
+    }
+
+    .auth-field {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+      margin-bottom: 0.9rem;
+    }
+
+    .auth-field label {
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .auth-field input {
+      background: #070f2c;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      padding: 0.6rem 0.75rem;
+      color: var(--text);
+      font: inherit;
+    }
+
+    .auth-field input:focus {
+      outline: 2px solid var(--primary);
+      outline-offset: 1px;
+    }
+
+    .auth-error {
+      min-height: 1.1rem;
+      font-size: 0.8rem;
+      color: #ff7a7a;
+      margin-bottom: 0.4rem;
+      text-align: center;
+    }
+
+    .auth-actions {
+      display: flex;
+      justify-content: center;
+      margin-top: 0.5rem;
+    }
+
+    .auth-btn {
+      width: 100%;
+      justify-content: center;
+    }
+
+    .app {
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(4px);
+      transition: opacity 0.18s ease, transform 0.18s ease;
+    }
+
+    .app--ready {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 600px) {
+      .top-bar-inner {
+        padding-inline: 1rem;
+      }
+
+      .page {
+        padding-inline: 1rem;
       }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Admin – FjOlsenbanden</h1>
-    <p class="subtitle">
-      Her kan du styre hvilke seksjoner som er synlige på forsiden, og endre tittel/undertekst (subtitle) for hver seksjon.
-      Endringene lagres i nettleseren din (localStorage) og leses av <code>index.html</code>.
-    </p>
+  <!-- Login overlay -->
+  <div class="auth-overlay" id="auth-overlay">
+    <div class="auth-box">
+      <div class="auth-logo">
+        <img src="https://setaei.com/Fjolsen/Liggende-M%E2%94%9C%E2%95%95rk.png" alt="FjOlsenbanden logo" />
+      </div>
+      <div class="auth-title">Admin tilgang</div>
+      <div class="auth-sub">Skriv inn access pass for å åpne adminpanelet.</div>
 
-    <div class="section-list" id="section-list">
-      <!-- Seksjoner defineres i JS -->
-    </div>
-
-    <div class="actions">
-      <button class="btn btn-primary" id="save-btn">Lagre innstillinger</button>
-      <button class="btn btn-ghost" id="reset-btn">Tilbakestill til standard</button>
-      <span class="status" id="status-msg"></span>
+      <form id="auth-form">
+        <div class="auth-field">
+          <label for="access-pass">Access pass</label>
+          <input type="password" id="access-pass" autocomplete="off" />
+        </div>
+        <div class="auth-error" id="auth-error"></div>
+        <div class="auth-actions">
+          <button type="submit" class="btn btn-primary auth-btn">Logg inn</button>
+        </div>
+      </form>
     </div>
   </div>
 
+  <!-- App -->
+  <div class="top-bar">
+    <div class="top-bar-inner">
+      <div class="top-brand">
+        <img src="https://setaei.com/Fjolsen/Liggende-M%E2%94%9C%E2%95%95rk.png" alt="FjOlsenbanden logo" />
+        <div class="top-title">
+          <span class="top-title-main">FjOlsenbanden – Adminpanel</span>
+          <span class="top-title-sub">Styr seksjoner og innhold som vises på forsiden</span>
+        </div>
+      </div>
+      <span class="top-badge">Admin</span>
+    </div>
+  </div>
+
+  <main class="page app" id="app">
+    <div class="page-header">
+      <h1>Forsideoppsett</h1>
+      <p>
+        Aktiver eller deaktiver seksjoner, tilpass overskrifter og oppdater logo, bilder, video og sosiale lenker.
+        Endringene lagres i nettleseren (localStorage) og brukes av forsiden (<code>index.html</code>).
+      </p>
+    </div>
+
+    <div class="grid">
+      <section>
+        <div class="card">
+          <div class="stats-grid" id="stats-grid">
+            <div class="stat-card">
+              <div class="stat-label">Totalt seksjoner</div>
+              <div class="stat-value" id="stat-total">–</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">Aktive</div>
+              <div class="stat-value" id="stat-on">–</div>
+              <div class="stat-pill">Vises på forsiden</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">Skjulte</div>
+              <div class="stat-value" id="stat-off">–</div>
+              <div class="stat-pill stat-pill--off">Skjult for besøkende</div>
+            </div>
+          </div>
+
+          <div class="section-list" id="section-list">
+            <!-- Fylles av JS -->
+          </div>
+
+          <div class="actions">
+            <button class="btn btn-primary" id="save-btn">Lagre innstillinger</button>
+            <button class="btn btn-ghost" id="reset-btn">Tilbakestill til standard</button>
+            <span class="status" id="status-msg"></span>
+          </div>
+          <div class="hint">
+            Tips: åpne forsiden i en ny fane. Etter at du har lagret her, oppdaterer du forsiden (F5) for å se
+            endringene.
+          </div>
+        </div>
+      </section>
+
+      <aside>
+        <div class="info-list">
+          <div class="card">
+            <div class="info-card-title">Globale innstillinger</div>
+            <div class="global-group">
+              <div class="global-row">
+                <span class="global-label">Logo URL</span>
+                <input class="global-input" id="branding-logo" type="text" />
+                <span class="global-help">Bruk lenke til logo-bilde (PNG/SVG). Vises i header og footer.</span>
+              </div>
+
+              <div class="global-row">
+                <span class="global-label">Hero-bilde URL</span>
+                <input class="global-input" id="branding-hero" type="text" />
+                <span class="global-help">Bilde som vises i kortet til høyre i hero-seksjonen.</span>
+              </div>
+
+              <div class="global-row">
+                <span class="global-label">YouTube-video URL</span>
+                <input class="global-input" id="branding-youtube" type="text" />
+                <span class="global-help">Kan være vanlig YouTube-lenke (watch eller youtu.be) – den konverteres til embed.</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="info-card-title">Sosiale lenker</div>
+            <div class="global-group">
+              <div class="global-row">
+                <span class="global-label">Twitch</span>
+                <input class="global-input" id="social-twitch" type="text" />
+              </div>
+              <div class="global-row">
+                <span class="global-label">TikTok</span>
+                <input class="global-input" id="social-tiktok" type="text" />
+              </div>
+              <div class="global-row">
+                <span class="global-label">Discord</span>
+                <input class="global-input" id="social-discord" type="text" />
+              </div>
+              <div class="global-row">
+                <span class="global-label">YouTube</span>
+                <input class="global-input" id="social-youtube" type="text" />
+              </div>
+              <div class="global-row">
+                <span class="global-label">Instagram</span>
+                <input class="global-input" id="social-instagram" type="text" />
+              </div>
+            </div>
+          </div>
+
+          <div class="card info-card">
+            <div class="info-card-title">Hvordan fungerer dette?</div>
+            <p>Alt lagres i <code>localStorage</code> under nøkkelen:</p>
+            <div class="info-key">fjAdminConfig</div>
+            <p>Forsiden leser dette når den lastes, og:</p>
+            <p>• skjuler seksjoner som er deaktivert</p>
+            <p>• bruker logo / hero-bilde / video-lenke du har satt</p>
+            <p>• oppdaterer sosiale lenker</p>
+            <p>• overskriver overskrifter og undertekster der du har skrevet noe nytt.</p>
+          </div>
+
+          <div class="card info-card">
+            <div class="info-card-title">Access pass</div>
+            <p>Access pass som brukes nå:</p>
+            <div class="info-key">123456789</div>
+            <p style="margin-top:0.4rem;">Dette er kun frontend-sikring. For «ordentlig» sikkerhet må dette flyttes til server.</p>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </main>
+
   <script>
+    const ACCESS_PASS = "123456789";
+
     const DEFAULT_CONFIG = {
+      global: {
+        logoUrl: "https://setaei.com/Fjolsen/Liggende-M%E2%94%9C%E2%95%95rk.png",
+        heroImageUrl: "img/fjolsen-card.png",
+        youtubeUrl: "https://www.youtube.com/embed/8EgRIkmvmtM",
+        socials: {
+          twitch: "https://twitch.tv/...",
+          tiktok: "https://tiktok.com/@...",
+          discord: "https://discord.gg/...",
+          youtube: "https://youtube.com/...",
+          instagram: "https://instagram.com/..."
+        }
+      },
       sections: {
-        hero:      { enabled: true,  title: "FjOlsenbanden er Norges mest inkluderende gaming-community.", subtitle: "" },
-        about:     { enabled: true,  title: "Hva er FjOlsenbanden?", subtitle: "" },
-        video:     { enabled: true,  title: "Hvem er FjOlsen?", subtitle: "" },
-        feedback:  { enabled: true,  title: "Tilbakemeldinger fra FjOlsenbanden", subtitle: "" },
-        membership:{ enabled: true,  title: "Bli medlem i dag.", subtitle: "" },
-        community: { enabled: true,  title: "FjOlsenbanden – et community i vekst!", subtitle: "" },
-        partners:  { enabled: true,  title: "Våre samarbeidspartnere", subtitle: "" },
-        services:  { enabled: true,  title: "Andre tilbud", subtitle: "" },
-        contact:   { enabled: true,  title: "Kontakt oss", subtitle: "" },
-        faq:       { enabled: true,  title: "Ofte stilte spørsmål", subtitle: "" }
+        hero:       { enabled: true,  title: "FjOlsenbanden er Norges mest inkluderende gaming-community.", subtitle: "" },
+        about:      { enabled: true,  title: "Hva er FjOlsenbanden?", subtitle: "" },
+        video:      { enabled: true,  title: "Hvem er FjOlsen?", subtitle: "" },
+        feedback:   { enabled: true,  title: "Tilbakemeldinger fra FjOlsenbanden", subtitle: "" },
+        membership: { enabled: true,  title: "Bli medlem i dag.", subtitle: "" },
+        community:  { enabled: true,  title: "FjOlsenbanden – et community i vekst!", subtitle: "" },
+        partners:   { enabled: true,  title: "Våre samarbeidspartnere", subtitle: "" },
+        services:   { enabled: true,  title: "Andre tilbud", subtitle: "" },
+        contact:    { enabled: true,  title: "Kontakt oss", subtitle: "" },
+        faq:        { enabled: true,  title: "Ofte stilte spørsmål", subtitle: "" }
       }
     };
 
     const SECTION_META = [
-      { id: "hero",      label: "Hero / Velkommen" },
-      { id: "about",     label: "Om FjOlsenbanden" },
-      { id: "video",     label: "Video / Hvem er FjOlsen" },
-      { id: "feedback",  label: "Tilbakemeldinger" },
-      { id: "membership",label: "Medlemskap" },
-      { id: "community", label: "Community / SoMe" },
-      { id: "partners",  label: "Samarbeidspartnere" },
-      { id: "services",  label: "Andre tjenester" },
-      { id: "contact",   label: "Kontakt" },
-      { id: "faq",       label: "FAQ" },
+      { id: "hero",       label: "Hero / Velkommen", tag: "Øverst på siden" },
+      { id: "about",      label: "Om FjOlsenbanden", tag: "Presentasjon" },
+      { id: "video",      label: "Video / Hvem er FjOlsen", tag: "YouTube / intro" },
+      { id: "feedback",   label: "Tilbakemeldinger", tag: "Sitater fra medlemmer" },
+      { id: "membership", label: "Medlemskap", tag: "Bli medlem / CTA" },
+      { id: "community",  label: "Community / SoMe", tag: "Sosiale medier" },
+      { id: "partners",   label: "Samarbeidspartnere", tag: "Logoer / partnere" },
+      { id: "services",   label: "Andre tjenester", tag: "Foredrag / events" },
+      { id: "contact",    label: "Kontakt", tag: "Kontaktskjema" },
+      { id: "faq",        label: "FAQ", tag: "Ofte stilte spørsmål" }
     ];
+
+    function deepClone(obj) {
+      return JSON.parse(JSON.stringify(obj));
+    }
 
     function loadConfig() {
       try {
         const raw = localStorage.getItem("fjAdminConfig");
-        if (!raw) return JSON.parse(JSON.stringify(DEFAULT_CONFIG));
+        if (!raw) return deepClone(DEFAULT_CONFIG);
         const parsed = JSON.parse(raw);
-        // enkel merge: hvis noe mangler, bruk default
-        const cfg = JSON.parse(JSON.stringify(DEFAULT_CONFIG));
+        const cfg = deepClone(DEFAULT_CONFIG);
+
+        if (parsed.global) {
+          cfg.global = {
+            ...cfg.global,
+            ...parsed.global,
+            socials: {
+              ...cfg.global.socials,
+              ...(parsed.global.socials || {})
+            }
+          };
+        }
+
         if (parsed.sections) {
           Object.keys(parsed.sections).forEach((id) => {
             if (!cfg.sections[id]) return;
@@ -256,7 +760,8 @@
         }
         return cfg;
       } catch (e) {
-        return JSON.parse(JSON.stringify(DEFAULT_CONFIG));
+        console.warn("Klarte ikke å lese config, bruker default:", e);
+        return deepClone(DEFAULT_CONFIG);
       }
     }
 
@@ -264,10 +769,35 @@
       localStorage.setItem("fjAdminConfig", JSON.stringify(cfg));
     }
 
-    function renderForm() {
+    function renderStats(cfg) {
+      const sections = Object.values(cfg.sections);
+      const total = sections.length;
+      const on = sections.filter((s) => s.enabled).length;
+      const off = total - on;
+
+      document.getElementById("stat-total").textContent = total;
+      document.getElementById("stat-on").textContent = on;
+      document.getElementById("stat-off").textContent = off;
+    }
+
+    function renderGlobalForm(cfg) {
+      const g = cfg.global;
+      document.getElementById("branding-logo").value = g.logoUrl || "";
+      document.getElementById("branding-hero").value = g.heroImageUrl || "";
+      document.getElementById("branding-youtube").value = g.youtubeUrl || "";
+
+      document.getElementById("social-twitch").value = g.socials.twitch || "";
+      document.getElementById("social-tiktok").value = g.socials.tiktok || "";
+      document.getElementById("social-discord").value = g.socials.discord || "";
+      document.getElementById("social-youtube").value = g.socials.youtube || "";
+      document.getElementById("social-instagram").value = g.socials.instagram || "";
+    }
+
+    function renderSectionsForm(cfg) {
       const container = document.getElementById("section-list");
       container.innerHTML = "";
-      const cfg = loadConfig();
+
+      renderStats(cfg);
 
       SECTION_META.forEach((meta) => {
         const sCfg = cfg.sections[meta.id];
@@ -276,15 +806,18 @@
         card.dataset.sectionId = meta.id;
 
         card.innerHTML = `
-          <div class="section-header">
-            <div>
-              <div class="section-title">${meta.label}</div>
+          <div class="section-header-row">
+            <div class="section-header-main">
+              <div class="section-label">${meta.label}</div>
               <div class="section-id">ID: #${meta.id}</div>
             </div>
-            <label class="toggle">
-              <input type="checkbox" class="toggle-input" ${sCfg.enabled ? "checked" : ""} />
-              <span>Vis på forsiden</span>
-            </label>
+            <div style="display:flex; align-items:center; gap:0.75rem;">
+              <span class="section-tag">${meta.tag}</span>
+              <label class="toggle">
+                <input type="checkbox" class="toggle-input" ${sCfg.enabled ? "checked" : ""} />
+                <span>Vis på forsiden</span>
+              </label>
+            </div>
           </div>
 
           <div class="field-group">
@@ -303,9 +836,10 @@
     }
 
     function collectConfigFromForm() {
-      const cfg = JSON.parse(JSON.stringify(DEFAULT_CONFIG));
-      const cards = document.querySelectorAll(".section-card");
+      const cfg = deepClone(DEFAULT_CONFIG);
 
+      // Sections
+      const cards = document.querySelectorAll(".section-card");
       cards.forEach((card) => {
         const id = card.dataset.sectionId;
         const enabled = card.querySelector(".toggle-input").checked;
@@ -320,6 +854,22 @@
         };
       });
 
+      // Global
+      const g = cfg.global;
+      const logo = document.getElementById("branding-logo").value.trim();
+      const hero = document.getElementById("branding-hero").value.trim();
+      const yt = document.getElementById("branding-youtube").value.trim();
+
+      if (logo) g.logoUrl = logo;
+      if (hero) g.heroImageUrl = hero;
+      if (yt) g.youtubeUrl = yt;
+
+      g.socials.twitch = document.getElementById("social-twitch").value.trim() || g.socials.twitch;
+      g.socials.tiktok = document.getElementById("social-tiktok").value.trim() || g.socials.tiktok;
+      g.socials.discord = document.getElementById("social-discord").value.trim() || g.socials.discord;
+      g.socials.youtube = document.getElementById("social-youtube").value.trim() || g.socials.youtube;
+      g.socials.instagram = document.getElementById("social-instagram").value.trim() || g.socials.instagram;
+
       return cfg;
     }
 
@@ -331,14 +881,44 @@
       if (type === "error") el.classList.add("status--error");
     }
 
+    function setupAuth() {
+      const overlay = document.getElementById("auth-overlay");
+      const form = document.getElementById("auth-form");
+      const input = document.getElementById("access-pass");
+      const error = document.getElementById("auth-error");
+      const app = document.getElementById("app");
+
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const value = input.value.trim();
+        if (value === ACCESS_PASS) {
+          overlay.style.display = "none";
+          app.classList.add("app--ready");
+          input.value = "";
+          error.textContent = "";
+        } else {
+          error.textContent = "Feil access pass. Prøv igjen.";
+          input.focus();
+          input.select();
+        }
+      });
+
+      setTimeout(() => input.focus(), 50);
+    }
+
     document.addEventListener("DOMContentLoaded", () => {
-      renderForm();
+      setupAuth();
+
+      const cfg = loadConfig();
+      renderSectionsForm(cfg);
+      renderGlobalForm(cfg);
 
       document.getElementById("save-btn").addEventListener("click", () => {
         try {
-          const cfg = collectConfigFromForm();
-          saveConfig(cfg);
-          setStatus("Lagret! Gå til forsiden og oppdater siden (F5) for å se endringer.", "ok");
+          const newCfg = collectConfigFromForm();
+          saveConfig(newCfg);
+          renderStats(newCfg);
+          setStatus("Lagret! Oppdater forsiden for å se endringene.", "ok");
         } catch (e) {
           console.error(e);
           setStatus("Noe gikk galt ved lagring.", "error");
@@ -347,8 +927,10 @@
 
       document.getElementById("reset-btn").addEventListener("click", () => {
         saveConfig(DEFAULT_CONFIG);
-        renderForm();
-        setStatus("Tilbakestilt til standard.", "ok");
+        const fresh = loadConfig();
+        renderSectionsForm(fresh);
+        renderGlobalForm(fresh);
+        setStatus("Tilbakestilt til standardoppsett.", "ok");
       });
     });
   </script>
