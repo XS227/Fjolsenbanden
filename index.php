@@ -7,16 +7,16 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Fjolsenbanden – Spillglede for hele familien</title>
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <link rel="apple-touch-icon" href="/favicon.svg" />
+    <link rel="icon" href="https://fjolsenbanden.setaei.com/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="https://fjolsenbanden.setaei.com/favicon.svg" />
     <meta property="og:title" content="Fjolsenbanden – Spillglede for hele familien" />
     <meta
       property="og:description"
       content="Trygge streams, premier og Vipps-verifisering i et familievennlig gaming-community."
     />
-    <meta property="og:image" content="/og-image.svg" />
+    <meta property="og:image" content="https://fjolsenbanden.setaei.com/og-image.svg" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:image" content="/og-image.svg" />
+    <meta name="twitter:image" content="https://fjolsenbanden.setaei.com/og-image.svg" />
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -730,7 +730,7 @@
           <div class="mx-auto grid max-w-6xl items-center gap-10 lg:grid-cols-2">
             <div class="space-y-5 text-left">
               <img
-                src="/assets/branding/Liggende-Lys.svg"
+                src="https://fjolsenbanden.setaei.com/assets/branding/Liggende-Lys.svg"
                 alt="Fjolsenbanden logo"
                 class="h-20 w-auto sm:h-24"
                 loading="lazy"
@@ -758,7 +758,7 @@
             </div>
             <div class="flex justify-center lg:justify-end">
               <img
-                src="/assets/branding/Staende-Lys.svg"
+                src="https://fjolsenbanden.setaei.com/assets/branding/Staende-Lys.svg"
                 alt="Fjolsenbanden illustrasjon"
                 class="max-h-[420px] w-full max-w-xl object-contain"
                 loading="lazy"
@@ -1346,7 +1346,7 @@
           <div class="flex flex-col items-center justify-center gap-2 text-sm md:flex-row">
             <span>© 2025 Fjolsenbanden v/Fair Share Invest AS - Org.nr. 926 963 023. Alle rettigheter reservert.</span>
             <a
-              href="/admin"
+              href="https://fjolsenbanden.setaei.com/admin"
               class="flex items-center gap-2 font-medium text-zinc-300 transition hover:text-white"
             >
               <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4" aria-hidden="true">

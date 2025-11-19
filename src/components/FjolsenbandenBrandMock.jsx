@@ -5,6 +5,7 @@ import { Instagram, Menu, Play, ShieldCheck, Smartphone, Sparkles, Trophy, Twitc
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useAdminState } from "@/lib/admin-state";
+const SITE_BASE_URL = "https://fjolsenbanden.setaei.com";
 const BRAND = {
     midnight: "#020824",
     midnightSoft: "#0E1A42",
@@ -27,19 +28,19 @@ const PRIZES = [
         brand: "Lenovo Legion",
         item: "Gaming headset",
         value: "Verdi 1 299,-",
-        image: "/assets/prize-legion-headset.svg",
+        image: `${SITE_BASE_URL}/assets/prize-legion-headset.svg`,
     },
     {
         brand: "Samsung Odyssey",
         item: "27\" QHD skjerm",
         value: "Verdi 4 990,-",
-        image: "/assets/prize-odyssey-monitor.svg",
+        image: `${SITE_BASE_URL}/assets/prize-odyssey-monitor.svg`,
     },
     {
         brand: "Philips Hue",
         item: "Smart startpakke",
         value: "Verdi 1 599,-",
-        image: "/assets/prize-hue-kit.svg",
+        image: `${SITE_BASE_URL}/assets/prize-hue-kit.svg`,
     },
 ];
 export default function FjolsenbandenBrandMock() {
@@ -101,7 +102,7 @@ export default function FjolsenbandenBrandMock() {
                                     borderRadius: 999,
                                     boxShadow: `0 0 24px ${BRAND.pink}7a`,
                                 }, animate: prefersReducedMotion ? undefined : { opacity: [1, 0.6, 1] }, transition: prefersReducedMotion ? undefined : { repeat: Infinity, duration: 1.4 } }, "\uD83D\uDD34 LIVE"),
-                            React.createElement(motion.img, { src: "/assets/mascot.svg", alt: "Fjolsenbanden maskot", className: "absolute bottom-4 right-4 w-28 opacity-90 sm:w-36", initial: prefersReducedMotion ? undefined : { y: 6 }, animate: prefersReducedMotion ? undefined : { y: [6, -4, 6] }, transition: prefersReducedMotion
+                            React.createElement(motion.img, { src: `${SITE_BASE_URL}/assets/mascot.svg`, alt: "Fjolsenbanden maskot", className: "absolute bottom-4 right-4 w-28 opacity-90 sm:w-36", initial: prefersReducedMotion ? undefined : { y: 6 }, animate: prefersReducedMotion ? undefined : { y: [6, -4, 6] }, transition: prefersReducedMotion
                                     ? undefined
                                     : { duration: 4, repeat: Infinity, ease: "easeInOut" } }),
                             React.createElement("div", { className: "grid h-full w-full place-items-center text-zinc-300" },

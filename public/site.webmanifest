@@ -3,7 +3,7 @@
   "short_name": "MySite",
   "icons": [
     {
-      "src": "/favicon.svg",
+      "src": "https://fjolsenbanden.setaei.com/favicon.svg",
       "sizes": "any",
       "type": "image/svg+xml",
       "purpose": "any maskable"

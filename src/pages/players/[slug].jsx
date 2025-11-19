@@ -31,11 +31,11 @@ export default function PlayerProfilePage() {
                 React.createElement("h1", { className: "text-3xl font-semibold text-white" }, "Profilen er ikke klar enn\u00E5"),
                 React.createElement("p", { className: "max-w-lg text-sm text-slate-300" }, "Vi fant ingen spiller med denne adressen. Oppdater adminpanelet og lag en ny profil for spilleren, eller del en gyldig lenke."),
                 React.createElement(Button, { asChild: true, className: "gap-2" },
-                    React.createElement("a", { href: "/admin", className: "flex items-center gap-2" },
+                    React.createElement("a", { href: "https://fjolsenbanden.setaei.com/admin", className: "flex items-center gap-2" },
                         React.createElement(ArrowLeft, { className: "h-4 w-4" }),
                         " Tilbake til admin")))));
     }
-    return (React.createElement(PlayerProfileView, { player: player, siteSettings: siteSettings, backLink: { href: "/players", label: "Til spilleroversikt" }, extraActions: React.createElement(Button, { variant: "outline", onClick: memberAuth.logout },
+    return (React.createElement(PlayerProfileView, { player: player, siteSettings: siteSettings, backLink: { href: "https://fjolsenbanden.setaei.com/players", label: "Til spilleroversikt" }, extraActions: React.createElement(Button, { variant: "outline", onClick: memberAuth.logout },
             React.createElement(LogOut, { className: "mr-2 h-4 w-4" }),
             " Logg ut") }));
 }

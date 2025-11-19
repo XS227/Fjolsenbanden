@@ -60,7 +60,7 @@ function ProfilePreviewContent() {
                     React.createElement("p", null, "Legg til en spiller i adminpanelet for \u00E5 kunne forh\u00E5ndsvise profilen deres."),
                     React.createElement("p", null,
                         "G\u00E5 til ",
-                        React.createElement("a", { href: "/admin", className: "text-cyan-300 underline" }, "adminpanelet"),
+                        React.createElement("a", { href: "https://fjolsenbanden.setaei.com/admin", className: "text-cyan-300 underline" }, "adminpanelet"),
                         " og bruk \u00ABLegg til spiller\u00BB-skjemaet for \u00E5 komme i gang.")))) : selectedPlayer ? (React.createElement(PlayerProfileView, { player: selectedPlayer, siteSettings: siteSettings, extraActions: React.createElement(Button, { className: "rounded-full px-6 py-2 text-sm font-semibold", onClick: () => {
                         if (typeof window !== "undefined") {
                             window.open(`/players/${selectedPlayer.slug}`, "_blank", "noopener,noreferrer");
@@ -80,7 +80,7 @@ function PreviewGate({ hint }) {
                     React.createElement("p", null, hint),
                     React.createElement(Button, { className: "w-full", onClick: () => {
                             if (typeof window !== "undefined") {
-                                window.location.href = "/admin";
+                                window.location.href = "https://fjolsenbanden.setaei.com/admin";
                             }
                         } }, "G\u00E5 til admininnlogging"))))));
 }

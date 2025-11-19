@@ -141,7 +141,7 @@ const DEFAULT_STATE = {
         heroTagline: "Spillglede for hele familien – trygge streams, turneringer og premier.",
         heroSubtitle: "En trygg arena for familier som elsker gaming, med fellesskap, premier og foreldre i sentrum.",
         heroDescription: "Spillglede for hele familien med trygge streams, premier og fellesskap.",
-        heroImageUrl: "/assets/branding/fjolsenbanden-logo-light.svg",
+        heroImageUrl: "https://fjolsenbanden.setaei.com/assets/branding/fjolsenbanden-logo-light.svg",
         heroBackgroundImage: "",
         announcement: "Neste livesending starter 20:00 med co-op i Mario Kart og premier fra Lenovo!",
         aboutTitle: "Hva er FjOlsenbanden?",
