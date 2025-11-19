@@ -966,36 +966,61 @@ textarea:focus {
     <div class="container">
       <h2>Frequently Asked Questions</h2><div class="faq-list">
     <details class="faq-item" open>
-      <summary>Hva er FjOlsenbanden?</summary>
-      <p>
-        FjOlsenbanden er et familievennlig gaming-community der barn, ungdom og foreldre kan delta på trygge og
-        inkluderende aktiviteter og events.
-      </p>
+      <summary>
+        <span class="faq-question">Hva er FjOlsenbanden?</span>
+        <span class="faq-icon" aria-hidden="true">▼</span>
+      </summary>
+      <div class="faq-content">
+        <p>
+          FjOlsenbanden er et familievennlig gaming-community der barn, ungdom og foreldre kan delta på trygge og
+          inkluderende aktiviteter og events.
+        </p>
+      </div>
     </details>
 
     <details class="faq-item">
-      <summary>Hvordan blir jeg medlem?</summary>
-      <p>
-        Bla opp til seksjonen «Bli medlem» eller klikk på knappen i menyen. Der finner du lenker for både under
-        og over 18 år.
-      </p>
+      <summary>
+        <span class="faq-question">Hvordan blir jeg medlem?</span>
+        <span class="faq-icon" aria-hidden="true">▼</span>
+      </summary>
+      <div class="faq-content">
+        <p>
+          Bla opp til seksjonen «Bli medlem» eller klikk på knappen i menyen. Der finner du lenker for både under
+          og over 18 år.
+        </p>
+      </div>
     </details>
 
     <details class="faq-item">
-      <summary>Er det noen aldersgrense?</summary>
-      <p>Alle kan være med, men barn under 18 år bør ha samtykke fra foresatte.</p>
+      <summary>
+        <span class="faq-question">Er det noen aldersgrense?</span>
+        <span class="faq-icon" aria-hidden="true">▼</span>
+      </summary>
+      <div class="faq-content">
+        <p>Alle kan være med, men barn under 18 år bør ha samtykke fra foresatte.</p>
+      </div>
     </details>
 
     <details class="faq-item">
-      <summary>Hva koster det å være med?</summary>
-      <p>Medlemskapet er gratis. Enkelte spesialevents kan ha egne vilkår.</p>
+      <summary>
+        <span class="faq-question">Hva koster det å være med?</span>
+        <span class="faq-icon" aria-hidden="true">▼</span>
+      </summary>
+      <div class="faq-content">
+        <p>Medlemskapet er gratis. Enkelte spesialevents kan ha egne vilkår.</p>
+      </div>
     </details>
 
     <details class="faq-item">
-      <summary>Hvordan sikrer dere trygg gaming?</summary>
-      <p>
-        Vi har tydelige regler mot mobbing, banning og ekskludering, og alle aktiviteter overvåkes av voksne.
-      </p>
+      <summary>
+        <span class="faq-question">Hvordan sikrer dere trygg gaming?</span>
+        <span class="faq-icon" aria-hidden="true">▼</span>
+      </summary>
+      <div class="faq-content">
+        <p>
+          Vi har tydelige regler mot mobbing, banning og ekskludering, og alle aktiviteter overvåkes av voksne.
+        </p>
+      </div>
     </details>
   </div>
 </div>
@@ -1003,19 +1028,25 @@ textarea:focus {
   </section><footer class="site-footer">
 <div class="container footer-inner">
   <div class="footer-left">
-    <img class="footer-logo" src="https://setaei.com/Fjolsen/Liggende-M%E2%94%9C%E2%95%95rk.png" alt="FjOlsenbanden logo" />
-    <span>© 2025 Fjolsenbanden v/Fair Share Invest AS. Alle rettigheter reservert.</span>
+    <img class="footer-logo" src="https://setaei.com/Fjolsen/Ikon.png" alt="FjOlsenbanden logo" />
+    <div class="footer-meta">
+      <span class="copyright-primary">© 2025 Fjolsenbanden v/Fair Share Invest AS – Org.nr. 926 963 023</span>
+      <span class="copyright-secondary">Alle rettigheter reservert. <a href="regler.html">Regler</a></span>
+    </div>
   </div>
   <nav class="footer-links">
-    <a href="#about">Om</a>
-    <a href="#video">FjOlsen</a>
-    <a href="#membership">Medlemskap</a>
-    <a href="#community">Community</a>
-    <a href="#services">Andre tilbud</a>
-    <a href="#contact">Kontakt</a>
-    <a href="#faq">FAQ</a>
-    <a href="personvernerklaering.html">Personvernerklæring</a>
-    <a href="regler.html">Regler</a>
+    <div class="footer-column">
+      <a href="#about">Om</a>
+      <a href="#video">FjOlsen</a>
+      <a href="#membership">Medlemskap</a>
+      <a href="#community">Community</a>
+    </div>
+    <div class="footer-column">
+      <a href="#services">Andre tilbud</a>
+      <a href="#contact">Kontakt</a>
+      <a href="#faq">FAQ</a>
+      <a href="personvernerklaering.html">Personvernerklæring</a>
+    </div>
   </nav>
   <div class="footer-ctas">
     <a href="#hero" class="btn btn-ghost small">Til toppen</a>
@@ -1032,6 +1063,29 @@ items.forEach((item) => {
       items.forEach((other) => {
         if (other !== item) other.open = false;
       });
+    }
+  });
+});
+
+// FAQ: smooth open/close
+const faqDetails = document.querySelectorAll('.faq-item');
+faqDetails.forEach((detail) => {
+  const content = detail.querySelector('.faq-content');
+  if (!content) return;
+
+  const setHeight = () => {
+    if (detail.open) {
+      content.style.maxHeight = `${content.scrollHeight}px`;
+    } else {
+      content.style.maxHeight = '0px';
+    }
+  };
+
+  setHeight();
+  detail.addEventListener('toggle', setHeight);
+  window.addEventListener('resize', () => {
+    if (detail.open) {
+      content.style.maxHeight = `${content.scrollHeight}px`;
     }
   });
 });
