@@ -41,25 +41,25 @@ export const DEFAULT_SECTION_ORDER = [
 export const DEFAULT_FEEDBACK_ENTRIES = [
     {
         id: "feedback-filip",
-        quote: "\u201CH\u2665 Tusen takk for at jeg har fått muligheten til å spille hos FjOlsenbanden. Kan ikke takke nok for alt du har gjort for meg og alle andre. \u2665\u201D",
-        author: "Filip",
+        quote: "\u00abTusen takk for at jeg har fått muligheten til å spille hos FjOlsenbanden. Kan ikke takke nokk for alt du har gjort for meg og alle andre. Tusen takk! \u2665\ufe0f Tror ikke du vet hvor mye jeg setter pris på dette. Du har vært hele grunnen til at jeg har blitt enda nærmere noen i real life venner. Tusen tusen takk for det <3\u00bb",
+        author: "Filip, medlem",
         accent: "text-[#FF9B6A]",
     },
     {
         id: "feedback-rasmus",
-        quote: "\u201CJeg elsker å spille customs-a dine, det er min favoritt. Jeg spiller ikke annet enn dine customs!\u201D",
-        author: "Rasmus",
+        quote: "\u00abJeg er nokk den som har droppa flest treninger og middag bare for å spille med deg. Du er min favoritt streamer, og jeg vil egentlig bare se på deg og spille med deg. Jeg bare elsker å spille customsa dine, det er min favoritt. Jeg spiller ikke annet enn dine customs, og vipper på Fortnite ellers kjeder jeg meg litt.\u00bb",
+        author: "Rasmus, medlem",
         accent: "text-[#13A0F9]",
     },
     {
         id: "feedback-pernille-terje",
-        quote: "\u201CUansett er vi takknemlige for innsatsen du legger i trygge og engasjerende rammer for barn og ungdom – og veldig flott at du arrangerer egne jentekvelder.\u201D",
+        quote: "\u00abUansett er vi takknemlig for innsatsen du legger i trygge og engasjerende rammer for barn og ungdom – og veldig flott at du arrangerer egne jentekvelder \u2764\ufe0f Hilsen Pernille og Terje (foreldre)\u00bb",
         author: "Pernille & Terje, foreldre",
         accent: "text-[#34D399]",
     },
     {
         id: "feedback-merethe",
-        quote: "\u201CDu gjør en forskjell! Du har så mye peiling på how to – overfor barn! Respekt.\u201D",
+        quote: "\u00abTusen takk for eventet! Fashion show var KJ i sitt ess – herlig! Han var S\u00c5 excited \ud83d\ude0d Du altså. Du har ikke vurdert å starte ditt eget pedagogiske byrå?!? Du har så mye peil på how to, overfor barn! Veldig fint å observere hvordan iallfall KJ tjener på FjOlsen-events! Og jeg kjenner en del som hadde hatt fullt utbytte av et pedagogisk opplegg i din regi! Respect. Ville bare si det: du gjør en forskjell!\u00bb",
         author: "Merethe, mamma",
         accent: "text-[#FF2F9C]",
     },

@@ -169,22 +169,22 @@ export const DEFAULT_SITE_CONFIG = {
             entries: [
                 {
                     id: "feedback-filip",
-                    quote: "H❤ Tusen takk for at jeg har fått muligheten til å spille hos FjOlsenbanden. Kan ikke takke nok for alt du har gjort for meg og alle andre. ❤",
-                    author: "Filip",
+                    quote: "«Tusen takk for at jeg har fått muligheten til å spille hos FjOlsenbanden. Kan ikke takke nokk for alt du har gjort for meg og alle andre. Tusen takk! ♥️ Tror ikke du vet hvor mye jeg setter pris på dette. Du har vært hele grunnen til at jeg har blitt enda nærmere noen i real life venner. Tusen tusen takk for det <3»",
+                    author: "Filip, medlem",
                 },
                 {
                     id: "feedback-rasmus",
-                    quote: "Jeg elsker å spille customs-a dine, det er min favoritt. Jeg spiller ikke annet enn dine customs!",
-                    author: "Rasmus",
+                    quote: "«Jeg er nokk den som har droppa flest treninger og middag bare for å spille med deg. Du er min favoritt streamer, og jeg vil egentlig bare se på deg og spille med deg. Jeg bare elsker å spille customsa dine, det er min favoritt. Jeg spiller ikke annet enn dine customs, og vipper på Fortnite ellers kjeder jeg meg litt.»",
+                    author: "Rasmus, medlem",
                 },
                 {
                     id: "feedback-pernille",
-                    quote: "Uansett er vi takknemlige for innsatsen du legger i trygge og engasjerende rammer for barn og ungdom – og veldig flott at du arrangerer egne jentekvelder.",
+                    quote: "«Uansett er vi takknemlig for innsatsen du legger i trygge og engasjerende rammer for barn og ungdom – og veldig flott at du arrangerer egne jentekvelder ❤️ Hilsen Pernille og Terje (foreldre)»",
                     author: "Pernille & Terje, foreldre",
                 },
                 {
                     id: "feedback-merethe",
-                    quote: "Du gjør en forskjell! Du har så mye peiling på how to – overfor barn! Respekt.",
+                    quote: "«Tusen takk for eventet! Fashion show var KJ i sitt ess – herlig! Han var SÅ excited 😍 Du altså. Du har ikke vurdert å starte ditt eget pedagogiske byrå?!? Du har så mye peil på how to, overfor barn! Veldig fint å observere hvordan iallfall KJ tjener på FjOlsen-events! Og jeg kjenner en del som hadde hatt fullt utbytte av et pedagogisk opplegg i din regi! Respect. Ville bare si det: du gjør en forskjell!»",
                     author: "Merethe, mamma",
                 },
             ],

@@ -281,87 +281,56 @@ a {
 
 /* Feedback */
 
-.feedback-title {
+#feedback h2,
+#feedback .subtitle {
   text-align: center;
-  font-size: clamp(2.4rem, 3.5vw, 3rem);
+  margin-left: auto;
+  margin-right: auto;
 }
 
-.feedback-intro {
-  text-align: center;
-}
-
-.feedback-shell {
-  margin-top: 2.5rem;
-  background: #040c2b;
-  border-radius: 40px;
-  padding: 2.5rem 2.5rem 2rem;
-  box-shadow: var(--shadow-soft);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+.feedback-title-center {
   display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
+  justify-content: center;
+  margin: 1.6rem 0 1rem;
 }
 
-.feedback-tag {
+.feedback-pill {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0.4rem 1.4rem;
+  padding: 0.55rem 1.4rem;
   border-radius: var(--radius-pill);
-  background: rgba(10, 20, 80, 0.95);
+  background: rgba(10, 20, 80, 0.9);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  font-size: 0.8rem;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--muted);
-  margin: 0 auto 2rem;
-  align-self: center;
-}
-
-.feedback-tag span + span {
-  margin-left: 0.4rem;
+  font-weight: 700;
+  color: #fff;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
 }
 
 .feedback-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.1fr);
-  gap: 1.5rem 1.8rem;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1.6rem;
 }
 
-.feedback-card {
-  background: radial-gradient(circle at top left, #192554, #0b1433);
-  border-radius: 26px;
-  padding: 1.6rem 1.8rem;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+.feedback-grid .card {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
-.feedback-card p {
+.feedback-grid p {
   margin: 0;
 }
 
 .feedback-name {
   margin-top: 1rem;
-  font-weight: 600;
-}
-
-.feedback-name--orange {
-  color: #ffb566;
-}
-
-.feedback-name--blue {
-  color: #4cb4ff;
-}
-
-.feedback-name--teal {
-  color: #3ad1b0;
-}
-
-.feedback-name--pink {
-  color: #ff6aa8;
-}
-
-.feedback-cta {
-  margin-top: 3rem;
+  font-weight: 700;
+  color: var(--muted);
 }
 
 .center {
