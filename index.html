@@ -320,11 +320,15 @@ a {
 
 .feedback-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.1fr);
-  gap: 1.5rem 1.8rem;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.5rem;
 }
 
 .feedback-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 210px;
   background: radial-gradient(circle at top left, #192554, #0b1433);
   border-radius: 26px;
   padding: 1.6rem 1.8rem;
@@ -360,8 +364,9 @@ a {
 }
 
 .feedback-name {
-  margin-top: 1rem;
+  margin-top: 1.2rem;
   font-weight: 600;
+  color: var(--primary);
   text-align: right;
 }
 
@@ -379,6 +384,10 @@ a {
 
 .feedback-name--pink {
   color: #ff6aa8;
+}
+
+.feedback-name-accent {
+  color: var(--accent);
 }
 
 .feedback-cta {
