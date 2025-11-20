@@ -215,17 +215,67 @@ a {
 }
 
 .hero-card {
+  position: relative;
   background: radial-gradient(circle at top left, #25105a, #0d1636);
   border-radius: 28px;
   padding: 1.5rem;
   box-shadow: var(--shadow-soft);
   text-align: center;
+  overflow: hidden;
 }
 
 .hero-card img {
   width: 100%;
   border-radius: 22px;
   display: block;
+}
+
+.screen-effects::before {
+  content: "";
+  position: absolute;
+  inset: 12% 8% auto;
+  height: 40%;
+  background: radial-gradient(circle, rgba(255, 92, 185, 0.28), transparent 60%);
+  filter: blur(18px);
+  transform: translateY(-10%);
+}
+
+.screen-effects .particle {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 50%;
+  box-shadow: 0 0 18px rgba(255, 255, 255, 0.5);
+  animation: float 6s ease-in-out infinite;
+}
+
+.screen-effects .particle:nth-child(1) {
+  top: 18%;
+  right: 22%;
+  animation-delay: 0.5s;
+}
+
+.screen-effects .particle:nth-child(2) {
+  bottom: 12%;
+  left: 18%;
+  animation-delay: 1.2s;
+}
+
+.screen-effects .particle:nth-child(3) {
+  top: 8%;
+  left: 10%;
+  animation-delay: 2s;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-10px) scale(1.1);
+  }
 }
 
 .hero-card-caption {
@@ -838,7 +888,8 @@ textarea:focus {
         <span class="particle"></span>
         <span class="particle"></span>
         <span class="particle"></span>
-        <img src="https://setaei.com/Fjolsen/St%E2%94%9C%D0%B5ende-M%E2%94%9C%E2%95%95rk.png" alt="FjOlsen stående maskot" />
+
+        <img src="img/fjolsen-card.svg" alt="FjOlsen illustrasjon" />
       </div>
     </div>
   </section>
