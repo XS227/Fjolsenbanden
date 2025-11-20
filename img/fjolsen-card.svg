@@ -1,0 +1,42 @@
+<svg width="640" height="400" viewBox="0 0 640 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="40" y1="30" x2="560" y2="360" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#3D2B87" />
+      <stop offset="1" stop-color="#101A3D" />
+    </linearGradient>
+    <radialGradient id="glow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(200 140) rotate(45) scale(220 160)">
+      <stop stop-color="#FF5CB9" stop-opacity="0.8" />
+      <stop offset="1" stop-color="#FF5CB9" stop-opacity="0" />
+    </radialGradient>
+    <radialGradient id="accent" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(460 280) rotate(90) scale(160)">
+      <stop stop-color="#42E8E0" stop-opacity="0.7" />
+      <stop offset="1" stop-color="#42E8E0" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+  <rect x="0" y="0" width="640" height="400" rx="26" fill="url(#bg)" />
+  <rect x="18" y="16" width="604" height="368" rx="22" stroke="rgba(255,255,255,0.1)" stroke-width="2" />
+  <ellipse cx="210" cy="150" rx="220" ry="160" fill="url(#glow)" />
+  <ellipse cx="470" cy="280" rx="180" ry="140" fill="url(#accent)" />
+  <path d="M130 276L252 112C256 107 262 104 268 104H372C378 104 384 107 388 112L510 276C518 286 511 302 498 302H152C139 302 132 286 140 276Z" fill="#0D132B" stroke="#6E77E5" stroke-width="4" />
+  <circle cx="193" cy="178" r="24" fill="#111A35" stroke="#E8EDFF" stroke-width="3" />
+  <circle cx="193" cy="178" r="8" fill="#FF5CB9" />
+  <circle cx="320" cy="156" r="26" fill="#111A35" stroke="#E8EDFF" stroke-width="3" />
+  <circle cx="320" cy="156" r="10" fill="#42E8E0" />
+  <circle cx="447" cy="178" r="24" fill="#111A35" stroke="#E8EDFF" stroke-width="3" />
+  <circle cx="447" cy="178" r="8" fill="#FF5CB9" />
+  <rect x="196" y="220" width="248" height="24" rx="12" fill="#0E1630" stroke="#2E3A72" stroke-width="2" />
+  <rect x="218" y="225" width="206" height="14" rx="7" fill="#1C274A" />
+  <path d="M188 328L214 254H426L452 328H188Z" fill="#121B39" stroke="#2E3A72" stroke-width="3" />
+  <path d="M252 260H388L408 316H232L252 260Z" fill="#1B2446" />
+  <rect x="232" y="280" width="176" height="6" rx="3" fill="#283563" />
+  <rect x="232" y="296" width="176" height="6" rx="3" fill="#283563" />
+  <rect x="232" y="312" width="176" height="6" rx="3" fill="#283563" />
+  <text x="200" y="80" fill="#E8EDFF" font-family="'Inter', 'Segoe UI', sans-serif" font-size="30" font-weight="700">FjOlsenbanden</text>
+  <text x="200" y="112" fill="#BFC7EF" font-family="'Inter', 'Segoe UI', sans-serif" font-size="16" font-weight="500">Trygg gaming for hele familien</text>
+  <g opacity="0.7">
+    <circle cx="86" cy="90" r="6" fill="#FF5CB9" />
+    <circle cx="544" cy="74" r="4" fill="#E8EDFF" />
+    <circle cx="560" cy="328" r="5" fill="#42E8E0" />
+    <circle cx="92" cy="320" r="5" fill="#E8EDFF" />
+  </g>
+</svg>
