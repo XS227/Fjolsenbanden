@@ -629,7 +629,27 @@ textarea:focus {
 /* FAQ */
 
 .section-faq {
-  background: var(--section-bg);
+  position: relative;
+  overflow: hidden;
+}
+
+.faq-inner {
+  position: relative;
+  z-index: 1;
+}
+
+.section-faq::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, #101a3e 0, #050b2b 55%, #020317 100%);
+  transform: translateY(0%);
+  transition: transform 0.9s ease-in-out;
+  z-index: 0;
+}
+
+.section-faq.faq-visible::before {
+  transform: translateY(-100%);
 }
 
 .section-faq .subtitle {
@@ -648,61 +668,40 @@ textarea:focus {
   padding: 1.1rem 1.5rem;
   border: 1px solid rgba(255, 255, 255, 0.08);
   margin-bottom: 0.85rem;
-  overflow: hidden;
-  box-shadow: var(--shadow-soft);
-  transition: border-color 0.25s ease, background 0.25s ease, box-shadow 0.25s ease,
-    transform 0.25s ease, filter 0.25s ease;
-}
-
-.faq-item:hover,
-.faq-item:focus-within {
-  border-color: rgba(0, 166, 255, 0.6);
-  box-shadow: var(--shadow-soft), 0 0 28px rgba(0, 166, 255, 0.35);
-  transform: translateY(-4px);
-  filter: brightness(1.03);
-}
-
-.faq-item:active {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-soft), 0 0 20px rgba(255, 45, 164, 0.35);
 }
 
 .faq-item summary {
   list-style: none;
   cursor: pointer;
-  font-weight: 600;
+  font-weight: 500;
   display: flex;
   align-items: center;
-  gap: 0.75rem;
   justify-content: space-between;
+  gap: 0.75rem;
 }
 
 .faq-item summary::-webkit-details-marker {
   display: none;
 }
 
-.faq-question {
-  font-weight: 600;
+.faq-item summary::after {
+  content: "+";
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--muted);
+  transition: transform 0.2s ease, color 0.2s ease;
 }
 
-.faq-icon {
-  transition: transform 0.3s ease;
+.faq-item[open] summary::after {
+  content: "–";
+  transform: translateY(-1px);
+  color: var(--primary);
 }
 
-.faq-item[open] .faq-icon {
-  transform: rotate(180deg);
-}
-
-.faq-content {
-  max-height: 0;
-  overflow: hidden;
-  opacity: 0;
-  transition: max-height 0.35s ease, opacity 0.35s ease, padding-top 0.35s ease;
-}
-
-.faq-item[open] .faq-content {
-  opacity: 1;
-  padding-top: 0.5rem;
+.faq-item p {
+  margin-top: 0.75rem;
+  color: var(--muted);
+  font-size: 0.9rem;
 }
 
 /* Footer */

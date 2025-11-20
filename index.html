@@ -620,7 +620,27 @@ textarea:focus {
 /* FAQ */
 
 .section-faq {
-  background: #02010e;
+  position: relative;
+  overflow: hidden;
+}
+
+.faq-inner {
+  position: relative;
+  z-index: 1;
+}
+
+.section-faq::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, #101a3e 0, #050b2b 55%, #020317 100%);
+  transform: translateY(0%);
+  transition: transform 0.9s ease-in-out;
+  z-index: 0;
+}
+
+.section-faq.faq-visible::before {
+  transform: translateY(-100%);
 }
 
 .faq-list {
@@ -640,10 +660,34 @@ textarea:focus {
   list-style: none;
   cursor: pointer;
   font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
 }
 
 .faq-item summary::-webkit-details-marker {
   display: none;
+}
+
+.faq-item summary::after {
+  content: "+";
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--muted);
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.faq-item[open] summary::after {
+  content: "–";
+  transform: translateY(-1px);
+  color: var(--primary);
+}
+
+.faq-item p {
+  margin-top: 0.75rem;
+  color: var(--muted);
+  font-size: 0.9rem;
 }
 
 /* Footer */
@@ -1243,6 +1287,29 @@ textarea:focus {
       }
     });
   });
+
+  const faqSection = document.querySelector('.section-faq');
+  if (faqSection) {
+    const activateFaq = () => faqSection.classList.add('faq-visible');
+
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver(
+        (entries, obs) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              activateFaq();
+              obs.disconnect();
+            }
+          });
+        },
+        { threshold: 0.35 }
+      );
+
+      observer.observe(faqSection);
+    } else {
+      activateFaq();
+    }
+  }
 
   // Les admin-konfig fra localStorage og bruk på forsiden
   (function () {
