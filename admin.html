@@ -45,14 +45,14 @@
     .top-bar {
       position: sticky;
       top: 0;
-      z-index: 10;
+      z-index: 20;
       background: rgba(5, 11, 43, 0.97);
       backdrop-filter: blur(18px);
       border-bottom: 1px solid rgba(255, 255, 255, 0.06);
     }
 
     .top-bar-inner {
-      max-width: 1120px;
+      max-width: 1200px;
       margin: 0 auto;
       padding: 0.75rem 1.5rem;
       display: flex;
@@ -88,7 +88,7 @@
     }
 
     .top-badge {
-      padding: 0.25rem 0.85rem;
+      padding: 0.25rem 0.9rem;
       border-radius: var(--radius-pill);
       background: rgba(0, 166, 255, 0.18);
       color: #b9e5ff;
@@ -99,42 +99,37 @@
 
     /* Layout */
 
-    .page {
-      max-width: 1120px;
+    .page-shell {
+      max-width: 1200px;
       margin: 0 auto;
-      padding: 2rem 1.5rem 3rem;
-    }
-
-    .page-header {
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-      margin-bottom: 1.5rem;
-    }
-
-    .page-header h1 {
-      font-size: clamp(2rem, 3vw, 2.4rem);
-      margin: 0;
-    }
-
-    .page-header p {
-      margin: 0;
-      color: var(--muted);
-      max-width: 640px;
-      font-size: 0.95rem;
-    }
-
-    .grid {
+      padding: 1.75rem 1.5rem 3rem;
       display: grid;
-      grid-template-columns: minmax(0, 1.8fr) minmax(0, 1.1fr);
+      grid-template-columns: 220px minmax(0, 1fr);
       gap: 1.5rem;
       align-items: flex-start;
     }
 
     @media (max-width: 900px) {
-      .grid {
+      .page-shell {
         grid-template-columns: 1fr;
       }
+    }
+
+    .page-main-header {
+      grid-column: 1 / -1;
+      margin-bottom: 0.5rem;
+    }
+
+    .page-main-header h1 {
+      font-size: clamp(2rem, 3vw, 2.4rem);
+      margin: 0 0 0.35rem;
+    }
+
+    .page-main-header p {
+      margin: 0;
+      color: var(--muted);
+      max-width: 640px;
+      font-size: 0.95rem;
     }
 
     .card {
@@ -145,7 +140,76 @@
       border: 1px solid rgba(255, 255, 255, 0.06);
     }
 
-    /* Stats */
+    /* Admin side-nav */
+
+    .admin-nav {
+      position: sticky;
+      top: 4.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      padding: 1rem 1rem;
+      border-radius: 20px;
+      background: radial-gradient(circle at top left, #151f4b, #050b2b);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .admin-nav-title {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      margin-bottom: 0.25rem;
+    }
+
+    .admin-nav-btn {
+      border: none;
+      background: transparent;
+      color: var(--muted);
+      font-size: 0.85rem;
+      text-align: left;
+      padding: 0.35rem 0.65rem;
+      border-radius: 999px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .admin-nav-btn span {
+      flex: 1;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+
+    .admin-nav-btn:hover {
+      background: rgba(255, 255, 255, 0.06);
+      color: #ffffff;
+    }
+
+    .admin-nav-btn.active {
+      background: rgba(0, 166, 255, 0.25);
+      color: #ffffff;
+    }
+
+    @media (max-width: 900px) {
+      .admin-nav {
+        position: static;
+        flex-direction: row;
+        flex-wrap: wrap;
+        row-gap: 0.5rem;
+      }
+    }
+
+    /* Main column */
+
+    .main-column {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
 
     .stats-grid {
       display: grid;
@@ -189,8 +253,6 @@
       color: #ffc4e2;
     }
 
-    /* Sections list */
-
     .section-list {
       display: flex;
       flex-direction: column;
@@ -200,8 +262,9 @@
     .section-card {
       background: radial-gradient(circle at top left, #192554, #0b1433);
       border-radius: 22px;
-      padding: 1.25rem 1.4rem 1.15rem;
+      padding: 1.25rem 1.4rem 1.2rem;
       border: 1px solid rgba(255, 255, 255, 0.08);
+      scroll-margin-top: 90px;
     }
 
     .section-header-row {
@@ -234,6 +297,7 @@
       border-radius: var(--radius-pill);
       background: rgba(255, 255, 255, 0.06);
       color: var(--muted);
+      white-space: nowrap;
     }
 
     .toggle {
@@ -281,6 +345,63 @@
     .field-group textarea:focus {
       outline: 2px solid var(--primary);
       outline-offset: 1px;
+    }
+
+    .field-inline {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+      gap: 0.75rem;
+    }
+
+    @media (max-width: 700px) {
+      .field-inline {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .subsection-title {
+      margin-top: 0.9rem;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+    }
+
+    .small-hint {
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin-top: 0.25rem;
+    }
+
+    .two-column-fields {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 0.75rem 1rem;
+      margin-top: 0.5rem;
+    }
+
+    .two-column-fields .field-group {
+      margin-top: 0;
+    }
+
+    .feedback-grid-admin {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.75rem;
+      margin-top: 0.5rem;
+    }
+
+    .feedback-item-admin {
+      background: rgba(2, 4, 25, 0.6);
+      border-radius: 14px;
+      padding: 0.75rem 0.9rem;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .feedback-item-admin-header {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-bottom: 0.25rem;
     }
 
     .actions {
@@ -340,18 +461,13 @@
       color: #ff7a7a;
     }
 
-    .hint {
-      font-size: 0.8rem;
-      color: var(--muted);
-      margin-top: 0.4rem;
-    }
-
     /* Right column / global settings & info */
 
-    .info-list {
+    .info-stack {
       display: flex;
       flex-direction: column;
       gap: 1rem;
+      margin-top: 1rem;
     }
 
     .info-card-title {
@@ -525,8 +641,7 @@
       .top-bar-inner {
         padding-inline: 1rem;
       }
-
-      .page {
+      .page-shell {
         padding-inline: 1rem;
       }
     }
@@ -555,7 +670,7 @@
     </div>
   </div>
 
-  <!-- App -->
+  <!-- Top bar -->
   <div class="top-bar">
     <div class="top-bar-inner">
       <div class="top-brand">
@@ -569,19 +684,35 @@
     </div>
   </div>
 
-  <main class="page app" id="app">
-    <div class="page-header">
-      <h1>Forsideoppsett</h1>
-      <p>
-        Aktiver eller deaktiver seksjoner, tilpass overskrifter og oppdater logo, bilder, video og sosiale lenker.
-        Endringene lagres i nettleseren (localStorage) og brukes av forsiden (<code>index.html</code>).
-      </p>
-    </div>
+  <main class="app" id="app">
+    <div class="page-shell">
+      <header class="page-main-header">
+        <h1>Forsideoppsett</h1>
+        <p>
+          Aktiver eller deaktiver seksjoner, tilpass innhold direkte under hver seksjon, og oppdater logo, video og
+          sosiale lenker. Endringer lagres i nettleseren (localStorage) og brukes av forsiden (<code>index.html</code>).
+        </p>
+      </header>
 
-    <div class="grid">
-      <section>
-        <div class="card">
-          <div class="stats-grid" id="stats-grid">
+      <!-- Side-nav -->
+      <aside class="admin-nav">
+        <div class="admin-nav-title">Seksjoner</div>
+        <button class="admin-nav-btn" data-target="section-hero"><span>Hero / Velkommen</span></button>
+        <button class="admin-nav-btn" data-target="section-about"><span>Om FjOlsenbanden</span></button>
+        <button class="admin-nav-btn" data-target="section-video"><span>Video / Hvem er FjOlsen</span></button>
+        <button class="admin-nav-btn" data-target="section-feedback"><span>Tilbakemeldinger</span></button>
+        <button class="admin-nav-btn" data-target="section-membership"><span>Medlemskap</span></button>
+        <button class="admin-nav-btn" data-target="section-community"><span>Community / SoMe</span></button>
+        <button class="admin-nav-btn" data-target="section-partners"><span>Partnere</span></button>
+        <button class="admin-nav-btn" data-target="section-services"><span>Andre tilbud</span></button>
+        <button class="admin-nav-btn" data-target="section-contact"><span>Kontakt</span></button>
+        <button class="admin-nav-btn" data-target="section-faq"><span>FAQ</span></button>
+      </aside>
+
+      <!-- Main content -->
+      <div class="main-column">
+        <section class="card">
+          <div class="stats-grid">
             <div class="stat-card">
               <div class="stat-label">Totalt seksjoner</div>
               <div class="stat-value" id="stat-total">–</div>
@@ -599,7 +730,7 @@
           </div>
 
           <div class="section-list" id="section-list">
-            <!-- Fylles av JS -->
+            <!-- fylles av JS -->
           </div>
 
           <div class="actions">
@@ -607,34 +738,27 @@
             <button class="btn btn-ghost" id="reset-btn">Tilbakestill til standard</button>
             <span class="status" id="status-msg"></span>
           </div>
-          <div class="hint">
-            Tips: åpne forsiden i en ny fane. Etter at du har lagret her, oppdaterer du forsiden (F5) for å se
-            endringene.
+          <div class="small-hint">
+            Tips: åpne forsiden i en ny fane. Etter at du har lagret her, oppdaterer du forsiden (F5) for å se endringene.
           </div>
-        </div>
-      </section>
+        </section>
 
-      <aside>
-        <div class="info-list">
+        <section class="info-stack">
           <div class="card">
             <div class="info-card-title">Globale innstillinger</div>
             <div class="global-group">
               <div class="global-row">
                 <span class="global-label">Logo URL</span>
                 <input class="global-input" id="branding-logo" type="text" />
-                <span class="global-help">Bruk lenke til logo-bilde (PNG/SVG). Vises i header og footer.</span>
-              </div>
-
-              <div class="global-row">
-                <span class="global-label">Hero-bilde URL</span>
-                <input class="global-input" id="branding-hero" type="text" />
-                <span class="global-help">Bilde som vises i kortet til høyre i hero-seksjonen.</span>
+                <span class="global-help">Lenke til logo-bilde (PNG/SVG). Vises i header og footer.</span>
               </div>
 
               <div class="global-row">
                 <span class="global-label">YouTube-video URL</span>
                 <input class="global-input" id="branding-youtube" type="text" />
-                <span class="global-help">Kan være vanlig YouTube-lenke (watch eller youtu.be) – den konverteres til embed.</span>
+                <span class="global-help">
+                  Kan være vanlig YouTube-lenke (watch eller youtu.be) – embed håndteres i forsiden.
+                </span>
               </div>
             </div>
           </div>
@@ -662,6 +786,9 @@
                 <span class="global-label">Instagram</span>
                 <input class="global-input" id="social-instagram" type="text" />
               </div>
+              <span class="global-help">
+                Disse lenkene brukes både i community-seksjonen og andre steder der du linker til SoMe-kanalene.
+              </span>
             </div>
           </div>
 
@@ -671,30 +798,30 @@
             <div class="info-key">fjAdminConfig</div>
             <p>Forsiden leser dette når den lastes, og:</p>
             <p>• skjuler seksjoner som er deaktivert</p>
-            <p>• bruker logo / hero-bilde / video-lenke du har satt</p>
-            <p>• oppdaterer sosiale lenker</p>
-            <p>• overskriver overskrifter og undertekster der du har skrevet noe nytt.</p>
+            <p>• oppdaterer innhold i hero, medlemskap, tilbakemeldinger, tjenester m.m.</p>
+            <p>• bruker logo, video-URL og sosiale lenker du har satt.</p>
           </div>
 
           <div class="card info-card">
             <div class="info-card-title">Access pass</div>
             <p>Access pass som brukes nå:</p>
-            <div class="info-key">1234</div>
-            <p style="margin-top:0.4rem;">Dette er kun frontend-sikring. For «ordentlig» sikkerhet må dette flyttes til server.</p>
+            <div class="info-key">123456789</div>
+            <p style="margin-top:0.4rem;">
+              Dette er kun frontend-sikring. For «ordentlig» sikkerhet må dette kontrolleres på server.
+            </p>
           </div>
-        </div>
-      </aside>
+        </section>
+      </div>
     </div>
   </main>
 
   <script>
-    const ACCESS_PASS = "1234";
+    const ACCESS_PASS = "123456789";
 
     const DEFAULT_CONFIG = {
       global: {
         logoUrl: "https://setaei.com/Fjolsen/Liggende-M%E2%94%9C%E2%95%95rk.png",
-        heroImageUrl: "img/fjolsen-card.png",
-        youtubeUrl: "https://www.youtube.com/embed/8EgRIkmvmtM",
+        youtubeUrl: "https://youtu.be/8EgRIkmvmtM?feature=shared",
         socials: {
           twitch: "https://twitch.tv/...",
           tiktok: "https://tiktok.com/@...",
@@ -704,30 +831,187 @@
         }
       },
       sections: {
-        hero:       { enabled: true,  title: "FjOlsenbanden er Norges mest inkluderende gaming-community.", subtitle: "" },
-        about:      { enabled: true,  title: "Hva er FjOlsenbanden?", subtitle: "" },
-        video:      { enabled: true,  title: "Hvem er FjOlsen?", subtitle: "" },
-        feedback:   { enabled: true,  title: "Tilbakemeldinger fra FjOlsenbanden", subtitle: "" },
-        membership: { enabled: true,  title: "Bli medlem i dag.", subtitle: "" },
-        community:  { enabled: true,  title: "FjOlsenbanden – et community i vekst!", subtitle: "" },
-        partners:   { enabled: true,  title: "Våre samarbeidspartnere", subtitle: "" },
-        services:   { enabled: true,  title: "Andre tilbud", subtitle: "" },
-        contact:    { enabled: true,  title: "Kontakt oss", subtitle: "" },
-        faq:        { enabled: true,  title: "Ofte stilte spørsmål", subtitle: "" }
+        hero: {
+          enabled: true,
+          pillText: "Velkommen",
+          sectionText:
+            "En trygg arena for familier som elsker gaming, med fellesskap, premier og kreativitet i sentrum.",
+          button1Label: "Bli medlem",
+          button1Href: "#membership",
+          button2Label: "Les mer",
+          button2Href: "#about",
+          heroImageUrl: "img/fjolsen-card.png",
+          heroImageCaption: "Minecraft-inspirert versjon av apen i FjOlsen-logoen.",
+          title: "",
+          subtitle: ""
+        },
+        about: {
+          enabled: true,
+          title: "Hva er FjOlsenbanden?",
+          subtitle: "Norges mest inkluderende gaming-community for hele familien."
+        },
+        video: {
+          enabled: true,
+          title: "Hvem er FjOlsen?",
+          subtitle: "FjOlsenFN – familievennlig streamer og grunnlegger av FjOlsenbanden."
+        },
+        feedback: {
+          enabled: true,
+          title: "Tilbakemeldinger fra FjOlsenbanden",
+          subtitle: "Takk til alle som sender flotte tilbakemeldinger til oss i FjOlsenbanden!",
+          items: [
+            {
+              quote:
+                "«Tusen takk for at jeg har fått muligheten til å spille hos FJOlsenbanden.\nKan ikke takke nok for alt du har gjort for meg og alle andre. Tusen takk! <3\nTror ikke du vet hvor mye jeg setter pris på dette. Du har vært hele grunnen\ntil at jeg har blitt enda nærmere noen i real life venner. Tusen tusen takk for\ndet <3»",
+              name: "Filip, medlem"
+            },
+            {
+              quote:
+                "«Du fortjener det mann! Du er så super streamer og den personen som\nsetter et smil på alle som kommer inn. Jeg som er syk ble glad med\nengang jeg kom inn.»",
+              name: "Borkærn, medlem"
+            },
+            {
+              quote:
+                "«Tusen takk for alt du gjør for barn og ungdom som digger Fortnite – og for at du\nholder strenge og trygge rammer. Du skaper stor underholdningsverdi også for\noss som ikke skjønner så mye av gamingverden! Du klarte å få barnet vårt til å\nglede seg til bursdagen sin og å skape et skikkelig lyspunkt i en ellers ganske\ntøff tilværelse. For det er vi foreldre (og storesøster) evig takknemlig.»",
+              name: "Pernille & Terje, foreldre"
+            },
+            {
+              quote:
+                "«Du har så mye peil på how to, overflow barn! Veldig fint og observere\nhvordan iallfall KJ tjener på FJOlsen-events!! Og jeg kjenner en del som\nhadde hatt fullt utbytte av et pedagogisk opplegg i din regi! Respect.»",
+              name: "Merethe, mamma"
+            }
+          ]
+        },
+        membership: {
+          enabled: true,
+          title: "Bli medlem i dag.",
+          subtitle:
+            "Det er helt gratis å bli medlem i FjOlsenbanden. Ved å bli medlem kan du vinne premier og delta i giveaways.",
+          features: [
+            {
+              iconUrl: "img/icons/discord.svg",
+              text: "Få medlemsrolle i Discord"
+            },
+            {
+              iconUrl: "img/icons/trophy.svg",
+              text: "Vinne premier i customs & giveaways"
+            },
+            {
+              iconUrl: "https://setaei.com/Fjolsen/Love.png",
+              text: "Prioritet i kø til konkurranser foran ikke-medlemmer"
+            }
+          ],
+          buttonUnder18: {
+            label: "Under 18 år",
+            href: "https://discord.gg/..."
+          },
+          buttonOver18: {
+            label: "Over 18 år",
+            href: "https://discord.gg/..."
+          }
+        },
+        community: {
+          enabled: true,
+          title: "FjOlsenbanden – et community i vekst!",
+          subtitle:
+            "Følg FjOlsenbanden på tvers av våre kanaler for å få med deg alle nyheter!"
+        },
+        partners: {
+          enabled: true,
+          title: "Våre samarbeidspartnere",
+          subtitle:
+            "Her er noen av våre samarbeidspartnere som har bidratt til å skape minneverdige øyeblikk i FjOlsenbanden!",
+          logos: [
+            {
+              name: "Lenovo",
+              url: "https://fjolsenbanden.setaei.com/assets/p-lenovo-zG8s0yqd.png"
+            },
+            {
+              name: "Komplett",
+              url: "https://fjolsenbanden.setaei.com/assets/p-komplett-Bpx7vYhC.png"
+            },
+            {
+              name: "Samsung",
+              url: "https://fjolsenbanden.setaei.com/assets/p-samsung-CTyK3nvK.png"
+            },
+            {
+              name: "Kristiania",
+              url: "https://fjolsenbanden.setaei.com/assets/p-kristiania-DmhQbukm.png"
+            },
+            {
+              name: "Philips",
+              url: "https://fjolsenbanden.setaei.com/assets/p-philips-B33Lb_3a.png"
+            },
+            {
+              name: "Saily",
+              url: "https://fjolsenbanden.setaei.com/assets/p-saily-D-MbpSdv.png"
+            },
+            {
+              name: "NKI",
+              url: "img/partners/nki-logo-light.svg"
+            },
+            {
+              name: "Trondheim Play",
+              url: "https://fjolsenbanden.setaei.com/assets/p-trondheimplay-BQDD3bw9.png"
+            }
+          ]
+        },
+        services: {
+          enabled: true,
+          title: "Andre tilbud",
+          subtitle: "FjOlsenbanden tilbyr mer enn bare streaming!",
+          items: [
+            {
+              title: "FOREDRAG",
+              text:
+                "FjOlsen besøker skoler, idrettslag og e-sportklubber for å snakke om streaming, gaming-kultur og nettvett.",
+              iconUrl: "https://setaei.com/Fjolsen/Sjokk.png"
+            },
+            {
+              title: "EVENTS",
+              text:
+                "Vi arrangerer gaming-konkurranser for bedrifter, skoler og klubber – både digitalt og fysisk.",
+              iconUrl: "https://setaei.com/Fjolsen/Penger.png"
+            },
+            {
+              title: "UNBOXING",
+              text:
+                "FjOlsen lager profesjonelle unboxing-videoer av dine produkter som kan brukes i deres markedsføring og deles med vårt community.",
+              iconUrl: "https://setaei.com/Fjolsen/Love.png"
+            },
+            {
+              title: "STREAMER FOR HIRE",
+              text:
+                "Ønsker du at FjOlsen skal streame på vegne av din merkevare? Han er tilgjengelig for co-streams, produktlanseringer og kampanjer – der ditt budskap blir formidlet på en autentisk og engasjerende måte til tusenvis av følgere.",
+              iconUrl: "https://setaei.com/Fjolsen/Glad%20tenner.png"
+            }
+          ]
+        },
+        contact: {
+          enabled: true,
+          title: "Kontakt oss",
+          subtitle:
+            "Har du spørsmål om medlemskap, samarbeid eller events? Send oss en melding så kommer vi tilbake til deg."
+        },
+        faq: {
+          enabled: true,
+          title: "Ofte stilte spørsmål",
+          subtitle: ""
+        }
       }
     };
 
     const SECTION_META = [
-      { id: "hero",       label: "Hero / Velkommen", tag: "Øverst på siden" },
-      { id: "about",      label: "Om FjOlsenbanden", tag: "Presentasjon" },
+      { id: "hero",       label: "Hero / Velkommen",        tag: "Øverst på siden" },
+      { id: "about",      label: "Om FjOlsenbanden",        tag: "Presentasjon" },
       { id: "video",      label: "Video / Hvem er FjOlsen", tag: "YouTube / intro" },
-      { id: "feedback",   label: "Tilbakemeldinger", tag: "Sitater fra medlemmer" },
-      { id: "membership", label: "Medlemskap", tag: "Bli medlem / CTA" },
-      { id: "community",  label: "Community / SoMe", tag: "Sosiale medier" },
-      { id: "partners",   label: "Samarbeidspartnere", tag: "Logoer / partnere" },
-      { id: "services",   label: "Andre tjenester", tag: "Foredrag / events" },
-      { id: "contact",    label: "Kontakt", tag: "Kontaktskjema" },
-      { id: "faq",        label: "FAQ", tag: "Ofte stilte spørsmål" }
+      { id: "feedback",   label: "Tilbakemeldinger",        tag: "Sitater fra medlemmer" },
+      { id: "membership", label: "Medlemskap",              tag: "Bli medlem / CTA" },
+      { id: "community",  label: "Community / SoMe",        tag: "Sosiale medier" },
+      { id: "partners",   label: "Samarbeidspartnere",      tag: "Logoer / partnere" },
+      { id: "services",   label: "Andre tjenester",         tag: "Foredrag / events" },
+      { id: "contact",    label: "Kontakt",                 tag: "Kontaktskjema" },
+      { id: "faq",        label: "FAQ",                     tag: "Ofte stilte spørsmål" }
     ];
 
     function deepClone(obj) {
@@ -758,6 +1042,7 @@
             cfg.sections[id] = { ...cfg.sections[id], ...parsed.sections[id] };
           });
         }
+
         return cfg;
       } catch (e) {
         console.warn("Klarte ikke å lese config, bruker default:", e);
@@ -782,8 +1067,8 @@
 
     function renderGlobalForm(cfg) {
       const g = cfg.global;
+
       document.getElementById("branding-logo").value = g.logoUrl || "";
-      document.getElementById("branding-hero").value = g.heroImageUrl || "";
       document.getElementById("branding-youtube").value = g.youtubeUrl || "";
 
       document.getElementById("social-twitch").value = g.socials.twitch || "";
@@ -804,8 +1089,9 @@
         const card = document.createElement("div");
         card.className = "section-card";
         card.dataset.sectionId = meta.id;
+        card.id = `section-${meta.id}`;
 
-        card.innerHTML = `
+        const headerHtml = `
           <div class="section-header-row">
             <div class="section-header-main">
               <div class="section-label">${meta.label}</div>
@@ -819,17 +1105,213 @@
               </label>
             </div>
           </div>
-
-          <div class="field-group">
-            <label>Tittel (H2 i seksjonen)</label>
-            <input type="text" class="title-input" value="${sCfg.title || ""}" />
-          </div>
-
-          <div class="field-group">
-            <label>Undertekst / subtitle (valgfritt – erstatter eksisterende .subtitle-tekst)</label>
-            <textarea class="subtitle-input">${sCfg.subtitle || ""}</textarea>
-          </div>
         `;
+
+        if (meta.id === "hero") {
+          card.innerHTML = `
+            ${headerHtml}
+            <div class="field-group">
+              <label>Tittel i pillen (f.eks. «Velkommen»)</label>
+              <input type="text" class="hero-pill-input" value="${sCfg.pillText || ""}" />
+            </div>
+
+            <div class="field-group">
+              <label>Seksjonstekst (under hovedoverskriften)</label>
+              <textarea class="hero-sectiontext-input">${sCfg.sectionText || ""}</textarea>
+            </div>
+
+            <div class="subsection-title">Knapper</div>
+            <div class="field-group">
+              <label>Knapp 1 – tekst</label>
+              <input type="text" class="hero-btn1-label-input" value="${sCfg.button1Label || ""}" />
+            </div>
+            <div class="field-group">
+              <label>Knapp 1 – lenke (URL eller #anchor)</label>
+              <input type="text" class="hero-btn1-href-input" value="${sCfg.button1Href || ""}" />
+            </div>
+
+            <div class="field-group">
+              <label>Knapp 2 – tekst</label>
+              <input type="text" class="hero-btn2-label-input" value="${sCfg.button2Label || ""}" />
+            </div>
+            <div class="field-group">
+              <label>Knapp 2 – lenke (URL eller #anchor)</label>
+              <input type="text" class="hero-btn2-href-input" value="${sCfg.button2Href || ""}" />
+            </div>
+
+            <div class="subsection-title">Hero-bilde</div>
+            <div class="field-group">
+              <label>Hero-bilde (URL)</label>
+              <input type="text" class="hero-image-url-input" value="${sCfg.heroImageUrl || ""}" />
+            </div>
+            <div class="field-group">
+              <label>Bildetekst (tekst under hero-bildet)</label>
+              <textarea class="hero-image-caption-input">${sCfg.heroImageCaption || ""}</textarea>
+            </div>
+          `;
+        } else if (meta.id === "feedback") {
+          const items = sCfg.items || [];
+          card.innerHTML = `
+            ${headerHtml}
+
+            <div class="field-group">
+              <label>Tittel (H2 i seksjonen)</label>
+              <input type="text" class="title-input" value="${sCfg.title || ""}" />
+            </div>
+
+            <div class="field-group">
+              <label>Undertekst / subtitle</label>
+              <textarea class="subtitle-input">${sCfg.subtitle || ""}</textarea>
+            </div>
+
+            <div class="subsection-title">Tilbakemeldinger</div>
+            <div class="feedback-grid-admin">
+              ${items
+                .map(
+                  (item, index) => `
+                  <div class="feedback-item-admin" data-feedback-index="${index}">
+                    <div class="feedback-item-admin-header">Kort ${index + 1}</div>
+                    <div class="field-group">
+                      <label>Sitat</label>
+                      <textarea class="feedback-quote-input">${item.quote || ""}</textarea>
+                    </div>
+                    <div class="field-group">
+                      <label>Navn / rolle (f.eks. «Filip, medlem»)</label>
+                      <input type="text" class="feedback-name-input" value="${item.name || ""}" />
+                    </div>
+                  </div>
+                `
+                )
+                .join("")}
+            </div>
+          `;
+        } else if (meta.id === "membership") {
+          const features = sCfg.features || [];
+          card.innerHTML = `
+            ${headerHtml}
+
+            <div class="field-group">
+              <label>Tittel (H2 i seksjonen)</label>
+              <input type="text" class="title-input" value="${sCfg.title || ""}" />
+            </div>
+
+            <div class="field-group">
+              <label>Undertekst / subtitle</label>
+              <textarea class="subtitle-input">${sCfg.subtitle || ""}</textarea>
+            </div>
+
+            <div class="subsection-title">Medlemsfordeler</div>
+            <div class="two-column-fields">
+              ${features
+                .map(
+                  (feat, index) => `
+                  <div class="field-group" data-feature-index="${index}">
+                    <label>Fordel ${index + 1} – ikon-URL</label>
+                    <input type="text" class="membership-feature-icon-input" value="${feat.iconUrl || ""}" />
+                    <label>Fordel ${index + 1} – tekst</label>
+                    <input type="text" class="membership-feature-text-input" value="${feat.text || ""}" />
+                  </div>
+                `
+                )
+                .join("")}
+            </div>
+
+            <div class="subsection-title">Knapper</div>
+            <div class="field-inline">
+              <div class="field-group">
+                <label>Knapp «Under 18 år» – tekst</label>
+                <input type="text" class="membership-btn-under-label" value="${(sCfg.buttonUnder18 && sCfg.buttonUnder18.label) || ""}" />
+                <label>Lenke (URL eller Discord-invite)</label>
+                <input type="text" class="membership-btn-under-href" value="${(sCfg.buttonUnder18 && sCfg.buttonUnder18.href) || ""}" />
+              </div>
+              <div class="field-group">
+                <label>Knapp «Over 18 år» – tekst</label>
+                <input type="text" class="membership-btn-over-label" value="${(sCfg.buttonOver18 && sCfg.buttonOver18.label) || ""}" />
+                <label>Lenke (URL eller Discord-invite)</label>
+                <input type="text" class="membership-btn-over-href" value="${(sCfg.buttonOver18 && sCfg.buttonOver18.href) || ""}" />
+              </div>
+            </div>
+          `;
+        } else if (meta.id === "services") {
+          const items = sCfg.items || [];
+          card.innerHTML = `
+            ${headerHtml}
+
+            <div class="field-group">
+              <label>Tittel (H2 i seksjonen)</label>
+              <input type="text" class="title-input" value="${sCfg.title || ""}" />
+            </div>
+
+            <div class="field-group">
+              <label>Undertekst / subtitle</label>
+              <textarea class="subtitle-input">${sCfg.subtitle || ""}</textarea>
+            </div>
+
+            <div class="subsection-title">Tjenester</div>
+            <div class="two-column-fields">
+              ${items
+                .map(
+                  (item, index) => `
+                  <div class="field-group" data-service-index="${index}">
+                    <label>Tjeneste ${index + 1} – tittel</label>
+                    <input type="text" class="service-title-input" value="${item.title || ""}" />
+                    <label>Tjeneste ${index + 1} – tekst</label>
+                    <textarea class="service-text-input">${item.text || ""}</textarea>
+                    <label>Tjeneste ${index + 1} – ikon-URL</label>
+                    <input type="text" class="service-icon-input" value="${item.iconUrl || ""}" />
+                  </div>
+                `
+                )
+                .join("")}
+            </div>
+          `;
+        } else if (meta.id === "partners") {
+          const logos = sCfg.logos || [];
+          card.innerHTML = `
+            ${headerHtml}
+
+            <div class="field-group">
+              <label>Tittel (H2 i seksjonen)</label>
+              <input type="text" class="title-input" value="${sCfg.title || ""}" />
+            </div>
+
+            <div class="field-group">
+              <label>Undertekst / subtitle</label>
+              <textarea class="subtitle-input">${sCfg.subtitle || ""}</textarea>
+            </div>
+
+            <div class="subsection-title">Partnerlogoer</div>
+            <div class="two-column-fields">
+              ${logos
+                .map(
+                  (logo, index) => `
+                  <div class="field-group" data-partner-index="${index}">
+                    <label>Partner ${index + 1} – navn</label>
+                    <input type="text" class="partner-name-input" value="${logo.name || ""}" />
+                    <label>Partner ${index + 1} – logo-URL</label>
+                    <input type="text" class="partner-url-input" value="${logo.url || ""}" />
+                  </div>
+                `
+                )
+                .join("")}
+            </div>
+          `;
+        } else {
+          // standard: title + subtitle
+          card.innerHTML = `
+            ${headerHtml}
+
+            <div class="field-group">
+              <label>Tittel (H2 i seksjonen)</label>
+              <input type="text" class="title-input" value="${sCfg.title || ""}" />
+            </div>
+
+            <div class="field-group">
+              <label>Undertekst / subtitle</label>
+              <textarea class="subtitle-input">${sCfg.subtitle || ""}</textarea>
+            </div>
+          `;
+        }
 
         container.appendChild(card);
       });
@@ -838,30 +1320,151 @@
     function collectConfigFromForm() {
       const cfg = deepClone(DEFAULT_CONFIG);
 
-      // Sections
       const cards = document.querySelectorAll(".section-card");
       cards.forEach((card) => {
         const id = card.dataset.sectionId;
         const enabled = card.querySelector(".toggle-input").checked;
-        const title = card.querySelector(".title-input").value.trim();
-        const subtitle = card.querySelector(".subtitle-input").value.trim();
 
-        cfg.sections[id] = {
-          ...cfg.sections[id],
-          enabled,
-          title: title || cfg.sections[id].title,
-          subtitle
-        };
+        if (id === "hero") {
+          const pillText = card.querySelector(".hero-pill-input").value.trim();
+          const sectionText = card.querySelector(".hero-sectiontext-input").value.trim();
+          const btn1Label = card.querySelector(".hero-btn1-label-input").value.trim();
+          const btn1Href = card.querySelector(".hero-btn1-href-input").value.trim();
+          const btn2Label = card.querySelector(".hero-btn2-label-input").value.trim();
+          const btn2Href = card.querySelector(".hero-btn2-href-input").value.trim();
+          const imgUrl = card.querySelector(".hero-image-url-input").value.trim();
+          const imgCaption = card.querySelector(".hero-image-caption-input").value.trim();
+
+          cfg.sections.hero = {
+            ...cfg.sections.hero,
+            enabled,
+            pillText: pillText || cfg.sections.hero.pillText,
+            sectionText: sectionText || cfg.sections.hero.sectionText,
+            button1Label: btn1Label || cfg.sections.hero.button1Label,
+            button1Href: btn1Href || cfg.sections.hero.button1Href,
+            button2Label: btn2Label || cfg.sections.hero.button2Label,
+            button2Href: btn2Href || cfg.sections.hero.button2Href,
+            heroImageUrl: imgUrl || cfg.sections.hero.heroImageUrl,
+            heroImageCaption: imgCaption || cfg.sections.hero.heroImageCaption
+          };
+        } else if (id === "feedback") {
+          const titleInput = card.querySelector(".title-input");
+          const subtitleInput = card.querySelector(".subtitle-input");
+          const quoteBlocks = card.querySelectorAll(".feedback-item-admin");
+
+          const items = [];
+          quoteBlocks.forEach((block) => {
+            const quote = block.querySelector(".feedback-quote-input").value.trim();
+            const name = block.querySelector(".feedback-name-input").value.trim();
+            items.push({ quote, name });
+          });
+
+          cfg.sections.feedback = {
+            ...cfg.sections.feedback,
+            enabled,
+            title: (titleInput && titleInput.value.trim()) || cfg.sections.feedback.title,
+            subtitle: (subtitleInput && subtitleInput.value.trim()) || "",
+            items
+          };
+        } else if (id === "membership") {
+          const titleInput = card.querySelector(".title-input");
+          const subtitleInput = card.querySelector(".subtitle-input");
+
+          const featureGroups = card.querySelectorAll("[data-feature-index]");
+          const features = [];
+          featureGroups.forEach((fg) => {
+            const icon = fg.querySelector(".membership-feature-icon-input").value.trim();
+            const text = fg.querySelector(".membership-feature-text-input").value.trim();
+            features.push({
+              iconUrl: icon || "",
+              text: text || ""
+            });
+          });
+
+          const underLabel = card.querySelector(".membership-btn-under-label").value.trim();
+          const underHref = card.querySelector(".membership-btn-under-href").value.trim();
+          const overLabel = card.querySelector(".membership-btn-over-label").value.trim();
+          const overHref = card.querySelector(".membership-btn-over-href").value.trim();
+
+          cfg.sections.membership = {
+            ...cfg.sections.membership,
+            enabled,
+            title: (titleInput && titleInput.value.trim()) || cfg.sections.membership.title,
+            subtitle: (subtitleInput && subtitleInput.value.trim()) || cfg.sections.membership.subtitle,
+            features: features.length ? features : cfg.sections.membership.features,
+            buttonUnder18: {
+              label: underLabel || cfg.sections.membership.buttonUnder18.label,
+              href: underHref || cfg.sections.membership.buttonUnder18.href
+            },
+            buttonOver18: {
+              label: overLabel || cfg.sections.membership.buttonOver18.label,
+              href: overHref || cfg.sections.membership.buttonOver18.href
+            }
+          };
+        } else if (id === "services") {
+          const titleInput = card.querySelector(".title-input");
+          const subtitleInput = card.querySelector(".subtitle-input");
+
+          const serviceGroups = card.querySelectorAll("[data-service-index]");
+          const items = [];
+          serviceGroups.forEach((sg) => {
+            const sTitle = sg.querySelector(".service-title-input").value.trim();
+            const sText = sg.querySelector(".service-text-input").value.trim();
+            const sIcon = sg.querySelector(".service-icon-input").value.trim();
+            items.push({
+              title: sTitle || "",
+              text: sText || "",
+              iconUrl: sIcon || ""
+            });
+          });
+
+          cfg.sections.services = {
+            ...cfg.sections.services,
+            enabled,
+            title: (titleInput && titleInput.value.trim()) || cfg.sections.services.title,
+            subtitle: (subtitleInput && subtitleInput.value.trim()) || cfg.sections.services.subtitle,
+            items: items.length ? items : cfg.sections.services.items
+          };
+        } else if (id === "partners") {
+          const titleInput = card.querySelector(".title-input");
+          const subtitleInput = card.querySelector(".subtitle-input");
+
+          const partnerGroups = card.querySelectorAll("[data-partner-index]");
+          const logos = [];
+          partnerGroups.forEach((pg) => {
+            const name = pg.querySelector(".partner-name-input").value.trim();
+            const url = pg.querySelector(".partner-url-input").value.trim();
+            logos.push({
+              name,
+              url
+            });
+          });
+
+          cfg.sections.partners = {
+            ...cfg.sections.partners,
+            enabled,
+            title: (titleInput && titleInput.value.trim()) || cfg.sections.partners.title,
+            subtitle: (subtitleInput && subtitleInput.value.trim()) || cfg.sections.partners.subtitle,
+            logos: logos.length ? logos : cfg.sections.partners.logos
+          };
+        } else {
+          const titleInput = card.querySelector(".title-input");
+          const subtitleInput = card.querySelector(".subtitle-input");
+
+          cfg.sections[id] = {
+            ...cfg.sections[id],
+            enabled,
+            title: (titleInput && titleInput.value.trim()) || cfg.sections[id].title,
+            subtitle: subtitleInput ? subtitleInput.value.trim() : cfg.sections[id].subtitle
+          };
+        }
       });
 
-      // Global
       const g = cfg.global;
       const logo = document.getElementById("branding-logo").value.trim();
-      const hero = document.getElementById("branding-hero").value.trim();
       const yt = document.getElementById("branding-youtube").value.trim();
 
       if (logo) g.logoUrl = logo;
-      if (hero) g.heroImageUrl = hero;
       if (yt) g.youtubeUrl = yt;
 
       g.socials.twitch = document.getElementById("social-twitch").value.trim() || g.socials.twitch;
@@ -906,12 +1509,28 @@
       setTimeout(() => input.focus(), 50);
     }
 
+    function setupNav() {
+      const buttons = document.querySelectorAll(".admin-nav-btn");
+      buttons.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const targetId = btn.dataset.target;
+          const target = document.getElementById(targetId);
+          if (target) {
+            target.scrollIntoView({ behavior: "smooth", block: "start" });
+          }
+          buttons.forEach((b) => b.classList.remove("active"));
+          btn.classList.add("active");
+        });
+      });
+    }
+
     document.addEventListener("DOMContentLoaded", () => {
       setupAuth();
 
       const cfg = loadConfig();
       renderSectionsForm(cfg);
       renderGlobalForm(cfg);
+      setupNav();
 
       document.getElementById("save-btn").addEventListener("click", () => {
         try {
@@ -930,6 +1549,7 @@
         const fresh = loadConfig();
         renderSectionsForm(fresh);
         renderGlobalForm(fresh);
+        setupNav();
         setStatus("Tilbakestilt til standardoppsett.", "ok");
       });
     });
