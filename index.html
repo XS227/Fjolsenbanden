@@ -1232,155 +1232,176 @@ textarea:focus {
     </div>
   </footer>
 <script>
-  // FAQ: når én åpnes, lukk de andre
-  const faqItems = document.querySelectorAll('.faq-item');
-  faqItems.forEach((item) => {
-    item.addEventListener('toggle', () => {
-      if (item.open) {
-        faqItems.forEach((other) => {
-          if (other !== item) other.open = false;
+  document.addEventListener('DOMContentLoaded', function () {
+    const faqSection = document.getElementById('faq');
+
+    if (faqSection) {
+      // Gardin-effekt: når FAQ blir synlig, dras "gardinen" opp
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              faqSection.classList.add('faq-visible');
+              observer.disconnect(); // bare trigge én gang
+            }
+          });
+        },
+        { threshold: 0.4 }
+      );
+
+      observer.observe(faqSection);
+
+      // Bare ett FAQ-punkt åpent om gangen
+      const details = faqSection.querySelectorAll('details.faq-item');
+      details.forEach((el) => {
+        el.addEventListener('toggle', () => {
+          if (el.open) {
+            details.forEach((other) => {
+              if (other !== el) other.open = false;
+            });
+          }
+        });
+      });
+    }
+
+    // Les admin-konfig fra localStorage og bruk på forsiden
+    (function () {
+      let raw = localStorage.getItem('fjAdminConfig');
+      if (!raw) return;
+
+      let cfg;
+      try {
+        cfg = JSON.parse(raw);
+      } catch (e) {
+        console.warn('Kunne ikke parse fjAdminConfig:', e);
+        return;
+      }
+
+      // Seksjonsstyring (på/av + innhold)
+      const sections = cfg.sections || {};
+      Object.entries(sections).forEach(([id, settings]) => {
+        const section = document.getElementById(id);
+        if (!section) return;
+
+        // Skru av/på seksjon
+        if (settings.enabled === false) {
+          section.style.display = 'none';
+          return;
+        }
+
+        if (id === 'hero') {
+          applyHeroSettings(section, settings);
+          return;
+        }
+
+        // Oppdater tittel (første h2 i seksjonen)
+        if (settings.title) {
+          const h2 = section.querySelector('h2');
+          if (h2) {
+            h2.textContent = settings.title;
+          }
+        }
+
+        // Oppdater undertekst / subtitle
+        if (settings.subtitle) {
+          const sub = section.querySelector('.subtitle');
+          if (sub) {
+            sub.textContent = settings.subtitle;
+          }
+        }
+      });
+
+      // Globale innstillinger
+      const global = cfg.global || {};
+
+      // Logo i header + footer
+      if (global.logoUrl) {
+        document.querySelectorAll('.logo img, .footer-logo').forEach((img) => {
+          img.src = global.logoUrl;
         });
       }
-    });
+
+      // YouTube-video
+      if (global.youtubeUrl) {
+        const iframe = document.querySelector('#video iframe');
+        if (iframe) {
+          iframe.src = normalizeYoutube(global.youtubeUrl);
+        }
+      }
+
+      // Sosiale lenker
+      if (global.socials) {
+        const cards = document.querySelectorAll('.social-card');
+        cards.forEach((card) => {
+          const key = card.dataset.social;
+          if (!key) return;
+          const url = global.socials[key];
+          if (url) {
+            card.href = url;
+          }
+        });
+      }
+
+      function normalizeYoutube(url) {
+        if (!url) return url;
+
+        // embed-lenke allerede
+        if (url.includes('/embed/')) return url;
+
+        // youtu.be/ID
+        const shortMatch = url.match(/youtu\.be\/([^?&]+)/);
+        if (shortMatch) {
+          return 'https://www.youtube.com/embed/' + shortMatch[1];
+        }
+
+        // watch?v=ID
+        const longMatch = url.match(/[?&]v=([^&]+)/);
+        if (longMatch) {
+          return 'https://www.youtube.com/embed/' + longMatch[1];
+        }
+
+        return url;
+      }
+
+      function applyHeroSettings(section, settings) {
+        const pill = section.querySelector('.pill');
+        if (settings.pillText && pill) {
+          pill.textContent = settings.pillText;
+        }
+
+        const lead = section.querySelector('.lead');
+        if (settings.sectionText && lead) {
+          lead.textContent = settings.sectionText;
+        }
+
+        const h1 = section.querySelector('h1');
+        if (settings.title && h1) {
+          h1.innerHTML = settings.title;
+        }
+
+        const heroImg = section.querySelector('.hero-card img');
+        if (settings.heroImageUrl && heroImg) {
+          heroImg.src = settings.heroImageUrl;
+        }
+
+        const caption = section.querySelector('.hero-card-caption');
+        if (settings.heroImageCaption && caption) {
+          caption.textContent = settings.heroImageCaption;
+        }
+
+        const buttons = section.querySelectorAll('.hero-actions a');
+        const [btn1, btn2] = buttons;
+        if (btn1) {
+          if (settings.button1Label) btn1.textContent = settings.button1Label;
+          if (settings.button1Href) btn1.href = settings.button1Href;
+        }
+        if (btn2) {
+          if (settings.button2Label) btn2.textContent = settings.button2Label;
+          if (settings.button2Href) btn2.href = settings.button2Href;
+        }
+      }
+    })();
   });
-
-  // Les admin-konfig fra localStorage og bruk på forsiden
-  (function () {
-    let raw = localStorage.getItem('fjAdminConfig');
-    if (!raw) return;
-
-    let cfg;
-    try {
-      cfg = JSON.parse(raw);
-    } catch (e) {
-      console.warn('Kunne ikke parse fjAdminConfig:', e);
-      return;
-    }
-
-    // Seksjonsstyring (på/av + innhold)
-    const sections = cfg.sections || {};
-    Object.entries(sections).forEach(([id, settings]) => {
-      const section = document.getElementById(id);
-      if (!section) return;
-
-      // Skru av/på seksjon
-      if (settings.enabled === false) {
-        section.style.display = 'none';
-        return;
-      }
-
-      if (id === 'hero') {
-        applyHeroSettings(section, settings);
-        return;
-      }
-
-      // Oppdater tittel (første h2 i seksjonen)
-      if (settings.title) {
-        const h2 = section.querySelector('h2');
-        if (h2) {
-          h2.textContent = settings.title;
-        }
-      }
-
-      // Oppdater undertekst / subtitle
-      if (settings.subtitle) {
-        const sub = section.querySelector('.subtitle');
-        if (sub) {
-          sub.textContent = settings.subtitle;
-        }
-      }
-    });
-
-    // Globale innstillinger
-    const global = cfg.global || {};
-
-    // Logo i header + footer
-    if (global.logoUrl) {
-      document.querySelectorAll('.logo img, .footer-logo').forEach((img) => {
-        img.src = global.logoUrl;
-      });
-    }
-
-    // YouTube-video
-    if (global.youtubeUrl) {
-      const iframe = document.querySelector('#video iframe');
-      if (iframe) {
-        iframe.src = normalizeYoutube(global.youtubeUrl);
-      }
-    }
-
-    // Sosiale lenker
-    if (global.socials) {
-      const cards = document.querySelectorAll('.social-card');
-      cards.forEach((card) => {
-        const key = card.dataset.social;
-        if (!key) return;
-        const url = global.socials[key];
-        if (url) {
-          card.href = url;
-        }
-      });
-    }
-
-    function normalizeYoutube(url) {
-      if (!url) return url;
-
-      // embed-lenke allerede
-      if (url.includes('/embed/')) return url;
-
-      // youtu.be/ID
-      const shortMatch = url.match(/youtu\.be\/([^?&]+)/);
-      if (shortMatch) {
-        return 'https://www.youtube.com/embed/' + shortMatch[1];
-      }
-
-      // watch?v=ID
-      const longMatch = url.match(/[?&]v=([^&]+)/);
-      if (longMatch) {
-        return 'https://www.youtube.com/embed/' + longMatch[1];
-      }
-
-      return url;
-    }
-
-    function applyHeroSettings(section, settings) {
-      const pill = section.querySelector('.pill');
-      if (settings.pillText && pill) {
-        pill.textContent = settings.pillText;
-      }
-
-      const lead = section.querySelector('.lead');
-      if (settings.sectionText && lead) {
-        lead.textContent = settings.sectionText;
-      }
-
-      const h1 = section.querySelector('h1');
-      if (settings.title && h1) {
-        h1.innerHTML = settings.title;
-      }
-
-      const heroImg = section.querySelector('.hero-card img');
-      if (settings.heroImageUrl && heroImg) {
-        heroImg.src = settings.heroImageUrl;
-      }
-
-      const caption = section.querySelector('.hero-card-caption');
-      if (settings.heroImageCaption && caption) {
-        caption.textContent = settings.heroImageCaption;
-      }
-
-      const buttons = section.querySelectorAll('.hero-actions a');
-      const [btn1, btn2] = buttons;
-      if (btn1) {
-        if (settings.button1Label) btn1.textContent = settings.button1Label;
-        if (settings.button1Href) btn1.href = settings.button1Href;
-      }
-      if (btn2) {
-        if (settings.button2Label) btn2.textContent = settings.button2Label;
-        if (settings.button2Href) btn2.href = settings.button2Href;
-      }
-    }
-  })();
 </script>
 </body>
 </html>
