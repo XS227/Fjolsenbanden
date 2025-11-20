@@ -619,16 +619,17 @@ a {
 }
 
 .services-grid .service h3 {
-  margin-top: 0;
-  margin-bottom: 0.6rem;
-  font-size: 1rem;
+  margin-top: 0.4rem;
+  margin-bottom: 0.8rem;
+  font-size: 1.05rem;
   text-transform: uppercase;
   letter-spacing: 0.08em;
 }
 
 .services-grid .service p {
-  font-size: 0.9rem;
-  line-height: 1.5;
+  margin-top: 0.6rem;
+  line-height: 1.55;
+  font-size: 0.92rem;
 }
 
 /* Ikon-effekt – Fortnite-style */
@@ -652,6 +653,7 @@ a {
 .service-icon {
   width: 70px;
   height: 70px;
+  margin-bottom: 0.8rem;
   object-fit: contain;
   position: relative;
   z-index: 2;
