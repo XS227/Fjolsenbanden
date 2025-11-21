@@ -5,7 +5,7 @@ export const INLINE_PARTNER_BADGES = Object.freeze({
     komplett: "https://setaei.com/Fjolsen/partnere/p-komplett.png",
     kristiania: "https://setaei.com/Fjolsen/partnere/p-kristiania.png",
     saily: "https://setaei.com/Fjolsen/partnere/p-saily.png",
-    nki: "https://fjolsenbanden.setaei.com/img/partners/nki-logo-light.svg",
+    nki: "https://setaei.com/Fjolsen/partnere/P-nki.svg",
     trondheimPlay: "https://setaei.com/Fjolsen/partnere/p-trondheimplay.png",
 });
 
