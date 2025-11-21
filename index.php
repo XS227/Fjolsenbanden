@@ -1123,7 +1123,7 @@
           >
             <span class="sr-only">Lenovo</span>
             <img
-                src="https://fjolsenbanden.setaei.com/assets/p-lenovo-zG8s0yqd.png"
+                src="https://setaei.com/Fjolsen/partnere/p-lenovo.png"
                 alt="Lenovo"
             />
           </a>
@@ -1135,7 +1135,7 @@
           >
             <span class="sr-only">Komplett</span>
             <img
-                src="https://fjolsenbanden.setaei.com/assets/p-komplett-Bpx7vYhC.png"
+                src="https://setaei.com/Fjolsen/partnere/p-komplett.png"
                 alt="Komplett"
             />
           </a>
@@ -1147,7 +1147,7 @@
           >
             <span class="sr-only">Philips</span>
             <img
-                src="https://fjolsenbanden.setaei.com/assets/p-philips-B33Lb_3a.png"
+                src="https://setaei.com/Fjolsen/partnere/p-philips.png"
                 alt="Philips"
             />
           </a>
@@ -1159,7 +1159,7 @@
           >
             <span class="sr-only">Samsung</span>
             <img
-                src="https://fjolsenbanden.setaei.com/assets/p-samsung-CTyK3nvK.png"
+                src="https://setaei.com/Fjolsen/partnere/p-samsung.png"
                 alt="Samsung"
             />
           </a>
