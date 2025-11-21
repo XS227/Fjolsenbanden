@@ -1119,51 +1119,51 @@
               class="logo"
               href="https://www.lenovo.com/no/no/"
               target="_blank"
-              rel="noopener noreferrer"
-            >
-              <span class="sr-only">Lenovo</span>
-              <img
-                src="data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20width%3D%27200%27%20height%3D%2780%27%20viewBox%3D%270%200%20200%2080%27%3E%3Crect%20width%3D%27200%27%20height%3D%2780%27%20rx%3D%2718%27%20fill%3D%27%23e60012%27/%3E%3Ctext%20x%3D%2750%25%27%20y%3D%2750%25%27%20dominant-baseline%3D%27middle%27%20text-anchor%3D%27middle%27%20fill%3D%27%23ffffff%27%20font-family%3D%27Inter%2CArial%2Csans-serif%27%20font-size%3D%2732%27%20font-weight%3D%27700%27%3ELenovo%3C/text%3E%3C/svg%3E"
+            rel="noopener noreferrer"
+          >
+            <span class="sr-only">Lenovo</span>
+            <img
+                src="https://fjolsenbanden.setaei.com/assets/p-lenovo-zG8s0yqd.png"
                 alt="Lenovo"
-              />
-            </a>
-            <a
+            />
+          </a>
+          <a
               class="logo"
               href="https://www.komplett.no/"
               target="_blank"
-              rel="noopener noreferrer"
-            >
-              <span class="sr-only">Komplett</span>
-              <img
-                src="data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20width%3D%27200%27%20height%3D%2780%27%20viewBox%3D%270%200%20200%2080%27%3E%3Crect%20width%3D%27200%27%20height%3D%2780%27%20rx%3D%2718%27%20fill%3D%27%23ffcc00%27/%3E%3Ctext%20x%3D%2750%25%27%20y%3D%2750%25%27%20dominant-baseline%3D%27middle%27%20text-anchor%3D%27middle%27%20fill%3D%27%231c1c1c%27%20font-family%3D%27Inter%2CArial%2Csans-serif%27%20font-size%3D%2732%27%20font-weight%3D%27700%27%3EKomplett%3C/text%3E%3C/svg%3E"
+            rel="noopener noreferrer"
+          >
+            <span class="sr-only">Komplett</span>
+            <img
+                src="https://fjolsenbanden.setaei.com/assets/p-komplett-Bpx7vYhC.png"
                 alt="Komplett"
-              />
-            </a>
-            <a
+            />
+          </a>
+          <a
               class="logo"
               href="https://www.philips.no/"
               target="_blank"
-              rel="noopener noreferrer"
-            >
-              <span class="sr-only">Philips</span>
-              <img
-                src="https://www.logo.wine/a/logo/Philips/Philips-Logo.wine.svg"
+            rel="noopener noreferrer"
+          >
+            <span class="sr-only">Philips</span>
+            <img
+                src="https://fjolsenbanden.setaei.com/assets/p-philips-B33Lb_3a.png"
                 alt="Philips"
-              />
-            </a>
-            <a
+            />
+          </a>
+          <a
               class="logo"
               href="https://www.samsung.com/no/"
               target="_blank"
-              rel="noopener noreferrer"
-            >
-              <span class="sr-only">Samsung</span>
-              <img
-                src="data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20width%3D%27200%27%20height%3D%2780%27%20viewBox%3D%270%200%20200%2080%27%3E%3Crect%20width%3D%27200%27%20height%3D%2780%27%20rx%3D%2718%27%20fill%3D%27%231428a0%27/%3E%3Ctext%20x%3D%2750%25%27%20y%3D%2750%25%27%20dominant-baseline%3D%27middle%27%20text-anchor%3D%27middle%27%20fill%3D%27%23ffffff%27%20font-family%3D%27Inter%2CArial%2Csans-serif%27%20font-size%3D%2732%27%20font-weight%3D%27700%27%3ESamsung%3C/text%3E%3C/svg%3E"
+            rel="noopener noreferrer"
+          >
+            <span class="sr-only">Samsung</span>
+            <img
+                src="https://fjolsenbanden.setaei.com/assets/p-samsung-CTyK3nvK.png"
                 alt="Samsung"
-              />
-            </a>
-          </div>
+            />
+          </a>
+        </div>
 
           <p>Ønsker du å synliggjøre din merkevare for vårt engasjerte gaming-publikum?</p>
           <a href="#kontakt" class="cta">Kontakt oss</a>

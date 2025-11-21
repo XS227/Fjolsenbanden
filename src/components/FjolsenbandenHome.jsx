@@ -208,7 +208,7 @@ const sponsors = [
         name: "Philips",
         slug: "philips",
         website: "https://www.philips.no/",
-        defaultLogoUrl: "https://www.logo.wine/a/logo/Philips/Philips-Logo.wine.svg",
+        defaultLogoUrl: INLINE_PARTNER_BADGES.philips,
         remoteFileNames: [
             "philips-logo.png",
             "Philips-logo.png",
