@@ -1,12 +1,12 @@
 export const INLINE_PARTNER_BADGES = Object.freeze({
-    lenovo: "https://fjolsenbanden.setaei.com/img/partners/lenovo-svgrepo-com.svg",
-    samsung: "https://fjolsenbanden.setaei.com/img/partners/samsung-1-logo-svgrepo-com.svg",
-    philips: "https://fjolsenbanden.setaei.com/img/partners/Philips-logo.svg",
-    komplett: "data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20width%3D%27200%27%20height%3D%2780%27%20viewBox%3D%270%200%20200%2080%27%3E%3Crect%20width%3D%27200%27%20height%3D%2780%27%20rx%3D%2718%27%20fill%3D%27%23ffcc00%27/%3E%3Ctext%20x%3D%2750%25%27%20y%3D%2750%25%27%20dominant-baseline%3D%27middle%27%20text-anchor%3D%27middle%27%20fill%3D%27%231c1c1c%27%20font-family%3D%27Inter%2CArial%2Csans-serif%27%20font-size%3D%2732%27%20font-weight%3D%27700%27%3EKomplett%3C/text%3E%3C/svg%3E",
-    kristiania: "data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20width%3D%27200%27%20height%3D%2780%27%20viewBox%3D%270%200%20200%2080%27%3E%3Cdefs%3E%3ClinearGradient%20id%3D%27g%27%20x1%3D%270%25%27%20x2%3D%27100%25%27%20y1%3D%2750%25%27%20y2%3D%2750%25%27%3E%3Cstop%20offset%3D%270%25%27%20stop-color%3D%27%233D4A7A%27/%3E%3Cstop%20offset%3D%27100%25%27%20stop-color%3D%27%235A6DA5%27/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect%20width%3D%27200%27%20height%3D%2780%27%20rx%3D%2718%27%20fill%3D%27url(%23g)%27/%3E%3Ctext%20x%3D%2750%25%27%20y%3D%2752%25%27%20dominant-baseline%3D%27middle%27%20text-anchor%3D%27middle%27%20fill%3D%27%23f4f6ff%27%20font-family%3D%27Inter%2CArial%2Csans-serif%27%20font-size%3D%2730%27%20font-weight%3D%27700%27%3EKristiania%3C/text%3E%3C/svg%3E",
-    saily: "data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20width%3D%27200%27%20height%3D%2780%27%20viewBox%3D%270%200%20200%2080%27%3E%3Cdefs%3E%3ClinearGradient%20id%3D%27s%27%20x1%3D%270%25%27%20x2%3D%27100%25%27%20y1%3D%270%25%27%20y2%3D%27100%25%27%3E%3Cstop%20offset%3D%270%25%27%20stop-color%3D%27%230B7BEB%27/%3E%3Cstop%20offset%3D%27100%25%27%20stop-color%3D%27%2305C1FF%27/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect%20width%3D%27200%27%20height%3D%2780%27%20rx%3D%2718%27%20fill%3D%27url(%23s)%27/%3E%3Ctext%20x%3D%2750%25%27%20y%3D%2752%25%27%20dominant-baseline%3D%27middle%27%20text-anchor%3D%27middle%27%20fill%3D%27%23e8f6ff%27%20font-family%3D%27Inter%2CArial%2Csans-serif%27%20font-size%3D%2734%27%20font-weight%3D%27700%27%3ESaily%3C/text%3E%3C/svg%3E",
+    lenovo: "https://fjolsenbanden.setaei.com/assets/p-lenovo-zG8s0yqd.png",
+    samsung: "https://fjolsenbanden.setaei.com/assets/p-samsung-CTyK3nvK.png",
+    philips: "https://fjolsenbanden.setaei.com/assets/p-philips-B33Lb_3a.png",
+    komplett: "https://fjolsenbanden.setaei.com/assets/p-komplett-Bpx7vYhC.png",
+    kristiania: "https://fjolsenbanden.setaei.com/assets/p-kristiania-DmhQbukm.png",
+    saily: "https://fjolsenbanden.setaei.com/assets/p-saily-D-MbpSdv.png",
     nki: "https://fjolsenbanden.setaei.com/img/partners/nki-logo-light.svg",
-    trondheimPlay: "data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20width%3D%27210%27%20height%3D%2780%27%20viewBox%3D%270%200%20210%2080%27%3E%3Cdefs%3E%3ClinearGradient%20id%3D%27tp%27%20x1%3D%270%25%27%20x2%3D%27100%25%27%20y1%3D%270%25%27%20y2%3D%27100%25%27%3E%3Cstop%20offset%3D%270%25%27%20stop-color%3D%27%235323f0%27/%3E%3Cstop%20offset%3D%27100%25%27%20stop-color%3D%27%23813aff%27/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect%20width%3D%27210%27%20height%3D%2780%27%20rx%3D%2718%27%20fill%3D%27url(%23tp)%27/%3E%3Ctext%20x%3D%2750%25%27%20y%3D%2751%25%27%20dominant-baseline%3D%27middle%27%20text-anchor%3D%27middle%27%20fill%3D%27%23f5edff%27%20font-family%3D%27Inter%2CArial%2Csans-serif%27%20font-size%3D%2726%27%20font-weight%3D%27700%27%3ETrondheim%20Play%3C/text%3E%3C/svg%3E",
+    trondheimPlay: "https://fjolsenbanden.setaei.com/assets/p-trondheimplay-BQDD3bw9.png",
 });
 
 export function getPartnerBadge(slug) {
