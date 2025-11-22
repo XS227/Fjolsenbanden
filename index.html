@@ -1727,5 +1727,201 @@ body.is-admin .fb-block-edit-btn:hover {
     })();
   });
 </script>
+<script>
+(function () {
+  if (!document.body.classList.contains('is-admin')) return;
+
+  const blocks = Array.from(document.querySelectorAll('.fb-edit-block'));
+
+  blocks.forEach(block => {
+    const type = block.dataset.editType || 'richtext';
+    const blockId = block.dataset.blockId || '';
+
+    // Lag liten blyant-knapp
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'fb-block-edit-btn';
+    btn.innerHTML = '✏️'; // kan byttes til SVG senere
+    btn.title = 'Rediger';
+    block.prepend(btn);
+
+    if (type === 'richtext') {
+      setupRichtextBlock(block, blockId, btn);
+    } else if (type === 'youtube') {
+      setupYoutubeBlock(block, blockId, btn);
+    }
+  });
+
+  /* ---- RICHTEXT ---- */
+  function setupRichtextBlock(block, blockId, btn) {
+    let originalHtml = '';
+    let isEditing = false;
+
+    btn.addEventListener('click', () => {
+      if (isEditing) return;
+      const contentEl = block; // hele blocken kan skrives i
+      originalHtml = contentEl.innerHTML.replace(/<button[^>]*class="fb-block-edit-btn"[^>]*>.*?<\/button>/, '');
+      isEditing = true;
+
+      block.classList.add('fb-editing-richtext');
+      contentEl.setAttribute('contenteditable', 'true');
+      contentEl.focus();
+
+      // Lag liten “hint” nederst: Enter = vanlig, Ctrl+S = lagre (kan bygges senere)
+      // For nå bruker vi bare blur/save via confirm
+      contentEl.addEventListener('keydown', onKeydown);
+
+      function onKeydown(e) {
+        if (e.key === 'Escape') {
+          e.preventDefault();
+          cancel();
+        }
+        if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 's') {
+          e.preventDefault();
+          save();
+        }
+      }
+
+      function cleanup() {
+        contentEl.removeAttribute('contenteditable');
+        block.classList.remove('fb-editing-richtext');
+        contentEl.removeEventListener('keydown', onKeydown);
+        isEditing = false;
+      }
+
+      function cancel() {
+        contentEl.innerHTML = originalHtml;
+        cleanup();
+      }
+
+      async function save() {
+        const htmlToSave = contentEl.innerHTML.replace(/<button[^>]*class="fb-block-edit-btn"[^>]*>.*?<\/button>/, '');
+
+        try {
+          const res = await fetch('/api/admin/blocks/' + encodeURIComponent(blockId), {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json',
+              'X-CSRFToken': window.csrfToken || ''
+            },
+            body: JSON.stringify({ type: 'richtext', content: htmlToSave })
+          });
+          if (!res.ok) throw new Error('Feil ved lagring');
+          cleanup();
+          console.log('Blokk lagret:', blockId);
+        } catch (err) {
+          console.error(err);
+          alert('Klarte ikke å lagre. Endringene er fortsatt i nettleseren.');
+        }
+      }
+
+      // enkel dialog for nå: spør om lagring når man klikker på blyanten igjen
+      btn.onclick = () => {
+        if (!isEditing) return;
+        const wantSave = confirm('Vil du lagre endringene?');
+        if (wantSave) {
+          save();
+        } else {
+          cancel();
+        }
+      };
+    });
+  }
+
+  /* ---- YOUTUBE ---- */
+  function setupYoutubeBlock(block, blockId, btn) {
+    let editorEl = null;
+
+    btn.addEventListener('click', () => {
+      // hvis editor allerede er åpen → lukk
+      if (editorEl) {
+        editorEl.remove();
+        editorEl = null;
+        return;
+      }
+
+      const iframe = block.querySelector('iframe');
+      const currentSrc = iframe ? iframe.src || '' : '';
+      const currentUrl = currentSrc || '';
+
+      editorEl = document.createElement('div');
+      editorEl.className = 'fb-youtube-editor';
+      editorEl.innerHTML = `
+        <label for="yt-input-${blockId}">YouTube-lenke eller video-ID</label>
+        <input id="yt-input-${blockId}"
+               type="text"
+               placeholder="f.eks. https://youtu.be/VIDEOID"
+               value="${currentUrl}">
+        <div class="fb-youtube-editor__actions">
+          <button type="button" class="fb-btn-small fb-btn-small--ghost">Avbryt</button>
+          <button type="button" class="fb-btn-small fb-btn-small--primary">Lagre</button>
+        </div>
+      `;
+      block.appendChild(editorEl);
+
+      const input = editorEl.querySelector('input');
+      const cancelBtn = editorEl.querySelector('.fb-btn-small--ghost');
+      const saveBtn = editorEl.querySelector('.fb-btn-small--primary');
+
+      input.focus();
+      input.select();
+
+      cancelBtn.addEventListener('click', () => {
+        editorEl.remove();
+        editorEl = null;
+      });
+
+      saveBtn.addEventListener('click', async () => {
+        const raw = input.value.trim();
+        if (!raw) {
+          alert('Skriv inn en YouTube-lenke eller ID');
+          return;
+        }
+
+        const videoId = extractYoutubeId(raw);
+        if (!videoId) {
+          alert('Fant ikke en gyldig YouTube-ID i lenken.');
+          return;
+        }
+
+        const newSrc = 'https://www.youtube.com/embed/' + videoId;
+
+        if (iframe) {
+          iframe.src = newSrc;
+        }
+
+        try {
+          const res = await fetch('/api/admin/blocks/' + encodeURIComponent(blockId), {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json',
+              'X-CSRFToken': window.csrfToken || ''
+            },
+            body: JSON.stringify({ type: 'youtube', videoId, src: newSrc })
+          });
+          if (!res.ok) throw new Error('Feil ved lagring');
+          console.log('YouTube-blokk lagret:', blockId, videoId);
+          editorEl.remove();
+          editorEl = null;
+        } catch (err) {
+          console.error(err);
+          alert('Klarte ikke å lagre videolenken. Men videoen er oppdatert i nettleseren.');
+        }
+      });
+    });
+  }
+
+  function extractYoutubeId(url) {
+    // aksepter ren ID
+    if (/^[a-zA-Z0-9_-]{11}$/.test(url)) return url;
+
+    // typiske url-formater
+    const regExp =
+      /(?:youtube\.com\/(?:watch\?v=|embed\/|v\/|shorts\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
+    const match = url.match(regExp);
+    return match ? match[1] : null;
+  }
+})();
+</script>
 </body>
 </html>
