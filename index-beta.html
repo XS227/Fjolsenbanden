@@ -1341,52 +1341,6 @@ textarea:focus {
       color: #fff;
     }
 
-    /* Av/på-knapp per seksjon */
-    .fb-section-toggle {
-      position: absolute;
-      top: 8px;
-      left: 8px;
-      z-index: 40;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 3px 8px;
-      border-radius: 999px;
-      border: 1px solid rgba(255, 255, 255, 0.16);
-      background: rgba(4, 17, 73, 0.96);
-      color: #fff;
-      font-size: 11px;
-      cursor: pointer;
-    }
-
-    .fb-section-toggle-pill {
-      width: 26px;
-      height: 14px;
-      border-radius: 999px;
-      background: rgba(120, 120, 120, 0.4);
-      position: relative;
-    }
-
-    .fb-section-toggle-pill::after {
-      content: "";
-      position: absolute;
-      top: 1px;
-      left: 2px;
-      width: 11px;
-      height: 11px;
-      border-radius: 50%;
-      background: #fff;
-      transition: transform 0.15s ease;
-    }
-
-    .fb-section-toggle[data-enabled="true"] .fb-section-toggle-pill {
-      background: #13A0F9;
-    }
-
-    .fb-section-toggle[data-enabled="true"] .fb-section-toggle-pill::after {
-      transform: translateX(10px);
-    }
-
     body.is-admin.fb-editor-on .editable-section.fb-section-disabled {
       opacity: 0.35;
       filter: grayscale(0.3);
@@ -1432,99 +1386,168 @@ textarea:focus {
 
     #fb-editor-panel {
       position: fixed;
-      right: 16px;
-      bottom: 16px;
-      z-index: 99;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      top: 76px;
+      right: 20px;
+      width: min(420px, calc(100% - 32px));
+      z-index: 12000;
+      color: #e5e7eb;
+      background: rgba(8, 12, 38, 0.96);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+      padding: 1rem;
+      box-shadow: 0 24px 64px rgba(0, 0, 0, 0.55);
+      display: none;
     }
 
-    /* selve boksen */
-    .fb-editor-panel__box {
-      width: 260px;
-      max-height: 60vh;
-      border-radius: 16px;
-      background: rgba(4, 17, 73, 0.97);
-      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.6);
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
+    body.visual-editor-on #fb-editor-panel {
+      display: block;
     }
 
-    /* topp-linje med tittel + lukk */
-    .fb-editor-panel__header {
+    #fb-editor-panel.fb-panel-hidden {
+      display: none;
+    }
+
+    .fb-visual-panel__top {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 10px 12px;
-      font-size: 13px;
+      gap: 0.75rem;
+    }
+
+    .fb-visual-panel__title {
+      font-size: 1.05rem;
+      font-weight: 700;
       color: #fff;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      margin: 0;
     }
 
-    .fb-editor-panel__close {
-      border: none;
-      background: transparent;
-      color: rgba(255, 255, 255, 0.7);
-      font-size: 16px;
+    .fb-visual-panel__hint,
+    .fb-visual-panel__subhint {
+      color: #94a3b8;
+      font-size: 0.85rem;
+      margin: 0.2rem 0 0;
+    }
+
+    .fb-visual-panel__content {
+      margin-top: 1rem;
+    }
+
+    .fb-visual-panel__close {
+      width: 36px;
+      height: 36px;
+      border-radius: 12px;
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      background: rgba(15, 23, 42, 0.7);
+      color: #e5e7eb;
       cursor: pointer;
+      font-size: 16px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.15s ease, border-color 0.15s ease;
     }
 
-    /* innhold */
-    .fb-editor-panel__body {
-      padding: 8px 10px 10px;
-      font-size: 12px;
-      color: rgba(255, 255, 255, 0.85);
+    .fb-visual-panel__close:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.35);
     }
 
-    .fb-editor-panel__body p {
-      margin: 0 0 6px;
-    }
-
-    /* seksjonsliste */
-    #fb-section-list {
+    #section-order-list {
       list-style: none;
-      margin: 4px 0 0;
+      margin: 0.75rem 0 0;
       padding: 0;
       display: flex;
       flex-direction: column;
-      gap: 4px;
+      gap: 0.5rem;
     }
 
     .fb-section-item {
       display: flex;
       align-items: center;
-      gap: 6px;
-      padding: 6px 8px;
-      border-radius: 10px;
-      background: rgba(10, 26, 92, 0.9);
-      color: #fff;
+      justify-content: space-between;
+      padding: 0.6rem 0.75rem;
+      border-radius: 14px;
+      background: rgba(15, 23, 42, 0.75);
+      border: 1px solid rgba(148, 163, 184, 0.25);
       cursor: grab;
       user-select: none;
+      gap: 0.75rem;
     }
 
     .fb-section-item:active {
       cursor: grabbing;
     }
 
+    .fb-section-item__info {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      min-width: 0;
+    }
+
     .fb-section-item__handle {
-      width: 20px;
+      width: 22px;
       text-align: center;
       opacity: 0.8;
-      font-size: 14px;
+      font-size: 16px;
+      color: #94a3b8;
     }
 
     .fb-section-item__title {
-      flex: 1;
-      font-size: 12px;
+      font-size: 0.95rem;
+      color: #e2e8f0;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
     }
 
-    /* drag-tilstand */
+    .fb-section-item__toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.85rem;
+      color: #cbd5e1;
+    }
+
+    .section-toggle {
+      appearance: none;
+      width: 38px;
+      height: 22px;
+      border-radius: 999px;
+      background: rgba(148, 163, 184, 0.3);
+      border: 1px solid rgba(148, 163, 184, 0.3);
+      position: relative;
+      cursor: pointer;
+      transition: background 0.15s ease, border-color 0.15s ease;
+    }
+
+    .section-toggle::after {
+      content: '';
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: #0b162f;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+      transition: transform 0.15s ease, background 0.15s ease;
+    }
+
+    .section-toggle:checked {
+      background: rgba(52, 211, 153, 0.3);
+      border-color: rgba(52, 211, 153, 0.8);
+    }
+
+    .section-toggle:checked::after {
+      transform: translateX(16px);
+      background: #34d399;
+    }
+
     .fb-section-item.fb-dragging {
       opacity: 0.7;
-      background: rgba(19, 160, 249, 0.9);
+      border-color: rgba(19, 160, 249, 0.8);
+      background: rgba(19, 160, 249, 0.12);
     }
 
     .fb-section-item.fb-over-before {
@@ -1534,48 +1557,31 @@ textarea:focus {
     .fb-section-item.fb-over-after {
       box-shadow: inset 0 -2px 0 #13A0F9;
     }
-
-    /* panel knapp når minimert */
-    #fb-editor-panel.fb-panel-collapsed .fb-editor-panel__box {
-      display: none;
-    }
-
-    .fb-editor-panel__toggle {
-      margin-top: 6px;
-      width: 120px;
-      border-radius: 999px;
-      border: none;
-      padding: 6px 10px;
-      font-size: 12px;
-      background: rgba(4, 17, 73, 0.95);
-      color: #fff;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 4px;
-    }
-
-    .fb-editor-panel__toggle span.emoji {
-      font-size: 14px;
-    }
   </style>
 
-  <div id="fb-editor-panel" class="fb-panel-collapsed">
-    <div class="fb-editor-panel__box">
-      <div class="fb-editor-panel__header">
-        <span>Seksjoner – dra og slipp</span>
-        <button type="button" class="fb-editor-panel__close" aria-label="Lukk panel">×</button>
+  <div id="fb-editor-panel" class="fb-panel-hidden">
+    <div class="fb-visual-panel__top">
+      <div>
+        <h2 class="fb-visual-panel__title">Visual editor</h2>
+        <p class="fb-visual-panel__hint">Flytt på seksjonene og slå de av/på. Endringene lagres i nettleseren.</p>
       </div>
-      <div class="fb-editor-panel__body">
-        <p>Flytt rekkefølgen på seksjonene på forsiden.</p>
-        <ul id="fb-section-list"></ul>
-      </div>
+      <button
+        type="button"
+        id="close-visual-editor"
+        class="fb-visual-panel__close"
+        aria-label="Lukk visual editor"
+      >
+        ✕
+      </button>
     </div>
-    <button type="button" class="fb-editor-panel__toggle">
-      <span class="emoji">⬍</span>
-      <span>Seksjoner</span>
-    </button>
+
+    <div class="fb-visual-panel__content">
+      <p class="fb-visual-panel__subhint">
+        Dra i håndtaket for å endre rekkefølgen. Bruk bryteren for å vise/skjule en seksjon.
+      </p>
+
+      <ul id="section-order-list"></ul>
+    </div>
   </div>
 
   <script>
@@ -1663,7 +1669,7 @@ textarea:focus {
 
         applyDemoState();
 
-        /* ========= AV/PÅ-KNAPP PER SEKSJON ========= */
+        /* ========= AKTIVER/DEAKTIVER PER SEKSJON ========= */
         sections.forEach((section) => {
           const sectionId = section.dataset.sectionId;
           if (!sectionId) return;
@@ -1671,45 +1677,6 @@ textarea:focus {
           const enabled = section.dataset.sectionEnabled !== 'false';
           section.dataset.sectionEnabled = String(enabled);
           updateDisabledClass(section, enabled);
-
-          const toggle = document.createElement('button');
-          toggle.type = 'button';
-          toggle.className = 'fb-section-toggle';
-          toggle.dataset.enabled = String(enabled);
-          toggle.innerHTML = `
-      <div class="fb-section-toggle-pill"></div>
-      <span>${enabled ? 'Aktiv' : 'Av'}</span>
-    `;
-          section.appendChild(toggle);
-
-          toggle.addEventListener('click', async () => {
-            const current = toggle.dataset.enabled === 'true';
-            const next = !current;
-            toggle.dataset.enabled = String(next);
-            toggle.querySelector('span').textContent = next ? 'Aktiv' : 'Av';
-            section.dataset.sectionEnabled = String(next);
-            updateDisabledClass(section, next);
-
-            if (DEMO_MODE) {
-              updateDemoSection(sectionId, { enabled: next });
-              return;
-            }
-
-            try {
-              await fetch('/api/admin/sections/' + encodeURIComponent(sectionId), {
-                method: 'PUT',
-                headers: {
-                  'Content-Type': 'application/json',
-                  'X-CSRFToken': window.csrfToken || '',
-                },
-                body: JSON.stringify({ enabled: next }),
-              });
-              console.log('Seksjon status lagret', sectionId, next);
-            } catch (err) {
-              console.error(err);
-              alert('Kunne ikke lagre aktiv/av-status for seksjonen.');
-            }
-          });
         });
 
       /* ========= INLINE EDITOR PER SEKSJON ========= */
@@ -1794,35 +1761,93 @@ textarea:focus {
       /* ========= SIDEPANEL MED DRAG & DROP ========= */
 
       const panel = document.getElementById('fb-editor-panel');
-      const listEl = document.getElementById('fb-section-list');
-      const toggleBtn = panel.querySelector('.fb-editor-panel__toggle');
-      const closeBtn = panel.querySelector('.fb-editor-panel__close');
+      const listEl = document.getElementById('section-order-list');
+      const closeBtn = document.getElementById('close-visual-editor');
 
-      toggleBtn.addEventListener('click', () => {
-        panel.classList.toggle('fb-panel-collapsed');
+      closeBtn?.addEventListener('click', () => {
+        panel?.classList.add('fb-panel-hidden');
       });
 
-      closeBtn.addEventListener('click', () => {
-        panel.classList.add('fb-panel-collapsed');
-      });
+      const toggleSectionEnabled = async (sectionId, enabled) => {
+        const section = root.querySelector('.editable-section[data-section-id="' + sectionId + '"]');
+        if (!section) return;
+
+        section.dataset.sectionEnabled = String(enabled);
+        updateDisabledClass(section, enabled);
+
+        if (DEMO_MODE) {
+          updateDemoSection(sectionId, { enabled });
+          return;
+        }
+
+        try {
+          await fetch('/api/admin/sections/' + encodeURIComponent(sectionId), {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json',
+              'X-CSRFToken': window.csrfToken || '',
+            },
+            body: JSON.stringify({ enabled }),
+          });
+          console.log('Seksjon status lagret', sectionId, enabled);
+        } catch (err) {
+          console.error(err);
+          alert('Kunne ikke lagre aktiv/av-status for seksjonen.');
+        }
+      };
 
       // bygg liste ut fra seksjonene på siden
       function buildSectionList() {
+        if (!listEl) return;
         listEl.innerHTML = '';
         const currentSections = Array.from(root.querySelectorAll('.editable-section'));
+
         currentSections.forEach((section) => {
           const id = section.dataset.sectionId || '';
           const titleEl = section.querySelector('h1, h2, h3, h4');
           const titleText = titleEl ? titleEl.textContent.trim() : id || 'Uten navn';
+          const enabled = section.dataset.sectionEnabled !== 'false';
 
           const li = document.createElement('li');
           li.className = 'fb-section-item';
           li.draggable = true;
           li.dataset.sectionId = id;
-          li.innerHTML = `
-        <span class="fb-section-item__handle">⠿</span>
-        <span class="fb-section-item__title">${titleText}</span>
-      `;
+
+          const info = document.createElement('div');
+          info.className = 'fb-section-item__info';
+
+          const handle = document.createElement('span');
+          handle.className = 'fb-section-item__handle';
+          handle.textContent = '☰';
+
+          const title = document.createElement('span');
+          title.className = 'fb-section-item__title';
+          title.textContent = titleText;
+
+          info.appendChild(handle);
+          info.appendChild(title);
+
+          const toggleWrapper = document.createElement('label');
+          toggleWrapper.className = 'fb-section-item__toggle';
+
+          const checkbox = document.createElement('input');
+          checkbox.type = 'checkbox';
+          checkbox.className = 'section-toggle';
+          checkbox.dataset.sectionId = id;
+          checkbox.checked = enabled;
+
+          checkbox.addEventListener('change', () => {
+            toggleSectionEnabled(id, checkbox.checked);
+          });
+
+          const toggleLabel = document.createElement('span');
+          toggleLabel.textContent = 'Vis';
+
+          toggleWrapper.appendChild(checkbox);
+          toggleWrapper.appendChild(toggleLabel);
+
+          li.appendChild(info);
+          li.appendChild(toggleWrapper);
           listEl.appendChild(li);
         });
       }
@@ -1831,46 +1856,49 @@ textarea:focus {
 
       let dragItem = null;
 
-      listEl.addEventListener('dragstart', (e) => {
-        const li = e.target.closest('.fb-section-item');
-        if (!li) return;
-        dragItem = li;
-        li.classList.add('fb-dragging');
-        e.dataTransfer.effectAllowed = 'move';
-      });
-
-      listEl.addEventListener('dragend', () => {
-        if (dragItem) dragItem.classList.remove('fb-dragging');
-        listEl.querySelectorAll('.fb-section-item').forEach((el) => {
-          el.classList.remove('fb-over-before', 'fb-over-after');
-        });
-        dragItem = null;
-        applyOrderToSections();
-        persistOrder();
-      });
-
-      listEl.addEventListener('dragover', (e) => {
-        e.preventDefault();
-        const target = e.target.closest('.fb-section-item');
-        if (!target || target === dragItem) return;
-
-        const rect = target.getBoundingClientRect();
-        const offset = e.clientY - rect.top;
-
-        listEl.querySelectorAll('.fb-section-item').forEach((el) => {
-          el.classList.remove('fb-over-before', 'fb-over-after');
+      if (listEl) {
+        listEl.addEventListener('dragstart', (e) => {
+          const li = e.target.closest('.fb-section-item');
+          if (!li) return;
+          dragItem = li;
+          li.classList.add('fb-dragging');
+          e.dataTransfer.effectAllowed = 'move';
         });
 
-        if (offset < rect.height / 2) {
-          target.classList.add('fb-over-before');
-          listEl.insertBefore(dragItem, target);
-        } else {
-          target.classList.add('fb-over-after');
-          listEl.insertBefore(dragItem, target.nextSibling);
-        }
-      });
+        listEl.addEventListener('dragend', () => {
+          if (dragItem) dragItem.classList.remove('fb-dragging');
+          listEl.querySelectorAll('.fb-section-item').forEach((el) => {
+            el.classList.remove('fb-over-before', 'fb-over-after');
+          });
+          dragItem = null;
+          applyOrderToSections();
+          persistOrder();
+        });
+
+        listEl.addEventListener('dragover', (e) => {
+          e.preventDefault();
+          const target = e.target.closest('.fb-section-item');
+          if (!target || target === dragItem) return;
+
+          const rect = target.getBoundingClientRect();
+          const offset = e.clientY - rect.top;
+
+          listEl.querySelectorAll('.fb-section-item').forEach((el) => {
+            el.classList.remove('fb-over-before', 'fb-over-after');
+          });
+
+          if (offset < rect.height / 2) {
+            target.classList.add('fb-over-before');
+            listEl.insertBefore(dragItem, target);
+          } else {
+            target.classList.add('fb-over-after');
+            listEl.insertBefore(dragItem, target.nextSibling);
+          }
+        });
+      }
 
       function applyOrderToSections() {
+        if (!listEl) return;
         const orderIds = Array.from(listEl.querySelectorAll('.fb-section-item')).map((li) => li.dataset.sectionId);
 
         orderIds.forEach((id) => {
@@ -1882,6 +1910,7 @@ textarea:focus {
       }
 
       function persistOrder() {
+        if (!listEl) return;
         const order = Array.from(listEl.querySelectorAll('.fb-section-item')).map((li) => li.dataset.sectionId);
 
         if (DEMO_MODE) {
@@ -2592,6 +2621,9 @@ textarea:focus {
       document.querySelectorAll('[data-visual-only]').forEach((el) => {
         el.classList.remove('hidden');
       });
+
+      const panel = document.getElementById('fb-editor-panel');
+      panel?.classList.remove('fb-panel-hidden');
     }
 
     window.enableVisualEditor = enableVisualEditor;
@@ -3072,6 +3104,9 @@ textarea:focus {
       }
       const editOn = document.body.classList.toggle('edit-mode');
       document.body.classList.toggle('fb-editor-on', editOn);
+      if (editOn) {
+        document.getElementById('fb-editor-panel')?.classList.remove('fb-panel-hidden');
+      }
     };
 
     window.saveSection = (sectionId) => {
