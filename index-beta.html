@@ -1437,12 +1437,17 @@ textarea:focus {
 
   <script>
     (function () {
-      if (!document.body.classList.contains('is-admin')) return;
+      let initialized = false;
 
-      const root = document.getElementById('fb-sections-root');
-      if (!root) return;
+      const tryInit = () => {
+        if (initialized) return;
+        if (!document.body.classList.contains('is-admin')) return;
 
-      const sections = Array.from(root.querySelectorAll('.editable-section'));
+        const root = document.getElementById('fb-sections-root');
+        if (!root) return;
+        initialized = true;
+
+        const sections = Array.from(root.querySelectorAll('.editable-section'));
 
       /* ========= INLINE EDITOR PER SEKSJON ========= */
 
@@ -1624,6 +1629,14 @@ textarea:focus {
             alert('Rekkefølgen ble endret i nettleseren, men kunne ikke lagres i databasen.');
           });
       }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', tryInit);
+      } else {
+        tryInit();
+      }
+
+      window.addEventListener('fb:admin-authorized', tryInit);
     })();
   </script>
   <header class="top-nav">
@@ -2359,6 +2372,7 @@ textarea:focus {
           if (errorEl) errorEl.textContent = '';
           closeModal();
           document.body.classList.add('is-admin');
+          window.dispatchEvent(new Event('fb:admin-authorized'));
           openEditor();
           if (codeInput) codeInput.value = '';
         } else {
@@ -2723,6 +2737,82 @@ textarea:focus {
         if (settings.button2Href) btn2.href = settings.button2Href;
       }
     }
+  })();
+</script>
+<script>
+  (function () {
+    const SECTION_KEY = 'fjSectionEdits';
+    const AUTH_KEY = 'fjAdminAuthorized';
+
+    const isAuthorized = () => localStorage.getItem(AUTH_KEY) === 'true';
+
+    const getSavedSections = () => {
+      try {
+        return JSON.parse(localStorage.getItem(SECTION_KEY) || '{}');
+      } catch (err) {
+        console.warn('Kunne ikke lese lagret innhold', err);
+        return {};
+      }
+    };
+
+    const persistSections = (data) => {
+      localStorage.setItem(SECTION_KEY, JSON.stringify(data));
+    };
+
+    window.toggleEditMode = () => {
+      if (!isAuthorized()) {
+        document.getElementById('admin-login-btn')?.click();
+        return;
+      }
+      document.body.classList.toggle('edit-mode');
+    };
+
+    window.saveSection = (sectionId) => {
+      if (!sectionId) return;
+      if (!isAuthorized()) {
+        document.getElementById('admin-login-btn')?.click();
+        return;
+      }
+
+      const section = document.getElementById(sectionId);
+      if (!section) return;
+
+      const edits = getSavedSections();
+      edits[sectionId] = edits[sectionId] || {};
+
+      section.querySelectorAll('[data-editable]').forEach((node) => {
+        const field = node.dataset.field || '';
+        if (!field) return;
+        edits[sectionId][field] = node.innerHTML.trim();
+      });
+
+      persistSections(edits);
+      section.classList.add('saved');
+      setTimeout(() => section.classList.remove('saved'), 1200);
+    };
+
+    const applySavedSections = () => {
+      const edits = getSavedSections();
+      Object.entries(edits).forEach(([sectionId, fields]) => {
+        const section = document.getElementById(sectionId);
+        if (!section) return;
+
+        Object.entries(fields || {}).forEach(([field, value]) => {
+          const target = section.querySelector(`[data-field="${field}"]`);
+          if (target && typeof value === 'string') {
+            target.innerHTML = value;
+          }
+        });
+      });
+    };
+
+    document.addEventListener('DOMContentLoaded', () => {
+      if (isAuthorized()) {
+        document.body.classList.add('is-admin');
+        window.dispatchEvent(new Event('fb:admin-authorized'));
+      }
+      applySavedSections();
+    });
   })();
 </script>
 </body>
