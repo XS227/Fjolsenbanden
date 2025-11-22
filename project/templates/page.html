@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="nb" data-partials-root="../partials">
+  <head>
+    <meta charset="utf-8" />
+    <title>FjOlsenbanden – beta-side med partials</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../static/css/main.css" />
+  </head>
+  <body>
+    <header class="top-nav">
+      <div class="container nav-inner">
+        <div class="logo">
+          <img src="../../favicon.svg" alt="FjOlsenbanden" />
+        </div>
+        <nav class="nav-links">
+          <a href="#about">Om</a>
+          <a href="#player-cards">Medlemskap</a>
+          <a href="#partners">Partnere</a>
+          <a href="#vipps-info">Vipps</a>
+        </nav>
+        <a href="#player-cards" class="btn btn-primary">Bli medlem</a>
+      </div>
+    </header>
+
+    <main>
+      <div data-partial="hero"></div>
+      <div data-partial="about"></div>
+      <div data-partial="player-cards"></div>
+      <div data-partial="partners"></div>
+      <div data-partial="vipps-info"></div>
+      <div data-partial="footer"></div>
+    </main>
+
+    <script type="module" src="../static/js/loader.js"></script>
+  </body>
+</html>
