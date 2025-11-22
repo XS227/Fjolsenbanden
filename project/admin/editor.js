@@ -1,40 +1,39 @@
-const modal = document.getElementById('modal');
-const modalContent = document.getElementById('modal-content');
+// Klientside-stub for å hente og lagre seksjoner i beta-oppsettet.
+// Bruker SectionModel for å sikre at all metadata (order/visible) følger med.
+import { SectionModel } from '../models/SectionModel.js';
 
-function hideModal() {
-  modal?.classList.remove('show');
-  if (modalContent) {
-    modalContent.innerHTML = '';
-  }
+const API_BASE = '/api/sections';
+const STATIC_FALLBACK = '../static/data/sections.json';
+
+async function getJson(url) {
+  const res = await fetch(url);
+  if (!res.ok) throw new Error(`Kunne ikke hente ${url}: ${res.status}`);
+  return res.json();
 }
 
-function bindModalClose() {
-  modal?.querySelectorAll('[data-close-modal]').forEach((el) => {
-    el.addEventListener('click', hideModal);
+export async function loadSections() {
+  const raw = await getJson(API_BASE).catch(() => getJson(STATIC_FALLBACK));
+  return raw.map((item) => SectionModel.fromJSON(item));
+}
+
+export async function loadSection(key) {
+  const sections = await loadSections();
+  const match = sections.find((section) => section.key === key);
+  if (!match) throw new Error(`Fant ingen seksjon med key '${key}'`);
+  return match;
+}
+
+export async function saveSection(section) {
+  const payload = section instanceof SectionModel ? section.toJSON() : section;
+  const res = await fetch(`${API_BASE}/${payload.key}`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload),
   });
-}
 
-async function loadForm(sectionKey) {
-  const res = await fetch(`/admin/editor-form/${sectionKey}`);
-  if (!res.ok) throw new Error(`Kunne ikke hente form for ${sectionKey}`);
-  return res.text();
-}
-
-async function openEditor(sectionKey) {
-  if (!modal || !modalContent) return;
-  try {
-    const html = await loadForm(sectionKey);
-    modalContent.innerHTML = html;
-    modal.classList.add('show');
-    bindModalClose();
-  } catch (err) {
-    modalContent.innerHTML = `<div class="card"><p>Kunne ikke laste skjema for <strong>${sectionKey}</strong>.</p><pre>${err.message}</pre></div>`;
-    modal.classList.add('show');
-    bindModalClose();
+  if (!res.ok) {
+    throw new Error(`Kunne ikke lagre ${payload.key}: ${res.status}`);
   }
+
+  return res.json().catch(() => payload);
 }
-
-window.openEditor = openEditor;
-window.closeEditor = hideModal;
-
-bindModalClose();

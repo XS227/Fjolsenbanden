@@ -31,19 +31,4 @@ Alle seksjoner følger modellen i `project/models/SectionModel.js` med feltene:
 }
 ```
 
-## Endepunkter
-
-- `GET /api/sections` – liste alle seksjoner
-- `GET /api/sections/:key` – les én seksjon
-- `POST /api/sections/:key/update` – oppdater tittel/innhold for en seksjon (se `update.js`)
-
-`POST /api/sections/:key/update` forventer payload:
-
-```json
-{
-  "title": "...",
-  "content": { "felt": "verdi" }
-}
-```
-
-Backend lagrer JSON, returnerer 200 og klienten kan deretter refreshe/modul-laste seksjonen på nytt.
+API-et bør støtte `GET /api/sections` (liste), `GET /api/sections/:key` og `POST /api/sections/:key` for å oppdatere innholdet.
