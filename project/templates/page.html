@@ -38,5 +38,18 @@
     </main>
 
     <script type="module" src="../static/js/loader.js"></script>
+    <script>
+      (function () {
+        const toggleBtn = document.getElementById('fb-editor-toggle');
+        if (!toggleBtn) return;
+
+        // sørg for at body har is-admin når en admin er inne
+        document.body.classList.add('is-admin');
+
+        toggleBtn.addEventListener('click', () => {
+          document.body.classList.toggle('fb-editor-on');
+        });
+      })();
+    </script>
   </body>
 </html>
