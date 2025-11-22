@@ -836,6 +836,154 @@ body.is-admin .fb-block-edit-btn:hover {
   background: linear-gradient(120deg, #29b8ff, #6ee0ff);
 }
 
+/* Visual editor toggle & seksjonssortering */
+.visual-editor-toggle {
+  position: fixed;
+  left: 1.25rem;
+  bottom: 1.25rem;
+  z-index: 998;
+  background: rgba(0, 0, 0, 0.7);
+  color: #ffffff;
+  padding: 0.4rem 0.8rem;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  display: none;
+  align-items: center;
+  gap: 0.4rem;
+  backdrop-filter: blur(4px);
+}
+
+body.is-admin .visual-editor-toggle {
+  display: flex;
+}
+
+.visual-editor-toggle input[type="checkbox"] {
+  accent-color: #ffcc00;
+}
+
+.section-sorter-modal[hidden] {
+  display: none;
+}
+
+.section-sorter-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+}
+
+.section-sorter-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+}
+
+.section-sorter-dialog {
+  position: relative;
+  max-width: 480px;
+  margin: 8vh auto 0;
+  background: #18181b;
+  color: #ffffff;
+  border-radius: 1.25rem;
+  padding: 1.25rem 1.5rem 1.1rem;
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.7);
+}
+
+.section-sorter-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.6rem;
+}
+
+.section-sorter-header h3 {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.section-sorter-close {
+  border: none;
+  background: transparent;
+  color: #a1a1aa;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.section-sorter-subtitle {
+  font-size: 0.85rem;
+  opacity: 0.85;
+  margin-bottom: 0.8rem;
+}
+
+.section-sorter-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-height: 260px;
+  overflow-y: auto;
+}
+
+.section-sorter-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.55rem 0.75rem;
+  margin-bottom: 0.3rem;
+  border-radius: 0.8rem;
+  background: #27272f;
+  cursor: grab;
+}
+
+.section-sorter-item:active {
+  cursor: grabbing;
+}
+
+.section-sorter-item-handle {
+  font-size: 1.1rem;
+  opacity: 0.7;
+}
+
+.section-sorter-item-label {
+  flex: 1;
+  font-size: 0.9rem;
+}
+
+.section-sorter-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  margin-top: 0.9rem;
+}
+
+.section-sorter-dialog .btn.btn-primary {
+  padding: 0.45rem 1.1rem;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  background: #facc15;
+  color: #1e1e22;
+  font-weight: 600;
+}
+
+.section-sorter-dialog .btn.btn-secondary {
+  padding: 0.45rem 1.1rem;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  background: #3f3f46;
+  color: #e4e4e7;
+  font-weight: 500;
+}
+
+.section-sorter-dialog .btn.btn-primary:hover {
+  background: #fde047;
+}
+
+.section-sorter-dialog .btn.btn-secondary:hover {
+  background: #52525b;
+}
+
 /* Footer */
 
   .site-footer {
@@ -957,7 +1105,8 @@ body.is-admin .fb-block-edit-btn:hover {
     </div>
   </header>
 
-  <section id="hero" class="section hero">
+  <main id="page-sections" data-sections-container>
+  <section id="hero" class="section hero" data-sortable-section="hero" data-section-label="Hero">
     <div class="container hero-grid">
       <div class="hero-text">
         <div class="fb-edit-block" data-block-id="hero-copy" data-edit-type="richtext">
@@ -985,7 +1134,12 @@ body.is-admin .fb-block-edit-btn:hover {
     </div>
   </section>
 
-  <section id="kalender" class="section section-calendar">
+  <section
+    id="kalender"
+    class="section section-calendar"
+    data-sortable-section="kalender"
+    data-section-label="Julekalender"
+  >
     <div class="calendar-snow-layer" aria-hidden="true"></div>
     <div class="container calendar-inner">
       <div>
@@ -1026,7 +1180,7 @@ body.is-admin .fb-block-edit-btn:hover {
     </div>
   </section>
 
-  <section id="about" class="section">
+  <section id="about" class="section" data-sortable-section="about" data-section-label="Om FjOlsenbanden">
     <div class="container">
       <div class="fb-edit-block" data-block-id="about-intro" data-edit-type="richtext">
         <h2>Hva er <span class="highlight">FjOlsenbanden?</span></h2>
@@ -1086,7 +1240,7 @@ body.is-admin .fb-block-edit-btn:hover {
 
   </section>
 
-  <section id="video" class="section">
+  <section id="video" class="section" data-sortable-section="video" data-section-label="Video">
     <div class="container">
       <div class="fb-edit-block" data-block-id="video-intro" data-edit-type="richtext">
         <h2>Hvem er <span class="highlight">FjOlsen?</span></h2>
@@ -1126,7 +1280,7 @@ body.is-admin .fb-block-edit-btn:hover {
   </section>
 
 
-  <section id="feedback" class="section">
+  <section id="feedback" class="section" data-sortable-section="feedback" data-section-label="Tilbakemeldinger">
     <div class="container">
       <div class="fb-edit-block" data-block-id="feedback-intro" data-edit-type="richtext">
         <h2>Tilbakemeldinger fra <span class="highlight">FjOlsenbanden</span></h2>
@@ -1183,7 +1337,7 @@ body.is-admin .fb-block-edit-btn:hover {
     </div>
   </section>
 
-  <section id="membership" class="section">
+  <section id="membership" class="section" data-sortable-section="membership" data-section-label="Medlemskap">
     <div class="container">
       <div class="fb-edit-block" data-block-id="membership-intro" data-edit-type="richtext">
         <h2>Bli <span class="highlight">medlem</span> i dag.</h2>
@@ -1213,7 +1367,7 @@ body.is-admin .fb-block-edit-btn:hover {
     </div>
   </section>
 
-  <section id="community" class="section">
+  <section id="community" class="section" data-sortable-section="community" data-section-label="Community">
     <div class="container">
       <h2>FjOlsenbanden – et community i <span class="highlight">vekst!</span></h2>
       <p class="subtitle">
@@ -1261,7 +1415,7 @@ body.is-admin .fb-block-edit-btn:hover {
     </div>
   </section>
 
-  <section id="partners" class="section">
+  <section id="partners" class="section" data-sortable-section="partners" data-section-label="Partnere">
     <div class="container">
       <div class="partners-header fb-edit-block" data-block-id="partners-intro" data-edit-type="richtext">
         <h2 class="partners-title">
@@ -1309,7 +1463,7 @@ body.is-admin .fb-block-edit-btn:hover {
     </div>
   </section>
 
-<section id="services" class="section">
+<section id="services" class="section" data-sortable-section="services" data-section-label="Andre tilbud">
   <div class="container">
     <div class="fb-edit-block" data-block-id="services-intro" data-edit-type="richtext">
       <h2>Andre tilbud</h2>
@@ -1394,7 +1548,7 @@ body.is-admin .fb-block-edit-btn:hover {
   </div>
 </section>
 
-  <section id="contact" class="section">
+  <section id="contact" class="section" data-sortable-section="contact" data-section-label="Kontakt">
     <div class="container">
       <div class="card contact-card">
         <div class="fb-edit-block" data-block-id="contact-intro" data-edit-type="richtext">
@@ -1429,7 +1583,7 @@ body.is-admin .fb-block-edit-btn:hover {
 
   </section>
 
-  <section id="faq" class="section section-faq">
+  <section id="faq" class="section section-faq" data-sortable-section="faq" data-section-label="FAQ">
     <div class="container faq-inner">
       <div class="fb-edit-block" data-block-id="faq-intro" data-edit-type="richtext">
         <h2>Ofte stilte spørsmål</h2>
@@ -1482,6 +1636,52 @@ body.is-admin .fb-block-edit-btn:hover {
       </button>
     </div>
   </section>
+  </main>
+  <!-- Visual editor toggle (vises kun for innloggede brukere) -->
+  <div id="visual-editor-toggle" class="visual-editor-toggle">
+    <label>
+      <input type="checkbox" id="visual-editor-checkbox" />
+      Visual editor
+    </label>
+  </div>
+
+  <!-- Modal for seksjonssortering -->
+  <div id="section-sorter-modal" class="section-sorter-modal" hidden>
+    <div class="section-sorter-backdrop" data-modal-close></div>
+    <div class="section-sorter-dialog">
+      <header class="section-sorter-header">
+        <h3>Sorter seksjoner</h3>
+        <button class="section-sorter-close" type="button" data-modal-close>
+          ✕
+        </button>
+      </header>
+
+      <p class="section-sorter-subtitle">
+        Dra og slipp for å endre rekkefølge på seksjonene.
+      </p>
+
+      <ul id="section-sorter-list" class="section-sorter-list">
+        <!-- fylles automatisk av JavaScript -->
+      </ul>
+
+      <footer class="section-sorter-footer">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-modal-close
+        >
+          Avbryt
+        </button>
+        <button
+          type="button"
+          class="btn btn-primary"
+          id="section-sorter-save"
+        >
+          Lagre rekkefølge
+        </button>
+      </footer>
+    </div>
+  </div>
   <footer class="site-footer">
     <div class="container footer-main">
       <nav class="footer-menu">
@@ -1504,6 +1704,117 @@ body.is-admin .fb-block-edit-btn:hover {
       <a href="https://fjolsenbanden.setaei.com/regler.html" class="footer-bottom-link">Les reglene våre</a>
     </div>
   </footer>
+<script>
+  (function () {
+    if (!document.body.classList.contains('is-admin')) return;
+
+    const toggleCheckbox = document.getElementById('visual-editor-checkbox');
+    const modal = document.getElementById('section-sorter-modal');
+    const listEl = document.getElementById('section-sorter-list');
+    const saveBtn = document.getElementById('section-sorter-save');
+    const sectionContainer = document.querySelector('[data-sections-container]');
+    const closers = modal?.querySelectorAll('[data-modal-close]') || [];
+
+    if (!toggleCheckbox || !modal || !listEl || !saveBtn || !sectionContainer) {
+      return;
+    }
+
+    function getSections() {
+      return Array.from(sectionContainer.querySelectorAll('[data-sortable-section]'));
+    }
+
+    function buildList() {
+      listEl.innerHTML = '';
+      getSections().forEach((section) => {
+        const id = section.getAttribute('data-sortable-section');
+        const label = section.getAttribute('data-section-label') || id || 'Seksjon';
+
+        const li = document.createElement('li');
+        li.className = 'section-sorter-item';
+        li.draggable = true;
+        li.dataset.sectionId = id;
+
+        li.innerHTML = `
+          <span class="section-sorter-item-handle">☰</span>
+          <span class="section-sorter-item-label">${label}</span>
+        `;
+
+        listEl.appendChild(li);
+      });
+    }
+
+    function openModal() {
+      buildList();
+      modal.hidden = false;
+    }
+
+    function closeModal() {
+      modal.hidden = true;
+    }
+
+    toggleCheckbox.addEventListener('change', (e) => {
+      const checked = e.target.checked;
+      document.documentElement.classList.toggle('visual-editor-active', checked);
+      if (checked) {
+        openModal();
+      } else {
+        closeModal();
+      }
+    });
+
+    closers.forEach((btn) =>
+      btn.addEventListener('click', () => {
+        closeModal();
+        toggleCheckbox.checked = false;
+        document.documentElement.classList.remove('visual-editor-active');
+      })
+    );
+
+    let draggedItem = null;
+
+    listEl.addEventListener('dragstart', (e) => {
+      const li = e.target.closest('.section-sorter-item');
+      if (!li) return;
+      draggedItem = li;
+      e.dataTransfer.effectAllowed = 'move';
+    });
+
+    listEl.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      const li = e.target.closest('.section-sorter-item');
+      if (!li || li === draggedItem) return;
+
+      const rect = li.getBoundingClientRect();
+      const before = e.clientY < rect.top + rect.height / 2;
+      if (before) {
+        listEl.insertBefore(draggedItem, li);
+      } else {
+        listEl.insertBefore(draggedItem, li.nextSibling);
+      }
+    });
+
+    listEl.addEventListener('dragend', () => {
+      draggedItem = null;
+    });
+
+    saveBtn.addEventListener('click', () => {
+      const orderedIds = Array.from(listEl.querySelectorAll('.section-sorter-item')).map(
+        (li) => li.dataset.sectionId
+      );
+
+      orderedIds.forEach((id) => {
+        const section = sectionContainer.querySelector(`[data-sortable-section="${id}"]`);
+        if (section) {
+          sectionContainer.appendChild(section);
+        }
+      });
+
+      closeModal();
+      toggleCheckbox.checked = false;
+      document.documentElement.classList.remove('visual-editor-active');
+    });
+  })();
+</script>
 <script>
   document.addEventListener('DOMContentLoaded', function () {
     const faqSection = document.getElementById('faq');
