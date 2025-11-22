@@ -18,6 +18,12 @@
           <a href="#partners">Partnere</a>
           <a href="#vipps-info">Vipps</a>
         </nav>
+        {% if user.is_authenticated and user.is_staff %}
+          <button id="fb-editor-toggle" class="fb-editor-toggle-btn">
+            <span class="icon">✨</span>
+            <span>Visual editor</span>
+          </button>
+        {% endif %}
         <a href="#player-cards" class="btn btn-primary">Bli medlem</a>
       </div>
     </header>
