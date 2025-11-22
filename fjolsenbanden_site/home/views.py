@@ -7,12 +7,24 @@ from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods
 
+from django.core.exceptions import ValidationError
+from django.core.validators import EmailValidator
+
 from .models import ContentBlock
+
+_EMAIL_VALIDATOR = EmailValidator()
 
 
 def _block_payload_is_valid(payload):
     block_type = payload.get("type")
-    if block_type not in (ContentBlock.TYPE_RICHTEXT, ContentBlock.TYPE_YOUTUBE):
+    if block_type not in (
+        ContentBlock.TYPE_RICHTEXT,
+        ContentBlock.TYPE_YOUTUBE,
+        ContentBlock.TYPE_IMAGE,
+        ContentBlock.TYPE_EMAIL,
+        ContentBlock.TYPE_SOCIAL,
+        ContentBlock.TYPE_FAQ,
+    ):
         return False, "Ukjent eller manglende blokk-type"
 
     if block_type == ContentBlock.TYPE_RICHTEXT:
@@ -21,13 +33,49 @@ def _block_payload_is_valid(payload):
             return False, "Richtext-blokker krever feltet 'content'"
         return True, {"type": block_type, "data": {"content": content}}
 
-    video_id = payload.get("videoId")
-    src = payload.get("src")
-    if not isinstance(video_id, str) or not video_id.strip():
-        return False, "YouTube-blokker krever feltet 'videoId'"
-    if not isinstance(src, str) or not src.strip():
-        return False, "YouTube-blokker krever feltet 'src'"
-    return True, {"type": block_type, "data": {"videoId": video_id, "src": src}}
+    if block_type == ContentBlock.TYPE_YOUTUBE:
+        video_id = payload.get("videoId")
+        src = payload.get("src")
+        if not isinstance(video_id, str) or not video_id.strip():
+            return False, "YouTube-blokker krever feltet 'videoId'"
+        if not isinstance(src, str) or not src.strip():
+            return False, "YouTube-blokker krever feltet 'src'"
+        return True, {"type": block_type, "data": {"videoId": video_id, "src": src}}
+
+    if block_type == ContentBlock.TYPE_IMAGE:
+        src = payload.get("src")
+        if not isinstance(src, str) or not src.strip():
+            return False, "Image-blokker krever feltet 'src'"
+        alt = payload.get("alt")
+        data = {"src": src}
+        if isinstance(alt, str) and alt.strip():
+            data["alt"] = alt
+        return True, {"type": block_type, "data": data}
+
+    if block_type == ContentBlock.TYPE_EMAIL:
+        email = payload.get("email")
+        if not isinstance(email, str) or not email.strip():
+            return False, "Email-blokker krever feltet 'email'"
+        try:
+            _EMAIL_VALIDATOR(email)
+        except ValidationError:
+            return False, "Email-blokker krever en gyldig e-postadresse"
+        return True, {"type": block_type, "data": {"email": email}}
+
+    if block_type == ContentBlock.TYPE_SOCIAL:
+        url = payload.get("url")
+        if not isinstance(url, str) or not url.strip():
+            return False, "Social-blokker krever feltet 'url'"
+        return True, {"type": block_type, "data": {"url": url}}
+
+    if block_type == ContentBlock.TYPE_FAQ:
+        question = payload.get("question")
+        answer = payload.get("answer")
+        if not isinstance(question, str) or not question.strip():
+            return False, "FAQ-blokker krever feltet 'question'"
+        if not isinstance(answer, str) or not answer.strip():
+            return False, "FAQ-blokker krever feltet 'answer'"
+        return True, {"type": block_type, "data": {"question": question, "answer": answer}}
 
 
 @csrf_exempt
