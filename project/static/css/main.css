@@ -1,0 +1,376 @@
+:root {
+  --bg: #050b2b;
+  --bg-alt: #0a1438;
+  --card: #0d1636;
+  --card-alt: #101a3e;
+  --text: #ffffff;
+  --muted: #a6b0d8;
+  --primary: #00a6ff;
+  --accent: #ff2da4;
+  --radius-lg: 20px;
+  --radius-md: 14px;
+  --radius-pill: 999px;
+  --shadow-soft: 0 18px 48px rgba(0, 0, 0, 0.5);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: #020317;
+  color: var(--text);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+/* Layout */
+
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.section {
+  padding: 4.5rem 0;
+  background: radial-gradient(circle at center, #101a3e 0, #050b2b 55%, #020317 100%);
+}
+
+.section h2 {
+  font-size: clamp(2rem, 3vw, 2.6rem);
+  margin: 0 0 0.7rem;
+  text-align: center;
+}
+
+.subtitle {
+  color: var(--muted);
+  max-width: 720px;
+  margin: 0 auto 2.4rem;
+  text-align: center;
+}
+
+.card {
+  background: radial-gradient(circle at top left, var(--card-alt), var(--card));
+  border-radius: var(--radius-lg);
+  padding: 1.6rem 1.8rem;
+  box-shadow: var(--shadow-soft);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.35rem 0.8rem;
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  border-radius: var(--radius-pill);
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  margin-bottom: 0.35rem;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 0.85rem 1.7rem;
+  border-radius: var(--radius-pill);
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: transform 0.12s ease, box-shadow 0.12s ease, filter 0.12s ease;
+}
+
+.btn-primary {
+  background: var(--primary);
+  color: #fff;
+  box-shadow: 0 0 18px rgba(0, 166, 255, 0.45);
+}
+
+.btn-secondary {
+  background: var(--accent);
+  color: #fff;
+  box-shadow: 0 0 18px rgba(255, 45, 164, 0.45);
+}
+
+.btn-ghost {
+  background: transparent;
+  border: 1px solid var(--primary);
+  color: var(--primary);
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+}
+
+/* Top nav */
+
+.top-nav {
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  background: rgba(5, 11, 43, 0.95);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.75rem 1.5rem;
+}
+
+.nav-links {
+  display: flex;
+  gap: 1.4rem;
+  font-size: 0.95rem;
+  color: var(--muted);
+}
+
+.nav-links a:hover {
+  color: #fff;
+}
+
+.logo img {
+  height: 40px;
+}
+
+/* Hero */
+
+.hero {
+  padding-top: 6rem;
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+  gap: 3rem;
+  align-items: center;
+}
+
+.hero-text h1 {
+  font-size: clamp(2.4rem, 3.4vw, 3rem);
+  margin: 0 0 1rem;
+}
+
+.hero-text .lead {
+  color: var(--muted);
+  max-width: 32rem;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.3rem 1rem;
+  border-radius: var(--radius-pill);
+  background: rgba(10, 20, 80, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin-bottom: 1rem;
+}
+
+.highlight {
+  color: var(--primary);
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.hero-card {
+  position: relative;
+  background: radial-gradient(circle at top left, #25105a, #0d1636);
+  border-radius: 26px;
+  padding: 1.5rem;
+  box-shadow: var(--shadow-soft);
+  overflow: hidden;
+}
+
+.hero-card::after {
+  content: "";
+  position: absolute;
+  inset: 12% 8% auto;
+  height: 40%;
+  background: radial-gradient(circle, rgba(255, 92, 185, 0.24), transparent 60%);
+  filter: blur(18px);
+  transform: translateY(-10%);
+}
+
+.hero-card img {
+  position: relative;
+  z-index: 1;
+  border-radius: 20px;
+}
+
+.hero-card-caption {
+  margin-top: 0.8rem;
+  font-size: 0.9rem;
+  color: var(--muted);
+  text-align: center;
+}
+
+/* About */
+
+.about-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+  gap: 2rem;
+}
+
+.about-benefits {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.card-pill {
+  border-radius: var(--radius-md);
+}
+
+/* Partners */
+
+.partners-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.partner img {
+  height: 48px;
+  object-fit: contain;
+  margin: 0 auto;
+}
+
+.partners-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  align-items: center;
+}
+
+.partners-cta {
+  margin-top: 2rem;
+  text-align: center;
+  color: var(--muted);
+}
+
+/* Membership cards */
+
+.player-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.2rem;
+}
+
+.player-card {
+  position: relative;
+}
+
+.player-card h3 {
+  margin-top: 0.5rem;
+}
+
+.player-card .price {
+  font-size: 2.1rem;
+  margin: 0.6rem 0 0.8rem;
+}
+
+.player-card ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  color: var(--muted);
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.player-card .actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  margin-top: 1.2rem;
+}
+
+/* Vipps */
+
+.vipps-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+  gap: 1.8rem;
+  align-items: center;
+}
+
+.vipps-card h3 {
+  margin: 0 0 0.5rem;
+}
+
+.vipps-info p {
+  color: var(--muted);
+  margin: 0 0 0.8rem;
+}
+
+/* Footer */
+
+.footer {
+  padding: 2rem 0 3rem;
+  background: #040826;
+  color: var(--muted);
+  text-align: center;
+}
+
+.footer nav {
+  display: flex;
+  justify-content: center;
+  gap: 1.3rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.footer nav a {
+  color: var(--text);
+}
+
+.footer nav a:hover {
+  color: var(--primary);
+}
+
+/* Responsive */
+
+@media (max-width: 900px) {
+  .hero-grid,
+  .about-grid,
+  .vipps-card {
+    grid-template-columns: 1fr;
+  }
+
+  .nav-links {
+    display: none;
+  }
+
+  .hero {
+    padding-top: 4rem;
+  }
+}
