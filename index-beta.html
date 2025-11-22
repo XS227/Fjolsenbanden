@@ -1206,6 +1206,426 @@ textarea:focus {
   </style>
 </head>
 <body class="is-admin">
+  <style>
+    /* --- Felles --- */
+    body.is-admin .editable-section {
+      position: relative;
+    }
+
+    /* ===== INLINE EDITOR PER SEKSJON ===== */
+
+    .fb-section-edit-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      z-index: 40;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(4, 17, 73, 0.92);
+      color: #fff;
+      font-size: 14px;
+      cursor: pointer;
+      opacity: 0;
+      transform: translateY(-4px);
+      transition: opacity 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .editable-section:hover .fb-section-edit-btn {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .fb-section-edit-btn:hover {
+      box-shadow: 0 0 0 2px rgba(19, 160, 249, 0.6);
+    }
+
+    /* Mens seksjonen er i edit-modus */
+    .editable-section.fb-editing .editable-content {
+      outline: 2px solid #13A0F9;
+      background: rgba(0, 0, 0, 0.25);
+    }
+
+    .fb-inline-toolbar {
+      position: absolute;
+      top: 10px;
+      right: 48px;
+      z-index: 40;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: rgba(4, 17, 73, 0.96);
+      font-size: 12px;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: #fff;
+    }
+
+    .fb-inline-toolbar button {
+      border: none;
+      border-radius: 999px;
+      padding: 2px 8px;
+      font-size: 11px;
+      cursor: pointer;
+      background: rgba(255, 255, 255, 0.08);
+      color: #fff;
+    }
+
+    .fb-inline-toolbar button.fb-save {
+      font-weight: 600;
+      background: #13A0F9;
+    }
+
+    .fb-inline-toolbar button.fb-cancel {
+      opacity: 0.8;
+    }
+
+    /* ===== SIDEPANEL MED DRAG & DROP ===== */
+
+    #fb-editor-panel {
+      position: fixed;
+      right: 16px;
+      bottom: 16px;
+      z-index: 99;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    /* selve boksen */
+    .fb-editor-panel__box {
+      width: 260px;
+      max-height: 60vh;
+      border-radius: 16px;
+      background: rgba(4, 17, 73, 0.97);
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.6);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* topp-linje med tittel + lukk */
+    .fb-editor-panel__header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 12px;
+      font-size: 13px;
+      color: #fff;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .fb-editor-panel__close {
+      border: none;
+      background: transparent;
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    /* innhold */
+    .fb-editor-panel__body {
+      padding: 8px 10px 10px;
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.85);
+    }
+
+    .fb-editor-panel__body p {
+      margin: 0 0 6px;
+    }
+
+    /* seksjonsliste */
+    #fb-section-list {
+      list-style: none;
+      margin: 4px 0 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .fb-section-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 8px;
+      border-radius: 10px;
+      background: rgba(10, 26, 92, 0.9);
+      color: #fff;
+      cursor: grab;
+      user-select: none;
+    }
+
+    .fb-section-item:active {
+      cursor: grabbing;
+    }
+
+    .fb-section-item__handle {
+      width: 20px;
+      text-align: center;
+      opacity: 0.8;
+      font-size: 14px;
+    }
+
+    .fb-section-item__title {
+      flex: 1;
+      font-size: 12px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* drag-tilstand */
+    .fb-section-item.fb-dragging {
+      opacity: 0.7;
+      background: rgba(19, 160, 249, 0.9);
+    }
+
+    .fb-section-item.fb-over-before {
+      box-shadow: inset 0 2px 0 #13A0F9;
+    }
+
+    .fb-section-item.fb-over-after {
+      box-shadow: inset 0 -2px 0 #13A0F9;
+    }
+
+    /* panel knapp når minimert */
+    #fb-editor-panel.fb-panel-collapsed .fb-editor-panel__box {
+      display: none;
+    }
+
+    .fb-editor-panel__toggle {
+      margin-top: 6px;
+      width: 120px;
+      border-radius: 999px;
+      border: none;
+      padding: 6px 10px;
+      font-size: 12px;
+      background: rgba(4, 17, 73, 0.95);
+      color: #fff;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+    }
+
+    .fb-editor-panel__toggle span.emoji {
+      font-size: 14px;
+    }
+  </style>
+
+  <div id="fb-editor-panel" class="fb-panel-collapsed">
+    <div class="fb-editor-panel__box">
+      <div class="fb-editor-panel__header">
+        <span>Seksjoner – dra og slipp</span>
+        <button type="button" class="fb-editor-panel__close" aria-label="Lukk panel">×</button>
+      </div>
+      <div class="fb-editor-panel__body">
+        <p>Flytt rekkefølgen på seksjonene på forsiden.</p>
+        <ul id="fb-section-list"></ul>
+      </div>
+    </div>
+    <button type="button" class="fb-editor-panel__toggle">
+      <span class="emoji">⬍</span>
+      <span>Seksjoner</span>
+    </button>
+  </div>
+
+  <script>
+    (function () {
+      if (!document.body.classList.contains('is-admin')) return;
+
+      const root = document.getElementById('fb-sections-root');
+      if (!root) return;
+
+      const sections = Array.from(root.querySelectorAll('.editable-section'));
+
+      /* ========= INLINE EDITOR PER SEKSJON ========= */
+
+      sections.forEach((section) => {
+        const editable = section.querySelector('.editable-content');
+        if (!editable) return;
+        const sectionId = section.dataset.sectionId || '';
+
+        // blyant-ikon
+        const editBtn = document.createElement('button');
+        editBtn.type = 'button';
+        editBtn.className = 'fb-section-edit-btn';
+        editBtn.title = 'Rediger seksjon';
+        editBtn.innerHTML = '✏️';
+        section.appendChild(editBtn);
+
+        // inline toolbar (lagre / avbryt)
+        const toolbar = document.createElement('div');
+        toolbar.className = 'fb-inline-toolbar';
+        toolbar.style.display = 'none';
+        toolbar.innerHTML = `
+      <span>Redigerer: ${sectionId || 'seksjon'}</span>
+      <button type="button" class="fb-save">Lagre</button>
+      <button type="button" class="fb-cancel">Avbryt</button>
+    `;
+        section.appendChild(toolbar);
+
+        const saveBtn = toolbar.querySelector('.fb-save');
+        const cancelBtn = toolbar.querySelector('.fb-cancel');
+        let originalHtml = '';
+
+        editBtn.addEventListener('click', () => {
+          if (section.classList.contains('fb-editing')) return;
+          section.classList.add('fb-editing');
+          originalHtml = editable.innerHTML;
+          editable.setAttribute('contenteditable', 'true');
+          editable.focus();
+          toolbar.style.display = 'inline-flex';
+        });
+
+        cancelBtn.addEventListener('click', () => {
+          editable.innerHTML = originalHtml;
+          editable.setAttribute('contenteditable', 'false');
+          toolbar.style.display = 'none';
+          section.classList.remove('fb-editing');
+        });
+
+        saveBtn.addEventListener('click', async () => {
+          const newContent = editable.innerHTML;
+          try {
+            const res = await fetch('/api/admin/sections/' + encodeURIComponent(sectionId), {
+              method: 'PUT',
+              headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': window.csrfToken || '',
+              },
+              body: JSON.stringify({ content: newContent }),
+            });
+
+            if (!res.ok) throw new Error('Feil ved lagring');
+            editable.setAttribute('contenteditable', 'false');
+            toolbar.style.display = 'none';
+            section.classList.remove('fb-editing');
+            console.log('Seksjon lagret:', sectionId);
+          } catch (err) {
+            console.error(err);
+            alert('Klarte ikke å lagre seksjonen. Prøv igjen.');
+          }
+        });
+      });
+
+      /* ========= SIDEPANEL MED DRAG & DROP ========= */
+
+      const panel = document.getElementById('fb-editor-panel');
+      const listEl = document.getElementById('fb-section-list');
+      const toggleBtn = panel.querySelector('.fb-editor-panel__toggle');
+      const closeBtn = panel.querySelector('.fb-editor-panel__close');
+
+      toggleBtn.addEventListener('click', () => {
+        panel.classList.toggle('fb-panel-collapsed');
+      });
+
+      closeBtn.addEventListener('click', () => {
+        panel.classList.add('fb-panel-collapsed');
+      });
+
+      // bygg liste ut fra seksjonene på siden
+      function buildSectionList() {
+        listEl.innerHTML = '';
+        const currentSections = Array.from(root.querySelectorAll('.editable-section'));
+        currentSections.forEach((section) => {
+          const id = section.dataset.sectionId || '';
+          const titleEl = section.querySelector('h1, h2, h3, h4');
+          const titleText = titleEl ? titleEl.textContent.trim() : id || 'Uten navn';
+
+          const li = document.createElement('li');
+          li.className = 'fb-section-item';
+          li.draggable = true;
+          li.dataset.sectionId = id;
+          li.innerHTML = `
+        <span class="fb-section-item__handle">⠿</span>
+        <span class="fb-section-item__title">${titleText}</span>
+      `;
+          listEl.appendChild(li);
+        });
+      }
+
+      buildSectionList();
+
+      let dragItem = null;
+
+      listEl.addEventListener('dragstart', (e) => {
+        const li = e.target.closest('.fb-section-item');
+        if (!li) return;
+        dragItem = li;
+        li.classList.add('fb-dragging');
+        e.dataTransfer.effectAllowed = 'move';
+      });
+
+      listEl.addEventListener('dragend', () => {
+        if (dragItem) dragItem.classList.remove('fb-dragging');
+        listEl.querySelectorAll('.fb-section-item').forEach((el) => {
+          el.classList.remove('fb-over-before', 'fb-over-after');
+        });
+        dragItem = null;
+        applyOrderToSections();
+        persistOrder();
+      });
+
+      listEl.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        const target = e.target.closest('.fb-section-item');
+        if (!target || target === dragItem) return;
+
+        const rect = target.getBoundingClientRect();
+        const offset = e.clientY - rect.top;
+
+        listEl.querySelectorAll('.fb-section-item').forEach((el) => {
+          el.classList.remove('fb-over-before', 'fb-over-after');
+        });
+
+        if (offset < rect.height / 2) {
+          target.classList.add('fb-over-before');
+          listEl.insertBefore(dragItem, target);
+        } else {
+          target.classList.add('fb-over-after');
+          listEl.insertBefore(dragItem, target.nextSibling);
+        }
+      });
+
+      function applyOrderToSections() {
+        const orderIds = Array.from(listEl.querySelectorAll('.fb-section-item')).map((li) => li.dataset.sectionId);
+
+        orderIds.forEach((id) => {
+          const section = root.querySelector('.editable-section[data-section-id="' + id + '"]');
+          if (section) {
+            root.appendChild(section);
+          }
+        });
+      }
+
+      function persistOrder() {
+        const order = Array.from(listEl.querySelectorAll('.fb-section-item')).map((li) => li.dataset.sectionId);
+
+        fetch('/api/admin/sections/order', {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': window.csrfToken || '',
+          },
+          body: JSON.stringify({ order }),
+        })
+          .then((res) => {
+            if (!res.ok) throw new Error('Feil ved lagring av rekkefølge');
+            console.log('Ny seksjonsrekkefølge lagret', order);
+          })
+          .catch((err) => {
+            console.error(err);
+            alert('Rekkefølgen ble endret i nettleseren, men kunne ikke lagres i databasen.');
+          });
+      }
+    })();
+  </script>
   <header class="top-nav">
     <div class="container nav-inner">
       <div class="logo">
