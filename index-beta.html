@@ -2465,7 +2465,13 @@ textarea:focus {
             </details>
           </div>
 
-          <button type="button" id="fb-faq-add-btn" class="fb-btn-small fb-btn-small--primary">+ Legg til spørsmål</button>
+          <button
+            id="add-faq-question-btn"
+            data-visual-only
+            class="hidden mt-6 inline-flex items-center justify-center px-6 py-3 rounded-full bg-[#04B2FF] text-sm font-semibold text-slate-900 shadow-lg shadow-cyan-500/30 hover:-translate-y-0.5 hover:shadow-cyan-400/50 transition"
+          >
+            + Legg til spørsmål
+          </button>
         </div>
       </div>
     </section>
@@ -2587,6 +2593,16 @@ textarea:focus {
     let layoutResetBtn = null;
     let dragItem = null;
 
+    function enableVisualEditor() {
+      document.body.classList.add('visual-editor-on');
+
+      document.querySelectorAll('[data-visual-only]').forEach((el) => {
+        el.classList.remove('hidden');
+      });
+    }
+
+    window.enableVisualEditor = enableVisualEditor;
+
     document.addEventListener('DOMContentLoaded', () => {
       initFaq();
       const cfg = loadConfig();
@@ -2648,6 +2664,7 @@ textarea:focus {
       const authorized = localStorage.getItem(AUTH_KEY) === 'true';
       document.body.classList.toggle('is-admin', authorized);
       if (authorized) {
+        enableVisualEditor();
         openEditor();
       }
 
@@ -2668,6 +2685,7 @@ textarea:focus {
           closeModal();
           document.body.classList.add('is-admin');
           window.dispatchEvent(new Event('fb:admin-authorized'));
+          enableVisualEditor();
           openEditor();
           if (codeInput) codeInput.value = '';
         } else {
@@ -3105,6 +3123,7 @@ textarea:focus {
     document.addEventListener('DOMContentLoaded', () => {
       if (isAuthorized()) {
         document.body.classList.add('is-admin');
+        window.enableVisualEditor?.();
         window.dispatchEvent(new Event('fb:admin-authorized'));
       }
       applySavedSections();
