@@ -2,6 +2,8 @@
 import json
 from http import HTTPStatus
 
+from django.core.exceptions import ValidationError
+from django.core.validators import URLValidator, validate_email
 from django.http import JsonResponse
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
@@ -12,26 +14,71 @@ from .models import ContentBlock
 
 def _block_payload_is_valid(payload):
     block_type = payload.get("type")
-    if block_type not in (ContentBlock.TYPE_RICHTEXT, ContentBlock.TYPE_YOUTUBE):
+
+    validators = {
+        ContentBlock.TYPE_RICHTEXT: _validate_richtext_payload,
+        ContentBlock.TYPE_YOUTUBE: _validate_youtube_payload,
+        ContentBlock.TYPE_IMAGE: _validate_image_payload,
+        ContentBlock.TYPE_EMAIL: _validate_email_payload,
+        ContentBlock.TYPE_SOCIAL: _validate_social_payload,
+    }
+
+    validator = validators.get(block_type)
+    if not validator:
         return False, "Ukjent eller manglende blokk-type"
 
-    if block_type == ContentBlock.TYPE_RICHTEXT:
-        content = payload.get("content")
-        if not isinstance(content, str) or not content.strip():
-            return False, "Richtext-blokker krever feltet 'content'"
-        return True, {"type": block_type, "data": {"content": content}}
+    return validator(payload)
 
+
+def _validate_richtext_payload(payload):
+    content = payload.get("content")
+    if not isinstance(content, str) or not content.strip():
+        return False, "Richtext-blokker krever feltet 'content'"
+    return True, {"type": ContentBlock.TYPE_RICHTEXT, "data": {"content": content}}
+
+
+def _validate_youtube_payload(payload):
     video_id = payload.get("videoId")
     src = payload.get("src")
     if not isinstance(video_id, str) or not video_id.strip():
         return False, "YouTube-blokker krever feltet 'videoId'"
     if not isinstance(src, str) or not src.strip():
         return False, "YouTube-blokker krever feltet 'src'"
-    return True, {"type": block_type, "data": {"videoId": video_id, "src": src}}
+    return True, {"type": ContentBlock.TYPE_YOUTUBE, "data": {"videoId": video_id, "src": src}}
+
+
+def _validate_image_payload(payload):
+    src = payload.get("src")
+    if not isinstance(src, str) or not src.strip():
+        return False, "Bilde-blokker krever feltet 'src'"
+    return True, {"type": ContentBlock.TYPE_IMAGE, "data": {"src": src}}
+
+
+def _validate_email_payload(payload):
+    email = payload.get("email")
+    if not isinstance(email, str) or not email.strip():
+        return False, "E-post-blokker krever feltet 'email'"
+    try:
+        validate_email(email)
+    except ValidationError:
+        return False, "E-post-blokker krever et gyldig felt 'email'"
+    return True, {"type": ContentBlock.TYPE_EMAIL, "data": {"email": email}}
+
+
+def _validate_social_payload(payload):
+    url = payload.get("url")
+    if not isinstance(url, str) or not url.strip():
+        return False, "Sosial-blokker krever feltet 'url'"
+    validator = URLValidator()
+    try:
+        validator(url)
+    except ValidationError:
+        return False, "Sosial-blokker krever en gyldig 'url'"
+    return True, {"type": ContentBlock.TYPE_SOCIAL, "data": {"url": url}}
 
 
 @csrf_exempt
-@require_http_methods(["PUT"])
+@require_http_methods(["PUT", "POST"])
 def admin_block(request, block_id):
     """Create or update a content block for administrators."""
 

@@ -7,9 +7,15 @@ class ContentBlock(models.Model):
 
     TYPE_RICHTEXT = "richtext"
     TYPE_YOUTUBE = "youtube"
+    TYPE_IMAGE = "image"
+    TYPE_EMAIL = "email"
+    TYPE_SOCIAL = "social"
     TYPE_CHOICES = (
         (TYPE_RICHTEXT, "Rich text"),
         (TYPE_YOUTUBE, "YouTube"),
+        (TYPE_IMAGE, "Image"),
+        (TYPE_EMAIL, "Email"),
+        (TYPE_SOCIAL, "Social"),
     )
 
     block_id = models.CharField(max_length=100, unique=True)
@@ -36,9 +42,36 @@ class ContentBlock(models.Model):
         return self.data.get("content", "") if isinstance(self.data, dict) else ""
 
     @property
+    def is_image(self) -> bool:
+        return self.type == self.TYPE_IMAGE
+
+    @property
+    def is_email(self) -> bool:
+        return self.type == self.TYPE_EMAIL
+
+    @property
+    def is_social(self) -> bool:
+        return self.type == self.TYPE_SOCIAL
+
+    @property
+    def image_src(self) -> str:
+        return self._get_data_value("src")
+
+    @property
+    def email_address(self) -> str:
+        return self._get_data_value("email")
+
+    @property
+    def social_url(self) -> str:
+        return self._get_data_value("url")
+
+    @property
     def video_id(self) -> str:
         return self.data.get("videoId", "") if isinstance(self.data, dict) else ""
 
     @property
     def video_src(self) -> str:
         return self.data.get("src", "") if isinstance(self.data, dict) else ""
+
+    def _get_data_value(self, key: str) -> str:
+        return self.data.get(key, "") if isinstance(self.data, dict) else ""

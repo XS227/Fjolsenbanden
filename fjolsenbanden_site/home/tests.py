@@ -49,6 +49,9 @@ class AdminBlockApiTests(TestCase):
             "videoId": "VIDEOID12345",
             "src": "https://www.youtube.com/embed/VIDEOID12345",
         }
+        self.image_payload = {"type": ContentBlock.TYPE_IMAGE, "src": "https://example.com/banner.jpg"}
+        self.email_payload = {"type": ContentBlock.TYPE_EMAIL, "email": "kontakt@fjolsenbanden.no"}
+        self.social_payload = {"type": ContentBlock.TYPE_SOCIAL, "url": "https://instagram.com/fjolsenbanden"}
 
     def test_requires_staff_user(self) -> None:
         url = reverse("admin-block", args=["test-block"])
@@ -75,9 +78,58 @@ class AdminBlockApiTests(TestCase):
         self.assertEqual(block.video_id, "VIDEOID12345")
         self.assertEqual(block.video_src, "https://www.youtube.com/embed/VIDEOID12345")
 
+    def test_staff_can_update_image_block(self) -> None:
+        url = reverse("admin-block", args=["hero-image"])
+        self.client.force_login(self.staff_user)
+        response = self.client.put(url, data=json.dumps(self.image_payload), content_type="application/json")
+        self.assertEqual(response.status_code, 200)
+        block = ContentBlock.objects.get(block_id="hero-image")
+        self.assertTrue(block.is_image)
+        self.assertEqual(block.image_src, "https://example.com/banner.jpg")
+
+    def test_staff_can_create_email_block_with_post(self) -> None:
+        url = reverse("admin-block", args=["contact-email"])
+        self.client.force_login(self.staff_user)
+        response = self.client.post(url, data=json.dumps(self.email_payload), content_type="application/json")
+        self.assertEqual(response.status_code, 200)
+        block = ContentBlock.objects.get(block_id="contact-email")
+        self.assertTrue(block.is_email)
+        self.assertEqual(block.email_address, "kontakt@fjolsenbanden.no")
+
+    def test_staff_can_update_social_block(self) -> None:
+        url = reverse("admin-block", args=["instagram-link"])
+        self.client.force_login(self.staff_user)
+        response = self.client.put(url, data=json.dumps(self.social_payload), content_type="application/json")
+        self.assertEqual(response.status_code, 200)
+        block = ContentBlock.objects.get(block_id="instagram-link")
+        self.assertTrue(block.is_social)
+        self.assertEqual(block.social_url, "https://instagram.com/fjolsenbanden")
+
     def test_validation_errors_are_reported(self) -> None:
         url = reverse("admin-block", args=["hero-info"])
         self.client.force_login(self.staff_user)
         response = self.client.put(url, data=json.dumps({"type": "richtext"}), content_type="application/json")
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(ContentBlock.objects.count(), 0)
+
+    def test_invalid_email_returns_error(self) -> None:
+        url = reverse("admin-block", args=["contact-email"])
+        self.client.force_login(self.staff_user)
+        response = self.client.post(
+            url,
+            data=json.dumps({"type": ContentBlock.TYPE_EMAIL, "email": "not-an-email"}),
+            content_type="application/json",
+        )
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(ContentBlock.objects.count(), 0)
+
+    def test_invalid_social_url_returns_error(self) -> None:
+        url = reverse("admin-block", args=["instagram-link"])
+        self.client.force_login(self.staff_user)
+        response = self.client.put(
+            url,
+            data=json.dumps({"type": ContentBlock.TYPE_SOCIAL, "url": "not a url"}),
+            content_type="application/json",
+        )
         self.assertEqual(response.status_code, 400)
         self.assertEqual(ContentBlock.objects.count(), 0)
