@@ -1582,6 +1582,39 @@ textarea:focus {
   <script>
     (function () {
       let initialized = false;
+      const DEMO_MODE = true;
+      const DEMO_STORE_KEY = 'fbAdminDemoState';
+
+      function getDemoStore() {
+        try {
+          return JSON.parse(localStorage.getItem(DEMO_STORE_KEY) || '{}') || {};
+        } catch (err) {
+          console.warn('Kunne ikke lese admin-demo fra localStorage', err);
+          return {};
+        }
+      }
+
+      function persistDemoStore(data) {
+        try {
+          localStorage.setItem(DEMO_STORE_KEY, JSON.stringify(data || {}));
+        } catch (err) {
+          console.warn('Kunne ikke lagre admin-demo til localStorage', err);
+        }
+      }
+
+      function updateDemoSection(sectionId, updates) {
+        const store = getDemoStore();
+        store.sections = store.sections || {};
+        store.sections[sectionId] = { ...(store.sections[sectionId] || {}), ...updates };
+        persistDemoStore(store);
+      }
+
+      function updateDemoOrder(order) {
+        const store = getDemoStore();
+        store.sections = store.sections || {};
+        store.order = order || [];
+        persistDemoStore(store);
+      }
 
       const tryInit = () => {
         if (initialized) return;
@@ -1600,6 +1633,36 @@ textarea:focus {
             section.classList.remove('fb-section-disabled');
           }
         };
+
+        const applyDemoState = () => {
+          if (!DEMO_MODE) return;
+          const store = getDemoStore();
+
+          if (Array.isArray(store.order) && store.order.length) {
+            store.order.forEach((id) => {
+              const section = root.querySelector('.editable-section[data-section-id="' + id + '"]');
+              if (section) root.appendChild(section);
+            });
+          }
+
+          sections.forEach((section) => {
+            const sectionId = section.dataset.sectionId || '';
+            const data = store.sections?.[sectionId];
+            if (!data) return;
+
+            if (typeof data.enabled === 'boolean') {
+              section.dataset.sectionEnabled = String(data.enabled);
+              updateDisabledClass(section, data.enabled);
+            }
+
+            if (typeof data.content === 'string') {
+              const editable = section.querySelector('.editable-content');
+              if (editable) editable.innerHTML = data.content;
+            }
+          });
+        };
+
+        applyDemoState();
 
         /* ========= AV/PÅ-KNAPP PER SEKSJON ========= */
         sections.forEach((section) => {
@@ -1627,6 +1690,11 @@ textarea:focus {
             toggle.querySelector('span').textContent = next ? 'Aktiv' : 'Av';
             section.dataset.sectionEnabled = String(next);
             updateDisabledClass(section, next);
+
+            if (DEMO_MODE) {
+              updateDemoSection(sectionId, { enabled: next });
+              return;
+            }
 
             try {
               await fetch('/api/admin/sections/' + encodeURIComponent(sectionId), {
@@ -1693,6 +1761,15 @@ textarea:focus {
 
         saveBtn.addEventListener('click', async () => {
           const newContent = editable.innerHTML;
+          if (DEMO_MODE) {
+            updateDemoSection(sectionId, { content: newContent });
+            editable.setAttribute('contenteditable', 'false');
+            toolbar.style.display = 'none';
+            section.classList.remove('fb-editing');
+            console.log('Seksjon lagret lokalt (demo):', sectionId);
+            return;
+          }
+
           try {
             const res = await fetch('/api/admin/sections/' + encodeURIComponent(sectionId), {
               method: 'PUT',
@@ -1807,6 +1884,12 @@ textarea:focus {
 
       function persistOrder() {
         const order = Array.from(listEl.querySelectorAll('.fb-section-item')).map((li) => li.dataset.sectionId);
+
+        if (DEMO_MODE) {
+          updateDemoOrder(order);
+          console.log('Ny seksjonsrekkefølge lagret lokalt (demo)', order);
+          return;
+        }
 
         fetch('/api/admin/sections/order', {
           method: 'PUT',
