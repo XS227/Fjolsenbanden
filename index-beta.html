@@ -820,6 +820,195 @@ textarea:focus {
     color: var(--primary);
   }
 
+/* Admin login + visual editor */
+
+.admin-login-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: radial-gradient(circle at top left, #1a2453, #0b122f);
+  color: #fff;
+  cursor: pointer;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.45), 0 0 16px rgba(0, 166, 255, 0.35);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1500;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+}
+
+.admin-login-btn svg {
+  width: 22px;
+  height: 22px;
+}
+
+.admin-login-btn:hover {
+  transform: translateY(-2px);
+  border-color: rgba(0, 166, 255, 0.55);
+  box-shadow: 0 26px 55px rgba(0, 0, 0, 0.55), 0 0 22px rgba(0, 166, 255, 0.45);
+}
+
+.admin-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  z-index: 2000;
+}
+
+.admin-modal.open {
+  display: flex;
+}
+
+.admin-modal-content {
+  width: min(420px, 100%);
+  background: radial-gradient(circle at top left, var(--card-alt), var(--card));
+  border-radius: var(--radius-lg);
+  padding: 1.4rem 1.5rem 1.2rem;
+  box-shadow: var(--shadow-soft);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  position: relative;
+}
+
+.admin-modal h3 {
+  margin: 0 0 0.45rem;
+}
+
+.admin-modal p {
+  margin: 0 0 0.25rem;
+  color: var(--muted);
+}
+
+.admin-modal-close {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  border: none;
+  background: transparent;
+  color: var(--muted);
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.admin-modal form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  margin-top: 0.75rem;
+}
+
+.admin-modal input {
+  width: 100%;
+  padding: 0.75rem 0.85rem;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.04);
+  color: #fff;
+}
+
+.admin-error {
+  min-height: 1.1rem;
+  color: #ff6aa8;
+  font-size: 0.9rem;
+}
+
+.admin-modal-actions {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: flex-end;
+  margin-top: 0.35rem;
+}
+
+.visual-editor {
+  position: fixed;
+  top: 96px;
+  right: 20px;
+  width: min(360px, calc(100% - 40px));
+  background: radial-gradient(circle at top left, var(--card-alt), #0a122f);
+  border-radius: 18px;
+  padding: 1rem 1.1rem 1.2rem;
+  box-shadow: var(--shadow-soft);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  display: none;
+  z-index: 1800;
+}
+
+.visual-editor.open {
+  display: block;
+}
+
+.visual-editor-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem;
+  margin-bottom: 0.35rem;
+}
+
+.visual-editor-title {
+  font-weight: 700;
+}
+
+.visual-editor-close {
+  border: none;
+  background: transparent;
+  color: var(--muted);
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+
+.visual-editor-hint {
+  margin: 0 0 0.8rem;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.visual-editor form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.visual-editor label {
+  font-size: 0.9rem;
+  color: var(--muted);
+  margin-bottom: 0.25rem;
+  display: block;
+}
+
+.visual-editor input,
+.visual-editor textarea {
+  width: 100%;
+  padding: 0.7rem 0.8rem;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.04);
+  color: #fff;
+  font-family: inherit;
+}
+
+.visual-editor textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.visual-editor .editor-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.6rem;
+}
+
+.visual-editor .btn.small {
+  padding-inline: 1rem;
+}
+
   /* Mobil */
 
   @media (max-width: 700px) {
@@ -1364,27 +1553,110 @@ textarea:focus {
       <a href="https://fjolsenbanden.setaei.com/regler.html" class="footer-bottom-link">Les reglene våre</a>
     </div>
   </footer>
+  <button class="admin-login-btn" id="admin-login-btn" aria-label="Admin login">
+    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path
+        d="M12 2.5c-2.9 0-5.25 2.35-5.25 5.25V10H5a2 2 0 0 0-2 2v6c0 1.1.9 2 2 2h14a2 2 0 0 0 2-2v-6a2 2 0 0 0-2-2h-1.75V7.75C17.25 4.85 14.9 2.5 12 2.5Zm-3.75 5.25a3.75 3.75 0 0 1 7.5 0V10h-7.5Z"
+        fill="currentColor"
+      />
+    </svg>
+  </button>
+
+  <div class="admin-modal" id="admin-modal" aria-hidden="true" role="dialog" aria-modal="true">
+    <div class="admin-modal-content">
+      <button class="admin-modal-close" id="admin-modal-close" aria-label="Lukk innlogging">×</button>
+      <h3>Admin-innlogging</h3>
+      <p>Oppgi tilgangskoden for å åpne den visuelle editoren (kode: 1234).</p>
+      <form id="admin-login-form">
+        <label for="admin-code">Tilgangskode</label>
+        <input type="password" id="admin-code" name="admin-code" autocomplete="off" required />
+        <div class="admin-error" id="admin-error"></div>
+        <div class="admin-modal-actions">
+          <button type="button" class="btn btn-ghost small" id="admin-cancel">Avbryt</button>
+          <button type="submit" class="btn btn-primary small">Logg inn</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="visual-editor" id="visual-editor" aria-hidden="true">
+    <div class="visual-editor-header">
+      <div class="visual-editor-title">Visual editor</div>
+      <button class="visual-editor-close" id="visual-editor-close" aria-label="Lukk editor">×</button>
+    </div>
+    <p class="visual-editor-hint">Oppdater innholdet på forsiden. Endringene lagres i nettleseren og vises med en gang.</p>
+    <form id="visual-editor-form">
+      <div>
+        <label for="ve-hero-title">Hero-overskrift</label>
+        <input id="ve-hero-title" type="text" placeholder="Skriv ny overskrift" />
+      </div>
+      <div>
+        <label for="ve-hero-pill">Merke (pill)</label>
+        <input id="ve-hero-pill" type="text" placeholder="Kort label" />
+      </div>
+      <div>
+        <label for="ve-hero-lead">Ingress</label>
+        <textarea id="ve-hero-lead" placeholder="Beskriv hva FjOlsenbanden er"></textarea>
+      </div>
+      <div>
+        <label for="ve-btn1-label">Primærknapp – tekst</label>
+        <input id="ve-btn1-label" type="text" />
+      </div>
+      <div>
+        <label for="ve-btn1-link">Primærknapp – lenke</label>
+        <input id="ve-btn1-link" type="text" />
+      </div>
+      <div>
+        <label for="ve-btn2-label">Sekundærknapp – tekst</label>
+        <input id="ve-btn2-label" type="text" />
+      </div>
+      <div>
+        <label for="ve-btn2-link">Sekundærknapp – lenke</label>
+        <input id="ve-btn2-link" type="text" />
+      </div>
+      <div class="editor-actions">
+        <button type="reset" class="btn btn-ghost small" id="visual-editor-reset">Tilbakestill</button>
+        <button type="submit" class="btn btn-primary small">Lagre</button>
+      </div>
+    </form>
+  </div>
+
 <script>
-  document.addEventListener('DOMContentLoaded', function () {
-    const faqSection = document.getElementById('faq');
+  (function () {
+    const ADMIN_CODE = '1234';
+    const CONFIG_KEY = 'fjAdminConfig';
+    const AUTH_KEY = 'fjAdminAuthorized';
 
-    if (faqSection) {
-      // Gardin-effekt: når FAQ blir synlig, dras "gardinen" opp
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              faqSection.classList.add('faq-visible');
-              observer.disconnect(); // bare trigge én gang
-            }
-          });
-        },
-        { threshold: 0.4 }
-      );
+    document.addEventListener('DOMContentLoaded', () => {
+      initFaq();
+      const cfg = loadConfig();
+      if (cfg) applyAdminConfig(cfg);
+      initAdminTools();
+    });
 
-      observer.observe(faqSection);
+    function initFaq() {
+      const faqSection = document.getElementById('faq');
+      if (!faqSection) return;
 
-      // Bare ett FAQ-punkt åpent om gangen
+      const activateFaq = () => faqSection.classList.add('faq-visible');
+
+      if ('IntersectionObserver' in window) {
+        const observer = new IntersectionObserver(
+          (entries, obs) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                activateFaq();
+                obs.disconnect();
+              }
+            });
+          },
+          { threshold: 0.35 }
+        );
+        observer.observe(faqSection);
+      } else {
+        activateFaq();
+      }
+
       const details = faqSection.querySelectorAll('details.faq-item');
       details.forEach((el) => {
         el.addEventListener('toggle', () => {
@@ -1394,104 +1666,170 @@ textarea:focus {
             });
           }
         });
+      });
+    }
+
+    function initAdminTools() {
+      const loginBtn = document.getElementById('admin-login-btn');
+      const modal = document.getElementById('admin-modal');
+      const modalClose = document.getElementById('admin-modal-close');
+      const modalCancel = document.getElementById('admin-cancel');
+      const loginForm = document.getElementById('admin-login-form');
+      const codeInput = document.getElementById('admin-code');
+      const errorEl = document.getElementById('admin-error');
+      const editor = document.getElementById('visual-editor');
+      const editorClose = document.getElementById('visual-editor-close');
+      const editorForm = document.getElementById('visual-editor-form');
+      const editorReset = document.getElementById('visual-editor-reset');
+
+      const authorized = localStorage.getItem(AUTH_KEY) === 'true';
+      if (authorized) {
+        openEditor();
       }
-    });
-  });
 
-  const faqSection = document.querySelector('.section-faq');
-  if (faqSection) {
-    const activateFaq = () => faqSection.classList.add('faq-visible');
+      loginBtn?.addEventListener('click', openModal);
+      modalClose?.addEventListener('click', closeModal);
+      modalCancel?.addEventListener('click', closeModal);
+      modal?.addEventListener('click', (evt) => {
+        if (evt.target === modal) closeModal();
+      });
 
-    if ('IntersectionObserver' in window) {
-      const observer = new IntersectionObserver(
-        (entries, obs) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              activateFaq();
-              obs.disconnect();
-            }
-          });
-        },
-        { threshold: 0.35 }
-      );
+      loginForm?.addEventListener('submit', (evt) => {
+        evt.preventDefault();
+        if ((codeInput?.value || '').trim() === ADMIN_CODE) {
+          localStorage.setItem(AUTH_KEY, 'true');
+          if (errorEl) errorEl.textContent = '';
+          closeModal();
+          openEditor();
+          if (codeInput) codeInput.value = '';
+        } else {
+          if (errorEl) errorEl.textContent = 'Feil kode. Prøv igjen.';
+        }
+      });
 
-      observer.observe(faqSection);
-    } else {
-      activateFaq();
+      editorClose?.addEventListener('click', () => {
+        editor?.classList.remove('open');
+      });
+
+      editorReset?.addEventListener('click', (evt) => {
+        evt.preventDefault();
+        populateEditorForm(getEditableConfig());
+      });
+
+      editorForm?.addEventListener('submit', (evt) => {
+        evt.preventDefault();
+        const cfg = getEditableConfig();
+        const hero = cfg.sections.hero;
+        hero.title = document.getElementById('ve-hero-title')?.value || '';
+        hero.pillText = document.getElementById('ve-hero-pill')?.value || '';
+        hero.sectionText = document.getElementById('ve-hero-lead')?.value || '';
+        hero.button1Label = document.getElementById('ve-btn1-label')?.value || '';
+        hero.button1Href = document.getElementById('ve-btn1-link')?.value || '';
+        hero.button2Label = document.getElementById('ve-btn2-label')?.value || '';
+        hero.button2Href = document.getElementById('ve-btn2-link')?.value || '';
+
+        saveConfig(cfg);
+        applyAdminConfig(cfg);
+      });
+
+      function openModal() {
+        modal?.classList.add('open');
+        setTimeout(() => codeInput?.focus(), 50);
+      }
+
+      function closeModal() {
+        modal?.classList.remove('open');
+      }
+
+      function openEditor() {
+        editor?.classList.add('open');
+        populateEditorForm(getEditableConfig());
+      }
     }
-  }
 
-  // Les admin-konfig fra localStorage og bruk på forsiden
-  (function () {
-    let raw = localStorage.getItem('fjAdminConfig');
-    if (!raw) return;
+    function populateEditorForm(cfg) {
+      const heroSection = document.getElementById('hero');
+      const hero = cfg?.sections?.hero || {};
 
-    let cfg;
-    try {
-      cfg = JSON.parse(raw);
-    } catch (e) {
-      console.warn('Kunne ikke parse fjAdminConfig:', e);
-      return;
+      setValue('ve-hero-title', hero.title || heroSection?.querySelector('h1')?.innerHTML || '');
+      setValue('ve-hero-pill', hero.pillText || heroSection?.querySelector('.pill')?.textContent || '');
+      setValue('ve-hero-lead', hero.sectionText || heroSection?.querySelector('.lead')?.textContent || '');
+
+      const [btn1, btn2] = heroSection ? heroSection.querySelectorAll('.hero-actions a') : [];
+      setValue('ve-btn1-label', hero.button1Label || btn1?.textContent || '');
+      setValue('ve-btn1-link', hero.button1Href || btn1?.getAttribute('href') || '');
+      setValue('ve-btn2-label', hero.button2Label || btn2?.textContent || '');
+      setValue('ve-btn2-link', hero.button2Href || btn2?.getAttribute('href') || '');
     }
 
-    // Les admin-konfig fra localStorage og bruk på forsiden
-    (function () {
-      let raw = localStorage.getItem('fjAdminConfig');
-      if (!raw) return;
+    function setValue(id, value) {
+      const el = document.getElementById(id);
+      if (el) {
+        el.value = value;
+        el.defaultValue = value;
+      }
+    }
 
-      let cfg;
+    function getEditableConfig() {
+      const cfg = loadConfig() || { sections: {}, global: {} };
+      cfg.sections.hero = cfg.sections.hero || {};
+      return cfg;
+    }
+
+    function loadConfig() {
+      const raw = localStorage.getItem(CONFIG_KEY);
+      if (!raw) return null;
       try {
-        cfg = JSON.parse(raw);
+        return JSON.parse(raw);
       } catch (e) {
         console.warn('Kunne ikke parse fjAdminConfig:', e);
-        return;
+        return null;
       }
+    }
 
-      // Seksjonsstyring (på/av + innhold)
+    function saveConfig(cfg) {
+      localStorage.setItem(CONFIG_KEY, JSON.stringify(cfg));
+    }
+
+    function applyAdminConfig(cfg) {
+      if (!cfg) return;
       const sections = cfg.sections || {};
+
       Object.entries(sections).forEach(([id, settings]) => {
         const section = document.getElementById(id);
         if (!section) return;
 
-        // Skru av/på seksjon
         if (settings.enabled === false) {
           section.style.display = 'none';
           return;
         }
+
+        section.style.display = '';
 
         if (id === 'hero') {
           applyHeroSettings(section, settings);
           return;
         }
 
-        // Oppdater tittel (første h2 i seksjonen)
         if (settings.title) {
           const h2 = section.querySelector('h2');
-          if (h2) {
-            h2.textContent = settings.title;
-          }
+          if (h2) h2.textContent = settings.title;
         }
 
-        // Oppdater undertekst / subtitle
         if (settings.subtitle) {
           const sub = section.querySelector('.subtitle');
-          if (sub) {
-            sub.textContent = settings.subtitle;
-          }
+          if (sub) sub.textContent = settings.subtitle;
         }
       });
 
-      // Globale innstillinger
       const global = cfg.global || {};
 
-      // Logo i header + footer
       if (global.logoUrl) {
         document.querySelectorAll('.logo img, .footer-logo').forEach((img) => {
           img.src = global.logoUrl;
         });
       }
 
-      // YouTube-video
       if (global.youtubeUrl) {
         const iframe = document.querySelector('#video iframe');
         if (iframe) {
@@ -1499,79 +1837,68 @@ textarea:focus {
         }
       }
 
-      // Sosiale lenker
       if (global.socials) {
         const cards = document.querySelectorAll('.social-card');
         cards.forEach((card) => {
           const key = card.dataset.social;
           if (!key) return;
           const url = global.socials[key];
-          if (url) {
-            card.href = url;
-          }
+          if (url) card.href = url;
         });
       }
+    }
 
-      function normalizeYoutube(url) {
-        if (!url) return url;
+    function normalizeYoutube(url) {
+      if (!url) return url;
+      if (url.includes('/embed/')) return url;
 
-        // embed-lenke allerede
-        if (url.includes('/embed/')) return url;
+      const shortMatch = url.match(/youtu\.be\/([^?&]+)/);
+      if (shortMatch) return 'https://www.youtube.com/embed/' + shortMatch[1];
 
-        // youtu.be/ID
-        const shortMatch = url.match(/youtu\.be\/([^?&]+)/);
-        if (shortMatch) {
-          return 'https://www.youtube.com/embed/' + shortMatch[1];
-        }
+      const longMatch = url.match(/[?&]v=([^&]+)/);
+      if (longMatch) return 'https://www.youtube.com/embed/' + longMatch[1];
 
-        // watch?v=ID
-        const longMatch = url.match(/[?&]v=([^&]+)/);
-        if (longMatch) {
-          return 'https://www.youtube.com/embed/' + longMatch[1];
-        }
+      return url;
+    }
 
-        return url;
+    function applyHeroSettings(section, settings) {
+      const pill = section.querySelector('.pill');
+      if (pill) {
+        pill.textContent = settings.pillText || pill.textContent;
       }
 
-      function applyHeroSettings(section, settings) {
-        const pill = section.querySelector('.pill');
-        if (settings.pillText && pill) {
-          pill.textContent = settings.pillText;
-        }
-
-        const lead = section.querySelector('.lead');
-        if (settings.sectionText && lead) {
-          lead.textContent = settings.sectionText;
-        }
-
-        const h1 = section.querySelector('h1');
-        if (settings.title && h1) {
-          h1.innerHTML = settings.title;
-        }
-
-        const heroImg = section.querySelector('.hero-card img');
-        if (settings.heroImageUrl && heroImg) {
-          heroImg.src = settings.heroImageUrl;
-        }
-
-        const caption = section.querySelector('.hero-card-caption');
-        if (settings.heroImageCaption && caption) {
-          caption.textContent = settings.heroImageCaption;
-        }
-
-        const buttons = section.querySelectorAll('.hero-actions a');
-        const [btn1, btn2] = buttons;
-        if (btn1) {
-          if (settings.button1Label) btn1.textContent = settings.button1Label;
-          if (settings.button1Href) btn1.href = settings.button1Href;
-        }
-        if (btn2) {
-          if (settings.button2Label) btn2.textContent = settings.button2Label;
-          if (settings.button2Href) btn2.href = settings.button2Href;
-        }
+      const lead = section.querySelector('.lead');
+      if (lead && settings.sectionText) {
+        lead.textContent = settings.sectionText;
       }
-    })();
-  });
+
+      const h1 = section.querySelector('h1');
+      if (h1 && settings.title) {
+        h1.innerHTML = settings.title;
+      }
+
+      const heroImg = section.querySelector('.hero-card img');
+      if (heroImg && settings.heroImageUrl) {
+        heroImg.src = settings.heroImageUrl;
+      }
+
+      const caption = section.querySelector('.hero-card-caption');
+      if (caption && settings.heroImageCaption) {
+        caption.textContent = settings.heroImageCaption;
+      }
+
+      const buttons = section.querySelectorAll('.hero-actions a');
+      const [btn1, btn2] = buttons;
+      if (btn1) {
+        if (settings.button1Label) btn1.textContent = settings.button1Label;
+        if (settings.button1Href) btn1.href = settings.button1Href;
+      }
+      if (btn2) {
+        if (settings.button2Label) btn2.textContent = settings.button2Label;
+        if (settings.button2Href) btn2.href = settings.button2Href;
+      }
+    }
+  })();
 </script>
 </body>
 </html>
