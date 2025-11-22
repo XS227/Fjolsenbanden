@@ -879,6 +879,284 @@ textarea:focus {
   box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.6);
 }
 
+.admin-login-btn {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 10000;
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  border: none;
+  background: rgba(7, 17, 51, 0.9);
+  color: #fff;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.admin-login-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.45);
+}
+
+.admin-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(2, 3, 23, 0.78);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+  z-index: 10000;
+  padding: 1.5rem;
+}
+
+.admin-modal.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.admin-modal-content {
+  background: #0a102b;
+  border-radius: 18px;
+  padding: 1.5rem;
+  width: min(420px, 100%);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+  position: relative;
+}
+
+.admin-modal h3 {
+  margin: 0 0 0.25rem;
+}
+
+.admin-modal p {
+  margin: 0 0 1rem;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.admin-modal label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.35rem;
+}
+
+.admin-modal input[type='password'] {
+  width: 100%;
+  padding: 0.75rem 0.85rem;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #050b2b;
+  color: #fff;
+}
+
+.admin-modal-actions {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+}
+
+.admin-modal-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  border: none;
+  background: transparent;
+  color: #fff;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.admin-error {
+  min-height: 20px;
+  color: #fda4af;
+  font-size: 0.9rem;
+  margin-top: 0.35rem;
+}
+
+.visual-editor {
+  position: fixed;
+  top: 64px;
+  right: 24px;
+  width: min(420px, 100% - 48px);
+  background: #0a0f2a;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55);
+  padding: 1.25rem;
+  z-index: 10000;
+  color: #e5e7eb;
+  display: none;
+  max-height: calc(100vh - 96px);
+  overflow: auto;
+}
+
+.visual-editor.open {
+  display: block;
+}
+
+.visual-editor-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.visual-editor-title {
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.visual-editor-close {
+  border: none;
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.visual-editor-hint {
+  margin: 0.35rem 0 0.8rem;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.visual-editor form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.visual-editor label {
+  font-weight: 600;
+  display: block;
+  margin-bottom: 0.35rem;
+}
+
+.visual-editor input,
+.visual-editor textarea {
+  width: 100%;
+  background: #050b2b;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #fff;
+  border-radius: 12px;
+  padding: 0.75rem 0.85rem;
+}
+
+.visual-editor textarea {
+  min-height: 90px;
+  resize: vertical;
+}
+
+.visual-editor .editor-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  margin-top: 0.25rem;
+}
+
+.layout-editor {
+  margin-top: 0.5rem;
+  padding: 0.75rem;
+  border-radius: 16px;
+  background: rgba(9, 12, 30, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.layout-editor-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.layout-title {
+  font-weight: 700;
+}
+
+.layout-hint {
+  color: var(--muted);
+  font-size: 0.9rem;
+  margin: 0.25rem 0 0;
+}
+
+.layout-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.layout-item {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.65rem 0.75rem;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  cursor: grab;
+  transition: transform 0.12s ease, border-color 0.12s ease;
+}
+
+.layout-item:active {
+  cursor: grabbing;
+}
+
+.layout-item.dragging {
+  opacity: 0.85;
+  transform: scale(0.995);
+  border-color: rgba(0, 166, 255, 0.6);
+}
+
+.layout-handle {
+  background: rgba(255, 255, 255, 0.08);
+  width: 36px;
+  height: 36px;
+  border-radius: 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.layout-labels {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.layout-labels small {
+  color: var(--muted);
+}
+
+.layout-order {
+  background: rgba(0, 166, 255, 0.12);
+  color: #8ed8ff;
+  padding: 0.3rem 0.55rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+}
+
+.layout-placeholder {
+  height: 14px;
+  border: 1px dashed rgba(0, 166, 255, 0.5);
+  border-radius: 999px;
+  margin: 4px 0;
+}
+
   /* Mobil */
 
   @media (max-width: 700px) {
@@ -1075,7 +1353,7 @@ textarea:focus {
   </section>
 
 
-  <section id="feedback" class="section">
+  <section id="feedback" class="section" data-section="feedback">
     <div class="container">
       <h2>Tilbakemeldinger fra <span class="highlight">FjOlsenbanden</span></h2>
       <p class="subtitle">
@@ -1354,7 +1632,7 @@ textarea:focus {
   </div>
 </section>
 
-  <section id="contact" class="section">
+  <section id="contact" class="section" data-section="contact">
     <div class="container">
       <div class="card contact-card">
         <h2>Kontakt oss</h2>
@@ -1386,7 +1664,7 @@ textarea:focus {
 
   </section>
 
-  <section id="faq" class="section section-faq">
+  <section id="faq" class="section section-faq" data-section="faq">
     <div class="container faq-inner">
       <h2>Ofte stilte spørsmål</h2>
       <p class="subtitle">
@@ -1518,6 +1796,16 @@ textarea:focus {
         <label for="ve-btn2-link">Sekundærknapp – lenke</label>
         <input id="ve-btn2-link" type="text" />
       </div>
+      <div class="layout-editor" aria-label="Dra og slipp seksjoner">
+        <div class="layout-editor-header">
+          <div>
+            <div class="layout-title">Dra og slipp seksjoner</div>
+            <p class="layout-hint">Flytt seksjoner for å endre rekkefølgen på forsiden.</p>
+          </div>
+          <button type="button" class="btn btn-ghost small" id="layout-reset">Nullstill</button>
+        </div>
+        <div class="layout-list" id="layout-list" aria-live="polite"></div>
+      </div>
       <div class="editor-actions">
         <button type="reset" class="btn btn-ghost small" id="visual-editor-reset">Tilbakestill</button>
         <button type="submit" class="btn btn-primary small">Lagre</button>
@@ -1530,6 +1818,9 @@ textarea:focus {
     const ADMIN_CODE = '1234';
     const CONFIG_KEY = 'fjAdminConfig';
     const AUTH_KEY = 'fjAdminAuthorized';
+    let layoutListEl = null;
+    let layoutResetBtn = null;
+    let dragItem = null;
 
     document.addEventListener('DOMContentLoaded', () => {
       initFaq();
@@ -1585,11 +1876,15 @@ textarea:focus {
       const editorClose = document.getElementById('visual-editor-close');
       const editorForm = document.getElementById('visual-editor-form');
       const editorReset = document.getElementById('visual-editor-reset');
+      layoutListEl = document.getElementById('layout-list');
+      layoutResetBtn = document.getElementById('layout-reset');
 
       const authorized = localStorage.getItem(AUTH_KEY) === 'true';
       if (authorized) {
         openEditor();
       }
+
+      initLayoutEditor();
 
       loginBtn?.addEventListener('click', openModal);
       modalClose?.addEventListener('click', closeModal);
@@ -1648,6 +1943,7 @@ textarea:focus {
       function openEditor() {
         editor?.classList.add('open');
         populateEditorForm(getEditableConfig());
+        renderLayoutList();
       }
     }
 
@@ -1675,8 +1971,9 @@ textarea:focus {
     }
 
     function getEditableConfig() {
-      const cfg = loadConfig() || { sections: {}, global: {} };
+      const cfg = loadConfig() || { sections: {}, global: {}, layout: {} };
       cfg.sections.hero = cfg.sections.hero || {};
+      cfg.layout = cfg.layout || {};
       return cfg;
     }
 
@@ -1698,6 +1995,9 @@ textarea:focus {
     function applyAdminConfig(cfg) {
       if (!cfg) return;
       const sections = cfg.sections || {};
+      if (cfg.layout?.order?.length) {
+        applyLayoutOrder(cfg.layout.order);
+      }
 
       Object.entries(sections).forEach(([id, settings]) => {
         const section = document.getElementById(id);
@@ -1750,6 +2050,156 @@ textarea:focus {
           if (url) card.href = url;
         });
       }
+    }
+
+    function initLayoutEditor() {
+      if (!layoutListEl) return;
+
+      layoutResetBtn?.addEventListener('click', () => {
+        const defaultOrder = getDefaultSectionOrder();
+        persistLayoutOrder(defaultOrder);
+        renderLayoutList(defaultOrder);
+      });
+
+      renderLayoutList();
+    }
+
+    function renderLayoutList(order) {
+      if (!layoutListEl) return;
+      const cfg = getEditableConfig();
+      const chosenOrder = normalizeOrder(order || cfg.layout?.order);
+      layoutListEl.innerHTML = '';
+
+      chosenOrder.forEach((id, index) => {
+        const section = document.getElementById(id);
+        if (!section) return;
+        const item = document.createElement('div');
+        item.className = 'layout-item';
+        item.draggable = true;
+        item.dataset.sectionId = id;
+        item.innerHTML = `
+          <div class="layout-handle" aria-hidden="true">⋮⋮</div>
+          <div class="layout-labels">
+            <div>${getSectionLabel(id)}</div>
+            <small>${getSectionSubtitle(section)}</small>
+          </div>
+          <span class="layout-order">${index + 1}</span>
+        `;
+
+        item.addEventListener('dragstart', handleDragStart);
+        item.addEventListener('dragenter', handleDragEnter);
+        item.addEventListener('dragover', handleDragOver);
+        item.addEventListener('drop', handleDrop);
+        item.addEventListener('dragend', handleDragEnd);
+
+        layoutListEl.appendChild(item);
+      });
+    }
+
+    function getSectionSubtitle(section) {
+      const title = section.querySelector('h2')?.textContent?.trim();
+      if (title) return title;
+      const paragraph = section.querySelector('p')?.textContent?.trim();
+      return paragraph || 'Ingen beskrivelse';
+    }
+
+    function handleDragStart(evt) {
+      dragItem = evt.currentTarget;
+      evt.dataTransfer.effectAllowed = 'move';
+      evt.dataTransfer.setData('text/plain', dragItem.dataset.sectionId || '');
+      requestAnimationFrame(() => dragItem.classList.add('dragging'));
+    }
+
+    function handleDragEnter(evt) {
+      const target = evt.currentTarget;
+      if (!dragItem || target === dragItem) return;
+      evt.preventDefault();
+    }
+
+    function handleDragOver(evt) {
+      if (!dragItem) return;
+      evt.preventDefault();
+      const target = evt.currentTarget.closest('.layout-item');
+      if (!target || target === dragItem || !layoutListEl) return;
+
+      const rect = target.getBoundingClientRect();
+      const before = evt.clientY < rect.top + rect.height / 2;
+      if (before) {
+        layoutListEl.insertBefore(dragItem, target);
+      } else {
+        layoutListEl.insertBefore(dragItem, target.nextSibling);
+      }
+    }
+
+    function handleDrop(evt) {
+      evt.preventDefault();
+      if (!layoutListEl) return;
+      persistLayoutOrder(getCurrentListOrder());
+    }
+
+    function handleDragEnd() {
+      if (dragItem) {
+        dragItem.classList.remove('dragging');
+      }
+      dragItem = null;
+    }
+
+    function persistLayoutOrder(order) {
+      const cfg = getEditableConfig();
+      const normalized = normalizeOrder(order);
+      cfg.layout.order = normalized;
+      saveConfig(cfg);
+      applyLayoutOrder(normalized);
+    }
+
+    function normalizeOrder(order) {
+      const available = getDefaultSectionOrder();
+      const cleanOrder = Array.isArray(order) ? order.filter((id) => available.includes(id)) : [];
+      available.forEach((id) => {
+        if (!cleanOrder.includes(id)) cleanOrder.push(id);
+      });
+      return cleanOrder;
+    }
+
+    function getCurrentListOrder() {
+      if (!layoutListEl) return getDefaultSectionOrder();
+      return Array.from(layoutListEl.querySelectorAll('.layout-item')).map((item) => item.dataset.sectionId || '');
+    }
+
+    function applyLayoutOrder(order) {
+      const normalized = normalizeOrder(order);
+      const footer = document.querySelector('.site-footer');
+      const parent = footer?.parentElement || document.body;
+      if (!footer || !parent) return;
+
+      normalized.forEach((id) => {
+        const section = document.getElementById(id);
+        if (section && parent.contains(section)) {
+          parent.insertBefore(section, footer);
+        }
+      });
+
+      renderLayoutList(normalized);
+    }
+
+    function getDefaultSectionOrder() {
+      return Array.from(document.querySelectorAll('[data-section]')).map((section) => section.id);
+    }
+
+    function getSectionLabel(id) {
+      const labels = {
+        hero: 'Hero',
+        about: 'Om FjOlsenbanden',
+        video: 'Video',
+        feedback: 'Tilbakemeldinger',
+        membership: 'Medlemskap',
+        community: 'Community',
+        partners: 'Partnere',
+        services: 'Andre tilbud',
+        contact: 'Kontakt',
+        faq: 'FAQ',
+      };
+      return labels[id] || id;
     }
 
     function normalizeYoutube(url) {
