@@ -820,6 +820,11 @@ textarea:focus {
     color: var(--primary);
   }
 
+  .last-updated {
+    margin: 0;
+    color: var(--muted);
+  }
+
 /* Inline visual editor */
 
 .admin-toggle {
@@ -1731,6 +1736,7 @@ textarea:focus {
     </div>
 
     <div class="container footer-bottom">
+      <p class="last-updated" id="last-updated"></p>
       <p>© 2025 Fjolsenbanden v/Fair Share Invest AS – Org.nr. 926 963 023</p>
       <a href="https://fjolsenbanden.setaei.com/regler.html" class="footer-bottom-link">Les reglene våre</a>
     </div>
@@ -1827,6 +1833,7 @@ textarea:focus {
       const cfg = loadConfig();
       if (cfg) applyAdminConfig(cfg);
       initAdminTools();
+      setLastUpdated();
     });
 
     function initFaq() {
@@ -2213,6 +2220,18 @@ textarea:focus {
       if (longMatch) return 'https://www.youtube.com/embed/' + longMatch[1];
 
       return url;
+    }
+
+    function setLastUpdated() {
+      const el = document.getElementById('last-updated');
+      if (!el) return;
+
+      const updated = new Date(document.lastModified);
+      if (Number.isNaN(updated.getTime())) return;
+
+      const date = updated.toLocaleDateString('nb-NO', { day: '2-digit', month: '2-digit', year: 'numeric' });
+      const time = updated.toLocaleTimeString('nb-NO', { hour: '2-digit', minute: '2-digit' });
+      el.textContent = `Sist oppdatert: ${date} kl. ${time}`;
     }
 
     function applyHeroSettings(section, settings) {
