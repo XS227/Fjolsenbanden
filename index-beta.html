@@ -684,6 +684,130 @@ textarea:focus {
   margin-top: 0.8rem;
 }
 
+/* --- Julekalender --- */
+
+.calendar-section {
+  position: relative;
+  overflow: hidden;
+  padding: 4rem 1.5rem;
+  background: linear-gradient(135deg, #8b1a31, #d62839);
+  color: #ffffff;
+}
+
+.calendar-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.35;
+  background-image:
+    radial-gradient(circle at 10% 20%, rgba(255, 255, 255, 0.9) 0, transparent 40%),
+    radial-gradient(circle at 80% 10%, rgba(255, 255, 255, 0.7) 0, transparent 45%),
+    radial-gradient(circle at 50% 100%, rgba(255, 255, 255, 0.6) 0, transparent 50%);
+  background-repeat: no-repeat;
+}
+
+.calendar-inner {
+  position: relative;
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  gap: 3rem;
+  align-items: center;
+  z-index: 1;
+}
+
+.calendar-text h2 {
+  font-size: clamp(2rem, 3vw, 2.5rem);
+  margin-bottom: 1rem;
+}
+
+.calendar-text p {
+  margin-bottom: 1.75rem;
+  line-height: 1.6;
+  font-size: 1rem;
+}
+
+.calendar-countdown {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.75rem;
+}
+
+.countdown-item {
+  min-width: 70px;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.75rem;
+  background: rgba(0, 0, 0, 0.28);
+  text-align: center;
+  backdrop-filter: blur(4px);
+}
+
+.countdown-number {
+  display: block;
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+
+.countdown-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  opacity: 0.8;
+}
+
+.btn.btn-calendar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.85rem 1.7rem;
+  border-radius: 999px;
+  background: #ffffff;
+  color: #8b1a31;
+  font-weight: 600;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.12s ease;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.35);
+}
+
+.btn.btn-calendar:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+  background: #f7f7f7;
+}
+
+.calendar-visual {
+  flex: 0 0 40%;
+  display: flex;
+  justify-content: center;
+}
+
+.calendar-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 1.5rem;
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.4);
+}
+
+/* Responsivt */
+@media (max-width: 900px) {
+  .calendar-inner {
+    flex-direction: column-reverse;
+    text-align: center;
+  }
+
+  .calendar-countdown {
+    justify-content: center;
+  }
+
+  .calendar-visual {
+    flex: 0 0 auto;
+  }
+}
+
 /* FAQ */
 
 .section-faq {
@@ -2003,6 +2127,70 @@ textarea:focus {
       </div>
     </section>
 
+    <section
+      id="julekalender"
+      class="section calendar-section fb-section editable-section"
+      data-section-id="julekalender"
+      data-section-enabled="true"
+    >
+      <div class="editable-content">
+        <div class="container">
+          <div class="section-toolbar">
+            <span>Julekalender</span>
+            <button type="button" onclick="saveSection('julekalender')">Lagre</button>
+          </div>
+        </div>
+        <div class="calendar-inner">
+          <div class="calendar-text">
+            <h2 data-editable data-field="title">ÅRETS JULEKALENDER</h2>
+            <p data-editable data-field="description">
+              Vinn premier til verdi av over <strong>10 000 kroner!</strong><br />
+              Meld deg på årets julekalender før <strong>1. desember</strong> og få
+              <strong>10 ekstra lodd</strong> i den store giveaway <strong>25. desember</strong>!
+            </p>
+
+            <div class="calendar-countdown" data-countdown-target>
+              <div class="countdown-item">
+                <span class="countdown-number" data-countdown-part="days">0</span>
+                <span class="countdown-label">dager</span>
+              </div>
+              <div class="countdown-item">
+                <span class="countdown-number" data-countdown-part="hours">0</span>
+                <span class="countdown-label">timer</span>
+              </div>
+              <div class="countdown-item">
+                <span class="countdown-number" data-countdown-part="minutes">0</span>
+                <span class="countdown-label">min</span>
+              </div>
+              <div class="countdown-item">
+                <span class="countdown-number" data-countdown-part="seconds">0</span>
+                <span class="countdown-label">sek</span>
+              </div>
+            </div>
+
+            <a
+              href="https://fjolsenbanden.julekalender.no/"
+              class="btn btn-calendar"
+              target="_blank"
+              rel="noopener noreferrer"
+              data-editable
+              data-field="cta"
+            >
+              Gå til julekalenderen
+            </a>
+          </div>
+
+          <div class="calendar-visual">
+            <img
+              src="/img/fjolsen-card.svg"
+              alt="Fjolsenbandens Julekalender"
+              class="calendar-image"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section id="about" class="section fb-section editable-section" data-section-id="about" data-section-enabled="true">
       <div class="editable-content">
         <div class="container">
@@ -2604,6 +2792,46 @@ textarea:focus {
       </div>
     </form>
   </div>
+
+  <script>
+    (function () {
+      const countdownRoot = document.querySelector('[data-countdown-target]');
+      if (!countdownRoot) return;
+
+      const targetDate = new Date('2025-12-25T18:00:00+01:00').getTime();
+
+      const parts = {
+        days: countdownRoot.querySelector('[data-countdown-part="days"]'),
+        hours: countdownRoot.querySelector('[data-countdown-part="hours"]'),
+        minutes: countdownRoot.querySelector('[data-countdown-part="minutes"]'),
+        seconds: countdownRoot.querySelector('[data-countdown-part="seconds"]'),
+      };
+
+      function updateCountdown() {
+        const now = Date.now();
+        const diff = targetDate - now;
+
+        if (diff <= 0) {
+          Object.values(parts).forEach((el) => (el.textContent = '0'));
+          return;
+        }
+
+        const totalSeconds = Math.floor(diff / 1000);
+        const days = Math.floor(totalSeconds / (60 * 60 * 24));
+        const hours = Math.floor((totalSeconds / (60 * 60)) % 24);
+        const minutes = Math.floor((totalSeconds / 60) % 60);
+        const seconds = Math.floor(totalSeconds % 60);
+
+        parts.days.textContent = String(days);
+        parts.hours.textContent = String(hours).padStart(2, '0');
+        parts.minutes.textContent = String(minutes).padStart(2, '0');
+        parts.seconds.textContent = String(seconds).padStart(2, '0');
+      }
+
+      updateCountdown();
+      setInterval(updateCountdown, 1000);
+    })();
+  </script>
 
 <script>
   (function () {
