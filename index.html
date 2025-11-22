@@ -960,14 +960,16 @@ body.is-admin .fb-block-edit-btn:hover {
   <section id="hero" class="section hero">
     <div class="container hero-grid">
       <div class="hero-text">
-        <span class="pill">Velkommen</span>
-        <h1>
-          FjOlsenbanden er<br />
-          <span class="highlight">Norges mest inkluderende gaming-community.</span>
-        </h1>
-        <p class="lead">
-          En trygg arena for familier som elsker gaming, med fellesskap, premier og kreativitet i sentrum.
-        </p>
+        <div class="fb-edit-block" data-block-id="hero-copy" data-edit-type="richtext">
+          <span class="pill">Velkommen</span>
+          <h1>
+            FjOlsenbanden er<br />
+            <span class="highlight">Norges mest inkluderende gaming-community.</span>
+          </h1>
+          <p class="lead">
+            En trygg arena for familier som elsker gaming, med fellesskap, premier og kreativitet i sentrum.
+          </p>
+        </div>
         <div class="hero-actions">
           <a href="#membership" class="btn btn-primary">Bli medlem</a>
           <a href="#about" class="btn btn-ghost">Les mer</a>
@@ -985,102 +987,114 @@ body.is-admin .fb-block-edit-btn:hover {
 
   <section id="about" class="section">
     <div class="container">
-      <h2>Hva er <span class="highlight">FjOlsenbanden?</span></h2>
-      <p class="subtitle">
-        Norges mest inkluderende gaming-community for hele familien.
-      </p><div class="about-grid">
-    <div class="card card-large">
-      <h3>Målet med FjOlsenbanden</h3>
-      <p>
-        Målet med FjOlsenbanden er å skape et trygt, positivt og inkluderende gamingmiljø der barn, ungdom –
-        og mange foreldre – kan oppleve ekte mestring, samarbeid og fellesskap.
-      </p>
-      <p>
-        Hver uke legger FjOlsenFN ned utallige timer på å arrangere morsomme konkurranser og aktiviteter som
-        skaper engasjement og samhold i hele communityet.
-      </p>
-      <p>
-        Premiene som deles ut er sponset av samarbeidspartnere fra næringslivet, eller finansiert gjennom
-        frivillige bidrag fra foreldre – alt for å gi barna ekstra motivasjon og glede.
-      </p>
-      <p>
-        Alle som blir med i FjOlsenbanden får tittelen «FjOls» – hvor man blir en ambassadør som fremmer et
-        positivt fellesskap, trygghet og stolthet.
-      </p>
-      <a href="#membership" class="btn btn-primary">Bli medlem</a>
+      <div class="fb-edit-block" data-block-id="about-intro" data-edit-type="richtext">
+        <h2>Hva er <span class="highlight">FjOlsenbanden?</span></h2>
+        <p class="subtitle">
+          Norges mest inkluderende gaming-community for hele familien.
+        </p>
+      </div>
+
+      <div class="about-grid">
+        <div class="card card-large">
+          <div class="fb-edit-block" data-block-id="about-body" data-edit-type="richtext">
+            <h3>Målet med FjOlsenbanden</h3>
+            <p>
+              Målet med FjOlsenbanden er å skape et trygt, positivt og inkluderende gamingmiljø der barn, ungdom –
+              og mange foreldre – kan oppleve ekte mestring, samarbeid og fellesskap.
+            </p>
+            <p>
+              Hver uke legger FjOlsenFN ned utallige timer på å arrangere morsomme konkurranser og aktiviteter som
+              skaper engasjement og samhold i hele communityet.
+            </p>
+            <p>
+              Premiene som deles ut er sponset av samarbeidspartnere fra næringslivet, eller finansiert gjennom
+              frivillige bidrag fra foreldre – alt for å gi barna ekstra motivasjon og glede.
+            </p>
+            <p>
+              Alle som blir med i FjOlsenbanden får tittelen «FjOls» – hvor man blir en ambassadør som fremmer et
+              positivt fellesskap, trygghet og stolthet.
+            </p>
+          </div>
+          <a href="#membership" class="btn btn-primary">Bli medlem</a>
+        </div>
+
+        <div class="about-benefits fb-edit-block" data-block-id="about-benefits" data-edit-type="richtext">
+          <div class="card card-pill">
+            <h4>Trygg gamingarena</h4>
+            <p>
+              Alle aktiviteter overvåkes av voksne, med klare regler mot mobbing, banning og ekskludering.
+            </p>
+          </div>
+
+          <div class="card card-pill">
+            <h4>Positivt fellesskap</h4>
+            <p>
+              Vi har fokus på å lære barn og unge god nettadferd, samarbeid og kommunikasjon.
+            </p>
+          </div>
+
+          <div class="card card-pill">
+            <h4>Familievennlig stream</h4>
+            <p>
+              Alt innhold er bannfritt og passer for både barn og voksne å se sammen.
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
-
-    <div class="about-benefits">
-      <div class="card card-pill">
-        <h4>Trygg gamingarena</h4>
-        <p>
-          Alle aktiviteter overvåkes av voksne, med klare regler mot mobbing, banning og ekskludering.
-        </p>
-      </div>
-
-      <div class="card card-pill">
-        <h4>Positivt fellesskap</h4>
-        <p>
-          Vi har fokus på å lære barn og unge god nettadferd, samarbeid og kommunikasjon.
-        </p>
-      </div>
-
-      <div class="card card-pill">
-        <h4>Familievennlig stream</h4>
-        <p>
-          Alt innhold er bannfritt og passer for både barn og voksne å se sammen.
-        </p>
-      </div>
-    </div>
-  </div>
-</div>
 
   </section>
 
   <section id="video" class="section">
     <div class="container">
-      <h2>Hvem er <span class="highlight">FjOlsen?</span></h2>
-      <p class="subtitle">
-        FjOlsenFN – familievennlig streamer og grunnlegger av FjOlsenbanden.
-      </p><div class="two-column">
-    <div class="card video-wrapper">
-      <iframe
-        src="https://www.youtube.com/embed/8EgRIkmvmtM"
-        title="Slik deltar du på FjOlsenbanden customs"
-        frameborder="0"
-        allowfullscreen
-      ></iframe>
+      <div class="fb-edit-block" data-block-id="video-intro" data-edit-type="richtext">
+        <h2>Hvem er <span class="highlight">FjOlsen?</span></h2>
+        <p class="subtitle">
+          FjOlsenFN – familievennlig streamer og grunnlegger av FjOlsenbanden.
+        </p>
+      </div>
+
+      <div class="two-column">
+        <div class="card video-wrapper fb-edit-block" data-block-id="video-embed" data-edit-type="youtube">
+          <iframe
+            src="https://www.youtube.com/embed/8EgRIkmvmtM"
+            title="Slik deltar du på FjOlsenbanden customs"
+            frameborder="0"
+            allowfullscreen
+          ></iframe>
+        </div>
+        <div class="card fb-edit-block" data-block-id="video-copy" data-edit-type="richtext">
+          <h3>FjOlsenFN – Familievennlig streamer</h3>
+          <p>
+            FjOlsenbanden ledes av Tor Martin «FjOlsenFN» Olsen. FjOlsen er en familievennlig streamer som ikke
+            tillater banning, mobbing og brudd på nettvettsreglene.
+          </p>
+          <p>
+            Han startet prosjektet for å gi sine egne onkelbarn et trygt og bannefritt sted å spille. Det som
+            begynte som et tiltak for å beskytte onkelbarna, har vokst til å omfatte alle barn som ønsker å være
+            en del av FjOlsenbanden – hvor gjensidig trygghet, respekt og fellesskap står i fokus.
+          </p>
+          <p>
+            For han vet at så lenge hans egne onkelbarn spiller under trygge rammer, betyr det at også dine barn
+            gjør det samme.
+          </p>
+        </div>
+      </div>
     </div>
-    <div class="card">
-      <h3>FjOlsenFN – Familievennlig streamer</h3>
-      <p>
-        FjOlsenbanden ledes av Tor Martin «FjOlsenFN» Olsen. FjOlsen er en familievennlig streamer som ikke
-        tillater banning, mobbing og brudd på nettvettsreglene.
-      </p>
-      <p>
-        Han startet prosjektet for å gi sine egne onkelbarn et trygt og bannefritt sted å spille. Det som
-        begynte som et tiltak for å beskytte onkelbarna, har vokst til å omfatte alle barn som ønsker å være
-        en del av FjOlsenbanden – hvor gjensidig trygghet, respekt og fellesskap står i fokus.
-      </p>
-      <p>
-        For han vet at så lenge hans egne onkelbarn spiller under trygge rammer, betyr det at også dine barn
-        gjør det samme.
-      </p>
-    </div>
-  </div>
-</div>
 
   </section>
 
 
   <section id="feedback" class="section">
     <div class="container">
-      <h2>Tilbakemeldinger fra <span class="highlight">FjOlsenbanden</span></h2>
-      <p class="subtitle">
-        Takk til alle som sender flotte tilbakemeldinger til oss i FjOlsenbanden!
-      </p>
+      <div class="fb-edit-block" data-block-id="feedback-intro" data-edit-type="richtext">
+        <h2>Tilbakemeldinger fra <span class="highlight">FjOlsenbanden</span></h2>
+        <p class="subtitle">
+          Takk til alle som sender flotte tilbakemeldinger til oss i FjOlsenbanden!
+        </p>
+      </div>
 
-      <div class="feedback-grid">
+      <div class="feedback-grid fb-edit-block" data-block-id="feedback-quotes" data-edit-type="richtext">
         <div class="card">
           <p>
             «Tusen takk for at jeg har fått muligheten til å spille hos FJOlsenbanden.
@@ -1130,14 +1144,16 @@ body.is-admin .fb-block-edit-btn:hover {
 
   <section id="membership" class="section">
     <div class="container">
-      <h2>Bli <span class="highlight">medlem</span> i dag.</h2>
-      <p class="subtitle">
-        Det er helt gratis å bli medlem i FjOlsenbanden.<br />
-        Ved å bli medlem kan du vinne premier og delta i giveaways.
-      </p>
+      <div class="fb-edit-block" data-block-id="membership-intro" data-edit-type="richtext">
+        <h2>Bli <span class="highlight">medlem</span> i dag.</h2>
+        <p class="subtitle">
+          Det er helt gratis å bli medlem i FjOlsenbanden.<br />
+          Ved å bli medlem kan du vinne premier og delta i giveaways.
+        </p>
+      </div>
 
       <div class="center">
-        <div class="card membership-card">
+        <div class="card membership-card fb-edit-block" data-block-id="membership-card" data-edit-type="richtext">
           <span class="badge">Gratis</span>
           <p class="price">0 kr/mnd</p>
 
@@ -1156,6 +1172,9 @@ body.is-admin .fb-block-edit-btn:hover {
     </div>
   </section>
 
+  <section id="community" class="section">
+    <div class="container">
+      <div class="fb-edit-block" data-block-id="community-intro" data-edit-type="richtext">
     <section id="community" class="section">
       <div class="container">
         <h2>FjOlsenbanden – et community i <span class="highlight">vekst!</span></h2>
@@ -1163,6 +1182,44 @@ body.is-admin .fb-block-edit-btn:hover {
           Følg FjOlsenbanden på tvers av våre kanaler for å få med deg alle nyheter! Det kan være unike events på de
           forskjellige kanalene!
         </p>
+      </div>
+
+      <div class="social-grid fb-edit-block" data-block-id="community-socials" data-edit-type="richtext">
+        <a class="card social-card" data-social="twitch" href="https://www.twitch.tv/FjOlsenFN" target="_blank">
+          <div class="social-icon">
+            <img src="img/social/twitch.svg" alt="Twitch" />
+          </div>
+          <p class="social-number">3.2k</p>
+          <span class="social-label">Twitch</span>
+        </a>
+        <a class="card social-card" data-social="tiktok" href="https://www.tiktok.com/@fjolsenbanden" target="_blank">
+          <div class="social-icon">
+            <img src="img/social/tiktok.svg" alt="TikTok" />
+          </div>
+          <p class="social-number">4.2k</p>
+          <span class="social-label">TikTok</span>
+        </a>
+        <a class="card social-card" data-social="discord" href="https://discord.gg/fjolsenbanden" target="_blank">
+          <div class="social-icon">
+            <img src="img/social/discord.svg" alt="Discord" />
+          </div>
+          <p class="social-number">2.5k</p>
+          <span class="social-label">Discord</span>
+        </a>
+        <a class="card social-card" data-social="youtube" href="https://youtube.com/@fjolsenbanden" target="_blank">
+          <div class="social-icon">
+            <img src="img/social/youtube.svg" alt="YouTube" />
+          </div>
+          <p class="social-number">50+</p>
+          <span class="social-label">YouTube</span>
+        </a>
+        <a class="card social-card" data-social="instagram" href="https://www.instagram.com/fjolsenbanden" target="_blank">
+          <div class="social-icon">
+            <img src="img/social/instagram.svg" alt="Instagram" />
+          </div>
+          <p class="social-number">3.2k</p>
+          <span class="social-label">Instagram</span>
+        </a>
 
         <div class="social-grid">
           <a class="card social-card" data-social="twitch" href="https://www.twitch.tv/FjOlsenFN" target="_blank">
@@ -1220,7 +1277,7 @@ body.is-admin .fb-block-edit-btn:hover {
 
   <section id="partners" class="section">
     <div class="container">
-      <div class="partners-header">
+      <div class="partners-header fb-edit-block" data-block-id="partners-intro" data-edit-type="richtext">
         <h2 class="partners-title">
           Våre<br class="partners-title-break" />
           <span class="highlight">samarbeidspartnere</span>
@@ -1259,7 +1316,7 @@ body.is-admin .fb-block-edit-btn:hover {
         </div>
       </div>
 
-      <div class="partners-cta">
+      <div class="partners-cta fb-edit-block" data-block-id="partners-cta" data-edit-type="richtext">
         <p>Ønsker du å synliggjøre din merkevare for vårt engasjerte gaming publikum?</p>
         <a class="btn btn-primary" href="#contact">Kontakt oss</a>
       </div>
@@ -1268,10 +1325,12 @@ body.is-admin .fb-block-edit-btn:hover {
 
 <section id="services" class="section">
   <div class="container">
-    <h2>Andre tilbud</h2>
-    <p class="subtitle">FjOlsenbanden tilbyr mer enn bare streaming!</p>
+    <div class="fb-edit-block" data-block-id="services-intro" data-edit-type="richtext">
+      <h2>Andre tilbud</h2>
+      <p class="subtitle">FjOlsenbanden tilbyr mer enn bare streaming!</p>
+    </div>
 
-    <div class="services-grid">
+    <div class="services-grid fb-edit-block" data-block-id="services-list" data-edit-type="richtext">
 
       <!-- Foredrag -->
       <div class="card service">
@@ -1352,10 +1411,13 @@ body.is-admin .fb-block-edit-btn:hover {
   <section id="contact" class="section">
     <div class="container">
       <div class="card contact-card">
-        <h2>Kontakt oss</h2>
-        <p class="subtitle">
-          Har du spørsmål om medlemskap, samarbeid eller events? Send oss en melding så kommer vi tilbake til deg.
-        </p><form action="#" method="POST" class="contact-form">
+        <div class="fb-edit-block" data-block-id="contact-intro" data-edit-type="richtext">
+          <h2>Kontakt oss</h2>
+          <p class="subtitle">
+            Har du spørsmål om medlemskap, samarbeid eller events? Send oss en melding så kommer vi tilbake til deg.
+          </p>
+        </div>
+        <form action="#" method="POST" class="contact-form">
       <div class="form-row">
         <div class="form-group">
           <label for="name">Navn</label>
@@ -1383,10 +1445,12 @@ body.is-admin .fb-block-edit-btn:hover {
 
   <section id="faq" class="section section-faq">
     <div class="container faq-inner">
-      <h2>Ofte stilte spørsmål</h2>
-      <p class="subtitle">
-        Her finner du svar på de vanligste spørsmålene om FjOlsenbanden.
-      </p>
+      <div class="fb-edit-block" data-block-id="faq-intro" data-edit-type="richtext">
+        <h2>Ofte stilte spørsmål</h2>
+        <p class="subtitle">
+          Her finner du svar på de vanligste spørsmålene om FjOlsenbanden.
+        </p>
+      </div>
 
       <div class="faq-list">
         <details class="faq-item fb-edit-block" data-block-id="faq-1" data-edit-type="faq" open>
