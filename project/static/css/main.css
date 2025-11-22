@@ -332,6 +332,60 @@ img {
   margin: 0 0 0.8rem;
 }
 
+/* Calendar countdown */
+.calendar-countdown {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.9rem;
+  align-items: stretch;
+  justify-content: center;
+  padding: 1.25rem 1.5rem;
+  border-radius: var(--radius-lg);
+  background: linear-gradient(135deg, rgba(0, 166, 255, 0.15), rgba(255, 45, 164, 0.12));
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: var(--shadow-soft);
+}
+
+.calendar-countdown__item {
+  min-width: 90px;
+  padding: 0.8rem 1rem;
+  border-radius: var(--radius-md);
+  background: rgba(7, 17, 51, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.calendar-countdown__number {
+  font-size: clamp(1.6rem, 2vw, 2.2rem);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.calendar-countdown__label {
+  font-size: 0.85rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.calendar-countdown__complete,
+.calendar-countdown__error {
+  width: 100%;
+  text-align: center;
+  font-weight: 700;
+  padding: 0.6rem 0.8rem;
+  background: rgba(0, 166, 255, 0.1);
+  border-radius: var(--radius-md);
+}
+
+.calendar-countdown__error {
+  background: rgba(255, 45, 164, 0.1);
+  color: #ffd7ef;
+}
+
 /* Footer */
 
 .footer {

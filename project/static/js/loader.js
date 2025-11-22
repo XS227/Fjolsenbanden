@@ -171,4 +171,66 @@ async function loadPartials() {
   }
 }
 
-document.addEventListener('DOMContentLoaded', loadPartials);
+function renderCountdownValue(label, value) {
+  return `
+    <div class="calendar-countdown__item">
+      <span class="calendar-countdown__number">${String(value).padStart(2, '0')}</span>
+      <span class="calendar-countdown__label">${label}</span>
+    </div>
+  `;
+}
+
+function updateCountdown(el, targetDate) {
+  const diffMs = targetDate.getTime() - Date.now();
+  if (diffMs <= 0) {
+    el.innerHTML = '<div class="calendar-countdown__complete">Klar!</div>';
+    return false;
+  }
+
+  const totalSeconds = Math.floor(diffMs / 1000);
+  const days = Math.floor(totalSeconds / 86400);
+  const hours = Math.floor((totalSeconds % 86400) / 3600);
+  const minutes = Math.floor((totalSeconds % 3600) / 60);
+  const seconds = totalSeconds % 60;
+
+  el.innerHTML = `
+    ${renderCountdownValue('Dager', days)}
+    ${renderCountdownValue('Timer', hours)}
+    ${renderCountdownValue('Min', minutes)}
+    ${renderCountdownValue('Sek', seconds)}
+  `;
+
+  return true;
+}
+
+function setupCalendarCountdowns(root = document) {
+  const countdowns = Array.from(root.querySelectorAll('.calendar-countdown'));
+
+  countdowns.forEach((el) => {
+    if (el.dataset.countdownInitialized === '1') return;
+    const targetValue = el.dataset.target;
+    const targetDate = targetValue ? new Date(targetValue) : null;
+
+    el.dataset.countdownInitialized = '1';
+
+    if (!targetDate || Number.isNaN(targetDate.getTime())) {
+      el.innerHTML = '<div class="calendar-countdown__error">Ugyldig dato</div>';
+      return;
+    }
+
+    const tick = () => {
+      const keepRunning = updateCountdown(el, targetDate);
+      if (!keepRunning) {
+        clearInterval(intervalId);
+      }
+    };
+
+    tick();
+    const intervalId = window.setInterval(tick, 1000);
+  });
+}
+
+document.addEventListener('DOMContentLoaded', async () => {
+  await loadPartials();
+  setupCalendarCountdowns();
+});
