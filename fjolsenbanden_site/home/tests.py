@@ -131,3 +131,25 @@ class AdminBlockApiTests(TestCase):
         response = self.client.put(url, data=json.dumps({"type": "richtext"}), content_type="application/json")
         self.assertEqual(response.status_code, 400)
         self.assertEqual(ContentBlock.objects.count(), 0)
+
+    def test_invalid_email_returns_error(self) -> None:
+        url = reverse("admin-block", args=["contact-email"])
+        self.client.force_login(self.staff_user)
+        response = self.client.post(
+            url,
+            data=json.dumps({"type": ContentBlock.TYPE_EMAIL, "email": "not-an-email"}),
+            content_type="application/json",
+        )
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(ContentBlock.objects.count(), 0)
+
+    def test_invalid_social_url_returns_error(self) -> None:
+        url = reverse("admin-block", args=["instagram-link"])
+        self.client.force_login(self.staff_user)
+        response = self.client.put(
+            url,
+            data=json.dumps({"type": ContentBlock.TYPE_SOCIAL, "url": "not a url"}),
+            content_type="application/json",
+        )
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(ContentBlock.objects.count(), 0)
