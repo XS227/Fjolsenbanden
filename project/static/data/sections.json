@@ -1,0 +1,88 @@
+[
+  {
+    "id": 1,
+    "key": "hero",
+    "title": "Hero",
+    "order": 1,
+    "visible": true,
+    "content": {
+      "title": "Fjolsenbanden – Spillglede for hele familien",
+      "subtitle": "Livestreams, premier og trygg gamingcommunity",
+      "image_bg": "/static/img/hero-bg.jpg",
+      "cta_text": "Bli med!",
+      "cta_link": "#player-cards",
+      "tagline": "Et vennlig community bygget for trygg gamingglede.",
+      "hero_image": "/img/fjolsen-card.svg"
+    }
+  },
+  {
+    "id": 2,
+    "key": "about",
+    "title": "Om Fjolsenbanden",
+    "order": 2,
+    "visible": true,
+    "content": {
+      "lede": "Fjolsenbanden er et inkluderende gamingmiljø for barn, unge og foreldre.",
+      "items": [
+        "Familievennlig arena med tydelige verdier og trygge rammer",
+        "Jevenlige turneringer, giveaways og streams",
+        "Engasjert felleskap der kreativitet og mestring står i sentrum"
+      ]
+    }
+  },
+  {
+    "id": 3,
+    "key": "player-cards",
+    "title": "Medlemskap",
+    "order": 3,
+    "visible": true,
+    "content": {
+      "cards": [
+        {"title": "Mini", "price": "Gratis", "perks": ["Tilgang til Discord", "Delta på åpne events"]},
+        {"title": "Standard", "price": "79 kr / mnd", "perks": ["Giveaways", "Medlemsarrangement", "Felles gamingkvelder"]},
+        {"title": "Familie", "price": "129 kr / mnd", "perks": ["Inntil 4 familiemedlemmer", "Rabatt på turneringer", "Eksklusive VIP-streams"]}
+      ]
+    }
+  },
+  {
+    "id": 4,
+    "key": "partners",
+    "title": "Partnere",
+    "order": 4,
+    "visible": true,
+    "content": {
+      "logos": [
+        "/static/img/samsung-logo.png",
+        "/static/img/lenovo-logo.png",
+        "/static/img/philips-logo.png",
+        "/static/img/komplett-logo.png"
+      ]
+    }
+  },
+  {
+    "id": 5,
+    "key": "vipps-info",
+    "title": "Vipps",
+    "order": 5,
+    "visible": true,
+    "content": {
+      "number": "702931",
+      "description": "Støtt Fjolsenbanden på Vipps og bidra til flere arrangementer og premier."
+    }
+  },
+  {
+    "id": 6,
+    "key": "footer",
+    "title": "Footer",
+    "order": 6,
+    "visible": true,
+    "content": {
+      "links": [
+        {"label": "Discord", "href": "https://discord.gg/fjolsen"},
+        {"label": "Regler", "href": "/regler.html"},
+        {"label": "Personvernerklæring", "href": "/personvernerklaering.html"}
+      ],
+      "copyright": "© 2024 Fjolsenbanden"
+    }
+  }
+]

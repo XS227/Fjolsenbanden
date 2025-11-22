@@ -1,10 +1,17 @@
 <div class="card">
   <h3>Rediger seksjon</h3>
-  <p>Dette er en enkel stub for redigeringsskjemaet. Koble den mot admin/editor.js for å laste og lagre HTML.</p>
-  <label for="section-name">Seksjonsnavn</label>
-  <input id="section-name" name="section" placeholder="for eksempel hero" />
-  <label for="section-html">HTML-innhold</label>
-  <textarea id="section-html" rows="10" placeholder="Lim inn eller skriv HTML..."></textarea>
+  <p>Stub for å redigere SectionModel-felt før de sendes til API-et.</p>
+  <label for="section-key">Key</label>
+  <input id="section-key" name="key" placeholder="for eksempel hero" />
+  <label for="section-title">Tittel</label>
+  <input id="section-title" name="title" placeholder="Visningsnavn" />
+  <label for="section-order">Rekkefølge</label>
+  <input id="section-order" name="order" type="number" value="0" />
+  <label for="section-visible">
+    <input id="section-visible" name="visible" type="checkbox" checked /> Vis seksjonen
+  </label>
+  <label for="section-json">JSON-innhold</label>
+  <textarea id="section-json" rows="10" placeholder='{"title": "..."}'></textarea>
   <div class="hero-actions">
     <button class="btn btn-primary" type="submit">Lagre</button>
     <button class="btn btn-ghost" type="button">Avbryt</button>
