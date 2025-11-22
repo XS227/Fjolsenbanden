@@ -1,0 +1,24 @@
+<div class="section-wrapper" data-section="hero">
+  {% if is_admin %}
+    <button class="edit-btn" type="button" onclick="openEditor('hero')">✏️</button>
+  {% endif %}
+  <div class="section-content">
+    <section id="hero" class="section hero">
+      <div class="container hero-grid">
+        <div class="hero-text">
+          <span class="pill">Velkommen</span>
+          <h1>Fjolsenbanden – Spillglede for hele familien</h1>
+          <p class="lead">Livestreams, premier og trygg gamingcommunity</p>
+          <div class="hero-actions">
+            <a href="#player-cards" class="btn btn-primary">Bli med!</a>
+            <a href="#about" class="btn btn-ghost">Les mer</a>
+          </div>
+        </div>
+        <div class="hero-card">
+          <img src="../../img/fjolsen-card.svg" alt="Fjolsenbanden" />
+          <p class="hero-card-caption">Et vennlig community bygget for trygg gamingglede.</p>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
