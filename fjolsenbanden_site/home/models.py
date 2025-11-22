@@ -60,6 +60,30 @@ class ContentBlock(models.Model):
         return self.data.get("content", "") if isinstance(self.data, dict) else ""
 
     @property
+    def is_image(self) -> bool:
+        return self.type == self.TYPE_IMAGE
+
+    @property
+    def is_email(self) -> bool:
+        return self.type == self.TYPE_EMAIL
+
+    @property
+    def is_social(self) -> bool:
+        return self.type == self.TYPE_SOCIAL
+
+    @property
+    def image_src(self) -> str:
+        return self._get_data_value("src")
+
+    @property
+    def email_address(self) -> str:
+        return self._get_data_value("email")
+
+    @property
+    def social_url(self) -> str:
+        return self._get_data_value("url")
+
+    @property
     def video_id(self) -> str:
         return self.data.get("videoId", "") if isinstance(self.data, dict) else ""
 
