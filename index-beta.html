@@ -761,6 +761,82 @@ textarea:focus {
   font-size: 0.9rem;
 }
 
+
+  /* Admin blocks */
+  body.is-admin .fb-edit-block {
+    position: relative;
+  }
+
+  .fb-block-edit-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    z-index: 40;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    background: rgba(4, 17, 73, 0.95);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.45);
+    color: #fff;
+    font-size: 14px;
+    cursor: pointer;
+    opacity: 0;
+    transform: translateY(-4px);
+    transition:
+      opacity 0.2s ease,
+      transform 0.2s ease,
+      box-shadow 0.2s ease;
+  }
+
+  body.is-admin .fb-edit-block:hover > .fb-block-edit-btn {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  body.is-admin .fb-block-edit-btn:hover {
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.55);
+  }
+
+  .fb-edit-block.fb-editing-richtext {
+    outline: 2px solid rgba(0, 166, 255, 0.4);
+    outline-offset: 3px;
+  }
+
+  .fb-btn-small {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0.4rem 0.9rem;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    background: rgba(255, 255, 255, 0.05);
+    color: #fff;
+    font-size: 0.92rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+  }
+
+  .fb-btn-small:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.25);
+    transform: translateY(-1px);
+  }
+
+  .fb-btn-small--primary {
+    background: linear-gradient(120deg, #00a6ff, #4dd0ff);
+    border: 1px solid rgba(0, 166, 255, 0.6);
+    color: #0a1231;
+  }
+
+  .fb-btn-small--primary:hover {
+    background: linear-gradient(120deg, #29b8ff, #6ee0ff);
+  }
+
 /* Footer */
 
   .site-footer {
@@ -2057,14 +2133,28 @@ textarea:focus {
               <p class="social-number">2.5k</p>
               <span class="social-label">Discord</span>
             </a>
-            <a class="card social-card" data-social="youtube" href="https://youtube.com/@fjolsenbanden" target="_blank">
+            <a
+              class="card social-card fb-edit-block"
+              data-social="youtube"
+              data-block-id="social-youtube"
+              data-edit-type="social"
+              href="https://youtube.com/@fjolsenfn"
+              target="_blank"
+            >
               <div class="social-icon">
                 <img src="img/social/youtube.svg" alt="YouTube" />
               </div>
               <p class="social-number">50+</p>
               <span class="social-label">YouTube</span>
             </a>
-            <a class="card social-card" data-social="instagram" href="https://www.instagram.com/fjolsenbanden" target="_blank">
+            <a
+              class="card social-card fb-edit-block"
+              data-social="instagram"
+              data-block-id="social-instagram"
+              data-edit-type="social"
+              href="https://instagram.com/fjolsenbanden"
+              target="_blank"
+            >
               <div class="social-icon">
                 <img src="img/social/instagram.svg" alt="Instagram" />
               </div>
@@ -2258,15 +2348,17 @@ textarea:focus {
           </p>
 
           <div class="faq-list">
-            <details class="faq-item" open>
-              <summary>Hva er FjOlsenbanden?</summary>
-              <p>
-                FjOlsenbanden er et familievennlig gaming-community der barn, ungdom og foreldre kan delta på trygge og
-                inkluderende aktiviteter og events.
-              </p>
+            <details class="faq-item fb-edit-block" data-block-id="faq-1" data-edit-type="faq" open>
+              <summary>Hva koster det å bli medlem?</summary>
+              <p>Det er gratis å være med i FjOlsenbanden, men noen turneringer kan ha egen premie-pott.</p>
             </details>
 
-            <details class="faq-item">
+            <details class="faq-item fb-edit-block" data-block-id="faq-2" data-edit-type="faq">
+              <summary>Hvilken aldersgrense har dere?</summary>
+              <p>Vi er tilpasset barn og unge, men foresatte må godkjenne deltakelse.</p>
+            </details>
+
+            <details class="faq-item fb-edit-block" data-block-id="faq-3" data-edit-type="faq">
               <summary>Hvordan blir jeg medlem?</summary>
               <p>
                 Bla opp til seksjonen «Bli medlem» eller klikk på knappen i menyen. Der finner du lenker for både under
@@ -2274,23 +2366,23 @@ textarea:focus {
               </p>
             </details>
 
-            <details class="faq-item">
-              <summary>Er det noen aldersgrense?</summary>
-              <p>Alle kan være med, men barn under 18 år bør ha samtykke fra foresatte.</p>
+            <details class="faq-item fb-edit-block" data-block-id="faq-4" data-edit-type="faq">
+              <summary>Hva er FjOlsenbanden?</summary>
+              <p>
+                FjOlsenbanden er et familievennlig gaming-community der barn, ungdom og foreldre kan delta på trygge og
+                inkluderende aktiviteter og events.
+              </p>
             </details>
 
-            <details class="faq-item">
-              <summary>Hva koster det å være med?</summary>
-              <p>Medlemskapet er gratis. Enkelte spesialevents kan ha egne vilkår.</p>
-            </details>
-
-            <details class="faq-item">
+            <details class="faq-item fb-edit-block" data-block-id="faq-5" data-edit-type="faq">
               <summary>Hvordan sikrer dere trygg gaming?</summary>
               <p>
                 Vi har tydelige regler mot mobbing, banning og ekskludering, og alle aktiviteter overvåkes av voksne.
               </p>
             </details>
           </div>
+
+          <button type="button" id="fb-faq-add-btn" class="fb-btn-small fb-btn-small--primary">+ Legg til spørsmål</button>
         </div>
       </div>
     </section>
