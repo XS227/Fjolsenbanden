@@ -1,0 +1,9 @@
+{
+  "merchant_serial_number": "123456",
+  "client_id": "vipps-client-id",
+  "client_secret": "vipps-client-secret",
+  "subscription_key": "vipps-subscription-key",
+  "callback_url": "https://example.com/vipps/callback",
+  "environment": "test",
+  "active": true
+}
