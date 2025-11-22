@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="nb">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin – Vipps innstillinger</title>
+    <link rel="stylesheet" href="/admin/vipps.css" />
+  </head>
+  <body>
+    <header class="admin-header">
+      <h1>Admin</h1>
+      <nav class="admin-menu">
+        <a href="/admin">Dashboard</a>
+        <a href="/admin/editor">Rediger side</a>
+        <a class="active" href="/admin/vipps">Vipps innstillinger</a>
+        <a href="/admin/users">Brukere</a>
+        <a href="/logout">Logg ut</a>
+      </nav>
+    </header>
+
+    <main class="container">
+      <section class="card">
+        <div class="card-header">
+          <div>
+            <p class="eyebrow">Vipps</p>
+            <h2>Innstillinger</h2>
+          </div>
+          <span class="status-badge" id="status-badge">&nbsp;</span>
+        </div>
+        <form id="vipps-form" class="form-grid">
+          <label>
+            <span>Merchant serial number</span>
+            <input name="merchant_serial_number" type="text" required />
+          </label>
+          <label>
+            <span>Client ID</span>
+            <input name="client_id" type="text" required />
+          </label>
+          <label>
+            <span>Client secret</span>
+            <input name="client_secret" type="password" required />
+          </label>
+          <label>
+            <span>Subscription key</span>
+            <input name="subscription_key" type="text" required />
+          </label>
+          <label>
+            <span>Callback URL</span>
+            <input name="callback_url" type="url" placeholder="https://..." required />
+          </label>
+          <label>
+            <span>Miljø</span>
+            <select name="environment">
+              <option value="test">Test</option>
+              <option value="production">Production</option>
+            </select>
+          </label>
+          <label class="switch">
+            <input type="checkbox" name="active" />
+            <span>Aktiver Vipps</span>
+          </label>
+          <div class="form-actions">
+            <button type="submit">Lagre</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="card">
+        <div class="card-header">
+          <div>
+            <p class="eyebrow">Test</p>
+            <h2>Simuler betaling</h2>
+          </div>
+        </div>
+        <form id="payment-form" class="form-grid">
+          <label>
+            <span>Beløp (øre)</span>
+            <input name="amount" type="number" min="100" step="50" value="5000" />
+          </label>
+          <label>
+            <span>Order ID</span>
+            <input name="orderId" type="text" value="demo-order" />
+          </label>
+          <label>
+            <span>Return URL</span>
+            <input name="returnUrl" type="url" value="https://example.com/return" />
+          </label>
+          <div class="form-actions">
+            <button type="submit">Opprett Vipps-betaling</button>
+          </div>
+        </form>
+        <pre class="log" id="payment-log"></pre>
+      </section>
+    </main>
+
+    <script src="/admin/vipps.js"></script>
+  </body>
+</html>

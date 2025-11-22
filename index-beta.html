@@ -1365,78 +1365,65 @@ textarea:focus {
     </div>
   </footer>
 <script>
-  document.addEventListener('DOMContentLoaded', function () {
-    const faqSection = document.getElementById('faq');
+    document.addEventListener('DOMContentLoaded', function () {
+      const faqSection = document.getElementById('faq');
 
-    if (faqSection) {
-      // Gardin-effekt: når FAQ blir synlig, dras "gardinen" opp
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              faqSection.classList.add('faq-visible');
-              observer.disconnect(); // bare trigge én gang
+      if (faqSection) {
+        // Gardin-effekt: når FAQ blir synlig, dras "gardinen" opp
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                faqSection.classList.add('faq-visible');
+                observer.disconnect(); // bare trigge én gang
+              }
+            });
+          },
+          { threshold: 0.4 }
+        );
+
+        observer.observe(faqSection);
+
+        // Bare ett FAQ-punkt åpent om gangen
+        const details = faqSection.querySelectorAll('details.faq-item');
+        details.forEach((el) => {
+          el.addEventListener('toggle', () => {
+            if (el.open) {
+              details.forEach((other) => {
+                if (other !== el) other.open = false;
+              });
             }
           });
-        },
-        { threshold: 0.4 }
-      );
-
-      observer.observe(faqSection);
-
-      // Bare ett FAQ-punkt åpent om gangen
-      const details = faqSection.querySelectorAll('details.faq-item');
-      details.forEach((el) => {
-        el.addEventListener('toggle', () => {
-          if (el.open) {
-            details.forEach((other) => {
-              if (other !== el) other.open = false;
-            });
-          }
         });
       }
     });
-  });
 
-  const faqSection = document.querySelector('.section-faq');
-  if (faqSection) {
-    const activateFaq = () => faqSection.classList.add('faq-visible');
+    const faqSection = document.querySelector('.section-faq');
+    if (faqSection) {
+      const activateFaq = () => faqSection.classList.add('faq-visible');
 
-    if ('IntersectionObserver' in window) {
-      const observer = new IntersectionObserver(
-        (entries, obs) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              activateFaq();
-              obs.disconnect();
-            }
-          });
-        },
-        { threshold: 0.35 }
-      );
+      if ('IntersectionObserver' in window) {
+        const observer = new IntersectionObserver(
+          (entries, obs) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                activateFaq();
+                obs.disconnect();
+              }
+            });
+          },
+          { threshold: 0.35 }
+        );
 
-      observer.observe(faqSection);
-    } else {
-      activateFaq();
-    }
-  }
-
-  // Les admin-konfig fra localStorage og bruk på forsiden
-  (function () {
-    let raw = localStorage.getItem('fjAdminConfig');
-    if (!raw) return;
-
-    let cfg;
-    try {
-      cfg = JSON.parse(raw);
-    } catch (e) {
-      console.warn('Kunne ikke parse fjAdminConfig:', e);
-      return;
+        observer.observe(faqSection);
+      } else {
+        activateFaq();
+      }
     }
 
     // Les admin-konfig fra localStorage og bruk på forsiden
     (function () {
-      let raw = localStorage.getItem('fjAdminConfig');
+      const raw = localStorage.getItem('fjAdminConfig');
       if (!raw) return;
 
       let cfg;
@@ -1519,7 +1506,7 @@ textarea:focus {
         if (url.includes('/embed/')) return url;
 
         // youtu.be/ID
-        const shortMatch = url.match(/youtu\.be\/([^?&]+)/);
+        const shortMatch = url.match(/youtu.be\/([^?&]+)/);
         if (shortMatch) {
           return 'https://www.youtube.com/embed/' + shortMatch[1];
         }
@@ -1571,7 +1558,6 @@ textarea:focus {
         }
       }
     })();
-  });
-</script>
+  </script>
 </body>
 </html>

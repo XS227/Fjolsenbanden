@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="nb">
+  <head>
+    <meta charset="utf-8" />
+    <title>Fjolsenbanden – One-page med admin overlay</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../static/css/main.css" />
+    {% if is_admin %}
+      <link rel="stylesheet" href="/admin/editor.css" />
+    {% endif %}
+  </head>
+  <body>
+    {% include "../partials/hero.html" %}
+    {% include "../partials/about.html" %}
+    {% include "../partials/partners.html" %}
+    {% include "../partials/player-cards.html" %}
+    {% include "../partials/vipps-info.html" %}
+    {% include "../partials/footer.html" %}
+
+    {% if is_admin %}
+      <div id="modal" class="admin-modal" aria-hidden="true">
+        <div class="modal-backdrop" data-close-modal></div>
+        <div class="modal-dialog" role="dialog" aria-modal="true">
+          <button class="modal-close" type="button" data-close-modal>&times;</button>
+          <div id="modal-content" class="modal-content"></div>
+        </div>
+      </div>
+      <script src="/admin/editor.js"></script>
+    {% endif %}
+  </body>
+</html>
