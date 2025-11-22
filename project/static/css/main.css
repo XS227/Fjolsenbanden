@@ -152,6 +152,36 @@ img {
   height: 40px;
 }
 
+/* Login lock */
+.login-lock {
+  position: fixed;
+  top: 1.25rem;
+  right: 1.25rem;
+  z-index: 999;
+  font-size: 1.5rem;
+  text-decoration: none;
+  color: #ffffff;
+  background: rgba(0, 0, 0, 0.4);
+  padding: 0.4rem 0.55rem;
+  border-radius: 999px;
+  backdrop-filter: blur(4px);
+  transition: transform 0.12s ease, background 0.12s ease, box-shadow 0.12s ease;
+}
+
+.login-lock:hover {
+  transform: translateY(-1px);
+  background: rgba(0, 0, 0, 0.6);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.45);
+}
+
+@media (max-width: 640px) {
+  .login-lock {
+    top: 0.75rem;
+    right: 0.75rem;
+    font-size: 1.3rem;
+  }
+}
+
 /* Hero */
 
 .hero {
