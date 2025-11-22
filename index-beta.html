@@ -1205,7 +1205,427 @@ textarea:focus {
 
   </style>
 </head>
-<body>
+<body class="is-admin">
+  <style>
+    /* --- Felles --- */
+    body.is-admin .editable-section {
+      position: relative;
+    }
+
+    /* ===== INLINE EDITOR PER SEKSJON ===== */
+
+    .fb-section-edit-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      z-index: 40;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(4, 17, 73, 0.92);
+      color: #fff;
+      font-size: 14px;
+      cursor: pointer;
+      opacity: 0;
+      transform: translateY(-4px);
+      transition: opacity 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .editable-section:hover .fb-section-edit-btn {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .fb-section-edit-btn:hover {
+      box-shadow: 0 0 0 2px rgba(19, 160, 249, 0.6);
+    }
+
+    /* Mens seksjonen er i edit-modus */
+    .editable-section.fb-editing .editable-content {
+      outline: 2px solid #13A0F9;
+      background: rgba(0, 0, 0, 0.25);
+    }
+
+    .fb-inline-toolbar {
+      position: absolute;
+      top: 10px;
+      right: 48px;
+      z-index: 40;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: rgba(4, 17, 73, 0.96);
+      font-size: 12px;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: #fff;
+    }
+
+    .fb-inline-toolbar button {
+      border: none;
+      border-radius: 999px;
+      padding: 2px 8px;
+      font-size: 11px;
+      cursor: pointer;
+      background: rgba(255, 255, 255, 0.08);
+      color: #fff;
+    }
+
+    .fb-inline-toolbar button.fb-save {
+      font-weight: 600;
+      background: #13A0F9;
+    }
+
+    .fb-inline-toolbar button.fb-cancel {
+      opacity: 0.8;
+    }
+
+    /* ===== SIDEPANEL MED DRAG & DROP ===== */
+
+    #fb-editor-panel {
+      position: fixed;
+      right: 16px;
+      bottom: 16px;
+      z-index: 99;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    /* selve boksen */
+    .fb-editor-panel__box {
+      width: 260px;
+      max-height: 60vh;
+      border-radius: 16px;
+      background: rgba(4, 17, 73, 0.97);
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.6);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* topp-linje med tittel + lukk */
+    .fb-editor-panel__header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 12px;
+      font-size: 13px;
+      color: #fff;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .fb-editor-panel__close {
+      border: none;
+      background: transparent;
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    /* innhold */
+    .fb-editor-panel__body {
+      padding: 8px 10px 10px;
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.85);
+    }
+
+    .fb-editor-panel__body p {
+      margin: 0 0 6px;
+    }
+
+    /* seksjonsliste */
+    #fb-section-list {
+      list-style: none;
+      margin: 4px 0 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .fb-section-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 8px;
+      border-radius: 10px;
+      background: rgba(10, 26, 92, 0.9);
+      color: #fff;
+      cursor: grab;
+      user-select: none;
+    }
+
+    .fb-section-item:active {
+      cursor: grabbing;
+    }
+
+    .fb-section-item__handle {
+      width: 20px;
+      text-align: center;
+      opacity: 0.8;
+      font-size: 14px;
+    }
+
+    .fb-section-item__title {
+      flex: 1;
+      font-size: 12px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* drag-tilstand */
+    .fb-section-item.fb-dragging {
+      opacity: 0.7;
+      background: rgba(19, 160, 249, 0.9);
+    }
+
+    .fb-section-item.fb-over-before {
+      box-shadow: inset 0 2px 0 #13A0F9;
+    }
+
+    .fb-section-item.fb-over-after {
+      box-shadow: inset 0 -2px 0 #13A0F9;
+    }
+
+    /* panel knapp når minimert */
+    #fb-editor-panel.fb-panel-collapsed .fb-editor-panel__box {
+      display: none;
+    }
+
+    .fb-editor-panel__toggle {
+      margin-top: 6px;
+      width: 120px;
+      border-radius: 999px;
+      border: none;
+      padding: 6px 10px;
+      font-size: 12px;
+      background: rgba(4, 17, 73, 0.95);
+      color: #fff;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+    }
+
+    .fb-editor-panel__toggle span.emoji {
+      font-size: 14px;
+    }
+  </style>
+
+  <div id="fb-editor-panel" class="fb-panel-collapsed">
+    <div class="fb-editor-panel__box">
+      <div class="fb-editor-panel__header">
+        <span>Seksjoner – dra og slipp</span>
+        <button type="button" class="fb-editor-panel__close" aria-label="Lukk panel">×</button>
+      </div>
+      <div class="fb-editor-panel__body">
+        <p>Flytt rekkefølgen på seksjonene på forsiden.</p>
+        <ul id="fb-section-list"></ul>
+      </div>
+    </div>
+    <button type="button" class="fb-editor-panel__toggle">
+      <span class="emoji">⬍</span>
+      <span>Seksjoner</span>
+    </button>
+  </div>
+
+  <script>
+    (function () {
+      if (!document.body.classList.contains('is-admin')) return;
+
+      const root = document.getElementById('fb-sections-root');
+      if (!root) return;
+
+      const sections = Array.from(root.querySelectorAll('.editable-section'));
+
+      /* ========= INLINE EDITOR PER SEKSJON ========= */
+
+      sections.forEach((section) => {
+        const editable = section.querySelector('.editable-content');
+        if (!editable) return;
+        const sectionId = section.dataset.sectionId || '';
+
+        // blyant-ikon
+        const editBtn = document.createElement('button');
+        editBtn.type = 'button';
+        editBtn.className = 'fb-section-edit-btn';
+        editBtn.title = 'Rediger seksjon';
+        editBtn.innerHTML = '✏️';
+        section.appendChild(editBtn);
+
+        // inline toolbar (lagre / avbryt)
+        const toolbar = document.createElement('div');
+        toolbar.className = 'fb-inline-toolbar';
+        toolbar.style.display = 'none';
+        toolbar.innerHTML = `
+      <span>Redigerer: ${sectionId || 'seksjon'}</span>
+      <button type="button" class="fb-save">Lagre</button>
+      <button type="button" class="fb-cancel">Avbryt</button>
+    `;
+        section.appendChild(toolbar);
+
+        const saveBtn = toolbar.querySelector('.fb-save');
+        const cancelBtn = toolbar.querySelector('.fb-cancel');
+        let originalHtml = '';
+
+        editBtn.addEventListener('click', () => {
+          if (section.classList.contains('fb-editing')) return;
+          section.classList.add('fb-editing');
+          originalHtml = editable.innerHTML;
+          editable.setAttribute('contenteditable', 'true');
+          editable.focus();
+          toolbar.style.display = 'inline-flex';
+        });
+
+        cancelBtn.addEventListener('click', () => {
+          editable.innerHTML = originalHtml;
+          editable.setAttribute('contenteditable', 'false');
+          toolbar.style.display = 'none';
+          section.classList.remove('fb-editing');
+        });
+
+        saveBtn.addEventListener('click', async () => {
+          const newContent = editable.innerHTML;
+          try {
+            const res = await fetch('/api/admin/sections/' + encodeURIComponent(sectionId), {
+              method: 'PUT',
+              headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': window.csrfToken || '',
+              },
+              body: JSON.stringify({ content: newContent }),
+            });
+
+            if (!res.ok) throw new Error('Feil ved lagring');
+            editable.setAttribute('contenteditable', 'false');
+            toolbar.style.display = 'none';
+            section.classList.remove('fb-editing');
+            console.log('Seksjon lagret:', sectionId);
+          } catch (err) {
+            console.error(err);
+            alert('Klarte ikke å lagre seksjonen. Prøv igjen.');
+          }
+        });
+      });
+
+      /* ========= SIDEPANEL MED DRAG & DROP ========= */
+
+      const panel = document.getElementById('fb-editor-panel');
+      const listEl = document.getElementById('fb-section-list');
+      const toggleBtn = panel.querySelector('.fb-editor-panel__toggle');
+      const closeBtn = panel.querySelector('.fb-editor-panel__close');
+
+      toggleBtn.addEventListener('click', () => {
+        panel.classList.toggle('fb-panel-collapsed');
+      });
+
+      closeBtn.addEventListener('click', () => {
+        panel.classList.add('fb-panel-collapsed');
+      });
+
+      // bygg liste ut fra seksjonene på siden
+      function buildSectionList() {
+        listEl.innerHTML = '';
+        const currentSections = Array.from(root.querySelectorAll('.editable-section'));
+        currentSections.forEach((section) => {
+          const id = section.dataset.sectionId || '';
+          const titleEl = section.querySelector('h1, h2, h3, h4');
+          const titleText = titleEl ? titleEl.textContent.trim() : id || 'Uten navn';
+
+          const li = document.createElement('li');
+          li.className = 'fb-section-item';
+          li.draggable = true;
+          li.dataset.sectionId = id;
+          li.innerHTML = `
+        <span class="fb-section-item__handle">⠿</span>
+        <span class="fb-section-item__title">${titleText}</span>
+      `;
+          listEl.appendChild(li);
+        });
+      }
+
+      buildSectionList();
+
+      let dragItem = null;
+
+      listEl.addEventListener('dragstart', (e) => {
+        const li = e.target.closest('.fb-section-item');
+        if (!li) return;
+        dragItem = li;
+        li.classList.add('fb-dragging');
+        e.dataTransfer.effectAllowed = 'move';
+      });
+
+      listEl.addEventListener('dragend', () => {
+        if (dragItem) dragItem.classList.remove('fb-dragging');
+        listEl.querySelectorAll('.fb-section-item').forEach((el) => {
+          el.classList.remove('fb-over-before', 'fb-over-after');
+        });
+        dragItem = null;
+        applyOrderToSections();
+        persistOrder();
+      });
+
+      listEl.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        const target = e.target.closest('.fb-section-item');
+        if (!target || target === dragItem) return;
+
+        const rect = target.getBoundingClientRect();
+        const offset = e.clientY - rect.top;
+
+        listEl.querySelectorAll('.fb-section-item').forEach((el) => {
+          el.classList.remove('fb-over-before', 'fb-over-after');
+        });
+
+        if (offset < rect.height / 2) {
+          target.classList.add('fb-over-before');
+          listEl.insertBefore(dragItem, target);
+        } else {
+          target.classList.add('fb-over-after');
+          listEl.insertBefore(dragItem, target.nextSibling);
+        }
+      });
+
+      function applyOrderToSections() {
+        const orderIds = Array.from(listEl.querySelectorAll('.fb-section-item')).map((li) => li.dataset.sectionId);
+
+        orderIds.forEach((id) => {
+          const section = root.querySelector('.editable-section[data-section-id="' + id + '"]');
+          if (section) {
+            root.appendChild(section);
+          }
+        });
+      }
+
+      function persistOrder() {
+        const order = Array.from(listEl.querySelectorAll('.fb-section-item')).map((li) => li.dataset.sectionId);
+
+        fetch('/api/admin/sections/order', {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': window.csrfToken || '',
+          },
+          body: JSON.stringify({ order }),
+        })
+          .then((res) => {
+            if (!res.ok) throw new Error('Feil ved lagring av rekkefølge');
+            console.log('Ny seksjonsrekkefølge lagret', order);
+          })
+          .catch((err) => {
+            console.error(err);
+            alert('Rekkefølgen ble endret i nettleseren, men kunne ikke lagres i databasen.');
+          });
+      }
+    })();
+  </script>
   <header class="top-nav">
     <div class="container nav-inner">
       <div class="logo">
@@ -1228,491 +1648,521 @@ textarea:focus {
     ✏️ Visual editor
   </button>
 
-  <section id="hero" class="section hero" data-section="hero">
-    <div class="container">
-      <div class="section-toolbar">
-        <span>Hero-seksjon</span>
-        <button type="button" onclick="saveSection('hero')">Lagre</button>
-      </div>
-    </div>
-    <div class="container hero-grid">
-      <div class="hero-text">
-        <span class="pill" data-editable data-field="pill">Velkommen</span>
-        <h1 data-editable data-field="title">
-          FjOlsenbanden er<br />
-          <span class="highlight">Norges mest inkluderende gaming-community.</span>
-        </h1>
-        <p class="lead" data-editable data-field="ingress">
-          En trygg arena for familier som elsker gaming, med fellesskap, premier og kreativitet i sentrum.
-        </p>
-        <div class="hero-actions">
-          <a href="#membership" class="btn btn-primary" data-editable data-field="primary_cta_text">Bli medlem</a>
-          <a href="#about" class="btn btn-ghost" data-editable data-field="secondary_cta_text">Les mer</a>
-        </div>
-      </div>
-      <div class="hero-card screen-effects">
-        <span class="particle"></span>
-        <span class="particle"></span>
-        <span class="particle"></span>
-
-        <img src="img/fjolsen-card.svg" alt="FjOlsen illustrasjon" />
-      </div>
-    </div>
-  </section>
-
-  <section id="about" class="section" data-section="about">
-    <div class="container">
-      <div class="section-toolbar">
-        <span>Om-seksjon</span>
-        <button type="button" onclick="saveSection('about')">Lagre</button>
-      </div>
-      <h2 data-editable data-field="title">Hva er <span class="highlight">FjOlsenbanden?</span></h2>
-      <p class="subtitle" data-editable data-field="subtitle">
-        Norges mest inkluderende gaming-community for hele familien.
-      </p><div class="about-grid">
-    <div class="card card-large">
-      <h3 data-editable data-field="goal_title">Målet med FjOlsenbanden</h3>
-      <p data-editable data-field="goal_p1">
-        Målet med FjOlsenbanden er å skape et trygt, positivt og inkluderende gamingmiljø der barn, ungdom –
-        og mange foreldre – kan oppleve ekte mestring, samarbeid og fellesskap.
-      </p>
-      <p data-editable data-field="goal_p2">
-        Hver uke legger FjOlsenFN ned utallige timer på å arrangere morsomme konkurranser og aktiviteter som
-        skaper engasjement og samhold i hele communityet.
-      </p>
-      <p data-editable data-field="goal_p3">
-        Premiene som deles ut er sponset av samarbeidspartnere fra næringslivet, eller finansiert gjennom
-        frivillige bidrag fra foreldre – alt for å gi barna ekstra motivasjon og glede.
-      </p>
-      <p data-editable data-field="goal_p4">
-        Alle som blir med i FjOlsenbanden får tittelen «FjOls» – hvor man blir en ambassadør som fremmer et
-        positivt fellesskap, trygghet og stolthet.
-      </p>
-      <a href="#membership" class="btn btn-primary" data-editable data-field="cta">Bli medlem</a>
-    </div>
-
-    <div class="about-benefits">
-      <div class="card card-pill">
-        <h4 data-editable data-field="benefit1_title">Trygg gamingarena</h4>
-        <p data-editable data-field="benefit1_text">
-          Alle aktiviteter overvåkes av voksne, med klare regler mot mobbing, banning og ekskludering.
-        </p>
-      </div>
-
-      <div class="card card-pill">
-        <h4 data-editable data-field="benefit2_title">Positivt fellesskap</h4>
-        <p data-editable data-field="benefit2_text">
-          Vi har fokus på å lære barn og unge god nettadferd, samarbeid og kommunikasjon.
-        </p>
-      </div>
-
-      <div class="card card-pill">
-        <h4 data-editable data-field="benefit3_title">Familievennlig stream</h4>
-        <p data-editable data-field="benefit3_text">
-          Alt innhold er bannfritt og passer for både barn og voksne å se sammen.
-        </p>
-      </div>
-    </div>
-  </div>
-</div>
-
-  </section>
-
-  <section id="video" class="section" data-section="video">
-    <div class="container">
-      <div class="section-toolbar">
-        <span>Video</span>
-        <button type="button" onclick="saveSection('video')">Lagre</button>
-      </div>
-      <h2 data-editable data-field="title">Hvem er <span class="highlight">FjOlsen?</span></h2>
-      <p class="subtitle" data-editable data-field="subtitle">
-        FjOlsenFN – familievennlig streamer og grunnlegger av FjOlsenbanden.
-      </p><div class="two-column">
-    <div class="card video-wrapper">
-      <iframe
-        src="https://www.youtube.com/embed/8EgRIkmvmtM"
-        title="Slik deltar du på FjOlsenbanden customs"
-        frameborder="0"
-        allowfullscreen
-      ></iframe>
-    </div>
-    <div class="card">
-      <h3 data-editable data-field="profile_title">FjOlsenFN – Familievennlig streamer</h3>
-      <p data-editable data-field="profile_p1">
-        FjOlsenbanden ledes av Tor Martin «FjOlsenFN» Olsen. FjOlsen er en familievennlig streamer som ikke
-        tillater banning, mobbing og brudd på nettvettsreglene.
-      </p>
-      <p data-editable data-field="profile_p2">
-        Han startet prosjektet for å gi sine egne onkelbarn et trygt og bannefritt sted å spille. Det som
-        begynte som et tiltak for å beskytte onkelbarna, har vokst til å omfatte alle barn som ønsker å være
-        en del av FjOlsenbanden – hvor gjensidig trygghet, respekt og fellesskap står i fokus.
-      </p>
-      <p data-editable data-field="profile_p3">
-        For han vet at så lenge hans egne onkelbarn spiller under trygge rammer, betyr det at også dine barn
-        gjør det samme.
-      </p>
-    </div>
-  </div>
-</div>
-
-  </section>
-
-
-  <section id="feedback" class="section" data-section="feedback">
-    <div class="container">
-      <h2>Tilbakemeldinger fra <span class="highlight">FjOlsenbanden</span></h2>
-      <p class="subtitle">
-        Takk til alle som sender flotte tilbakemeldinger til oss i FjOlsenbanden!
-      </p>
-
-      <div class="feedback-grid">
-        <div class="card">
-          <p>
-            «Tusen takk for at jeg har fått muligheten til å spille hos FJOlsenbanden.
-            Kan ikke takke nok for alt du har gjort for meg og alle andre. Tusen takk! ♥️
-            Tror ikke du vet hvor mye jeg setter pris på dette. Du har vært hele grunnen
-            til at jeg har blitt enda nærmere noen i real life venner. Tusen tusen takk for
-            det ♥️»
-          </p>
-          <p class="feedback-name">Filip, medlem</p>
-        </div>
-
-        <div class="card">
-          <p>
-            «Du fortjener det mann! Du er så super streamer og den personen som
-            setter et smil på alle som kommer inn. Jeg som er syk ble glad med
-            engang jeg kom inn.»
-          </p>
-          <p class="feedback-name">Borkærn, medlem</p>
-        </div>
-
-        <div class="card">
-          <p>
-            «Tusen takk for alt du gjør for barn og ungdom som digger Fortnite – og for at du
-            holder strenge og trygge rammer. Du skaper stor underholdningsverdi også for
-            oss som ikke skjønner så mye av gamingverden! Du klarte å få barnet vårt til å
-            glede seg til bursdagen sin og å skape et skikkelig lyspunkt i en ellers ganske
-            tøff tilværelse. For det er vi foreldre (og storesøster) evig takknemlig.»
-          </p>
-          <p class="feedback-name">Pernille &amp; Terje, foreldre</p>
-        </div>
-
-        <div class="card">
-          <p>
-            «Du har så mye peil på how to, overflow barn! Veldig fint og observere
-            hvordan iallfall KJ tjener på FJOlsen-events!! Og jeg kjenner en del som
-            hadde hatt fullt utbytte av et pedagogisk opplegg i din regi! Respect.»
-          </p>
-          <p class="feedback-name feedback-name-accent">Merethe, mamma</p>
-        </div>
-      </div>
-
-      <div class="center">
-        <a href="#membership" class="btn btn-primary">Bli med i communityet</a>
-      </div>
-    </div>
-  </section>
-
-  <section id="membership" class="section" data-section="membership">
-    <div class="container">
-      <div class="section-toolbar">
-        <span>Medlemskap</span>
-        <button type="button" onclick="saveSection('membership')">Lagre</button>
-      </div>
-      <h2 data-editable data-field="title">Bli <span class="highlight">medlem</span> i dag.</h2>
-      <p class="subtitle" data-editable data-field="subtitle">
-        Det er helt gratis å bli medlem i FjOlsenbanden.<br />
-        Ved å bli medlem kan du vinne premier og delta i giveaways.
-      </p>
-
-      <div class="center">
-        <div class="card membership-card">
-          <span class="badge">Gratis</span>
-          <p class="price">0 kr/mnd</p>
-
-          <ul class="checklist membership-features">
-            <li data-editable data-field="feature1">Få medlemsrolle i Discord</li>
-            <li data-editable data-field="feature2">Vinne premier i customs &amp; giveaways</li>
-            <li data-editable data-field="feature3">Prioritet i kø til konkurranser foran ikke-medlemmer</li>
-          </ul>
-
-          <div class="membership-buttons">
-            <a href="https://forms.gle/sq4mUf7s6e6UY7R58" class="btn btn-primary" data-editable data-field="cta_under18">Under 18 år</a>
-            <a href="https://forms.gle/ZrbXCggnUY8FTT7t9" class="btn btn-secondary" data-editable data-field="cta_over18">Over 18 år</a>
+  <main id="fb-sections-root">
+    <section id="hero" class="section hero fb-section editable-section" data-section-id="hero">
+      <div class="editable-content">
+        <div class="container">
+          <div class="section-toolbar">
+            <span>Hero-seksjon</span>
+            <button type="button" onclick="saveSection('hero')">Lagre</button>
           </div>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="community" class="section" data-section="community">
-    <div class="container">
-      <div class="section-toolbar">
-        <span>Community</span>
-        <button type="button" onclick="saveSection('community')">Lagre</button>
-      </div>
-      <h2 data-editable data-field="title">FjOlsenbanden – et community i <span class="highlight">vekst!</span></h2>
-      <p class="subtitle" data-editable data-field="subtitle">
-        Følg FjOlsenbanden på tvers av våre kanaler for å få med deg alle nyheter! Det kan være unike events på de
-        forskjellige kanalene!
-      </p>
-
-      <div class="social-grid">
-        <a class="card social-card" data-social="twitch" href="https://www.twitch.tv/FjOlsenFN" target="_blank">
-          <div class="social-icon">
-            <img src="img/social/twitch.svg" alt="Twitch" />
-          </div>
-          <p class="social-number">3.2k</p>
-          <span class="social-label">Twitch</span>
-        </a>
-        <a class="card social-card" data-social="tiktok" href="https://www.tiktok.com/@fjolsenbanden" target="_blank">
-          <div class="social-icon">
-            <img src="img/social/tiktok.svg" alt="TikTok" />
-          </div>
-          <p class="social-number">4.2k</p>
-          <span class="social-label">TikTok</span>
-        </a>
-        <a class="card social-card" data-social="discord" href="https://discord.gg/fjolsenbanden" target="_blank">
-          <div class="social-icon">
-            <img src="img/social/discord.svg" alt="Discord" />
-          </div>
-          <p class="social-number">2.5k</p>
-          <span class="social-label">Discord</span>
-        </a>
-        <a class="card social-card" data-social="youtube" href="https://youtube.com/@fjolsenbanden" target="_blank">
-          <div class="social-icon">
-            <img src="img/social/youtube.svg" alt="YouTube" />
-          </div>
-          <p class="social-number">50+</p>
-          <span class="social-label">YouTube</span>
-        </a>
-        <a class="card social-card" data-social="instagram" href="https://www.instagram.com/fjolsenbanden" target="_blank">
-          <div class="social-icon">
-            <img src="img/social/instagram.svg" alt="Instagram" />
-          </div>
-          <p class="social-number">3.2k</p>
-          <span class="social-label">Instagram</span>
-        </a>
-      </div>
-  </div>
-
-  </section>
-
-  <section id="partners" class="section" data-section="partners">
-    <div class="container">
-      <div class="section-toolbar">
-        <span>Partner-seksjon</span>
-        <button type="button" onclick="saveSection('partners')">Lagre</button>
-      </div>
-      <div class="partners-header">
-        <h2 class="partners-title" data-editable data-field="title">
-          Våre<br class="partners-title-break" />
-          <span class="highlight">samarbeidspartnere</span>
-        </h2>
-        <p class="subtitle partners-subtitle" data-editable data-field="subtitle">
-          Her er noen av våre samarbeidspartnere som har bidratt til<br class="partners-subtitle-break" />
-          å skape minneverdige øyeblikk i FjOlsenbanden!
-        </p>
-      </div>
-
-      <div class="partners-grid">
-        <div class="card partner">
-          <img src="https://setaei.com/Fjolsen/partnere/p-lenovo.png" alt="Lenovo" />
-        </div>
-        <div class="card partner">
-          <img src="https://setaei.com/Fjolsen/partnere/p-komplett.png" alt="Komplett" />
-        </div>
-        <div class="card partner">
-          <img src="https://setaei.com/Fjolsen/partnere/p-samsung.png" alt="Samsung" />
-        </div>
-        <div class="card partner">
-          <img src="https://setaei.com/Fjolsen/partnere/p-kristiania.png" alt="Kristiania" />
-        </div>
-
-        <div class="card partner">
-          <img src="https://setaei.com/Fjolsen/partnere/p-philips.png" alt="Philips" />
-        </div>
-        <div class="card partner">
-          <img src="https://setaei.com/Fjolsen/partnere/p-saily.png" alt="Saily" />
-        </div>
-        <div class="card partner">
-          <img src="https://setaei.com/Fjolsen/partnere/P-nki.svg" alt="NKI" />
-        </div>
-        <div class="card partner">
-          <img src="https://setaei.com/Fjolsen/partnere/p-trondheimplay.png" alt="Trondheim Play" />
-        </div>
-      </div>
-
-      <div class="partners-cta">
-        <p data-editable data-field="cta_text">Ønsker du å synliggjøre din merkevare for vårt engasjerte gaming publikum?</p>
-        <a class="btn btn-primary" href="#contact" data-editable data-field="cta_button">Kontakt oss</a>
-      </div>
-    </div>
-  </section>
-
-<section id="services" class="section" data-section="services">
-  <div class="container">
-    <div class="section-toolbar">
-      <span>Andre tilbud</span>
-      <button type="button" onclick="saveSection('services')">Lagre</button>
-    </div>
-    <h2 data-editable data-field="title">Andre tilbud</h2>
-    <p class="subtitle" data-editable data-field="subtitle">FjOlsenbanden tilbyr mer enn bare streaming!</p>
-
-    <div class="services-grid">
-
-      <!-- Foredrag -->
-      <div class="card service">
-        <div class="service-icon-wrap">
-          <div class="service-icon-bg"></div>
-          <img src="https://setaei.com/Fjolsen/Sjokk.png" class="service-icon" alt="Foredrag ikon" />
-        </div>
-          <h3 class="service-title" data-editable data-field="talk_title">FORE­DRAG</h3>
-          <p class="service-description" data-editable data-field="talk_text">
-            FjOlsen besøker skoler, idrettslag og e-sportklubber for å snakke om streaming, gaming-kultur og nettvett.
-          </p>
-      </div>
-
-      <!-- Events -->
-      <div class="card service">
-        <div class="service-icon-wrap">
-          <div class="service-icon-bg"></div>
-          <img src="https://setaei.com/Fjolsen/Glad%20tunge.png" class="service-icon" alt="Events ikon" />
-        </div>
-          <h3 class="service-title" data-editable data-field="events_title">EVENTS</h3>
-          <p class="service-description" data-editable data-field="events_text">
-            Vi arrangerer gaming-konkurranser for bedrifter, skoler og klubber – både digitalt og fysisk.
-          </p>
-      </div>
-
-      <!-- Unboxing -->
-      <div class="card service">
-        <div class="service-icon-wrap">
-          <div class="service-icon-bg"></div>
-          <img src="https://setaei.com/Fjolsen/Love.png" class="service-icon" alt="Unboxing ikon" />
-        </div>
-            <h3 class="service-title" data-editable data-field="unboxing_title">UNBOXING</h3>
-            <p class="service-description" data-editable data-field="unboxing_text">
-              FjOlsen lager profesjonelle unboxing-videoer av dine produkter som kan brukes i deres markedsføring og deles med vårt community.
+        <div class="container hero-grid">
+          <div class="hero-text">
+            <span class="pill" data-editable data-field="pill">Velkommen</span>
+            <h1 data-editable data-field="title">
+              FjOlsenbanden er<br />
+              <span class="highlight">Norges mest inkluderende gaming-community.</span>
+            </h1>
+            <p class="lead" data-editable data-field="ingress">
+              En trygg arena for familier som elsker gaming, med fellesskap, premier og kreativitet i sentrum.
             </p>
-      </div>
+            <div class="hero-actions">
+              <a href="#membership" class="btn btn-primary" data-editable data-field="primary_cta_text">Bli medlem</a>
+              <a href="#about" class="btn btn-ghost" data-editable data-field="secondary_cta_text">Les mer</a>
+            </div>
+          </div>
+          <div class="hero-card screen-effects">
+            <span class="particle"></span>
+            <span class="particle"></span>
+            <span class="particle"></span>
 
-      <!-- Streamer for hire -->
-      <div class="card service">
-        <div class="service-icon-wrap">
-          <div class="service-icon-bg"></div>
-          <img src="https://setaei.com/Fjolsen/Glad%20tenner.png" class="service-icon" alt="Streamer ikon" />
+            <img src="img/fjolsen-card.svg" alt="FjOlsen illustrasjon" />
+          </div>
         </div>
-            <h3 class="service-title" data-editable data-field="streamer_title">STREAMER FOR HIRE</h3>
-            <p class="service-description" data-editable data-field="streamer_text">
-              Ønsker du at FjOlsen skal streame på vegne av din merkevare? Han er tilgjengelig for co-streams, produktlanseringer og kampanjer – der ditt budskap blir formidlet på en autentisk og engasjerende måte til tusenvis av følgere.
+      </div>
+    </section>
+
+    <section id="about" class="section fb-section editable-section" data-section-id="about">
+      <div class="editable-content">
+        <div class="container">
+          <div class="section-toolbar">
+            <span>Om-seksjon</span>
+            <button type="button" onclick="saveSection('about')">Lagre</button>
+          </div>
+          <h2 data-editable data-field="title">Hva er <span class="highlight">FjOlsenbanden?</span></h2>
+          <p class="subtitle" data-editable data-field="subtitle">
+            Norges mest inkluderende gaming-community for hele familien.
+          </p>
+          <div class="about-grid">
+            <div class="card card-large">
+              <h3 data-editable data-field="goal_title">Målet med FjOlsenbanden</h3>
+              <p data-editable data-field="goal_p1">
+                Målet med FjOlsenbanden er å skape et trygt, positivt og inkluderende gamingmiljø der barn, ungdom –
+                og mange foreldre – kan oppleve ekte mestring, samarbeid og fellesskap.
+              </p>
+              <p data-editable data-field="goal_p2">
+                Hver uke legger FjOlsenFN ned utallige timer på å arrangere morsomme konkurranser og aktiviteter som
+                skaper engasjement og samhold i hele communityet.
+              </p>
+              <p data-editable data-field="goal_p3">
+                Premiene som deles ut er sponset av samarbeidspartnere fra næringslivet, eller finansiert gjennom
+                frivillige bidrag fra foreldre – alt for å gi barna ekstra motivasjon og glede.
+              </p>
+              <p data-editable data-field="goal_p4">
+                Alle som blir med i FjOlsenbanden får tittelen «FjOls» – hvor man blir en ambassadør som fremmer et
+                positivt fellesskap, trygghet og stolthet.
+              </p>
+              <a href="#membership" class="btn btn-primary" data-editable data-field="cta">Bli medlem</a>
+            </div>
+
+            <div class="about-benefits">
+              <div class="card card-pill">
+                <h4 data-editable data-field="benefit1_title">Trygg gamingarena</h4>
+                <p data-editable data-field="benefit1_text">
+                  Alle aktiviteter overvåkes av voksne, med klare regler mot mobbing, banning og ekskludering.
+                </p>
+              </div>
+
+              <div class="card card-pill">
+                <h4 data-editable data-field="benefit2_title">Positivt fellesskap</h4>
+                <p data-editable data-field="benefit2_text">
+                  Vi har fokus på å lære barn og unge god nettadferd, samarbeid og kommunikasjon.
+                </p>
+              </div>
+
+              <div class="card card-pill">
+                <h4 data-editable data-field="benefit3_title">Familievennlig stream</h4>
+                <p data-editable data-field="benefit3_text">
+                  Alt innhold er bannfritt og passer for både barn og voksne å se sammen.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="video" class="section fb-section editable-section" data-section-id="video">
+      <div class="editable-content">
+        <div class="container">
+          <div class="section-toolbar">
+            <span>Video</span>
+            <button type="button" onclick="saveSection('video')">Lagre</button>
+          </div>
+          <h2 data-editable data-field="title">Hvem er <span class="highlight">FjOlsen?</span></h2>
+          <p class="subtitle" data-editable data-field="subtitle">
+            FjOlsenFN – familievennlig streamer og grunnlegger av FjOlsenbanden.
+          </p>
+          <div class="two-column">
+            <div class="card video-wrapper">
+              <iframe
+                src="https://www.youtube.com/embed/8EgRIkmvmtM"
+                title="Slik deltar du på FjOlsenbanden customs"
+                frameborder="0"
+                allowfullscreen
+              ></iframe>
+            </div>
+            <div class="card">
+              <h3 data-editable data-field="profile_title">FjOlsenFN – Familievennlig streamer</h3>
+              <p data-editable data-field="profile_p1">
+                FjOlsenbanden ledes av Tor Martin «FjOlsenFN» Olsen. FjOlsen er en familievennlig streamer som ikke
+                tillater banning, mobbing og brudd på nettvettsreglene.
+              </p>
+              <p data-editable data-field="profile_p2">
+                Han startet prosjektet for å gi sine egne onkelbarn et trygt og bannefritt sted å spille. Det som
+                begynte som et tiltak for å beskytte onkelbarna, har vokst til å omfatte alle barn som ønsker å være
+                en del av FjOlsenbanden – hvor gjensidig trygghet, respekt og fellesskap står i fokus.
+              </p>
+              <p data-editable data-field="profile_p3">
+                For han vet at så lenge hans egne onkelbarn spiller under trygge rammer, betyr det at også dine barn
+                gjør det samme.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="feedback" class="section fb-section editable-section" data-section-id="feedback">
+      <div class="editable-content">
+        <div class="container">
+          <h2>Tilbakemeldinger fra <span class="highlight">FjOlsenbanden</span></h2>
+          <p class="subtitle">
+            Takk til alle som sender flotte tilbakemeldinger til oss i FjOlsenbanden!
+          </p>
+
+          <div class="feedback-grid">
+            <div class="card">
+              <p>
+                «Tusen takk for at jeg har fått muligheten til å spille hos FJOlsenbanden.
+                Kan ikke takke nok for alt du har gjort for meg og alle andre. Tusen takk! ♥️
+                Tror ikke du vet hvor mye jeg setter pris på dette. Du har vært hele grunnen
+                til at jeg har blitt enda nærmere noen i real life venner. Tusen tusen takk for
+                det ♥️»
+              </p>
+              <p class="feedback-name">Filip, medlem</p>
+            </div>
+
+            <div class="card">
+              <p>
+                «Du fortjener det mann! Du er så super streamer og den personen som
+                setter et smil på alle som kommer inn. Jeg som er syk ble glad med
+                engang jeg kom inn.»
+              </p>
+              <p class="feedback-name">Borkærn, medlem</p>
+            </div>
+
+            <div class="card">
+              <p>
+                «Tusen takk for alt du gjør for barn og ungdom som digger Fortnite – og for at du
+                holder strenge og trygge rammer. Du skaper stor underholdningsverdi også for
+                oss som ikke skjønner så mye av gamingverden! Du klarte å få barnet vårt til å
+                glede seg til bursdagen sin og å skape et skikkelig lyspunkt i en ellers ganske
+                tøff tilværelse. For det er vi foreldre (og storesøster) evig takknemlig.»
+              </p>
+              <p class="feedback-name">Pernille &amp; Terje, foreldre</p>
+            </div>
+
+            <div class="card">
+              <p>
+                «Du har så mye peil på how to, overflow barn! Veldig fint og observere
+                hvordan iallfall KJ tjener på FJOlsen-events!! Og jeg kjenner en del som
+                hadde hatt fullt utbytte av et pedagogisk opplegg i din regi! Respect.»
+              </p>
+              <p class="feedback-name feedback-name-accent">Merethe, mamma</p>
+            </div>
+          </div>
+
+          <div class="center">
+            <a href="#membership" class="btn btn-primary">Bli med i communityet</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="membership" class="section fb-section editable-section" data-section-id="membership">
+      <div class="editable-content">
+        <div class="container">
+          <div class="section-toolbar">
+            <span>Medlemskap</span>
+            <button type="button" onclick="saveSection('membership')">Lagre</button>
+          </div>
+          <h2 data-editable data-field="title">Bli <span class="highlight">medlem</span> i dag.</h2>
+          <p class="subtitle" data-editable data-field="subtitle">
+            Det er helt gratis å bli medlem i FjOlsenbanden.<br />
+            Ved å bli medlem kan du vinne premier og delta i giveaways.
+          </p>
+
+          <div class="center">
+            <div class="card membership-card">
+              <span class="badge">Gratis</span>
+              <p class="price">0 kr/mnd</p>
+
+              <ul class="checklist membership-features">
+                <li data-editable data-field="feature1">Få medlemsrolle i Discord</li>
+                <li data-editable data-field="feature2">Vinne premier i customs &amp; giveaways</li>
+                <li data-editable data-field="feature3">Prioritet i kø til konkurranser foran ikke-medlemmer</li>
+              </ul>
+
+              <div class="membership-buttons">
+                <a
+                  href="https://forms.gle/sq4mUf7s6e6UY7R58"
+                  class="btn btn-primary"
+                  data-editable
+                  data-field="cta_under18"
+                >
+                  Under 18 år
+                </a>
+                <a
+                  href="https://forms.gle/ZrbXCggnUY8FTT7t9"
+                  class="btn btn-secondary"
+                  data-editable
+                  data-field="cta_over18"
+                >
+                  Over 18 år
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="community" class="section fb-section editable-section" data-section-id="community">
+      <div class="editable-content">
+        <div class="container">
+          <div class="section-toolbar">
+            <span>Community</span>
+            <button type="button" onclick="saveSection('community')">Lagre</button>
+          </div>
+          <h2 data-editable data-field="title">FjOlsenbanden – et community i <span class="highlight">vekst!</span></h2>
+          <p class="subtitle" data-editable data-field="subtitle">
+            Følg FjOlsenbanden på tvers av våre kanaler for å få med deg alle nyheter! Det kan være unike events på de
+            forskjellige kanalene!
+          </p>
+
+          <div class="social-grid">
+            <a class="card social-card" data-social="twitch" href="https://www.twitch.tv/FjOlsenFN" target="_blank">
+              <div class="social-icon">
+                <img src="img/social/twitch.svg" alt="Twitch" />
+              </div>
+              <p class="social-number">3.2k</p>
+              <span class="social-label">Twitch</span>
+            </a>
+            <a class="card social-card" data-social="tiktok" href="https://www.tiktok.com/@fjolsenbanden" target="_blank">
+              <div class="social-icon">
+                <img src="img/social/tiktok.svg" alt="TikTok" />
+              </div>
+              <p class="social-number">4.2k</p>
+              <span class="social-label">TikTok</span>
+            </a>
+            <a class="card social-card" data-social="discord" href="https://discord.gg/fjolsenbanden" target="_blank">
+              <div class="social-icon">
+                <img src="img/social/discord.svg" alt="Discord" />
+              </div>
+              <p class="social-number">2.5k</p>
+              <span class="social-label">Discord</span>
+            </a>
+            <a class="card social-card" data-social="youtube" href="https://youtube.com/@fjolsenbanden" target="_blank">
+              <div class="social-icon">
+                <img src="img/social/youtube.svg" alt="YouTube" />
+              </div>
+              <p class="social-number">50+</p>
+              <span class="social-label">YouTube</span>
+            </a>
+            <a class="card social-card" data-social="instagram" href="https://www.instagram.com/fjolsenbanden" target="_blank">
+              <div class="social-icon">
+                <img src="img/social/instagram.svg" alt="Instagram" />
+              </div>
+              <p class="social-number">3.2k</p>
+              <span class="social-label">Instagram</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="partners" class="section fb-section editable-section" data-section-id="partners">
+      <div class="editable-content">
+        <div class="container">
+          <div class="section-toolbar">
+            <span>Partner-seksjon</span>
+            <button type="button" onclick="saveSection('partners')">Lagre</button>
+          </div>
+          <div class="partners-header">
+            <h2 class="partners-title" data-editable data-field="title">
+              Våre<br class="partners-title-break" />
+              <span class="highlight">samarbeidspartnere</span>
+            </h2>
+            <p class="subtitle partners-subtitle" data-editable data-field="subtitle">
+              Her er noen av våre samarbeidspartnere som har bidratt til<br class="partners-subtitle-break" />
+              å skape minneverdige øyeblikk i FjOlsenbanden!
             </p>
-      </div>
+          </div>
 
-      <!-- Brand Collabs -->
-      <div class="card service">
-        <div class="service-icon-wrap">
-          <div class="service-icon-bg"></div>
-          <img src="https://setaei.com/Fjolsen/Penger.png" class="service-icon" alt="Brand collabs ikon" />
-        </div>
-          <h3 class="service-title" data-editable data-field="collabs_title">BRAND COLLABS</h3>
-          <p class="service-description" data-editable data-field="collabs_text">
-            FjOlsen samarbeider med merkevarer som ønsker trygg og familievennlig synlighet i gamingmiljøet vårt – gjennom sponsorinnhold, produktlanseringer og kampanjer tilpasset barn og foreldre.
-          </p>
-      </div>
+          <div class="partners-grid">
+            <div class="card partner">
+              <img src="https://setaei.com/Fjolsen/partnere/p-lenovo.png" alt="Lenovo" />
+            </div>
+            <div class="card partner">
+              <img src="https://setaei.com/Fjolsen/partnere/p-komplett.png" alt="Komplett" />
+            </div>
+            <div class="card partner">
+              <img src="https://setaei.com/Fjolsen/partnere/p-samsung.png" alt="Samsung" />
+            </div>
+            <div class="card partner">
+              <img src="https://setaei.com/Fjolsen/partnere/p-kristiania.png" alt="Kristiania" />
+            </div>
 
-      <!-- Digital kampanjeproduksjon -->
-      <div class="card service">
-        <div class="service-icon-wrap">
-          <div class="service-icon-bg"></div>
-          <img src="https://setaei.com/Fjolsen/Sjokk.png" class="service-icon" alt="Digital kampanje ikon" />
-        </div>
-          <h3 class="service-title" data-editable data-field="digital_title">DIGITAL KAMPANJEPRODUKSJON</h3>
-          <p class="service-description" data-editable data-field="digital_text">
-            Produksjon av gaming- og SoMe-innhold for merkevarer som vil nå et ungt publikum – som short-form videoer, highlight-klipp og kampanjeinnhold skreddersydd til deres kanaler.
-          </p>
-      </div>
+            <div class="card partner">
+              <img src="https://setaei.com/Fjolsen/partnere/p-philips.png" alt="Philips" />
+            </div>
+            <div class="card partner">
+              <img src="https://setaei.com/Fjolsen/partnere/p-saily.png" alt="Saily" />
+            </div>
+            <div class="card partner">
+              <img src="https://setaei.com/Fjolsen/partnere/P-nki.svg" alt="NKI" />
+            </div>
+            <div class="card partner">
+              <img src="https://setaei.com/Fjolsen/partnere/p-trondheimplay.png" alt="Trondheim Play" />
+            </div>
+          </div>
 
-    </div>
-  </div>
-</section>
-
-  <section id="contact" class="section" data-section="contact">
-    <div class="container">
-      <div class="card contact-card">
-        <h2>Kontakt oss</h2>
-        <p class="subtitle">
-          Har du spørsmål om medlemskap, samarbeid eller events? Send oss en melding så kommer vi tilbake til deg.
-        </p><form action="#" method="POST" class="contact-form">
-      <div class="form-row">
-        <div class="form-group">
-          <label for="name">Navn</label>
-          <input type="text" id="name" name="name" required />
-        </div>
-        <div class="form-group">
-          <label for="email">E-post</label>
-          <input type="email" id="email" name="email" required />
+          <div class="partners-cta">
+            <p data-editable data-field="cta_text">Ønsker du å synliggjøre din merkevare for vårt engasjerte gaming publikum?</p>
+            <a class="btn btn-primary" href="#contact" data-editable data-field="cta_button">Kontakt oss</a>
+          </div>
         </div>
       </div>
+    </section>
 
-      <div class="form-group">
-        <label for="message">Melding</label>
-        <textarea id="message" name="message" rows="5" required></textarea>
+    <section id="services" class="section fb-section editable-section" data-section-id="services">
+      <div class="editable-content">
+        <div class="container">
+          <div class="section-toolbar">
+            <span>Andre tilbud</span>
+            <button type="button" onclick="saveSection('services')">Lagre</button>
+          </div>
+          <h2 data-editable data-field="title">Andre tilbud</h2>
+          <p class="subtitle" data-editable data-field="subtitle">FjOlsenbanden tilbyr mer enn bare streaming!</p>
+
+          <div class="services-grid">
+            <div class="card service">
+              <div class="service-icon-wrap">
+                <div class="service-icon-bg"></div>
+                <img src="https://setaei.com/Fjolsen/Sjokk.png" class="service-icon" alt="Foredrag ikon" />
+              </div>
+              <h3 class="service-title" data-editable data-field="talk_title">FORE­DRAG</h3>
+              <p class="service-description" data-editable data-field="talk_text">
+                FjOlsen besøker skoler, idrettslag og e-sportklubber for å snakke om streaming, gaming-kultur og nettvett.
+              </p>
+            </div>
+
+            <div class="card service">
+              <div class="service-icon-wrap">
+                <div class="service-icon-bg"></div>
+                <img src="https://setaei.com/Fjolsen/Glad%20tunge.png" class="service-icon" alt="Events ikon" />
+              </div>
+              <h3 class="service-title" data-editable data-field="events_title">EVENTS</h3>
+              <p class="service-description" data-editable data-field="events_text">
+                Vi arrangerer gaming-konkurranser for bedrifter, skoler og klubber – både digitalt og fysisk.
+              </p>
+            </div>
+
+            <div class="card service">
+              <div class="service-icon-wrap">
+                <div class="service-icon-bg"></div>
+                <img src="https://setaei.com/Fjolsen/Love.png" class="service-icon" alt="Unboxing ikon" />
+              </div>
+              <h3 class="service-title" data-editable data-field="unboxing_title">UNBOXING</h3>
+              <p class="service-description" data-editable data-field="unboxing_text">
+                FjOlsen lager profesjonelle unboxing-videoer av dine produkter som kan brukes i deres markedsføring og deles med vårt
+                community.
+              </p>
+            </div>
+
+            <div class="card service">
+              <div class="service-icon-wrap">
+                <div class="service-icon-bg"></div>
+                <img src="https://setaei.com/Fjolsen/Glad%20tenner.png" class="service-icon" alt="Streamer ikon" />
+              </div>
+              <h3 class="service-title" data-editable data-field="streamer_title">STREAMER FOR HIRE</h3>
+              <p class="service-description" data-editable data-field="streamer_text">
+                Ønsker du at FjOlsen skal streame på vegne av din merkevare? Han er tilgjengelig for co-streams, produktlanseringer og kampanjer – der ditt budskap
+                blir formidlet på en autentisk og engasjerende måte til tusenvis av følgere.
+              </p>
+            </div>
+
+            <div class="card service">
+              <div class="service-icon-wrap">
+                <div class="service-icon-bg"></div>
+                <img src="https://setaei.com/Fjolsen/Penger.png" class="service-icon" alt="Brand collabs ikon" />
+              </div>
+              <h3 class="service-title" data-editable data-field="collabs_title">BRAND COLLABS</h3>
+              <p class="service-description" data-editable data-field="collabs_text">
+                FjOlsen samarbeider med merkevarer som ønsker trygg og familievennlig synlighet i gamingmiljøet vårt – gjennom sponsorinnhold,
+                produktlanseringer og kampanjer tilpasset barn og foreldre.
+              </p>
+            </div>
+
+            <div class="card service">
+              <div class="service-icon-wrap">
+                <div class="service-icon-bg"></div>
+                <img src="https://setaei.com/Fjolsen/Sjokk.png" class="service-icon" alt="Digital kampanje ikon" />
+              </div>
+              <h3 class="service-title" data-editable data-field="digital_title">DIGITAL KAMPANJEPRODUKSJON</h3>
+              <p class="service-description" data-editable data-field="digital_text">
+                Produksjon av gaming- og SoMe-innhold for merkevarer som vil nå et ungt publikum – som short-form videoer, highlight-klipp og
+                kampanjeinnhold skreddersydd til deres kanaler.
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
+    </section>
 
-      <p class="help-text">Vi svarer så snart vi kan, som regel innen 1–2 virkedager.</p>
+    <section id="contact" class="section fb-section editable-section" data-section-id="contact">
+      <div class="editable-content">
+        <div class="container">
+          <div class="card contact-card">
+            <h2>Kontakt oss</h2>
+            <p class="subtitle">
+              Har du spørsmål om medlemskap, samarbeid eller events? Send oss en melding så kommer vi tilbake til deg.
+            </p>
+            <form action="#" method="POST" class="contact-form">
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="name">Navn</label>
+                  <input type="text" id="name" name="name" required />
+                </div>
+                <div class="form-group">
+                  <label for="email">E-post</label>
+                  <input type="email" id="email" name="email" required />
+                </div>
+              </div>
 
-      <button type="submit" class="btn btn-primary">Send melding</button>
-    </form>
-  </div>
-</div>
+              <div class="form-group">
+                <label for="message">Melding</label>
+                <textarea id="message" name="message" rows="5" required></textarea>
+              </div>
 
-  </section>
+              <p class="help-text">Vi svarer så snart vi kan, som regel innen 1–2 virkedager.</p>
 
-  <section id="faq" class="section section-faq" data-section="faq">
-    <div class="container faq-inner">
-      <h2>Ofte stilte spørsmål</h2>
-      <p class="subtitle">
-        Her finner du svar på de vanligste spørsmålene om FjOlsenbanden.
-      </p>
-
-      <div class="faq-list">
-        <details class="faq-item" open>
-          <summary>Hva er FjOlsenbanden?</summary>
-          <p>
-            FjOlsenbanden er et familievennlig gaming-community der barn, ungdom og foreldre kan delta på trygge og
-            inkluderende aktiviteter og events.
-          </p>
-        </details>
-
-        <details class="faq-item">
-          <summary>Hvordan blir jeg medlem?</summary>
-          <p>
-            Bla opp til seksjonen «Bli medlem» eller klikk på knappen i menyen. Der finner du lenker for både under
-            og over 18 år.
-          </p>
-        </details>
-
-        <details class="faq-item">
-          <summary>Er det noen aldersgrense?</summary>
-          <p>Alle kan være med, men barn under 18 år bør ha samtykke fra foresatte.</p>
-        </details>
-
-        <details class="faq-item">
-          <summary>Hva koster det å være med?</summary>
-          <p>Medlemskapet er gratis. Enkelte spesialevents kan ha egne vilkår.</p>
-        </details>
-
-        <details class="faq-item">
-          <summary>Hvordan sikrer dere trygg gaming?</summary>
-          <p>
-            Vi har tydelige regler mot mobbing, banning og ekskludering, og alle aktiviteter overvåkes av voksne.
-          </p>
-        </details>
+              <button type="submit" class="btn btn-primary">Send melding</button>
+            </form>
+          </div>
+        </div>
       </div>
-    </div>
-  </section>
-  <footer class="site-footer">
+    </section>
+
+    <section id="faq" class="section section-faq fb-section editable-section" data-section-id="faq">
+      <div class="editable-content">
+        <div class="container faq-inner">
+          <h2>Ofte stilte spørsmål</h2>
+          <p class="subtitle">
+            Her finner du svar på de vanligste spørsmålene om FjOlsenbanden.
+          </p>
+
+          <div class="faq-list">
+            <details class="faq-item" open>
+              <summary>Hva er FjOlsenbanden?</summary>
+              <p>
+                FjOlsenbanden er et familievennlig gaming-community der barn, ungdom og foreldre kan delta på trygge og
+                inkluderende aktiviteter og events.
+              </p>
+            </details>
+
+            <details class="faq-item">
+              <summary>Hvordan blir jeg medlem?</summary>
+              <p>
+                Bla opp til seksjonen «Bli medlem» eller klikk på knappen i menyen. Der finner du lenker for både under
+                og over 18 år.
+              </p>
+            </details>
+
+            <details class="faq-item">
+              <summary>Er det noen aldersgrense?</summary>
+              <p>Alle kan være med, men barn under 18 år bør ha samtykke fra foresatte.</p>
+            </details>
+
+            <details class="faq-item">
+              <summary>Hva koster det å være med?</summary>
+              <p>Medlemskapet er gratis. Enkelte spesialevents kan ha egne vilkår.</p>
+            </details>
+
+            <details class="faq-item">
+              <summary>Hvordan sikrer dere trygg gaming?</summary>
+              <p>
+                Vi har tydelige regler mot mobbing, banning og ekskludering, og alle aktiviteter overvåkes av voksne.
+              </p>
+            </details>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+<footer class="site-footer">
     <div class="container footer-main">
       <nav class="footer-menu">
         <ul class="footer-col">
@@ -1824,6 +2274,7 @@ textarea:focus {
     const ADMIN_CODE = '1234';
     const CONFIG_KEY = 'fjAdminConfig';
     const AUTH_KEY = 'fjAdminAuthorized';
+    const sectionsRoot = document.getElementById('fb-sections-root');
     let layoutListEl = null;
     let layoutResetBtn = null;
     let dragItem = null;
@@ -1887,6 +2338,7 @@ textarea:focus {
       layoutResetBtn = document.getElementById('layout-reset');
 
       const authorized = localStorage.getItem(AUTH_KEY) === 'true';
+      document.body.classList.toggle('is-admin', authorized);
       if (authorized) {
         openEditor();
       }
@@ -1906,6 +2358,7 @@ textarea:focus {
           localStorage.setItem(AUTH_KEY, 'true');
           if (errorEl) errorEl.textContent = '';
           closeModal();
+          document.body.classList.add('is-admin');
           openEditor();
           if (codeInput) codeInput.value = '';
         } else {
@@ -2175,14 +2628,13 @@ textarea:focus {
 
     function applyLayoutOrder(order) {
       const normalized = normalizeOrder(order);
-      const footer = document.querySelector('.site-footer');
-      const parent = footer?.parentElement || document.body;
-      if (!footer || !parent) return;
+      const container = sectionsRoot;
+      if (!container) return;
 
       normalized.forEach((id) => {
         const section = document.getElementById(id);
-        if (section && parent.contains(section)) {
-          parent.insertBefore(section, footer);
+        if (section && container.contains(section)) {
+          container.appendChild(section);
         }
       });
 
@@ -2190,7 +2642,7 @@ textarea:focus {
     }
 
     function getDefaultSectionOrder() {
-      return Array.from(document.querySelectorAll('[data-section]')).map((section) => section.id);
+      return Array.from((sectionsRoot || document).querySelectorAll('[data-section-id]')).map((section) => section.id);
     }
 
     function getSectionLabel(id) {
