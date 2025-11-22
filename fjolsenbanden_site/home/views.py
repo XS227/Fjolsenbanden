@@ -9,7 +9,12 @@ from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods
 
+from django.core.exceptions import ValidationError
+from django.core.validators import EmailValidator
+
 from .models import ContentBlock
+
+_EMAIL_VALIDATOR = EmailValidator()
 
 
 def _block_payload_is_valid(payload):

@@ -51,5 +51,391 @@
         });
       })();
     </script>
+    <script>
+      (function () {
+        if (!document.body.classList.contains('is-admin')) return;
+
+        const blocks = Array.from(document.querySelectorAll('.fb-edit-block'));
+
+        blocks.forEach(block => {
+          const type = block.dataset.editType || 'richtext';
+          const blockId = block.dataset.blockId || '';
+
+          // liten Fjølsen-blyant
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'fb-block-edit-btn';
+          btn.innerHTML = '✏️';
+          btn.title = 'Rediger';
+          block.prepend(btn);
+
+          if (type === 'richtext' || type === 'faq') {
+            setupRichtextBlock(block, blockId, btn);
+          } else if (type === 'youtube') {
+            setupYoutubeBlock(block, blockId, btn);
+          } else if (type === 'image') {
+            setupImageBlock(block, blockId, btn);
+          } else if (type === 'email') {
+            setupSingleValueBlock(block, blockId, btn, {
+              label: 'Mottaker-e-post for kontaktskjema',
+              placeholder: 'f.eks. kontakt@fjolsenbanden.no',
+              getInitial: () => block.dataset.email || '',
+              applyDom: value => {
+                block.dataset.email = value;
+                console.log('Ny kontakt-epost (frontend):', value);
+              },
+              payloadType: 'email',
+              payloadKey: 'email'
+            });
+          } else if (type === 'social') {
+            setupSingleValueBlock(block, blockId, btn, {
+              label: 'Lenke til kanal',
+              placeholder: 'f.eks. https://instagram.com/…',
+              getInitial: () => block.getAttribute('href') || '',
+              applyDom: value => {
+                block.setAttribute('href', value);
+              },
+              payloadType: 'social',
+              payloadKey: 'url'
+            });
+          }
+        });
+
+        /* ===== RICHTEXT / FAQ ===== */
+        function setupRichtextBlock(block, blockId, btn) {
+          let originalHtml = '';
+          let editing = false;
+
+          btn.addEventListener('click', () => {
+            if (!document.body.classList.contains('fb-editor-on')) return;
+
+            const contentEl = block;
+            if (!editing) {
+              // start edit
+              editing = true;
+              originalHtml = stripEditorButtons(contentEl.innerHTML);
+              block.classList.add('fb-editing-richtext');
+              contentEl.setAttribute('contenteditable', 'true');
+              contentEl.focus();
+
+              const onKey = (e) => {
+                if (e.key === 'Escape') {
+                  e.preventDefault();
+                  cancel();
+                }
+                if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 's') {
+                  e.preventDefault();
+                  save();
+                }
+              };
+
+              contentEl.addEventListener('keydown', onKey);
+
+              btn.dataset.listenerAttached = '1';
+
+              btn._cleanup = () => {
+                contentEl.removeAttribute('contenteditable');
+                block.classList.remove('fb-editing-richtext');
+                contentEl.removeEventListener('keydown', onKey);
+                editing = false;
+              };
+
+              btn._cancel = () => {
+                contentEl.innerHTML = originalHtml;
+                btn._cleanup();
+              };
+
+              btn._save = save;
+
+              async function save() {
+                const htmlToSave = stripEditorButtons(contentEl.innerHTML);
+                try {
+                  const res = await fetch('/api/admin/blocks/' + encodeURIComponent(blockId), {
+                    method: 'PUT',
+                    headers: {
+                      'Content-Type': 'application/json',
+                      'X-CSRFToken': window.csrfToken || ''
+                    },
+                    body: JSON.stringify({ type: 'richtext', content: htmlToSave })
+                  });
+                  if (!res.ok) throw new Error('Feil ved lagring');
+                  btn._cleanup();
+                  console.log('Blokk lagret:', blockId);
+                } catch (err) {
+                  console.error(err);
+                  alert('Klarte ikke å lagre. Endringene er fortsatt i nettleseren.');
+                }
+              }
+
+              function cancel() {
+                btn._cancel();
+              }
+            } else {
+              // allerede i edit → spør om lagre/avbryt
+              const wantSave = confirm('Vil du lagre endringene?');
+              if (wantSave) {
+                btn._save();
+              } else {
+                btn._cancel();
+              }
+            }
+          });
+        }
+
+        function stripEditorButtons(html) {
+          return html.replace(/<button[^>]*class="fb-block-edit-btn"[^>]*>.*?<\/button>/, '');
+        }
+
+        /* ===== YOUTUBE ===== */
+        function setupYoutubeBlock(block, blockId, btn) {
+          let editorEl = null;
+
+          btn.addEventListener('click', () => {
+            if (!document.body.classList.contains('fb-editor-on')) return;
+            if (editorEl) {
+              editorEl.remove();
+              editorEl = null;
+              return;
+            }
+
+            const iframe = block.querySelector('iframe');
+            const currentSrc = iframe ? iframe.src || '' : '';
+
+            editorEl = makeInlineEditor(block, {
+              label: 'YouTube-lenke eller video-ID',
+              placeholder: 'https://youtu.be/VIDEOID',
+              initial: currentSrc
+            });
+
+            const input = editorEl.querySelector('input');
+            const cancelBtn = editorEl.querySelector('.fb-btn-small--ghost');
+            const saveBtn = editorEl.querySelector('.fb-btn-small--primary');
+
+            cancelBtn.addEventListener('click', () => {
+              editorEl.remove();
+              editorEl = null;
+            });
+
+            saveBtn.addEventListener('click', async () => {
+              const raw = input.value.trim();
+              const videoId = extractYoutubeId(raw);
+              if (!videoId) {
+                alert('Fant ikke en gyldig YouTube-ID.');
+                return;
+              }
+              const newSrc = 'https://www.youtube.com/embed/' + videoId;
+              if (iframe) iframe.src = newSrc;
+
+              try {
+                const res = await fetch('/api/admin/blocks/' + encodeURIComponent(blockId), {
+                  method: 'PUT',
+                  headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': window.csrfToken || ''
+                  },
+                  body: JSON.stringify({ type: 'youtube', videoId, src: newSrc })
+                });
+                if (!res.ok) throw new Error('Feil ved lagring');
+                editorEl.remove();
+                editorEl = null;
+              } catch (err) {
+                console.error(err);
+                alert('Kunne ikke lagre video-URL, men videoen er oppdatert i nettleseren.');
+              }
+            });
+          });
+        }
+
+        function extractYoutubeId(url) {
+          if (/^[a-zA-Z0-9_-]{11}$/.test(url)) return url;
+          const regExp =
+            /(?:youtube\.com\/(?:watch\?v=|embed\/|v\/|shorts\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
+          const match = url.match(regExp);
+          return match ? match[1] : null;
+        }
+
+        /* ===== BILDE-URL ===== */
+        function setupImageBlock(block, blockId, btn) {
+          let editorEl = null;
+
+          btn.addEventListener('click', () => {
+            if (!document.body.classList.contains('fb-editor-on')) return;
+            if (editorEl) {
+              editorEl.remove();
+              editorEl = null;
+              return;
+            }
+
+            const img = block.querySelector('img');
+            const currentSrc = img ? img.src || '' : '';
+
+            editorEl = makeInlineEditor(block, {
+              label: 'Bilde-URL',
+              placeholder: 'https://…/bilde.png',
+              initial: currentSrc
+            });
+
+            const input = editorEl.querySelector('input');
+            const cancelBtn = editorEl.querySelector('.fb-btn-small--ghost');
+            const saveBtn = editorEl.querySelector('.fb-btn-small--primary');
+
+            cancelBtn.addEventListener('click', () => {
+              editorEl.remove();
+              editorEl = null;
+            });
+
+            saveBtn.addEventListener('click', async () => {
+              const url = input.value.trim();
+              if (!url) {
+                alert('Skriv inn en gyldig URL');
+                return;
+              }
+              if (img) img.src = url;
+
+              try {
+                const res = await fetch('/api/admin/blocks/' + encodeURIComponent(blockId), {
+                  method: 'PUT',
+                  headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': window.csrfToken || ''
+                  },
+                  body: JSON.stringify({ type: 'image', src: url })
+                });
+                if (!res.ok) throw new Error('Feil ved lagring');
+                editorEl.remove();
+                editorEl = null;
+              } catch (err) {
+                console.error(err);
+                alert('Kunne ikke lagre bilde-URL.');
+              }
+            });
+          });
+        }
+
+        /* ===== GENERELL ENKEL VERDI (EMAIL / SOCIAL) ===== */
+        function setupSingleValueBlock(block, blockId, btn, options) {
+          let editorEl = null;
+
+          btn.addEventListener('click', () => {
+            if (!document.body.classList.contains('fb-editor-on')) return;
+            if (editorEl) {
+              editorEl.remove();
+              editorEl = null;
+              return;
+            }
+
+            const initial = options.getInitial() || '';
+
+            editorEl = makeInlineEditor(block, {
+              label: options.label,
+              placeholder: options.placeholder,
+              initial
+            });
+
+            const input = editorEl.querySelector('input');
+            const cancelBtn = editorEl.querySelector('.fb-btn-small--ghost');
+            const saveBtn = editorEl.querySelector('.fb-btn-small--primary');
+
+            cancelBtn.addEventListener('click', () => {
+              editorEl.remove();
+              editorEl = null;
+            });
+
+            saveBtn.addEventListener('click', async () => {
+              const value = input.value.trim();
+              if (!value) {
+                alert('Feltet kan ikke være tomt.');
+                return;
+              }
+
+              // oppdater DOM
+              options.applyDom(value);
+
+              const payload = {
+                type: options.payloadType
+              };
+              payload[options.payloadKey] = value;
+
+              try {
+                const res = await fetch('/api/admin/blocks/' + encodeURIComponent(blockId), {
+                  method: 'PUT',
+                  headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': window.csrfToken || ''
+                  },
+                  body: JSON.stringify(payload)
+                });
+                if (!res.ok) throw new Error('Feil ved lagring');
+                editorEl.remove();
+                editorEl = null;
+              } catch (err) {
+                console.error(err);
+                alert('Kunne ikke lagre verdien.');
+              }
+            });
+          });
+        }
+
+        /* ===== LITEN INLINE-PANEL ===== */
+        function makeInlineEditor(block, { label, placeholder, initial }) {
+          const editor = document.createElement('div');
+          editor.className = 'fb-youtube-editor';
+          editor.innerHTML = `
+      <label>${label}</label>
+      <input type="text" placeholder="${placeholder || ''}" value="${initial || ''}">
+      <div class="fb-youtube-editor__actions">
+        <button type="button" class="fb-btn-small fb-btn-small--ghost">Avbryt</button>
+        <button type="button" class="fb-btn-small fb-btn-small--primary">Lagre</button>
+      </div>
+    `;
+          block.appendChild(editor);
+          const input = editor.querySelector('input');
+          input.focus();
+          input.select();
+          return editor;
+        }
+
+        /* ===== FAQ – LEGG TIL NYTT SPØRSMÅL ===== */
+        const faqAddBtn = document.getElementById('fb-faq-add-btn');
+        if (faqAddBtn) {
+          faqAddBtn.addEventListener('click', async () => {
+            const container = faqAddBtn.closest('[data-faq-container]') || faqAddBtn.parentElement;
+            const template = container.querySelector('.fb-edit-block[data-edit-type="faq"]');
+            if (!template) {
+              alert('Fant ingen FAQ-mal å kopiere fra.');
+              return;
+            }
+
+            const clone = template.cloneNode(true);
+            const newId = 'faq-' + Date.now();
+            clone.dataset.blockId = newId;
+            container.insertBefore(clone, faqAddBtn);
+
+            // gjør klonen redigerbar (samme som de andre)
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'fb-block-edit-btn';
+            btn.innerHTML = '✏️';
+            btn.title = 'Rediger';
+            clone.prepend(btn);
+            setupRichtextBlock(clone, newId, btn);
+
+            // opprett tom FAQ i backend
+            try {
+              await fetch('/api/admin/blocks/' + encodeURIComponent(newId), {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                  'X-CSRFToken': window.csrfToken || ''
+                },
+                body: JSON.stringify({ type: 'faq', content: stripEditorButtons(clone.innerHTML) })
+              });
+            } catch (err) {
+              console.error(err);
+            }
+          });
+        }
+      })();
+    </script>
   </body>
 </html>
