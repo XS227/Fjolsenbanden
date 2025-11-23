@@ -1207,7 +1207,8 @@ body.is-admin.fb-editor-on .fb-edit-block:hover > .fb-block-edit-btn {
   z-index: 1;
 }
 
-.section-calendar .section-title {
+.section-calendar .section-title,
+.section-calendar .calendar-title {
   font-family: "Luckiest Guy", system-ui, -apple-system, BlinkMacSystemFont,
     "Segoe UI", sans-serif;
   font-size: clamp(2.2rem, 3vw, 2.8rem);
@@ -1216,7 +1217,8 @@ body.is-admin.fb-editor-on .fb-edit-block:hover > .fb-block-edit-btn {
   margin-bottom: 1rem;
 }
 
-.section-calendar .calendar-ingress {
+.section-calendar .calendar-ingress,
+.section-calendar .calendar-text {
   font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
     sans-serif;
   font-size: 1rem;
