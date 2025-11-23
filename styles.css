@@ -1179,69 +1179,61 @@ body.is-admin.fb-editor-on .fb-edit-block:hover > .fb-block-edit-btn {
 }
 
 /* Julekalender */
-.section--julekalender {
+.section--julekal {
   position: relative;
   overflow: hidden;
   background: radial-gradient(circle at top, #ff6b81 0, #d8243a 35%, #3e0320 100%);
 }
 
-.julekal-grid {
+.section--julekal .hero-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
   align-items: center;
-  gap: 32px;
 }
 
-.julekal-media .hero-card--calendar {
+.hero-card--calendar {
+  width: 100%;
+  height: auto;
+  border-radius: 24px;
   overflow: hidden;
+  background: rgba(255,255,255,0.05);
+  padding: 0;
 }
 
 .hero-card--calendar img {
   width: 100%;
-  height: 100%;
+  height: auto;
   display: block;
   object-fit: cover;
 }
 
-.julekal-text {
-  color: #ffffff;
+.section--julekal .hero-title {
+  margin: 0 0 10px;
 }
 
-.julekal-text h2 {
-  font-size: 1.8rem;
-  margin-bottom: 0.75rem;
+.section--julekal .hero-ingress {
+  max-width: 400px;
+  margin: 0 0 20px;
 }
 
-.julekal-text p {
-  margin-bottom: 1rem;
-  max-width: 32rem;
+.section--julekal .btn--primary {
+  display: inline-block;
+  padding: 12px 26px;
+  background: #0ea5ff;
+  color: #041149;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 15px;
+  transition: 0.2s;
 }
 
-@media (max-width: 768px) {
-  .julekal-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .julekal-media {
-    order: -1;
-  }
-
-  .hero-card--calendar {
-    aspect-ratio: 3 / 4;
-  }
-
-  .calendar-content {
-    justify-items: center;
-  }
-
-  .calendar-btn {
-    width: 100%;
-    justify-content: center;
-  }
+.section--julekal .btn--primary:hover {
+  background: #36b8ff;
 }
 
-.section--julekalender::before,
-.section--julekalender::after {
+.section--julekal::before,
+.section--julekal::after {
   content: "";
   pointer-events: none;
   position: absolute;
@@ -1259,7 +1251,7 @@ body.is-admin.fb-editor-on .fb-edit-block:hover > .fb-block-edit-btn {
   animation: fj-snow 25s linear infinite;
 }
 
-.section--julekalender::after {
+.section--julekal::after {
   animation-duration: 40s;
   opacity: 0.5;
 }
