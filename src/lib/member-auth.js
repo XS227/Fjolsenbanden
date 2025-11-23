@@ -36,7 +36,7 @@ export function useMemberAuth() {
     const logout = () => {
         setState({ isAuthenticated: false });
     };
-    const hint = useMemo(() => "Brukernavn: User • Passord: User (store forbokstaver).", []);
+    const hint = useMemo(() => "Har du ikke tilgangskoden? Kontakt oss for å få den.", []);
     return {
         state,
         login,

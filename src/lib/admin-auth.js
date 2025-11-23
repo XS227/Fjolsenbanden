@@ -37,7 +37,7 @@ export function useAdminAuth() {
         setState({ isAuthenticated: false });
     };
     const hint = useMemo(
-        () => "Brukernavn: Admin • Passord: Admin123 (store forbokstaver).",
+        () => "Tilgangskoden får du fra administrator. Be om den for å logge inn.",
         [],
     );
     return {
