@@ -836,153 +836,148 @@ body.is-admin .fb-block-edit-btn:hover {
   background: linear-gradient(120deg, #29b8ff, #6ee0ff);
 }
 
-/* Visual editor toggle & seksjonssortering */
-.visual-editor-toggle {
-  position: fixed;
-  left: 1.25rem;
-  bottom: 1.25rem;
-  z-index: 998;
-  background: rgba(0, 0, 0, 0.7);
-  color: #ffffff;
-  padding: 0.4rem 0.8rem;
-  border-radius: 999px;
-  font-size: 0.85rem;
-  display: none;
-  align-items: center;
-  gap: 0.4rem;
-  backdrop-filter: blur(4px);
-}
+  /* VISUAL EDITOR – KUN SEKSJONER */
+  .visual-editor {
+    position: fixed;
+    top: 80px;
+    right: 0;
+    z-index: 999;
+    pointer-events: none;
+  }
 
-body.is-admin .visual-editor-toggle {
-  display: flex;
-}
+  .visual-editor-panel {
+    width: 320px;
+    max-height: calc(100vh - 100px);
+    background: rgba(6, 15, 55, 0.95);
+    border-radius: 24px 0 0 24px;
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.6);
+    overflow: hidden;
+    backdrop-filter: blur(16px);
+    transform: translateX(0);
+    transition: transform 0.25s ease-out;
+    pointer-events: auto;
+  }
 
-.visual-editor-toggle input[type="checkbox"] {
-  accent-color: #ffcc00;
-}
+  .visual-editor.collapsed .visual-editor-panel {
+    transform: translateX(100%);
+    pointer-events: none;
+  }
 
-.section-sorter-modal[hidden] {
-  display: none;
-}
+  .visual-editor-toggle {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translate(40%, -50%);
+    width: 40px;
+    height: 40px;
+    border-radius: 999px;
+    border: none;
+    background: #13a0f9;
+    color: #041149;
+    font-size: 20px;
+    cursor: pointer;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
+    pointer-events: auto;
+  }
 
-.section-sorter-modal {
-  position: fixed;
-  inset: 0;
-  z-index: 1000;
-}
+  .visual-editor:not(.collapsed) .visual-editor-toggle {
+    display: none;
+  }
 
-.section-sorter-backdrop {
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.55);
-}
+  .visual-editor-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    font-weight: 600;
+    font-size: 14px;
+    color: #fff;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  }
 
-.section-sorter-dialog {
-  position: relative;
-  max-width: 480px;
-  margin: 8vh auto 0;
-  background: #18181b;
-  color: #ffffff;
-  border-radius: 1.25rem;
-  padding: 1.25rem 1.5rem 1.1rem;
-  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.7);
-}
+  .visual-editor-close {
+    border: none;
+    background: none;
+    color: #fff;
+    font-size: 20px;
+    cursor: pointer;
+  }
 
-.section-sorter-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.75rem;
-  margin-bottom: 0.6rem;
-}
+  .visual-editor-body {
+    padding: 8px 12px 12px;
+  }
 
-.section-sorter-header h3 {
-  margin: 0;
-  font-size: 1.1rem;
-}
+  .section-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
 
-.section-sorter-close {
-  border: none;
-  background: transparent;
-  color: #a1a1aa;
-  font-size: 1rem;
-  cursor: pointer;
-}
+  .section-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 8px 10px;
+    margin-bottom: 6px;
+    border-radius: 12px;
+    background: rgba(20, 35, 90, 0.9);
+    cursor: grab;
+  }
 
-.section-sorter-subtitle {
-  font-size: 0.85rem;
-  opacity: 0.85;
-  margin-bottom: 0.8rem;
-}
+  .section-item .handle {
+    cursor: grab;
+    font-size: 18px;
+    opacity: 0.7;
+  }
 
-.section-sorter-list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  max-height: 260px;
-  overflow-y: auto;
-}
+  .section-item .name {
+    flex: 1;
+    font-size: 13px;
+    color: #fff;
+  }
 
-.section-sorter-item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.75rem;
-  padding: 0.55rem 0.75rem;
-  margin-bottom: 0.3rem;
-  border-radius: 0.8rem;
-  background: #27272f;
-  cursor: grab;
-}
+  .section-item .toggle input {
+    display: none;
+  }
 
-.section-sorter-item:active {
-  cursor: grabbing;
-}
+  .section-item .toggle span {
+    display: inline-block;
+    width: 30px;
+    height: 16px;
+    border-radius: 999px;
+    background: #546287;
+    position: relative;
+    transition: background 0.2s ease;
+  }
 
-.section-sorter-item-handle {
-  font-size: 1.1rem;
-  opacity: 0.7;
-}
+  .section-item .toggle span::before {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 12px;
+    height: 12px;
+    border-radius: 999px;
+    background: #fff;
+    transition: transform 0.2s ease;
+  }
 
-.section-sorter-item-label {
-  flex: 1;
-  font-size: 0.9rem;
-}
+  .section-item .toggle input:checked + span {
+    background: #13a0f9;
+  }
 
-.section-sorter-footer {
-  display: flex;
-  justify-content: flex-end;
-  gap: 0.5rem;
-  margin-top: 0.9rem;
-}
+  .section-item .toggle input:checked + span::before {
+    transform: translateX(14px);
+  }
 
-.section-sorter-dialog .btn.btn-primary {
-  padding: 0.45rem 1.1rem;
-  border-radius: 999px;
-  border: none;
-  cursor: pointer;
-  background: #facc15;
-  color: #1e1e22;
-  font-weight: 600;
-}
+  body:not(.is-admin) #visual-editor {
+    display: none;
+  }
 
-.section-sorter-dialog .btn.btn-secondary {
-  padding: 0.45rem 1.1rem;
-  border-radius: 999px;
-  border: none;
-  cursor: pointer;
-  background: #3f3f46;
-  color: #e4e4e7;
-  font-weight: 500;
-}
-
-.section-sorter-dialog .btn.btn-primary:hover {
-  background: #fde047;
-}
-
-.section-sorter-dialog .btn.btn-secondary:hover {
-  background: #52525b;
-}
+  body.is-admin [data-sortable-section].is-visual-hidden {
+    display: none !important;
+  }
 
 /* Footer */
 
@@ -1637,49 +1632,21 @@ body.is-admin .visual-editor-toggle {
     </div>
   </section>
   </main>
-  <!-- Visual editor toggle (vises kun for innloggede brukere) -->
-  <div id="visual-editor-toggle" class="visual-editor-toggle">
-    <label>
-      <input type="checkbox" id="visual-editor-checkbox" />
-      Visual editor
-    </label>
-  </div>
+  <!-- VISUAL EDITOR – KUN SEKSJONER -->
+  <div id="visual-editor" class="visual-editor collapsed">
+    <button class="visual-editor-toggle" aria-label="Åpne seksjonsmeny">
+      ☰
+    </button>
 
-  <!-- Modal for seksjonssortering -->
-  <div id="section-sorter-modal" class="section-sorter-modal" hidden>
-    <div class="section-sorter-backdrop" data-modal-close></div>
-    <div class="section-sorter-dialog">
-      <header class="section-sorter-header">
-        <h3>Sorter seksjoner</h3>
-        <button class="section-sorter-close" type="button" data-modal-close>
-          ✕
-        </button>
-      </header>
+    <div class="visual-editor-panel">
+      <div class="visual-editor-header">
+        <span>Seksjoner</span>
+        <button class="visual-editor-close" aria-label="Skjul seksjonsmeny">×</button>
+      </div>
 
-      <p class="section-sorter-subtitle">
-        Dra og slipp for å endre rekkefølge på seksjonene.
-      </p>
-
-      <ul id="section-sorter-list" class="section-sorter-list">
-        <!-- fylles automatisk av JavaScript -->
-      </ul>
-
-      <footer class="section-sorter-footer">
-        <button
-          type="button"
-          class="btn btn-secondary"
-          data-modal-close
-        >
-          Avbryt
-        </button>
-        <button
-          type="button"
-          class="btn btn-primary"
-          id="section-sorter-save"
-        >
-          Lagre rekkefølge
-        </button>
-      </footer>
+      <div class="visual-editor-body">
+        <ul id="section-list" class="section-list"></ul>
+      </div>
     </div>
   </div>
   <footer class="site-footer">
@@ -1705,115 +1672,163 @@ body.is-admin .visual-editor-toggle {
     </div>
   </footer>
 <script>
-  (function () {
+  document.addEventListener('DOMContentLoaded', () => {
     if (!document.body.classList.contains('is-admin')) return;
 
-    const toggleCheckbox = document.getElementById('visual-editor-checkbox');
-    const modal = document.getElementById('section-sorter-modal');
-    const listEl = document.getElementById('section-sorter-list');
-    const saveBtn = document.getElementById('section-sorter-save');
-    const sectionContainer = document.querySelector('[data-sections-container]');
-    const closers = modal?.querySelectorAll('[data-modal-close]') || [];
+    const editor = document.getElementById('visual-editor');
+    const sectionsContainer = document.querySelector('[data-sections-container]');
+    if (!editor || !sectionsContainer) return;
 
-    if (!toggleCheckbox || !modal || !listEl || !saveBtn || !sectionContainer) {
-      return;
+    const toggleBtn = editor.querySelector('.visual-editor-toggle');
+    const closeBtn = editor.querySelector('.visual-editor-close');
+    const sectionList = editor.querySelector('#section-list');
+
+    if (!toggleBtn || !closeBtn || !sectionList) return;
+
+    const OPEN_KEY = 'fj_visual_editor_open';
+    const HIDDEN_KEY = 'fj_visual_hidden_sections';
+
+    let hiddenSections;
+    try {
+      hiddenSections = new Set(JSON.parse(localStorage.getItem(HIDDEN_KEY) || '[]'));
+    } catch (error) {
+      hiddenSections = new Set();
     }
+
+    const isOpen = localStorage.getItem(OPEN_KEY) === '1';
+    editor.classList.toggle('collapsed', !isOpen);
+
+    toggleBtn.addEventListener('click', () => {
+      editor.classList.remove('collapsed');
+      localStorage.setItem(OPEN_KEY, '1');
+    });
+
+    closeBtn.addEventListener('click', () => {
+      editor.classList.add('collapsed');
+      localStorage.setItem(OPEN_KEY, '0');
+    });
 
     function getSections() {
-      return Array.from(sectionContainer.querySelectorAll('[data-sortable-section]'));
+      return Array.from(sectionsContainer.querySelectorAll('[data-sortable-section]'));
     }
 
-    function buildList() {
-      listEl.innerHTML = '';
+    function saveHiddenSections() {
+      localStorage.setItem(HIDDEN_KEY, JSON.stringify(Array.from(hiddenSections)));
+    }
+
+    function applyVisibility() {
       getSections().forEach((section) => {
-        const id = section.getAttribute('data-sortable-section');
-        const label = section.getAttribute('data-section-label') || id || 'Seksjon';
-
-        const li = document.createElement('li');
-        li.className = 'section-sorter-item';
-        li.draggable = true;
-        li.dataset.sectionId = id;
-
-        li.innerHTML = `
-          <span class="section-sorter-item-handle">☰</span>
-          <span class="section-sorter-item-label">${label}</span>
-        `;
-
-        listEl.appendChild(li);
+        const id = section.dataset.sortableSection;
+        const isHidden = hiddenSections.has(id);
+        section.classList.toggle('is-visual-hidden', isHidden);
       });
     }
 
-    function openModal() {
-      buildList();
-      modal.hidden = false;
+    function createSectionItem(section) {
+      const id = section.dataset.sortableSection;
+      const label = section.dataset.sectionLabel || id || 'Seksjon';
+      const isVisible = !hiddenSections.has(id);
+
+      const li = document.createElement('li');
+      li.className = 'section-item';
+      li.dataset.sectionId = id;
+      li.draggable = true;
+
+      const handle = document.createElement('span');
+      handle.className = 'handle';
+      handle.textContent = '⋮⋮';
+
+      const name = document.createElement('span');
+      name.className = 'name';
+      name.textContent = label;
+
+      const toggle = document.createElement('label');
+      toggle.className = 'toggle';
+
+      const checkbox = document.createElement('input');
+      checkbox.type = 'checkbox';
+      checkbox.checked = isVisible;
+
+      const slider = document.createElement('span');
+
+      toggle.append(checkbox, slider);
+      li.append(handle, name, toggle);
+
+      checkbox.addEventListener('change', () => {
+        if (checkbox.checked) {
+          hiddenSections.delete(id);
+        } else {
+          hiddenSections.add(id);
+        }
+        applyVisibility();
+        saveHiddenSections();
+      });
+
+      return li;
     }
 
-    function closeModal() {
-      modal.hidden = true;
+    function buildSectionList() {
+      sectionList.innerHTML = '';
+      getSections().forEach((section) => {
+        sectionList.appendChild(createSectionItem(section));
+      });
+      applyVisibility();
     }
 
-    toggleCheckbox.addEventListener('change', (e) => {
-      const checked = e.target.checked;
-      document.documentElement.classList.toggle('visual-editor-active', checked);
-      if (checked) {
-        openModal();
-      } else {
-        closeModal();
-      }
-    });
+    function applyOrderToSections() {
+      const orderedIds = Array.from(sectionList.querySelectorAll('.section-item')).map(
+        (li) => li.dataset.sectionId
+      );
 
-    closers.forEach((btn) =>
-      btn.addEventListener('click', () => {
-        closeModal();
-        toggleCheckbox.checked = false;
-        document.documentElement.classList.remove('visual-editor-active');
-      })
-    );
+      orderedIds.forEach((id) => {
+        const section = sectionsContainer.querySelector(`[data-sortable-section="${id}"]`);
+        if (section) {
+          sectionsContainer.appendChild(section);
+        }
+      });
+    }
 
     let draggedItem = null;
 
-    listEl.addEventListener('dragstart', (e) => {
-      const li = e.target.closest('.section-sorter-item');
+    sectionList.addEventListener('dragstart', (e) => {
+      const li = e.target.closest('.section-item');
       if (!li) return;
       draggedItem = li;
+      li.classList.add('dragging');
       e.dataTransfer.effectAllowed = 'move';
     });
 
-    listEl.addEventListener('dragover', (e) => {
+    sectionList.addEventListener('dragover', (e) => {
       e.preventDefault();
-      const li = e.target.closest('.section-sorter-item');
+      const li = e.target.closest('.section-item');
       if (!li || li === draggedItem) return;
 
       const rect = li.getBoundingClientRect();
       const before = e.clientY < rect.top + rect.height / 2;
       if (before) {
-        listEl.insertBefore(draggedItem, li);
+        sectionList.insertBefore(draggedItem, li);
       } else {
-        listEl.insertBefore(draggedItem, li.nextSibling);
+        sectionList.insertBefore(draggedItem, li.nextSibling);
       }
     });
 
-    listEl.addEventListener('dragend', () => {
+    sectionList.addEventListener('drop', (e) => {
+      e.preventDefault();
+      if (draggedItem) {
+        applyOrderToSections();
+      }
+    });
+
+    sectionList.addEventListener('dragend', () => {
+      if (draggedItem) {
+        draggedItem.classList.remove('dragging');
+      }
       draggedItem = null;
+      applyOrderToSections();
     });
 
-    saveBtn.addEventListener('click', () => {
-      const orderedIds = Array.from(listEl.querySelectorAll('.section-sorter-item')).map(
-        (li) => li.dataset.sectionId
-      );
-
-      orderedIds.forEach((id) => {
-        const section = sectionContainer.querySelector(`[data-sortable-section="${id}"]`);
-        if (section) {
-          sectionContainer.appendChild(section);
-        }
-      });
-
-      closeModal();
-      toggleCheckbox.checked = false;
-      document.documentElement.classList.remove('visual-editor-active');
-    });
-  })();
+    buildSectionList();
+  });
 </script>
 <script>
   document.addEventListener('DOMContentLoaded', function () {
