@@ -1921,6 +1921,9 @@ textarea:focus {
 
       closeBtn?.addEventListener('click', () => {
         panel?.classList.add('fb-panel-hidden');
+        document.body.classList.remove('visual-editor-on');
+        document.body.classList.remove('fb-editor-on');
+        document.body.classList.remove('edit-mode');
       });
 
       const toggleSectionEnabled = async (sectionId, enabled) => {
