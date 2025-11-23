@@ -1251,7 +1251,8 @@ body.is-admin.fb-editor-on .fb-edit-block:hover > .fb-block-edit-btn {
   margin: 0 0 20px;
 }
 
-.section--julekal .btn--primary {
+.section--julekal .btn--primary,
+.section--julekal .btn-primary {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -1267,12 +1268,14 @@ body.is-admin.fb-editor-on .fb-edit-block:hover > .fb-block-edit-btn {
   white-space: nowrap;
 }
 
-.section--julekal .btn--primary:hover {
+.section--julekal .btn--primary:hover,
+.section--julekal .btn-primary:hover {
   background: #36b8ff;
   box-shadow: 0 0 26px rgba(0, 180, 255, 0.7);
 }
 
-.section--julekal .btn--primary:active {
+.section--julekal .btn--primary:active,
+.section--julekal .btn-primary:active {
   transform: translateY(1px);
   box-shadow: 0 0 16px rgba(0, 150, 230, 0.5);
 }
