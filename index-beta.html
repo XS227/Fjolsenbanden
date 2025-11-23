@@ -1011,6 +1011,31 @@ textarea:focus {
     font-size: 0.8rem;
   }
 
+  .footer-login-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: rgba(255, 255, 255, 0.04);
+    color: var(--text);
+    cursor: pointer;
+    transition: background 0.15s ease, transform 0.15s ease, border-color 0.15s ease;
+  }
+
+  .footer-login-btn:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.18);
+    transform: translateY(-1px);
+  }
+
+  .footer-login-btn svg {
+    width: 18px;
+    height: 18px;
+  }
+
   .footer-bottom-link {
     color: var(--text);
     font-weight: 600;
@@ -2713,9 +2738,17 @@ textarea:focus {
       <p class="last-updated" id="last-updated"></p>
       <p>© 2025 Fjolsenbanden v/Fair Share Invest AS – Org.nr. 926 963 023</p>
       <a href="https://fjolsenbanden.setaei.com/regler.html" class="footer-bottom-link">Les reglene våre</a>
+      <button class="footer-login-btn admin-login-trigger" type="button" aria-label="Admin login">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path
+            d="M12 2.5c-2.9 0-5.25 2.35-5.25 5.25V10H5a2 2 0 0 0-2 2v6c0 1.1.9 2 2 2h14a2 2 0 0 0 2-2v-6a2 2 0 0 0-2-2h-1.75V7.75C17.25 4.85 14.9 2.5 12 2.5Zm-3.75 5.25a3.75 3.75 0 0 1 7.5 0V10h-7.5Z"
+            fill="currentColor"
+          />
+        </svg>
+      </button>
     </div>
   </footer>
-  <button class="admin-login-btn" id="admin-login-btn" aria-label="Admin login">
+  <button class="admin-login-btn admin-login-trigger" id="admin-login-btn" aria-label="Admin login">
     <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
       <path
         d="M12 2.5c-2.9 0-5.25 2.35-5.25 5.25V10H5a2 2 0 0 0-2 2v6c0 1.1.9 2 2 2h14a2 2 0 0 0 2-2v-6a2 2 0 0 0-2-2h-1.75V7.75C17.25 4.85 14.9 2.5 12 2.5Zm-3.75 5.25a3.75 3.75 0 0 1 7.5 0V10h-7.5Z"
@@ -2900,7 +2933,7 @@ textarea:focus {
     }
 
     function initAdminTools() {
-      const loginBtn = document.getElementById('admin-login-btn');
+      const loginButtons = document.querySelectorAll('.admin-login-trigger');
       const modal = document.getElementById('admin-modal');
       const modalClose = document.getElementById('admin-modal-close');
       const modalCancel = document.getElementById('admin-cancel');
@@ -2923,7 +2956,7 @@ textarea:focus {
 
       initLayoutEditor();
 
-      loginBtn?.addEventListener('click', openModal);
+      loginButtons.forEach((btn) => btn.addEventListener('click', openModal));
       modalClose?.addEventListener('click', closeModal);
       modalCancel?.addEventListener('click', closeModal);
       modal?.addEventListener('click', (evt) => {
