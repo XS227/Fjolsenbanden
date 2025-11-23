@@ -1225,6 +1225,19 @@ body.is-admin.fb-editor-on .fb-edit-block:hover > .fb-block-edit-btn {
   .julekal-media {
     order: -1;
   }
+
+  .hero-card--calendar {
+    aspect-ratio: 3 / 4;
+  }
+
+  .calendar-content {
+    justify-items: center;
+  }
+
+  .calendar-btn {
+    width: 100%;
+    justify-content: center;
+  }
 }
 
 .section--julekalender::before,
@@ -1257,5 +1270,15 @@ body.is-admin.fb-editor-on .fb-edit-block:hover > .fb-block-edit-btn {
   }
   to {
     transform: translateY(10%);
+  }
+
+  .calendar-image {
+    max-width: 380px;
+  }
+}
+
+@media (min-width: 901px) {
+  .hero-card--calendar {
+    aspect-ratio: 16 / 9;
   }
 }
