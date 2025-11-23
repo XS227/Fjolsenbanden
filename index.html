@@ -1134,48 +1134,32 @@ body.is-admin .visual-editor-toggle {
     </div>
   </section>
 
-  <section
-    id="kalender"
-    class="section section-calendar"
-    data-sortable-section="kalender"
-    data-section-label="Julekalender"
-  >
-    <div class="calendar-snow-layer" aria-hidden="true"></div>
+  <section id="kalender" class="section section-calendar section--active">
     <div class="container calendar-inner">
-      <div>
-        <p class="pill">Desember 2024</p>
-        <h2 class="calendar-title">Julekalender for hele banden</h2>
+      <div class="calendar-content">
+        <h2 class="calendar-title">ÅRETS JULEKALENDER</h2>
+
         <p class="calendar-text">
-          Tell ned til årets hyggeligste gaming-kalender! Hver dag fra 1.–24. desember deler vi ut premier,
-          utfordringer og små overraskelser til alle medlemmer.
+          Vinn premier til verdi av over 10&nbsp;000 kroner!<br />
+          Meld deg på årets julekalender før 1. desember og få 10 lodd ekstra i den store giveaway 25. desember!
         </p>
 
-        <div class="calendar-countdown" data-target="2024-12-01T00:00:00+01:00">
-          <div class="time-box">
-            <span class="number" data-unit="days">00</span>
-            <span class="label">Dager</span>
-          </div>
-          <div class="time-box">
-            <span class="number" data-unit="hours">00</span>
-            <span class="label">Timer</span>
-          </div>
-          <div class="time-box">
-            <span class="number" data-unit="minutes">00</span>
-            <span class="label">Min</span>
-          </div>
-          <div class="time-box">
-            <span class="number" data-unit="seconds">00</span>
-            <span class="label">Sek</span>
-          </div>
-        </div>
-
-        <div class="calendar-btn">
-          <a class="btn btn-primary" href="#membership">Bli medlem før luke 1</a>
-        </div>
-        <p class="calendar-note">Påmelding er gratis – premiene sendes ut til registrerte familiemedlemmer.</p>
+        <a
+          href="https://fjolsenbanden.julekalender.no/"
+          class="btn btn-primary calendar-btn"
+          target="_blank"
+          rel="noopener"
+        >
+          Meld deg på julekalenderen
+        </a>
       </div>
+
       <div class="calendar-image">
-        <img src="https://fjolsenbanden.setaei.com/assets/updates/calendar-preview.png" alt="Illustrasjon av FjOlsenbandens julekalender" />
+        <img
+          src="https://fjolsenbanden.setaei.com/assets/updates/calendar-preview.png"
+          alt="FjOlsenbandens julekalender"
+          loading="lazy"
+        />
       </div>
     </div>
   </section>
@@ -2219,49 +2203,6 @@ body.is-admin .visual-editor-toggle {
     return match ? match[1] : null;
   }
 })();
-</script>
-<script>
-  (function () {
-    const countdown = document.querySelector(".calendar-countdown");
-    if (!countdown) return;
-
-    const targetStr = countdown.getAttribute("data-target");
-    const target = new Date(targetStr);
-
-    const units = {
-      days: countdown.querySelector('[data-unit="days"]'),
-      hours: countdown.querySelector('[data-unit="hours"]'),
-      minutes: countdown.querySelector('[data-unit="minutes"]'),
-      seconds: countdown.querySelector('[data-unit="seconds"]')
-    };
-
-    function updateCountdown() {
-      const now = new Date();
-      let diff = target.getTime() - now.getTime();
-
-      if (diff <= 0) {
-        countdown.textContent = "Julekalenderen er i gang! 🎄";
-        return;
-      }
-
-      const sec = Math.floor(diff / 1000);
-      const days = Math.floor(sec / 86400);
-      const hours = Math.floor((sec % 86400) / 3600);
-      const minutes = Math.floor((sec % 3600) / 60);
-      const seconds = sec % 60;
-
-      if (units.days) units.days.textContent = String(days).padStart(2, "0");
-      if (units.hours)
-        units.hours.textContent = String(hours).padStart(2, "0");
-      if (units.minutes)
-        units.minutes.textContent = String(minutes).padStart(2, "0");
-      if (units.seconds)
-        units.seconds.textContent = String(seconds).padStart(2, "0");
-    }
-
-    updateCountdown();
-    setInterval(updateCountdown, 1000);
-  })();
 </script>
 </body>
 </html>
