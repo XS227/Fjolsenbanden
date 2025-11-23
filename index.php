@@ -1346,7 +1346,7 @@
           <div class="flex flex-col items-center justify-center gap-2 text-sm md:flex-row">
             <span>© 2025 Fjolsenbanden v/Fair Share Invest AS - Org.nr. 926 963 023. Alle rettigheter reservert.</span>
             <a
-              href="https://fjolsenbanden.setaei.com/admin"
+              href="/admin.html"
               class="flex items-center gap-2 font-medium text-zinc-300 transition hover:text-white"
             >
               <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4" aria-hidden="true">
