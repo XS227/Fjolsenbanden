@@ -1271,10 +1271,10 @@ body.is-admin.fb-editor-on .fb-edit-block:hover > .fb-block-edit-btn {
   to {
     transform: translateY(10%);
   }
+}
 
-  .calendar-image {
-    max-width: 380px;
-  }
+.calendar-image {
+  max-width: 380px;
 }
 
 @media (min-width: 901px) {
