@@ -493,6 +493,11 @@ body.is-admin .fb-edit-block {
   position: relative;
 }
 
+/* Skjul knapp for å legge til nye FAQ-punkter */
+.faq-add-btn {
+  display: none !important;
+}
+
 /* skjul blyant når editor er av */
 body.is-admin:not(.fb-editor-on) .fb-block-edit-btn {
   display: none !important;
