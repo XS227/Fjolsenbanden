@@ -101,6 +101,12 @@ a {
   height: 40px;
 }
 
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
 .nav-links {
   display: flex;
   gap: 1.5rem;
@@ -2109,7 +2115,10 @@ textarea:focus {
         <a href="#contact">Kontakt</a>
         <a href="#faq">FAQ</a>
       </nav>
-      <a href="#membership" class="btn btn-primary small">Bli medlem</a>
+      <div class="nav-actions">
+        <a href="#membership" class="btn btn-primary small">Bli medlem</a>
+        <button class="btn btn-ghost small admin-login-trigger" type="button">Admin-login</button>
+      </div>
     </div>
   </header>
 
