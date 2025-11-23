@@ -1921,6 +1921,9 @@ textarea:focus {
 
       closeBtn?.addEventListener('click', () => {
         panel?.classList.add('fb-panel-hidden');
+        document.body.classList.remove('visual-editor-on');
+        document.body.classList.remove('fb-editor-on');
+        document.body.classList.remove('edit-mode');
       });
 
       const toggleSectionEnabled = async (sectionId, enabled) => {
@@ -2951,10 +2954,17 @@ textarea:focus {
       const errorEl = document.getElementById('admin-error');
       const editor = document.getElementById('visual-editor');
       const editorClose = document.getElementById('visual-editor-close');
+      const panelClose = document.getElementById('close-visual-editor');
       const editorForm = document.getElementById('visual-editor-form');
       const editorReset = document.getElementById('visual-editor-reset');
       layoutListEl = document.getElementById('layout-list');
       layoutResetBtn = document.getElementById('layout-reset');
+
+      const hideEditorUI = () => {
+        document.body.classList.remove('visual-editor-on', 'fb-editor-on', 'edit-mode');
+        document.getElementById('fb-editor-panel')?.classList.add('fb-panel-hidden');
+        editor?.classList.remove('open');
+      };
 
       const authorized = localStorage.getItem(AUTH_KEY) === 'true';
       document.body.classList.toggle('is-admin', authorized);
@@ -2988,9 +2998,8 @@ textarea:focus {
         }
       });
 
-      editorClose?.addEventListener('click', () => {
-        editor?.classList.remove('open');
-      });
+      editorClose?.addEventListener('click', hideEditorUI);
+      panelClose?.addEventListener('click', hideEditorUI);
 
       editorReset?.addEventListener('click', (evt) => {
         evt.preventDefault();
