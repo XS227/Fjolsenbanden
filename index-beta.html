@@ -1059,6 +1059,7 @@ textarea:focus {
 /* Inline visual editor */
 
 .admin-toggle {
+  display: none; /* Skjult for vanlige brukere */
   position: fixed;
   top: 80px;
   right: 24px;
@@ -1072,6 +1073,11 @@ textarea:focus {
   cursor: pointer;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
   backdrop-filter: blur(10px);
+}
+
+/* Vis knappen kun når admin er logget inn */
+body.is-admin .admin-toggle {
+  display: inline-flex;
 }
 
 .admin-toggle.editing {
@@ -1219,24 +1225,7 @@ textarea:focus {
 }
 
 .visual-editor {
-  position: fixed;
-  top: 64px;
-  right: 24px;
-  width: min(420px, 100% - 48px);
-  background: #0a0f2a;
-  border-radius: 20px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55);
-  padding: 1.25rem;
-  z-index: 10000;
-  color: #e5e7eb;
-  display: none;
-  max-height: calc(100vh - 96px);
-  overflow: auto;
-}
-
-.visual-editor.open {
-  display: block;
+  display: none !important; /* Skjul hele innholds-editoren permanent */
 }
 
 .visual-editor-header {
@@ -1435,7 +1424,7 @@ textarea:focus {
 
   </style>
 </head>
-<body class="is-admin">
+<body>
   <style>
     /* --- Felles --- */
     body.is-admin .editable-section {
