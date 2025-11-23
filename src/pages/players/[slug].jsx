@@ -22,7 +22,7 @@ export default function PlayerProfilePage() {
     const player = useMemo(() => (slug ? findPlayerBySlug(slug) : null), [findPlayerBySlug, slug]);
     if (!memberAuth.state.isAuthenticated) {
         return (React.createElement("div", { className: "min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950" },
-            React.createElement(LoginModal, { open: true, auth: memberAuth, title: "Medlemsinnhold", description: "Logg inn som medlem (brukernavn og passord: User) for \u00E5 se spillerprofilen.", accent: "cyan" })));
+            React.createElement(LoginModal, { open: true, auth: memberAuth, title: "Medlemsinnhold", description: "Logg inn som medlem for \u00E5 se spillerprofilen.", accent: "cyan" })));
     }
     if (!player) {
         return (React.createElement("div", { className: "min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 text-slate-100" },

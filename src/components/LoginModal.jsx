@@ -65,7 +65,7 @@ export default function LoginModal({ open, auth, title, description, submitLabel
                     React.createElement("div", { className: "space-y-2 text-left" },
                         React.createElement(Label, { htmlFor: "login-password", className: "text-slate-200" }, passwordLabel),
                         React.createElement(Input, { id: "login-password", name: "password", type: "password", autoComplete: "current-password", value: password, onChange: (event) => setPassword(event.target.value), placeholder: "Skriv inn passord", className: "bg-slate-950/40 text-white placeholder:text-slate-400", disabled: auth.isVerifying, required: true })),
-                    error ? (React.createElement("p", { className: "text-sm text-rose-300" }, error)) : (React.createElement("p", { className: "text-xs text-slate-400" }, auth.hint)),
+                    error ? (React.createElement("p", { className: "text-sm text-rose-300" }, error)) : auth.hint ? (React.createElement("p", { className: "text-xs text-slate-400" }, auth.hint)) : null,
                     React.createElement(Button, { type: "submit", className: `w-full ${accentStyle.button}`, disabled: auth.isVerifying }, auth.isVerifying ? (React.createElement(React.Fragment, null,
                         React.createElement(Loader2, { className: "mr-2 h-4 w-4 animate-spin" }),
                         " Verifiserer\u2026")) : (submitLabel)))))));
