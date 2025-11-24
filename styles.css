@@ -592,11 +592,6 @@ a {
   transform: translateY(-1px);
 }
 
-.social-number {
-  font-size: 1.4rem;
-  margin: 0.5rem 0;
-}
-
 .social-label {
   font-size: 0.85rem;
   text-transform: uppercase;
