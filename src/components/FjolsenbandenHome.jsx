@@ -25,7 +25,7 @@ const socialLinks = [
     {
         icon: React.createElement(DiscordIcon, { className: "h-4 w-4", "aria-hidden": "true" }),
         label: "Discord",
-        href: "https://discord.gg/fjolsenbanden",
+        href: "https://discord.gg/CbvBPHzg4D",
     },
     {
         icon: React.createElement(Twitch, { className: "h-4 w-4", "aria-hidden": "true" }),

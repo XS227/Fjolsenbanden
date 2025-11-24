@@ -161,7 +161,7 @@ export const DEFAULT_SITE_CONFIG = {
             title: "Kontakt oss",
             description: "Har du spørsmål om medlemskap, samarbeid eller events? Send oss en melding så kommer vi tilbake til deg.",
             email: "hei@fjolsenbanden.no",
-            discord: "https://discord.gg/fjolsenbanden",
+            discord: "https://discord.gg/CbvBPHzg4D",
             tiktok: "https://www.tiktok.com/@fjolsenbanden",
             youtube: "https://youtube.com/@fjolsenbanden",
             formEndpoint: `${SITE_BASE_URL}/api/contact`,

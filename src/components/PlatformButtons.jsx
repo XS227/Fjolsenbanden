@@ -33,7 +33,7 @@ const PLATFORM_LINKS = [
     {
         id: "discord",
         label: "Bli med i Discord",
-        href: "https://discord.gg/fjolsenbanden",
+        href: "https://discord.gg/CbvBPHzg4D",
         icon: React.createElement(Discord, { className: "h-5 w-5" }),
     },
     {
