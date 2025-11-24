@@ -825,7 +825,7 @@
                     <span>Twitch</span>
                   </a>
                   <a
-                    href="https://discord.gg/fjolsenbanden"
+                    href="https://discord.gg/CbvBPHzg4D"
                     target="_blank"
                     rel="noopener noreferrer"
                     class="flex items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/10 px-3 py-2 text-xs font-medium uppercase tracking-wide text-white/90 transition duration-200 hover:-translate-y-0.5 hover:bg-white/20 hover:text-white focus:outline-none focus:ring-2 focus:ring-[#13A0F9] sm:justify-start"
