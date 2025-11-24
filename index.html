@@ -511,7 +511,7 @@ a {
   justify-content: center;
   text-align: center;
   padding-block: 2rem;
-  gap: 0.3rem;
+  gap: 0.55rem;
 }
 
 .social-icon img {
@@ -519,6 +519,28 @@ a {
   height: 32px;
   object-fit: contain;
   margin-bottom: 0.25rem;
+}
+
+.social-follow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.4rem 1rem;
+  margin-top: 0.1rem;
+  border-radius: var(--radius-pill);
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: background 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.social-card:hover .social-follow {
+  background: var(--primary);
+  box-shadow: 0 0 18px rgba(0, 166, 255, 0.35);
+  transform: translateY(-1px);
 }
 
 .social-number {
@@ -1124,7 +1146,6 @@ body.is-admin .fb-block-edit-btn:hover {
       </nav>
       <div class="nav-actions">
         <a href="#membership" class="btn btn-primary small">Bli medlem</a>
-        <a href="/admin.html" class="btn btn-secondary small">Admin</a>
       </div>
     </div>
   </header>
@@ -1381,35 +1402,40 @@ body.is-admin .fb-block-edit-btn:hover {
           <div class="social-icon">
             <img src="img/social/twitch.svg" alt="Twitch" />
           </div>
-          <p class="social-number">4.5k</p>
+          <span class="social-follow">FØLG</span>
+          <p class="social-number">5.9k</p>
           <span class="social-label">Twitch</span>
         </a>
         <a class="card social-card" data-social="tiktok" href="https://www.tiktok.com/@fjolsenbanden" target="_blank">
           <div class="social-icon">
             <img src="img/social/tiktok.svg" alt="TikTok" />
           </div>
-          <p class="social-number">7.0k</p>
+          <span class="social-follow">FØLG</span>
+          <p class="social-number">18.7k</p>
           <span class="social-label">TikTok</span>
         </a>
         <a class="card social-card" data-social="discord" href="https://discord.gg/fjolsenbanden" target="_blank">
           <div class="social-icon">
             <img src="img/social/discord.svg" alt="Discord" />
           </div>
-          <p class="social-number">3.5k</p>
+          <span class="social-follow">FØLG</span>
+          <p class="social-number">5.2k</p>
           <span class="social-label">Discord</span>
         </a>
         <a class="card social-card" data-social="youtube" href="https://youtube.com/@fjolsenbanden" target="_blank">
           <div class="social-icon">
             <img src="img/social/youtube.svg" alt="YouTube" />
           </div>
-          <p class="social-number">150+</p>
+          <span class="social-follow">FØLG</span>
+          <p class="social-number">620+</p>
           <span class="social-label">YouTube</span>
         </a>
         <a class="card social-card" data-social="instagram" href="https://www.instagram.com/fjolsenbanden" target="_blank">
           <div class="social-icon">
             <img src="img/social/instagram.svg" alt="Instagram" />
           </div>
-          <p class="social-number">4.1k</p>
+          <span class="social-follow">FØLG</span>
+          <p class="social-number">7.8k</p>
           <span class="social-label">Instagram</span>
         </a>
       </div>
