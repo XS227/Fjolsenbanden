@@ -780,10 +780,8 @@
               <div class="space-y-4 rounded-3xl border border-white/10 bg-white/5 p-6 text-left shadow-[0_18px_42px_rgba(12,21,45,0.45)]">
                 <h2 class="text-xl font-semibold text-[#13A0F9]">🎮 Hva er FjOlsenbanden?</h2>
                 <p class="text-sm leading-relaxed text-zinc-200 sm:text-base">
-                  FjOlsenbanden er et raskt voksende gaming-community med over
-                  <span data-followers="discord" data-format="compact">2.5k</span>&nbsp;medlemmer på Discord,
-                  <span data-followers="twitch" data-format="compact">3.2k</span>&nbsp;følgere på Twitch og
-                  <span data-followers="tiktok" data-format="compact">4.2k</span>&nbsp;på TikTok – både barn, ungdom og foreldre!
+                  FjOlsenbanden er et raskt voksende gaming-community med engasjerte medlemmer på Discord,
+                  og et bredt publikum på Twitch og TikTok – både barn, ungdom og foreldre!
                 </p>
                 <p class="text-sm leading-relaxed text-zinc-200 sm:text-base">
                   <span class="font-semibold text-white">Målet vårt er enkelt:</span><br class="hidden sm:block" />Å skape et trygt, positivt og inkluderende miljø der alle kan game uten hets, mobbing eller negativ adferd.
@@ -908,16 +906,7 @@
                   </a>
                 </div>
                 <p class="mt-3 text-center text-xs text-zinc-400 sm:text-left">
-                  Totalt over
-                  <span
-                    data-followers-total="discord,twitch,youtube,tiktok,instagram"
-                    data-format="plain"
-                    data-round="up-1000"
-                    data-min="10000"
-                  >
-                    10 000
-                  </span>
-                  følgere på tvers av Discord, Twitch, YouTube, TikTok og Instagram.
+                  Finn oss på Discord, Twitch, YouTube, TikTok og Instagram for å få med deg alt som skjer.
                 </p>
               </div>
             </div>
@@ -1705,140 +1694,6 @@
       </div>
     </div>
   </section>
-
-  <script>
-    (() => {
-      const plainFormatter = new Intl.NumberFormat("no-NO");
-      const defaultFollowers = {
-        discord: { count: 2500, label: "medlemmer" },
-        twitch: { count: 3200, label: "følgere" },
-        youtube: { count: 0, label: "abonnenter" },
-        tiktok: { count: 4200, label: "følgere" },
-        instagram: { count: 0, label: "følgere" },
-      };
-
-      const mergeFollowers = (base, overrides) => {
-        const merged = { ...base };
-        if (!overrides || typeof overrides !== "object") {
-          return merged;
-        }
-        Object.entries(overrides).forEach(([key, value]) => {
-          if (!value || typeof value !== "object") {
-            return;
-          }
-          const existing = merged[key] || {};
-          const nextCount =
-            typeof value.count === "number"
-              ? value.count
-              : typeof existing.count === "number"
-              ? existing.count
-              : 0;
-          merged[key] = { ...existing, ...value, count: nextCount };
-        });
-        return merged;
-      };
-
-      const formatCompact = (value) => {
-        if (value < 100000) {
-          return plainFormatter.format(value);
-        }
-        if (value >= 1000000) {
-          const millions = value / 1000000;
-          const decimals = millions >= 10 ? 0 : 1;
-          return `${Number(millions.toFixed(decimals))}m`;
-        }
-        if (value >= 1000) {
-          const thousands = value / 1000;
-          const decimals = thousands >= 10 ? 0 : 1;
-          return `${Number(thousands.toFixed(decimals))}k`;
-        }
-        return String(value);
-      };
-
-      const formatValue = (value, format) => {
-        switch (format) {
-          case "compact":
-            return formatCompact(value);
-          case "plain":
-            return plainFormatter.format(value);
-          default:
-            return String(value);
-        }
-      };
-
-      let followersConfig =
-        typeof window !== "undefined" && window.fjCommunityFollowers
-          ? mergeFollowers(defaultFollowers, window.fjCommunityFollowers)
-          : { ...defaultFollowers };
-
-      const applyFollowerValues = () => {
-        document.querySelectorAll("[data-followers]").forEach((element) => {
-          const key = element.dataset.followers;
-          if (!key) {
-            return;
-          }
-          const config = followersConfig[key];
-          if (!config) {
-            return;
-          }
-          const format = element.dataset.format || "compact";
-          const prefix = element.dataset.prefix ?? "";
-          const suffix = element.dataset.suffix ?? "";
-          element.textContent = `${prefix}${formatValue(config.count, format)}${suffix}`;
-        });
-
-        document.querySelectorAll("[data-followers-total]").forEach((element) => {
-          const keys = element.dataset.followersTotal
-            ? element.dataset.followersTotal
-                .split(",")
-                .map((value) => value.trim())
-                .filter(Boolean)
-            : Object.keys(followersConfig);
-
-          const totalValue = keys.reduce(
-            (accumulator, key) => accumulator + (followersConfig[key]?.count ?? 0),
-            0
-          );
-
-          const roundStrategy = element.dataset.round || "none";
-          let valueToFormat = totalValue;
-          if (roundStrategy === "up-1000") {
-            valueToFormat = Math.ceil(totalValue / 1000) * 1000;
-          } else if (roundStrategy === "up-100") {
-            valueToFormat = Math.ceil(totalValue / 100) * 100;
-          } else if (roundStrategy === "down-100") {
-            valueToFormat = Math.floor(totalValue / 100) * 100;
-          }
-
-          const minValue = element.dataset.min ? Number.parseInt(element.dataset.min, 10) : null;
-          if (typeof minValue === "number" && !Number.isNaN(minValue)) {
-            valueToFormat = Math.max(valueToFormat, minValue);
-          }
-
-          const format = element.dataset.format || "plain";
-          const prefix = element.dataset.prefix ?? "";
-          const suffix = element.dataset.suffix ?? "";
-          element.textContent = `${prefix}${formatValue(valueToFormat, format)}${suffix}`;
-        });
-      };
-
-      const updateFollowers = (overrides) => {
-        followersConfig = mergeFollowers(followersConfig, overrides);
-        applyFollowerValues();
-      };
-
-      if (typeof window !== "undefined") {
-        window.updateFjCommunityFollowers = updateFollowers;
-        window.fjCommunityFollowers = followersConfig;
-      }
-
-      if (document.readyState === "loading") {
-        document.addEventListener("DOMContentLoaded", applyFollowerValues, { once: true });
-      } else {
-        applyFollowerValues();
-      }
-    })();
-  </script>
 
   <script>
       const SKIN_STORAGE_KEY = "fjolsenbanden-skin";
