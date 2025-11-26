@@ -30,8 +30,8 @@ export const DEFAULT_ABOUT_BULLETS = [
 ];
 export const DEFAULT_SECTION_ORDER = [
     "heroIntro",
-    "liveStream",
     "community",
+    "liveStream",
     "membership",
     "partners",
     "offerings",
