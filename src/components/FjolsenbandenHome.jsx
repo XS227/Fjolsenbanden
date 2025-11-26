@@ -49,9 +49,9 @@ const socialLinks = [
     },
 ];
 const stats = [
-    { label: "Discord", value: "2 500+" },
-    { label: "Twitch", value: "3 200+" },
-    { label: "TikTok", value: "4 200+" },
+    { label: "Totalt følgere", value: "10 000+" },
+    { label: "Discord-medlemmer", value: "2 600+" },
+    { label: "Kanalene våre", value: "5+" },
 ];
 const SOCIAL_PLATFORM_STYLES = {
     twitch: {
