@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8" />
+  <title>FjOlsenbanden – Visual Editor med PIN-lås (demo)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Demo-fonts + enkel styling -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --fj-dark: #041149;
+      --fj-bg: #050822;
+      --fj-blue: #13A0F9;
+      --fj-pink: #FF2F9C;
+      --fj-border: rgba(255,255,255,0.08);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--fj-bg);
+      color: #f8f9ff;
+    }
+    .editor-bar {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 16px;
+      background: linear-gradient(90deg, rgba(4,17,73,0.96), rgba(84,98,135,0.96));
+      border-bottom: 1px solid var(--fj-border);
+      backdrop-filter: blur(12px);
+      color: #f5f6ff;
+    }
+    .editor-bar h1 {
+      margin: 0;
+      font-size: 16px;
+      letter-spacing: 0.05em;
+      color: var(--fj-pink);
+    }
+    main.page-wrapper {
+      padding: 24px 16px 80px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .editable {
+      padding: 14px;
+      border: 1px solid var(--fj-border);
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+    .editable[contenteditable="true"] {
+      outline: 1px dashed rgba(255,255,255,0.6);
+      background: rgba(0,0,0,0.35);
+    }
+    .btn {
+      display: inline-block;
+      padding: 8px 14px;
+      border: none;
+      border-radius: 999px;
+      background: var(--fj-blue);
+      color: #041149;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    #unlockBtn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      padding: 10px 16px;
+      border: none;
+      border-radius: 999px;
+      background: var(--fj-pink);
+      color: #041149;
+      font-weight: 600;
+      cursor: pointer;
+      z-index: 1500;
+    }
+
+    /* PIN-modal */
+    #pinModal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.85);
+      z-index: 2000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    #pinModal .modal-content {
+      background: var(--fj-dark);
+      padding: 24px;
+      border-radius: 12px;
+      min-width: 280px;
+      color: #f8f9ff;
+      box-shadow: 0 0 30px rgba(0,0,0,0.9);
+    }
+    #pinModal input {
+      width: 100%;
+      padding: 8px;
+      border-radius: 6px;
+      border: none;
+      margin-bottom: 14px;
+      font-size: 16px;
+    }
+    #pinModal .btn-row {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+    #pinError {
+      color: #ff5c8d;
+      margin-top: 10px;
+      font-size: 14px;
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- EDITOR BAR (skjult til opplåst) -->
+  <header class="editor-bar" id="editorBar" style="display: none;">
+    <h1>FjOlsenbanden – Visual Editor (Demo)</h1>
+    <button class="btn" id="toggleEditBtn">🔧 Aktiver redigering</button>
+  </header>
+
+  <main class="page-wrapper">
+    <div class="editable" data-field="heading">
+      <h2>Velkommen til FjOlsenbanden</h2>
+    </div>
+
+    <div class="editable" data-field="lead">
+      <p>Dette er en demo-side. Når du låser opp med PIN, kan du redigere innholdet direkte her.</p>
+    </div>
+
+    <div class="editable" data-field="footer">
+      <p>© 2025 FjOlsenbanden</p>
+    </div>
+  </main>
+
+  <!-- Lås-/innloggings-knapp -->
+  <button id="unlockBtn">🔒 Lås opp editor</button>
+
+  <!-- PIN-modal -->
+  <div id="pinModal">
+    <div class="modal-content">
+      <h3>Skriv inn PIN-kode</h3>
+      <input id="pinInput" type="password" placeholder="••••" />
+      <div class="btn-row">
+        <button class="btn" id="pinCancel">Avbryt</button>
+        <button class="btn" id="pinSubmit">OK</button>
+      </div>
+      <div id="pinError">Feil PIN — prøv igjen</div>
+    </div>
+  </div>
+
+  <script>
+    (function(){
+      const CORRECT_PIN = '1234';  // Endre PIN hvis du ønsker
+      let unlocked = false;
+
+      const unlockBtn = document.getElementById('unlockBtn');
+      const pinModal  = document.getElementById('pinModal');
+      const pinInput  = document.getElementById('pinInput');
+      const pinSubmit = document.getElementById('pinSubmit');
+      const pinCancel = document.getElementById('pinCancel');
+      const pinError  = document.getElementById('pinError');
+      const editorBar = document.getElementById('editorBar');
+      const toggleEditBtn = document.getElementById('toggleEditBtn');
+
+      unlockBtn.addEventListener('click', () => {
+        pinModal.style.display = 'flex';
+        pinInput.value = '';
+        pinError.style.display = 'none';
+        pinInput.focus();
+      });
+
+      pinCancel.addEventListener('click', () => {
+        pinModal.style.display = 'none';
+      });
+
+      pinSubmit.addEventListener('click', checkPin);
+      pinInput.addEventListener('keydown', e => {
+        if (e.key === 'Enter') checkPin();
+      });
+
+      function checkPin(){
+        if (pinInput.value === CORRECT_PIN) {
+          unlocked = true;
+          pinModal.style.display = 'none';
+          unlockBtn.style.display = 'none';
+          editorBar.style.display = 'flex';
+        } else {
+          pinError.style.display = 'block';
+        }
+      }
+
+      toggleEditBtn.addEventListener('click', () => {
+        if (!unlocked) return;
+        const isEditing = toggleEditBtn.getAttribute('data-editing') === 'true';
+        if (!isEditing) {
+          startEditing();
+        } else {
+          stopEditing();
+        }
+      });
+
+      function startEditing() {
+        document.querySelectorAll('.editable').forEach(el => {
+          el.setAttribute('contenteditable', 'true');
+        });
+        toggleEditBtn.textContent = '💾 Lås endringer';
+        toggleEditBtn.setAttribute('data-editing', 'true');
+      }
+
+      function stopEditing() {
+        document.querySelectorAll('.editable').forEach(el => {
+          el.removeAttribute('contenteditable');
+        });
+        toggleEditBtn.textContent = '🔧 Aktiver redigering';
+        toggleEditBtn.setAttribute('data-editing', 'false');
+      }
+
+      // (Valgfritt) Dersom du vil auto-aktivere redigering ved opplåsing:
+      // uncomment følgende linje:
+      // if (unlocked) startEditing();
+
+    })();
+  </script>
+
+</body>
+</html>
