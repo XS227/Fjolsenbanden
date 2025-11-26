@@ -687,7 +687,7 @@
 
   <script>
     (function() {
-      const STORAGE_KEY = "fjolsen_visual_editor_p_v1";
+      const API_URL = 'visual-editor-api.php';
 
       const body = document.body;
       const modeButtons = document.querySelectorAll(".editor-mode-btn");
@@ -897,30 +897,44 @@
         });
       }
 
-      function saveToStorage() {
-        const state = serializePage();
+      async function saveToServer(state) {
         try {
-          localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-          showToast("Endringer lagret i nettleseren.");
+          const res = await fetch(API_URL + '?action=save', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(state)
+          });
+          const data = await res.json();
+          if (!res.ok || data.status !== 'ok') {
+            throw new Error(data.message || 'Ukjent feil');
+          }
+          showToast("Endringer lagret på server.");
         } catch (err) {
           console.error(err);
-          showToast("Kunne ikke lagre – sjekk localStorage.");
+          showToast("Kunne ikke lagre til server.");
         }
       }
 
-      function loadFromStorage() {
+      async function loadFromServer() {
         try {
-          const raw = localStorage.getItem(STORAGE_KEY);
-          if (!raw) return null;
-          return JSON.parse(raw);
+          const res = await fetch(API_URL + '?action=load');
+          if (!res.ok) return null;
+          const data = await res.json();
+          if (!data || !data.sections || data.sections.length === 0) return null;
+          return data;
         } catch (err) {
           console.error(err);
           return null;
         }
       }
 
-      function resetDemo() {
-        localStorage.removeItem(STORAGE_KEY);
+      async function resetDemo() {
+        if (!confirm("Tilbakestill alt til standardinnhold?")) return;
+        try {
+          await fetch(API_URL + '?action=reset', { method: 'POST' });
+        } catch (err) {
+          console.error(err);
+        }
         location.reload();
       }
 
@@ -934,24 +948,24 @@
 
       // Save / reset listeners
       saveBtn.addEventListener("click", () => {
-        saveToStorage();
+        const state = serializePage();
+        saveToServer(state);
       });
 
       resetBtn.addEventListener("click", () => {
-        if (confirm("Tilbakestill demoen til standardinnhold?")) {
-          resetDemo();
-        }
+        resetDemo();
       });
 
-      // INIT: try load saved state
-      const stored = loadFromStorage();
-      if (stored) {
-        applyState(stored);
-        showToast("Lastet lagrede endringer (demo).");
-      }
-
-      // Start in view mode
-      switchMode("view");
+      // INIT
+      (async function init() {
+        const stored = await loadFromServer();
+        if (stored) {
+          applyState(stored);
+          showToast("Lastet lagrede endringer fra server.");
+        }
+        // Start i visningsmodus
+        switchMode("view");
+      })();
     })();
   </script>
 </body>
