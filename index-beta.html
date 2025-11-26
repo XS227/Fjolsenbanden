@@ -709,18 +709,23 @@ textarea:focus {
 
 /* --- Julekalender --- */
 
-.calendar-section {
-  position: relative;
-  overflow: hidden;
-  padding: 4rem 1.5rem;
-  background: linear-gradient(135deg, #8b1a31, #d62839);
-  color: #ffffff;
-}
+    .calendar-section {
+      position: relative;
+      overflow: hidden;
+      padding: 4rem 1.5rem;
+      background: linear-gradient(135deg, #8b1a31, #d62839);
+      color: #ffffff;
+    }
 
-.calendar-section::before {
-  content: "";
-  position: absolute;
-  inset: 0;
+    .calendar-section .editable-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    .calendar-section::before {
+      content: "";
+      position: absolute;
+      inset: 0;
   pointer-events: none;
   opacity: 0.35;
   background-image:
@@ -730,11 +735,11 @@ textarea:focus {
   background-repeat: no-repeat;
 }
 
-.calendar-inner {
-  position: relative;
-  max-width: 1100px;
-  margin: 0 auto;
-  display: flex;
+    .calendar-inner {
+      position: relative;
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
   gap: 3rem;
   align-items: center;
   z-index: 1;
@@ -808,12 +813,57 @@ textarea:focus {
   justify-content: center;
 }
 
-.calendar-image {
-  max-width: 100%;
-  height: auto;
-  border-radius: 1.5rem;
-  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.4);
-}
+    .calendar-image {
+      max-width: 100%;
+      height: auto;
+      border-radius: 1.5rem;
+      box-shadow: 0 14px 40px rgba(0, 0, 0, 0.4);
+    }
+
+    .calendar-snow,
+    .calendar-snow::before,
+    .calendar-snow::after {
+      content: "";
+      position: absolute;
+      inset: -10% -10% auto;
+      height: 140%;
+      background-image: radial-gradient(2px 2px at 20px 30px, #fff, transparent),
+        radial-gradient(3px 3px at 60px 80px, rgba(255, 255, 255, 0.85), transparent),
+        radial-gradient(1.5px 1.5px at 120px 20px, rgba(255, 255, 255, 0.8), transparent),
+        radial-gradient(2px 2px at 200px 70px, rgba(255, 255, 255, 0.9), transparent),
+        radial-gradient(3px 3px at 260px 10px, rgba(255, 255, 255, 0.7), transparent),
+        radial-gradient(2px 2px at 320px 90px, rgba(255, 255, 255, 0.9), transparent),
+        radial-gradient(1.5px 1.5px at 400px 40px, rgba(255, 255, 255, 0.85), transparent),
+        radial-gradient(2px 2px at 480px 100px, rgba(255, 255, 255, 0.8), transparent);
+      background-size: 200px 200px;
+      animation: calendar-snowfall 18s linear infinite;
+      pointer-events: none;
+      opacity: 0.35;
+      z-index: 1;
+    }
+
+    .calendar-snow::before {
+      animation-duration: 26s;
+      opacity: 0.25;
+      filter: blur(1px);
+      transform: translateY(-6%);
+    }
+
+    .calendar-snow::after {
+      animation-duration: 32s;
+      opacity: 0.2;
+      filter: blur(2px);
+      transform: translateY(-10%);
+    }
+
+    @keyframes calendar-snowfall {
+      0% {
+        transform: translateY(-8%);
+      }
+      100% {
+        transform: translateY(12%);
+      }
+    }
 
 /* Responsivt */
 @media (max-width: 900px) {
@@ -2175,6 +2225,7 @@ body.is-admin .admin-toggle {
       data-section-id="julekalender"
       data-section-enabled="true"
     >
+      <div class="calendar-snow" aria-hidden="true"></div>
       <div class="editable-content">
         <div class="container">
           <div class="section-toolbar">
