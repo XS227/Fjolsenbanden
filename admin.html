@@ -645,6 +645,68 @@
         padding-inline: 1rem;
       }
     }
+
+    /* Vipps module */
+    .vipps-card {
+      display: grid;
+      gap: 0.8rem;
+    }
+
+    .vipps-card p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .vipps-grid {
+      display: grid;
+      gap: 0.85rem;
+    }
+
+    .vipps-label {
+      display: grid;
+      gap: 0.35rem;
+      font-size: 0.95rem;
+      color: #ffffff;
+    }
+
+    .vipps-input,
+    .vipps-card input[type="password"] {
+      width: 100%;
+      padding: 0.75rem 0.85rem;
+      border-radius: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.05);
+      color: #ffffff;
+      font: inherit;
+    }
+
+    .vipps-input::placeholder,
+    .vipps-card input[type="password"]::placeholder {
+      color: rgba(255, 255, 255, 0.45);
+    }
+
+    .vipps-toggle {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-weight: 600;
+      color: #ffffff;
+    }
+
+    .vipps-status-message {
+      min-height: 1.1rem;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    .vipps-status-message.status--ok {
+      color: #7bffca;
+    }
+
+    .vipps-status-message.status--error {
+      color: #ff7a7a;
+    }
   </style>
 </head>
 <body>
@@ -792,6 +854,43 @@
             </div>
           </div>
 
+          <div class="card vipps-card" id="admin-vipps-module">
+            <div class="info-card-title">Vipps / MobilePay</div>
+            <p class="admin-help-text">
+              Legg inn opplysninger fra Vipps-portalen for å aktivere Vipps-modulen på forsiden.
+            </p>
+
+            <div class="vipps-grid">
+              <label class="vipps-label">
+                Merchant serial number (MSN)
+                <input type="text" id="vipps-msn" class="vipps-input" placeholder="f.eks. 123456" />
+              </label>
+
+              <label class="vipps-label">
+                Client ID
+                <input type="text" id="vipps-client-id" class="vipps-input" placeholder="kopier fra Vipps-portalen" />
+              </label>
+
+              <label class="vipps-label">
+                Client Secret
+                <input type="password" id="vipps-client-secret" class="vipps-input" placeholder="kopier fra Vipps-portalen" />
+              </label>
+
+              <label class="vipps-label">
+                Subscription key (API key)
+                <input type="text" id="vipps-sub-key" class="vipps-input" placeholder="Ocp-Apim-Subscription-Key" />
+              </label>
+
+              <label class="vipps-toggle">
+                <input type="checkbox" id="vipps-enabled" />
+                <span>Aktiver Vipps-modulen på forsiden</span>
+              </label>
+            </div>
+
+            <button id="vipps-save-settings" class="btn btn-primary">Lagre Vipps-innstillinger</button>
+            <p id="vipps-status-message" class="vipps-status-message"></p>
+          </div>
+
           <div class="card info-card">
             <div class="info-card-title">Hvordan fungerer dette?</div>
             <p>Alt lagres i <code>localStorage</code> under nøkkelen:</p>
@@ -828,6 +927,13 @@
           discord: "https://discord.gg/CbvBPHzg4D",
           youtube: "https://youtube.com/@fjolsenbanden",
           instagram: "https://www.instagram.com/fjolsenbanden"
+        },
+        vipps: {
+          msn: "",
+          clientId: "",
+          clientSecret: "",
+          subscriptionKey: "",
+          enabled: false
         }
       },
       sections: {
@@ -1076,6 +1182,18 @@
       document.getElementById("social-discord").value = g.socials.discord || "";
       document.getElementById("social-youtube").value = g.socials.youtube || "";
       document.getElementById("social-instagram").value = g.socials.instagram || "";
+
+      const vipps = g.vipps || {};
+      document.getElementById("vipps-msn").value = vipps.msn || "";
+      document.getElementById("vipps-client-id").value = vipps.clientId || "";
+      document.getElementById("vipps-client-secret").value = vipps.clientSecret || "";
+      document.getElementById("vipps-sub-key").value = vipps.subscriptionKey || "";
+      document.getElementById("vipps-enabled").checked = Boolean(vipps.enabled);
+      const vippsStatus = document.getElementById("vipps-status-message");
+      if (vippsStatus) {
+        vippsStatus.textContent = "";
+        vippsStatus.classList.remove("status--ok", "status--error");
+      }
     }
 
     function renderSectionsForm(cfg) {
@@ -1473,6 +1591,17 @@
       g.socials.youtube = document.getElementById("social-youtube").value.trim() || g.socials.youtube;
       g.socials.instagram = document.getElementById("social-instagram").value.trim() || g.socials.instagram;
 
+      const vippsDefaults = g.vipps || {};
+      g.vipps = {
+        ...vippsDefaults,
+        msn: document.getElementById("vipps-msn").value.trim() || vippsDefaults.msn || "",
+        clientId: document.getElementById("vipps-client-id").value.trim() || vippsDefaults.clientId || "",
+        clientSecret:
+          document.getElementById("vipps-client-secret").value.trim() || vippsDefaults.clientSecret || "",
+        subscriptionKey: document.getElementById("vipps-sub-key").value.trim() || vippsDefaults.subscriptionKey || "",
+        enabled: document.getElementById("vipps-enabled").checked
+      };
+
       return cfg;
     }
 
@@ -1543,6 +1672,31 @@
           setStatus("Noe gikk galt ved lagring.", "error");
         }
       });
+
+      const vippsSaveBtn = document.getElementById("vipps-save-settings");
+      const vippsStatus = document.getElementById("vipps-status-message");
+      if (vippsSaveBtn) {
+        vippsSaveBtn.addEventListener("click", () => {
+          try {
+            const newCfg = collectConfigFromForm();
+            saveConfig(newCfg);
+            renderStats(newCfg);
+            setStatus("Lagret! Oppdater forsiden for å se endringene.", "ok");
+            if (vippsStatus) {
+              vippsStatus.textContent = "Vipps-innstillinger lagret.";
+              vippsStatus.classList.remove("status--error");
+              vippsStatus.classList.add("status--ok");
+            }
+          } catch (e) {
+            console.error(e);
+            if (vippsStatus) {
+              vippsStatus.textContent = "Noe gikk galt ved lagring av Vipps.";
+              vippsStatus.classList.remove("status--ok");
+              vippsStatus.classList.add("status--error");
+            }
+          }
+        });
+      }
 
       document.getElementById("reset-btn").addEventListener("click", () => {
         saveConfig(DEFAULT_CONFIG);
