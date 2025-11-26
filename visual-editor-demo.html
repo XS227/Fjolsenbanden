@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8" />
+  <title>FjOlsenbanden – Visual Editor Demo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Demo fonts (approximate your profile) -->
+  <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --fj-dark: #041149;
+      --fj-dark-2: #293660;
+      --fj-mid: #546287;
+      --fj-blue: #13A0F9;
+      --fj-pink: #FF2F9C;
+      --fj-pink-light: #FF83CA;
+      --fj-bg: #050822;
+      --fj-card: #10163a;
+      --fj-border: rgba(255,255,255,0.08);
+      --fj-radius-lg: 18px;
+      --fj-radius-xl: 24px;
+      --fj-shadow-soft: 0 18px 40px rgba(0,0,0,0.45);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #293660 0, #041149 40%, #000 100%);
+      color: #f8f9ff;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Top editor bar */
+    .editor-bar {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 16px;
+      background: linear-gradient(90deg, rgba(4,17,73,0.96), rgba(84,98,135,0.96));
+      border-bottom: 1px solid var(--fj-border);
+      backdrop-filter: blur(14px);
+    }
+
+    .editor-bar-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .editor-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(0,0,0,0.3);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .editor-pill span.logo-text {
+      font-family: "Luckiest Guy", system-ui;
+      font-size: 16px;
+      letter-spacing: 0.05em;
+      color: var(--fj-pink);
+      text-shadow: 0 0 16px rgba(255,47,156,0.8);
+    }
+
+    .editor-mode-toggle {
+      display: inline-flex;
+      background: rgba(0,0,0,0.3);
+      border-radius: 999px;
+      padding: 3px;
+    }
+
+    .editor-mode-btn {
+      border: none;
+      background: transparent;
+      color: #d4ddff;
+      font-size: 12px;
+      padding: 5px 12px;
+      border-radius: 999px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .editor-mode-btn.active {
+      background: #13A0F9;
+      color: #041149;
+      font-weight: 600;
+      box-shadow: 0 0 14px rgba(19,160,249,0.8);
+    }
+
+    .editor-bar-right {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+    }
+
+    .editor-btn {
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.15);
+      background: rgba(0,0,0,0.35);
+      padding: 6px 12px;
+      font-size: 12px;
+      color: #f5f6ff;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      transition: background 0.15s ease, transform 0.1s ease, box-shadow 0.15s ease;
+    }
+
+    .editor-btn.primary {
+      border-color: transparent;
+      background: linear-gradient(135deg, #FF2F9C, #FF83CA);
+      color: #041149;
+      font-weight: 600;
+      box-shadow: 0 0 16px rgba(255,47,156,0.8);
+    }
+
+    .editor-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.45);
+    }
+
+    .editor-status {
+      opacity: 0.8;
+    }
+
+    .editor-status strong {
+      color: var(--fj-blue);
+    }
+
+    main.page-wrapper {
+      flex: 1;
+      padding: 24px 16px 40px;
+      max-width: 1080px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .sections-wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .editable-section {
+      background: radial-gradient(circle at top left, rgba(255,47,156,0.12), rgba(4,17,73,1));
+      border-radius: var(--fj-radius-xl);
+      border: 1px solid var(--fj-border);
+      box-shadow: var(--fj-shadow-soft);
+      padding: 18px 18px 20px;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.12s ease, box-shadow 0.12s ease, border-color 0.12s ease;
+    }
+
+    .editable-section:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 24px 50px rgba(0,0,0,0.7);
+      border-color: rgba(255,255,255,0.16);
+    }
+
+    .editable-section.hidden-section {
+      opacity: 0.38;
+      position: relative;
+    }
+
+    .editable-section.hidden-section::after {
+      content: "Deaktivert seksjon";
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 3px 7px;
+      border-radius: 999px;
+      background: rgba(0,0,0,0.7);
+      border: 1px solid rgba(255,255,255,0.4);
+      color: #FFABDF;
+    }
+
+    .section-inner {
+      display: grid;
+      grid-template-columns: minmax(0, 2fr) minmax(0, 1.4fr);
+      gap: 18px;
+      align-items: center;
+    }
+
+    @media (max-width: 840px) {
+      .section-inner {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .section-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      opacity: 0.78;
+      margin-bottom: 6px;
+    }
+
+    .section-title {
+      font-family: "Luckiest Guy", system-ui;
+      font-size: 30px;
+      letter-spacing: 0.03em;
+      margin: 0 0 8px;
+      text-transform: uppercase;
+      color: #fff;
+      text-shadow: 0 0 18px rgba(0,0,0,0.9);
+    }
+
+    .section-lead {
+      font-size: 14px;
+      line-height: 1.6;
+      color: #e4e6ff;
+      margin-bottom: 12px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(0,0,0,0.45);
+      border: 1px solid rgba(255,255,255,0.2);
+      margin-bottom: 10px;
+    }
+
+    .pill span.dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: #13A0F9;
+      box-shadow: 0 0 10px rgba(19,160,249,0.9);
+    }
+
+    .hero-primary-btn,
+    .hero-secondary-btn {
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      font-size: 13px;
+      padding: 9px 18px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-right: 8px;
+      margin-top: 4px;
+    }
+
+    .hero-primary-btn {
+      background: linear-gradient(120deg, #FF2F9C, #FF83CA);
+      color: #041149;
+      font-weight: 600;
+      box-shadow: 0 0 18px rgba(255,47,156,0.8);
+    }
+
+    .hero-secondary-btn {
+      background: rgba(0,0,0,0.6);
+      color: #f7f7ff;
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+
+    .hero-tagline {
+      font-size: 12px;
+      opacity: 0.8;
+      margin-top: 10px;
+    }
+
+    .section-media-card {
+      border-radius: var(--fj-radius-lg);
+      background: linear-gradient(145deg, rgba(19,160,249,0.16), rgba(4,17,73,0.9));
+      border: 1px solid rgba(255,255,255,0.16);
+      padding: 14px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .fake-stream {
+      border-radius: 14px;
+      border: 1px solid rgba(0,0,0,0.8);
+      background: radial-gradient(circle at top left, #13A0F9, #041149 40%, #000 100%);
+      height: 180px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .fake-stream::after {
+      content: "LIVE • FjOlsen på Twitch (demo)";
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      font-size: 11px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: rgba(0,0,0,0.75);
+      color: #ff6ea0;
+      border: 1px solid rgba(255,110,160,0.9);
+    }
+
+    .fake-stream-overlay {
+      position: absolute;
+      inset: 0;
+      background-image: linear-gradient(120deg, rgba(255,47,156,0.35) 10%, transparent 40%, rgba(19,160,249,0.35) 90%);
+      mix-blend-mode: screen;
+      pointer-events: none;
+    }
+
+    .fake-partner-logos {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      font-size: 12px;
+      opacity: 0.9;
+    }
+
+    .fake-logo-pill {
+      border-radius: 999px;
+      padding: 5px 10px;
+      border: 1px solid rgba(255,255,255,0.22);
+      background: rgba(0,0,0,0.55);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+    }
+
+    .calendar-card {
+      border-radius: var(--fj-radius-lg);
+      border: 1px solid rgba(255,255,255,0.15);
+      background: rgba(0,0,0,0.6);
+      padding: 12px 14px 14px;
+      font-size: 13px;
+    }
+
+    .calendar-date-row {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      margin-bottom: 6px;
+    }
+
+    .calendar-date-main {
+      font-size: 24px;
+      font-weight: 700;
+      color: #FF83CA;
+    }
+
+    .calendar-countdown {
+      font-family: "Luckiest Guy", system-ui;
+      font-size: 22px;
+      letter-spacing: 0.12em;
+      margin-top: 4px;
+      text-shadow: 0 0 18px rgba(19,160,249,0.9);
+    }
+
+    .calendar-note {
+      font-size: 12px;
+      opacity: 0.85;
+      margin-top: 6px;
+    }
+
+    .small-label {
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      opacity: 0.75;
+      margin-bottom: 4px;
+    }
+
+    /* Section toolbar in edit mode */
+    body.edit-mode .editable-section {
+      outline: 1px dashed rgba(255,255,255,0.35);
+      cursor: default;
+      position: relative;
+    }
+
+    .section-toolbar {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      display: none;
+      align-items: center;
+      gap: 4px;
+      padding: 3px 4px;
+      border-radius: 999px;
+      background: rgba(0,0,0,0.8);
+      border: 1px solid rgba(255,255,255,0.25);
+      z-index: 10;
+      font-size: 11px;
+    }
+
+    body.edit-mode .section-toolbar {
+      display: inline-flex;
+    }
+
+    .section-toolbar button {
+      border: none;
+      background: transparent;
+      color: #f5f6ff;
+      padding: 2px 7px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      cursor: pointer;
+      font-size: 11px;
+    }
+
+    .section-toolbar button:hover {
+      background: rgba(255,255,255,0.12);
+    }
+
+    .toolbar-handle {
+      cursor: grab;
+    }
+
+    body.edit-mode .editable-text {
+      position: relative;
+    }
+
+    body.edit-mode .editable-text[contenteditable="true"] {
+      outline: 1px dashed rgba(255,255,255,0.55);
+      background: rgba(0,0,0,0.35);
+    }
+
+    .section-toolbar .toggle-off {
+      color: #FFABDF;
+    }
+
+    .section-toolbar .toggle-on {
+      color: #8CFFB0;
+    }
+
+    /* Drag placeholder */
+    .drag-placeholder {
+      border-radius: var(--fj-radius-xl);
+      border: 2px dashed rgba(255,255,255,0.6);
+      min-height: 40px;
+      margin: 4px 0;
+      opacity: 0.9;
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 14px;
+      right: 14px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(0,0,0,0.85);
+      border: 1px solid rgba(255,255,255,0.25);
+      font-size: 12px;
+      opacity: 0;
+      transform: translateY(10px);
+      pointer-events: none;
+      transition: opacity 0.18s ease, transform 0.18s ease;
+      z-index: 2000;
+    }
+
+    .toast.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+
+<body>
+  <!-- VISUAL EDITOR BAR -->
+  <header class="editor-bar">
+    <div class="editor-bar-left">
+      <div class="editor-pill">
+        <span class="logo-text">FjOlsenbanden</span>
+        <span style="font-size:11px;opacity:0.8;">Visual editor (demo)</span>
+      </div>
+      <div class="editor-mode-toggle">
+        <button class="editor-mode-btn active" data-mode="view">
+          👀 Vis
+        </button>
+        <button class="editor-mode-btn" data-mode="edit">
+          ✏️ Rediger
+        </button>
+      </div>
+    </div>
+    <div class="editor-bar-right">
+      <div class="editor-status">
+        Modus: <strong id="editor-mode-label">Visning</strong>
+      </div>
+      <button class="editor-btn" id="load-default-btn" type="button">
+        ↩ Tilbakestill demo
+      </button>
+      <button class="editor-btn primary" id="save-btn" type="button">
+        💾 Lagre til nettleser
+      </button>
+    </div>
+  </header>
+
+  <!-- PAGE CONTENT WRAPPER -->
+  <main class="page-wrapper">
+    <div class="sections-wrapper" id="sectionsWrapper">
+      <!-- HERO SECTION -->
+      <section class="editable-section" data-section-id="hero" draggable="true">
+        <div class="section-toolbar">
+          <button class="toolbar-handle" data-role="drag">
+            ⠿
+          </button>
+          <button data-role="toggle">
+            <span class="toggle-icon">👁</span>
+          </button>
+          <button data-role="edit">
+            ✏️
+          </button>
+        </div>
+
+        <div class="section-inner">
+          <div>
+            <div class="section-label editable-text" data-field="hero_label">
+              SE PÅ FJOLSENBANDEN LIVE
+            </div>
+            <h1 class="section-title editable-text" data-field="hero_title">
+              Spillglede for hele familien
+            </h1>
+            <p class="section-lead editable-text" data-field="hero_lead">
+              Trygge streams, giveaways og gaming-kvelder der både barn, ungdom og foreldre er velkomne. 
+              Alt er Vipps-verifisert og moderert – null tull, bare ekte spillglede.
+            </p>
+            <div class="pill editable-text" data-field="hero_pill">
+              <span class="dot"></span>
+              LIVE HVER UKE • CUSTOMS • PREMIER
+            </div>
+            <div>
+              <button class="hero-primary-btn editable-text" data-field="hero_cta_primary">
+                ▶ Se neste livesending
+              </button>
+              <button class="hero-secondary-btn editable-text" data-field="hero_cta_secondary">
+                📅 Se hele programmet
+              </button>
+            </div>
+            <div class="hero-tagline editable-text" data-field="hero_tagline">
+              FjOlsenbanden er Norges mest inkluderende gaming-community – 
+              laget for foreldre som vil vite at barna spiller trygt.
+            </div>
+          </div>
+
+          <div class="section-media-card">
+            <div class="fake-stream">
+              <div class="fake-stream-overlay"></div>
+            </div>
+            <p style="font-size:11px;opacity:0.8;margin-top:8px;" class="editable-text" data-field="hero_stream_note">
+              I den ekte løsningen dukker Twitch-vinduet ditt opp her. Klikk seksjonen i redigeringsmodus for å endre URL / tekst.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- PARTNERS SECTION -->
+      <section class="editable-section" data-section-id="partners" draggable="true">
+        <div class="section-toolbar">
+          <button class="toolbar-handle" data-role="drag">
+            ⠿
+          </button>
+          <button data-role="toggle">
+            <span class="toggle-icon">👁</span>
+          </button>
+          <button data-role="edit">
+            ✏️
+          </button>
+        </div>
+
+        <div class="section-inner">
+          <div>
+            <div class="section-label editable-text" data-field="partners_label">
+              SAMARBEIDSPARTNERE
+            </div>
+            <h2 class="section-title editable-text" data-field="partners_title">
+              Premier og opplevelser fra ekte brands
+            </h2>
+            <p class="section-lead editable-text" data-field="partners_lead">
+              FjOlsenbanden samarbeider med teknologipartnere for å gi barna ekte premier, 
+              ikke bare digitale skins. Alt presenteres trygt i stream og gjennom 
+              familievennlige konkurranser.
+            </p>
+            <p class="hero-tagline editable-text" data-field="partners_tagline">
+              I visual editor kan du bytte logoer, tekster og lenker direkte fra front – uten å logge inn i admin.
+            </p>
+          </div>
+          <div class="section-media-card">
+            <div class="small-label editable-text" data-field="partners_small_label">
+              EKSEMPELLOGOER (DEMO)
+            </div>
+            <div class="fake-partner-logos">
+              <span class="fake-logo-pill editable-text" data-field="partner_1">SAMSUNG</span>
+              <span class="fake-logo-pill editable-text" data-field="partner_2">PHILIPS</span>
+              <span class="fake-logo-pill editable-text" data-field="partner_3">LENOVO</span>
+              <span class="fake-logo-pill editable-text" data-field="partner_4">KOMPLETT</span>
+              <span class="fake-logo-pill editable-text" data-field="partner_5">VIPPS</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CALENDAR / JULEKALENDER SECTION -->
+      <section class="editable-section" data-section-id="calendar" draggable="true">
+        <div class="section-toolbar">
+          <button class="toolbar-handle" data-role="drag">
+            ⠿
+          </button>
+          <button data-role="toggle">
+            <span class="toggle-icon">👁</span>
+          </button>
+          <button data-role="edit">
+            ✏️
+          </button>
+        </div>
+
+        <div class="section-inner">
+          <div>
+            <div class="section-label editable-text" data-field="calendar_label">
+              ÅRETS JULEKALENDER
+            </div>
+            <h2 class="section-title editable-text" data-field="calendar_title">
+              24 dager med stream, moro og premier
+            </h2>
+            <p class="section-lead editable-text" data-field="calendar_lead">
+              Vinn premier til verdi av over 10&nbsp;000 kroner! Meld deg på årets julekalender 
+              før 1. desember og få 10 ekstra lodd i den store giveaway 25. desember.
+            </p>
+            <button class="hero-primary-btn editable-text" data-field="calendar_cta">
+              🎄 Meld deg på julekalenderen
+            </button>
+            <div class="hero-tagline editable-text" data-field="calendar_note">
+              I FjOlsen-editoren kan Tor selv endre tekst, datoer og lenker – rett fra forsiden.
+            </div>
+          </div>
+          <div class="calendar-card">
+            <div class="calendar-date-row">
+              <div class="calendar-date-main editable-text" data-field="calendar_date">
+                01.12
+              </div>
+              <div class="editable-text" data-field="calendar_date_text">
+                Frist for påmelding til bonuslodd
+              </div>
+            </div>
+            <div class="small-label editable-text" data-field="calendar_countdown_label">
+              Nedtelling til julekvelden (demo)
+            </div>
+            <div class="calendar-countdown" id="countdown-text">
+              29 DAGER
+            </div>
+            <div class="calendar-note editable-text" data-field="calendar_small_note">
+              I den ekte løsningen kan samme nedtelling brukes både i hero og i kalender-seksjonen. 
+              Denne demoen viser bare statisk tekst.
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    (function() {
+      const STORAGE_KEY = "fjolsen_visual_editor_p_v1";
+
+      const body = document.body;
+      const modeButtons = document.querySelectorAll(".editor-mode-btn");
+      const modeLabel = document.getElementById("editor-mode-label");
+      const sectionsWrapper = document.getElementById("sectionsWrapper");
+      const saveBtn = document.getElementById("save-btn");
+      const resetBtn = document.getElementById("load-default-btn");
+      const toastEl = document.getElementById("toast");
+
+      let currentMode = "view";
+      let editActive = false;
+      let draggingSection = null;
+
+      function showToast(message) {
+        if (!toastEl) return;
+        toastEl.textContent = message;
+        toastEl.classList.add("visible");
+        setTimeout(() => {
+          toastEl.classList.remove("visible");
+        }, 2200);
+      }
+
+      function switchMode(mode) {
+        currentMode = mode;
+        modeButtons.forEach(btn => {
+          const isActive = btn.dataset.mode === mode;
+          btn.classList.toggle("active", isActive);
+        });
+        modeLabel.textContent = mode === "edit" ? "Redigering" : "Visning";
+
+        if (mode === "edit") {
+          body.classList.add("edit-mode");
+          enableEditing();
+        } else {
+          body.classList.remove("edit-mode");
+          disableEditing();
+        }
+      }
+
+      function enableEditing() {
+        editActive = true;
+        const sections = document.querySelectorAll(".editable-section");
+        sections.forEach(section => {
+          section.setAttribute("draggable", "true");
+        });
+
+        const textFields = document.querySelectorAll(".editable-text");
+        textFields.forEach(el => {
+          el.setAttribute("contenteditable", "true");
+        });
+      }
+
+      function disableEditing() {
+        editActive = false;
+        const sections = document.querySelectorAll(".editable-section");
+        sections.forEach(section => {
+          section.removeAttribute("draggable");
+        });
+
+        const textFields = document.querySelectorAll(".editable-text");
+        textFields.forEach(el => {
+          el.setAttribute("contenteditable", "false");
+        });
+      }
+
+      /* Simple countdown demo */
+      function updateCountdownDemo() {
+        const countdownEl = document.getElementById("countdown-text");
+        if (!countdownEl) return;
+        const now = new Date();
+        const target = new Date(now.getFullYear(), 11, 24); // 24. desember
+        const diff = target - now;
+        if (diff <= 0) {
+          countdownEl.textContent = "GOD JUL!";
+          return;
+        }
+        const days = Math.max(0, Math.floor(diff / (1000 * 60 * 60 * 24)));
+        countdownEl.textContent = days + " DAGER";
+      }
+
+      updateCountdownDemo();
+      setInterval(updateCountdownDemo, 60 * 1000);
+
+      /* DRAG & DROP */
+
+      function getDragAfterElement(container, y) {
+        const draggableElements = [...container.querySelectorAll(".editable-section:not(.dragging)")];
+        return draggableElements.reduce((closest, child) => {
+          const box = child.getBoundingClientRect();
+          const offset = y - box.top - box.height / 2;
+          if (offset < 0 && offset > closest.offset) {
+            return { offset: offset, element: child };
+          } else {
+            return closest;
+          }
+        }, { offset: Number.NEGATIVE_INFINITY, element: null }).element;
+      }
+
+      sectionsWrapper.addEventListener("dragstart", (e) => {
+        const section = e.target.closest(".editable-section");
+        if (!editActive || !section) return;
+        draggingSection = section;
+        section.classList.add("dragging");
+        e.dataTransfer.effectAllowed = "move";
+      });
+
+      sectionsWrapper.addEventListener("dragend", () => {
+        const section = draggingSection;
+        if (section) {
+          section.classList.remove("dragging");
+        }
+        draggingSection = null;
+      });
+
+      sectionsWrapper.addEventListener("dragover", (e) => {
+        if (!editActive || !draggingSection) return;
+        e.preventDefault();
+        const afterElement = getDragAfterElement(sectionsWrapper, e.clientY);
+        if (afterElement == null) {
+          sectionsWrapper.appendChild(draggingSection);
+        } else {
+          sectionsWrapper.insertBefore(draggingSection, afterElement);
+        }
+      });
+
+      /* TOOLBAR BUTTONS */
+
+      sectionsWrapper.addEventListener("click", (e) => {
+        const btn = e.target.closest("button");
+        if (!btn) return;
+
+        const role = btn.dataset.role;
+        if (!role) return;
+
+        const section = btn.closest(".editable-section");
+        if (!section) return;
+
+        if (role === "toggle") {
+          const isHidden = section.classList.toggle("hidden-section");
+          const iconSpan = btn.querySelector(".toggle-icon");
+          if (iconSpan) {
+            iconSpan.textContent = isHidden ? "🙈" : "👁";
+          }
+        }
+
+        if (role === "edit") {
+          if (!editActive) {
+            showToast("Bytt til redigeringsmodus for å endre innhold.");
+            return;
+          }
+          const fields = section.querySelectorAll(".editable-text");
+          const anyEditable = [...fields].some(el => el.getAttribute("contenteditable") === "true");
+          const newState = !anyEditable;
+          fields.forEach(el => {
+            el.setAttribute("contenteditable", newState ? "true" : "false");
+          });
+          showToast(newState ? "Tekst i seksjonen kan nå redigeres." : "Redigering låst for denne seksjonen.");
+        }
+      });
+
+      /* SAVE / LOAD */
+
+      function serializePage() {
+        const sections = [...document.querySelectorAll(".editable-section")];
+        return {
+          order: sections.map(sec => sec.dataset.sectionId),
+          sections: sections.map(sec => {
+            const id = sec.dataset.sectionId;
+            const hidden = sec.classList.contains("hidden-section");
+            const fields = {};
+            sec.querySelectorAll(".editable-text").forEach(el => {
+              const key = el.dataset.field || "";
+              if (!key) return;
+              fields[key] = el.innerHTML;
+            });
+            return { id, hidden, fields };
+          })
+        };
+      }
+
+      function applyState(state) {
+        if (!state || !state.sections) return;
+
+        // Order
+        if (state.order && Array.isArray(state.order)) {
+          state.order.forEach(id => {
+            const sec = document.querySelector(`.editable-section[data-section-id="${id}"]`);
+            if (sec) sectionsWrapper.appendChild(sec);
+          });
+        }
+
+        // Content + visibility
+        state.sections.forEach(item => {
+          const sec = document.querySelector(`.editable-section[data-section-id="${item.id}"]`);
+          if (!sec) return;
+          sec.classList.toggle("hidden-section", !!item.hidden);
+          const toggleBtn = sec.querySelector('[data-role="toggle"] .toggle-icon');
+          if (toggleBtn) {
+            toggleBtn.textContent = item.hidden ? "🙈" : "👁";
+          }
+          if (item.fields) {
+            Object.entries(item.fields).forEach(([key, value]) => {
+              const el = sec.querySelector(`.editable-text[data-field="${key}"]`);
+              if (el) el.innerHTML = value;
+            });
+          }
+        });
+      }
+
+      function saveToStorage() {
+        const state = serializePage();
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+          showToast("Endringer lagret i nettleseren.");
+        } catch (err) {
+          console.error(err);
+          showToast("Kunne ikke lagre – sjekk localStorage.");
+        }
+      }
+
+      function loadFromStorage() {
+        try {
+          const raw = localStorage.getItem(STORAGE_KEY);
+          if (!raw) return null;
+          return JSON.parse(raw);
+        } catch (err) {
+          console.error(err);
+          return null;
+        }
+      }
+
+      function resetDemo() {
+        localStorage.removeItem(STORAGE_KEY);
+        location.reload();
+      }
+
+      // Mode switch listeners
+      modeButtons.forEach(btn => {
+        btn.addEventListener("click", () => {
+          const mode = btn.dataset.mode;
+          switchMode(mode);
+        });
+      });
+
+      // Save / reset listeners
+      saveBtn.addEventListener("click", () => {
+        saveToStorage();
+      });
+
+      resetBtn.addEventListener("click", () => {
+        if (confirm("Tilbakestill demoen til standardinnhold?")) {
+          resetDemo();
+        }
+      });
+
+      // INIT: try load saved state
+      const stored = loadFromStorage();
+      if (stored) {
+        applyState(stored);
+        showToast("Lastet lagrede endringer (demo).");
+      }
+
+      // Start in view mode
+      switchMode("view");
+    })();
+  </script>
+</body>
+</html>
