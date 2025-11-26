@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="nb">
+<head>
+  <meta charset="utf-8" />
+  <title>Index Beta – Admin & Visual Editor</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --bg: #030719;
+      --card: #0c1231;
+      --border: rgba(255, 255, 255, 0.08);
+      --text: #e5e7eb;
+      --muted: #94a3b8;
+      --primary: #13a0f9;
+      --accent: #ff2da4;
+      --radius: 18px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at 18% 20%, #0d1b4d 0, #050b2b 40%, #020317 100%);
+      color: var(--text);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      padding: 18px;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 1.5rem;
+      letter-spacing: 0.01em;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: rgba(19, 160, 249, 0.16);
+      color: #cde9ff;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      border: 1px solid rgba(19, 160, 249, 0.4);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+    }
+
+    p {
+      margin: 0;
+    }
+
+    .controls, .info-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 14px 16px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
+    }
+
+    .controls {
+      display: grid;
+      gap: 10px;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      align-items: center;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 14px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.04);
+      color: #fff;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 120ms ease, box-shadow 150ms ease, border-color 150ms ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      border-color: rgba(255, 255, 255, 0.22);
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.4);
+    }
+
+    .btn.primary {
+      background: linear-gradient(135deg, #13a0f9, #1dd4ff);
+      color: #041149;
+      border-color: transparent;
+      box-shadow: 0 12px 26px rgba(19, 160, 249, 0.45);
+    }
+
+    .btn.destructive {
+      background: linear-gradient(135deg, #ff2da4, #ff83ca);
+      color: #1d0b22;
+      border-color: transparent;
+      box-shadow: 0 12px 26px rgba(255, 45, 164, 0.45);
+    }
+
+    .info-card {
+      display: grid;
+      gap: 8px;
+      line-height: 1.5;
+      color: var(--muted);
+    }
+
+    .info-card strong {
+      color: #fff;
+    }
+
+    iframe {
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      flex: 1;
+      min-height: 65vh;
+      box-shadow: 0 28px 70px rgba(0, 0, 0, 0.6);
+      background: #050b2b;
+    }
+
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 10px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .status-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--primary);
+      box-shadow: 0 0 12px rgba(19, 160, 249, 0.7);
+    }
+
+    @media (max-width: 720px) {
+      body {
+        padding: 12px;
+      }
+      iframe {
+        min-height: 60vh;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Index Beta – Admin &amp; Visual Editor</h1>
+    <span class="badge">Testoppsett</span>
+    <div class="status" id="status"> <span class="status-dot"></span> Venter på forhåndsvisning… </div>
+  </header>
+
+  <div class="controls">
+    <button class="btn primary" id="open-editor">🔓 Autoriser &amp; åpne editor</button>
+    <button class="btn" id="refresh-frame">🔄 Oppdater forhåndsvisning</button>
+    <button class="btn destructive" id="reset-state">🧹 Nullstill lagrede endringer</button>
+    <a class="btn" id="open-new-tab" href="index-beta.html" target="_blank" rel="noreferrer">🪟 Åpne index-beta i ny fane</a>
+  </div>
+
+  <div class="info-card">
+    <strong>Slik bruker du test-editoren:</strong>
+    <p>1. Klikk <em>Autoriser &amp; åpne editor</em> for å sette deg inn som admin i forhåndsvisningen.</p>
+    <p>2. Den innebygde editoren i <code>index-beta.html</code> åpnes automatisk, og du kan redigere hero-innhold, seksjonsrekkefølge og synlighet.</p>
+    <p>3. Vil du starte på nytt? Bruk <em>Nullstill lagrede endringer</em> for å rydde lokal lagring og last forhåndsvisningen på nytt.</p>
+  </div>
+
+  <iframe id="preview" title="Index beta forhåndsvisning" src="index-beta.html"></iframe>
+
+  <script>
+    (function () {
+      const frame = document.getElementById('preview');
+      const status = document.getElementById('status');
+      const openBtn = document.getElementById('open-editor');
+      const refreshBtn = document.getElementById('refresh-frame');
+      const resetBtn = document.getElementById('reset-state');
+
+      const CONFIG_KEY = 'fjAdminConfig';
+      const AUTH_KEY = 'fjAdminAuthorized';
+      const DEMO_KEY = 'fbAdminDemoState';
+
+      function setStatus(text, ok = true) {
+        if (!status) return;
+        status.textContent = text;
+        const dot = document.createElement('span');
+        dot.className = 'status-dot';
+        if (!ok) dot.style.background = '#f87171';
+        status.innerHTML = '';
+        status.appendChild(dot);
+        status.appendChild(document.createTextNode(' ' + text));
+      }
+
+      function withFrameWindow(fn) {
+        if (!frame?.contentWindow) {
+          setStatus('Fant ikke forhåndsvisningen', false);
+          return;
+        }
+        try {
+          fn(frame.contentWindow);
+        } catch (err) {
+          console.error('Kunne ikke kommunisere med forhåndsvisningen', err);
+          setStatus('Kunne ikke snakke med forhåndsvisningen', false);
+        }
+      }
+
+      function authorizeAndOpen() {
+        withFrameWindow((win) => {
+          win.localStorage.setItem(AUTH_KEY, 'true');
+          win.dispatchEvent(new Event('fb:admin-authorized'));
+          if (typeof win.enableVisualEditor === 'function') {
+            win.enableVisualEditor();
+          }
+          win.location.reload();
+          setStatus('Admin aktivert – laster editor…');
+        });
+      }
+
+      function resetState() {
+        if (!confirm('Tilbakestill lagring for index-beta-editoren?')) return;
+        withFrameWindow((win) => {
+          win.localStorage.removeItem(AUTH_KEY);
+          win.localStorage.removeItem(CONFIG_KEY);
+          win.localStorage.removeItem(DEMO_KEY);
+          win.location.reload();
+          setStatus('Lokal lagring nullstilt – laster inn på nytt');
+        });
+      }
+
+      frame?.addEventListener('load', () => {
+        const doc = frame.contentDocument;
+        const isAdmin = doc?.body?.classList.contains('is-admin');
+        setStatus(isAdmin ? 'Editor klar (admin-tilgang aktiv)' : 'Forhåndsvisning lastet – klikk Autoriser for å redigere');
+      });
+
+      openBtn?.addEventListener('click', authorizeAndOpen);
+      refreshBtn?.addEventListener('click', () => frame?.contentWindow?.location.reload());
+      resetBtn?.addEventListener('click', resetState);
+    })();
+  </script>
+</body>
+</html>
