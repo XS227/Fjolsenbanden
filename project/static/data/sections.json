@@ -79,8 +79,8 @@
     "content": {
       "links": [
         {"label": "Discord", "href": "https://discord.gg/CbvBPHzg4D"},
-        {"label": "Regler", "href": "/regler.html"},
-        {"label": "Personvernerklæring", "href": "/personvernerklaering.html"}
+        {"label": "Regler", "href": "https://fjolsenbanden.setaei.com/regler.html"},
+        {"label": "Personvernerklæring", "href": "https://fjolsenbanden.setaei.com/personvernerklaering.html"}
       ],
       "copyright": "© 2024 Fjolsenbanden"
     }
