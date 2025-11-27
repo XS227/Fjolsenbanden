@@ -1,18 +1,674 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="no" data-lang="no">
 <head>
-  <meta charset="utf-8" />
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>FjOlsenbandens Julekalender 2025 – Samarbeidspartnere</title>
-  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-  <script
-    src="https://cdn.tailwindcss.com"
-    defer
-    data-tailwind-cdn="true"
-  ></script>
+
+  <style>
+    :root {
+      --bg: #050b2b;
+      --bg-alt: #071133;
+      --card: #0d1636;
+      --card-alt: #101a3e;
+      --text: #ffffff;
+      --muted: #a6b0d8;
+      --primary: #00a6ff;
+      --accent: #ff2da4;
+      --radius-lg: 24px;
+      --radius-md: 18px;
+      --radius-pill: 999px;
+      --shadow-soft: 0 24px 60px rgba(0, 0, 0, 0.6);
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Inter", sans-serif;
+      background: #020317;
+      color: var(--text);
+      scroll-behavior: smooth;
+      min-height: 100vh;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img,
+    video {
+      max-width: 100%;
+      display: block;
+      border-radius: var(--radius-md);
+    }
+
+    /* Layout */
+    .page {
+      min-height: 100vh;
+      background: radial-gradient(circle at 30% 20%, #101a3e 0, #050b2b 50%, #020317 100%);
+      padding-bottom: 4rem;
+    }
+
+    .container {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    .section {
+      padding: 4.5rem 0;
+    }
+
+    .section.alt {
+      background: radial-gradient(circle at center, #0c1534 0, #040a25 100%);
+    }
+
+    .section h2 {
+      font-size: clamp(2rem, 3vw, 2.5rem);
+      margin-bottom: 0.5rem;
+    }
+
+    .subtitle {
+      color: var(--muted);
+      max-width: 720px;
+      margin: 0.25rem 0 2rem;
+    }
+
+    /* Top nav */
+    .top-nav {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(5, 11, 43, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0.9rem 1.5rem;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .brand img {
+      height: 46px;
+    }
+
+    .lang-switch {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 0.25rem;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .lang-switch button {
+      border: none;
+      background: transparent;
+      color: var(--text);
+      font-size: 0.9rem;
+      padding: 0.3rem 0.85rem;
+      border-radius: var(--radius-pill);
+      cursor: pointer;
+      opacity: 0.6;
+      transition: background 0.15s ease, opacity 0.15s ease, transform 0.1s ease;
+    }
+
+    .lang-switch button.active {
+      background: var(--primary);
+      opacity: 1;
+      transform: translateY(-1px);
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.45rem;
+      padding: 0.85rem 1.7rem;
+      border-radius: var(--radius-pill);
+      border: none;
+      cursor: pointer;
+      font-weight: 650;
+      font-size: 0.95rem;
+      transition: transform 0.12s ease, box-shadow 0.12s ease, filter 0.12s ease;
+    }
+
+    .btn-primary {
+      background: linear-gradient(120deg, var(--primary), var(--accent));
+      color: #fff;
+      box-shadow: 0 0 18px rgba(0, 166, 255, 0.45);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: var(--text);
+    }
+
+    .btn:hover {
+      filter: brightness(1.04);
+      transform: translateY(-1px);
+      box-shadow: 0 0 22px rgba(0, 166, 255, 0.35);
+    }
+
+    /* Hero */
+    .hero {
+      padding-top: 4.5rem;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+      gap: 2.5rem;
+      align-items: center;
+    }
+
+    .hero-text h1 {
+      font-size: clamp(2.2rem, 3.4vw, 3rem);
+      margin-bottom: 0.9rem;
+    }
+
+    .lead {
+      color: var(--muted);
+      font-size: 1rem;
+      max-width: 32rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-top: 1.4rem;
+    }
+
+    .hero-card {
+      background: radial-gradient(circle at top left, var(--card-alt), var(--card));
+      border-radius: var(--radius-lg);
+      padding: 1.1rem;
+      box-shadow: var(--shadow-soft);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 20% 20%, rgba(0, 166, 255, 0.12), transparent 55%);
+      pointer-events: none;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.35rem 0.9rem;
+      border-radius: var(--radius-pill);
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--muted);
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .highlight {
+      color: var(--primary);
+    }
+
+    /* Cards & grids */
+    .card {
+      background: radial-gradient(circle at top left, var(--card-alt), var(--card));
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      box-shadow: var(--shadow-soft);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .card h3 {
+      margin-top: 0;
+      margin-bottom: 0.5rem;
+      font-size: 1.1rem;
+    }
+
+    .card p {
+      color: var(--muted);
+      margin: 0;
+    }
+
+    .list {
+      display: grid;
+      gap: 0.8rem;
+      margin-top: 1rem;
+    }
+
+    .list-item {
+      display: flex;
+      gap: 0.65rem;
+      align-items: flex-start;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .list-item span.icon {
+      color: var(--primary);
+      font-size: 1.1rem;
+      margin-top: 0.15rem;
+    }
+
+    /* Calendar CTA */
+    .cta-card {
+      display: flex;
+      flex-direction: column;
+      gap: 0.9rem;
+      align-items: flex-start;
+    }
+
+    .cta-note {
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    /* About */
+    .about-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+      gap: 1.5rem;
+      align-items: center;
+    }
+
+    .about-logo {
+      display: flex;
+      justify-content: center;
+    }
+
+    .about-logo img {
+      width: 160px;
+    }
+
+    /* Contact */
+    .contact-card {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+      gap: 1.25rem;
+      align-items: center;
+    }
+
+    .contact-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-top: 0.9rem;
+    }
+
+    .contact-note {
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    footer {
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.85rem;
+      padding: 2rem 0 1rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .hero-grid,
+      .about-grid,
+      .contact-card {
+        grid-template-columns: 1fr;
+      }
+
+      .section {
+        padding: 3.25rem 0;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .nav-inner {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .hero-actions,
+      .contact-actions {
+        flex-direction: column;
+        align-items: stretch;
+      }
+    }
+
+    /* Language visibility */
+    html[data-lang="no"] .lang-en {
+      display: none;
+    }
+
+    html[data-lang="en"] .lang-no {
+      display: none;
+    }
+  </style>
 </head>
 <body>
-  <div id="root"></div>
-  <script type="module" src="/src/sponsor-main.jsx"></script>
+  <div class="page">
+    <header class="top-nav">
+      <div class="container nav-inner">
+        <div class="brand">
+          <img src="../assets/branding/fjolsenbanden-logo-light.svg" alt="FjOlsenbanden" />
+          <span>FjOlsenbanden</span>
+        </div>
+
+        <div class="lang-switch">
+          <button type="button" data-lang-btn="no" class="active">NO</button>
+          <button type="button" data-lang-btn="en">EN</button>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="section hero">
+        <div class="container hero-grid">
+          <div class="hero-text">
+            <span class="pill lang-no">For samarbeidspartnere</span>
+            <span class="pill lang-en">For partners</span>
+
+            <h1 class="lang-no">
+              Skap magiske desemberøyeblikk<br />
+              <span class="highlight">sammen med FjOlsenbanden</span>
+            </h1>
+            <h1 class="lang-en">
+              Create magical December moments<br />
+              <span class="highlight">together with FjOlsenbanden</span>
+            </h1>
+
+            <p class="lead lang-no">
+              Bli med på årets julekalender og få din merkevare inn i et varmt, trygt og engasjert gamingmiljø for hele
+              familien.
+            </p>
+            <p class="lead lang-en">
+              Join this year's Christmas calendar and bring your brand into a warm, safe and engaged gaming community for
+              the whole family.
+            </p>
+
+            <div class="hero-actions">
+              <a
+                class="btn btn-primary"
+                href="https://fjolsenbanden.julekalender.no"
+                target="_blank"
+                rel="noreferrer noopener"
+              >
+                <span class="lang-no">Åpne julekalenderen</span>
+                <span class="lang-en">Open the Christmas calendar</span>
+              </a>
+
+              <a class="btn btn-ghost" href="mailto:post@fjolsenbanden.no">
+                <span class="lang-no">Book en prat</span>
+                <span class="lang-en">Book a call</span>
+              </a>
+            </div>
+          </div>
+
+          <div class="hero-card">
+            <video
+              src="https://setaei.com/Fjolsen/Velkommen%20til%20FjOlsenbanden-VEED.mp4"
+              autoplay
+              loop
+              muted
+              playsinline
+              controls
+            ></video>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="why">
+        <div class="container">
+          <h2 class="lang-no">Hvorfor partnere blir med</h2>
+          <h2 class="lang-en">Why partners join us</h2>
+          <p class="subtitle lang-no">
+            Samarbeid med oss gir ekte engasjement, familievennlig profilering og tydelige resultater.
+          </p>
+          <p class="subtitle lang-en">
+            Partnering with us delivers authentic engagement, family-friendly visibility and clear results.
+          </p>
+
+          <div class="card-grid">
+            <div class="card">
+              <h3 class="lang-no">Synlighet gjennom aktivitet</h3>
+              <h3 class="lang-en">Attention through activity</h3>
+              <p class="lang-no">
+                Hver luke har et spørsmål eller en oppgave som løfter frem din merkevare – og gjør deltakerne nysgjerrige
+                på dere.
+              </p>
+              <p class="lang-en">
+                Every window carries a question or task that highlights your brand and sparks curiosity among
+                participants.
+              </p>
+            </div>
+
+            <div class="card">
+              <h3 class="lang-no">Direkte trafikk til dere</h3>
+              <h3 class="lang-en">Direct traffic to you</h3>
+              <p class="lang-no">
+                Vi lenker rett til nettbutikk eller kampanjeside, slik at engasjementet kan bli til konkrete besøk og
+                salg.
+              </p>
+              <p class="lang-en">
+                We link straight to your store or landing page so engagement can turn into measurable visits and sales.
+              </p>
+            </div>
+
+            <div class="card">
+              <h3 class="lang-no">Eksklusive tilbud</h3>
+              <h3 class="lang-en">Exclusive offers</h3>
+              <p class="lang-no">
+                Gi kalender-deltakere et unikt tilbud og få et ekstra løft i desember-salget.
+              </p>
+              <p class="lang-en">
+                Provide calendar participants with an exclusive offer to boost December conversions.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section alt" id="offer">
+        <div class="container">
+          <div class="card">
+            <div class="cta-card">
+              <span class="pill lang-no">Partnerpakke</span>
+              <span class="pill lang-en">Partner package</span>
+
+              <h2 class="lang-no">Egen luke i julekalenderen</h2>
+              <h2 class="lang-en">Your own calendar window</h2>
+
+              <p class="cta-note lang-no">
+                Pris: <strong>2&nbsp;500 kr eks. mva</strong>. Dere får full profilering i én luke – perfekt for å løfte
+                frem en kampanje, et produkt eller et eksklusivt tilbud.
+              </p>
+              <p class="cta-note lang-en">
+                Price: <strong>NOK 2,500 excl. VAT</strong>. You get full exposure in one window – ideal for highlighting
+                a campaign, product or exclusive offer.
+              </p>
+
+              <div class="list">
+                <div class="list-item">
+                  <span class="icon">🎯</span>
+                  <span class="lang-no">Profilering i en dedikert luke med spørsmål/oppgave.</span>
+                  <span class="lang-en">Brand placement in a dedicated window with a question/task.</span>
+                </div>
+                <div class="list-item">
+                  <span class="icon">🔗</span>
+                  <span class="lang-no">Direkte lenke til ønsket landingsside eller nettbutikk.</span>
+                  <span class="lang-en">Direct link to your chosen landing page or webshop.</span>
+                </div>
+                <div class="list-item">
+                  <span class="icon">📈</span>
+                  <span class="lang-no">Eksklusivt tilbud eller rabattkode for deltakerne (valgfritt).</span>
+                  <span class="lang-en">Optional exclusive offer or discount code for participants.</span>
+                </div>
+              </div>
+
+              <div class="hero-actions" style="margin-top: 1.2rem;">
+                <a class="btn btn-primary" href="mailto:post@fjolsenbanden.no">
+                  <span class="lang-no">Book din luke</span>
+                  <span class="lang-en">Reserve your window</span>
+                </a>
+                <a
+                  class="btn btn-ghost"
+                  href="https://fjolsenbanden.julekalender.no"
+                  target="_blank"
+                  rel="noreferrer noopener"
+                >
+                  <span class="lang-no">Se kalenderen live</span>
+                  <span class="lang-en">View the calendar</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="about">
+        <div class="container">
+          <h2 class="lang-no">Hva er FjOlsenbanden?</h2>
+          <h2 class="lang-en">What is FjOlsenbanden?</h2>
+          <p class="subtitle lang-no">Norges mest inkluderende gaming-community for hele familien.</p>
+          <p class="subtitle lang-en">Norway's most inclusive gaming community for the whole family.</p>
+
+          <div class="about-grid">
+            <div class="card">
+              <p class="lang-no">
+                FjOlsenbanden er et familievennlig gaming-community ledet av Tor Martin “FjOlsen” Olsen. Her samles barn,
+                ungdom og foreldre til trygge streams, turneringer og giveaways – med tydelige regler, moderering og
+                fokus på inkludering.
+              </p>
+              <p class="lang-en">
+                FjOlsenbanden is a family-friendly gaming community led by Tor Martin “FjOlsen” Olsen. Kids, teens and
+                parents come together for safe streams, tournaments and giveaways – with clear rules, moderation and a
+                strong focus on inclusion.
+              </p>
+
+              <p class="lang-no">
+                Målet vårt er å skape et positivt spillmiljø der flere føler seg sett, inkludert og ivaretatt – både på
+                og utenfor skjermen.
+              </p>
+              <p class="lang-en">
+                Our goal is to create a positive gaming environment where players feel seen, included and taken care of –
+                both on and off screen.
+              </p>
+            </div>
+
+            <div class="about-logo">
+              <img src="../assets/branding/fjolsenbanden-logo-light.svg" alt="FjOlsenbanden logo" />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section alt" id="contact">
+        <div class="container">
+          <div class="card contact-card">
+            <div>
+              <span class="pill lang-no">Neste steg</span>
+              <span class="pill lang-en">Next step</span>
+              <h2 class="lang-no">La oss skreddersy en luke</h2>
+              <h2 class="lang-en">Let's tailor your window</h2>
+
+              <p class="contact-note lang-no">
+                Ta kontakt for en kort og uforpliktende prat om hvordan vi kan profilere merkevaren deres i kalenderen.
+              </p>
+              <p class="contact-note lang-en">
+                Reach out for a quick, no-strings chat about how we can feature your brand in the calendar.
+              </p>
+
+              <p><strong>Tor Martin Olsen – “FjOlsen”</strong></p>
+              <p class="contact-note lang-no">Gründer og programleder</p>
+              <p class="contact-note lang-en">Founder & host</p>
+
+              <div class="contact-actions">
+                <a class="btn btn-primary" href="mailto:post@fjolsenbanden.no">
+                  <span class="lang-no">Send e-post</span>
+                  <span class="lang-en">Send email</span>
+                </a>
+                <a class="btn btn-ghost" href="https://fjolsenbanden.no" target="_blank" rel="noreferrer noopener">
+                  fjolsenbanden.no
+                </a>
+              </div>
+            </div>
+
+            <div>
+              <p class="contact-note lang-no">
+                Hundrevis av barn og unge er med på våre sendinger og kalendre hvert år – med deres hjelp skaper vi enda
+                flere magiske øyeblikk i desember. 🎮🎄
+              </p>
+              <p class="contact-note lang-en">
+                Hundreds of kids and young people join our streams and calendars each year – with your help we create even
+                more magical December moments. 🎮🎄
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      © <span id="year"></span> FjOlsenbanden. Alle rettigheter reservert.
+    </footer>
+  </div>
+
+  <script>
+    (function () {
+      const htmlEl = document.documentElement;
+      const langButtons = document.querySelectorAll("[data-lang-btn]");
+
+      function setLanguage(lang) {
+        htmlEl.setAttribute("data-lang", lang);
+        htmlEl.setAttribute("lang", lang === "no" ? "no" : "en");
+        langButtons.forEach(btn => {
+          btn.classList.toggle("active", btn.getAttribute("data-lang-btn") === lang);
+        });
+      }
+
+      langButtons.forEach(btn => {
+        btn.addEventListener("click", () => {
+          const lang = btn.getAttribute("data-lang-btn");
+          setLanguage(lang);
+        });
+      });
+
+      setLanguage("no");
+      document.getElementById("year").textContent = new Date().getFullYear();
+    })();
+  </script>
 </body>
 </html>
