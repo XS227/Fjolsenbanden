@@ -1,0 +1,516 @@
+<!doctype html>
+
+<html lang="nb">
+<head>
+  <meta charset="utf-8" />
+  <title>FjOlsenbanden – Promo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta
+    name="description"
+    content="Promo-side for FjOlsenbanden med raske lenker til communityet og informasjon om hva vi står for."
+  />
+  <style>
+    :root {
+      --bg: #050b2b;
+      --bg-alt: #071133;
+      --card: #0d1636;
+      --card-alt: #101a3e;
+      --text: #ffffff;
+      --muted: #a6b0d8;
+      --primary: #00a6ff;
+      --accent: #ff2da4;
+      --radius-lg: 24px;
+      --radius-md: 18px;
+      --radius-pill: 999px;
+      --shadow-soft: 0 24px 60px rgba(0, 0, 0, 0.6);
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #020317;
+      color: var(--text);
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-height: 100vh;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* Layout */
+    .container {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    .section {
+      padding: 5rem 0;
+      background: radial-gradient(circle at center, #101a3e 0, #050b2b 55%, #020317 100%);
+    }
+
+    .section h2 {
+      font-size: clamp(2rem, 3vw, 2.5rem);
+      margin-bottom: 0.5rem;
+      text-align: center;
+    }
+
+    .subtitle {
+      color: var(--muted);
+      max-width: 720px;
+      margin: 0 auto 2.5rem;
+      text-align: center;
+    }
+
+    /* Top nav */
+    .top-nav {
+      position: sticky;
+      top: 0;
+      z-index: 999;
+      background: rgba(5, 11, 43, 0.96);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0.75rem 1.5rem;
+    }
+
+    .logo img {
+      height: 40px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+      font-size: 0.9rem;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+    }
+
+    .nav-links a:hover {
+      color: var(--primary);
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      padding: 0.85rem 1.7rem;
+      border-radius: var(--radius-pill);
+      border: none;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: transform 0.12s ease, box-shadow 0.12s ease, filter 0.12s ease;
+    }
+
+    .btn.small {
+      padding: 0.5rem 1.2rem;
+      font-size: 0.85rem;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #fff;
+      box-shadow: 0 0 18px rgba(0, 166, 255, 0.45);
+    }
+
+    .btn-primary:hover {
+      filter: brightness(1.05);
+      transform: translateY(-1px);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      border: 1px solid var(--primary);
+      color: var(--primary);
+    }
+
+    /* Hero */
+    .hero {
+      padding-top: 6rem;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+      gap: 3rem;
+      align-items: center;
+    }
+
+    .hero-text h1 {
+      font-size: clamp(2.4rem, 3.5vw, 3rem);
+      margin-bottom: 1rem;
+    }
+
+    .hero-text .lead {
+      color: var(--muted);
+      max-width: 32rem;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.3rem 1rem;
+      border-radius: var(--radius-pill);
+      background: rgba(10, 20, 80, 0.9);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-bottom: 1rem;
+    }
+
+    .highlight {
+      color: var(--primary);
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .card {
+      background: radial-gradient(circle at top left, var(--card-alt), var(--card));
+      border-radius: var(--radius-lg);
+      padding: 1.6rem 1.8rem;
+      box-shadow: var(--shadow-soft);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+    }
+
+    /* Socials */
+    .social-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .social-card {
+      position: relative;
+      padding: 1.5rem;
+      display: grid;
+      gap: 0.8rem;
+      place-items: center;
+      text-align: center;
+      color: var(--text);
+      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .social-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 18px 45px rgba(0, 0, 0, 0.55), 0 0 24px rgba(0, 166, 255, 0.15);
+      border-color: rgba(255, 255, 255, 0.16);
+    }
+
+    .social-follow {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.25rem 0.9rem;
+      border-radius: var(--radius-pill);
+      background: rgba(255, 255, 255, 0.08);
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    .social-icon img {
+      width: 56px;
+      height: 56px;
+      object-fit: contain;
+    }
+
+    .social-label {
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      color: var(--text);
+    }
+
+    /* About */
+    .about-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+      gap: 2rem;
+    }
+
+    .card-large {
+      border-radius: 28px;
+    }
+
+    .about-benefits {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .card-pill {
+      border-radius: var(--radius-md);
+    }
+
+    .card-pill h4 {
+      margin-top: 0;
+    }
+
+    /* Footer */
+    .site-footer {
+      background: #040821;
+      padding: 3rem 0 2rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.04);
+    }
+
+    .footer-main {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .footer-links {
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.9rem 1.5rem;
+      padding: 0;
+      margin: 0;
+      justify-content: center;
+    }
+
+    .footer-links a {
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .footer-links a:hover {
+      color: var(--primary);
+    }
+
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      color: var(--muted);
+      font-size: 0.9rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.04);
+      padding-top: 1.25rem;
+    }
+
+    .footer-bottom a {
+      color: var(--primary);
+      font-weight: 600;
+    }
+
+    @media (max-width: 900px) {
+      .hero-grid,
+      .about-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .footer-bottom {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="top-nav">
+    <div class="container nav-inner">
+      <div class="logo">
+        <img src="https://setaei.com/Fjolsen/Liggende-M%E2%94%9C%E2%95%95rk.png" alt="FjOlsenbanden logo" />
+      </div>
+      <nav class="nav-links">
+        <a href="#hero">Header</a>
+        <a href="#community">Social links</a>
+        <a href="#about">Om oss</a>
+      </nav>
+      <div class="nav-actions">
+        <a href="#community" class="btn btn-primary small">Bli med</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section id="hero" class="section hero">
+      <div class="container hero-grid">
+        <div class="hero-text">
+          <span class="pill">Promo</span>
+          <h1>
+            FjOlsenbanden er<br />
+            <span class="highlight">Norges mest inkluderende gaming-community.</span>
+          </h1>
+          <p class="lead">
+            Bli med på et trygt og familievennlig gaming-eventyr sammen med over 2600 medlemmer i Discord og
+            tusenvis av følgere i sosiale medier.
+          </p>
+          <div class="hero-actions">
+            <a href="#community" class="btn btn-primary">Følg oss</a>
+            <a href="#about" class="btn btn-ghost">Les mer</a>
+          </div>
+        </div>
+        <div class="card">
+          <h3>Hva skjer?</h3>
+          <p class="lead">
+            Ukentlige turneringer, kreative events og premier fra samarbeidspartnere – alt i et miljø uten bannskap og
+            mobbing.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="community" class="section">
+      <div class="container">
+        <h2>Følg oss i sosiale medier</h2>
+        <p class="subtitle">
+          Vi bygger et positivt fellesskap på tvers av kanaler. Klikk på lenkene under for å bli med der du liker best
+          å henge.
+        </p>
+
+        <div class="social-grid">
+          <a class="card social-card" data-social="twitch" href="https://www.twitch.tv/FjOlsenFN" target="_blank">
+            <div class="social-icon">
+              <img src="img/social/twitch.svg" alt="Twitch" />
+            </div>
+            <span class="social-follow">FØLG</span>
+            <span class="social-label">Twitch</span>
+          </a>
+          <a class="card social-card" data-social="tiktok" href="https://www.tiktok.com/@fjolsenbanden" target="_blank">
+            <div class="social-icon">
+              <img src="img/social/tiktok.svg" alt="TikTok" />
+            </div>
+            <span class="social-follow">FØLG</span>
+            <span class="social-label">TikTok</span>
+          </a>
+          <a class="card social-card" data-social="discord" href="https://discord.gg/CbvBPHzg4D" target="_blank">
+            <div class="social-icon">
+              <img src="img/social/discord.svg" alt="Discord" />
+            </div>
+            <span class="social-follow">BLI MED</span>
+            <span class="social-label">Discord</span>
+          </a>
+          <a class="card social-card" data-social="youtube" href="https://youtube.com/@fjolsenbanden" target="_blank">
+            <div class="social-icon">
+              <img src="img/social/youtube.svg" alt="YouTube" />
+            </div>
+            <span class="social-follow">ABONNER</span>
+            <span class="social-label">YouTube</span>
+          </a>
+          <a class="card social-card" data-social="instagram" href="https://www.instagram.com/fjolsenbanden" target="_blank">
+            <div class="social-icon">
+              <img src="img/social/instagram.svg" alt="Instagram" />
+            </div>
+            <span class="social-follow">FØLG</span>
+            <span class="social-label">Instagram</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="section">
+      <div class="container">
+        <h2>Hva er <span class="highlight">FjOlsenbanden?</span></h2>
+        <p class="subtitle">
+          Norges mest inkluderende gaming-community for hele familien.
+        </p>
+
+        <div class="about-grid">
+          <div class="card card-large">
+            <h3>Målet med FjOlsenbanden</h3>
+            <p>
+              Målet er å skape et trygt, positivt og inkluderende gamingmiljø der barn, ungdom – og mange foreldre –
+              kan oppleve ekte mestring, samarbeid og fellesskap.
+            </p>
+            <p>
+              Hver uke arrangerer vi morsomme konkurranser og aktiviteter som skaper engasjement og samhold i hele
+              communityet.
+            </p>
+            <p>
+              Premiene som deles ut er sponset av samarbeidspartnere fra næringslivet, eller finansiert gjennom
+              frivillige bidrag fra foreldre – alt for å gi barna ekstra motivasjon og glede.
+            </p>
+            <p>
+              Alle som blir med får tittelen «FjOls» – en ambassadør som fremmer et positivt fellesskap, trygghet og
+              stolthet.
+            </p>
+            <a href="#community" class="btn btn-primary">Bli med</a>
+          </div>
+
+          <div class="about-benefits">
+            <div class="card card-pill">
+              <h4>Trygg gamingarena</h4>
+              <p>
+                Alle aktiviteter overvåkes av voksne, med klare regler mot mobbing, banning og ekskludering.
+              </p>
+            </div>
+
+            <div class="card card-pill">
+              <h4>Positivt fellesskap</h4>
+              <p>
+                Vi fokuserer på god nettadferd, samarbeid og kommunikasjon for barn og unge.
+              </p>
+            </div>
+
+            <div class="card card-pill">
+              <h4>Familievennlig stream</h4>
+              <p>
+                Alt innhold er bannfritt og passer for både barn og voksne å se sammen.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-main">
+      <nav class="footer-menu">
+        <ul class="footer-links">
+          <li><a href="#hero">Til toppen</a></li>
+          <li><a href="#community">Sosiale lenker</a></li>
+          <li><a href="#about">Om FjOlsenbanden</a></li>
+          <li><a href="https://fjolsenbanden.setaei.com/partners/">For sponsorer</a></li>
+          <li><a href="https://fjolsenbanden.setaei.com/personvernerklaering.html">Personvernerklæring</a></li>
+        </ul>
+      </nav>
+    </div>
+
+    <div class="container footer-bottom">
+      <p>© 2025 Fjolsenbanden v/Fair Share Invest AS – Org.nr. 926 963 023</p>
+      <a href="https://fjolsenbanden.setaei.com/regler.html" class="footer-bottom-link">Les reglene våre</a>
+    </div>
+  </footer>
+</body>
+</html>
