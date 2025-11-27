@@ -306,19 +306,78 @@
       border: 0;
     }
 
-    /* Calendar */
-    .calendar-wrapper {
-      margin-top: 1rem;
-      border-radius: 1rem;
+    /* Lett kalenderseksjon */
+    .section-calendar {
+      border-radius: 1.5rem;
+      padding: 1.5rem 1.25rem;
+      background: rgba(4, 17, 73, 0.85);
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      box-shadow: 0 18px 45px rgba(0, 0, 0, 0.55);
+    }
+
+    .calendar-intro {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .calendar-intro-text {
+      font-size: 0.95rem;
+      color: #e5e7eb;
+      max-width: 520px;
+    }
+
+    .calendar-load-btn {
+      border-radius: 999px;
+      padding: 0.7rem 1.4rem;
+      font-size: 0.9rem;
+      font-weight: 600;
+      border: 0;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      background: linear-gradient(120deg, #13A0F9, #FF2F9C);
+      color: #fff;
+      box-shadow: 0 14px 35px rgba(0, 0, 0, 0.45);
+    }
+
+    .calendar-load-btn span.icon {
+      font-size: 1.05rem;
+    }
+
+    .calendar-frame-wrap {
+      margin-top: 1.2rem;
+      border-radius: 1.1rem;
       overflow: hidden;
       background: #020617;
-      border: 1px solid rgba(148, 163, 184, 0.25);
+      border: 1px solid rgba(148, 163, 184, 0.3);
+      max-height: 720px;           /* kutter alt det unødvendige røde nederst */
     }
 
     .calendar-note {
-      font-size: 0.78rem;
-      color: var(--fj-light);
-      margin-top: 0.4rem;
+      margin-top: 0.5rem;
+      font-size: 0.8rem;
+      color: #9CA3AF;
+    }
+
+    /* Mobil */
+    @media (max-width: 640px) {
+      .section-calendar {
+        border-radius: 1rem;
+      }
+      .calendar-intro {
+        align-items: flex-start;
+      }
+      .calendar-load-btn {
+        width: 100%;
+        justify-content: center;
+      }
+      .calendar-frame-wrap {
+        max-height: 580px;
+      }
     }
 
     /* Why section */
@@ -651,79 +710,99 @@
       </section>
 
       <!-- KALENDER / EMBED -->
-      <section id="calendar">
+      <section id="calendar" class="section-calendar">
         <div class="section-header">
           <div>
             <div class="section-kicker lang-no">Demo</div>
             <div class="section-kicker lang-en">Demo</div>
-            <h2 class="section-title lang-no">Test julekalenderen direkte på siden</h2>
-            <h2 class="section-title lang-en">Try the calendar right here</h2>
+            <h2 class="section-title lang-no">Test julekalenderen uten å forlate siden</h2>
+            <h2 class="section-title lang-en">Try the Christmas calendar without leaving the page</h2>
           </div>
         </div>
 
-        <div class="body-text">
-          <p class="lang-no">
-            Under ser dere en live versjon av FjOlsenbandens julekalender.
-            Klikk dere gjennom lukene for å oppleve hvordan deltakerne møter spørsmål,
-            aktiviteter og premier fra samarbeidspartnere.
-          </p>
-          <p class="lang-en">
-            Below you’ll find a live version of the FjOlsenbanden Christmas calendar.
-            Click through the windows to see how participants experience questions,
-            activities and prizes from our partners.
-          </p>
+        <div class="calendar-intro">
+          <div class="calendar-intro-text">
+            <p class="lang-no">
+              Klikk på knappen under for å laste inn en live demo av FjOlsenbandens julekalender.
+              Da ser dere hvordan deltakerne møter spørsmål, aktiviteter og premier – direkte her på siden.
+            </p>
+            <p class="lang-en">
+              Click the button below to load a live demo of the FjOlsenbanden Christmas calendar.
+              You’ll see how participants experience questions, activities and prizes – right here on this page.
+            </p>
+          </div>
+
+          <button type="button" id="load-calendar-btn" class="calendar-load-btn">
+            <span class="icon">📅</span>
+            <span class="lang-no">Last inn julekalender-demo</span>
+            <span class="lang-en">Load calendar demo</span>
+          </button>
         </div>
 
-        <div class="calendar-wrapper">
-          <!-- Adventcalendar-embed (originalkoden din) -->
-          <script>
-            var AdventCalendar = function (t) {
-              this.element = t.element,
-              this.width = t.width || "800px",
-              this.height =
-                window.screen.width <= 767
-                  ? t.mobileHeight || "2000px"
-                  : t.height || "600px",
-              this.webaddress = t.webaddress,
-              this.domain = t.domain,
-              this.createIframe = function () {
-                var t = document.createElement("iframe");
-                t.setAttribute("src", "https://" + this.webaddress + "." + this.domain + window.location.search),
-                t.setAttribute("width", this.width),
-                t.setAttribute("height", this.height),
-                t.setAttribute("border", "0"),
-                t.setAttribute("id", "adventcalendar"),
-                t.setAttribute("class", "adventcalendar"),
-                t.setAttribute("frameborder", "0"),
-                t.setAttribute("allow", "autoplay;fullscreen"),
-                document.getElementById("adventcalendar-container").appendChild(t)
-              },
-              this.createIframe()
-            };
-          </script>
-
-          <div id="adventcalendar-container"></div>
-
-          <script>
-            (function () {
-              "use strict";
-              new AdventCalendar({
-                width: "100%",
-                height: "1000px",
-                mobileHeight: "2000px",
-                webaddress: "fjolsenbanden",
-                domain: "julekalender.no"
-              });
-            })();
-          </script>
+        <div id="calendar-frame-wrap" class="calendar-frame-wrap">
+          <!-- I utgangspunktet tom – vi fyller den med iframe først når de klikker -->
         </div>
 
         <p class="calendar-note lang-no">
-          Tips: Dere kan også åpne kalenderen i fullskjerm i egen fane hvis dere ønsker å se alle detaljer.
+          Tips: Ønsker dere å se hele kalenderen i full høyde, kan dere åpne den i egen fane fra demoen.
         </p>
         <p class="calendar-note lang-en">
-          Tip: You can also open the calendar in a separate tab if you’d like to explore it in full screen.
+          Tip: If you want to see the full calendar in full height, you can open it in a separate tab from the demo.
         </p>
+
+        <script>
+          (function () {
+            const btn = document.getElementById("load-calendar-btn");
+            const frameWrap = document.getElementById("calendar-frame-wrap");
+            let calendarLoaded = false;
+
+            function loadCalendar() {
+              if (calendarLoaded) return;
+              calendarLoaded = true;
+
+              // AdventCalendar-funksjonen (samme som du fikk, men med lavere høyde)
+              var AdventCalendar = function (t) {
+                this.element = t.element;
+                this.width = t.width || "100%";
+                this.height =
+                  window.screen.width <= 767
+                    ? (t.mobileHeight || "900px")   // tidligere 2000px
+                    : (t.height || "650px");        // tidligere 1000px
+                this.webaddress = t.webaddress;
+                this.domain = t.domain;
+                this.createIframe = function () {
+                  var iframe = document.createElement("iframe");
+                  iframe.setAttribute("src", "https://" + this.webaddress + "." + this.domain + window.location.search);
+                  iframe.setAttribute("width", this.width);
+                  iframe.setAttribute("height", this.height);
+                  iframe.setAttribute("border", "0");
+                  iframe.setAttribute("id", "adventcalendar");
+                  iframe.setAttribute("class", "adventcalendar");
+                  iframe.setAttribute("frameborder", "0");
+                  iframe.setAttribute("allow", "autoplay;fullscreen");
+                  document.getElementById("adventcalendar-container").appendChild(iframe);
+                };
+                this.createIframe();
+              };
+
+              // Tom container inni wrapperen
+              frameWrap.innerHTML = '<div id="adventcalendar-container"></div>';
+
+              // Start kalenderen
+              new AdventCalendar({
+                width: "100%",
+                height: "650px",
+                mobileHeight: "900px",
+                webaddress: "fjolsenbanden",
+                domain: "julekalender.no"
+              });
+            }
+
+            if (btn) {
+              btn.addEventListener("click", loadCalendar);
+            }
+          })();
+        </script>
       </section>
 
       <!-- HVORFOR / PRIS -->
