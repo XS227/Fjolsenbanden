@@ -77,3 +77,4 @@ DerivedDataCache/*
 # Node modules
 node_modules/
 dist/
+fjolsenbanden_site/static/dist/
