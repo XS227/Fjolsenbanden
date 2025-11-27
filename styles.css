@@ -1425,3 +1425,55 @@ body.is-admin.fb-editor-on .fb-edit-block:hover > .fb-block-edit-btn {
     aspect-ratio: 16 / 9;
   }
 }
+
+/* Vipps test-modul front */
+#vipps-front-section {
+  padding: 3rem 0;
+}
+
+.vipps-box {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 2rem;
+  border-radius: 20px;
+  background: radial-gradient(circle at top, #101a3e 0, #050b2b 60%, #020317 100%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+  text-align: center;
+}
+
+.vipps-box h2 {
+  margin: 0 0 0.5rem;
+}
+
+.vipps-box p {
+  margin: 0.25rem 0 1rem;
+  color: var(--muted);
+}
+
+.vipps-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 0.8rem 1.5rem;
+  border-radius: 999px;
+  border: none;
+  background: linear-gradient(135deg, #ff7a2f, #ff5b24);
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 12px 28px rgba(255, 91, 36, 0.45);
+  transition: transform 0.12s ease, box-shadow 0.12s ease, filter 0.12s ease;
+}
+
+.vipps-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 14px 32px rgba(255, 91, 36, 0.5);
+}
+
+.vipps-front-status {
+  margin-top: 0.75rem;
+  font-size: 0.95rem;
+  color: var(--muted);
+}

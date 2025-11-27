@@ -790,6 +790,66 @@
       color: #ff7a7a;
     }
 
+    #admin-vipps-module {
+      padding: 1rem;
+      border-radius: 0.75rem;
+      background: rgba(0, 0, 0, 0.7);
+      margin-bottom: 1rem;
+    }
+
+    #admin-vipps-module h3 {
+      margin-bottom: 0.4rem;
+    }
+
+    .admin-help-text {
+      font-size: 0.8rem;
+      opacity: 0.9;
+      margin-bottom: 0.6rem;
+    }
+
+    .admin-label {
+      display: flex;
+      flex-direction: column;
+      font-size: 0.85rem;
+      margin-bottom: 0.55rem;
+    }
+
+    .admin-input {
+      margin-top: 0.25rem;
+      padding: 0.4rem 0.55rem;
+      border-radius: 0.4rem;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      background: rgba(0, 0, 0, 0.3);
+      color: #fff;
+    }
+
+    .admin-input::placeholder {
+      color: rgba(255, 255, 255, 0.4);
+    }
+
+    .admin-toggle {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      margin: 0.45rem 0;
+      font-size: 0.85rem;
+    }
+
+    .admin-button.primary {
+      width: 100%;
+      padding: 0.45rem 0.8rem;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .admin-status-message {
+      font-size: 0.8rem;
+      margin-top: 0.4rem;
+      opacity: 0.9;
+    }
+
     /* --------------------------------------------------
      *  ONBOARDING OVERLAY
      * -------------------------------------------------- */
@@ -1199,42 +1259,48 @@
             </div>
           </div>
 
-          <div class="card vipps-card" id="admin-vipps-module">
-            <div class="info-card-title">Vipps / MobilePay</div>
+          <section class="card admin-block" id="admin-vipps-module">
+            <h3>Vipps / MobilePay</h3>
+
             <p class="admin-help-text">
-              Legg inn opplysninger fra Vipps-portalen for å aktivere Vipps-modulen på forsiden.
+              Lim inn nøklene fra <strong>Developer → Test keys</strong> i Vipps-portalen. Når denne modulen er aktivert, kan vi
+              vise Vipps-knapp/login i front.
             </p>
 
-            <div class="vipps-grid">
-              <label class="vipps-label">
-                Merchant serial number (MSN)
-                <input type="text" id="vipps-msn" class="vipps-input" placeholder="f.eks. 123456" />
-              </label>
+            <label class="admin-label">
+              Merchant Serial Number (MSN)
+              <input type="text" id="vipps-msn" class="admin-input" placeholder="f.eks. 412556" />
+            </label>
 
-              <label class="vipps-label">
-                Client ID
-                <input type="text" id="vipps-client-id" class="vipps-input" placeholder="kopier fra Vipps-portalen" />
-              </label>
+            <label class="admin-label">
+              client_id
+              <input type="text" id="vipps-client-id" class="admin-input" placeholder="Lim inn client_id fra Vipps test keys" />
+            </label>
 
-              <label class="vipps-label">
-                Client Secret
-                <input type="password" id="vipps-client-secret" class="vipps-input" placeholder="kopier fra Vipps-portalen" />
-              </label>
+            <label class="admin-label">
+              client_secret
+              <input type="password" id="vipps-client-secret" class="admin-input" placeholder="Lim inn client_secret fra Vipps test keys" />
+            </label>
 
-              <label class="vipps-label">
-                Subscription key (API key)
-                <input type="text" id="vipps-sub-key" class="vipps-input" placeholder="Ocp-Apim-Subscription-Key" />
-              </label>
+            <label class="admin-label">
+              Ocp-Apim-Subscription-Key (primær eller sekundær)
+              <input type="text" id="vipps-sub-key" class="admin-input" placeholder="Lim inn Subscription-Key (test)" />
+            </label>
 
-              <label class="vipps-toggle">
-                <input type="checkbox" id="vipps-enabled" />
-                <span>Aktiver Vipps-modulen på forsiden</span>
-              </label>
-            </div>
+            <label class="admin-toggle">
+              <input type="checkbox" id="vipps-sandbox" />
+              <span>Bruk Vipps <strong>TEST-miljø (sandbox)</strong></span>
+            </label>
 
-            <button id="vipps-save-settings" class="btn btn-primary">Lagre Vipps-innstillinger</button>
-            <p id="vipps-status-message" class="vipps-status-message"></p>
-          </div>
+            <label class="admin-toggle">
+              <input type="checkbox" id="vipps-enabled" />
+              <span>Aktiver Vipps-modulen på forsiden</span>
+            </label>
+
+            <button id="vipps-save-settings" class="admin-button primary">💾 Lagre Vipps-testoppsett</button>
+
+            <p id="vipps-status-message" class="admin-status-message"></p>
+          </section>
 
           <div class="card info-card">
             <div class="info-card-title">Hvordan fungerer dette?</div>
@@ -1251,6 +1317,109 @@
   </main>
 
   <script>
+    // Vipps Test-modul – lagring i localStorage
+    const VIPPS_STORAGE_KEY = "fjolsen_vipps_settings";
+
+    function loadVippsSettings() {
+      const raw = localStorage.getItem(VIPPS_STORAGE_KEY);
+      const fallback = (WORKING_CONFIG && WORKING_CONFIG.global && WORKING_CONFIG.global.vipps) || {};
+      let data = fallback;
+
+      if (raw) {
+        try {
+          const parsed = JSON.parse(raw);
+          data = {
+            ...fallback,
+            ...parsed,
+            subscriptionKey: parsed.subKey ?? parsed.subscriptionKey
+          };
+        } catch (e) {
+          console.warn("Kunne ikke lese Vipps-innstillinger:", e);
+          data = fallback;
+        }
+      }
+
+      const msnInput = document.getElementById("vipps-msn");
+      const clientIdInput = document.getElementById("vipps-client-id");
+      const clientSecretInput = document.getElementById("vipps-client-secret");
+      const subKeyInput = document.getElementById("vipps-sub-key");
+      const enabledCheckbox = document.getElementById("vipps-enabled");
+      const sandboxCheckbox = document.getElementById("vipps-sandbox");
+
+      if (msnInput) msnInput.value = data.msn || "";
+      if (clientIdInput) clientIdInput.value = data.clientId || "";
+      if (clientSecretInput) clientSecretInput.value = data.clientSecret || "";
+      if (subKeyInput) subKeyInput.value = data.subKey || data.subscriptionKey || "";
+      if (enabledCheckbox) enabledCheckbox.checked = !!data.enabled;
+      if (sandboxCheckbox) sandboxCheckbox.checked = !!data.sandbox;
+
+      document.documentElement.dataset.vippsEnabled = data.enabled ? "1" : "0";
+      document.documentElement.dataset.vippsSandbox = data.sandbox ? "1" : "0";
+
+      if (WORKING_CONFIG && WORKING_CONFIG.global) {
+        WORKING_CONFIG.global.vipps = {
+          ...WORKING_CONFIG.global.vipps,
+          msn: data.msn || "",
+          clientId: data.clientId || "",
+          clientSecret: data.clientSecret || "",
+          subscriptionKey: data.subKey || data.subscriptionKey || "",
+          sandbox: Boolean(data.sandbox),
+          enabled: Boolean(data.enabled)
+        };
+      }
+    }
+
+    function saveVippsSettings() {
+      const msnInput = document.getElementById("vipps-msn");
+      const clientIdInput = document.getElementById("vipps-client-id");
+      const clientSecretInput = document.getElementById("vipps-client-secret");
+      const subKeyInput = document.getElementById("vipps-sub-key");
+      const enabledCheckbox = document.getElementById("vipps-enabled");
+      const sandboxCheckbox = document.getElementById("vipps-sandbox");
+      const statusEl = document.getElementById("vipps-status-message");
+
+      const data = {
+        msn: msnInput?.value.trim() || "",
+        clientId: clientIdInput?.value.trim() || "",
+        clientSecret: clientSecretInput?.value.trim() || "",
+        subKey: subKeyInput?.value.trim() || "",
+        enabled: !!enabledCheckbox?.checked,
+        sandbox: !!sandboxCheckbox?.checked
+      };
+
+      if (!data.msn || !data.clientId || !data.clientSecret || !data.subKey) {
+        if (statusEl) {
+          statusEl.textContent = "⚠ Fyll inn alle Vipps-testnøkler før du aktiverer modulen.";
+        }
+        return;
+      }
+
+      localStorage.setItem(VIPPS_STORAGE_KEY, JSON.stringify(data));
+
+      document.documentElement.dataset.vippsEnabled = data.enabled ? "1" : "0";
+      document.documentElement.dataset.vippsSandbox = data.sandbox ? "1" : "0";
+
+      if (WORKING_CONFIG && WORKING_CONFIG.global) {
+        WORKING_CONFIG.global.vipps = {
+          ...WORKING_CONFIG.global.vipps,
+          msn: data.msn,
+          clientId: data.clientId,
+          clientSecret: data.clientSecret,
+          subscriptionKey: data.subKey,
+          sandbox: data.sandbox,
+          enabled: data.enabled
+        };
+        saveConfig(WORKING_CONFIG);
+      }
+
+      if (statusEl) {
+        statusEl.textContent = "✅ Vipps-testoppsett er lagret";
+        setTimeout(() => {
+          statusEl.textContent = "";
+        }, 4000);
+      }
+    }
+
     const DEFAULT_ACCESS_PASS = "123456789";
     let ACCESS_PASS = DEFAULT_ACCESS_PASS;
 
@@ -1276,6 +1445,7 @@
           clientId: "",
           clientSecret: "",
           subscriptionKey: "",
+          sandbox: false,
           enabled: false
         }
       },
@@ -1583,6 +1753,10 @@
       document.getElementById("vipps-client-secret").value = vipps.clientSecret || "";
       document.getElementById("vipps-sub-key").value = vipps.subscriptionKey || "";
       document.getElementById("vipps-enabled").checked = Boolean(vipps.enabled);
+      const vippsSandbox = document.getElementById("vipps-sandbox");
+      if (vippsSandbox) {
+        vippsSandbox.checked = Boolean(vipps.sandbox);
+      }
       const vippsStatus = document.getElementById("vipps-status-message");
       if (vippsStatus) {
         vippsStatus.textContent = "";
@@ -2193,6 +2367,7 @@
         clientSecret:
           document.getElementById("vipps-client-secret").value.trim() || vippsDefaults.clientSecret || "",
         subscriptionKey: document.getElementById("vipps-sub-key").value.trim() || vippsDefaults.subscriptionKey || "",
+        sandbox: document.getElementById("vipps-sandbox").checked,
         enabled: document.getElementById("vipps-enabled").checked
       };
 
@@ -2338,6 +2513,7 @@
       renderSectionsForm(WORKING_CONFIG);
       renderSectionOrderList(WORKING_CONFIG);
       renderGlobalForm(WORKING_CONFIG);
+      loadVippsSettings();
       setupNav();
 
       document.getElementById("save-btn").addEventListener("click", () => {
@@ -2354,30 +2530,11 @@
         }
       });
 
-        const vippsSaveBtn = document.getElementById("vipps-save-settings");
-        const vippsStatus = document.getElementById("vipps-status-message");
-        if (vippsSaveBtn) {
-          vippsSaveBtn.addEventListener("click", () => {
-            try {
-              const newCfg = collectConfigFromForm();
-              saveConfig(newCfg);
-              WORKING_CONFIG = newCfg;
-              renderStats(newCfg);
-              renderSectionOrderList(newCfg);
-              setStatus("Lagret! Oppdater forsiden for å se endringene.", "ok");
-              if (vippsStatus) {
-                vippsStatus.textContent = "Vipps-innstillinger lagret.";
-                vippsStatus.classList.remove("status--error");
-                vippsStatus.classList.add("status--ok");
-            }
-          } catch (e) {
-            console.error(e);
-            if (vippsStatus) {
-              vippsStatus.textContent = "Noe gikk galt ved lagring av Vipps.";
-              vippsStatus.classList.remove("status--ok");
-              vippsStatus.classList.add("status--error");
-            }
-          }
+      const vippsSaveBtn = document.getElementById("vipps-save-settings");
+      if (vippsSaveBtn) {
+        vippsSaveBtn.addEventListener("click", (event) => {
+          event.preventDefault();
+          saveVippsSettings();
         });
       }
 
