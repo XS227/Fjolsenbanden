@@ -1445,6 +1445,19 @@ body.is-admin .fb-block-edit-btn:hover {
     </div>
   </section>
 
+  <section id="vipps-front-section" class="section" data-front-module="vipps">
+    <div class="container">
+      <div class="vipps-box">
+        <h2>Vipps-betaling (test)</h2>
+        <p>
+          Denne modulen er aktivert via admin og bruker Vipps sitt <strong>test-miljø</strong>.
+        </p>
+        <button id="vipps-test-button" class="vipps-button">Test Vipps-oppsett</button>
+        <p id="vipps-front-status" class="vipps-front-status"></p>
+      </div>
+    </div>
+  </section>
+
   <section id="partners" class="section" data-sortable-section="partners" data-section-label="Partnere">
     <div class="container">
       <div class="partners-header fb-edit-block" data-block-id="partners-intro" data-edit-type="richtext">
@@ -2290,6 +2303,55 @@ body.is-admin .fb-block-edit-btn:hover {
     return match ? match[1] : null;
   }
 })();
+</script>
+
+<script>
+  (function () {
+    const VIPPS_STORAGE_KEY = "fjolsen_vipps_settings";
+    try {
+      const raw = localStorage.getItem(VIPPS_STORAGE_KEY);
+      const data = raw ? JSON.parse(raw) : null;
+      const enabled = data?.enabled === true;
+      const sandbox = data?.sandbox === true;
+      document.documentElement.dataset.vippsEnabled = enabled ? "1" : "0";
+      document.documentElement.dataset.vippsSandbox = sandbox ? "1" : "0";
+    } catch (error) {
+      console.warn("Kunne ikke lese Vipps-testoppsett:", error);
+      document.documentElement.dataset.vippsEnabled = "0";
+      document.documentElement.dataset.vippsSandbox = "0";
+    }
+  })();
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const vippsSection = document.querySelector("[data-front-module='vipps']");
+    if (!vippsSection) return;
+
+    const enabled = document.documentElement.dataset.vippsEnabled === "1";
+
+    if (!enabled) {
+      vippsSection.style.display = "none";
+      return;
+    }
+
+    const frontStatus = document.getElementById("vipps-front-status");
+    const sandbox = document.documentElement.dataset.vippsSandbox === "1";
+
+    if (frontStatus) {
+      frontStatus.textContent = sandbox
+        ? "Vipps er satt opp i TEST (sandbox)."
+        : "Vipps er satt opp mot PRODUKSJON (vær forsiktig!).";
+    }
+
+    const btn = document.getElementById("vipps-test-button");
+    if (btn) {
+      btn.addEventListener("click", () => {
+        if (frontStatus) {
+          frontStatus.textContent =
+            "Dette er bare en front-end test. Selve API-kallene må gjøres fra server (PHP/Node).";
+        }
+      });
+    }
+  });
 </script>
 </body>
 </html>
