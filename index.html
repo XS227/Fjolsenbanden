@@ -1230,7 +1230,12 @@ body.is-admin .fb-block-edit-btn:hover {
     </div>
   </section>
 
-  <section id="julekalender" class="section section--hero section--julekal section--active">
+  <section
+    id="julekalender"
+    class="section section--hero section--julekal section--active"
+    data-sortable-section="julekalender"
+    data-section-label="Julekalender"
+  >
     <div class="container hero-grid">
       <div class="hero-media">
         <div class="hero-card hero-card--calendar hover-lift">
@@ -1929,7 +1934,7 @@ body.is-admin .fb-block-edit-btn:hover {
 
   // Les admin-konfig fra localStorage og bruk på forsiden
   (function () {
-    let raw = localStorage.getItem('fjAdminConfig');
+    const raw = localStorage.getItem('fjAdminConfig');
     if (!raw) return;
 
     let cfg;
@@ -1940,143 +1945,163 @@ body.is-admin .fb-block-edit-btn:hover {
       return;
     }
 
-    // Les admin-konfig fra localStorage og bruk på forsiden
-    (function () {
-      let raw = localStorage.getItem('fjAdminConfig');
-      if (!raw) return;
+    const sectionsContainer = document.querySelector('[data-sections-container]');
+    if (sectionsContainer && Array.isArray(cfg.sectionsOrder) && cfg.sectionsOrder.length) {
+      cfg.sectionsOrder.forEach((id) => {
+        const sectionEl =
+          sectionsContainer.querySelector(`[data-sortable-section="${id}"]`) || document.getElementById(id);
+        if (sectionEl) {
+          sectionsContainer.appendChild(sectionEl);
+        }
+      });
+    }
 
-      let cfg;
-      try {
-        cfg = JSON.parse(raw);
-      } catch (e) {
-        console.warn('Kunne ikke parse fjAdminConfig:', e);
+    const sections = cfg.sections || {};
+    Object.entries(sections).forEach(([id, settings]) => {
+      const section = document.getElementById(id);
+      if (!section) return;
+
+      if (settings.enabled === false) {
+        section.style.display = 'none';
         return;
       }
 
-      // Seksjonsstyring (på/av + innhold)
-      const sections = cfg.sections || {};
-      Object.entries(sections).forEach(([id, settings]) => {
-        const section = document.getElementById(id);
-        if (!section) return;
+      if (id === 'hero') {
+        applyHeroSettings(section, settings);
+        return;
+      }
 
-        // Skru av/på seksjon
-        if (settings.enabled === false) {
-          section.style.display = 'none';
-          return;
+      if (id === 'julekalender') {
+        applyJulekalenderSettings(section, settings);
+        return;
+      }
+
+      if (settings.title) {
+        const h2 = section.querySelector('h2');
+        if (h2) {
+          h2.textContent = settings.title;
         }
+      }
 
-        if (id === 'hero') {
-          applyHeroSettings(section, settings);
-          return;
+      if (settings.subtitle) {
+        const sub = section.querySelector('.subtitle');
+        if (sub) {
+          sub.textContent = settings.subtitle;
         }
+      }
+    });
 
-        // Oppdater tittel (første h2 i seksjonen)
-        if (settings.title) {
-          const h2 = section.querySelector('h2');
-          if (h2) {
-            h2.textContent = settings.title;
-          }
-        }
+    const global = cfg.global || {};
 
-        // Oppdater undertekst / subtitle
-        if (settings.subtitle) {
-          const sub = section.querySelector('.subtitle');
-          if (sub) {
-            sub.textContent = settings.subtitle;
-          }
+    if (global.logoUrl) {
+      document.querySelectorAll('.logo img, .footer-logo').forEach((img) => {
+        img.src = global.logoUrl;
+      });
+    }
+
+    if (global.youtubeUrl) {
+      const iframe = document.querySelector('#video iframe');
+      if (iframe) {
+        iframe.src = normalizeYoutube(global.youtubeUrl);
+      }
+    }
+
+    if (global.socials) {
+      const cards = document.querySelectorAll('.social-card');
+      cards.forEach((card) => {
+        const key = card.dataset.social;
+        if (!key) return;
+        const url = global.socials[key];
+        if (url) {
+          card.href = url;
         }
       });
+    }
 
-      // Globale innstillinger
-      const global = cfg.global || {};
+    function normalizeYoutube(url) {
+      if (!url) return url;
 
-      // Logo i header + footer
-      if (global.logoUrl) {
-        document.querySelectorAll('.logo img, .footer-logo').forEach((img) => {
-          img.src = global.logoUrl;
-        });
+      if (url.includes('/embed/')) return url;
+
+      const shortMatch = url.match(/youtu\.be\/([^?&]+)/);
+      if (shortMatch) {
+        return 'https://www.youtube.com/embed/' + shortMatch[1];
       }
 
-      // YouTube-video
-      if (global.youtubeUrl) {
-        const iframe = document.querySelector('#video iframe');
-        if (iframe) {
-          iframe.src = normalizeYoutube(global.youtubeUrl);
-        }
+      const longMatch = url.match(/[?&]v=([^&]+)/);
+      if (longMatch) {
+        return 'https://www.youtube.com/embed/' + longMatch[1];
       }
 
-      // Sosiale lenker
-      if (global.socials) {
-        const cards = document.querySelectorAll('.social-card');
-        cards.forEach((card) => {
-          const key = card.dataset.social;
-          if (!key) return;
-          const url = global.socials[key];
-          if (url) {
-            card.href = url;
-          }
-        });
+      return url;
+    }
+
+    function applyHeroSettings(section, settings) {
+      const pill = section.querySelector('.pill');
+      if (settings.pillText && pill) {
+        pill.textContent = settings.pillText;
       }
 
-      function normalizeYoutube(url) {
-        if (!url) return url;
-
-        // embed-lenke allerede
-        if (url.includes('/embed/')) return url;
-
-        // youtu.be/ID
-        const shortMatch = url.match(/youtu\.be\/([^?&]+)/);
-        if (shortMatch) {
-          return 'https://www.youtube.com/embed/' + shortMatch[1];
-        }
-
-        // watch?v=ID
-        const longMatch = url.match(/[?&]v=([^&]+)/);
-        if (longMatch) {
-          return 'https://www.youtube.com/embed/' + longMatch[1];
-        }
-
-        return url;
+      const lead = section.querySelector('.lead');
+      if (settings.sectionText && lead) {
+        lead.textContent = settings.sectionText;
       }
 
-      function applyHeroSettings(section, settings) {
-        const pill = section.querySelector('.pill');
-        if (settings.pillText && pill) {
-          pill.textContent = settings.pillText;
-        }
-
-        const lead = section.querySelector('.lead');
-        if (settings.sectionText && lead) {
-          lead.textContent = settings.sectionText;
-        }
-
-        const h1 = section.querySelector('h1');
-        if (settings.title && h1) {
-          h1.innerHTML = settings.title;
-        }
-
-        const heroImg = section.querySelector('.hero-card img');
-        if (settings.heroImageUrl && heroImg) {
-          heroImg.src = settings.heroImageUrl;
-        }
-
-        const caption = section.querySelector('.hero-card-caption');
-        if (settings.heroImageCaption && caption) {
-          caption.textContent = settings.heroImageCaption;
-        }
-
-        const buttons = section.querySelectorAll('.hero-actions a');
-        const [btn1, btn2] = buttons;
-        if (btn1) {
-          if (settings.button1Label) btn1.textContent = settings.button1Label;
-          if (settings.button1Href) btn1.href = settings.button1Href;
-        }
-        if (btn2) {
-          if (settings.button2Label) btn2.textContent = settings.button2Label;
-          if (settings.button2Href) btn2.href = settings.button2Href;
-        }
+      const h1 = section.querySelector('h1');
+      if (settings.title && h1) {
+        h1.innerHTML = settings.title;
       }
-    })();
+
+      const heroImg = section.querySelector('.hero-card img');
+      if (settings.heroImageUrl && heroImg) {
+        heroImg.src = settings.heroImageUrl;
+      }
+
+      const caption = section.querySelector('.hero-card-caption');
+      if (settings.heroImageCaption && caption) {
+        caption.textContent = settings.heroImageCaption;
+      }
+
+      const buttons = section.querySelectorAll('.hero-actions a');
+      const [btn1, btn2] = buttons;
+      if (btn1) {
+        if (settings.button1Label) btn1.textContent = settings.button1Label;
+        if (settings.button1Href) btn1.href = settings.button1Href;
+      }
+      if (btn2) {
+        if (settings.button2Label) btn2.textContent = settings.button2Label;
+        if (settings.button2Href) btn2.href = settings.button2Href;
+      }
+    }
+
+    function applyJulekalenderSettings(section, settings) {
+      const pill = section.querySelector('.pill');
+      if (settings.pillText && pill) {
+        pill.textContent = settings.pillText;
+      }
+
+      const title = section.querySelector('h2');
+      if (settings.title && title) {
+        title.textContent = settings.title;
+      }
+
+      const ingress = section.querySelector('.hero-ingress');
+      if (settings.subtitle && ingress) {
+        ingress.textContent = settings.subtitle;
+      }
+
+      const btn = section.querySelector('a.btn');
+      if (btn) {
+        if (settings.button && settings.button.label) btn.textContent = settings.button.label;
+        if (settings.button && settings.button.href) btn.href = settings.button.href;
+      }
+
+      const image = section.querySelector('img');
+      if (image && settings.imageUrl) {
+        image.src = settings.imageUrl;
+      }
+    }
+  })();
   });
 </script>
 <script>
