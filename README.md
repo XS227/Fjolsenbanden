@@ -46,17 +46,19 @@ python fjolsenbanden_site/manage.py collectstatic
 
 ## Frontend build outputs
 
-The React marketing site lives in [`src/`](src/) and is bundled with Vite. The
-generated files in `dist/` are deployment artefacts only and are **not** kept in
-version control. Run the usual build command locally whenever you need the
-static output:
+The React marketing site lives in [`src/`](src/) and is bundled with Vite. Run
+the build to produce assets in `fjolsenbanden_site/static/dist/`, where Django
+will serve them via `STATICFILES_DIRS`:
 
 ```bash
 npm run build
 ```
 
-Continuous integration already performs this step before publishing assets, so
-pull requests are no longer blocked by large binary bundles.
+The Django template `home/index.html` uses `manifest.json` from that directory
+to load the hashed JS and CSS files, so make sure you run the build step before
+serving the site locally or deploying it. Generated assets remain ignored by
+Git; build them as part of your release process or during `collectstatic` on
+deployment.
 
 ## Running Tests
 
