@@ -944,32 +944,6 @@ textarea:focus {
   font-size: 0.8rem;
 }
 
-.footer-login-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 42px;
-  height: 42px;
-  border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  background: rgba(255, 255, 255, 0.04);
-  color: var(--text);
-  cursor: pointer;
-  transition: background 0.15s ease, transform 0.15s ease, border-color 0.15s ease;
-}
-
-.footer-login-btn:hover,
-.footer-login-btn:focus-visible {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(255, 255, 255, 0.18);
-  transform: translateY(-1px);
-}
-
-.footer-login-btn svg {
-  width: 18px;
-  height: 18px;
-}
-
 .footer-bottom-link {
   color: var(--text);
   font-weight: 600;
@@ -977,6 +951,84 @@ textarea:focus {
 
 .footer-bottom-link:hover {
   color: var(--primary);
+}
+
+.admin-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(2, 3, 23, 0.78);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+  z-index: 10000;
+  padding: 1.5rem;
+}
+
+.admin-modal.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.admin-modal-content {
+  background: #0a102b;
+  border-radius: 18px;
+  padding: 1.5rem;
+  width: min(420px, 100%);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+  position: relative;
+}
+
+.admin-modal h3 {
+  margin: 0 0 0.25rem;
+}
+
+.admin-modal p {
+  margin: 0 0 1rem;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.admin-modal label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.35rem;
+}
+
+.admin-modal input[type='password'] {
+  width: 100%;
+  padding: 0.75rem 0.85rem;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #050b2b;
+  color: #fff;
+}
+
+.admin-error {
+  color: #ff7b7b;
+  min-height: 1.2em;
+  margin-top: 0.4rem;
+}
+
+.admin-modal-actions {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+}
+
+.admin-modal-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  border: none;
+  background: transparent;
+  color: #fff;
+  font-size: 20px;
+  cursor: pointer;
 }
 
 /* Mobil */
