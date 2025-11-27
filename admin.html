@@ -789,6 +789,118 @@
     .vipps-status-message.status--error {
       color: #ff7a7a;
     }
+
+    /* --------------------------------------------------
+     *  ONBOARDING OVERLAY
+     * -------------------------------------------------- */
+    .onboarding-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(5, 11, 43, 0.92);
+      backdrop-filter: blur(18px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      z-index: 30;
+    }
+
+    .onboarding-overlay.visible {
+      display: flex;
+    }
+
+    .onboarding-box {
+      width: min(960px, 100%);
+      background: radial-gradient(circle at top left, #18234f, #0a1236);
+      border-radius: 24px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: var(--shadow-soft);
+      padding: clamp(1.25rem, 2vw, 2rem);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+      color: var(--text);
+    }
+
+    .onboarding-header {
+      grid-column: 1 / -1;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .onboarding-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 16px;
+      background: rgba(0, 166, 255, 0.15);
+      display: grid;
+      place-items: center;
+      font-size: 1.4rem;
+    }
+
+    .onboarding-title {
+      font-size: 1.35rem;
+      font-weight: 700;
+      margin: 0;
+    }
+
+    .onboarding-sub {
+      margin: 0.1rem 0 0;
+      color: var(--muted);
+      max-width: 640px;
+    }
+
+    .onboarding-card {
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 18px;
+      padding: 1rem;
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .onboarding-card h3 {
+      margin: 0 0 0.35rem;
+      font-size: 1rem;
+    }
+
+    .onboarding-card p {
+      margin: 0 0 0.75rem;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .onboarding-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.85rem;
+    }
+
+    .onboarding-actions {
+      grid-column: 1 / -1;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      margin-top: 0.5rem;
+    }
+
+    .pill-note {
+      padding: 0.4rem 0.7rem;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+
+    @media (max-width: 800px) {
+      .onboarding-box {
+        grid-template-columns: 1fr;
+      }
+
+      .onboarding-grid {
+        grid-template-columns: 1fr;
+      }
+    }
   </style>
 </head>
 <body>
@@ -811,6 +923,110 @@
           <button type="submit" class="btn btn-primary auth-btn">Logg inn</button>
         </div>
       </form>
+    </div>
+  </div>
+
+  <!-- First-time setup overlay -->
+  <div class="onboarding-overlay" id="onboarding-overlay">
+    <div class="onboarding-box">
+      <div class="onboarding-header">
+        <div class="onboarding-icon">✨</div>
+        <div>
+          <div class="onboarding-title">Velkommen! La oss sette opp adminpanelet.</div>
+          <div class="onboarding-sub">
+            Vi ber om kontaktinfo, Vipps og lenker. Du kan hoppe over – da bruker vi de forhåndslagrede FjOlsenbanden-verdiene.
+          </div>
+        </div>
+      </div>
+
+      <div class="onboarding-card">
+        <h3>Om deg</h3>
+        <p>Kontaktinfo for admins og oppdatering av access code.</p>
+        <div class="onboarding-grid">
+          <div class="field-group">
+            <label>Navn</label>
+            <input type="text" id="onb-admin-name" placeholder="Ditt navn" />
+          </div>
+          <div class="field-group">
+            <label>Telefon</label>
+            <input type="tel" id="onb-admin-phone" placeholder="Telefonnummer" />
+          </div>
+          <div class="field-group">
+            <label>E-post</label>
+            <input type="email" id="onb-admin-email" placeholder="E-postadresse" />
+          </div>
+          <div class="field-group">
+            <label>Ny access code (valgfritt)</label>
+            <input type="password" id="onb-access-code" placeholder="Sett nytt passord" />
+          </div>
+        </div>
+      </div>
+
+      <div class="onboarding-card">
+        <h3>Vipps</h3>
+        <p>Fyll inn dersom du vil aktivere Vipps/MobilePay nå.</p>
+        <div class="onboarding-grid">
+          <div class="field-group">
+            <label>Vipps MSN</label>
+            <input type="text" id="onb-vipps-msn" class="vipps-input" placeholder="Merchant serial number" />
+          </div>
+          <div class="field-group">
+            <label>Client ID</label>
+            <input type="text" id="onb-vipps-client-id" class="vipps-input" placeholder="Client ID" />
+          </div>
+          <div class="field-group">
+            <label>Client secret</label>
+            <input type="password" id="onb-vipps-client-secret" class="vipps-input" placeholder="Client secret" />
+          </div>
+          <div class="field-group">
+            <label>Subscription key</label>
+            <input type="password" id="onb-vipps-sub-key" class="vipps-input" placeholder="Primary subscription key" />
+          </div>
+          <label class="toggle" style="grid-column: 1 / -1; margin-top: 0.35rem;">
+            <input type="checkbox" id="onb-vipps-enabled" />
+            <span>Aktiver Vipps/MobilePay nå</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="onboarding-card">
+        <h3>Lenker</h3>
+        <p>Disse brukes på forsiden for å lede besøkende til dine kanaler.</p>
+        <div class="onboarding-grid">
+          <div class="field-group">
+            <label>YouTube-kanal</label>
+            <input type="text" id="onb-youtube" placeholder="https://youtube.com/..." />
+          </div>
+          <div class="field-group">
+            <label>Twitch</label>
+            <input type="text" id="onb-twitch" placeholder="https://twitch.tv/..." />
+          </div>
+          <div class="field-group">
+            <label>TikTok</label>
+            <input type="text" id="onb-tiktok" placeholder="https://www.tiktok.com/@..." />
+          </div>
+          <div class="field-group">
+            <label>Discord</label>
+            <input type="text" id="onb-discord" placeholder="https://discord.gg/..." />
+          </div>
+          <div class="field-group">
+            <label>YouTube</label>
+            <input type="text" id="onb-social-youtube" placeholder="https://youtube.com/@..." />
+          </div>
+          <div class="field-group">
+            <label>Instagram</label>
+            <input type="text" id="onb-instagram" placeholder="https://instagram.com/..." />
+          </div>
+        </div>
+      </div>
+
+      <div class="onboarding-actions">
+        <div class="pill-note">Du kan endre alt senere i innstillinger.</div>
+        <div style="display:flex; gap:0.6rem;">
+          <button type="button" class="btn" id="onb-skip">Hopp over</button>
+          <button type="button" class="btn btn-primary" id="onb-save">Lagre og fortsett</button>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -1266,6 +1482,8 @@
     };
 
     let WORKING_CONFIG = null;
+    let HAS_EXISTING_CONFIG = false;
+    const ONBOARDING_FLAG = "fjAdminOnboardingComplete";
 
     const SECTION_META = [
       { id: "hero",       label: "Hero / Velkommen",        tag: "Øverst på siden" },
@@ -1295,6 +1513,7 @@
     function loadConfig() {
       try {
         const raw = localStorage.getItem("fjAdminConfig");
+        HAS_EXISTING_CONFIG = Boolean(raw);
         if (!raw) return deepClone(DEFAULT_CONFIG);
         const parsed = JSON.parse(raw);
         const cfg = deepClone(DEFAULT_CONFIG);
@@ -1375,6 +1594,31 @@
       document.getElementById("admin-name").value = access.adminName || "";
       document.getElementById("admin-email").value = access.adminEmail || "";
       document.getElementById("admin-phone").value = access.adminPhone || "";
+    }
+
+    function renderOnboardingForm(cfg) {
+      const g = cfg.global || {};
+      const socials = g.socials || {};
+      const access = cfg.access || {};
+      const vipps = g.vipps || {};
+
+      document.getElementById("onb-admin-name").value = access.adminName || "";
+      document.getElementById("onb-admin-email").value = access.adminEmail || "";
+      document.getElementById("onb-admin-phone").value = access.adminPhone || "";
+      document.getElementById("onb-access-code").value = "";
+
+      document.getElementById("onb-vipps-msn").value = vipps.msn || "";
+      document.getElementById("onb-vipps-client-id").value = vipps.clientId || "";
+      document.getElementById("onb-vipps-client-secret").value = vipps.clientSecret || "";
+      document.getElementById("onb-vipps-sub-key").value = vipps.subscriptionKey || "";
+      document.getElementById("onb-vipps-enabled").checked = Boolean(vipps.enabled);
+
+      document.getElementById("onb-youtube").value = g.youtubeUrl || "";
+      document.getElementById("onb-twitch").value = socials.twitch || "";
+      document.getElementById("onb-tiktok").value = socials.tiktok || "";
+      document.getElementById("onb-discord").value = socials.discord || "";
+      document.getElementById("onb-social-youtube").value = socials.youtube || "";
+      document.getElementById("onb-instagram").value = socials.instagram || "";
     }
 
     function getOrderedMeta(cfg) {
@@ -1965,12 +2209,82 @@
       return cfg;
     }
 
+    function applyOnboardingConfig() {
+      const cfg = deepClone(WORKING_CONFIG || DEFAULT_CONFIG);
+
+      cfg.access = {
+        ...cfg.access,
+        adminName: document.getElementById("onb-admin-name").value.trim() || cfg.access.adminName,
+        adminEmail: document.getElementById("onb-admin-email").value.trim() || cfg.access.adminEmail,
+        adminPhone: document.getElementById("onb-admin-phone").value.trim() || cfg.access.adminPhone,
+        code: document.getElementById("onb-access-code").value.trim() || cfg.access.code
+      };
+
+      cfg.global = {
+        ...cfg.global,
+        youtubeUrl: document.getElementById("onb-youtube").value.trim() || cfg.global.youtubeUrl,
+        socials: {
+          ...cfg.global.socials,
+          twitch: document.getElementById("onb-twitch").value.trim() || cfg.global.socials.twitch,
+          tiktok: document.getElementById("onb-tiktok").value.trim() || cfg.global.socials.tiktok,
+          discord: document.getElementById("onb-discord").value.trim() || cfg.global.socials.discord,
+          youtube: document.getElementById("onb-social-youtube").value.trim() || cfg.global.socials.youtube,
+          instagram: document.getElementById("onb-instagram").value.trim() || cfg.global.socials.instagram
+        },
+        vipps: {
+          ...cfg.global.vipps,
+          msn: document.getElementById("onb-vipps-msn").value.trim() || cfg.global.vipps.msn,
+          clientId: document.getElementById("onb-vipps-client-id").value.trim() || cfg.global.vipps.clientId,
+          clientSecret:
+            document.getElementById("onb-vipps-client-secret").value.trim() || cfg.global.vipps.clientSecret,
+          subscriptionKey: document.getElementById("onb-vipps-sub-key").value.trim() || cfg.global.vipps.subscriptionKey,
+          enabled: document.getElementById("onb-vipps-enabled").checked
+        }
+      };
+
+      WORKING_CONFIG = cfg;
+      ACCESS_PASS = cfg.access.code;
+
+      saveConfig(cfg);
+      renderGlobalForm(cfg);
+      renderSectionOrderList(cfg);
+      renderSectionsForm(cfg);
+      localStorage.setItem(ONBOARDING_FLAG, "yes");
+      document.getElementById("onboarding-overlay").classList.remove("visible");
+      setStatus("Førstegangsoppsettet er lagret!", "ok");
+    }
+
+    function skipOnboarding() {
+      localStorage.setItem(ONBOARDING_FLAG, "yes");
+      document.getElementById("onboarding-overlay").classList.remove("visible");
+      setStatus("Hoppet over førstegangsoppsett. Du kan endre innstillinger senere.");
+    }
+
     function setStatus(msg, type = "") {
       const el = document.getElementById("status-msg");
       el.textContent = msg;
       el.classList.remove("status--ok", "status--error");
       if (type === "ok") el.classList.add("status--ok");
       if (type === "error") el.classList.add("status--error");
+    }
+
+    function maybeStartOnboarding() {
+      const overlay = document.getElementById("onboarding-overlay");
+      if (!overlay) return;
+      const done = localStorage.getItem(ONBOARDING_FLAG) === "yes";
+      if (done || HAS_EXISTING_CONFIG) return;
+      renderOnboardingForm(WORKING_CONFIG || DEFAULT_CONFIG);
+      overlay.classList.add("visible");
+    }
+
+    function setupOnboarding() {
+      const overlay = document.getElementById("onboarding-overlay");
+      if (!overlay) return;
+      const saveBtn = document.getElementById("onb-save");
+      const skipBtn = document.getElementById("onb-skip");
+
+      if (saveBtn) saveBtn.addEventListener("click", applyOnboardingConfig);
+      if (skipBtn) skipBtn.addEventListener("click", skipOnboarding);
     }
 
     function setupAuth() {
@@ -1988,6 +2302,7 @@
           app.classList.add("app--ready");
           input.value = "";
           error.textContent = "";
+          maybeStartOnboarding();
         } else {
           error.textContent = "Feil access pass. Prøv igjen.";
           input.focus();
@@ -2018,6 +2333,7 @@
       ACCESS_PASS = (WORKING_CONFIG.access && WORKING_CONFIG.access.code) || DEFAULT_ACCESS_PASS;
 
       setupAuth();
+      setupOnboarding();
 
       renderSectionsForm(WORKING_CONFIG);
       renderSectionOrderList(WORKING_CONFIG);
