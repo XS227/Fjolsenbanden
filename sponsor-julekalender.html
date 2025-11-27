@@ -6,6 +6,7 @@
   <title>FjOlsenbandens Julekalender 2025 – Samarbeidspartnere</title>
 
   <!-- FjOlsenbanden farger -->
+  <link rel="stylesheet" href="styles.css" />
   <style>
     :root {
       --fj-dark: #041149;
@@ -17,67 +18,20 @@
       --fj-bg: #020618;
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
     body {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Inter", sans-serif;
       background: radial-gradient(circle at top, #293660 0, #020618 45%, #000000 100%);
       color: var(--fj-white);
-      min-height: 100vh;
       line-height: 1.6;
     }
 
     a {
       color: inherit;
-      text-decoration: none;
-    }
-
-    img {
-      max-width: 100%;
-      display: block;
     }
 
     .page {
       max-width: 1100px;
       margin: 0 auto;
       padding: 1.5rem 1rem 3rem;
-    }
-
-    header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-      margin-bottom: 2rem;
-    }
-
-    .logo-wrap {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-    }
-
-    .logo-wrap img {
-      width: 52px;
-      height: 52px;
-      border-radius: 999px;
-    }
-
-    .logo-text {
-      font-weight: 700;
-      font-size: 0.95rem;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--fj-blue);
-    }
-
-    .tagline {
-      font-size: 0.75rem;
-      color: var(--fj-light);
     }
 
     .lang-switch {
@@ -306,19 +260,78 @@
       border: 0;
     }
 
-    /* Calendar */
-    .calendar-wrapper {
-      margin-top: 1rem;
-      border-radius: 1rem;
+    /* Lett kalenderseksjon */
+    .section-calendar {
+      border-radius: 1.5rem;
+      padding: 1.5rem 1.25rem;
+      background: rgba(4, 17, 73, 0.85);
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      box-shadow: 0 18px 45px rgba(0, 0, 0, 0.55);
+    }
+
+    .calendar-intro {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .calendar-intro-text {
+      font-size: 0.95rem;
+      color: #e5e7eb;
+      max-width: 520px;
+    }
+
+    .calendar-load-btn {
+      border-radius: 999px;
+      padding: 0.7rem 1.4rem;
+      font-size: 0.9rem;
+      font-weight: 600;
+      border: 0;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      background: linear-gradient(120deg, #13A0F9, #FF2F9C);
+      color: #fff;
+      box-shadow: 0 14px 35px rgba(0, 0, 0, 0.45);
+    }
+
+    .calendar-load-btn span.icon {
+      font-size: 1.05rem;
+    }
+
+    .calendar-frame-wrap {
+      margin-top: 1.2rem;
+      border-radius: 1.1rem;
       overflow: hidden;
       background: #020617;
-      border: 1px solid rgba(148, 163, 184, 0.25);
+      border: 1px solid rgba(148, 163, 184, 0.3);
+      max-height: 720px;           /* kutter alt det unødvendige røde nederst */
     }
 
     .calendar-note {
-      font-size: 0.78rem;
-      color: var(--fj-light);
-      margin-top: 0.4rem;
+      margin-top: 0.5rem;
+      font-size: 0.8rem;
+      color: #9CA3AF;
+    }
+
+    /* Mobil */
+    @media (max-width: 640px) {
+      .section-calendar {
+        border-radius: 1rem;
+      }
+      .calendar-intro {
+        align-items: flex-start;
+      }
+      .calendar-load-btn {
+        width: 100%;
+        justify-content: center;
+      }
+      .calendar-frame-wrap {
+        max-height: 580px;
+      }
     }
 
     /* Why section */
@@ -518,30 +531,36 @@
   </style>
 </head>
 <body>
-  <div class="page">
-    <header>
-      <div class="logo-wrap">
-        <!-- Bytt src til korrekt logo-bilde (apen med nisselue) -->
-        <img src="fjolsen-santa-logo.png" alt="FjOlsenbanden" />
-        <div>
-          <div class="logo-text">FjOlsenbanden</div>
-          <div class="tagline lang-no">Norges mest inkluderende gaming-community</div>
-          <div class="tagline lang-en">Norway’s most inclusive gaming community</div>
+  <header class="top-nav">
+    <div class="container nav-inner">
+      <div class="logo">
+        <img src="https://setaei.com/Fjolsen/Liggende-M%E2%94%9C%E2%95%95rk.png" alt="FjOlsenbanden logo" />
+      </div>
+      <nav class="nav-links">
+        <a href="#top">Topp</a>
+        <a href="#video">Video</a>
+        <a href="#calendar">Kalender</a>
+        <a href="#why">Muligheter</a>
+        <a href="#about">Om</a>
+        <a href="#contact">Kontakt</a>
+      </nav>
+      <div class="nav-actions" style="gap: 0.75rem; align-items: center;">
+        <div class="lang-switch" aria-label="Språkvalg">
+          <button type="button" class="lang-btn active" data-lang-btn="no">
+            <span class="flag">🇳🇴</span>
+            NO
+          </button>
+          <button type="button" class="lang-btn" data-lang-btn="en">
+            <span class="flag">🇬🇧</span>
+            EN
+          </button>
         </div>
+        <a href="#contact" class="btn btn-primary small">Ta kontakt</a>
       </div>
+    </div>
+  </header>
 
-      <div class="lang-switch" aria-label="Språkvalg">
-        <button type="button" class="lang-btn active" data-lang-btn="no">
-          <span class="flag">🇳🇴</span>
-          NO
-        </button>
-        <button type="button" class="lang-btn" data-lang-btn="en">
-          <span class="flag">🇬🇧</span>
-          EN
-        </button>
-      </div>
-    </header>
-
+  <div class="page">
     <main>
       <!-- HERO -->
       <section class="hero alt" id="top">
@@ -651,78 +670,45 @@
       </section>
 
       <!-- KALENDER / EMBED -->
-      <section id="calendar">
+      <section id="calendar" class="section-calendar">
         <div class="section-header">
           <div>
             <div class="section-kicker lang-no">Demo</div>
             <div class="section-kicker lang-en">Demo</div>
-            <h2 class="section-title lang-no">Test julekalenderen direkte på siden</h2>
-            <h2 class="section-title lang-en">Try the calendar right here</h2>
+            <h2 class="section-title lang-no">Åpne julekalenderen i egen fane</h2>
+            <h2 class="section-title lang-en">Open the Christmas calendar in a new tab</h2>
           </div>
         </div>
 
-        <div class="body-text">
-          <p class="lang-no">
-            Under ser dere en live versjon av FjOlsenbandens julekalender.
-            Klikk dere gjennom lukene for å oppleve hvordan deltakerne møter spørsmål,
-            aktiviteter og premier fra samarbeidspartnere.
-          </p>
-          <p class="lang-en">
-            Below you’ll find a live version of the FjOlsenbanden Christmas calendar.
-            Click through the windows to see how participants experience questions,
-            activities and prizes from our partners.
-          </p>
-        </div>
+        <div class="calendar-intro">
+          <div class="calendar-intro-text">
+            <p class="lang-no">
+              Klikk på knappen under for å åpne FjOlsenbandens julekalender i en ny fane.
+              Der kan dere se hvordan deltakerne møter spørsmål, aktiviteter og premier.
+            </p>
+            <p class="lang-en">
+              Click the button below to open the FjOlsenbanden Christmas calendar in a new tab.
+              You’ll see how participants experience questions, activities and prizes.
+            </p>
+          </div>
 
-        <div class="calendar-wrapper">
-          <!-- Adventcalendar-embed (originalkoden din) -->
-          <script>
-            var AdventCalendar = function (t) {
-              this.element = t.element,
-              this.width = t.width || "800px",
-              this.height =
-                window.screen.width <= 767
-                  ? t.mobileHeight || "2000px"
-                  : t.height || "600px",
-              this.webaddress = t.webaddress,
-              this.domain = t.domain,
-              this.createIframe = function () {
-                var t = document.createElement("iframe");
-                t.setAttribute("src", "https://" + this.webaddress + "." + this.domain + window.location.search),
-                t.setAttribute("width", this.width),
-                t.setAttribute("height", this.height),
-                t.setAttribute("border", "0"),
-                t.setAttribute("id", "adventcalendar"),
-                t.setAttribute("class", "adventcalendar"),
-                t.setAttribute("frameborder", "0"),
-                t.setAttribute("allow", "autoplay;fullscreen"),
-                document.getElementById("adventcalendar-container").appendChild(t)
-              },
-              this.createIframe()
-            };
-          </script>
-
-          <div id="adventcalendar-container"></div>
-
-          <script>
-            (function () {
-              "use strict";
-              new AdventCalendar({
-                width: "100%",
-                height: "1000px",
-                mobileHeight: "2000px",
-                webaddress: "fjolsenbanden",
-                domain: "julekalender.no"
-              });
-            })();
-          </script>
+          <a
+            href="https://fjolsenbanden.julekalender.no"
+            class="calendar-load-btn"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <span class="icon">📅</span>
+            <span class="lang-no">Åpne julekalender</span>
+            <span class="lang-en">Open the calendar</span>
+          </a>
         </div>
 
         <p class="calendar-note lang-no">
-          Tips: Dere kan også åpne kalenderen i fullskjerm i egen fane hvis dere ønsker å se alle detaljer.
+          Tips: Del lenken internt slik at flere på laget kan teste kalenderen samtidig.
         </p>
         <p class="calendar-note lang-en">
-          Tip: You can also open the calendar in a separate tab if you’d like to explore it in full screen.
+          Tip: Share the link internally so your team can test the calendar together.
         </p>
       </section>
 
@@ -938,11 +924,29 @@
         </div>
       </section>
     </main>
-
-    <footer>
-      © <span id="year"></span> FjOlsenbanden. Alle rettigheter reservert.
-    </footer>
   </div>
+
+  <footer class="site-footer">
+    <div class="container footer-main">
+      <nav class="footer-menu">
+        <ul class="footer-links">
+          <li><a href="#top">Til toppen</a></li>
+          <li><a href="#video">Se video</a></li>
+          <li><a href="#calendar">Kalender</a></li>
+          <li><a href="#why">Partner-muligheter</a></li>
+          <li><a href="#about">Om kalenderen</a></li>
+          <li><a href="#contact">Kontakt oss</a></li>
+          <li><a href="https://fjolsenbanden.setaei.com/">Forside</a></li>
+          <li><a href="https://fjolsenbanden.setaei.com/regler.html">Regler</a></li>
+        </ul>
+      </nav>
+    </div>
+
+    <div class="container footer-bottom">
+      <p>© <span id="year"></span> FjOlsenbanden v/Fair Share Invest AS – Org.nr. 926 963 023</p>
+      <a href="https://fjolsenbanden.setaei.com/personvernerklaering.html" class="footer-bottom-link">Personvernerklæring</a>
+    </div>
+  </footer>
 
   <script>
     // Språkbytte
