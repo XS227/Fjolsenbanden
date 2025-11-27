@@ -656,74 +656,43 @@
           <div>
             <div class="section-kicker lang-no">Demo</div>
             <div class="section-kicker lang-en">Demo</div>
-            <h2 class="section-title lang-no">Test julekalenderen direkte på siden</h2>
-            <h2 class="section-title lang-en">Try the calendar right here</h2>
+            <h2 class="section-title lang-no">Test julekalenderen i egen fane</h2>
+            <h2 class="section-title lang-en">Try the calendar in a separate tab</h2>
           </div>
         </div>
 
         <div class="body-text">
           <p class="lang-no">
-            Under ser dere en live versjon av FjOlsenbandens julekalender.
+            Bruk lenken under for å åpne testversjonen av FjOlsenbandens julekalender i ny fane.
             Klikk dere gjennom lukene for å oppleve hvordan deltakerne møter spørsmål,
             aktiviteter og premier fra samarbeidspartnere.
           </p>
           <p class="lang-en">
-            Below you’ll find a live version of the FjOlsenbanden Christmas calendar.
+            Use the link below to open the test version of the FjOlsenbanden Christmas calendar in a new tab.
             Click through the windows to see how participants experience questions,
             activities and prizes from our partners.
           </p>
         </div>
 
         <div class="calendar-wrapper">
-          <!-- Adventcalendar-embed (originalkoden din) -->
-          <script>
-            var AdventCalendar = function (t) {
-              this.element = t.element,
-              this.width = t.width || "800px",
-              this.height =
-                window.screen.width <= 767
-                  ? t.mobileHeight || "2000px"
-                  : t.height || "600px",
-              this.webaddress = t.webaddress,
-              this.domain = t.domain,
-              this.createIframe = function () {
-                var t = document.createElement("iframe");
-                t.setAttribute("src", "https://" + this.webaddress + "." + this.domain + window.location.search),
-                t.setAttribute("width", this.width),
-                t.setAttribute("height", this.height),
-                t.setAttribute("border", "0"),
-                t.setAttribute("id", "adventcalendar"),
-                t.setAttribute("class", "adventcalendar"),
-                t.setAttribute("frameborder", "0"),
-                t.setAttribute("allow", "autoplay;fullscreen"),
-                document.getElementById("adventcalendar-container").appendChild(t)
-              },
-              this.createIframe()
-            };
-          </script>
+          <p class="calendar-note lang-no">
+            Klikk på knappen under for å åpne julekalenderen i egen fane og teste hele opplevelsen.
+          </p>
+          <p class="calendar-note lang-en">
+            Use the button below to open the Christmas calendar in a separate tab and try the full experience.
+          </p>
 
-          <div id="adventcalendar-container"></div>
-
-          <script>
-            (function () {
-              "use strict";
-              new AdventCalendar({
-                width: "100%",
-                height: "1000px",
-                mobileHeight: "2000px",
-                webaddress: "fjolsenbanden",
-                domain: "julekalender.no"
-              });
-            })();
-          </script>
+          <a
+            class="btn btn-primary"
+            href="https://fjolsenbanden.julekalender.no"
+            target="_blank"
+            rel="noreferrer noopener"
+          >
+            <span class="icon">🌐</span>
+            <span class="lang-no">Åpne julekalenderen</span>
+            <span class="lang-en">Open the Christmas calendar</span>
+          </a>
         </div>
-
-        <p class="calendar-note lang-no">
-          Tips: Dere kan også åpne kalenderen i fullskjerm i egen fane hvis dere ønsker å se alle detaljer.
-        </p>
-        <p class="calendar-note lang-en">
-          Tip: You can also open the calendar in a separate tab if you’d like to explore it in full screen.
-        </p>
       </section>
 
       <!-- HVORFOR / PRIS -->
