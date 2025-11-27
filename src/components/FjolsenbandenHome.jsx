@@ -18,6 +18,7 @@ const navLinks = [
     { name: "Andre tilbud", href: "#tilbud" },
     { name: "Kontakt", href: "#kontakt" },
     { name: "Feedback", href: "#tilbakemeldinger" },
+    { name: "For sponsorer", href: `${SITE_BASE_URL}/partners/` },
     { name: "Personvernerklæring", href: `${SITE_BASE_URL}/personvernerklaering.html` },
     { name: "Regler", href: `${SITE_BASE_URL}/regler.html` },
 ];
