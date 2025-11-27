@@ -1084,31 +1084,6 @@ textarea:focus {
     font-size: 0.8rem;
   }
 
-  .footer-login-btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 42px;
-    height: 42px;
-    border-radius: 12px;
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    background: rgba(255, 255, 255, 0.04);
-    color: var(--text);
-    cursor: pointer;
-    transition: background 0.15s ease, transform 0.15s ease, border-color 0.15s ease;
-  }
-
-  .footer-login-btn:hover {
-    background: rgba(255, 255, 255, 0.08);
-    border-color: rgba(255, 255, 255, 0.18);
-    transform: translateY(-1px);
-  }
-
-  .footer-login-btn svg {
-    width: 18px;
-    height: 18px;
-  }
-
   .footer-bottom-link {
     color: var(--text);
     font-weight: 600;
@@ -1186,109 +1161,6 @@ body.is-admin .admin-toggle {
 
 .saved {
   box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.6);
-}
-
-.admin-login-btn {
-  position: fixed;
-  top: 96px;
-  right: 24px;
-  z-index: 10000;
-  width: 48px;
-  height: 48px;
-  border-radius: 14px;
-  border: none;
-  background: rgba(7, 17, 51, 0.9);
-  color: #fff;
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
-}
-
-.admin-login-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.45);
-}
-
-.admin-modal {
-  position: fixed;
-  inset: 0;
-  background: rgba(2, 3, 23, 0.78);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.2s ease;
-  z-index: 10000;
-  padding: 1.5rem;
-}
-
-.admin-modal.open {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-.admin-modal-content {
-  background: #0a102b;
-  border-radius: 18px;
-  padding: 1.5rem;
-  width: min(420px, 100%);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
-  position: relative;
-}
-
-.admin-modal h3 {
-  margin: 0 0 0.25rem;
-}
-
-.admin-modal p {
-  margin: 0 0 1rem;
-  color: var(--muted);
-  font-size: 0.95rem;
-}
-
-.admin-modal label {
-  display: block;
-  font-weight: 600;
-  margin-bottom: 0.35rem;
-}
-
-.admin-modal input[type='password'] {
-  width: 100%;
-  padding: 0.75rem 0.85rem;
-  border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  background: #050b2b;
-  color: #fff;
-}
-
-.admin-modal-actions {
-  margin-top: 1rem;
-  display: flex;
-  justify-content: flex-end;
-  gap: 0.75rem;
-}
-
-.admin-modal-close {
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  border: none;
-  background: transparent;
-  color: #fff;
-  font-size: 20px;
-  cursor: pointer;
-}
-
-.admin-error {
-  min-height: 20px;
-  color: #fda4af;
-  font-size: 0.9rem;
-  margin-top: 0.35rem;
 }
 
 .visual-editor {
@@ -2807,41 +2679,8 @@ body.is-admin .admin-toggle {
       <p class="last-updated" id="last-updated"></p>
       <p>© 2025 Fjolsenbanden v/Fair Share Invest AS – Org.nr. 926 963 023</p>
       <a href="https://fjolsenbanden.setaei.com/regler.html" class="footer-bottom-link">Les reglene våre</a>
-      <button class="footer-login-btn admin-login-trigger" type="button" aria-label="Admin login">
-        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <path
-            d="M12 2.5c-2.9 0-5.25 2.35-5.25 5.25V10H5a2 2 0 0 0-2 2v6c0 1.1.9 2 2 2h14a2 2 0 0 0 2-2v-6a2 2 0 0 0-2-2h-1.75V7.75C17.25 4.85 14.9 2.5 12 2.5Zm-3.75 5.25a3.75 3.75 0 0 1 7.5 0V10h-7.5Z"
-            fill="currentColor"
-          />
-        </svg>
-      </button>
     </div>
   </footer>
-  <button class="admin-login-btn admin-login-trigger" id="admin-login-btn" aria-label="Admin login">
-    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      <path
-        d="M12 2.5c-2.9 0-5.25 2.35-5.25 5.25V10H5a2 2 0 0 0-2 2v6c0 1.1.9 2 2 2h14a2 2 0 0 0 2-2v-6a2 2 0 0 0-2-2h-1.75V7.75C17.25 4.85 14.9 2.5 12 2.5Zm-3.75 5.25a3.75 3.75 0 0 1 7.5 0V10h-7.5Z"
-        fill="currentColor"
-      />
-    </svg>
-  </button>
-
-  <div class="admin-modal" id="admin-modal" aria-hidden="true" role="dialog" aria-modal="true">
-    <div class="admin-modal-content">
-      <button class="admin-modal-close" id="admin-modal-close" aria-label="Lukk innlogging">×</button>
-      <h3>Admin-innlogging</h3>
-      <p>Oppgi tilgangskoden for å åpne den visuelle editoren (kode: 1234).</p>
-      <form id="admin-login-form">
-        <label for="admin-code">Tilgangskode</label>
-        <input type="password" id="admin-code" name="admin-code" autocomplete="off" required />
-        <div class="admin-error" id="admin-error"></div>
-        <div class="admin-modal-actions">
-          <button type="button" class="btn btn-ghost small" id="admin-cancel">Avbryt</button>
-          <button type="submit" class="btn btn-primary small">Logg inn</button>
-        </div>
-      </form>
-    </div>
-  </div>
 
   <div class="visual-editor" id="visual-editor" aria-hidden="true">
     <div class="visual-editor-header">
@@ -3002,13 +2841,6 @@ body.is-admin .admin-toggle {
     }
 
     function initAdminTools() {
-      const loginButtons = document.querySelectorAll('.admin-login-trigger');
-      const modal = document.getElementById('admin-modal');
-      const modalClose = document.getElementById('admin-modal-close');
-      const modalCancel = document.getElementById('admin-cancel');
-      const loginForm = document.getElementById('admin-login-form');
-      const codeInput = document.getElementById('admin-code');
-      const errorEl = document.getElementById('admin-error');
       const editor = document.getElementById('visual-editor');
       const editorClose = document.getElementById('visual-editor-close');
       const panelClose = document.getElementById('close-visual-editor');
@@ -3031,29 +2863,6 @@ body.is-admin .admin-toggle {
       }
 
       initLayoutEditor();
-
-      loginButtons.forEach((btn) => btn.addEventListener('click', openModal));
-      modalClose?.addEventListener('click', closeModal);
-      modalCancel?.addEventListener('click', closeModal);
-      modal?.addEventListener('click', (evt) => {
-        if (evt.target === modal) closeModal();
-      });
-
-      loginForm?.addEventListener('submit', (evt) => {
-        evt.preventDefault();
-        if ((codeInput?.value || '').trim() === ADMIN_CODE) {
-          localStorage.setItem(AUTH_KEY, 'true');
-          if (errorEl) errorEl.textContent = '';
-          closeModal();
-          document.body.classList.add('is-admin');
-          window.dispatchEvent(new Event('fb:admin-authorized'));
-          enableVisualEditor();
-          openEditor();
-          if (codeInput) codeInput.value = '';
-        } else {
-          if (errorEl) errorEl.textContent = 'Feil kode. Prøv igjen.';
-        }
-      });
 
       editorClose?.addEventListener('click', hideEditorUI);
       panelClose?.addEventListener('click', hideEditorUI);
@@ -3078,15 +2887,6 @@ body.is-admin .admin-toggle {
         saveConfig(cfg);
         applyAdminConfig(cfg);
       });
-
-      function openModal() {
-        modal?.classList.add('open');
-        setTimeout(() => codeInput?.focus(), 50);
-      }
-
-      function closeModal() {
-        modal?.classList.remove('open');
-      }
 
       function openEditor() {
         editor?.classList.add('open');
@@ -3435,7 +3235,6 @@ body.is-admin .admin-toggle {
 
     window.toggleEditMode = () => {
       if (!isAuthorized()) {
-        document.getElementById('admin-login-btn')?.click();
         return;
       }
       const editOn = document.body.classList.toggle('edit-mode');
@@ -3448,7 +3247,6 @@ body.is-admin .admin-toggle {
     window.saveSection = (sectionId) => {
       if (!sectionId) return;
       if (!isAuthorized()) {
-        document.getElementById('admin-login-btn')?.click();
         return;
       }
 

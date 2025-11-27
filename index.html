@@ -1705,83 +1705,11 @@ body.is-admin .fb-block-edit-btn:hover {
     <div class="container footer-bottom">
       <p>© 2025 Fjolsenbanden v/Fair Share Invest AS – Org.nr. 926 963 023</p>
       <a href="https://fjolsenbanden.setaei.com/regler.html" class="footer-bottom-link">Les reglene våre</a>
-      <button class="footer-login-btn admin-login-trigger" type="button" aria-label="Admin">
-        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <path
-            d="M12 2.5c-2.9 0-5.25 2.35-5.25 5.25V10H5a2 2 0 0 0-2 2v6c0 1.1.9 2 2 2h14a2 2 0 0 0 2-2v-6a2 2 0 0 0-2-2h-1.75V7.75C17.25 4.85 14.9 2.5 12 2.5Zm-3.75 5.25a3.75 3.75 0 0 1 7.5 0V10h-7.5Z"
-            fill="currentColor"
-          />
-        </svg>
-        <span>Admin</span>
-      </button>
     </div>
   </footer>
-  <div class="admin-modal" id="admin-modal" aria-hidden="true" role="dialog" aria-modal="true">
-    <div class="admin-modal-content">
-      <button class="admin-modal-close" id="admin-modal-close" aria-label="Lukk innlogging">×</button>
-      <h3>Admin-innlogging</h3>
-      <p>Oppgi tilgangskoden for å logge inn og åpne admin-panelet.</p>
-      <form id="admin-login-form">
-        <label for="admin-code">Tilgangskode</label>
-        <input type="password" id="admin-code" name="admin-code" autocomplete="off" required />
-        <div class="admin-error" id="admin-error"></div>
-        <div class="admin-modal-actions">
-          <button type="button" class="btn btn-ghost small" id="admin-cancel">Avbryt</button>
-          <button type="submit" class="btn btn-primary small">Logg inn</button>
-        </div>
-      </form>
-    </div>
-  </div>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      const ADMIN_CODE = '1234';
-      const AUTH_KEY = 'fjAdminAuthorized';
-
-      const modal = document.getElementById('admin-modal');
-      const modalClose = document.getElementById('admin-modal-close');
-      const modalCancel = document.getElementById('admin-cancel');
-      const loginForm = document.getElementById('admin-login-form');
-      const codeInput = document.getElementById('admin-code');
-      const errorEl = document.getElementById('admin-error');
-
-      const openModal = () => {
-        modal?.classList.add('open');
-        setTimeout(() => codeInput?.focus(), 50);
-      };
-
-      const closeModal = () => {
-        modal?.classList.remove('open');
-        if (errorEl) errorEl.textContent = '';
-        loginForm?.reset();
-      };
-
-      document.querySelectorAll('.admin-login-trigger').forEach((btn) =>
-        btn.addEventListener('click', openModal)
-      );
-
-      modalClose?.addEventListener('click', closeModal);
-      modalCancel?.addEventListener('click', closeModal);
-      modal?.addEventListener('click', (evt) => {
-        if (evt.target === modal) closeModal();
-      });
-
-      loginForm?.addEventListener('submit', (evt) => {
-        evt.preventDefault();
-        const code = (codeInput?.value || '').trim();
-        if (code === ADMIN_CODE) {
-          localStorage.setItem(AUTH_KEY, 'true');
-          document.body.classList.add('is-admin');
-          closeModal();
-          window.location.href = '/admin.html';
-        } else if (errorEl) {
-          errorEl.textContent = 'Feil kode. Prøv igjen.';
-        }
-      });
-    });
-  </script>
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    if (!document.body.classList.contains('is-admin')) return;
+      if (!document.body.classList.contains('is-admin')) return;
 
     const editor = document.getElementById('visual-editor');
     const sectionsContainer = document.querySelector('[data-sections-container]');

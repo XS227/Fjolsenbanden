@@ -944,32 +944,6 @@ textarea:focus {
   font-size: 0.8rem;
 }
 
-.footer-login-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 42px;
-  height: 42px;
-  border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  background: rgba(255, 255, 255, 0.04);
-  color: var(--text);
-  cursor: pointer;
-  transition: background 0.15s ease, transform 0.15s ease, border-color 0.15s ease;
-}
-
-.footer-login-btn:hover,
-.footer-login-btn:focus-visible {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(255, 255, 255, 0.18);
-  transform: translateY(-1px);
-}
-
-.footer-login-btn svg {
-  width: 18px;
-  height: 18px;
-}
-
 .footer-bottom-link {
   color: var(--text);
   font-weight: 600;
