@@ -710,6 +710,60 @@
         <p class="calendar-note lang-en">
           Tip: Share the link internally so your team can test the calendar together.
         </p>
+
+        <script>
+          (function () {
+            const btn = document.getElementById("load-calendar-btn");
+            const frameWrap = document.getElementById("calendar-frame-wrap");
+            let calendarLoaded = false;
+
+            function loadCalendar() {
+              if (calendarLoaded) return;
+              calendarLoaded = true;
+
+              // AdventCalendar-funksjonen (samme som du fikk, men med lavere høyde)
+              var AdventCalendar = function (t) {
+                this.element = t.element;
+                this.width = t.width || "100%";
+                this.height =
+                  window.screen.width <= 767
+                    ? (t.mobileHeight || "900px")   // tidligere 2000px
+                    : (t.height || "650px");        // tidligere 1000px
+                this.webaddress = t.webaddress;
+                this.domain = t.domain;
+                this.createIframe = function () {
+                  var iframe = document.createElement("iframe");
+                  iframe.setAttribute("src", "https://" + this.webaddress + "." + this.domain + window.location.search);
+                  iframe.setAttribute("width", this.width);
+                  iframe.setAttribute("height", this.height);
+                  iframe.setAttribute("border", "0");
+                  iframe.setAttribute("id", "adventcalendar");
+                  iframe.setAttribute("class", "adventcalendar");
+                  iframe.setAttribute("frameborder", "0");
+                  iframe.setAttribute("allow", "autoplay;fullscreen");
+                  document.getElementById("adventcalendar-container").appendChild(iframe);
+                };
+                this.createIframe();
+              };
+
+              // Tom container inni wrapperen
+              frameWrap.innerHTML = '<div id="adventcalendar-container"></div>';
+
+              // Start kalenderen
+              new AdventCalendar({
+                width: "100%",
+                height: "650px",
+                mobileHeight: "900px",
+                webaddress: "fjolsenbanden",
+                domain: "julekalender.no"
+              });
+            }
+
+            if (btn) {
+              btn.addEventListener("click", loadCalendar);
+            }
+          })();
+        </script>
       </section>
 
       <!-- HVORFOR / PRIS -->
