@@ -22,6 +22,7 @@ export default defineConfig({
         admin: path.resolve(__dirname, "admin.html"),
         portal: path.resolve(__dirname, "portal.html"),
         updates: path.resolve(__dirname, "updates.html"),
+        sponsor: path.resolve(__dirname, "sponsor-julekalender.html"),
       },
     },
   },
