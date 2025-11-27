@@ -5,6 +5,9 @@
   <title>FjOlsenbanden – Adminpanel</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
+    /* --------------------------------------------------
+     *  FARGER & VARIABLER
+     * -------------------------------------------------- */
     :root {
       --bg: #050b2b;
       --bg-alt: #071133;
@@ -40,7 +43,9 @@
       text-decoration: none;
     }
 
-    /* Top bar */
+    /* --------------------------------------------------
+     *  TOPP & LAYOUT
+     * -------------------------------------------------- */
 
     .top-bar {
       position: sticky;
@@ -140,7 +145,9 @@
       border: 1px solid rgba(255, 255, 255, 0.06);
     }
 
-    /* Admin side-nav */
+    /* --------------------------------------------------
+     *  SIDE-NAV
+     * -------------------------------------------------- */
 
     .admin-nav {
       position: sticky;
@@ -203,7 +210,15 @@
       }
     }
 
-    /* Main column */
+    .admin-nav-section {
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding-top: 0.35rem;
+      margin-top: 0.35rem;
+    }
+
+    /* --------------------------------------------------
+     *  HOVEDINNHOLD
+     * -------------------------------------------------- */
 
     .main-column {
       display: flex;
@@ -253,10 +268,77 @@
       color: #ffc4e2;
     }
 
-    .section-list {
+    .section-list,
+    .settings-stack {
       display: flex;
       flex-direction: column;
       gap: 1rem;
+    }
+
+    /* --------------------------------------------------
+     *  SEKSJONS-SORTERING
+     * -------------------------------------------------- */
+
+    .section-sorter {
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 18px;
+      padding: 1rem;
+      background: rgba(7, 17, 48, 0.8);
+    }
+
+    .section-sorter-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .section-sorter-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .section-sorter-item {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.7rem 0.9rem;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      cursor: grab;
+    }
+
+    .section-sorter-item.dragging {
+      opacity: 0.6;
+      border-style: dashed;
+    }
+
+    .sorter-handle {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 30px;
+      height: 30px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    .sorter-name {
+      font-weight: 600;
+    }
+
+    .sorter-tag {
+      font-size: 0.78rem;
+      color: var(--muted);
     }
 
     .section-card {
@@ -707,6 +789,118 @@
     .vipps-status-message.status--error {
       color: #ff7a7a;
     }
+
+    /* --------------------------------------------------
+     *  ONBOARDING OVERLAY
+     * -------------------------------------------------- */
+    .onboarding-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(5, 11, 43, 0.92);
+      backdrop-filter: blur(18px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      z-index: 30;
+    }
+
+    .onboarding-overlay.visible {
+      display: flex;
+    }
+
+    .onboarding-box {
+      width: min(960px, 100%);
+      background: radial-gradient(circle at top left, #18234f, #0a1236);
+      border-radius: 24px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: var(--shadow-soft);
+      padding: clamp(1.25rem, 2vw, 2rem);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+      color: var(--text);
+    }
+
+    .onboarding-header {
+      grid-column: 1 / -1;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .onboarding-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 16px;
+      background: rgba(0, 166, 255, 0.15);
+      display: grid;
+      place-items: center;
+      font-size: 1.4rem;
+    }
+
+    .onboarding-title {
+      font-size: 1.35rem;
+      font-weight: 700;
+      margin: 0;
+    }
+
+    .onboarding-sub {
+      margin: 0.1rem 0 0;
+      color: var(--muted);
+      max-width: 640px;
+    }
+
+    .onboarding-card {
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 18px;
+      padding: 1rem;
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .onboarding-card h3 {
+      margin: 0 0 0.35rem;
+      font-size: 1rem;
+    }
+
+    .onboarding-card p {
+      margin: 0 0 0.75rem;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .onboarding-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.85rem;
+    }
+
+    .onboarding-actions {
+      grid-column: 1 / -1;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      margin-top: 0.5rem;
+    }
+
+    .pill-note {
+      padding: 0.4rem 0.7rem;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+
+    @media (max-width: 800px) {
+      .onboarding-box {
+        grid-template-columns: 1fr;
+      }
+
+      .onboarding-grid {
+        grid-template-columns: 1fr;
+      }
+    }
   </style>
 </head>
 <body>
@@ -729,6 +923,110 @@
           <button type="submit" class="btn btn-primary auth-btn">Logg inn</button>
         </div>
       </form>
+    </div>
+  </div>
+
+  <!-- First-time setup overlay -->
+  <div class="onboarding-overlay" id="onboarding-overlay">
+    <div class="onboarding-box">
+      <div class="onboarding-header">
+        <div class="onboarding-icon">✨</div>
+        <div>
+          <div class="onboarding-title">Velkommen! La oss sette opp adminpanelet.</div>
+          <div class="onboarding-sub">
+            Vi ber om kontaktinfo, Vipps og lenker. Du kan hoppe over – da bruker vi de forhåndslagrede FjOlsenbanden-verdiene.
+          </div>
+        </div>
+      </div>
+
+      <div class="onboarding-card">
+        <h3>Om deg</h3>
+        <p>Kontaktinfo for admins og oppdatering av access code.</p>
+        <div class="onboarding-grid">
+          <div class="field-group">
+            <label>Navn</label>
+            <input type="text" id="onb-admin-name" placeholder="Ditt navn" />
+          </div>
+          <div class="field-group">
+            <label>Telefon</label>
+            <input type="tel" id="onb-admin-phone" placeholder="Telefonnummer" />
+          </div>
+          <div class="field-group">
+            <label>E-post</label>
+            <input type="email" id="onb-admin-email" placeholder="E-postadresse" />
+          </div>
+          <div class="field-group">
+            <label>Ny access code (valgfritt)</label>
+            <input type="password" id="onb-access-code" placeholder="Sett nytt passord" />
+          </div>
+        </div>
+      </div>
+
+      <div class="onboarding-card">
+        <h3>Vipps</h3>
+        <p>Fyll inn dersom du vil aktivere Vipps/MobilePay nå.</p>
+        <div class="onboarding-grid">
+          <div class="field-group">
+            <label>Vipps MSN</label>
+            <input type="text" id="onb-vipps-msn" class="vipps-input" placeholder="Merchant serial number" />
+          </div>
+          <div class="field-group">
+            <label>Client ID</label>
+            <input type="text" id="onb-vipps-client-id" class="vipps-input" placeholder="Client ID" />
+          </div>
+          <div class="field-group">
+            <label>Client secret</label>
+            <input type="password" id="onb-vipps-client-secret" class="vipps-input" placeholder="Client secret" />
+          </div>
+          <div class="field-group">
+            <label>Subscription key</label>
+            <input type="password" id="onb-vipps-sub-key" class="vipps-input" placeholder="Primary subscription key" />
+          </div>
+          <label class="toggle" style="grid-column: 1 / -1; margin-top: 0.35rem;">
+            <input type="checkbox" id="onb-vipps-enabled" />
+            <span>Aktiver Vipps/MobilePay nå</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="onboarding-card">
+        <h3>Lenker</h3>
+        <p>Disse brukes på forsiden for å lede besøkende til dine kanaler.</p>
+        <div class="onboarding-grid">
+          <div class="field-group">
+            <label>YouTube-kanal</label>
+            <input type="text" id="onb-youtube" placeholder="https://youtube.com/..." />
+          </div>
+          <div class="field-group">
+            <label>Twitch</label>
+            <input type="text" id="onb-twitch" placeholder="https://twitch.tv/..." />
+          </div>
+          <div class="field-group">
+            <label>TikTok</label>
+            <input type="text" id="onb-tiktok" placeholder="https://www.tiktok.com/@..." />
+          </div>
+          <div class="field-group">
+            <label>Discord</label>
+            <input type="text" id="onb-discord" placeholder="https://discord.gg/..." />
+          </div>
+          <div class="field-group">
+            <label>YouTube</label>
+            <input type="text" id="onb-social-youtube" placeholder="https://youtube.com/@..." />
+          </div>
+          <div class="field-group">
+            <label>Instagram</label>
+            <input type="text" id="onb-instagram" placeholder="https://instagram.com/..." />
+          </div>
+        </div>
+      </div>
+
+      <div class="onboarding-actions">
+        <div class="pill-note">Du kan endre alt senere i innstillinger.</div>
+        <div style="display:flex; gap:0.6rem;">
+          <button type="button" class="btn" id="onb-skip">Hopp over</button>
+          <button type="button" class="btn btn-primary" id="onb-save">Lagre og fortsett</button>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -759,20 +1057,43 @@
       <!-- Side-nav -->
       <aside class="admin-nav">
         <div class="admin-nav-title">Seksjoner</div>
+        <button class="admin-nav-btn" data-target="section-sorter"><span>Seksjonsliste</span></button>
         <button class="admin-nav-btn" data-target="section-hero"><span>Hero / Velkommen</span></button>
+        <button class="admin-nav-btn" data-target="section-community"><span>Community / SoMe</span></button>
+        <button class="admin-nav-btn" data-target="section-julekalender"><span>Julekalender</span></button>
         <button class="admin-nav-btn" data-target="section-about"><span>Om FjOlsenbanden</span></button>
         <button class="admin-nav-btn" data-target="section-video"><span>Video / Hvem er FjOlsen</span></button>
         <button class="admin-nav-btn" data-target="section-feedback"><span>Tilbakemeldinger</span></button>
         <button class="admin-nav-btn" data-target="section-membership"><span>Medlemskap</span></button>
-        <button class="admin-nav-btn" data-target="section-community"><span>Community / SoMe</span></button>
         <button class="admin-nav-btn" data-target="section-partners"><span>Partnere</span></button>
         <button class="admin-nav-btn" data-target="section-services"><span>Andre tilbud</span></button>
         <button class="admin-nav-btn" data-target="section-contact"><span>Kontakt</span></button>
         <button class="admin-nav-btn" data-target="section-faq"><span>FAQ</span></button>
+
+        <div class="admin-nav-section">
+          <div class="admin-nav-title">Innstillinger</div>
+          <button class="admin-nav-btn" data-target="settings-access"><span>Access code</span></button>
+          <button class="admin-nav-btn" data-target="settings-branding"><span>Logo & video</span></button>
+          <button class="admin-nav-btn" data-target="settings-social"><span>Sosiale lenker</span></button>
+          <button class="admin-nav-btn" data-target="admin-vipps-module"><span>Vipps / MobilePay</span></button>
+        </div>
       </aside>
 
       <!-- Main content -->
       <div class="main-column">
+        <section class="card" id="section-sorter">
+          <div class="section-sorter">
+            <div class="section-sorter-header">
+              <div>
+                <div class="section-label">Seksjonsliste</div>
+                <div class="section-id">Dra for å endre rekkefølge. Slå på/av for å vise på forsiden.</div>
+              </div>
+              <span class="section-tag">Synk med forsiden</span>
+            </div>
+            <ol class="section-sorter-list" id="section-order-list"></ol>
+          </div>
+        </section>
+
         <section class="card">
           <div class="stats-grid">
             <div class="stat-card">
@@ -806,7 +1127,7 @@
         </section>
 
         <section class="info-stack">
-          <div class="card">
+          <div class="card" id="settings-branding">
             <div class="info-card-title">Globale innstillinger</div>
             <div class="global-group">
               <div class="global-row">
@@ -825,7 +1146,7 @@
             </div>
           </div>
 
-          <div class="card">
+          <div class="card" id="settings-social">
             <div class="info-card-title">Sosiale lenker</div>
             <div class="global-group">
               <div class="global-row">
@@ -851,6 +1172,30 @@
               <span class="global-help">
                 Disse lenkene brukes både i community-seksjonen og andre steder der du linker til SoMe-kanalene.
               </span>
+            </div>
+          </div>
+
+          <div class="card info-card" id="settings-access">
+            <div class="info-card-title">Tilgang & din info</div>
+            <p>Oppdater koden som låser opp adminpanelet, og legg inn kontaktinfo.</p>
+            <div class="global-group">
+              <div class="global-row">
+                <span class="global-label">Access code</span>
+                <input class="global-input" id="access-code" type="password" placeholder="F.eks. 123456" />
+                <span class="global-help">Koden må tastes inn når man åpner adminpanelet.</span>
+              </div>
+              <div class="global-row">
+                <span class="global-label">Navn</span>
+                <input class="global-input" id="admin-name" type="text" placeholder="Ditt navn" />
+              </div>
+              <div class="global-row">
+                <span class="global-label">E-post</span>
+                <input class="global-input" id="admin-email" type="email" placeholder="din@epost.no" />
+              </div>
+              <div class="global-row">
+                <span class="global-label">Telefon</span>
+                <input class="global-input" id="admin-phone" type="tel" placeholder="+47 ..." />
+              </div>
             </div>
           </div>
 
@@ -900,24 +1245,22 @@
             <p>• oppdaterer innhold i hero, medlemskap, tilbakemeldinger, tjenester m.m.</p>
             <p>• bruker logo, video-URL og sosiale lenker du har satt.</p>
           </div>
-
-          <div class="card info-card">
-            <div class="info-card-title">Access pass</div>
-            <p>Access pass som brukes nå:</p>
-            <div class="info-key">123456789</div>
-            <p style="margin-top:0.4rem;">
-              Dette er kun frontend-sikring. For «ordentlig» sikkerhet må dette kontrolleres på server.
-            </p>
-          </div>
         </section>
       </div>
     </div>
   </main>
 
   <script>
-    const ACCESS_PASS = "123456789";
+    const DEFAULT_ACCESS_PASS = "123456789";
+    let ACCESS_PASS = DEFAULT_ACCESS_PASS;
 
     const DEFAULT_CONFIG = {
+      access: {
+        code: DEFAULT_ACCESS_PASS,
+        adminName: "",
+        adminEmail: "",
+        adminPhone: ""
+      },
       global: {
         logoUrl: "https://setaei.com/Fjolsen/Liggende-M%E2%94%9C%E2%95%95rk.png",
         youtubeUrl: "https://youtu.be/8EgRIkmvmtM?feature=shared",
@@ -950,6 +1293,24 @@
           heroImageCaption: "Minecraft-inspirert versjon av apen i FjOlsen-logoen.",
           title: "",
           subtitle: ""
+        },
+        community: {
+          enabled: true,
+          title: "FjOlsenbanden – et community i vekst!",
+          subtitle:
+            "FjOlsenbanden har allerede over 10 000 følgere på tvers av våre kanaler og over 2600 medlemmer i Discord! Følg oss for å få med deg alle våre nyheter, det kan være unike events på de forskjellige kanalene."
+        },
+        julekalender: {
+          enabled: true,
+          pillText: "ÅRETS JULEKALENDER",
+          title: "Vinn premier til verdi av over 10 000 kroner!",
+          subtitle:
+            "Meld deg på årets julekalender før 1. desember og få 10 lodd ekstra i den store giveaway 25. desember!",
+          button: {
+            label: "Meld deg på julekalenderen",
+            href: "https://fjolsenbanden.julekalender.no/"
+          },
+          imageUrl: "https://setaei.com/Fjolsen/julekal.png"
         },
         about: {
           enabled: true,
@@ -1104,16 +1465,34 @@
           title: "Ofte stilte spørsmål",
           subtitle: ""
         }
-      }
+      },
+      sectionsOrder: [
+        "hero",
+        "community",
+        "julekalender",
+        "about",
+        "video",
+        "feedback",
+        "membership",
+        "partners",
+        "services",
+        "contact",
+        "faq"
+      ]
     };
+
+    let WORKING_CONFIG = null;
+    let HAS_EXISTING_CONFIG = false;
+    const ONBOARDING_FLAG = "fjAdminOnboardingComplete";
 
     const SECTION_META = [
       { id: "hero",       label: "Hero / Velkommen",        tag: "Øverst på siden" },
+      { id: "community",  label: "Community / SoMe",        tag: "Sosiale medier" },
+      { id: "julekalender", label: "Julekalender",          tag: "Kampanje" },
       { id: "about",      label: "Om FjOlsenbanden",        tag: "Presentasjon" },
       { id: "video",      label: "Video / Hvem er FjOlsen", tag: "YouTube / intro" },
       { id: "feedback",   label: "Tilbakemeldinger",        tag: "Sitater fra medlemmer" },
       { id: "membership", label: "Medlemskap",              tag: "Bli medlem / CTA" },
-      { id: "community",  label: "Community / SoMe",        tag: "Sosiale medier" },
       { id: "partners",   label: "Samarbeidspartnere",      tag: "Logoer / partnere" },
       { id: "services",   label: "Andre tjenester",         tag: "Foredrag / events" },
       { id: "contact",    label: "Kontakt",                 tag: "Kontaktskjema" },
@@ -1124,12 +1503,25 @@
       return JSON.parse(JSON.stringify(obj));
     }
 
+    function normalizeSectionOrder(cfg) {
+      const knownIds = SECTION_META.map((s) => s.id);
+      const incoming = Array.isArray(cfg.sectionsOrder) ? cfg.sectionsOrder.filter((id) => knownIds.includes(id)) : [];
+      const missing = knownIds.filter((id) => !incoming.includes(id));
+      return [...incoming, ...missing];
+    }
+
     function loadConfig() {
       try {
         const raw = localStorage.getItem("fjAdminConfig");
+        HAS_EXISTING_CONFIG = Boolean(raw);
         if (!raw) return deepClone(DEFAULT_CONFIG);
         const parsed = JSON.parse(raw);
         const cfg = deepClone(DEFAULT_CONFIG);
+
+        if (parsed.access) {
+          cfg.access = { ...cfg.access, ...parsed.access };
+          ACCESS_PASS = cfg.access.code || DEFAULT_ACCESS_PASS;
+        }
 
         if (parsed.global) {
           cfg.global = {
@@ -1148,6 +1540,8 @@
             cfg.sections[id] = { ...cfg.sections[id], ...parsed.sections[id] };
           });
         }
+
+        cfg.sectionsOrder = normalizeSectionOrder(parsed);
 
         return cfg;
       } catch (e) {
@@ -1194,6 +1588,49 @@
         vippsStatus.textContent = "";
         vippsStatus.classList.remove("status--ok", "status--error");
       }
+
+      const access = cfg.access || {};
+      document.getElementById("access-code").value = access.code || DEFAULT_ACCESS_PASS;
+      document.getElementById("admin-name").value = access.adminName || "";
+      document.getElementById("admin-email").value = access.adminEmail || "";
+      document.getElementById("admin-phone").value = access.adminPhone || "";
+    }
+
+    function renderOnboardingForm(cfg) {
+      const g = cfg.global || {};
+      const socials = g.socials || {};
+      const access = cfg.access || {};
+      const vipps = g.vipps || {};
+
+      document.getElementById("onb-admin-name").value = access.adminName || "";
+      document.getElementById("onb-admin-email").value = access.adminEmail || "";
+      document.getElementById("onb-admin-phone").value = access.adminPhone || "";
+      document.getElementById("onb-access-code").value = "";
+
+      document.getElementById("onb-vipps-msn").value = vipps.msn || "";
+      document.getElementById("onb-vipps-client-id").value = vipps.clientId || "";
+      document.getElementById("onb-vipps-client-secret").value = vipps.clientSecret || "";
+      document.getElementById("onb-vipps-sub-key").value = vipps.subscriptionKey || "";
+      document.getElementById("onb-vipps-enabled").checked = Boolean(vipps.enabled);
+
+      document.getElementById("onb-youtube").value = g.youtubeUrl || "";
+      document.getElementById("onb-twitch").value = socials.twitch || "";
+      document.getElementById("onb-tiktok").value = socials.tiktok || "";
+      document.getElementById("onb-discord").value = socials.discord || "";
+      document.getElementById("onb-social-youtube").value = socials.youtube || "";
+      document.getElementById("onb-instagram").value = socials.instagram || "";
+    }
+
+    function getOrderedMeta(cfg) {
+      const orderIds = (cfg.sectionsOrder && cfg.sectionsOrder.length ? cfg.sectionsOrder : SECTION_META.map((s) => s.id)).filter(
+        (id) => SECTION_META.some((meta) => meta.id === id)
+      );
+      const metaMap = new Map(SECTION_META.map((m) => [m.id, m]));
+      const ordered = orderIds.map((id) => metaMap.get(id)).filter(Boolean);
+      SECTION_META.forEach((meta) => {
+        if (!orderIds.includes(meta.id)) ordered.push(meta);
+      });
+      return ordered;
     }
 
     function renderSectionsForm(cfg) {
@@ -1202,8 +1639,10 @@
 
       renderStats(cfg);
 
-      SECTION_META.forEach((meta) => {
-        const sCfg = cfg.sections[meta.id];
+      const sectionMeta = getOrderedMeta(cfg);
+
+      sectionMeta.forEach((meta) => {
+        const sCfg = cfg.sections[meta.id] || { enabled: true, title: meta.label, subtitle: "" };
         const card = document.createElement("div");
         card.className = "section-card";
         card.dataset.sectionId = meta.id;
@@ -1265,6 +1704,34 @@
             <div class="field-group">
               <label>Bildetekst (tekst under hero-bildet)</label>
               <textarea class="hero-image-caption-input">${sCfg.heroImageCaption || ""}</textarea>
+            </div>
+          `;
+        } else if (meta.id === "julekalender") {
+          card.innerHTML = `
+            ${headerHtml}
+            <div class="field-group">
+              <label>Pill / label</label>
+              <input type="text" class="jule-pill-input" value="${sCfg.pillText || ""}" />
+            </div>
+            <div class="field-group">
+              <label>Tittel</label>
+              <input type="text" class="title-input" value="${sCfg.title || ""}" />
+            </div>
+            <div class="field-group">
+              <label>Ingress / brødtekst</label>
+              <textarea class="subtitle-input">${sCfg.subtitle || ""}</textarea>
+            </div>
+            <div class="field-group">
+              <label>CTA-tekst</label>
+              <input type="text" class="jule-btn-label" value="${(sCfg.button && sCfg.button.label) || ""}" />
+            </div>
+            <div class="field-group">
+              <label>CTA-lenke</label>
+              <input type="text" class="jule-btn-href" value="${(sCfg.button && sCfg.button.href) || ""}" />
+            </div>
+            <div class="field-group">
+              <label>Bilde-URL</label>
+              <input type="text" class="jule-image-url" value="${sCfg.imageUrl || ""}" />
             </div>
           `;
         } else if (meta.id === "feedback") {
@@ -1431,17 +1898,124 @@
           `;
         }
 
+        const toggleInput = card.querySelector(".toggle-input");
+        if (toggleInput) {
+          toggleInput.addEventListener("change", () => {
+            cfg.sections[meta.id].enabled = toggleInput.checked;
+            renderStats(cfg);
+            const sorterToggle = document.querySelector(
+              `#section-order-list .section-sorter-item[data-section-id="${meta.id}"] .order-toggle`
+            );
+            if (sorterToggle) sorterToggle.checked = toggleInput.checked;
+          });
+        }
+
         container.appendChild(card);
+      });
+    }
+
+    function renderSectionOrderList(cfg) {
+      const list = document.getElementById("section-order-list");
+      if (!list) return;
+
+      list.innerHTML = "";
+      const ordered = getOrderedMeta(cfg);
+
+      ordered.forEach((meta) => {
+        const li = document.createElement("li");
+        li.className = "section-sorter-item";
+        li.dataset.sectionId = meta.id;
+        li.draggable = true;
+
+        li.innerHTML = `
+          <span class="sorter-handle" aria-hidden="true">⋮⋮</span>
+          <div>
+            <div class="sorter-name">${meta.label}</div>
+            <div class="sorter-tag">#${meta.id}</div>
+          </div>
+          <label class="toggle">
+            <input type="checkbox" class="order-toggle" ${cfg.sections[meta.id]?.enabled !== false ? "checked" : ""} />
+            <span>På</span>
+          </label>
+        `;
+
+        const toggle = li.querySelector(".order-toggle");
+        toggle.addEventListener("change", () => {
+          if (cfg.sections[meta.id]) {
+            cfg.sections[meta.id].enabled = toggle.checked;
+          }
+          const cardToggle = document.querySelector(`#section-${meta.id} .toggle-input`);
+          if (cardToggle) {
+            cardToggle.checked = toggle.checked;
+          }
+          renderStats(cfg);
+        });
+
+        list.appendChild(li);
+      });
+
+      let draggedItem = null;
+
+      const updateOrder = () => {
+        const ids = Array.from(list.querySelectorAll(".section-sorter-item")).map((item) => item.dataset.sectionId);
+        cfg.sectionsOrder = ids;
+      };
+
+      list.addEventListener("dragstart", (e) => {
+        const item = e.target.closest(".section-sorter-item");
+        if (!item) return;
+        draggedItem = item;
+        item.classList.add("dragging");
+        e.dataTransfer.effectAllowed = "move";
+      });
+
+      list.addEventListener("dragover", (e) => {
+        e.preventDefault();
+        const item = e.target.closest(".section-sorter-item");
+        if (!item || item === draggedItem) return;
+
+        const rect = item.getBoundingClientRect();
+        const before = e.clientY < rect.top + rect.height / 2;
+        if (before) {
+          list.insertBefore(draggedItem, item);
+        } else {
+          list.insertBefore(draggedItem, item.nextSibling);
+        }
+      });
+
+      list.addEventListener("drop", (e) => {
+        e.preventDefault();
+        updateOrder();
+      });
+
+      list.addEventListener("dragend", () => {
+        if (draggedItem) draggedItem.classList.remove("dragging");
+        updateOrder();
+        draggedItem = null;
       });
     }
 
     function collectConfigFromForm() {
       const cfg = deepClone(DEFAULT_CONFIG);
 
+      const orderItems = document.querySelectorAll("#section-order-list .section-sorter-item");
+      const enabledFromSorter = {};
+      cfg.sectionsOrder = Array.from(orderItems)
+        .map((item) => {
+          const id = item.dataset.sectionId;
+          const toggle = item.querySelector(".order-toggle");
+          enabledFromSorter[id] = toggle ? toggle.checked : true;
+          return id;
+        })
+        .filter((id) => !!cfg.sections[id]);
+
       const cards = document.querySelectorAll(".section-card");
       cards.forEach((card) => {
         const id = card.dataset.sectionId;
-        const enabled = card.querySelector(".toggle-input").checked;
+        const enabled =
+          Object.prototype.hasOwnProperty.call(enabledFromSorter, id) && enabledFromSorter[id] !== undefined
+            ? enabledFromSorter[id]
+            : card.querySelector(".toggle-input").checked;
 
         if (id === "hero") {
           const pillText = card.querySelector(".hero-pill-input").value.trim();
@@ -1464,6 +2038,26 @@
             button2Href: btn2Href || cfg.sections.hero.button2Href,
             heroImageUrl: imgUrl || cfg.sections.hero.heroImageUrl,
             heroImageCaption: imgCaption || cfg.sections.hero.heroImageCaption
+          };
+        } else if (id === "julekalender") {
+          const pillText = card.querySelector(".jule-pill-input").value.trim();
+          const title = card.querySelector(".title-input").value.trim();
+          const subtitle = card.querySelector(".subtitle-input").value.trim();
+          const btnLabel = card.querySelector(".jule-btn-label").value.trim();
+          const btnHref = card.querySelector(".jule-btn-href").value.trim();
+          const imageUrl = card.querySelector(".jule-image-url").value.trim();
+
+          cfg.sections.julekalender = {
+            ...cfg.sections.julekalender,
+            enabled,
+            pillText: pillText || cfg.sections.julekalender.pillText,
+            title: title || cfg.sections.julekalender.title,
+            subtitle: subtitle || cfg.sections.julekalender.subtitle,
+            button: {
+              label: btnLabel || cfg.sections.julekalender.button.label,
+              href: btnHref || cfg.sections.julekalender.button.href
+            },
+            imageUrl: imageUrl || cfg.sections.julekalender.imageUrl
           };
         } else if (id === "feedback") {
           const titleInput = card.querySelector(".title-input");
@@ -1602,7 +2196,68 @@
         enabled: document.getElementById("vipps-enabled").checked
       };
 
+      cfg.access = {
+        ...cfg.access,
+        code: document.getElementById("access-code").value.trim() || DEFAULT_ACCESS_PASS,
+        adminName: document.getElementById("admin-name").value.trim(),
+        adminEmail: document.getElementById("admin-email").value.trim(),
+        adminPhone: document.getElementById("admin-phone").value.trim()
+      };
+
+      ACCESS_PASS = cfg.access.code;
+
       return cfg;
+    }
+
+    function applyOnboardingConfig() {
+      const cfg = deepClone(WORKING_CONFIG || DEFAULT_CONFIG);
+
+      cfg.access = {
+        ...cfg.access,
+        adminName: document.getElementById("onb-admin-name").value.trim() || cfg.access.adminName,
+        adminEmail: document.getElementById("onb-admin-email").value.trim() || cfg.access.adminEmail,
+        adminPhone: document.getElementById("onb-admin-phone").value.trim() || cfg.access.adminPhone,
+        code: document.getElementById("onb-access-code").value.trim() || cfg.access.code
+      };
+
+      cfg.global = {
+        ...cfg.global,
+        youtubeUrl: document.getElementById("onb-youtube").value.trim() || cfg.global.youtubeUrl,
+        socials: {
+          ...cfg.global.socials,
+          twitch: document.getElementById("onb-twitch").value.trim() || cfg.global.socials.twitch,
+          tiktok: document.getElementById("onb-tiktok").value.trim() || cfg.global.socials.tiktok,
+          discord: document.getElementById("onb-discord").value.trim() || cfg.global.socials.discord,
+          youtube: document.getElementById("onb-social-youtube").value.trim() || cfg.global.socials.youtube,
+          instagram: document.getElementById("onb-instagram").value.trim() || cfg.global.socials.instagram
+        },
+        vipps: {
+          ...cfg.global.vipps,
+          msn: document.getElementById("onb-vipps-msn").value.trim() || cfg.global.vipps.msn,
+          clientId: document.getElementById("onb-vipps-client-id").value.trim() || cfg.global.vipps.clientId,
+          clientSecret:
+            document.getElementById("onb-vipps-client-secret").value.trim() || cfg.global.vipps.clientSecret,
+          subscriptionKey: document.getElementById("onb-vipps-sub-key").value.trim() || cfg.global.vipps.subscriptionKey,
+          enabled: document.getElementById("onb-vipps-enabled").checked
+        }
+      };
+
+      WORKING_CONFIG = cfg;
+      ACCESS_PASS = cfg.access.code;
+
+      saveConfig(cfg);
+      renderGlobalForm(cfg);
+      renderSectionOrderList(cfg);
+      renderSectionsForm(cfg);
+      localStorage.setItem(ONBOARDING_FLAG, "yes");
+      document.getElementById("onboarding-overlay").classList.remove("visible");
+      setStatus("Førstegangsoppsettet er lagret!", "ok");
+    }
+
+    function skipOnboarding() {
+      localStorage.setItem(ONBOARDING_FLAG, "yes");
+      document.getElementById("onboarding-overlay").classList.remove("visible");
+      setStatus("Hoppet over førstegangsoppsett. Du kan endre innstillinger senere.");
     }
 
     function setStatus(msg, type = "") {
@@ -1611,6 +2266,25 @@
       el.classList.remove("status--ok", "status--error");
       if (type === "ok") el.classList.add("status--ok");
       if (type === "error") el.classList.add("status--error");
+    }
+
+    function maybeStartOnboarding() {
+      const overlay = document.getElementById("onboarding-overlay");
+      if (!overlay) return;
+      const done = localStorage.getItem(ONBOARDING_FLAG) === "yes";
+      if (done || HAS_EXISTING_CONFIG) return;
+      renderOnboardingForm(WORKING_CONFIG || DEFAULT_CONFIG);
+      overlay.classList.add("visible");
+    }
+
+    function setupOnboarding() {
+      const overlay = document.getElementById("onboarding-overlay");
+      if (!overlay) return;
+      const saveBtn = document.getElementById("onb-save");
+      const skipBtn = document.getElementById("onb-skip");
+
+      if (saveBtn) saveBtn.addEventListener("click", applyOnboardingConfig);
+      if (skipBtn) skipBtn.addEventListener("click", skipOnboarding);
     }
 
     function setupAuth() {
@@ -1628,6 +2302,7 @@
           app.classList.add("app--ready");
           input.value = "";
           error.textContent = "";
+          maybeStartOnboarding();
         } else {
           error.textContent = "Feil access pass. Prøv igjen.";
           input.focus();
@@ -1654,18 +2329,24 @@
     }
 
     document.addEventListener("DOMContentLoaded", () => {
-      setupAuth();
+      WORKING_CONFIG = loadConfig();
+      ACCESS_PASS = (WORKING_CONFIG.access && WORKING_CONFIG.access.code) || DEFAULT_ACCESS_PASS;
 
-      const cfg = loadConfig();
-      renderSectionsForm(cfg);
-      renderGlobalForm(cfg);
+      setupAuth();
+      setupOnboarding();
+
+      renderSectionsForm(WORKING_CONFIG);
+      renderSectionOrderList(WORKING_CONFIG);
+      renderGlobalForm(WORKING_CONFIG);
       setupNav();
 
       document.getElementById("save-btn").addEventListener("click", () => {
         try {
           const newCfg = collectConfigFromForm();
           saveConfig(newCfg);
+          WORKING_CONFIG = newCfg;
           renderStats(newCfg);
+          renderSectionOrderList(newCfg);
           setStatus("Lagret! Oppdater forsiden for å se endringene.", "ok");
         } catch (e) {
           console.error(e);
@@ -1673,19 +2354,21 @@
         }
       });
 
-      const vippsSaveBtn = document.getElementById("vipps-save-settings");
-      const vippsStatus = document.getElementById("vipps-status-message");
-      if (vippsSaveBtn) {
-        vippsSaveBtn.addEventListener("click", () => {
-          try {
-            const newCfg = collectConfigFromForm();
-            saveConfig(newCfg);
-            renderStats(newCfg);
-            setStatus("Lagret! Oppdater forsiden for å se endringene.", "ok");
-            if (vippsStatus) {
-              vippsStatus.textContent = "Vipps-innstillinger lagret.";
-              vippsStatus.classList.remove("status--error");
-              vippsStatus.classList.add("status--ok");
+        const vippsSaveBtn = document.getElementById("vipps-save-settings");
+        const vippsStatus = document.getElementById("vipps-status-message");
+        if (vippsSaveBtn) {
+          vippsSaveBtn.addEventListener("click", () => {
+            try {
+              const newCfg = collectConfigFromForm();
+              saveConfig(newCfg);
+              WORKING_CONFIG = newCfg;
+              renderStats(newCfg);
+              renderSectionOrderList(newCfg);
+              setStatus("Lagret! Oppdater forsiden for å se endringene.", "ok");
+              if (vippsStatus) {
+                vippsStatus.textContent = "Vipps-innstillinger lagret.";
+                vippsStatus.classList.remove("status--error");
+                vippsStatus.classList.add("status--ok");
             }
           } catch (e) {
             console.error(e);
@@ -1701,7 +2384,9 @@
       document.getElementById("reset-btn").addEventListener("click", () => {
         saveConfig(DEFAULT_CONFIG);
         const fresh = loadConfig();
+        WORKING_CONFIG = fresh;
         renderSectionsForm(fresh);
+        renderSectionOrderList(fresh);
         renderGlobalForm(fresh);
         setupNav();
         setStatus("Tilbakestilt til standardoppsett.", "ok");
