@@ -250,6 +250,20 @@
       gap: 0.7rem;
     }
 
+    .hero-image {
+      width: 100%;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-soft);
+      background: #000;
+    }
+
+    .hero-image img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
     .hero-card-title {
       display: inline-flex;
       align-items: center;
@@ -809,15 +823,8 @@
             </a>
           </div>
         </div>
-        <div class="card hero-card">
-          <div class="hero-card-title" data-i18n="hero-card-title">Kort fortalt</div>
-          <div class="hero-card-stat" data-i18n="hero-card-stat">1&nbsp;000–2&nbsp;000</div>
-          <p class="hero-card-body" data-i18n="hero-card-body">
-            Forventet antall spillere som åpner luker, svarer på spørsmål og ser merkevarene som er med.
-          </p>
-          <p class="hero-card-footer" data-i18n="hero-card-footer">
-            Perfekt for dere som vil nå barnefamilier og unge gamere på en trygg og leken måte – midt i førjulstida.
-          </p>
+        <div class="hero-image">
+          <img src="https://setaei.com/Fjolsen/Kalenderen.jpg" alt="FjOlsenbandens julekalender" />
         </div>
       </div>
     </section>
