@@ -148,6 +148,12 @@
       transform: translateY(-1px);
     }
 
+    .btn-secondary {
+      background: var(--accent);
+      color: #fff;
+      box-shadow: 0 0 18px rgba(255, 45, 164, 0.45);
+    }
+
     .btn-ghost {
       background: transparent;
       border: 1px solid var(--primary);
@@ -196,6 +202,43 @@
       display: flex;
       gap: 1rem;
       margin-top: 2rem;
+    }
+
+    .hero-card {
+      display: grid;
+      gap: 0.7rem;
+    }
+
+    .hero-card-title {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.35rem 0.9rem;
+      border-radius: var(--radius-pill);
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--muted);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      width: fit-content;
+    }
+
+    .hero-card-stat {
+      font-size: 2rem;
+      font-weight: 800;
+      letter-spacing: 0.03em;
+      color: #fff;
+    }
+
+    .hero-card-body {
+      color: var(--muted);
+      margin: 0;
+    }
+
+    .hero-card-footer {
+      color: #fff;
+      margin: 0;
+      font-weight: 600;
     }
 
     .card {
@@ -293,6 +336,12 @@
       margin-bottom: 1.5rem;
     }
 
+    .footer-menu {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+    }
+
     .footer-links {
       list-style: none;
       display: flex;
@@ -326,6 +375,15 @@
     .footer-bottom a {
       color: var(--primary);
       font-weight: 600;
+    }
+
+    .footer-bottom-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      color: var(--primary);
+      font-weight: 600;
+      text-decoration: none;
     }
 
     @media (max-width: 900px) {
@@ -368,23 +426,30 @@
         <div class="hero-text">
           <span class="pill">Promo</span>
           <h1>
-            FjOlsenbanden er<br />
-            <span class="highlight">Norges mest inkluderende gaming-community.</span>
+            Bli samarbeidspartner på<br />
+            <span class="highlight">FjOlsenbandens Julekalender 2025</span>
           </h1>
           <p class="lead">
-            Bli med på et trygt og familievennlig gaming-eventyr sammen med over 2600 medlemmer i Discord og
-            tusenvis av følgere i sosiale medier.
+            En digital julekalender med forventet <strong>1000–2000 aktive deltakere</strong> – der deres merkevare får
+            synlighet i et trygt og engasjert gamingmiljø.
+          </p>
+          <p class="lead">
+            Vi gjør det enkelt å bidra med premie eller gavekort – og gir dere mulighet til å kjøpe en egen
+            <strong>“luke”</strong> i kalenderen for maksimal effekt.
           </p>
           <div class="hero-actions">
-            <a href="#community" class="btn btn-primary">Følg oss</a>
-            <a href="#about" class="btn btn-ghost">Les mer</a>
+            <a href="index.html#video" class="btn btn-primary">Se presentasjonsvideo</a>
+            <a href="https://fjolsenbanden.julekalender.no" class="btn btn-ghost">Test julekalenderen</a>
           </div>
         </div>
-        <div class="card">
-          <h3>Hva skjer?</h3>
-          <p class="lead">
-            Ukentlige turneringer, kreative events og premier fra samarbeidspartnere – alt i et miljø uten bannskap og
-            mobbing.
+        <div class="card hero-card">
+          <div class="hero-card-title">Kort fortalt</div>
+          <div class="hero-card-stat">1&nbsp;000–2&nbsp;000</div>
+          <p class="hero-card-body">
+            Forventet antall spillere som åpner luker, svarer på spørsmål og ser merkevarene som er med.
+          </p>
+          <p class="hero-card-footer">
+            Perfekt for dere som vil nå barnefamilier og unge gamere på en trygg og leken måte – midt i førjulstida.
           </p>
         </div>
       </div>
