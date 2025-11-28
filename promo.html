@@ -303,6 +303,49 @@
       line-height: 1.5;
     }
 
+    /* Contact */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+      gap: 2.5rem;
+      align-items: center;
+    }
+
+    .contact-card {
+      background: var(--card);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      box-shadow: var(--shadow-soft);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .contact-card h2 {
+      margin-bottom: 1rem;
+      text-align: left;
+    }
+
+    .contact-card p {
+      color: var(--muted);
+      margin: 0 0 1rem;
+    }
+
+    .contact-card strong {
+      color: #fff;
+    }
+
+    .contact-image {
+      display: flex;
+      justify-content: center;
+    }
+
+    .contact-image img {
+      width: 100%;
+      max-width: 420px;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-soft);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
     /* Socials */
     .social-grid {
       display: grid;
@@ -443,7 +486,8 @@
     @media (max-width: 900px) {
       .hero-grid,
       .about-grid,
-      .video-grid {
+      .video-grid,
+      .contact-grid {
         grid-template-columns: 1fr;
       }
 
@@ -469,6 +513,7 @@
         <a href="#video" data-i18n="nav-video">Video</a>
         <a href="#community" data-i18n="nav-community">Sosiale medier</a>
         <a href="#about" data-i18n="nav-about">Om</a>
+        <a href="#contact" data-i18n="nav-contact">Kontakt</a>
       </nav>
       <div class="nav-actions">
         <button class="btn lang-toggle small" type="button" id="langToggle" aria-label="Change language">
@@ -656,6 +701,26 @@
         </div>
       </div>
     </section>
+
+    <section id="contact" class="section">
+      <div class="container contact-grid">
+        <div class="contact-card">
+          <h2 data-i18n="contact-title">Klar for å slå av en prat?</h2>
+          <p data-i18n="contact-body-1">
+            Gi gjerne en lyd hvis dette kan være aktuelt – vi tar gjerne en uforpliktende prat.
+          </p>
+          <p data-i18n="contact-body-2">Ønsker dere en fin dag videre!</p>
+          <p data-i18n="contact-signoff" data-i18n-type="html">
+            <strong>Vennlig hilsen</strong><br />
+            Tor Martin Olsen<br />
+            «FjOlsen»
+          </p>
+        </div>
+        <div class="contact-image">
+          <img src="https://setaei.com/Fjolsen/logojul.png" alt="FjOlsenbanden julevariant" />
+        </div>
+      </div>
+    </section>
   </main>
 
   <footer class="site-footer">
@@ -666,6 +731,7 @@
           <li><a href="#video" data-i18n="footer-video">Video</a></li>
           <li><a href="#community" data-i18n="footer-community">Sosiale medier</a></li>
           <li><a href="#about" data-i18n="footer-about">Om FjOlsenbanden</a></li>
+          <li><a href="#contact" data-i18n="footer-contact">Kontakt</a></li>
         </ul>
       </nav>
     </div>
@@ -685,7 +751,8 @@
         'nav-video': 'Video',
         'nav-community': 'Sosiale medier',
         'nav-about': 'Om',
-        'cta-join': 'Bli medlem',
+        'nav-contact': 'Kontakt',
+        'cta-join': 'Bli med',
         'hero-pill': 'Promo',
         'hero-title': 'Bli samarbeidspartner på<br /><span class="highlight">FjOlsenbandens Julekalender 2025</span>',
         'hero-lead-1':
@@ -739,15 +806,22 @@
         'footer-video': 'Video',
         'footer-community': 'Sosiale medier',
         'footer-about': 'Om FjOlsenbanden',
+        'footer-contact': 'Kontakt',
         'footer-copy': '© 2025 Fjolsenbanden v/Fair Share Invest AS – Org.nr. 926 963 023',
         'footer-rules': 'Les reglene våre',
+        'contact-title': 'Klar for å slå av en prat?',
+        'contact-body-1':
+          'Gi gjerne en lyd hvis dette kan være aktuelt – vi tar gjerne en uforpliktende prat.',
+        'contact-body-2': 'Ønsker dere en fin dag videre!',
+        'contact-signoff': '<strong>Vennlig hilsen</strong><br />Tor Martin Olsen<br />«FjOlsen»',
       },
       en: {
         'nav-hero': 'Top',
         'nav-video': 'Video',
         'nav-community': 'Social',
         'nav-about': 'About',
-        'cta-join': 'Become a member',
+        'nav-contact': 'Contact',
+        'cta-join': 'Join us',
         'hero-pill': 'Promo',
         'hero-title': 'Become a partner for<br /><span class="highlight">FjOlsenbanden’s Christmas Calendar 2025</span>',
         'hero-lead-1':
@@ -800,8 +874,14 @@
         'footer-video': 'Video',
         'footer-community': 'Social',
         'footer-about': 'About FjOlsenbanden',
+        'footer-contact': 'Contact',
         'footer-copy': '© 2025 Fjolsenbanden v/Fair Share Invest AS – Org.no. 926 963 023',
         'footer-rules': 'Read our rules',
+        'contact-title': 'Ready for a chat?',
+        'contact-body-1':
+          'Let us know if this sounds relevant – we’re happy to have a no-obligation conversation.',
+        'contact-body-2': 'Wishing you a great day!',
+        'contact-signoff': '<strong>Best regards</strong><br />Tor Martin Olsen<br />“FjOlsen”',
       },
     };
 
