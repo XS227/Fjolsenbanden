@@ -132,6 +132,18 @@
       transition: transform 0.12s ease, box-shadow 0.12s ease, filter 0.12s ease;
     }
 
+    .btn .icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .btn .icon svg {
+      width: 1.1em;
+      height: 1.1em;
+      fill: currentColor;
+    }
+
     .btn.lang-toggle {
       gap: 0.6rem;
       padding: 0.6rem 1.1rem;
@@ -363,66 +375,190 @@
       color: #fff;
     }
 
-    .contact-image {
-      display: flex;
-      justify-content: center;
+    .contact-form {
+      display: grid;
+      gap: 0.9rem;
     }
 
-    .contact-image img {
+    .contact-form label {
+      display: grid;
+      gap: 0.35rem;
+      color: #fff;
+      font-weight: 600;
+    }
+
+    .contact-form input,
+    .contact-form textarea {
       width: 100%;
-      max-width: 420px;
-      border-radius: var(--radius-lg);
-      box-shadow: var(--shadow-soft);
-      border: 1px solid rgba(255, 255, 255, 0.05);
+      padding: 0.85rem 1rem;
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.05);
+      color: #fff;
+      font-size: 1rem;
+      font-family: inherit;
+      outline: none;
+      transition: border-color 0.12s ease, box-shadow 0.12s ease;
+    }
+
+    .contact-form input:focus,
+    .contact-form textarea:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(0, 166, 255, 0.2);
+    }
+
+    .contact-form textarea {
+      min-height: 140px;
+      resize: vertical;
     }
 
     /* Socials */
+    #community {
+      background: radial-gradient(circle at 20% 15%, rgba(47, 85, 176, 0.14), transparent 38%),
+        radial-gradient(circle at 80% 10%, rgba(0, 166, 255, 0.16), transparent 40%),
+        radial-gradient(circle at 50% 90%, rgba(255, 45, 164, 0.12), transparent 40%),
+        radial-gradient(circle at center, #0c1335 0, #050b2b 60%, #020317 100%);
+    }
+
+    .community-panel {
+      background: linear-gradient(145deg, rgba(14, 26, 63, 0.9), rgba(7, 15, 40, 0.92));
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 28px 70px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+      border-radius: 30px;
+      padding: clamp(1.8rem, 2vw, 2.4rem) clamp(1.5rem, 2vw, 2.8rem);
+    }
+
+    .community-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.55rem 1.1rem;
+      border-radius: var(--radius-pill);
+      background: rgba(0, 166, 255, 0.12);
+      color: #cde6ff;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+    }
+
+    .community-header {
+      text-align: center;
+    }
+
+    .community-header h2 {
+      margin: 0.9rem 0 0.6rem;
+      font-size: clamp(2.1rem, 3.4vw, 2.9rem);
+    }
+
+    .community-header .subtitle {
+      max-width: 880px;
+      margin-bottom: 1.5rem;
+    }
+
     .social-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 1.5rem;
+      grid-auto-flow: column;
+      grid-auto-columns: minmax(190px, 1fr);
+      gap: 1.1rem;
+      overflow-x: auto;
+      padding: 0.35rem 0.35rem 0.8rem;
+      margin-top: 1.25rem;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(255, 255, 255, 0.25) transparent;
+    }
+
+    .social-grid::-webkit-scrollbar {
+      height: 8px;
+    }
+
+    .social-grid::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.25);
+      border-radius: 999px;
     }
 
     .social-card {
       position: relative;
-      padding: 1.5rem;
+      padding: 1.35rem 1.25rem 1.5rem;
       display: grid;
-      gap: 0.8rem;
+      grid-template-rows: auto auto 1fr;
+      gap: 0.65rem;
       place-items: center;
       text-align: center;
       color: var(--text);
       transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.08), transparent 35%),
+        linear-gradient(155deg, #111f4c 0%, #0a1333 100%);
+      box-shadow: 0 18px 50px rgba(0, 0, 0, 0.6), 0 0 18px rgba(0, 166, 255, 0.16);
+      min-height: 210px;
+      border-radius: 22px;
     }
 
     .social-card:hover {
       transform: translateY(-4px);
-      box-shadow: 0 18px 45px rgba(0, 0, 0, 0.55), 0 0 24px rgba(0, 166, 255, 0.15);
-      border-color: rgba(255, 255, 255, 0.16);
+      box-shadow: 0 24px 65px rgba(0, 0, 0, 0.7), 0 0 26px rgba(0, 166, 255, 0.24);
+      border-color: rgba(255, 255, 255, 0.2);
     }
 
     .social-follow {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      padding: 0.25rem 0.9rem;
+      padding: 0.45rem 1.2rem;
       border-radius: var(--radius-pill);
-      background: rgba(255, 255, 255, 0.08);
-      font-size: 0.85rem;
-      color: var(--muted);
+      background: linear-gradient(120deg, #1f8cfe, #51b0ff);
+      font-size: 0.9rem;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      color: #fff;
+      box-shadow: 0 10px 30px rgba(0, 166, 255, 0.35);
+      text-transform: uppercase;
+    }
+
+    .social-icon {
+      width: 78px;
+      height: 78px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 20px;
+      background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.05));
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 12px 30px rgba(0, 0, 0, 0.38);
     }
 
     .social-icon img {
-      width: 56px;
-      height: 56px;
+      width: 50px;
+      height: 50px;
+      display: block;
       object-fit: contain;
     }
 
     .social-label {
       font-size: 1.05rem;
-      font-weight: 700;
-      letter-spacing: 0.02em;
-      color: var(--text);
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      color: #f0f3ff;
+      text-transform: uppercase;
+    }
+
+    /* 2–kolonne layout på mobil / små tablets */
+    @media (max-width: 900px) {
+      .social-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        overflow-x: visible;
+      }
+
+      .social-card {
+        min-height: 200px;
+        padding: 1.3rem;
+      }
+    }
+
+    /* 1 kolonne på veldig små skjermer */
+    @media (max-width: 520px) {
+      .social-grid {
+        grid-template-columns: 1fr;
+      }
     }
 
     /* About */
@@ -529,6 +665,24 @@
         flex-direction: column;
         align-items: flex-start;
       }
+
+      /* --- NYTT: hero-knapper på mobil --- */
+      .hero-actions {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.75rem;
+        width: 100%;
+        max-width: 420px;
+      }
+
+      .hero-text {
+        /* så knappene ikke ligger helt i kanten */
+        padding-right: 0.25rem;
+      }
+
+      .hero-actions .btn {
+        width: 100%;
+      }
     }
   </style>
 </head>
@@ -538,18 +692,10 @@
       <div class="logo">
         <img src="https://setaei.com/Fjolsen/Liggende-M%E2%94%9C%E2%95%95rk.png" alt="FjOlsenbanden logo" />
       </div>
-      <nav class="nav-links">
-        <a href="#hero" data-i18n="nav-hero">Toppen</a>
-        <a href="#video" data-i18n="nav-video">Video</a>
-        <a href="#community" data-i18n="nav-community">Sosiale medier</a>
-        <a href="#about" data-i18n="nav-about">Om</a>
-        <a href="#contact" data-i18n="nav-contact">Kontakt</a>
-      </nav>
       <div class="nav-actions">
         <button class="btn lang-toggle small" type="button" id="langToggle" aria-label="Change language">
           <span class="flag" aria-hidden="true">🇬🇧</span>
         </button>
-        <a href="#community" class="btn btn-primary small" data-i18n="cta-join">Bli med</a>
       </div>
     </div>
   </header>
@@ -572,13 +718,27 @@
             <strong>“luke”</strong> i kalenderen for maksimal effekt.
           </p>
           <div class="hero-actions">
-            <a href="#video" class="btn btn-primary" data-i18n="hero-cta-primary">Se presentasjonsvideo</a>
+            <a href="#video" class="btn btn-primary">
+              <span class="icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M8 5v14l11-7z" />
+                </svg>
+              </span>
+              <span data-i18n="hero-cta-primary">Se presentasjonsvideo</span>
+            </a>
             <a
               href="https://advent.make.as/nb/calendars/16678/preview?back_url=%2Fnb%2Fcalendars%2F16678&redirected=1&test_token=f71d15c832ff9a7b6a2c9d19b98afd706a12b50a"
               class="btn btn-ghost"
-              data-i18n="hero-cta-secondary"
-              >Test julekalenderen</a
             >
+              <span class="icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M7 2a1 1 0 0 0-1 1v1H5a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3h-1V3a1 1 0 1 0-2 0v1H9V3a1 1 0 0 0-1-1Zm13 6H4v8a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1Z"
+                  />
+                </svg>
+              </span>
+              <span data-i18n="hero-cta-secondary">Test julekalenderen</span>
+            </a>
           </div>
         </div>
         <div class="card hero-card">
@@ -590,6 +750,66 @@
           <p class="hero-card-footer" data-i18n="hero-card-footer">
             Perfekt for dere som vil nå barnefamilier og unge gamere på en trygg og leken måte – midt i førjulstida.
           </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="community" class="section">
+      <div class="container">
+        <div class="community-panel">
+          <div class="community-header">
+            <span class="community-eyebrow" data-i18n="nav-community">Sosiale medier</span>
+            <h2 data-i18n="social-title" data-i18n-type="html">
+              FjOlsenbanden – et community i <span class="highlight">vekst!</span>
+            </h2>
+            <p class="subtitle" data-i18n="social-subtitle">
+              FjOlsenbanden har allerede over 10 000 følgere på tvers av våre kanaler og over 2600 medlemmer i Discord!
+              Følg oss for å få med deg alle nyheter, det kan være unike events på de forskjellige kanalene.
+            </p>
+          </div>
+
+          <div class="social-grid" aria-label="Community kanaler">
+            <a class="card social-card" data-social="twitch" href="https://www.twitch.tv/FjOlsenFN" target="_blank">
+              <div class="social-icon">
+                <img src="img/social/twitch.svg" alt="Twitch" />
+              </div>
+              <span class="social-follow" data-i18n="social-follow">FØLG</span>
+              <span class="social-label">Twitch</span>
+            </a>
+            <a class="card social-card" data-social="tiktok" href="https://www.tiktok.com/@fjolsenbanden" target="_blank">
+              <div class="social-icon">
+                <img src="img/social/tiktok.svg" alt="TikTok" />
+              </div>
+              <span class="social-follow" data-i18n="social-follow">FØLG</span>
+              <span class="social-label">TikTok</span>
+            </a>
+            <a class="card social-card" data-social="discord" href="https://discord.gg/CbvBPHzg4D" target="_blank">
+              <div class="social-icon">
+                <img src="img/social/discord.svg" alt="Discord" />
+              </div>
+              <span class="social-follow" data-i18n="social-join">BLI MED</span>
+              <span class="social-label">Discord</span>
+            </a>
+            <a class="card social-card" data-social="youtube" href="https://youtube.com/@fjolsenbanden" target="_blank">
+              <div class="social-icon">
+                <img src="img/social/youtube.svg" alt="YouTube" />
+              </div>
+              <span class="social-follow" data-i18n="social-subscribe">ABONNER</span>
+              <span class="social-label">YouTube</span>
+            </a>
+            <a
+              class="card social-card"
+              data-social="instagram"
+              href="https://www.instagram.com/fjolsenbanden"
+              target="_blank"
+            >
+              <div class="social-icon">
+                <img src="img/social/instagram.svg" alt="Instagram" />
+              </div>
+              <span class="social-follow" data-i18n="social-follow">FØLG</span>
+              <span class="social-label">Instagram</span>
+            </a>
+          </div>
         </div>
       </div>
     </section>
@@ -612,16 +832,16 @@
           <p data-i18n="video-body-2">
             I tillegg tilbyr vi muligheten til å kjøpe en egen “luke” i kalenderen for kun 2500 kr eks. mva.
           </p>
-          <p data-i18n="video-body-3">Se fordelene dere får i en uke-luke nedenfor.</p>
+          <p data-i18n="video-body-3">Se fordelene dere får i en luke nedenfor.</p>
         </div>
       </div>
     </section>
 
     <section id="partner-benefits" class="section">
       <div class="container">
-        <h2 data-i18n="benefits-title">Dette får dere i en uke</h2>
+        <h2 data-i18n="benefits-title">Dette får dere i en luke</h2>
         <p class="subtitle" data-i18n="benefits-subtitle">
-          Vi lager en uke med aktiviteter som gir synlighet, trafikk og konvertering for merkevaren deres.
+          Vi lager en luke med aktiviteter som gir synlighet, trafikk og konvertering for merkevaren deres.
         </p>
 
         <div class="benefit-grid">
@@ -653,54 +873,6 @@
       </div>
     </section>
 
-    <section id="community" class="section">
-      <div class="container">
-        <h2 data-i18n="social-title">Følg oss i sosiale medier</h2>
-        <p class="subtitle" data-i18n="social-subtitle">
-          Vi bygger et positivt fellesskap på tvers av kanaler. Klikk på lenkene under for å bli med der du liker best
-          å henge.
-        </p>
-
-        <div class="social-grid">
-          <a class="card social-card" data-social="twitch" href="https://www.twitch.tv/FjOlsenFN" target="_blank">
-            <div class="social-icon">
-              <img src="img/social/twitch.svg" alt="Twitch" />
-            </div>
-            <span class="social-follow" data-i18n="social-follow">FØLG</span>
-            <span class="social-label">Twitch</span>
-          </a>
-          <a class="card social-card" data-social="tiktok" href="https://www.tiktok.com/@fjolsenbanden" target="_blank">
-            <div class="social-icon">
-              <img src="img/social/tiktok.svg" alt="TikTok" />
-            </div>
-            <span class="social-follow" data-i18n="social-follow">FØLG</span>
-            <span class="social-label">TikTok</span>
-          </a>
-          <a class="card social-card" data-social="discord" href="https://discord.gg/CbvBPHzg4D" target="_blank">
-            <div class="social-icon">
-              <img src="img/social/discord.svg" alt="Discord" />
-            </div>
-            <span class="social-follow" data-i18n="social-join">BLI MED</span>
-            <span class="social-label">Discord</span>
-          </a>
-          <a class="card social-card" data-social="youtube" href="https://youtube.com/@fjolsenbanden" target="_blank">
-            <div class="social-icon">
-              <img src="img/social/youtube.svg" alt="YouTube" />
-            </div>
-            <span class="social-follow" data-i18n="social-subscribe">ABONNER</span>
-            <span class="social-label">YouTube</span>
-          </a>
-          <a class="card social-card" data-social="instagram" href="https://www.instagram.com/fjolsenbanden" target="_blank">
-            <div class="social-icon">
-              <img src="img/social/instagram.svg" alt="Instagram" />
-            </div>
-            <span class="social-follow" data-i18n="social-follow">FØLG</span>
-            <span class="social-label">Instagram</span>
-          </a>
-        </div>
-      </div>
-    </section>
-
     <section id="about" class="section">
       <div class="container">
         <h2 data-i18n="about-title" data-i18n-type="html">Hva er <span class="highlight">FjOlsenbanden?</span></h2>
@@ -727,7 +899,15 @@
               Alle som blir med får tittelen «FjOls» – en ambassadør som fremmer et positivt fellesskap, trygghet og
               stolthet.
             </p>
-            <a href="#community" class="btn btn-primary" data-i18n="about-cta">Bli med</a>
+            <a
+              href="https://fjolsensbanden.no"
+              class="btn btn-primary"
+              data-i18n="about-cta"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Besøk fjolsensbanden.no
+            </a>
           </div>
 
           <div class="about-benefits">
@@ -770,26 +950,29 @@
             «FjOlsen»
           </p>
         </div>
-        <div class="contact-image">
-          <img src="https://setaei.com/Fjolsen/logojul.png" alt="FjOlsenbanden julevariant" />
+        <div class="contact-card">
+          <h2 data-i18n="contact-form-title">Send en melding</h2>
+          <form class="contact-form">
+            <label>
+              <span data-i18n="contact-name-label">Navn</span>
+              <input type="text" name="name" required data-i18n-placeholder="contact-name-label" placeholder="Navn" />
+            </label>
+            <label>
+              <span data-i18n="contact-email-label">E-post</span>
+              <input type="email" name="email" required data-i18n-placeholder="contact-email-label" placeholder="E-post" />
+            </label>
+            <label>
+              <span data-i18n="contact-message-label">Melding</span>
+              <textarea name="message" required data-i18n-placeholder="contact-message-label" placeholder="Melding"></textarea>
+            </label>
+            <button class="btn btn-primary" type="submit" data-i18n="contact-submit">Send melding</button>
+          </form>
         </div>
       </div>
     </section>
   </main>
 
   <footer class="site-footer">
-    <div class="container footer-main">
-      <nav class="footer-menu">
-        <ul class="footer-links">
-          <li><a href="#hero" data-i18n="footer-top">Til toppen</a></li>
-          <li><a href="#video" data-i18n="footer-video">Video</a></li>
-          <li><a href="#community" data-i18n="footer-community">Sosiale medier</a></li>
-          <li><a href="#about" data-i18n="footer-about">Om FjOlsenbanden</a></li>
-          <li><a href="#contact" data-i18n="footer-contact">Kontakt</a></li>
-        </ul>
-      </nav>
-    </div>
-
     <div class="container footer-bottom">
       <p data-i18n="footer-copy">© 2025 Fjolsenbanden v/Fair Share Invest AS – Org.nr. 926 963 023</p>
       <a href="https://fjolsenbanden.setaei.com/regler.html" class="footer-bottom-link" data-i18n="footer-rules"
@@ -825,10 +1008,10 @@
         'video-body-1':
           'Vi søker merkevarer som ønsker å bidra med premier eller gavekort til våre giveaways. Ved å gi oss en premie får dere synlighet mot alle som deltar i kalenderen.',
         'video-body-2': 'I tillegg tilbyr vi muligheten til å kjøpe en egen “luke” i kalenderen for kun 2500 kr eks. mva.',
-        'video-body-3': 'Se fordelene dere får i en uke-luke nedenfor.',
-        'benefits-title': 'Dette får dere i en uke',
+        'video-body-3': 'Se fordelene dere får i en luke nedenfor.',
+        'benefits-title': 'Dette får dere i en luke',
         'benefits-subtitle':
-          'Vi lager en uke med aktiviteter som gir synlighet, trafikk og konvertering for merkevaren deres.',
+          'Vi lager en luke med aktiviteter som gir synlighet, trafikk og konvertering for merkevaren deres.',
         'benefits-visibility-title': 'Synlighet i kalenderen',
         'benefits-visibility-body':
           'Promotere deres bedrift med et spørsmål eller en aktivitet som skaper kjennskap til merkevaren deres.',
@@ -838,9 +1021,9 @@
         'benefits-offer-title': 'Mulighet for eksklusivt tilbud',
         'benefits-offer-body': 'Presentere et eksklusivt tilbud fra dere som kan konvertere salg fra målgruppen som deltar.',
         'benefits-note': 'Dette er en enkel måte å få god synlighet inn i et aktivt og engasjert gamingmiljø i desember.',
-        'social-title': 'Følg oss i sosiale medier',
+        'social-title': 'FjOlsenbanden – et community i <span class="highlight">vekst!</span>',
         'social-subtitle':
-          'Vi bygger et positivt fellesskap på tvers av kanaler. Klikk på lenkene under for å bli med der du liker best å henge.',
+          'FjOlsenbanden har allerede over 10 000 følgere på tvers av våre kanaler og over 2600 medlemmer i Discord! Følg oss for å få med deg alle nyheter, det kan være unike events på de forskjellige kanalene.',
         'social-follow': 'FØLG',
         'social-join': 'BLI MED',
         'social-subscribe': 'ABONNER',
@@ -855,7 +1038,7 @@
           'Premiene som deles ut er sponset av samarbeidspartnere fra næringslivet, eller finansiert gjennom frivillige bidrag fra foreldre – alt for å gi barna ekstra motivasjon og glede.',
         'about-goal-4':
           'Alle som blir med får tittelen «FjOls» – en ambassadør som fremmer et positivt fellesskap, trygghet og stolthet.',
-        'about-cta': 'Bli med',
+        'about-cta': 'Besøk fjolsensbanden.no',
         'benefit-safe-title': 'Trygg gamingarena',
         'benefit-safe-body':
           'Alle aktiviteter overvåkes av voksne, med klare regler mot mobbing, banning og ekskludering.',
@@ -875,6 +1058,11 @@
           'Gi gjerne en lyd hvis dette kan være aktuelt – vi tar gjerne en uforpliktende prat.',
         'contact-body-2': 'Ønsker dere en fin dag videre!',
         'contact-signoff': '<strong>Vennlig hilsen</strong><br />Tor Martin Olsen<br />«FjOlsen»',
+        'contact-form-title': 'Send en melding',
+        'contact-name-label': 'Navn',
+        'contact-email-label': 'E-post',
+        'contact-message-label': 'Melding',
+        'contact-submit': 'Send melding',
       },
       en: {
         'nav-hero': 'Top',
@@ -901,9 +1089,9 @@
         'video-body-1':
           'We’re looking for brands that want to contribute prizes or gift cards to our giveaways. By giving a prize, your brand gains visibility to everyone taking part in the calendar.',
         'video-body-2': 'We also offer the option to buy your own calendar “door” for only NOK 2,500 excl. VAT.',
-        'video-body-3': 'See the benefits you get in a weekly door below.',
-        'benefits-title': 'What you get in one week',
-        'benefits-subtitle': 'We craft a week of activities that drive visibility, traffic, and conversions for your brand.',
+        'video-body-3': 'See the benefits you get in a calendar door below.',
+        'benefits-title': 'What you get in one calendar door',
+        'benefits-subtitle': 'We craft a calendar door of activities that drive visibility, traffic, and conversions for your brand.',
         'benefits-visibility-title': 'Visibility in the calendar',
         'benefits-visibility-body':
           'Promote your company with a question or activity that builds awareness of your brand.',
@@ -913,9 +1101,9 @@
         'benefits-offer-title': 'Option for an exclusive offer',
         'benefits-offer-body': 'Present an exclusive offer from you that can convert sales from the participating audience.',
         'benefits-note': 'This is an easy way to gain strong visibility in an active and engaged gaming community during December.',
-        'social-title': 'Follow us on social media',
+        'social-title': 'FjOlsenbanden – a community <span class="highlight">on the rise!</span>',
         'social-subtitle':
-          'We build a positive community across channels. Click the links below to join us where you like to hang out.',
+          'FjOlsenbanden already has over 10,000 followers across our channels and more than 2,600 members in Discord! Follow us to catch every update — some events are unique to each channel.',
         'social-follow': 'FOLLOW',
         'social-join': 'JOIN',
         'social-subscribe': 'SUBSCRIBE',
@@ -930,7 +1118,7 @@
           'Prizes are sponsored by business partners or funded through voluntary parent contributions – all to give the kids extra motivation and joy.',
         'about-goal-4':
           'Everyone who joins becomes a “FjOls” – an ambassador who promotes a positive community, safety, and pride.',
-        'about-cta': 'Join us',
+        'about-cta': 'Visit fjolsensbanden.no',
         'benefit-safe-title': 'Safe gaming arena',
         'benefit-safe-body': 'All activities are supervised by adults with clear rules against bullying, swearing, and exclusion.',
         'benefit-community-title': 'Positive community',
@@ -949,6 +1137,11 @@
           'Let us know if this sounds relevant – we’re happy to have a no-obligation conversation.',
         'contact-body-2': 'Wishing you a great day!',
         'contact-signoff': '<strong>Best regards</strong><br />Tor Martin Olsen<br />“FjOlsen”',
+        'contact-form-title': 'Send a message',
+        'contact-name-label': 'Name',
+        'contact-email-label': 'Email',
+        'contact-message-label': 'Message',
+        'contact-submit': 'Send message',
       },
     };
 
@@ -967,6 +1160,13 @@
         } else {
           el.textContent = value;
         }
+      });
+
+      document.querySelectorAll('[data-i18n-placeholder]').forEach((el) => {
+        const key = el.dataset.i18nPlaceholder;
+        const value = strings[key];
+        if (!value) return;
+        el.placeholder = value;
       });
 
       const toggleButton = document.getElementById('langToggle');
