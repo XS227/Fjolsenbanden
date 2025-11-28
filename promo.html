@@ -346,33 +346,42 @@
     }
 
     /* Contact */
-    .contact-grid {
-      display: grid;
-      grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
-      gap: 2.5rem;
-      align-items: center;
-    }
-
     .contact-card {
-      background: var(--card);
-      border-radius: var(--radius-lg);
-      padding: 2rem;
-      box-shadow: var(--shadow-soft);
-      border: 1px solid rgba(255, 255, 255, 0.06);
+      max-width: 860px;
+      margin: 0 auto;
     }
 
-    .contact-card h2 {
-      margin-bottom: 1rem;
-      text-align: left;
+    .contact-form {
+      margin-top: 1.5rem;
+      display: grid;
+      gap: 1rem;
     }
 
-    .contact-card p {
-      color: var(--muted);
-      margin: 0 0 1rem;
+    .form-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+      gap: 1rem;
     }
 
-    .contact-card strong {
-      color: #fff;
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .form-group label {
+      font-weight: 700;
+    }
+
+    .contact-form input,
+    .contact-form textarea {
+      background: #070f2c;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      padding: 0.85rem 0.95rem;
+      color: var(--text);
+      font: inherit;
+      transition: outline 0.12s ease, border-color 0.12s ease;
     }
 
     .contact-form {
@@ -936,9 +945,10 @@
       </div>
     </section>
 
-    <section id="contact" class="section">
-      <div class="container contact-grid">
-        <div class="contact-card">
+    <section id="contact-info" class="section">
+      <div class="container contact-info">
+        <img src="https://setaei.com/Fjolsen/logojul.png" alt="FjOlsenbanden julelogo" loading="lazy" />
+        <div class="card">
           <h2 data-i18n="contact-title">Klar for å slå av en prat?</h2>
           <p data-i18n="contact-body-1">
             Gi gjerne en lyd hvis dette kan være aktuelt – vi tar gjerne en uforpliktende prat.
