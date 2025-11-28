@@ -590,7 +590,7 @@
     .community-grid {
       display: flex;
       flex-wrap: wrap;
-      gap: 1.5rem;
+      gap: 1.25rem;
       justify-content: center;
     }
 
@@ -599,7 +599,7 @@
       max-width: 220px;
       background: rgba(19, 160, 249, 0.08);
       border-radius: 24px;
-      padding: 1.5rem 1.25rem 1.75rem;
+      padding: 1.25rem 1.1rem 1.35rem;
       text-align: center;
       position: relative;
       overflow: hidden;
@@ -608,16 +608,16 @@
       border: 1px solid rgba(255, 255, 255, 0.06);
       backdrop-filter: blur(16px);
       transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.55rem;
     }
 
     .community-card:hover {
       transform: translateY(-4px);
       border-color: rgba(255, 255, 255, 0.18);
       box-shadow: 0 18px 45px rgba(0, 0, 0, 0.5);
-    }
-
-    .community-icon {
-      margin-bottom: 1rem;
     }
 
     .community-icon img {
@@ -629,13 +629,7 @@
 
     .community-card h3 {
       font-size: 1rem;
-      margin-bottom: 0.35rem;
-    }
-
-    .community-card p {
-      font-size: 0.85rem;
-      color: rgba(255, 255, 255, 0.78);
-      margin-bottom: 1.2rem;
+      margin: 0;
     }
 
     .community-pill {
@@ -876,7 +870,6 @@
               <img src="https://cdn.simpleicons.org/twitch/ffffff" alt="Twitch ikon" loading="lazy" />
             </div>
             <h3>Twitch</h3>
-            <p>Se livesendinger, turneringer og events.</p>
             <span class="community-pill">FØLG PÅ TWITCH</span>
           </a>
 
@@ -885,7 +878,6 @@
               <img src="https://cdn.simpleicons.org/tiktok/ffffff" alt="TikTok ikon" loading="lazy" />
             </div>
             <h3>TikTok</h3>
-            <p>Highlights, klipp og korte videoer.</p>
             <span class="community-pill">FØLG PÅ TIKTOK</span>
           </a>
 
@@ -894,7 +886,6 @@
               <img src="https://cdn.simpleicons.org/discord/ffffff" alt="Discord ikon" loading="lazy" />
             </div>
             <h3>Discord</h3>
-            <p>Bli med i kjernen av communityet.</p>
             <span class="community-pill">BLI MED I DISCORD</span>
           </a>
 
@@ -903,7 +894,6 @@
               <img src="https://cdn.simpleicons.org/youtube/ffffff" alt="YouTube ikon" loading="lazy" />
             </div>
             <h3>YouTube</h3>
-            <p>Turneringer, replays og content.</p>
             <span class="community-pill">ABONNER PÅ YOUTUBE</span>
           </a>
 
@@ -912,7 +902,6 @@
               <img src="https://cdn.simpleicons.org/instagram/ffffff" alt="Instagram ikon" loading="lazy" />
             </div>
             <h3>Instagram</h3>
-            <p>Behind the scenes og stories.</p>
             <span class="community-pill">FØLG PÅ INSTAGRAM</span>
           </a>
         </div>
