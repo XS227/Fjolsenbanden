@@ -346,79 +346,73 @@
     }
 
     /* Contact */
-    .contact-card {
-      max-width: 860px;
-      margin: 0 auto;
+    .contact-section {
+      margin-top: 4rem;
+      padding: 3rem 1rem;
+      position: relative;
     }
 
-    .contact-form {
-      margin-top: 1.5rem;
-      display: grid;
-      gap: 1rem;
-    }
-
-    .form-row {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
-      gap: 1rem;
-    }
-
-    .form-group {
+    .contact-container {
+      background: rgba(255, 255, 255, 0.06);
+      border-radius: 1.6rem;
+      padding: 2.5rem;
       display: flex;
-      flex-direction: column;
-      gap: 0.35rem;
+      justify-content: space-between;
+      align-items: center;
+      gap: 2rem;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 0 40px rgba(0, 0, 0, 0.4);
     }
 
-    .form-group label {
-      font-weight: 700;
+    .contact-text {
+      max-width: 520px;
     }
 
-    .contact-form input,
-    .contact-form textarea {
-      background: #070f2c;
-      border-radius: 12px;
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      padding: 0.85rem 0.95rem;
-      color: var(--text);
-      font: inherit;
-      transition: outline 0.12s ease, border-color 0.12s ease;
-    }
-
-    .contact-form {
-      display: grid;
-      gap: 0.9rem;
-    }
-
-    .contact-form label {
-      display: grid;
-      gap: 0.35rem;
+    .contact-text h2 {
       color: #fff;
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+
+    .contact-text p {
+      color: #d8e2f0;
+      font-size: 1rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .signature {
+      margin-top: 1.2rem;
       font-weight: 600;
     }
 
-    .contact-form input,
-    .contact-form textarea {
-      width: 100%;
-      padding: 0.85rem 1rem;
-      border-radius: var(--radius-md);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      background: rgba(255, 255, 255, 0.05);
-      color: #fff;
-      font-size: 1rem;
-      font-family: inherit;
-      outline: none;
-      transition: border-color 0.12s ease, box-shadow 0.12s ease;
+    .contact-ape img {
+      width: 220px;
+      animation: floaty 4s ease-in-out infinite;
+      filter: drop-shadow(0 0 14px rgba(0, 153, 255, 0.4));
     }
 
-    .contact-form input:focus,
-    .contact-form textarea:focus {
-      border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(0, 166, 255, 0.2);
+    @keyframes floaty {
+      0% {
+        transform: translateY(0px);
+      }
+      50% {
+        transform: translateY(-10px);
+      }
+      100% {
+        transform: translateY(0px);
+      }
     }
 
-    .contact-form textarea {
-      min-height: 140px;
-      resize: vertical;
+    @media (max-width: 820px) {
+      .contact-container {
+        flex-direction: column-reverse;
+        text-align: center;
+      }
+
+      .contact-ape img {
+        width: 180px;
+      }
     }
 
     /* Socials */
@@ -878,38 +872,28 @@
       </div>
     </section>
 
-    <section id="contact-info" class="section">
-      <div class="container contact-info">
-        <img src="https://setaei.com/Fjolsen/logojul.png" alt="FjOlsenbanden julelogo" loading="lazy" />
-        <div class="card">
-          <h2 data-i18n="contact-title">Klar for å slå av en prat?</h2>
-          <p data-i18n="contact-body-1">
-            Gi gjerne en lyd hvis dette kan være aktuelt – vi tar gjerne en uforpliktende prat.
-          </p>
-          <p data-i18n="contact-body-2">Ønsker dere en fin dag videre!</p>
-          <p data-i18n="contact-signoff" data-i18n-type="html">
-            <strong>Vennlig hilsen</strong><br />
-            Tor Martin Olsen<br />
-            «FjOlsen»
-          </p>
-        </div>
-        <div class="contact-card">
-          <h2 data-i18n="contact-form-title">Send en melding</h2>
-          <form class="contact-form">
-            <label>
-              <span data-i18n="contact-name-label">Navn</span>
-              <input type="text" name="name" required data-i18n-placeholder="contact-name-label" placeholder="Navn" />
-            </label>
-            <label>
-              <span data-i18n="contact-email-label">E-post</span>
-              <input type="email" name="email" required data-i18n-placeholder="contact-email-label" placeholder="E-post" />
-            </label>
-            <label>
-              <span data-i18n="contact-message-label">Melding</span>
-              <textarea name="message" required data-i18n-placeholder="contact-message-label" placeholder="Melding"></textarea>
-            </label>
-            <button class="btn btn-primary" type="submit" data-i18n="contact-submit">Send melding</button>
-          </form>
+    <section id="contact-info" class="contact-section">
+      <div class="container">
+        <div class="contact-container">
+          <div class="contact-text">
+            <h2 data-i18n="contact-title">Klar for å slå av en prat?</h2>
+
+            <p data-i18n="contact-body-1">
+              Gi gjerne en lyd hvis dette kan være aktuelt – vi tar gjerne en uforpliktende prat.
+            </p>
+
+            <p data-i18n="contact-body-2">Ønsker dere en fin dag videre!</p>
+
+            <p class="signature" data-i18n="contact-signoff" data-i18n-type="html">
+              Vennlig hilsen<br />
+              Tor Martin Olsen<br />
+              «FjOlsen»
+            </p>
+          </div>
+
+          <div class="contact-ape">
+            <img src="/img/ape-julehatt.png" alt="FjOlsen ape" />
+          </div>
         </div>
       </div>
     </section>
@@ -1000,7 +984,7 @@
         'contact-body-1':
           'Gi gjerne en lyd hvis dette kan være aktuelt – vi tar gjerne en uforpliktende prat.',
         'contact-body-2': 'Ønsker dere en fin dag videre!',
-        'contact-signoff': '<strong>Vennlig hilsen</strong><br />Tor Martin Olsen<br />«FjOlsen»',
+        'contact-signoff': 'Vennlig hilsen<br />Tor Martin Olsen<br />«FjOlsen»',
         'contact-form-title': 'Send en melding',
         'contact-name-label': 'Navn',
         'contact-email-label': 'E-post',
@@ -1079,7 +1063,7 @@
         'contact-body-1':
           'Let us know if this sounds relevant – we’re happy to have a no-obligation conversation.',
         'contact-body-2': 'Wishing you a great day!',
-        'contact-signoff': '<strong>Best regards</strong><br />Tor Martin Olsen<br />“FjOlsen”',
+        'contact-signoff': 'Best regards<br />Tor Martin Olsen<br />“FjOlsen”',
         'contact-form-title': 'Send a message',
         'contact-name-label': 'Name',
         'contact-email-label': 'Email',
