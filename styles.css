@@ -545,6 +545,115 @@ a {
   gap: 0.9rem;
 }
 
+/* COMMUNITY SECTION */
+.community-section {
+  padding: 80px 0 40px;
+}
+
+.community-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.community-title {
+  font-size: 2rem;
+  font-weight: 700;
+  text-align: center;
+  color: #ffffff;
+}
+
+.community-lead {
+  margin: 1rem auto 2rem;
+  max-width: 720px;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.accent-text {
+  color: #13A0F9;
+}
+
+.community-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  justify-content: center;
+}
+
+.community-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  flex: 1 1 180px;
+  max-width: 220px;
+  background: rgba(19, 160, 249, 0.08);
+  border-radius: 24px;
+  padding: 1.35rem 1.25rem 1.55rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  text-decoration: none;
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(16px);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.community-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(255, 255, 255, 0.18);
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.5);
+}
+
+.community-icon {
+  margin-bottom: 1rem;
+}
+
+.community-icon img {
+  width: 40px;
+  height: 40px;
+  display: block;
+  margin: 0 auto;
+}
+
+.community-card h3 {
+  font-size: 1rem;
+  margin: 0;
+}
+
+.community-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.4rem 0.9rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  background: #13A0F9;
+  color: #041149;
+}
+
+@media (max-width: 900px) {
+  .community-card {
+    flex: 1 1 calc(50% - 0.75rem);
+    max-width: none;
+  }
+}
+
+@media (max-width: 540px) {
+  .community-container {
+    padding: 0 1rem;
+  }
+
+  .community-card {
+    flex: 1 1 100%;
+  }
+}
+
 /* Socials */
 
 .social-grid {
