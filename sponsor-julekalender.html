@@ -298,6 +298,31 @@
       font-size: 0.95rem;
     }
 
+    /* Community */
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+      margin: 1.2rem 0 0.5rem;
+    }
+
+    .stat-card {
+      text-align: center;
+    }
+
+    .stat-number {
+      display: block;
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--primary);
+      margin-bottom: 0.2rem;
+    }
+
+    .stat-label {
+      color: var(--muted);
+      margin: 0;
+    }
+
     /* About */
     .about-grid {
       display: grid;
@@ -558,6 +583,78 @@
         </div>
       </section>
 
+      <section class="section" id="community">
+        <div class="container">
+          <h2 class="lang-no">Et engasjert community i vekst</h2>
+          <h2 class="lang-en">A growing, engaged community</h2>
+          <p class="subtitle lang-no">
+            FjOlsenbanden samler foreldre, barn og ungdom som vil game trygt sammen. Vi er aktive på flere plattformer,
+            med et sterkt fokus på inkluderende opplevelser og trygge rammer.
+          </p>
+          <p class="subtitle lang-en">
+            FjOlsenbanden brings together parents, kids and teens who want to game safely together. We're active across
+            multiple platforms with a strong focus on inclusive experiences and clear guardrails.
+          </p>
+
+          <div class="stat-grid">
+            <div class="card stat-card">
+              <span class="stat-number">10&nbsp;000+</span>
+              <p class="stat-label lang-no">Følgere på tvers av kanaler</p>
+              <p class="stat-label lang-en">Followers across channels</p>
+            </div>
+            <div class="card stat-card">
+              <span class="stat-number">2&nbsp;600+</span>
+              <p class="stat-label lang-no">Medlemmer i Discord</p>
+              <p class="stat-label lang-en">Members on Discord</p>
+            </div>
+            <div class="card stat-card">
+              <span class="stat-number">Flere per uke</span>
+              <p class="stat-label lang-no">Familievennlige streams og aktiviteter</p>
+              <p class="stat-label lang-en">Family-friendly streams and activities</p>
+            </div>
+          </div>
+
+          <div class="list">
+            <div class="list-item">
+              <span class="icon">🛡️</span>
+              <span class="lang-no">Klare regler, aktiv moderering og trygge samtaler.</span>
+              <span class="lang-en">Clear rules, active moderation and safe conversations.</span>
+            </div>
+            <div class="list-item">
+              <span class="icon">🤝</span>
+              <span class="lang-no">Fokus på inkludering, samarbeid og mestring.</span>
+              <span class="lang-en">Built around inclusion, teamwork and sense of achievement.</span>
+            </div>
+            <div class="list-item">
+              <span class="icon">✨</span>
+              <span class="lang-no">Varierte events som holder engasjementet oppe gjennom året.</span>
+              <span class="lang-en">Varied events that keep engagement high all year.</span>
+            </div>
+          </div>
+
+          <div class="hero-actions" style="margin-top: 1.4rem;">
+            <a
+              class="btn btn-primary"
+              href="https://discord.gg/CbvBPHzg4D"
+              target="_blank"
+              rel="noreferrer noopener"
+            >
+              <span class="lang-no">Bli med i Discord</span>
+              <span class="lang-en">Join the Discord</span>
+            </a>
+            <a
+              class="btn btn-ghost"
+              href="https://www.twitch.tv/FjOlsenFN"
+              target="_blank"
+              rel="noreferrer noopener"
+            >
+              <span class="lang-no">Se våre streams</span>
+              <span class="lang-en">Watch our streams</span>
+            </a>
+          </div>
+        </div>
+      </section>
+
       <section class="section" id="about">
         <div class="container">
           <h2 class="lang-no">Hva er FjOlsenbanden?</h2>
@@ -586,6 +683,24 @@
                 Our goal is to create a positive gaming environment where players feel seen, included and taken care of –
                 both on and off screen.
               </p>
+
+              <div class="list">
+                <div class="list-item">
+                  <span class="icon">📋</span>
+                  <span class="lang-no">Tydelige husregler og moderering som holder chatten trygg og hyggelig.</span>
+                  <span class="lang-en">Clear house rules and moderation that keep chat safe and welcoming.</span>
+                </div>
+                <div class="list-item">
+                  <span class="icon">🏆</span>
+                  <span class="lang-no">Ukentlige konkurranser og aktiviteter som samler hele familien.</span>
+                  <span class="lang-en">Weekly competitions and activities that unite the whole family.</span>
+                </div>
+                <div class="list-item">
+                  <span class="icon">🤗</span>
+                  <span class="lang-no">Et miljø der vi heier på hverandre og feirer små og store seire.</span>
+                  <span class="lang-en">A culture of cheering each other on and celebrating every win.</span>
+                </div>
+              </div>
             </div>
 
             <div class="about-logo">
