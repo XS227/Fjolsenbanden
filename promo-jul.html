@@ -371,6 +371,24 @@
       gap: 0.5rem;
     }
 
+    .benefit-card {
+      padding-right: 6.5rem;
+    }
+
+    .benefit-icon {
+      position: absolute;
+      top: -10px;
+      right: -4px;
+      pointer-events: none;
+    }
+
+    .benefit-icon img {
+      width: 110px;
+      height: auto;
+      animation: floaty 5.5s ease-in-out infinite;
+      filter: drop-shadow(0 0 14px rgba(0, 153, 255, 0.4));
+    }
+
     .benefit-grid h4 {
       margin: 0;
       color: #fff;
@@ -939,21 +957,30 @@
         </p>
 
         <div class="benefit-grid">
-          <div class="card card-pill">
+          <div class="card card-pill benefit-card">
+            <div class="benefit-icon">
+              <img src="https://setaei.com/Fjolsen/Love.png" alt="Synlighet ikon" loading="lazy" />
+            </div>
             <h4 data-i18n="benefits-visibility-title">Synlighet i kalenderen</h4>
             <p data-i18n="benefits-visibility-body">
               Promotere deres bedrift med et spørsmål eller en aktivitet som skaper kjennskap til merkevaren deres.
             </p>
           </div>
 
-          <div class="card card-pill">
+          <div class="card card-pill benefit-card">
+            <div class="benefit-icon">
+              <img src="https://setaei.com/Fjolsen/Penger.png" alt="Trafikk ikon" loading="lazy" />
+            </div>
             <h4 data-i18n="benefits-traffic-title">Trafikk til siden deres</h4>
             <p data-i18n="benefits-traffic-body">
               Linke direkte til deres nettside/nettbutikk slik at dere får målbar trafikk fra engasjerte spillere.
             </p>
           </div>
 
-          <div class="card card-pill">
+          <div class="card card-pill benefit-card">
+            <div class="benefit-icon">
+              <img src="https://setaei.com/Fjolsen/logojul.png" alt="Mulighet ikon" loading="lazy" />
+            </div>
             <h4 data-i18n="benefits-offer-title">Mulighet for eksklusivt tilbud</h4>
             <p data-i18n="benefits-offer-body">
               Presentere et eksklusivt tilbud fra dere som kan konvertere salg fra målgruppen som deltar.
