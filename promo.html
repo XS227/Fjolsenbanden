@@ -429,141 +429,89 @@
         radial-gradient(circle at center, #0c1335 0, #050b2b 60%, #020317 100%);
     }
 
-    .community-panel {
-      background: linear-gradient(145deg, rgba(14, 26, 63, 0.9), rgba(7, 15, 40, 0.92));
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      box-shadow: 0 28px 70px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.06);
-      border-radius: 30px;
-      padding: clamp(1.8rem, 2vw, 2.4rem) clamp(1.5rem, 2vw, 2.8rem);
+    .community-section {
+      margin-top: 4rem;
     }
 
-    .community-eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.55rem 1.1rem;
-      border-radius: var(--radius-pill);
-      background: rgba(0, 166, 255, 0.12);
-      color: #cde6ff;
-      font-weight: 700;
-      letter-spacing: 0.03em;
-      text-transform: uppercase;
-    }
-
-    .community-header {
+    .community-section .section-title {
       text-align: center;
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: #fff;
+      margin: 0;
     }
 
-    .community-header h2 {
-      margin: 0.9rem 0 0.6rem;
-      font-size: clamp(2.1rem, 3.4vw, 2.9rem);
+    .community-section .section-title .blue {
+      color: #2aa4ff;
     }
 
-    .community-header .subtitle {
-      max-width: 880px;
-      margin-bottom: 1.5rem;
+    .community-section .section-subtitle {
+      text-align: center;
+      max-width: 650px;
+      margin: 1rem auto 2rem;
+      color: #c9d4e0;
+      font-size: 1rem;
     }
 
     .social-grid {
       display: grid;
-      grid-auto-flow: column;
-      grid-auto-columns: minmax(190px, 1fr);
-      gap: 1.1rem;
-      overflow-x: auto;
-      padding: 0.35rem 0.35rem 0.8rem;
-      margin-top: 1.25rem;
-      scrollbar-width: thin;
-      scrollbar-color: rgba(255, 255, 255, 0.25) transparent;
-    }
-
-    .social-grid::-webkit-scrollbar {
-      height: 8px;
-    }
-
-    .social-grid::-webkit-scrollbar-thumb {
-      background: rgba(255, 255, 255, 0.25);
-      border-radius: 999px;
+      grid-template-columns: repeat(5, minmax(180px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
     }
 
     .social-card {
-      position: relative;
-      padding: 1.35rem 1.25rem 1.5rem;
-      display: grid;
-      grid-template-rows: auto auto 1fr;
-      gap: 0.65rem;
-      place-items: center;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 1rem;
+      padding: 1.5rem 1rem;
       text-align: center;
-      color: var(--text);
-      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      background: radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.08), transparent 35%),
-        linear-gradient(155deg, #111f4c 0%, #0a1333 100%);
-      box-shadow: 0 18px 50px rgba(0, 0, 0, 0.6), 0 0 18px rgba(0, 166, 255, 0.16);
-      min-height: 210px;
-      border-radius: 22px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      backdrop-filter: blur(8px);
+      transition: 0.3s ease;
     }
 
     .social-card:hover {
       transform: translateY(-4px);
-      box-shadow: 0 24px 65px rgba(0, 0, 0, 0.7), 0 0 26px rgba(0, 166, 255, 0.24);
-      border-color: rgba(255, 255, 255, 0.2);
-    }
-
-    .social-follow {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 0.45rem 1.2rem;
-      border-radius: var(--radius-pill);
-      background: linear-gradient(120deg, #1f8cfe, #51b0ff);
-      font-size: 0.9rem;
-      font-weight: 800;
-      letter-spacing: 0.04em;
-      color: #fff;
-      box-shadow: 0 10px 30px rgba(0, 166, 255, 0.35);
-      text-transform: uppercase;
+      background: rgba(255, 255, 255, 0.08);
     }
 
     .social-icon {
-      width: 78px;
-      height: 78px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 20px;
-      background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.05));
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 12px 30px rgba(0, 0, 0, 0.38);
+      width: 48px;
+      margin-bottom: 1rem;
     }
 
-    .social-icon img {
-      width: 50px;
-      height: 50px;
-      display: block;
-      object-fit: contain;
+    .social-btn {
+      background: #2aa4ff;
+      color: #fff;
+      border: none;
+      padding: 0.5rem 1.4rem;
+      border-radius: 999px;
+      font-size: 0.9rem;
+      margin-bottom: 0.7rem;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    .social-btn:hover {
+      background: #1784d6;
     }
 
     .social-label {
-      font-size: 1.05rem;
-      font-weight: 800;
-      letter-spacing: 0.04em;
-      color: #f0f3ff;
-      text-transform: uppercase;
+      color: #c9d4e0;
+      letter-spacing: 1px;
+      font-size: 0.85rem;
     }
 
-    /* 2–kolonne layout på mobil / små tablets */
+    /* 📱 MOBILE FIX */
     @media (max-width: 900px) {
       .social-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        overflow-x: visible;
-      }
-
-      .social-card {
-        min-height: 200px;
-        padding: 1.3rem;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
       }
     }
 
-    /* 1 kolonne på veldig små skjermer */
     @media (max-width: 520px) {
       .social-grid {
         grid-template-columns: 1fr;
@@ -763,62 +711,47 @@
       </div>
     </section>
 
-    <section id="community" class="section">
+    <section id="community" class="section community-section">
       <div class="container">
-        <div class="community-panel">
-          <div class="community-header">
-            <span class="community-eyebrow" data-i18n="nav-community">Sosiale medier</span>
-            <h2 data-i18n="social-title" data-i18n-type="html">
-              FjOlsenbanden – et community i <span class="highlight">vekst!</span>
-            </h2>
-            <p class="subtitle" data-i18n="social-subtitle">
-              FjOlsenbanden har allerede over 10 000 følgere på tvers av våre kanaler og over 2600 medlemmer i Discord!
-              Følg oss for å få med deg alle nyheter, det kan være unike events på de forskjellige kanalene.
-            </p>
-          </div>
+        <h2 class="section-title" data-i18n="social-title" data-i18n-type="html">
+          FjOlsenbanden – et community i <span class="blue">vekst!</span>
+        </h2>
 
-          <div class="social-grid" aria-label="Community kanaler">
-            <a class="card social-card" data-social="twitch" href="https://www.twitch.tv/FjOlsenFN" target="_blank">
-              <div class="social-icon">
-                <img src="img/social/twitch.svg" alt="Twitch" />
-              </div>
-              <span class="social-follow" data-i18n="social-follow">FØLG</span>
-              <span class="social-label">Twitch</span>
-            </a>
-            <a class="card social-card" data-social="tiktok" href="https://www.tiktok.com/@fjolsenbanden" target="_blank">
-              <div class="social-icon">
-                <img src="img/social/tiktok.svg" alt="TikTok" />
-              </div>
-              <span class="social-follow" data-i18n="social-follow">FØLG</span>
-              <span class="social-label">TikTok</span>
-            </a>
-            <a class="card social-card" data-social="discord" href="https://discord.gg/CbvBPHzg4D" target="_blank">
-              <div class="social-icon">
-                <img src="img/social/discord.svg" alt="Discord" />
-              </div>
-              <span class="social-follow" data-i18n="social-join">BLI MED</span>
-              <span class="social-label">Discord</span>
-            </a>
-            <a class="card social-card" data-social="youtube" href="https://youtube.com/@fjolsenbanden" target="_blank">
-              <div class="social-icon">
-                <img src="img/social/youtube.svg" alt="YouTube" />
-              </div>
-              <span class="social-follow" data-i18n="social-subscribe">ABONNER</span>
-              <span class="social-label">YouTube</span>
-            </a>
-            <a
-              class="card social-card"
-              data-social="instagram"
-              href="https://www.instagram.com/fjolsenbanden"
-              target="_blank"
-            >
-              <div class="social-icon">
-                <img src="img/social/instagram.svg" alt="Instagram" />
-              </div>
-              <span class="social-follow" data-i18n="social-follow">FØLG</span>
-              <span class="social-label">Instagram</span>
-            </a>
-          </div>
+        <p class="section-subtitle" data-i18n="social-subtitle">
+          FjOlsenbanden har allerede over 10 000 følgere på tvers av våre kanaler og over 2600 medlemmer i Discord!
+          Følg oss for å få med deg alle nyheter, det kan være unike events på de forskjellige kanalene.
+        </p>
+
+        <div class="social-grid" aria-label="Community kanaler">
+          <a href="https://www.twitch.tv/FjOlsenFN" class="social-card" data-social="twitch" target="_blank">
+            <img src="img/social/twitch.svg" class="social-icon" alt="Twitch" />
+            <button class="social-btn" data-i18n="social-follow">FØLG</button>
+            <span class="social-label">TWITCH</span>
+          </a>
+
+          <a href="https://www.tiktok.com/@fjolsenbanden" class="social-card" data-social="tiktok" target="_blank">
+            <img src="img/social/tiktok.svg" class="social-icon" alt="TikTok" />
+            <button class="social-btn" data-i18n="social-follow">FØLG</button>
+            <span class="social-label">TIKTOK</span>
+          </a>
+
+          <a href="https://discord.gg/CbvBPHzg4D" class="social-card" data-social="discord" target="_blank">
+            <img src="img/social/discord.svg" class="social-icon" alt="Discord" />
+            <button class="social-btn" data-i18n="social-join">BLI MED</button>
+            <span class="social-label">DISCORD</span>
+          </a>
+
+          <a href="https://youtube.com/@fjolsenbanden" class="social-card" data-social="youtube" target="_blank">
+            <img src="img/social/youtube.svg" class="social-icon" alt="YouTube" />
+            <button class="social-btn" data-i18n="social-subscribe">ABONNER</button>
+            <span class="social-label">YOUTUBE</span>
+          </a>
+
+          <a href="https://www.instagram.com/fjolsenbanden" class="social-card" data-social="instagram" target="_blank">
+            <img src="img/social/instagram.svg" class="social-icon" alt="Instagram" />
+            <button class="social-btn" data-i18n="social-follow">FØLG</button>
+            <span class="social-label">INSTAGRAM</span>
+          </a>
         </div>
       </div>
     </section>
@@ -1031,7 +964,7 @@
         'benefits-offer-title': 'Mulighet for eksklusivt tilbud',
         'benefits-offer-body': 'Presentere et eksklusivt tilbud fra dere som kan konvertere salg fra målgruppen som deltar.',
         'benefits-note': 'Dette er en enkel måte å få god synlighet inn i et aktivt og engasjert gamingmiljø i desember.',
-        'social-title': 'FjOlsenbanden – et community i <span class="highlight">vekst!</span>',
+        'social-title': 'FjOlsenbanden – et community i <span class="blue">vekst!</span>',
         'social-subtitle':
           'FjOlsenbanden har allerede over 10 000 følgere på tvers av våre kanaler og over 2600 medlemmer i Discord! Følg oss for å få med deg alle nyheter, det kan være unike events på de forskjellige kanalene.',
         'social-follow': 'FØLG',
@@ -1111,7 +1044,7 @@
         'benefits-offer-title': 'Option for an exclusive offer',
         'benefits-offer-body': 'Present an exclusive offer from you that can convert sales from the participating audience.',
         'benefits-note': 'This is an easy way to gain strong visibility in an active and engaged gaming community during December.',
-        'social-title': 'FjOlsenbanden – a community <span class="highlight">on the rise!</span>',
+        'social-title': 'FjOlsenbanden – a community <span class="blue">on the rise!</span>',
         'social-subtitle':
           'FjOlsenbanden already has over 10,000 followers across our channels and more than 2,600 members in Discord! Follow us to catch every update — some events are unique to each channel.',
         'social-follow': 'FOLLOW',
