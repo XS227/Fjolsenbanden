@@ -1,0 +1,77 @@
+.hero__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  color: #e2e8f0;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+
+.feature-list {
+  display: grid;
+  gap: 0.8rem;
+  margin: 1rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.feature-list li {
+  display: grid;
+  grid-template-columns: 22px 1fr;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.7rem 0.9rem;
+  border-radius: 12px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+}
+
+.feature-list svg {
+  width: 22px;
+  height: 22px;
+  color: #16a34a;
+}
+
+.content-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1.5rem;
+  align-items: start;
+}
+
+.content-panel {
+  background: white;
+  border-radius: 16px;
+  border: 1px solid #e2e8f0;
+  padding: 1.25rem 1.5rem;
+  box-shadow: 0 10px 45px rgba(15, 23, 42, 0.08);
+}
+
+.admin-panel {
+  padding: 1.25rem 1.5rem;
+  border-radius: 16px;
+  background: #0f172a;
+  color: #e2e8f0;
+}
+
+.admin-panel h3 {
+  margin-top: 0;
+}
+
+.admin-panel p {
+  color: #cbd5e1;
+}
+
+.admin-panel .button {
+  background: #22c55e;
+  border: none;
+  color: #0f172a;
+  padding: 0.6rem 1rem;
+  border-radius: 10px;
+  font-weight: 700;
+}

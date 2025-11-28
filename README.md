@@ -67,3 +67,15 @@ python fjolsenbanden_site/manage.py test
 ```
 
 The included test ensures the homepage renders successfully.
+
+## WordPress plug-and-play theme
+
+If you prefer to run the marketing site in WordPress, a ready-to-use theme lives
+in [`wordpress-theme/fjolsenbanden`](wordpress-theme/fjolsenbanden). Install the
+theme like a standard ZIP upload or via `wp-content/themes` and you get:
+
+- A landing-page template tailored for quick launches.
+- A setup wizard at **Appearance → Fjølsenbanden Setup** that imports demo
+  content and assigns the front page.
+- A `[vipps_login]` shortcode that renders a Vipps MobilePay login button,
+  falling back to the default login URL when the Vipps plugin is absent.
