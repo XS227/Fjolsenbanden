@@ -303,6 +303,36 @@
       line-height: 1.5;
     }
 
+    /* Partner benefits */
+    .benefit-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1rem;
+    }
+
+    .benefit-grid .card {
+      height: 100%;
+      display: grid;
+      gap: 0.5rem;
+    }
+
+    .benefit-grid h4 {
+      margin: 0;
+      color: #fff;
+    }
+
+    .benefit-grid p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .benefit-note {
+      text-align: center;
+      color: #fff;
+      margin-top: 2rem;
+      font-weight: 600;
+    }
+
     /* Contact */
     .contact-grid {
       display: grid;
@@ -582,20 +612,44 @@
           <p data-i18n="video-body-2">
             I tillegg tilbyr vi muligheten til å kjøpe en egen “luke” i kalenderen for kun 2500 kr eks. mva.
           </p>
-          <p data-i18n="video-body-3">I en slik luke vil vi:</p>
-          <ul>
-            <li data-i18n="video-bullet-1">
-              Promotere deres bedrift med et spørsmål eller en aktivitet som skaper kjennskap til deres merkevare
-            </li>
-            <li data-i18n="video-bullet-2">Linke direkte til deres nettside/nettbutikk for å drive trafikk</li>
-            <li data-i18n="video-bullet-3">
-              Eventuelt presentere et eksklusivt tilbud fra dere som kan konvertere salg
-            </li>
-          </ul>
-          <p data-i18n="video-body-4">
-            Dette er en enkel måte å få god synlighet inn i et aktivt og engasjert gamingmiljø i desember.
-          </p>
+          <p data-i18n="video-body-3">Se fordelene dere får i en uke-luke nedenfor.</p>
         </div>
+      </div>
+    </section>
+
+    <section id="partner-benefits" class="section">
+      <div class="container">
+        <h2 data-i18n="benefits-title">Dette får dere i en uke</h2>
+        <p class="subtitle" data-i18n="benefits-subtitle">
+          Vi lager en uke med aktiviteter som gir synlighet, trafikk og konvertering for merkevaren deres.
+        </p>
+
+        <div class="benefit-grid">
+          <div class="card card-pill">
+            <h4 data-i18n="benefits-visibility-title">Synlighet i kalenderen</h4>
+            <p data-i18n="benefits-visibility-body">
+              Promotere deres bedrift med et spørsmål eller en aktivitet som skaper kjennskap til merkevaren deres.
+            </p>
+          </div>
+
+          <div class="card card-pill">
+            <h4 data-i18n="benefits-traffic-title">Trafikk til siden deres</h4>
+            <p data-i18n="benefits-traffic-body">
+              Linke direkte til deres nettside/nettbutikk slik at dere får målbar trafikk fra engasjerte spillere.
+            </p>
+          </div>
+
+          <div class="card card-pill">
+            <h4 data-i18n="benefits-offer-title">Mulighet for eksklusivt tilbud</h4>
+            <p data-i18n="benefits-offer-body">
+              Presentere et eksklusivt tilbud fra dere som kan konvertere salg fra målgruppen som deltar.
+            </p>
+          </div>
+        </div>
+
+        <p class="benefit-note" data-i18n="benefits-note">
+          Dette er en enkel måte å få god synlighet inn i et aktivt og engasjert gamingmiljø i desember.
+        </p>
       </div>
     </section>
 
@@ -771,12 +825,19 @@
         'video-body-1':
           'Vi søker merkevarer som ønsker å bidra med premier eller gavekort til våre giveaways. Ved å gi oss en premie får dere synlighet mot alle som deltar i kalenderen.',
         'video-body-2': 'I tillegg tilbyr vi muligheten til å kjøpe en egen “luke” i kalenderen for kun 2500 kr eks. mva.',
-        'video-body-3': 'I en slik luke vil vi:',
-        'video-bullet-1':
-          'Promotere deres bedrift med et spørsmål eller en aktivitet som skaper kjennskap til deres merkevare',
-        'video-bullet-2': 'Linke direkte til deres nettside/nettbutikk for å drive trafikk',
-        'video-bullet-3': 'Eventuelt presentere et eksklusivt tilbud fra dere som kan konvertere salg',
-        'video-body-4': 'Dette er en enkel måte å få god synlighet inn i et aktivt og engasjert gamingmiljø i desember.',
+        'video-body-3': 'Se fordelene dere får i en uke-luke nedenfor.',
+        'benefits-title': 'Dette får dere i en uke',
+        'benefits-subtitle':
+          'Vi lager en uke med aktiviteter som gir synlighet, trafikk og konvertering for merkevaren deres.',
+        'benefits-visibility-title': 'Synlighet i kalenderen',
+        'benefits-visibility-body':
+          'Promotere deres bedrift med et spørsmål eller en aktivitet som skaper kjennskap til merkevaren deres.',
+        'benefits-traffic-title': 'Trafikk til siden deres',
+        'benefits-traffic-body':
+          'Linke direkte til deres nettside/nettbutikk slik at dere får målbar trafikk fra engasjerte spillere.',
+        'benefits-offer-title': 'Mulighet for eksklusivt tilbud',
+        'benefits-offer-body': 'Presentere et eksklusivt tilbud fra dere som kan konvertere salg fra målgruppen som deltar.',
+        'benefits-note': 'Dette er en enkel måte å få god synlighet inn i et aktivt og engasjert gamingmiljø i desember.',
         'social-title': 'Følg oss i sosiale medier',
         'social-subtitle':
           'Vi bygger et positivt fellesskap på tvers av kanaler. Klikk på lenkene under for å bli med der du liker best å henge.',
@@ -840,12 +901,18 @@
         'video-body-1':
           'We’re looking for brands that want to contribute prizes or gift cards to our giveaways. By giving a prize, your brand gains visibility to everyone taking part in the calendar.',
         'video-body-2': 'We also offer the option to buy your own calendar “door” for only NOK 2,500 excl. VAT.',
-        'video-body-3': 'In such a door we will:',
-        'video-bullet-1':
-          'Promote your company with a question or activity that builds awareness of your brand',
-        'video-bullet-2': 'Link directly to your website/webshop to drive traffic',
-        'video-bullet-3': 'Optionally present an exclusive offer from you that can convert sales',
-        'video-body-4': 'This is an easy way to gain strong visibility in an active and engaged gaming community during December.',
+        'video-body-3': 'See the benefits you get in a weekly door below.',
+        'benefits-title': 'What you get in one week',
+        'benefits-subtitle': 'We craft a week of activities that drive visibility, traffic, and conversions for your brand.',
+        'benefits-visibility-title': 'Visibility in the calendar',
+        'benefits-visibility-body':
+          'Promote your company with a question or activity that builds awareness of your brand.',
+        'benefits-traffic-title': 'Traffic to your site',
+        'benefits-traffic-body':
+          'Link directly to your website/webshop so you get measurable traffic from engaged players.',
+        'benefits-offer-title': 'Option for an exclusive offer',
+        'benefits-offer-body': 'Present an exclusive offer from you that can convert sales from the participating audience.',
+        'benefits-note': 'This is an easy way to gain strong visibility in an active and engaged gaming community during December.',
         'social-title': 'Follow us on social media',
         'social-subtitle':
           'We build a positive community across channels. Click the links below to join us where you like to hang out.',
