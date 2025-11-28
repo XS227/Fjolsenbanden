@@ -414,55 +414,97 @@
 
     /* Socials */
     #community {
-      background: radial-gradient(circle at 20% 15%, rgba(47, 85, 176, 0.16), transparent 38%),
-        radial-gradient(circle at 80% 10%, rgba(0, 166, 255, 0.18), transparent 40%),
-        radial-gradient(circle at center, #0b1438 0, #050b2b 60%, #020317 100%);
+      background: radial-gradient(circle at 20% 15%, rgba(47, 85, 176, 0.14), transparent 38%),
+        radial-gradient(circle at 80% 10%, rgba(0, 166, 255, 0.16), transparent 40%),
+        radial-gradient(circle at 50% 90%, rgba(255, 45, 164, 0.12), transparent 40%),
+        radial-gradient(circle at center, #0c1335 0, #050b2b 60%, #020317 100%);
+    }
+
+    .community-panel {
+      background: linear-gradient(145deg, rgba(14, 26, 63, 0.9), rgba(7, 15, 40, 0.92));
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 28px 70px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+      border-radius: 30px;
+      padding: clamp(1.8rem, 2vw, 2.4rem) clamp(1.5rem, 2vw, 2.8rem);
+    }
+
+    .community-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.55rem 1.1rem;
+      border-radius: var(--radius-pill);
+      background: rgba(0, 166, 255, 0.12);
+      color: #cde6ff;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+    }
+
+    .community-header {
+      text-align: center;
     }
 
     .community-header h2 {
-      margin-bottom: 0.75rem;
-      font-size: clamp(2.1rem, 3.4vw, 2.8rem);
+      margin: 0.9rem 0 0.6rem;
+      font-size: clamp(2.1rem, 3.4vw, 2.9rem);
     }
 
     .community-header .subtitle {
-      max-width: 900px;
+      max-width: 880px;
+      margin-bottom: 1.5rem;
     }
 
     .social-grid {
       display: grid;
-      grid-template-columns: repeat(5, minmax(180px, 1fr));
-      gap: 1.25rem;
+      grid-auto-flow: column;
+      grid-auto-columns: minmax(190px, 1fr);
+      gap: 1.1rem;
       overflow-x: auto;
-      padding: 0.25rem 0.25rem 0.5rem;
-      margin-top: 2rem;
+      padding: 0.35rem 0.35rem 0.8rem;
+      margin-top: 1.25rem;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(255, 255, 255, 0.25) transparent;
+    }
+
+    .social-grid::-webkit-scrollbar {
+      height: 8px;
+    }
+
+    .social-grid::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.25);
+      border-radius: 999px;
     }
 
     .social-card {
       position: relative;
-      padding: 1.6rem;
+      padding: 1.35rem 1.25rem 1.5rem;
       display: grid;
-      gap: 0.9rem;
+      grid-template-rows: auto auto 1fr;
+      gap: 0.65rem;
       place-items: center;
       text-align: center;
       color: var(--text);
       transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      background: linear-gradient(145deg, #0f1c46 0%, #0a1333 100%);
-      box-shadow: 0 18px 55px rgba(0, 0, 0, 0.65), 0 0 22px rgba(0, 166, 255, 0.12);
-      min-height: 230px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.08), transparent 35%),
+        linear-gradient(155deg, #111f4c 0%, #0a1333 100%);
+      box-shadow: 0 18px 50px rgba(0, 0, 0, 0.6), 0 0 18px rgba(0, 166, 255, 0.16);
+      min-height: 210px;
+      border-radius: 22px;
     }
 
     .social-card:hover {
       transform: translateY(-4px);
-      box-shadow: 0 22px 60px rgba(0, 0, 0, 0.7), 0 0 30px rgba(0, 166, 255, 0.2);
-      border-color: rgba(255, 255, 255, 0.16);
+      box-shadow: 0 24px 65px rgba(0, 0, 0, 0.7), 0 0 26px rgba(0, 166, 255, 0.24);
+      border-color: rgba(255, 255, 255, 0.2);
     }
 
     .social-follow {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      padding: 0.4rem 1.15rem;
+      padding: 0.45rem 1.2rem;
       border-radius: var(--radius-pill);
       background: linear-gradient(120deg, #1f8cfe, #51b0ff);
       font-size: 0.9rem;
@@ -470,42 +512,53 @@
       letter-spacing: 0.04em;
       color: #fff;
       box-shadow: 0 10px 30px rgba(0, 166, 255, 0.35);
+      text-transform: uppercase;
     }
 
     .social-icon {
-      width: 82px;
-      height: 82px;
+      width: 78px;
+      height: 78px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      border-radius: 22px;
-      background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.05));
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12), 0 12px 30px rgba(0, 0, 0, 0.35);
-    }
-
-    .social-icon {
-      width: 80px;
-      height: 80px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: var(--radius-pill);
-      background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.04));
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.05));
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 12px 30px rgba(0, 0, 0, 0.38);
     }
 
     .social-icon img {
-      width: 54px;
-      height: 54px;
+      width: 50px;
+      height: 50px;
       display: block;
       object-fit: contain;
     }
 
     .social-label {
       font-size: 1.05rem;
-      font-weight: 700;
-      letter-spacing: 0.03em;
-      color: #e7edff;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      color: #f0f3ff;
+      text-transform: uppercase;
+    }
+
+    /* 2–kolonne layout på mobil / små tablets */
+    @media (max-width: 900px) {
+      .social-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        overflow-x: visible;
+      }
+
+      .social-card {
+        min-height: 200px;
+        padding: 1.3rem;
+      }
+    }
+
+    /* 1 kolonne på veldig små skjermer */
+    @media (max-width: 520px) {
+      .social-grid {
+        grid-template-columns: 1fr;
+      }
     }
 
     /* About */
@@ -612,6 +665,24 @@
         flex-direction: column;
         align-items: flex-start;
       }
+
+      /* --- NYTT: hero-knapper på mobil --- */
+      .hero-actions {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.75rem;
+        width: 100%;
+        max-width: 420px;
+      }
+
+      .hero-text {
+        /* så knappene ikke ligger helt i kanten */
+        padding-right: 0.25rem;
+      }
+
+      .hero-actions .btn {
+        width: 100%;
+      }
     }
   </style>
 </head>
@@ -685,57 +756,60 @@
 
     <section id="community" class="section">
       <div class="container">
-        <div class="community-header">
-          <h2 data-i18n="social-title" data-i18n-type="html">
-            FjOlsenbanden – et community i <span class="highlight">vekst!</span>
-          </h2>
-          <p class="subtitle" data-i18n="social-subtitle">
-            FjOlsenbanden har allerede over 10 000 følgere på tvers av våre kanaler og over 2600 medlemmer i Discord!
-            Følg oss for å få med deg alle nyheter, det kan være unike events på de forskjellige kanalene.
-          </p>
-        </div>
+        <div class="community-panel">
+          <div class="community-header">
+            <span class="community-eyebrow" data-i18n="nav-community">Sosiale medier</span>
+            <h2 data-i18n="social-title" data-i18n-type="html">
+              FjOlsenbanden – et community i <span class="highlight">vekst!</span>
+            </h2>
+            <p class="subtitle" data-i18n="social-subtitle">
+              FjOlsenbanden har allerede over 10 000 følgere på tvers av våre kanaler og over 2600 medlemmer i Discord!
+              Følg oss for å få med deg alle nyheter, det kan være unike events på de forskjellige kanalene.
+            </p>
+          </div>
 
-        <div class="social-grid">
-          <a class="card social-card" data-social="twitch" href="https://www.twitch.tv/FjOlsenFN" target="_blank">
-            <div class="social-icon">
-              <img src="img/social/twitch.svg" alt="Twitch" />
-            </div>
-            <span class="social-follow" data-i18n="social-follow">FØLG</span>
-            <span class="social-label">Twitch</span>
-          </a>
-          <a class="card social-card" data-social="tiktok" href="https://www.tiktok.com/@fjolsenbanden" target="_blank">
-            <div class="social-icon">
-              <img src="img/social/tiktok.svg" alt="TikTok" />
-            </div>
-            <span class="social-follow" data-i18n="social-follow">FØLG</span>
-            <span class="social-label">TikTok</span>
-          </a>
-          <a class="card social-card" data-social="discord" href="https://discord.gg/CbvBPHzg4D" target="_blank">
-            <div class="social-icon">
-              <img src="img/social/discord.svg" alt="Discord" />
-            </div>
-            <span class="social-follow" data-i18n="social-join">BLI MED</span>
-            <span class="social-label">Discord</span>
-          </a>
-          <a class="card social-card" data-social="youtube" href="https://youtube.com/@fjolsenbanden" target="_blank">
-            <div class="social-icon">
-              <img src="img/social/youtube.svg" alt="YouTube" />
-            </div>
-            <span class="social-follow" data-i18n="social-subscribe">ABONNER</span>
-            <span class="social-label">YouTube</span>
-          </a>
-          <a
-            class="card social-card"
-            data-social="instagram"
-            href="https://www.instagram.com/fjolsenbanden"
-            target="_blank"
-          >
-            <div class="social-icon">
-              <img src="img/social/instagram.svg" alt="Instagram" />
-            </div>
-            <span class="social-follow" data-i18n="social-follow">FØLG</span>
-            <span class="social-label">Instagram</span>
-          </a>
+          <div class="social-grid" aria-label="Community kanaler">
+            <a class="card social-card" data-social="twitch" href="https://www.twitch.tv/FjOlsenFN" target="_blank">
+              <div class="social-icon">
+                <img src="img/social/twitch.svg" alt="Twitch" />
+              </div>
+              <span class="social-follow" data-i18n="social-follow">FØLG</span>
+              <span class="social-label">Twitch</span>
+            </a>
+            <a class="card social-card" data-social="tiktok" href="https://www.tiktok.com/@fjolsenbanden" target="_blank">
+              <div class="social-icon">
+                <img src="img/social/tiktok.svg" alt="TikTok" />
+              </div>
+              <span class="social-follow" data-i18n="social-follow">FØLG</span>
+              <span class="social-label">TikTok</span>
+            </a>
+            <a class="card social-card" data-social="discord" href="https://discord.gg/CbvBPHzg4D" target="_blank">
+              <div class="social-icon">
+                <img src="img/social/discord.svg" alt="Discord" />
+              </div>
+              <span class="social-follow" data-i18n="social-join">BLI MED</span>
+              <span class="social-label">Discord</span>
+            </a>
+            <a class="card social-card" data-social="youtube" href="https://youtube.com/@fjolsenbanden" target="_blank">
+              <div class="social-icon">
+                <img src="img/social/youtube.svg" alt="YouTube" />
+              </div>
+              <span class="social-follow" data-i18n="social-subscribe">ABONNER</span>
+              <span class="social-label">YouTube</span>
+            </a>
+            <a
+              class="card social-card"
+              data-social="instagram"
+              href="https://www.instagram.com/fjolsenbanden"
+              target="_blank"
+            >
+              <div class="social-icon">
+                <img src="img/social/instagram.svg" alt="Instagram" />
+              </div>
+              <span class="social-follow" data-i18n="social-follow">FØLG</span>
+              <span class="social-label">Instagram</span>
+            </a>
+          </div>
         </div>
       </div>
     </section>
