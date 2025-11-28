@@ -372,18 +372,18 @@
     }
 
     .benefit-card {
-      padding-right: 6.5rem;
+      padding-right: calc(6.5rem / 3);
     }
 
     .benefit-icon {
       position: absolute;
-      top: -10px;
-      right: -4px;
+      top: 6px;
+      right: 6px;
       pointer-events: none;
     }
 
     .benefit-icon img {
-      width: 110px;
+      width: calc(110px / 3);
       height: auto;
       animation: floaty 5.5s ease-in-out infinite;
       filter: drop-shadow(0 0 14px rgba(0, 153, 255, 0.4));
@@ -860,14 +860,11 @@
           </div>
         </div>
         <div class="hero-image">
-          <video
-            src="https://setaei.com/Fjolsen/Short-Loop.mp4"
-            autoplay
-            loop
-            muted
-            playsinline
-            aria-label="FjOlsenbandens julekalender"
-          ></video>
+          <img
+            src="https://setaei.com/Fjolsen/Kalenderen.jpg"
+            alt="FjOlsenbandens julekalender"
+            loading="lazy"
+          />
         </div>
       </div>
     </section>
