@@ -1,0 +1,841 @@
+<!doctype html>
+
+<html lang="nb">
+<head>
+  <meta charset="utf-8" />
+  <title>FjOlsenbanden – Promo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta
+    name="description"
+    content="Promo-side for FjOlsenbanden med raske lenker til communityet og informasjon om hva vi står for."
+  />
+  <style>
+    :root {
+      --bg: #050b2b;
+      --bg-alt: #071133;
+      --card: #0d1636;
+      --card-alt: #101a3e;
+      --text: #ffffff;
+      --muted: #a6b0d8;
+      --primary: #00a6ff;
+      --accent: #ff2da4;
+      --radius-lg: 24px;
+      --radius-md: 18px;
+      --radius-pill: 999px;
+      --shadow-soft: 0 24px 60px rgba(0, 0, 0, 0.6);
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #020317;
+      color: var(--text);
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-height: 100vh;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* Layout */
+    .container {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    .section {
+      padding: 5rem 0;
+      background: radial-gradient(circle at center, #101a3e 0, #050b2b 55%, #020317 100%);
+    }
+
+    .section h2 {
+      font-size: clamp(2rem, 3vw, 2.5rem);
+      margin-bottom: 0.5rem;
+      text-align: center;
+    }
+
+    .subtitle {
+      color: var(--muted);
+      max-width: 720px;
+      margin: 0 auto 2.5rem;
+      text-align: center;
+    }
+
+    /* Top nav */
+    .top-nav {
+      position: sticky;
+      top: 0;
+      z-index: 999;
+      background: rgba(5, 11, 43, 0.96);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0.75rem 1.5rem;
+    }
+
+    .logo img {
+      height: 40px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+      font-size: 0.9rem;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+    }
+
+    .nav-links a:hover {
+      color: var(--primary);
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      padding: 0.85rem 1.7rem;
+      border-radius: var(--radius-pill);
+      border: none;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: transform 0.12s ease, box-shadow 0.12s ease, filter 0.12s ease;
+    }
+
+    .btn.lang-toggle {
+      gap: 0.6rem;
+      padding: 0.6rem 1.1rem;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.04);
+      color: #fff;
+    }
+
+    .flag {
+      font-size: 1.1rem;
+      line-height: 1;
+    }
+
+    .btn.small {
+      padding: 0.5rem 1.2rem;
+      font-size: 0.85rem;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #fff;
+      box-shadow: 0 0 18px rgba(0, 166, 255, 0.45);
+    }
+
+    .btn-primary:hover {
+      filter: brightness(1.05);
+      transform: translateY(-1px);
+    }
+
+    .btn-secondary {
+      background: var(--accent);
+      color: #fff;
+      box-shadow: 0 0 18px rgba(255, 45, 164, 0.45);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      border: 1px solid var(--primary);
+      color: var(--primary);
+    }
+
+    /* Hero */
+    .hero {
+      padding-top: 6rem;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+      gap: 3rem;
+      align-items: center;
+    }
+
+    .hero-text h1 {
+      font-size: clamp(2.4rem, 3.5vw, 3rem);
+      margin-bottom: 1rem;
+    }
+
+    .hero-text .lead {
+      color: var(--muted);
+      max-width: 32rem;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.3rem 1rem;
+      border-radius: var(--radius-pill);
+      background: rgba(10, 20, 80, 0.9);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-bottom: 1rem;
+    }
+
+    .highlight {
+      color: var(--primary);
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .hero-card {
+      display: grid;
+      gap: 0.7rem;
+    }
+
+    .hero-card-title {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.35rem 0.9rem;
+      border-radius: var(--radius-pill);
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--muted);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      width: fit-content;
+    }
+
+    .hero-card-stat {
+      font-size: 2rem;
+      font-weight: 800;
+      letter-spacing: 0.03em;
+      color: #fff;
+    }
+
+    .hero-card-body {
+      color: var(--muted);
+      margin: 0;
+    }
+
+    .hero-card-footer {
+      color: #fff;
+      margin: 0;
+      font-weight: 600;
+    }
+
+    .card {
+      background: radial-gradient(circle at top left, var(--card-alt), var(--card));
+      border-radius: var(--radius-lg);
+      padding: 1.6rem 1.8rem;
+      box-shadow: var(--shadow-soft);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+    }
+
+    /* Video */
+    .video-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .video-frame {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      border: none;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-soft);
+      background: #000;
+    }
+
+    .video-copy {
+      display: grid;
+      gap: 1rem;
+      color: var(--muted);
+    }
+
+    .video-copy h3 {
+      color: #fff;
+      margin: 0;
+      font-size: 1.5rem;
+    }
+
+    .video-copy ul {
+      margin: 0;
+      padding-left: 1.2rem;
+      display: grid;
+      gap: 0.5rem;
+    }
+
+    .video-copy li {
+      line-height: 1.5;
+    }
+
+    /* Socials */
+    .social-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .social-card {
+      position: relative;
+      padding: 1.5rem;
+      display: grid;
+      gap: 0.8rem;
+      place-items: center;
+      text-align: center;
+      color: var(--text);
+      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .social-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 18px 45px rgba(0, 0, 0, 0.55), 0 0 24px rgba(0, 166, 255, 0.15);
+      border-color: rgba(255, 255, 255, 0.16);
+    }
+
+    .social-follow {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.25rem 0.9rem;
+      border-radius: var(--radius-pill);
+      background: rgba(255, 255, 255, 0.08);
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    .social-icon img {
+      width: 56px;
+      height: 56px;
+      object-fit: contain;
+    }
+
+    .social-label {
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      color: var(--text);
+    }
+
+    /* About */
+    .about-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+      gap: 2rem;
+    }
+
+    .card-large {
+      border-radius: 28px;
+    }
+
+    .about-benefits {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .card-pill {
+      border-radius: var(--radius-md);
+    }
+
+    .card-pill h4 {
+      margin-top: 0;
+    }
+
+    /* Footer */
+    .site-footer {
+      background: #040821;
+      padding: 3rem 0 2rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.04);
+    }
+
+    .footer-main {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .footer-menu {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+    }
+
+    .footer-links {
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.9rem 1.5rem;
+      padding: 0;
+      margin: 0;
+      justify-content: center;
+    }
+
+    .footer-links a {
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .footer-links a:hover {
+      color: var(--primary);
+    }
+
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      color: var(--muted);
+      font-size: 0.9rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.04);
+      padding-top: 1.25rem;
+    }
+
+    .footer-bottom a {
+      color: var(--primary);
+      font-weight: 600;
+    }
+
+    .footer-bottom-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      color: var(--primary);
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    @media (max-width: 900px) {
+      .hero-grid,
+      .about-grid,
+      .video-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .footer-bottom {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="top-nav">
+    <div class="container nav-inner">
+      <div class="logo">
+        <img src="https://setaei.com/Fjolsen/Liggende-M%E2%94%9C%E2%95%95rk.png" alt="FjOlsenbanden logo" />
+      </div>
+      <nav class="nav-links">
+        <a href="#hero" data-i18n="nav-hero">Toppen</a>
+        <a href="#video" data-i18n="nav-video">Video</a>
+        <a href="#community" data-i18n="nav-community">Sosiale medier</a>
+        <a href="#about" data-i18n="nav-about">Om</a>
+      </nav>
+      <div class="nav-actions">
+        <button class="btn lang-toggle small" type="button" id="langToggle" aria-label="Change language">
+          <span class="flag" aria-hidden="true">🇬🇧</span>
+        </button>
+        <a href="#community" class="btn btn-primary small" data-i18n="cta-join">Bli med</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section id="hero" class="section hero">
+      <div class="container hero-grid">
+        <div class="hero-text">
+          <span class="pill" data-i18n="hero-pill">Promo</span>
+          <h1 data-i18n="hero-title" data-i18n-type="html">
+            Bli samarbeidspartner på<br />
+            <span class="highlight">FjOlsenbandens Julekalender 2025</span>
+          </h1>
+          <p class="lead" data-i18n="hero-lead-1" data-i18n-type="html">
+            En digital julekalender med forventet <strong>1000–2000 aktive deltakere</strong> – der deres merkevare får
+            synlighet i et trygt og engasjert gamingmiljø.
+          </p>
+          <p class="lead" data-i18n="hero-lead-2" data-i18n-type="html">
+            Vi gjør det enkelt å bidra med premie eller gavekort – og gir dere mulighet til å kjøpe en egen
+            <strong>“luke”</strong> i kalenderen for maksimal effekt.
+          </p>
+          <div class="hero-actions">
+            <a href="index.html#video" class="btn btn-primary" data-i18n="hero-cta-primary">Se presentasjonsvideo</a>
+            <a href="https://fjolsenbanden.julekalender.no" class="btn btn-ghost" data-i18n="hero-cta-secondary">Test julekalenderen</a>
+          </div>
+        </div>
+        <div class="card hero-card">
+          <div class="hero-card-title" data-i18n="hero-card-title">Kort fortalt</div>
+          <div class="hero-card-stat" data-i18n="hero-card-stat">1&nbsp;000–2&nbsp;000</div>
+          <p class="hero-card-body" data-i18n="hero-card-body">
+            Forventet antall spillere som åpner luker, svarer på spørsmål og ser merkevarene som er med.
+          </p>
+          <p class="hero-card-footer" data-i18n="hero-card-footer">
+            Perfekt for dere som vil nå barnefamilier og unge gamere på en trygg og leken måte – midt i førjulstida.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="video" class="section">
+      <div class="container video-grid">
+        <iframe
+          class="video-frame"
+          src="https://drive.google.com/file/d/1nVKEm1rQ6X4vMScHfXK4giRbM9EdutsT/preview"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+          title="FjOlsenbanden presentasjonsvideo"
+        ></iframe>
+
+        <div class="video-copy">
+          <h3 data-i18n="video-title">Presentasjonsvideo & tilbud</h3>
+          <p data-i18n="video-body-1">
+            Vi søker merkevarer som ønsker å bidra med premier eller gavekort til våre giveaways. Ved å gi oss en premie får
+            dere synlighet mot alle som deltar i kalenderen.
+          </p>
+          <p data-i18n="video-body-2">
+            I tillegg tilbyr vi muligheten til å kjøpe en egen “luke” i kalenderen for kun 2500 kr eks. mva.
+          </p>
+          <p data-i18n="video-body-3">I en slik luke vil vi:</p>
+          <ul>
+            <li data-i18n="video-bullet-1">
+              Promotere deres bedrift med et spørsmål eller en aktivitet som skaper kjennskap til deres merkevare
+            </li>
+            <li data-i18n="video-bullet-2">Linke direkte til deres nettside/nettbutikk for å drive trafikk</li>
+            <li data-i18n="video-bullet-3">
+              Eventuelt presentere et eksklusivt tilbud fra dere som kan konvertere salg
+            </li>
+          </ul>
+          <p data-i18n="video-body-4">
+            Dette er en enkel måte å få god synlighet inn i et aktivt og engasjert gamingmiljø i desember.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="community" class="section">
+      <div class="container">
+        <h2 data-i18n="social-title">Følg oss i sosiale medier</h2>
+        <p class="subtitle" data-i18n="social-subtitle">
+          Vi bygger et positivt fellesskap på tvers av kanaler. Klikk på lenkene under for å bli med der du liker best
+          å henge.
+        </p>
+
+        <div class="social-grid">
+          <a class="card social-card" data-social="twitch" href="https://www.twitch.tv/FjOlsenFN" target="_blank">
+            <div class="social-icon">
+              <img src="img/social/twitch.svg" alt="Twitch" />
+            </div>
+            <span class="social-follow" data-i18n="social-follow">FØLG</span>
+            <span class="social-label">Twitch</span>
+          </a>
+          <a class="card social-card" data-social="tiktok" href="https://www.tiktok.com/@fjolsenbanden" target="_blank">
+            <div class="social-icon">
+              <img src="img/social/tiktok.svg" alt="TikTok" />
+            </div>
+            <span class="social-follow" data-i18n="social-follow">FØLG</span>
+            <span class="social-label">TikTok</span>
+          </a>
+          <a class="card social-card" data-social="discord" href="https://discord.gg/CbvBPHzg4D" target="_blank">
+            <div class="social-icon">
+              <img src="img/social/discord.svg" alt="Discord" />
+            </div>
+            <span class="social-follow" data-i18n="social-join">BLI MED</span>
+            <span class="social-label">Discord</span>
+          </a>
+          <a class="card social-card" data-social="youtube" href="https://youtube.com/@fjolsenbanden" target="_blank">
+            <div class="social-icon">
+              <img src="img/social/youtube.svg" alt="YouTube" />
+            </div>
+            <span class="social-follow" data-i18n="social-subscribe">ABONNER</span>
+            <span class="social-label">YouTube</span>
+          </a>
+          <a class="card social-card" data-social="instagram" href="https://www.instagram.com/fjolsenbanden" target="_blank">
+            <div class="social-icon">
+              <img src="img/social/instagram.svg" alt="Instagram" />
+            </div>
+            <span class="social-follow" data-i18n="social-follow">FØLG</span>
+            <span class="social-label">Instagram</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="section">
+      <div class="container">
+        <h2 data-i18n="about-title" data-i18n-type="html">Hva er <span class="highlight">FjOlsenbanden?</span></h2>
+        <p class="subtitle" data-i18n="about-subtitle">
+          Norges mest inkluderende gaming-community for hele familien.
+        </p>
+
+        <div class="about-grid">
+          <div class="card card-large">
+            <h3 data-i18n="about-goal-heading">Målet med FjOlsenbanden</h3>
+            <p data-i18n="about-goal-1">
+              Målet er å skape et trygt, positivt og inkluderende gamingmiljø der barn, ungdom – og mange foreldre –
+              kan oppleve ekte mestring, samarbeid og fellesskap.
+            </p>
+            <p data-i18n="about-goal-2">
+              Hver uke arrangerer vi morsomme konkurranser og aktiviteter som skaper engasjement og samhold i hele
+              communityet.
+            </p>
+            <p data-i18n="about-goal-3">
+              Premiene som deles ut er sponset av samarbeidspartnere fra næringslivet, eller finansiert gjennom
+              frivillige bidrag fra foreldre – alt for å gi barna ekstra motivasjon og glede.
+            </p>
+            <p data-i18n="about-goal-4">
+              Alle som blir med får tittelen «FjOls» – en ambassadør som fremmer et positivt fellesskap, trygghet og
+              stolthet.
+            </p>
+            <a href="#community" class="btn btn-primary" data-i18n="about-cta">Bli med</a>
+          </div>
+
+          <div class="about-benefits">
+            <div class="card card-pill">
+              <h4 data-i18n="benefit-safe-title">Trygg gamingarena</h4>
+              <p data-i18n="benefit-safe-body">
+                Alle aktiviteter overvåkes av voksne, med klare regler mot mobbing, banning og ekskludering.
+              </p>
+            </div>
+
+            <div class="card card-pill">
+              <h4 data-i18n="benefit-community-title">Positivt fellesskap</h4>
+              <p data-i18n="benefit-community-body">
+                Vi fokuserer på god nettadferd, samarbeid og kommunikasjon for barn og unge.
+              </p>
+            </div>
+
+            <div class="card card-pill">
+              <h4 data-i18n="benefit-stream-title">Familievennlig stream</h4>
+              <p data-i18n="benefit-stream-body">
+                Alt innhold er bannfritt og passer for både barn og voksne å se sammen.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-main">
+      <nav class="footer-menu">
+        <ul class="footer-links">
+          <li><a href="#hero" data-i18n="footer-top">Til toppen</a></li>
+          <li><a href="#video" data-i18n="footer-video">Video</a></li>
+          <li><a href="#community" data-i18n="footer-community">Sosiale medier</a></li>
+          <li><a href="#about" data-i18n="footer-about">Om FjOlsenbanden</a></li>
+        </ul>
+      </nav>
+    </div>
+
+    <div class="container footer-bottom">
+      <p data-i18n="footer-copy">© 2025 Fjolsenbanden v/Fair Share Invest AS – Org.nr. 926 963 023</p>
+      <a href="https://fjolsenbanden.setaei.com/regler.html" class="footer-bottom-link" data-i18n="footer-rules"
+        >Les reglene våre</a
+      >
+    </div>
+  </footer>
+
+  <script>
+    const translations = {
+      nb: {
+        'nav-hero': 'Toppen',
+        'nav-video': 'Video',
+        'nav-community': 'Sosiale medier',
+        'nav-about': 'Om',
+        'cta-join': 'Bli medlem',
+        'hero-pill': 'Promo',
+        'hero-title': 'Bli samarbeidspartner på<br /><span class="highlight">FjOlsenbandens Julekalender 2025</span>',
+        'hero-lead-1':
+          'En digital julekalender med forventet <strong>1000–2000 aktive deltakere</strong> – der deres merkevare får synlighet i et trygt og engasjert gamingmiljø.',
+        'hero-lead-2':
+          'Vi gjør det enkelt å bidra med premie eller gavekort – og gir dere mulighet til å kjøpe en egen <strong>“luke”</strong> i kalenderen for maksimal effekt.',
+        'hero-cta-primary': 'Se presentasjonsvideo',
+        'hero-cta-secondary': 'Test julekalenderen',
+        'hero-card-title': 'Kort fortalt',
+        'hero-card-stat': '1 000–2 000',
+        'hero-card-body':
+          'Forventet antall spillere som åpner luker, svarer på spørsmål og ser merkevarene som er med.',
+        'hero-card-footer':
+          'Perfekt for dere som vil nå barnefamilier og unge gamere på en trygg og leken måte – midt i førjulstida.',
+        'video-title': 'Presentasjonsvideo & tilbud',
+        'video-body-1':
+          'Vi søker merkevarer som ønsker å bidra med premier eller gavekort til våre giveaways. Ved å gi oss en premie får dere synlighet mot alle som deltar i kalenderen.',
+        'video-body-2': 'I tillegg tilbyr vi muligheten til å kjøpe en egen “luke” i kalenderen for kun 2500 kr eks. mva.',
+        'video-body-3': 'I en slik luke vil vi:',
+        'video-bullet-1':
+          'Promotere deres bedrift med et spørsmål eller en aktivitet som skaper kjennskap til deres merkevare',
+        'video-bullet-2': 'Linke direkte til deres nettside/nettbutikk for å drive trafikk',
+        'video-bullet-3': 'Eventuelt presentere et eksklusivt tilbud fra dere som kan konvertere salg',
+        'video-body-4': 'Dette er en enkel måte å få god synlighet inn i et aktivt og engasjert gamingmiljø i desember.',
+        'social-title': 'Følg oss i sosiale medier',
+        'social-subtitle':
+          'Vi bygger et positivt fellesskap på tvers av kanaler. Klikk på lenkene under for å bli med der du liker best å henge.',
+        'social-follow': 'FØLG',
+        'social-join': 'BLI MED',
+        'social-subscribe': 'ABONNER',
+        'about-title': 'Hva er <span class="highlight">FjOlsenbanden?</span>',
+        'about-subtitle': 'Norges mest inkluderende gaming-community for hele familien.',
+        'about-goal-heading': 'Målet med FjOlsenbanden',
+        'about-goal-1':
+          'Målet er å skape et trygt, positivt og inkluderende gamingmiljø der barn, ungdom – og mange foreldre – kan oppleve ekte mestring, samarbeid og fellesskap.',
+        'about-goal-2':
+          'Hver uke arrangerer vi morsomme konkurranser og aktiviteter som skaper engasjement og samhold i hele communityet.',
+        'about-goal-3':
+          'Premiene som deles ut er sponset av samarbeidspartnere fra næringslivet, eller finansiert gjennom frivillige bidrag fra foreldre – alt for å gi barna ekstra motivasjon og glede.',
+        'about-goal-4':
+          'Alle som blir med får tittelen «FjOls» – en ambassadør som fremmer et positivt fellesskap, trygghet og stolthet.',
+        'about-cta': 'Bli med',
+        'benefit-safe-title': 'Trygg gamingarena',
+        'benefit-safe-body':
+          'Alle aktiviteter overvåkes av voksne, med klare regler mot mobbing, banning og ekskludering.',
+        'benefit-community-title': 'Positivt fellesskap',
+        'benefit-community-body': 'Vi fokuserer på god nettadferd, samarbeid og kommunikasjon for barn og unge.',
+        'benefit-stream-title': 'Familievennlig stream',
+        'benefit-stream-body': 'Alt innhold er bannfritt og passer for både barn og voksne å se sammen.',
+        'footer-top': 'Til toppen',
+        'footer-video': 'Video',
+        'footer-community': 'Sosiale medier',
+        'footer-about': 'Om FjOlsenbanden',
+        'footer-copy': '© 2025 Fjolsenbanden v/Fair Share Invest AS – Org.nr. 926 963 023',
+        'footer-rules': 'Les reglene våre',
+      },
+      en: {
+        'nav-hero': 'Top',
+        'nav-video': 'Video',
+        'nav-community': 'Social',
+        'nav-about': 'About',
+        'cta-join': 'Become a member',
+        'hero-pill': 'Promo',
+        'hero-title': 'Become a partner for<br /><span class="highlight">FjOlsenbanden’s Christmas Calendar 2025</span>',
+        'hero-lead-1':
+          'A digital Christmas calendar with an expected <strong>1,000–2,000 active participants</strong> – giving your brand visibility in a safe and engaged gaming community.',
+        'hero-lead-2':
+          'We make it easy to contribute a prize or gift card – and give you the option to buy your own calendar <strong>“door”</strong> for maximum impact.',
+        'hero-cta-primary': 'Watch presentation video',
+        'hero-cta-secondary': 'Test the calendar',
+        'hero-card-title': 'Quick facts',
+        'hero-card-stat': '1,000–2,000',
+        'hero-card-body':
+          'Expected number of players opening doors, answering questions, and seeing the brands that join.',
+        'hero-card-footer':
+          'Ideal for reaching families and young gamers in a safe, playful way during the run-up to Christmas.',
+        'video-title': 'Presentation video & offer',
+        'video-body-1':
+          'We’re looking for brands that want to contribute prizes or gift cards to our giveaways. By giving a prize, your brand gains visibility to everyone taking part in the calendar.',
+        'video-body-2': 'We also offer the option to buy your own calendar “door” for only NOK 2,500 excl. VAT.',
+        'video-body-3': 'In such a door we will:',
+        'video-bullet-1':
+          'Promote your company with a question or activity that builds awareness of your brand',
+        'video-bullet-2': 'Link directly to your website/webshop to drive traffic',
+        'video-bullet-3': 'Optionally present an exclusive offer from you that can convert sales',
+        'video-body-4': 'This is an easy way to gain strong visibility in an active and engaged gaming community during December.',
+        'social-title': 'Follow us on social media',
+        'social-subtitle':
+          'We build a positive community across channels. Click the links below to join us where you like to hang out.',
+        'social-follow': 'FOLLOW',
+        'social-join': 'JOIN',
+        'social-subscribe': 'SUBSCRIBE',
+        'about-title': 'What is <span class="highlight">FjOlsenbanden?</span>',
+        'about-subtitle': 'Norway’s most inclusive gaming community for the whole family.',
+        'about-goal-heading': 'The goal of FjOlsenbanden',
+        'about-goal-1':
+          'The goal is to create a safe, positive, and inclusive gaming environment where kids, teens – and many parents – experience real mastery, teamwork, and community.',
+        'about-goal-2':
+          'Every week we host fun competitions and activities that build engagement and togetherness across the community.',
+        'about-goal-3':
+          'Prizes are sponsored by business partners or funded through voluntary parent contributions – all to give the kids extra motivation and joy.',
+        'about-goal-4':
+          'Everyone who joins becomes a “FjOls” – an ambassador who promotes a positive community, safety, and pride.',
+        'about-cta': 'Join us',
+        'benefit-safe-title': 'Safe gaming arena',
+        'benefit-safe-body': 'All activities are supervised by adults with clear rules against bullying, swearing, and exclusion.',
+        'benefit-community-title': 'Positive community',
+        'benefit-community-body': 'We focus on good online behavior, teamwork, and communication for kids and teens.',
+        'benefit-stream-title': 'Family-friendly stream',
+        'benefit-stream-body': 'All content is free from swearing and suitable for both kids and adults to watch together.',
+        'footer-top': 'Back to top',
+        'footer-video': 'Video',
+        'footer-community': 'Social',
+        'footer-about': 'About FjOlsenbanden',
+        'footer-copy': '© 2025 Fjolsenbanden v/Fair Share Invest AS – Org.no. 926 963 023',
+        'footer-rules': 'Read our rules',
+      },
+    };
+
+    const langFlags = { nb: '🇬🇧', en: '🇳🇴' };
+
+    function applyTranslations(lang) {
+      const strings = translations[lang] || translations.nb;
+      document.documentElement.lang = lang === 'en' ? 'en' : 'nb';
+
+      document.querySelectorAll('[data-i18n]').forEach((el) => {
+        const key = el.dataset.i18n;
+        const value = strings[key];
+        if (!value) return;
+        if (el.dataset.i18nType === 'html') {
+          el.innerHTML = value;
+        } else {
+          el.textContent = value;
+        }
+      });
+
+      const toggleButton = document.getElementById('langToggle');
+      if (toggleButton) {
+        const flagEl = toggleButton.querySelector('.flag');
+        if (flagEl) flagEl.textContent = langFlags[lang] || '🇬🇧';
+      }
+
+      localStorage.setItem('promoLang', lang);
+    }
+
+    const langToggle = document.getElementById('langToggle');
+    let currentLang = localStorage.getItem('promoLang') || 'nb';
+
+    applyTranslations(currentLang);
+
+    langToggle?.addEventListener('click', () => {
+      currentLang = currentLang === 'nb' ? 'en' : 'nb';
+      applyTranslations(currentLang);
+    });
+  </script>
+</body>
+</html>
