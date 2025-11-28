@@ -384,11 +384,36 @@
       transition: outline 0.12s ease, border-color 0.12s ease;
     }
 
+    .contact-form {
+      display: grid;
+      gap: 0.9rem;
+    }
+
+    .contact-form label {
+      display: grid;
+      gap: 0.35rem;
+      color: #fff;
+      font-weight: 600;
+    }
+
+    .contact-form input,
+    .contact-form textarea {
+      width: 100%;
+      padding: 0.85rem 1rem;
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.05);
+      color: #fff;
+      font-size: 1rem;
+      font-family: inherit;
+      outline: none;
+      transition: border-color 0.12s ease, box-shadow 0.12s ease;
+    }
+
     .contact-form input:focus,
     .contact-form textarea:focus {
-      outline: 2px solid var(--primary);
-      outline-offset: 1px;
       border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(0, 166, 255, 0.2);
     }
 
     .contact-form textarea {
@@ -396,79 +421,153 @@
       resize: vertical;
     }
 
-    .help-text {
-      color: var(--muted);
-      font-size: 0.9rem;
-      margin-top: -0.2rem;
-    }
-
-    .contact-info {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 1.5rem;
-      align-items: center;
-    }
-
-    .contact-info img {
-      width: 100%;
-      max-width: 340px;
-      display: block;
-      margin: 0 auto;
-      border-radius: var(--radius-md);
-      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
-    }
-
     /* Socials */
+    #community {
+      background: radial-gradient(circle at 20% 15%, rgba(47, 85, 176, 0.14), transparent 38%),
+        radial-gradient(circle at 80% 10%, rgba(0, 166, 255, 0.16), transparent 40%),
+        radial-gradient(circle at 50% 90%, rgba(255, 45, 164, 0.12), transparent 40%),
+        radial-gradient(circle at center, #0c1335 0, #050b2b 60%, #020317 100%);
+    }
+
+    .community-panel {
+      background: linear-gradient(145deg, rgba(14, 26, 63, 0.9), rgba(7, 15, 40, 0.92));
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 28px 70px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+      border-radius: 30px;
+      padding: clamp(1.8rem, 2vw, 2.4rem) clamp(1.5rem, 2vw, 2.8rem);
+    }
+
+    .community-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.55rem 1.1rem;
+      border-radius: var(--radius-pill);
+      background: rgba(0, 166, 255, 0.12);
+      color: #cde6ff;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+    }
+
+    .community-header {
+      text-align: center;
+    }
+
+    .community-header h2 {
+      margin: 0.9rem 0 0.6rem;
+      font-size: clamp(2.1rem, 3.4vw, 2.9rem);
+    }
+
+    .community-header .subtitle {
+      max-width: 880px;
+      margin-bottom: 1.5rem;
+    }
+
     .social-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-      gap: 1.3rem;
+      grid-auto-flow: column;
+      grid-auto-columns: minmax(190px, 1fr);
+      gap: 1.1rem;
+      overflow-x: auto;
+      padding: 0.35rem 0.35rem 0.8rem;
+      margin-top: 1.25rem;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(255, 255, 255, 0.25) transparent;
+    }
+
+    .social-grid::-webkit-scrollbar {
+      height: 8px;
+    }
+
+    .social-grid::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.25);
+      border-radius: 999px;
     }
 
     .social-card {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
+      position: relative;
+      padding: 1.35rem 1.25rem 1.5rem;
+      display: grid;
+      grid-template-rows: auto auto 1fr;
+      gap: 0.65rem;
+      place-items: center;
       text-align: center;
-      padding-block: 2rem;
-      gap: 0.55rem;
+      color: var(--text);
+      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.08), transparent 35%),
+        linear-gradient(155deg, #111f4c 0%, #0a1333 100%);
+      box-shadow: 0 18px 50px rgba(0, 0, 0, 0.6), 0 0 18px rgba(0, 166, 255, 0.16);
+      min-height: 210px;
+      border-radius: 22px;
     }
 
-    .social-icon img {
-      width: 32px;
-      height: 32px;
-      object-fit: contain;
-      margin-bottom: 0.25rem;
+    .social-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 24px 65px rgba(0, 0, 0, 0.7), 0 0 26px rgba(0, 166, 255, 0.24);
+      border-color: rgba(255, 255, 255, 0.2);
     }
 
     .social-follow {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      padding: 0.4rem 1rem;
-      margin-top: 0.1rem;
+      padding: 0.45rem 1.2rem;
       border-radius: var(--radius-pill);
-      background: rgba(255, 255, 255, 0.08);
+      background: linear-gradient(120deg, #1f8cfe, #51b0ff);
+      font-size: 0.9rem;
+      font-weight: 800;
+      letter-spacing: 0.04em;
       color: #fff;
-      font-weight: 700;
-      font-size: 0.8rem;
-      letter-spacing: 0.08em;
+      box-shadow: 0 10px 30px rgba(0, 166, 255, 0.35);
       text-transform: uppercase;
-      transition: background 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
     }
 
-    .social-card:hover .social-follow {
-      background: var(--primary);
-      box-shadow: 0 0 18px rgba(0, 166, 255, 0.35);
-      transform: translateY(-1px);
+    .social-icon {
+      width: 78px;
+      height: 78px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 20px;
+      background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.05));
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 12px 30px rgba(0, 0, 0, 0.38);
+    }
+
+    .social-icon img {
+      width: 50px;
+      height: 50px;
+      display: block;
+      object-fit: contain;
     }
 
     .social-label {
-      font-size: 0.85rem;
+      font-size: 1.05rem;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      color: #f0f3ff;
       text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--muted);
+    }
+
+    /* 2–kolonne layout på mobil / små tablets */
+    @media (max-width: 900px) {
+      .social-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        overflow-x: visible;
+      }
+
+      .social-card {
+        min-height: 200px;
+        padding: 1.3rem;
+      }
+    }
+
+    /* 1 kolonne på veldig små skjermer */
+    @media (max-width: 520px) {
+      .social-grid {
+        grid-template-columns: 1fr;
+      }
     }
 
     /* About */
@@ -666,48 +765,60 @@
 
     <section id="community" class="section">
       <div class="container">
-        <h2 data-i18n="social-title" data-i18n-type="html">FjOlsenbanden – et community i <span class="highlight">vekst!</span></h2>
-        <p class="subtitle" data-i18n="social-subtitle">
-          FjOlsenbanden har allerede over 10 000 følgere på tvers av våre kanaler og over 2600 medlemmer i Discord!<br />
-          Følg oss for å få med deg alle nyheter, det kan være unike events på de forskjellige kanalene.
-        </p>
+        <div class="community-panel">
+          <div class="community-header">
+            <span class="community-eyebrow" data-i18n="nav-community">Sosiale medier</span>
+            <h2 data-i18n="social-title" data-i18n-type="html">
+              FjOlsenbanden – et community i <span class="highlight">vekst!</span>
+            </h2>
+            <p class="subtitle" data-i18n="social-subtitle">
+              FjOlsenbanden har allerede over 10 000 følgere på tvers av våre kanaler og over 2600 medlemmer i Discord!
+              Følg oss for å få med deg alle nyheter, det kan være unike events på de forskjellige kanalene.
+            </p>
+          </div>
 
-        <div class="social-grid" aria-label="Community kanaler">
-          <a class="card social-card" data-social="twitch" href="https://www.twitch.tv/FjOlsenFN" target="_blank">
-            <div class="social-icon">
-              <img src="img/social/twitch.svg" alt="Twitch" />
-            </div>
-            <span class="social-follow" data-i18n="social-follow">FØLG</span>
-            <span class="social-label">Twitch</span>
-          </a>
-          <a class="card social-card" data-social="tiktok" href="https://www.tiktok.com/@fjolsenbanden" target="_blank">
-            <div class="social-icon">
-              <img src="img/social/tiktok.svg" alt="TikTok" />
-            </div>
-            <span class="social-follow" data-i18n="social-follow">FØLG</span>
-            <span class="social-label">TikTok</span>
-          </a>
-          <a class="card social-card" data-social="discord" href="https://discord.gg/CbvBPHzg4D" target="_blank">
-            <div class="social-icon">
-              <img src="img/social/discord.svg" alt="Discord" />
-            </div>
-            <span class="social-follow" data-i18n="social-join">BLI MED</span>
-            <span class="social-label">Discord</span>
-          </a>
-          <a class="card social-card" data-social="youtube" href="https://youtube.com/@fjolsenbanden" target="_blank">
-            <div class="social-icon">
-              <img src="img/social/youtube.svg" alt="YouTube" />
-            </div>
-            <span class="social-follow" data-i18n="social-subscribe">ABONNER</span>
-            <span class="social-label">YouTube</span>
-          </a>
-          <a class="card social-card" data-social="instagram" href="https://www.instagram.com/fjolsenbanden" target="_blank">
-            <div class="social-icon">
-              <img src="img/social/instagram.svg" alt="Instagram" />
-            </div>
-            <span class="social-follow" data-i18n="social-follow">FØLG</span>
-            <span class="social-label">Instagram</span>
-          </a>
+          <div class="social-grid" aria-label="Community kanaler">
+            <a class="card social-card" data-social="twitch" href="https://www.twitch.tv/FjOlsenFN" target="_blank">
+              <div class="social-icon">
+                <img src="img/social/twitch.svg" alt="Twitch" />
+              </div>
+              <span class="social-follow" data-i18n="social-follow">FØLG</span>
+              <span class="social-label">Twitch</span>
+            </a>
+            <a class="card social-card" data-social="tiktok" href="https://www.tiktok.com/@fjolsenbanden" target="_blank">
+              <div class="social-icon">
+                <img src="img/social/tiktok.svg" alt="TikTok" />
+              </div>
+              <span class="social-follow" data-i18n="social-follow">FØLG</span>
+              <span class="social-label">TikTok</span>
+            </a>
+            <a class="card social-card" data-social="discord" href="https://discord.gg/CbvBPHzg4D" target="_blank">
+              <div class="social-icon">
+                <img src="img/social/discord.svg" alt="Discord" />
+              </div>
+              <span class="social-follow" data-i18n="social-join">BLI MED</span>
+              <span class="social-label">Discord</span>
+            </a>
+            <a class="card social-card" data-social="youtube" href="https://youtube.com/@fjolsenbanden" target="_blank">
+              <div class="social-icon">
+                <img src="img/social/youtube.svg" alt="YouTube" />
+              </div>
+              <span class="social-follow" data-i18n="social-subscribe">ABONNER</span>
+              <span class="social-label">YouTube</span>
+            </a>
+            <a
+              class="card social-card"
+              data-social="instagram"
+              href="https://www.instagram.com/fjolsenbanden"
+              target="_blank"
+            >
+              <div class="social-icon">
+                <img src="img/social/instagram.svg" alt="Instagram" />
+              </div>
+              <span class="social-follow" data-i18n="social-follow">FØLG</span>
+              <span class="social-label">Instagram</span>
+            </a>
+          </div>
         </div>
       </div>
     </section>
@@ -849,50 +960,21 @@
             «FjOlsen»
           </p>
         </div>
-      </div>
-    </section>
-
-    <section id="contact" class="section">
-      <div class="container">
-        <div class="card contact-card">
-          <h2 data-i18n="contact-form-title">Kontakt oss</h2>
-          <p class="subtitle" data-i18n="contact-form-subtitle">
-            Har du spørsmål om medlemskap, samarbeid eller events? Send oss en melding så kommer vi tilbake til deg.
-          </p>
-
+        <div class="contact-card">
+          <h2 data-i18n="contact-form-title">Send en melding</h2>
           <form class="contact-form">
-            <div class="form-row">
-              <div class="form-group">
-                <label for="name" data-i18n="contact-name-label">Navn</label>
-                <input type="text" id="name" name="name" required data-i18n-placeholder="contact-name-label" placeholder="Navn" />
-              </div>
-              <div class="form-group">
-                <label for="email" data-i18n="contact-email-label">E-post</label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  required
-                  data-i18n-placeholder="contact-email-label"
-                  placeholder="E-post"
-                />
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label for="message" data-i18n="contact-message-label">Melding</label>
-              <textarea
-                id="message"
-                name="message"
-                rows="5"
-                required
-                data-i18n-placeholder="contact-message-label"
-                placeholder="Melding"
-              ></textarea>
-            </div>
-
-            <p class="help-text" data-i18n="contact-help">Vi svarer så snart vi kan, som regel innen 1–2 virkedager.</p>
-
+            <label>
+              <span data-i18n="contact-name-label">Navn</span>
+              <input type="text" name="name" required data-i18n-placeholder="contact-name-label" placeholder="Navn" />
+            </label>
+            <label>
+              <span data-i18n="contact-email-label">E-post</span>
+              <input type="email" name="email" required data-i18n-placeholder="contact-email-label" placeholder="E-post" />
+            </label>
+            <label>
+              <span data-i18n="contact-message-label">Melding</span>
+              <textarea name="message" required data-i18n-placeholder="contact-message-label" placeholder="Melding"></textarea>
+            </label>
             <button class="btn btn-primary" type="submit" data-i18n="contact-submit">Send melding</button>
           </form>
         </div>
@@ -986,13 +1068,10 @@
           'Gi gjerne en lyd hvis dette kan være aktuelt – vi tar gjerne en uforpliktende prat.',
         'contact-body-2': 'Ønsker dere en fin dag videre!',
         'contact-signoff': '<strong>Vennlig hilsen</strong><br />Tor Martin Olsen<br />«FjOlsen»',
-        'contact-form-title': 'Kontakt oss',
-        'contact-form-subtitle':
-          'Har du spørsmål om medlemskap, samarbeid eller events? Send oss en melding så kommer vi tilbake til deg.',
+        'contact-form-title': 'Send en melding',
         'contact-name-label': 'Navn',
         'contact-email-label': 'E-post',
         'contact-message-label': 'Melding',
-        'contact-help': 'Vi svarer så snart vi kan, som regel innen 1–2 virkedager.',
         'contact-submit': 'Send melding',
       },
       en: {
@@ -1068,13 +1147,10 @@
           'Let us know if this sounds relevant – we’re happy to have a no-obligation conversation.',
         'contact-body-2': 'Wishing you a great day!',
         'contact-signoff': '<strong>Best regards</strong><br />Tor Martin Olsen<br />“FjOlsen”',
-        'contact-form-title': 'Contact us',
-        'contact-form-subtitle':
-          'Questions about membership, partnerships, or events? Send us a message and we will get back to you.',
+        'contact-form-title': 'Send a message',
         'contact-name-label': 'Name',
         'contact-email-label': 'Email',
         'contact-message-label': 'Message',
-        'contact-help': 'We respond as soon as we can, usually within 1–2 business days.',
         'contact-submit': 'Send message',
       },
     };
