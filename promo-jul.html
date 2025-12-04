@@ -363,11 +363,20 @@
       position: relative;
     }
 
+    /* PARTNERE – 4 + 4 på desktop, 2 + 2 på mobil */
     .partners-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-      gap: 1rem;
+      gap: 1.25rem;
       margin-bottom: 2rem;
+      /* Mobil: 2 kolonner → 2 + 2 + 2 + 2 (første skjerm viser 2+2) */
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    @media (min-width: 768px) {
+      /* PC / nettbrett: 4 kolonner → 4 + 4 */
+      .partners-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
     }
 
     .partner-card {
@@ -670,16 +679,24 @@
       color: #13A0F9;
     }
 
+    /* COMMUNITY – 5 på rad desktop, 3 + 2 på mobil */
     .community-grid {
-      display: flex;
-      flex-wrap: wrap;
+      display: grid;
       gap: 1.25rem;
       justify-content: center;
+      /* Mobil / små skjermer: 3 kolonner → 3 + 2 */
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    @media (min-width: 900px) {
+      /* PC / nettbrett: alle 5 på én rad */
+      .community-grid {
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+      }
     }
 
     .community-card {
-      flex: 1 1 180px;
-      max-width: 220px;
+      width: 100%;
       background: rgba(19, 160, 249, 0.08);
       border-radius: 24px;
       padding: 1.25rem 1.1rem 1.35rem;
@@ -727,20 +744,9 @@
       color: #041149;
     }
 
-    @media (max-width: 900px) {
-      .community-card {
-        flex: 1 1 calc(50% - 0.75rem);
-        max-width: none;
-      }
-    }
-
     @media (max-width: 540px) {
       .community-container {
         padding: 0 1rem;
-      }
-
-      .community-card {
-        flex: 1 1 100%;
       }
     }
 
