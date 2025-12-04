@@ -358,6 +358,71 @@
       line-height: 1.5;
     }
 
+    /* Partners */
+    .partners-section {
+      position: relative;
+    }
+
+    .partners-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .partner-card {
+      background: radial-gradient(circle at top left, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02));
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      padding: 1.25rem;
+      display: grid;
+      place-items: center;
+      min-height: 120px;
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
+    }
+
+    .partner-card img {
+      max-width: 140px;
+      width: 100%;
+      height: auto;
+      filter: drop-shadow(0 0 14px rgba(0, 166, 255, 0.18));
+    }
+
+    .partner-cta-card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 1.5rem 1.75rem;
+      border-radius: var(--radius-lg);
+      background: linear-gradient(120deg, rgba(0, 166, 255, 0.18), rgba(255, 255, 255, 0.04));
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .partner-cta-card h3 {
+      margin: 0;
+      font-size: clamp(1rem, 2vw, 1.1rem);
+      color: #fff;
+    }
+
+    .partner-cta-card .btn {
+      white-space: nowrap;
+    }
+
+    @media (max-width: 720px) {
+      .partner-cta-card {
+        flex-direction: column;
+        text-align: center;
+        align-items: center;
+      }
+
+      .partner-cta-card .btn {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+
     /* Partner benefits */
     .benefit-grid {
       display: grid;
@@ -923,6 +988,47 @@
       </div>
     </section>
 
+    <section id="partners" class="section partners-section">
+      <div class="container">
+        <h2 data-i18n="partners-title">Våre samarbeidspartnere</h2>
+        <p class="subtitle" data-i18n="partners-subtitle">
+          Her er noen av våre samarbeidspartnere som har bidratt til å skape minneverdige øyeblikk i Fjolsenbanden!
+        </p>
+
+        <div class="partners-grid">
+          <div class="partner-card">
+            <img src="img/partners/p-lenovo.png" alt="Lenovo logo" loading="lazy" />
+          </div>
+          <div class="partner-card">
+            <img src="img/partners/p-komplett.png" alt="Komplett logo" loading="lazy" />
+          </div>
+          <div class="partner-card">
+            <img src="img/partners/p-samsung.png" alt="Samsung logo" loading="lazy" />
+          </div>
+          <div class="partner-card">
+            <img src="img/partners/p-kristiania.png" alt="Høyskolen Kristiania logo" loading="lazy" />
+          </div>
+          <div class="partner-card">
+            <img src="img/partners/p-philips.png" alt="Philips logo" loading="lazy" />
+          </div>
+          <div class="partner-card">
+            <img src="img/partners/p-saily.png" alt="Saily logo" loading="lazy" />
+          </div>
+          <div class="partner-card">
+            <img src="img/partners/nki-logo-light.svg" alt="NKI logo" loading="lazy" />
+          </div>
+          <div class="partner-card">
+            <img src="img/partners/p-trondheimplay.png" alt="Trondheim Play logo" loading="lazy" />
+          </div>
+        </div>
+
+        <div class="partner-cta-card card">
+          <h3 data-i18n="partners-cta-title">Ønsker du å synliggjøre din merkevare for vårt engasjerte gaming publikum?</h3>
+          <a class="btn btn-primary" href="#contact" data-i18n="partners-cta-button">Kontakt oss</a>
+        </div>
+      </div>
+    </section>
+
     <section id="video" class="section">
       <div class="container video-grid">
         <video
@@ -1178,6 +1284,11 @@
         'benefits-offer-title': 'Mulighet for eksklusivt tilbud',
         'benefits-offer-body': 'Presentere et eksklusivt tilbud fra dere som kan konvertere salg fra målgruppen som deltar.',
         'benefits-note': 'Dette er en enkel måte å få god synlighet inn i et aktivt og engasjert gamingmiljø i desember.',
+        'partners-title': 'Våre samarbeidspartnere',
+        'partners-subtitle':
+          'Her er noen av våre samarbeidspartnere som har bidratt til å skape minneverdige øyeblikk i Fjolsenbanden!',
+        'partners-cta-title': 'Ønsker du å synliggjøre din merkevare for vårt engasjerte gaming publikum?',
+        'partners-cta-button': 'Kontakt oss',
         'social-title': 'FjOlsenbanden – et community i <span class="blue">vekst!</span>',
         'social-subtitle':
           'FjOlsenbanden har allerede over 10 000 følgere på tvers av våre kanaler og over 2600 medlemmer i Discord! Følg oss for å få med deg alle nyheter, det kan være unike events på de forskjellige kanalene.',
@@ -1258,6 +1369,11 @@
         'benefits-offer-title': 'Option for an exclusive offer',
         'benefits-offer-body': 'Present an exclusive offer from you that can convert sales from the participating audience.',
         'benefits-note': 'This is an easy way to gain strong visibility in an active and engaged gaming community during December.',
+        'partners-title': 'Our partners',
+        'partners-subtitle':
+          'Here are some of our partners who have helped create memorable moments in Fjolsenbanden!',
+        'partners-cta-title': 'Want to showcase your brand to our highly engaged gaming audience?',
+        'partners-cta-button': 'Contact us',
         'social-title': 'FjOlsenbanden – a community <span class="blue">on the rise!</span>',
         'social-subtitle':
           'FjOlsenbanden already has over 10,000 followers across our channels and more than 2,600 members in Discord! Follow us to catch every update — some events are unique to each channel.',
