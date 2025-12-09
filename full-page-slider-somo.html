@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8" />
+  <title>SOMI – Full Page Hero</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html,
+    body {
+      height: 100%;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        sans-serif;
+      color: #ffffff;
+      background-color: #000;
+    }
+
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      width: 100%;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: url("https://static.vecteezy.com/system/resources/previews/038/023/311/non_2x/ai-generated-beautiful-smiling-50s-mid-aged-mature-woman-on-white-background-skin-care-beauty-photo.jpg");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      transform: scale(1.02);
+      filter: brightness(0.6);
+      z-index: -2;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.4),
+        rgba(0, 0, 0, 0.7)
+      );
+      z-index: -1;
+    }
+
+    .hero-inner {
+      width: 100%;
+      max-width: 1200px;
+      padding: 24px 32px 64px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 100%;
+    }
+
+    /* TOP BAR */
+
+    .hero-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo img {
+      height: 40px;
+      width: auto;
+      display: block;
+    }
+
+    .logo-text {
+      font-size: 18px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+
+    /* BURGER */
+
+    .burger {
+      width: 40px;
+      height: 40px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      background: rgba(0, 0, 0, 0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background 0.2s ease, border-color 0.2s ease;
+    }
+
+    .burger:hover {
+      background: rgba(0, 0, 0, 0.45);
+      border-color: #ffffff;
+    }
+
+    .burger-lines {
+      width: 18px;
+      height: 14px;
+      position: relative;
+    }
+
+    .burger-lines span {
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: 2px;
+      border-radius: 999px;
+      background: #ffffff;
+      transition: transform 0.25s ease, opacity 0.2s ease, top 0.25s ease,
+        bottom 0.25s ease;
+    }
+
+    .burger-lines span:nth-child(1) {
+      top: 0;
+    }
+
+    .burger-lines span:nth-child(2) {
+      top: 6px;
+    }
+
+    .burger-lines span:nth-child(3) {
+      bottom: 0;
+    }
+
+    .burger.open .burger-lines span:nth-child(1) {
+      top: 6px;
+      transform: rotate(45deg);
+    }
+
+    .burger.open .burger-lines span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .burger.open .burger-lines span:nth-child(3) {
+      bottom: 6px;
+      transform: rotate(-45deg);
+    }
+
+    /* NAV OVERLAY */
+
+    .nav-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.86);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+      z-index: 10;
+    }
+
+    .nav-overlay.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .nav-menu {
+      text-align: center;
+    }
+
+    .nav-menu ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .nav-menu a {
+      text-decoration: none;
+      color: #ffffff;
+      font-size: 18px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-weight: 400;
+    }
+
+    .nav-menu a:hover {
+      text-decoration: underline;
+    }
+
+    /* CENTERED CONTENT */
+
+    .hero-content {
+      max-width: 520px;
+      margin-top: auto;
+      margin-bottom: auto;
+    }
+
+    .hero-kicker {
+      font-size: 13px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      opacity: 0.85;
+    }
+
+    .hero-title {
+      font-size: clamp(32px, 4vw, 42px);
+      line-height: 1.2;
+      margin-bottom: 12px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .hero-subtitle {
+      font-size: 14px;
+      line-height: 1.7;
+      max-width: 460px;
+      opacity: 0.9;
+      margin-bottom: 24px;
+    }
+
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      padding: 10px 26px;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      font-size: 13px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      background: #ddb3b3;
+      color: #383838;
+      font-weight: 600;
+      transition: background 0.2s ease, transform 0.2s ease,
+        box-shadow 0.2s ease;
+    }
+
+    .btn-primary:hover {
+      background: #e7c3c3;
+      transform: translateY(-1px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.45);
+    }
+
+    .btn-secondary {
+      padding: 10px 22px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.7);
+      background: transparent;
+      cursor: pointer;
+      font-size: 13px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #ffffff;
+      font-weight: 500;
+      transition: background 0.2s ease, color 0.2s ease,
+        border-color 0.2s ease;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: #ffffff;
+    }
+
+    /* BOTTOM BAR */
+
+    .hero-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      opacity: 0.8;
+    }
+
+    .hero-footer-links {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .hero-footer a {
+      color: #ffffff;
+      text-decoration: none;
+    }
+
+    .hero-footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* RESPONSIVE */
+
+    @media (max-width: 768px) {
+      .hero-inner {
+        padding: 16px 16px 32px;
+      }
+
+      .logo img {
+        height: 32px;
+      }
+
+      .logo-text {
+        display: none;
+      }
+
+      .hero-footer {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="hero">
+    <div class="hero-inner">
+      <!-- TOP BAR -->
+      <header class="hero-header">
+        <div class="logo">
+          <img
+            src="https://somi.setaei.com/SomiKlinikkenLogo.png"
+            alt="SOMI Klinikken"
+          />
+          <span class="logo-text">SOMI KLINIKKEN</span>
+        </div>
+
+        <button class="burger" id="burgerBtn" aria-label="Åpne meny">
+          <div class="burger-lines">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </button>
+      </header>
+
+      <!-- CENTERED CONTENT -->
+      <main class="hero-content">
+        <div class="hero-kicker">Hud, velvære og estetikk</div>
+        <h1 class="hero-title">Naturlig resultat, personlig behandling</h1>
+        <p class="hero-subtitle">
+          SOMI Klinikken tilbyr skreddersydde behandlinger med fokus på trygghet,
+          kvalitet og et naturlig uttrykk – for deg som vil ta vare på huden din
+          over tid.
+        </p>
+        <div class="hero-actions">
+          <button class="btn-primary">Bestill time</button>
+          <button class="btn-secondary">Se behandlinger</button>
+        </div>
+      </main>
+
+      <!-- BOTTOM BAR -->
+      <footer class="hero-footer">
+        <div>© SOMI KLINIKKEN · ALLE RETTIGHETER</div>
+        <div class="hero-footer-links">
+          <a href="#">Instagram</a>
+          <a href="#">Facebook</a>
+          <a href="#">Kontakt</a>
+        </div>
+      </footer>
+    </div>
+  </div>
+
+  <!-- NAV OVERLAY -->
+  <div class="nav-overlay" id="navOverlay">
+    <nav class="nav-menu">
+      <ul>
+        <li><a href="#">Hjem</a></li>
+        <li><a href="#">Behandlinger</a></li>
+        <li><a href="#">Om SOMI</a></li>
+        <li><a href="#">Ansatte</a></li>
+        <li><a href="#">Kontakt</a></li>
+      </ul>
+    </nav>
+  </div>
+
+  <script>
+    const burgerBtn = document.getElementById("burgerBtn");
+    const navOverlay = document.getElementById("navOverlay");
+
+    burgerBtn.addEventListener("click", () => {
+      burgerBtn.classList.toggle("open");
+      navOverlay.classList.toggle("open");
+    });
+
+    navOverlay.addEventListener("click", (e) => {
+      if (e.target === navOverlay) {
+        burgerBtn.classList.remove("open");
+        navOverlay.classList.remove("open");
+      }
+    });
+  </script>
+</body>
+</html>
