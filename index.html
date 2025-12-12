@@ -1093,6 +1093,53 @@ body.is-admin .fb-block-edit-btn:hover {
     color: var(--primary);
   }
 
+  /* Contact modal (popup) */
+  .fj-modal {
+    position: fixed;
+    inset: 0;
+    display: none;
+    z-index: 2000;
+  }
+
+  .fj-modal.is-open {
+    display: block;
+  }
+
+  .fj-modal__backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.65);
+    backdrop-filter: blur(6px);
+  }
+
+  .fj-modal__dialog {
+    position: relative;
+    max-width: 520px;
+    margin: 12vh auto 0;
+    padding: 1.6rem 1.8rem;
+    border-radius: var(--radius-lg);
+    background: radial-gradient(circle at top left, var(--card-alt), var(--card));
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: var(--shadow-soft);
+  }
+
+  .fj-modal__title {
+    margin: 0 0 0.5rem;
+    font-size: 1.25rem;
+  }
+
+  .fj-modal__text {
+    margin: 0 0 1.25rem;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  .fj-modal__actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.75rem;
+  }
+
   /* Mobil */
 
   @media (max-width: 700px) {
@@ -2388,5 +2435,101 @@ body.is-admin .fb-block-edit-btn:hover {
     }
   });
 </script>
+<script>
+  (function () {
+    const form = document.getElementById('contact-form');
+    if (!form) return;
+
+    const submitBtn = document.getElementById('contact-submit');
+
+    const modal = document.getElementById('contact-modal');
+    const modalMsg = document.getElementById('fj-modal-message');
+
+    function openModal(message) {
+      if (message && modalMsg) modalMsg.textContent = message;
+      modal.classList.add('is-open');
+      modal.setAttribute('aria-hidden', 'false');
+      // fokus på lukk-knapp
+      const closeBtn = modal.querySelector('[data-close="1"]');
+      if (closeBtn) closeBtn.focus();
+    }
+
+    function closeModal() {
+      modal.classList.remove('is-open');
+      modal.setAttribute('aria-hidden', 'true');
+      if (submitBtn) submitBtn.focus();
+    }
+
+    if (modal) {
+      modal.addEventListener('click', (e) => {
+        const target = e.target;
+        if (target && target.getAttribute && target.getAttribute('data-close') === '1') {
+          closeModal();
+        }
+      });
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.classList.contains('is-open')) {
+          closeModal();
+        }
+      });
+    }
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      // honeypot: hvis fylt ut -> avbryt stille
+      const honey = form.querySelector('input[name="_honey"]');
+      if (honey && honey.value) return;
+
+      const originalText = submitBtn ? submitBtn.textContent : '';
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Sender...';
+      }
+
+      try {
+        const fd = new FormData(form);
+        const payload = Object.fromEntries(fd.entries());
+
+        // FormSubmit AJAX-endepunkt
+        const endpoint = 'https://formsubmit.co/ajax/Fjolsenfn@gmail.com';
+
+        const res = await fetch(endpoint, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify(payload)
+        });
+
+        if (!res.ok) throw new Error('Request failed');
+
+        form.reset();
+        openModal('Meldingen din er sendt. Vi tar kontakt så snart vi kan.');
+      } catch (err) {
+        openModal('Beklager – vi klarte ikke å sende meldingen nå. Prøv igjen om litt.');
+      } finally {
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = originalText || 'Send melding';
+        }
+      }
+    });
+  })();
+</script>
+<div id="contact-modal" class="fj-modal" aria-hidden="true">
+  <div class="fj-modal__backdrop" data-close="1"></div>
+  <div class="fj-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="fj-modal-title">
+    <h3 id="fj-modal-title" class="fj-modal__title">Takk!</h3>
+    <p id="fj-modal-message" class="fj-modal__text">
+      Meldingen din er sendt. Vi tar kontakt så snart vi kan.
+    </p>
+    <div class="fj-modal__actions">
+      <button type="button" class="btn btn-primary" data-close="1">Lukk</button>
+    </div>
+  </div>
+</div>
 </body>
 </html>
