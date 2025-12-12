@@ -2659,7 +2659,7 @@
           const message = (formData.get("message") || "").toString().trim();
           const subject = encodeURIComponent("Kontakt via fjolsenbanden.no");
           const body = encodeURIComponent(`${message}\n\nNavn: ${name || "Ukjent"}\nE-post: ${email || "Ikke oppgitt"}`);
-          window.location.href = `mailto:fjolsenfn@gmail.com?subject=${subject}&body=${body}`;
+          window.location.href = `mailto:Fjolsenfn@gmail.com?subject=${subject}&body=${body}`;
           contactForm.reset();
         });
       }

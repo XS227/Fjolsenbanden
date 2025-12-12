@@ -540,7 +540,7 @@ export default function FjolsenbandenHome() {
             "Har du spørsmål om medlemskap, samarbeid eller events? Send oss en melding så kommer vi tilbake til deg.";
     const contactEmail = (typeof contactSettings.email === "string" && contactSettings.email.trim()) ||
         (typeof siteSettings.contactEmail === "string" && siteSettings.contactEmail.trim()) ||
-        "fjolsenfn@gmail.com";
+        "Fjolsenfn@gmail.com";
     const contactButtonColor =
         (typeof contactSettings.buttonColor === "string" && contactSettings.buttonColor.trim()) ||
             (typeof siteSettings.contactButtonColor === "string" && siteSettings.contactButtonColor.trim()) ||
