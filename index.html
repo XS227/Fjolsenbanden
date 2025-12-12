@@ -1616,64 +1616,36 @@ body.is-admin .fb-block-edit-btn:hover {
       </p>
 
       <form
-        action="https://formsubmit.co/khabat@setaei.com"
+        id="contact-form"
+        action="https://formsubmit.co/Fjolsenfn@gmail.com"
         method="POST"
         class="contact-form"
       >
         <!-- SPAM-beskyttelse (honeypot) -->
-        <input type="text" name="_honey" style="display:none" />
+        <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off" />
 
-        <!-- Valgfritt: redirect til takk-side etter innsending -->
-        <input
-          type="hidden"
-          name="_next"
-          value="https://fjolsenbanden.setaei.com/takk.html"
-        />
+        <!-- Emne på e-posten du mottar -->
+        <input type="hidden" name="_subject" value="Ny henvendelse fra FjOlsenbanden kontaktskjema" />
 
-        <!-- Valgfritt: emnefelt i e-posten du mottar -->
-        <input
-          type="hidden"
-          name="_subject"
-          value="Ny henvendelse fra FjOlsenbanden.no kontaktskjema"
-        />
-
-        <!-- Valgfritt: slå av Captcha (kan kommenteres ut om du vil ha Captcha) -->
+        <!-- Captcha av/på (valgfritt) -->
         <input type="hidden" name="_captcha" value="false" />
 
         <div class="form-row form-row--two-columns">
           <div class="form-field">
             <label for="contact-name">Navn</label>
-            <input
-              id="contact-name"
-              type="text"
-              name="navn"
-              required
-              placeholder="Ditt navn"
-            />
+            <input id="contact-name" type="text" name="name" required placeholder="Ditt navn" />
           </div>
 
           <div class="form-field">
             <label for="contact-email">E-post</label>
-            <input
-              id="contact-email"
-              type="email"
-              name="epost"
-              required
-              placeholder="din@epost.no"
-            />
+            <input id="contact-email" type="email" name="email" required placeholder="din@epost.no" />
           </div>
         </div>
 
         <div class="form-row">
           <div class="form-field">
             <label for="contact-message">Melding</label>
-            <textarea
-              id="contact-message"
-              name="melding"
-              rows="5"
-              required
-              placeholder="Hva kan vi hjelpe deg med?"
-            ></textarea>
+            <textarea id="contact-message" name="message" rows="5" required placeholder="Hva kan vi hjelpe deg med?"></textarea>
           </div>
         </div>
 
@@ -1681,7 +1653,7 @@ body.is-admin .fb-block-edit-btn:hover {
           Vi svarer så snart vi kan, som regel innen 1–2 virkedager.
         </p>
 
-        <button type="submit" class="btn btn-primary">
+        <button type="submit" class="btn btn-primary" id="contact-submit">
           Send melding
         </button>
       </form>
