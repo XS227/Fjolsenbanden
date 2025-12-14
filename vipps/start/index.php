@@ -15,20 +15,16 @@ function vipps_request($method, $url, $headers, $body = null) {
   curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $method);
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
   curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-  if ($body !== null) {
-    curl_setopt($ch, CURLOPT_POSTFIELDS, $body);
-  }
+  if ($body !== null) curl_setopt($ch, CURLOPT_POSTFIELDS, $body);
   $resp = curl_exec($ch);
   $code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-  if ($resp === false) {
-    throw new Exception('cURL error: ' . curl_error($ch));
-  }
+  if ($resp === false) throw new Exception('cURL error: ' . curl_error($ch));
   curl_close($ch);
   return [$code, $resp];
 }
 
 try {
-  // 1) Hent access token (må gjøres før alle API-kall). 2
+  // 1) Access token
   $tokenUrl = rtrim($config['base_url'], '/') . '/accesstoken/get';
   $tokenHeaders = [
     'Content-Type: application/json',
@@ -44,6 +40,7 @@ try {
     echo "Token-feil ($tCode): " . htmlspecialchars($tResp);
     exit;
   }
+
   $tokenJson = json_decode($tResp, true);
   $accessToken = $tokenJson['access_token'] ?? null;
   if (!$accessToken) {
@@ -52,10 +49,10 @@ try {
     exit;
   }
 
-  // 2) Opprett Recurring agreement (abonnement). Se Recurring API docs. 3
+  // 2) Opprett agreement (Recurring)
   $agreementUrl = rtrim($config['base_url'], '/') . '/recurring/v3/agreements';
+  $merchantAgreementId = bin2hex(random_bytes(16));
 
-  $merchantAgreementId = bin2hex(random_bytes(16)); // enkel unik ID
   $payload = [
     'currency' => 'NOK',
     'price' => $prices[$plan],
