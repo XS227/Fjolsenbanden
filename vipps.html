@@ -1,483 +1,149 @@
 <!doctype html>
-<html lang="no">
+<html lang="nb">
 <head>
   <meta charset="utf-8" />
+  <title>Vipps – FjOlsenbanden</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Vipps abonnement – Fjolsenbanden</title>
-
-  <!-- Fonts (fallback hvis du ikke vil bruke Google Fonts: host LuckiestGuy/Inter selv) -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Luckiest+Guy&display=swap" rel="stylesheet">
-
-  <style>
-    :root{
-      /* Fjolsenbanden designprofil */
-      --ink: #041149;     /* 2 */
-      --navy: #293660;    /* 3 */
-      --slate: #546287;   /* 4 */
-      --blue: #13A0F9;    /* 5 */
-      --pink: #FF2F9C;    /* 6 */
-      --bg: #0b1433;
-      --card: rgba(255,255,255,0.06);
-      --card2: rgba(255,255,255,0.09);
-      --line: rgba(255,255,255,0.14);
-      --text: rgba(255,255,255,0.92);
-      --muted: rgba(255,255,255,0.72);
-
-      --radius: 18px;
-      --shadow: 0 18px 50px rgba(0,0,0,.35);
-    }
-
-    *{box-sizing:border-box}
-    body{
-      margin:0;
-      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      color:var(--text);
-      background:
-        radial-gradient(900px 400px at 10% 10%, rgba(19,160,249,.25), transparent 55%),
-        radial-gradient(800px 400px at 90% 30%, rgba(255,47,156,.18), transparent 60%),
-        linear-gradient(180deg, var(--bg), #060a1a 70%);
-      min-height:100vh;
-    }
-
-    .wrap{
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 28px 18px 60px;
-    }
-
-    header{
-      display:flex;
-      align-items:flex-start;
-      justify-content:space-between;
-      gap:16px;
-      padding: 10px 8px 18px;
-    }
-
-    .brand{
-      display:flex;
-      flex-direction:column;
-      gap:10px;
-    }
-
-    .title{
-      font-family: "Luckiest Guy", system-ui, sans-serif; /* 7 */
-      letter-spacing: .5px;
-      margin:0;
-      font-size: clamp(28px, 3vw, 40px);
-      line-height: 1.05;
-    }
-
-    .subtitle{
-      margin:0;
-      color: var(--muted);
-      max-width: 70ch;
-      line-height:1.5;
-    }
-
-    .pill{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      padding: 8px 12px;
-      border-radius: 999px;
-      background: rgba(19,160,249,.12);
-      border: 1px solid rgba(19,160,249,.25);
-      color: rgba(255,255,255,.92);
-      font-weight: 600;
-      font-size: 13px;
-      white-space: nowrap;
-    }
-
-    .grid{
-      display:grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 14px;
-      margin-top: 12px;
-    }
-
-    @media (max-width: 920px){
-      .grid{ grid-template-columns: 1fr; }
-      header{ flex-direction:column; }
-    }
-
-    .card{
-      border-radius: var(--radius);
-      background: linear-gradient(180deg, var(--card), rgba(255,255,255,0.03));
-      border: 1px solid var(--line);
-      box-shadow: var(--shadow);
-      padding: 18px;
-      position: relative;
-      overflow:hidden;
-    }
-
-    .card:before{
-      content:"";
-      position:absolute;
-      inset:-2px;
-      background: radial-gradient(600px 220px at 20% 0%, rgba(19,160,249,.22), transparent 55%),
-                  radial-gradient(500px 260px at 85% 10%, rgba(255,47,156,.14), transparent 55%);
-      opacity:.55;
-      pointer-events:none;
-    }
-
-    .card > *{ position:relative; z-index:1; }
-
-    .plan-head{
-      display:flex;
-      align-items:flex-start;
-      justify-content:space-between;
-      gap:10px;
-      margin-bottom: 10px;
-    }
-
-    .plan-name{
-      margin:0;
-      font-weight: 800;
-      font-size: 18px;
-      letter-spacing: .2px;
-    }
-
-    .badge{
-      font-size: 12px;
-      font-weight: 800;
-      padding: 6px 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,.16);
-      background: rgba(255,255,255,.06);
-      color: rgba(255,255,255,.88);
-    }
-
-    .price{
-      margin: 8px 0 0;
-      font-size: 32px;
-      font-weight: 900;
-      letter-spacing: -0.5px;
-    }
-
-    .price small{
-      font-size: 14px;
-      font-weight: 700;
-      color: var(--muted);
-      margin-left: 6px;
-    }
-
-    ul{
-      margin: 14px 0 0;
-      padding: 0 0 0 18px;
-      color: rgba(255,255,255,.82);
-      line-height: 1.55;
-    }
-
-    .select-row{
-      margin-top: 16px;
-      display:flex;
-      gap:10px;
-      align-items:center;
-      justify-content:space-between;
-    }
-
-    .radio{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      width:100%;
-      padding: 12px 12px;
-      border-radius: 14px;
-      border: 1px solid rgba(255,255,255,.16);
-      background: rgba(255,255,255,.06);
-      cursor:pointer;
-      user-select:none;
-    }
-
-    input[type="radio"]{
-      accent-color: var(--blue);
-      width: 18px;
-      height: 18px;
-    }
-
-    .cta{
-      margin-top: 18px;
-      border-radius: var(--radius);
-      background: linear-gradient(180deg, var(--card2), rgba(255,255,255,0.04));
-      border: 1px solid var(--line);
-      box-shadow: var(--shadow);
-      padding: 18px;
-      display:flex;
-      flex-direction:column;
-      gap: 10px;
-    }
-
-    .cta-top{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap: 12px;
-      flex-wrap:wrap;
-    }
-
-    .cta h2{
-      margin:0;
-      font-size: 18px;
-      font-weight: 900;
-    }
-
-    .cta p{
-      margin:0;
-      color: var(--muted);
-      line-height:1.5;
-      max-width: 85ch;
-    }
-
-    .actions{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      align-items:center;
-      justify-content:flex-end;
-    }
-
-    .btn{
-      border: 0;
-      cursor:pointer;
-      font-weight: 800;
-      border-radius: 14px;
-      padding: 12px 14px;
-      display:inline-flex;
-      align-items:center;
-      gap:10px;
-      color: rgba(255,255,255,.95);
-      background: rgba(255,255,255,.08);
-      border: 1px solid rgba(255,255,255,.14);
-      transition: transform .08s ease, background .12s ease, border-color .12s ease;
-      text-decoration:none;
-    }
-
-    .btn:hover{ transform: translateY(-1px); border-color: rgba(255,255,255,.22); background: rgba(255,255,255,.10); }
-    .btn:active{ transform: translateY(0px); }
-
-    .btn-primary{
-      background: linear-gradient(90deg, rgba(19,160,249,.95), rgba(255,47,156,.85));
-      border-color: rgba(255,255,255,.10);
-    }
-
-    .vipps-mark{
-      width: 20px; height: 20px;
-      border-radius: 6px;
-      background: rgba(255,255,255,.18);
-      display:inline-grid;
-      place-items:center;
-      font-size: 12px;
-      font-weight: 900;
-    }
-
-    .foot{
-      margin-top: 12px;
-      font-size: 12.5px;
-      color: rgba(255,255,255,.65);
-      line-height:1.45;
-    }
-
-    .note{
-      margin-top: 10px;
-      padding: 12px 12px;
-      border-radius: 14px;
-      border: 1px dashed rgba(255,255,255,.22);
-      background: rgba(0,0,0,.12);
-      color: rgba(255,255,255,.78);
-      font-size: 13px;
-    }
-
-    .error{
-      display:none;
-      margin-top: 10px;
-      padding: 12px 12px;
-      border-radius: 14px;
-      border: 1px solid rgba(255,47,156,.35);
-      background: rgba(255,47,156,.10);
-      color: rgba(255,255,255,.9);
-      font-weight: 700;
-      font-size: 13px;
-    }
-
-    .inline{
-      display:flex;
-      align-items:center;
-      gap:8px;
-      flex-wrap:wrap;
-    }
-
-    .link{
-      color: rgba(19,160,249,.95);
-      text-decoration: none;
-      font-weight: 700;
-    }
-    .link:hover{ text-decoration: underline; }
-  </style>
+  <meta name="description" content="Støtt FjOlsenbanden med Vipps." />
+  <link rel="stylesheet" href="/styles.css" />
 </head>
 
 <body>
-  <div class="wrap">
-    <header>
-      <div class="brand">
-        <div class="pill">Abonnement via Vipps</div>
-        <h1 class="title">Velg pakke – logg inn med Vipps</h1>
+  <header class="top-nav">
+    <div class="container nav-inner">
+      <div class="logo">
+        <a href="/"><img src="/img/logo//Liggende-M.png" alt="FjOlsenbanden logo" /></a>
+      </div>
+      <nav class="nav-links">
+        <a href="/#about">Om</a>
+        <a href="/#community">Community</a>
+        <a href="/#kontakt">Kontakt</a>
+      </nav>
+      <div class="nav-actions">
+        <a href="/#membership" class="btn btn-primary small">Bli medlem</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="section">
+      <div class="container">
+        <h2>Vipps <span class="highlight">støtte</span></h2>
         <p class="subtitle">
-          For å aktivere abonnementet må du bekrefte med Vipps. Dette fungerer både for eksisterende Vipps-brukere og nye
-          (du kan registrere deg i Vipps-appen underveis).
+          Her kan du opprette en fast støtte (abonnement) eller gjøre en engangsbetaling.
         </p>
-      </div>
-      <div class="pill" id="chosenPill">Valgt: <span id="chosenText">Ingen</span></div>
-    </header>
 
-    <section class="grid" aria-label="Abonnementspakker">
-      <!-- Pakke 1 -->
-      <article class="card">
-        <div class="plan-head">
-          <h3 class="plan-name">Starter</h3>
-          <span class="badge">Mest for nybegynnere</span>
+        <div class="services-grid">
+          <!-- Engang -->
+          <div class="card service">
+            <h3>Engangsbetaling</h3>
+            <p>Send valgfritt beløp som engangsstøtte.</p>
+
+            <label style="display:block; margin: 0.75rem 0 0.35rem; color: var(--muted); font-weight: 600;">
+              Beløp (NOK)
+            </label>
+            <input id="oneTimeAmount" type="number" min="1" step="1" value="50" />
+
+            <div style="margin-top: 1rem;">
+              <button id="btnOneTime" class="btn btn-primary">Betal med Vipps</button>
+            </div>
+
+            <p id="oneTimeStatus" class="vipps-front-status"></p>
+          </div>
+
+          <!-- Fast -->
+          <div class="card service">
+            <h3>Fast betaling</h3>
+            <p>Opprett en månedlig støtteavtale (Vipps Recurring).</p>
+
+            <label style="display:block; margin: 0.75rem 0 0.35rem; color: var(--muted); font-weight: 600;">
+              Beløp per måned (NOK)
+            </label>
+            <input id="monthlyAmount" type="number" min="1" step="1" value="49" />
+
+            <div style="margin-top: 1rem; display:flex; gap: 0.75rem; flex-wrap: wrap;">
+              <button id="btnCreateAgreement" class="btn btn-secondary">Opprett avtale</button>
+              <a class="btn btn-ghost" href="/vilkar.html">Vilkår</a>
+            </div>
+
+            <p id="agreementStatus" class="vipps-front-status"></p>
+          </div>
         </div>
-        <div class="price">49,- <small>/ mnd</small></div>
-        <ul>
-          <li>Tilgang til medlemssone</li>
-          <li>Basisrolle + perks</li>
-          <li>Støtter communityet</li>
-        </ul>
-
-        <div class="select-row">
-          <label class="radio" for="plan_starter">
-            <input type="radio" id="plan_starter" name="plan" value="starter" />
-            <span><strong>Velg Starter</strong><br><span style="color:var(--muted);font-weight:600;">Plan-id: starter</span></span>
-          </label>
-        </div>
-      </article>
-
-      <!-- Pakke 2 -->
-      <article class="card">
-        <div class="plan-head">
-          <h3 class="plan-name">Pro</h3>
-          <span class="badge" style="border-color: rgba(19,160,249,.30); background: rgba(19,160,249,.10);">Populær</span>
-        </div>
-        <div class="price">99,- <small>/ mnd</small></div>
-        <ul>
-          <li>Alt i Starter</li>
-          <li>Ekstra perks + badge</li>
-          <li>Prioritert tilgang til events</li>
-        </ul>
-
-        <div class="select-row">
-          <label class="radio" for="plan_pro">
-            <input type="radio" id="plan_pro" name="plan" value="pro" />
-            <span><strong>Velg Pro</strong><br><span style="color:var(--muted);font-weight:600;">Plan-id: pro</span></span>
-          </label>
-        </div>
-      </article>
-
-      <!-- Pakke 3 -->
-      <article class="card">
-        <div class="plan-head">
-          <h3 class="plan-name">Legend</h3>
-          <span class="badge" style="border-color: rgba(255,47,156,.32); background: rgba(255,47,156,.10);">Best verdi</span>
-        </div>
-        <div class="price">149,- <small>/ mnd</small></div>
-        <ul>
-          <li>Alt i Pro</li>
-          <li>Eksklusive perks + rolle</li>
-          <li>Navn på “supporter wall”</li>
-        </ul>
-
-        <div class="select-row">
-          <label class="radio" for="plan_legend">
-            <input type="radio" id="plan_legend" name="plan" value="legend" />
-            <span><strong>Velg Legend</strong><br><span style="color:var(--muted);font-weight:600;">Plan-id: legend</span></span>
-          </label>
-        </div>
-      </article>
-    </section>
-
-    <section class="cta" aria-label="Fortsett med Vipps">
-      <div class="cta-top">
-        <div>
-          <h2>Logg inn / registrer med Vipps</h2>
-          <p>
-            Når du trykker “Fortsett med Vipps” sendes du til Vipps for innlogging og bekreftelse av abonnement.
-          </p>
-        </div>
-
-        <div class="actions">
-          <button class="btn" type="button" id="btnChooseFirst">Velg anbefalt</button>
-          <button class="btn btn-primary" type="button" id="btnVipps">
-            <span class="vipps-mark">V</span>
-            Fortsett med Vipps
-          </button>
-        </div>
-      </div>
-
-      <div class="error" id="errorBox">Du må velge en pakke før du kan fortsette.</div>
-
-      <div class="note">
-        <strong>Backend-endpoint du må lage:</strong>
-        <div class="inline" style="margin-top:6px;">
-          <code style="background:rgba(0,0,0,.25); padding:6px 8px; border-radius:10px; border:1px solid rgba(255,255,255,.12);">/vipps/start?plan=starter|pro|legend</code>
-        </div>
-        <div class="foot" style="margin-top:8px;">
-          På serveren starter du Vipps “Recurring/Abonnement”-flyten (oppretter agreement, sender brukeren til Vipps, og
-          håndterer retur/callback). Denne HTML-siden er kun UI og routing til riktig plan.
-        </div>
-      </div>
-
-      <div class="foot">
-        Ved å fortsette godtar du abonnementsvilkår og at Vipps brukes som betalingsløsning.
-        <a class="link" href="/vilkar.html">Se vilkår</a> · <a class="link" href="/personvern.html">Personvern</a>
       </div>
     </section>
-  </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-bottom">
+      <p>© 2025 Fjolsenbanden v/Fair Share Invest AS – Org.nr. 926 963 023</p>
+      <a href="/personvernerklaering.html" class="footer-bottom-link">Personvern</a>
+    </div>
+  </footer>
 
   <script>
-    (function(){
-      const radios = Array.from(document.querySelectorAll('input[name="plan"]'));
-      const chosenText = document.getElementById('chosenText');
-      const chosenPill = document.getElementById('chosenPill');
-      const errorBox = document.getElementById('errorBox');
-      const btnVipps = document.getElementById('btnVipps');
-      const btnChooseFirst = document.getElementById('btnChooseFirst');
+    const apiBase = "/vipps/api";
 
-      function getSelected(){
-        const r = radios.find(x => x.checked);
-        return r ? r.value : null;
-      }
+    function setText(id, msg) {
+      const el = document.getElementById(id);
+      if (el) el.textContent = msg || "";
+    }
 
-      function setChosenUI(plan){
-        chosenText.textContent = plan ? plan : 'Ingen';
-        chosenPill.style.borderColor = plan ? 'rgba(19,160,249,.35)' : 'rgba(255,255,255,.14)';
-        errorBox.style.display = 'none';
-      }
-
-      radios.forEach(r => r.addEventListener('change', () => setChosenUI(getSelected())));
-
-      btnChooseFirst.addEventListener('click', () => {
-        // "Anbefalt" = Pro (kan endres)
-        const pro = document.getElementById('plan_pro');
-        if (pro) pro.checked = true;
-        setChosenUI(getSelected());
+    async function postJSON(url, body) {
+      const res = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "Accept": "application/json" },
+        body: JSON.stringify(body || {})
       });
 
-      btnVipps.addEventListener('click', () => {
-        const plan = getSelected();
-        if (!plan){
-          errorBox.style.display = 'block';
+      const text = await res.text();
+      let data = null;
+      try { data = text ? JSON.parse(text) : null; } catch (e) {}
+
+      if (!res.ok) {
+        const errMsg = data?.message || data?.error || text || ("HTTP " + res.status);
+        throw new Error(errMsg);
+      }
+      return data;
+    }
+
+    // Engang (checkout/ecom) - du kan koble dette til Checkout-løsningen din senere.
+    document.getElementById("btnOneTime")?.addEventListener("click", async () => {
+      setText("oneTimeStatus", "Sender...");
+      try {
+        const amount = parseInt(document.getElementById("oneTimeAmount").value || "0", 10);
+        const data = await postJSON(`${apiBase}/create_one_time_payment.php`, { amount });
+        // forventer { redirectUrl: "https://..." }
+        if (data?.redirectUrl) {
+          window.location.href = data.redirectUrl;
           return;
         }
+        setText("oneTimeStatus", "OK, men mangler redirectUrl fra server.");
+      } catch (e) {
+        setText("oneTimeStatus", "Feil: " + e.message);
+      }
+    });
 
-        // Send bruker til backend som starter Vipps-innlogging/abonnement for valgt plan
-        const url = `/vipps/start?plan=${encodeURIComponent(plan)}`;
-        window.location.href = url;
-      });
+    // Fast betaling (Recurring agreement)
+    document.getElementById("btnCreateAgreement")?.addEventListener("click", async () => {
+      setText("agreementStatus", "Oppretter avtale...");
+      try {
+        const amount = parseInt(document.getElementById("monthlyAmount").value || "0", 10);
+        const data = await postJSON(`${apiBase}/create_agreement.php`, { amount });
 
-      // Init
-      setChosenUI(getSelected());
-    })();
+        // ofte får du en url kunden må godkjenne i Vipps-appen / redirect
+        if (data?.vippsConfirmationUrl) {
+          window.location.href = data.vippsConfirmationUrl;
+          return;
+        }
+        if (data?.redirectUrl) {
+          window.location.href = data.redirectUrl;
+          return;
+        }
+        setText("agreementStatus", "Avtale opprettet, men mangler redirect/confirmation-url fra server.");
+      } catch (e) {
+        setText("agreementStatus", "Feil: " + e.message);
+      }
+    });
   </script>
 </body>
 </html>
