@@ -1,395 +1,483 @@
 <!doctype html>
-<html lang="nb">
-  <head>
-    <meta charset="utf-8" />
-    <title>Vipps abonnement – test login/registrering</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta
-      name="description"
-      content="Test Vipps Login og registrering for abonnementsbetalinger."
-    />
-    <style>
-      :root {
-        --bg: #050b2b;
-        --bg-alt: #0a1236;
-        --card: #0f193f;
-        --card-alt: #101c4d;
-        --text: #f5f7ff;
-        --muted: #c6c9dd;
-        --primary: #00a3ff;
-        --accent: #ff2da4;
-        --radius: 18px;
-        --shadow: 0 30px 80px rgba(0, 0, 0, 0.45);
-      }
+<html lang="no">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Vipps abonnement – Fjolsenbanden</title>
 
-      *,
-      *::before,
-      *::after {
-        box-sizing: border-box;
-      }
+  <!-- Fonts (fallback hvis du ikke vil bruke Google Fonts: host LuckiestGuy/Inter selv) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Luckiest+Guy&display=swap" rel="stylesheet">
 
-      body {
-        margin: 0;
-        min-height: 100vh;
-        font-family: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
-        background: radial-gradient(circle at 20% 20%, #0e1a4e 0, #050b2b 40%, #020316 100%);
-        color: var(--text);
-      }
+  <style>
+    :root{
+      /* Fjolsenbanden designprofil */
+      --ink: #041149;     /* 2 */
+      --navy: #293660;    /* 3 */
+      --slate: #546287;   /* 4 */
+      --blue: #13A0F9;    /* 5 */
+      --pink: #FF2F9C;    /* 6 */
+      --bg: #0b1433;
+      --card: rgba(255,255,255,0.06);
+      --card2: rgba(255,255,255,0.09);
+      --line: rgba(255,255,255,0.14);
+      --text: rgba(255,255,255,0.92);
+      --muted: rgba(255,255,255,0.72);
 
-      a {
-        color: inherit;
-        text-decoration: none;
-      }
+      --radius: 18px;
+      --shadow: 0 18px 50px rgba(0,0,0,.35);
+    }
 
-      .page {
-        max-width: 1100px;
-        margin: 0 auto;
-        padding: 3rem 1.5rem 4rem;
-      }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(900px 400px at 10% 10%, rgba(19,160,249,.25), transparent 55%),
+        radial-gradient(800px 400px at 90% 30%, rgba(255,47,156,.18), transparent 60%),
+        linear-gradient(180deg, var(--bg), #060a1a 70%);
+      min-height:100vh;
+    }
 
-      .topbar {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 1rem;
-        background: rgba(8, 13, 45, 0.8);
-        padding: 0.85rem 1.25rem;
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: var(--radius);
-        box-shadow: var(--shadow);
-        position: sticky;
-        top: 0.85rem;
-        backdrop-filter: blur(12px);
-        z-index: 10;
-      }
+    .wrap{
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 18px 60px;
+    }
 
-      .badge {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.4rem;
-        padding: 0.35rem 0.75rem;
-        background: rgba(0, 163, 255, 0.14);
-        color: var(--primary);
-        border: 1px solid rgba(0, 163, 255, 0.4);
-        border-radius: 999px;
-        font-size: 0.85rem;
-        font-weight: 700;
-        letter-spacing: 0.4px;
-      }
+    header{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:16px;
+      padding: 10px 8px 18px;
+    }
 
-      .hero {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 1.5rem;
-        margin-top: 2rem;
-        margin-bottom: 1.5rem;
-      }
+    .brand{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
 
-      .hero h1 {
-        font-size: clamp(2rem, 4vw, 2.8rem);
-        margin: 0 0 0.75rem;
-        letter-spacing: -0.03em;
-      }
+    .title{
+      font-family: "Luckiest Guy", system-ui, sans-serif; /* 7 */
+      letter-spacing: .5px;
+      margin:0;
+      font-size: clamp(28px, 3vw, 40px);
+      line-height: 1.05;
+    }
 
-      .lead {
-        color: var(--muted);
-        line-height: 1.6;
-        margin: 0;
-      }
+    .subtitle{
+      margin:0;
+      color: var(--muted);
+      max-width: 70ch;
+      line-height:1.5;
+    }
 
-      .panel {
-        background: linear-gradient(145deg, var(--card), var(--card-alt));
-        border: 1px solid rgba(255, 255, 255, 0.06);
-        border-radius: var(--radius);
-        padding: 1.5rem;
-        box-shadow: var(--shadow);
-      }
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(19,160,249,.12);
+      border: 1px solid rgba(19,160,249,.25);
+      color: rgba(255,255,255,.92);
+      font-weight: 600;
+      font-size: 13px;
+      white-space: nowrap;
+    }
 
-      .panel h2 {
-        margin: 0 0 0.25rem;
-        font-size: 1.25rem;
-      }
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-top: 12px;
+    }
 
-      .panel p {
-        margin: 0 0 1rem;
-        color: var(--muted);
-      }
+    @media (max-width: 920px){
+      .grid{ grid-template-columns: 1fr; }
+      header{ flex-direction:column; }
+    }
 
-      .grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-        gap: 1.25rem;
-      }
+    .card{
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, var(--card), rgba(255,255,255,0.03));
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      padding: 18px;
+      position: relative;
+      overflow:hidden;
+    }
 
-      label {
-        display: block;
-        margin-bottom: 0.35rem;
-        font-weight: 700;
-        font-size: 0.95rem;
-      }
+    .card:before{
+      content:"";
+      position:absolute;
+      inset:-2px;
+      background: radial-gradient(600px 220px at 20% 0%, rgba(19,160,249,.22), transparent 55%),
+                  radial-gradient(500px 260px at 85% 10%, rgba(255,47,156,.14), transparent 55%);
+      opacity:.55;
+      pointer-events:none;
+    }
 
-      input,
-      select {
-        width: 100%;
-        padding: 0.85rem 0.95rem;
-        border-radius: 12px;
-        border: 1px solid rgba(255, 255, 255, 0.12);
-        background: rgba(255, 255, 255, 0.05);
-        color: var(--text);
-        font-size: 0.98rem;
-      }
+    .card > *{ position:relative; z-index:1; }
 
-      .actions {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.75rem;
-        margin-top: 1rem;
-      }
+    .plan-head{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:10px;
+      margin-bottom: 10px;
+    }
 
-      button {
-        padding: 0.9rem 1.3rem;
-        border-radius: 12px;
-        border: none;
-        font-weight: 800;
-        font-size: 0.95rem;
-        cursor: pointer;
-        transition: transform 120ms ease, box-shadow 120ms ease;
-        box-shadow: 0 14px 35px rgba(0, 163, 255, 0.35);
-      }
+    .plan-name{
+      margin:0;
+      font-weight: 800;
+      font-size: 18px;
+      letter-spacing: .2px;
+    }
 
-      button.primary {
-        background: linear-gradient(120deg, var(--primary), #00d1ff);
-        color: #020316;
-      }
+    .badge{
+      font-size: 12px;
+      font-weight: 800;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.16);
+      background: rgba(255,255,255,.06);
+      color: rgba(255,255,255,.88);
+    }
 
-      button.secondary {
-        background: rgba(255, 255, 255, 0.1);
-        color: var(--text);
-        border: 1px solid rgba(255, 255, 255, 0.12);
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
-      }
+    .price{
+      margin: 8px 0 0;
+      font-size: 32px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+    }
 
-      button:hover {
-        transform: translateY(-2px);
-      }
+    .price small{
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--muted);
+      margin-left: 6px;
+    }
 
-      .steps {
-        list-style: none;
-        padding: 0;
-        margin: 1.25rem 0 0;
-        display: grid;
-        gap: 0.5rem;
-      }
+    ul{
+      margin: 14px 0 0;
+      padding: 0 0 0 18px;
+      color: rgba(255,255,255,.82);
+      line-height: 1.55;
+    }
 
-      .steps li {
-        padding: 0.85rem 1rem;
-        border-radius: 12px;
-        background: rgba(255, 255, 255, 0.04);
-        border: 1px solid rgba(255, 255, 255, 0.06);
-        color: var(--muted);
-      }
+    .select-row{
+      margin-top: 16px;
+      display:flex;
+      gap:10px;
+      align-items:center;
+      justify-content:space-between;
+    }
 
-      .log {
-        margin-top: 1rem;
-        padding: 0.85rem 1rem;
-        min-height: 120px;
-        background: rgba(0, 0, 0, 0.35);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 12px;
-        color: #e8eaff;
-        font-family: "SFMono-Regular", "JetBrains Mono", ui-monospace, monospace;
-        white-space: pre-line;
-      }
+    .radio{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      width:100%;
+      padding: 12px 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.16);
+      background: rgba(255,255,255,.06);
+      cursor:pointer;
+      user-select:none;
+    }
 
-      .pill {
-        display: inline-flex;
-        padding: 0.35rem 0.75rem;
-        border-radius: 999px;
-        background: rgba(255, 45, 164, 0.15);
-        color: #ff8bd5;
-        font-weight: 700;
-        border: 1px solid rgba(255, 45, 164, 0.25);
-        margin-bottom: 0.5rem;
-      }
+    input[type="radio"]{
+      accent-color: var(--blue);
+      width: 18px;
+      height: 18px;
+    }
 
-      .columns {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-        gap: 1rem;
-        margin-top: 1rem;
-      }
+    .cta{
+      margin-top: 18px;
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, var(--card2), rgba(255,255,255,0.04));
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      padding: 18px;
+      display:flex;
+      flex-direction:column;
+      gap: 10px;
+    }
 
-      footer {
-        margin-top: 2rem;
-        color: var(--muted);
-        font-size: 0.9rem;
-        text-align: center;
-      }
+    .cta-top{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 12px;
+      flex-wrap:wrap;
+    }
 
-      @media (max-width: 700px) {
-        .topbar {
-          flex-direction: column;
-          align-items: flex-start;
-        }
+    .cta h2{
+      margin:0;
+      font-size: 18px;
+      font-weight: 900;
+    }
 
-        .actions {
-          flex-direction: column;
-        }
+    .cta p{
+      margin:0;
+      color: var(--muted);
+      line-height:1.5;
+      max-width: 85ch;
+    }
 
-        button {
-          width: 100%;
-          text-align: center;
-        }
-      }
-    </style>
-  </head>
-  <body>
-    <div class="page">
-      <div class="topbar">
-        <div>
-          <div class="badge">Vipps Sandbox</div>
-          <div class="lead">Denne siden er bare for intern testing av Vipps Login og abonnement.</div>
-        </div>
-        <a class="pill" href="https://developer.vippsmobilepay.com/" target="_blank" rel="noreferrer"
-          >Åpne Vipps docs</a
-        >
+    .actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+      justify-content:flex-end;
+    }
+
+    .btn{
+      border: 0;
+      cursor:pointer;
+      font-weight: 800;
+      border-radius: 14px;
+      padding: 12px 14px;
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      color: rgba(255,255,255,.95);
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.14);
+      transition: transform .08s ease, background .12s ease, border-color .12s ease;
+      text-decoration:none;
+    }
+
+    .btn:hover{ transform: translateY(-1px); border-color: rgba(255,255,255,.22); background: rgba(255,255,255,.10); }
+    .btn:active{ transform: translateY(0px); }
+
+    .btn-primary{
+      background: linear-gradient(90deg, rgba(19,160,249,.95), rgba(255,47,156,.85));
+      border-color: rgba(255,255,255,.10);
+    }
+
+    .vipps-mark{
+      width: 20px; height: 20px;
+      border-radius: 6px;
+      background: rgba(255,255,255,.18);
+      display:inline-grid;
+      place-items:center;
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .foot{
+      margin-top: 12px;
+      font-size: 12.5px;
+      color: rgba(255,255,255,.65);
+      line-height:1.45;
+    }
+
+    .note{
+      margin-top: 10px;
+      padding: 12px 12px;
+      border-radius: 14px;
+      border: 1px dashed rgba(255,255,255,.22);
+      background: rgba(0,0,0,.12);
+      color: rgba(255,255,255,.78);
+      font-size: 13px;
+    }
+
+    .error{
+      display:none;
+      margin-top: 10px;
+      padding: 12px 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,47,156,.35);
+      background: rgba(255,47,156,.10);
+      color: rgba(255,255,255,.9);
+      font-weight: 700;
+      font-size: 13px;
+    }
+
+    .inline{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      flex-wrap:wrap;
+    }
+
+    .link{
+      color: rgba(19,160,249,.95);
+      text-decoration: none;
+      font-weight: 700;
+    }
+    .link:hover{ text-decoration: underline; }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <div class="pill">Abonnement via Vipps</div>
+        <h1 class="title">Velg pakke – logg inn med Vipps</h1>
+        <p class="subtitle">
+          For å aktivere abonnementet må du bekrefte med Vipps. Dette fungerer både for eksisterende Vipps-brukere og nye
+          (du kan registrere deg i Vipps-appen underveis).
+        </p>
       </div>
+      <div class="pill" id="chosenPill">Valgt: <span id="chosenText">Ingen</span></div>
+    </header>
 
-      <div class="hero">
+    <section class="grid" aria-label="Abonnementspakker">
+      <!-- Pakke 1 -->
+      <article class="card">
+        <div class="plan-head">
+          <h3 class="plan-name">Starter</h3>
+          <span class="badge">Mest for nybegynnere</span>
+        </div>
+        <div class="price">49,- <small>/ mnd</small></div>
+        <ul>
+          <li>Tilgang til medlemssone</li>
+          <li>Basisrolle + perks</li>
+          <li>Støtter communityet</li>
+        </ul>
+
+        <div class="select-row">
+          <label class="radio" for="plan_starter">
+            <input type="radio" id="plan_starter" name="plan" value="starter" />
+            <span><strong>Velg Starter</strong><br><span style="color:var(--muted);font-weight:600;">Plan-id: starter</span></span>
+          </label>
+        </div>
+      </article>
+
+      <!-- Pakke 2 -->
+      <article class="card">
+        <div class="plan-head">
+          <h3 class="plan-name">Pro</h3>
+          <span class="badge" style="border-color: rgba(19,160,249,.30); background: rgba(19,160,249,.10);">Populær</span>
+        </div>
+        <div class="price">99,- <small>/ mnd</small></div>
+        <ul>
+          <li>Alt i Starter</li>
+          <li>Ekstra perks + badge</li>
+          <li>Prioritert tilgang til events</li>
+        </ul>
+
+        <div class="select-row">
+          <label class="radio" for="plan_pro">
+            <input type="radio" id="plan_pro" name="plan" value="pro" />
+            <span><strong>Velg Pro</strong><br><span style="color:var(--muted);font-weight:600;">Plan-id: pro</span></span>
+          </label>
+        </div>
+      </article>
+
+      <!-- Pakke 3 -->
+      <article class="card">
+        <div class="plan-head">
+          <h3 class="plan-name">Legend</h3>
+          <span class="badge" style="border-color: rgba(255,47,156,.32); background: rgba(255,47,156,.10);">Best verdi</span>
+        </div>
+        <div class="price">149,- <small>/ mnd</small></div>
+        <ul>
+          <li>Alt i Pro</li>
+          <li>Eksklusive perks + rolle</li>
+          <li>Navn på “supporter wall”</li>
+        </ul>
+
+        <div class="select-row">
+          <label class="radio" for="plan_legend">
+            <input type="radio" id="plan_legend" name="plan" value="legend" />
+            <span><strong>Velg Legend</strong><br><span style="color:var(--muted);font-weight:600;">Plan-id: legend</span></span>
+          </label>
+        </div>
+      </article>
+    </section>
+
+    <section class="cta" aria-label="Fortsett med Vipps">
+      <div class="cta-top">
         <div>
-          <h1>Vipps abonnement – test login/registrering</h1>
-          <p class="lead">
-            Start en simulert flyt for nye abonnementer eller for eksisterende brukere som logger inn via Vipps Login.
-            Vi bruker testmiljøet, og ingen betalinger blir belastet.
+          <h2>Logg inn / registrer med Vipps</h2>
+          <p>
+            Når du trykker “Fortsett med Vipps” sendes du til Vipps for innlogging og bekreftelse av abonnement.
           </p>
         </div>
-        <div class="panel">
-          <h2>Test-sjekkliste</h2>
-          <ul class="steps">
-            <li>Velg om du vil registrere en ny bruker eller logge inn.</li>
-            <li>Bruk et Vipps testnummer (8 siffer) fra utviklerportalen.</li>
-            <li>Følg lenken som åpnes og fullfør Vipps Login.</li>
-            <li>Kopier callback-data inn i loggeren for å bekrefte.</li>
-          </ul>
+
+        <div class="actions">
+          <button class="btn" type="button" id="btnChooseFirst">Velg anbefalt</button>
+          <button class="btn btn-primary" type="button" id="btnVipps">
+            <span class="vipps-mark">V</span>
+            Fortsett med Vipps
+          </button>
         </div>
       </div>
 
-      <div class="grid">
-        <div class="panel">
-          <h2>Registrer ny abonnent</h2>
-          <p>Simuler onboarding med Vipps Login før du starter et abonnement.</p>
-          <label for="register-email">E-post</label>
-          <input id="register-email" type="email" placeholder="ola.nordmann@example.no" />
-          <label for="register-phone">Vipps-nummer</label>
-          <input id="register-phone" type="tel" inputmode="numeric" placeholder="12345678" />
-          <label for="register-plan">Abonnement</label>
-          <select id="register-plan">
-            <option>Familie – 99 kr / mnd</option>
-            <option>Standard – 59 kr / mnd</option>
-            <option>Pro – 149 kr / mnd</option>
-          </select>
-          <div class="actions">
-            <button class="primary" onclick="simulateVipps('register')">Start Vipps registrering</button>
-            <button class="secondary" onclick="copyCallback()">Lim inn callback-data</button>
-          </div>
-        </div>
+      <div class="error" id="errorBox">Du må velge en pakke før du kan fortsette.</div>
 
-        <div class="panel">
-          <h2>Logg inn eksisterende</h2>
-          <p>Test Vipps Login for en bruker som allerede har aktivt abonnement.</p>
-          <label for="login-phone">Vipps-nummer</label>
-          <input id="login-phone" type="tel" inputmode="numeric" placeholder="87654321" />
-          <label for="login-scope">Login scope</label>
-          <select id="login-scope">
-            <option>openid name phoneNumber emailAddress</option>
-            <option>openid address name phoneNumber</option>
-            <option>openid emailAddress</option>
-          </select>
-          <div class="actions">
-            <button class="primary" onclick="simulateVipps('login')">Start Vipps login</button>
-            <button class="secondary" onclick="resetLog()">Tøm logg</button>
-          </div>
+      <div class="note">
+        <strong>Backend-endpoint du må lage:</strong>
+        <div class="inline" style="margin-top:6px;">
+          <code style="background:rgba(0,0,0,.25); padding:6px 8px; border-radius:10px; border:1px solid rgba(255,255,255,.12);">/vipps/start?plan=starter|pro|legend</code>
+        </div>
+        <div class="foot" style="margin-top:8px;">
+          På serveren starter du Vipps “Recurring/Abonnement”-flyten (oppretter agreement, sender brukeren til Vipps, og
+          håndterer retur/callback). Denne HTML-siden er kun UI og routing til riktig plan.
         </div>
       </div>
 
-      <div class="columns">
-        <div class="panel">
-          <h2>Abonnementsstatus</h2>
-          <p class="lead">Notater til backend-teamet.</p>
-          <ul class="steps">
-            <li>Opprett en Vipps-recurring agreement etter vellykket login.</li>
-            <li>Lag callback-endepunkt (eks: <code>/vipps/callback</code>) som validerer signatur.</li>
-            <li>Bruk <em>orderId</em> fra Vipps til å slå opp og aktivere medlemskapet.</li>
-            <li>Loggfør miljøet (test/produksjon) i databasen for transparens.</li>
-          </ul>
-        </div>
-        <div class="panel">
-          <h2>Testlogger</h2>
-          <p>Suksessmeldinger og payloads vises her.</p>
-          <div id="log" class="log">Ingen hendelser ennå.</div>
-        </div>
+      <div class="foot">
+        Ved å fortsette godtar du abonnementsvilkår og at Vipps brukes som betalingsløsning.
+        <a class="link" href="/vilkar.html">Se vilkår</a> · <a class="link" href="/personvern.html">Personvern</a>
       </div>
+    </section>
+  </div>
 
-      <footer>
-        Vipps Login &amp; Subscription testoppsett. Husk å bytte til produksjon når alle tester er godkjent.
-      </footer>
-    </div>
+  <script>
+    (function(){
+      const radios = Array.from(document.querySelectorAll('input[name="plan"]'));
+      const chosenText = document.getElementById('chosenText');
+      const chosenPill = document.getElementById('chosenPill');
+      const errorBox = document.getElementById('errorBox');
+      const btnVipps = document.getElementById('btnVipps');
+      const btnChooseFirst = document.getElementById('btnChooseFirst');
 
-    <script>
-      const logEl = document.getElementById("log");
-
-      function timestamp() {
-        return new Date().toLocaleTimeString("nb-NO", { hour12: false });
+      function getSelected(){
+        const r = radios.find(x => x.checked);
+        return r ? r.value : null;
       }
 
-      function appendLog(message) {
-        if (!logEl) return;
-        const next = `[${timestamp()}] ${message}`;
-        logEl.textContent = logEl.textContent === "Ingen hendelser ennå." ? next : `${next}\n${logEl.textContent}`;
+      function setChosenUI(plan){
+        chosenText.textContent = plan ? plan : 'Ingen';
+        chosenPill.style.borderColor = plan ? 'rgba(19,160,249,.35)' : 'rgba(255,255,255,.14)';
+        errorBox.style.display = 'none';
       }
 
-      function simulateVipps(type) {
-        const phone =
-          type === "register"
-            ? document.getElementById("register-phone").value || "12345678"
-            : document.getElementById("login-phone").value || "87654321";
-        const scope = document.getElementById("login-scope").value;
-        const email = document.getElementById("register-email").value || "ola.nordmann@example.no";
-        const plan = document.getElementById("register-plan").value;
+      radios.forEach(r => r.addEventListener('change', () => setChosenUI(getSelected())));
 
-        const redirectUrl = `https://apitest.vipps.no/login?flow=${type}&phone=${phone}`;
+      btnChooseFirst.addEventListener('click', () => {
+        // "Anbefalt" = Pro (kan endres)
+        const pro = document.getElementById('plan_pro');
+        if (pro) pro.checked = true;
+        setChosenUI(getSelected());
+      });
 
-        appendLog(
-          type === "register"
-            ? `Starter registeringsflyt for ${phone} (${plan}). Sender bruker til: ${redirectUrl}`
-            : `Starter login med scope "${scope}" for ${phone}. Sender bruker til: ${redirectUrl}`
-        );
-
-        setTimeout(() => {
-          appendLog(`Mottatt callback fra Vipps for ${phone}. Signatur verifisert.`);
-        }, 1200);
-      }
-
-      function copyCallback() {
-        const examplePayload = {
-          sub: "12345678901",
-          name: "Test Testesen",
-          phone_number: "+4712345678",
-          email: "test@example.no",
-          agreementId: "agr_test_01",
-        };
-
-        navigator.clipboard
-          .writeText(JSON.stringify(examplePayload, null, 2))
-          .then(() => appendLog("Kopierte eksempel-callback til utklippstavle."))
-          .catch(() => appendLog("Kunne ikke kopiere callback. Kopier manuelt."));
-      }
-
-      function resetLog() {
-        if (logEl) {
-          logEl.textContent = "Ingen hendelser ennå.";
+      btnVipps.addEventListener('click', () => {
+        const plan = getSelected();
+        if (!plan){
+          errorBox.style.display = 'block';
+          return;
         }
-      }
-    </script>
-  </body>
+
+        // Send bruker til backend som starter Vipps-innlogging/abonnement for valgt plan
+        const url = `/vipps/start?plan=${encodeURIComponent(plan)}`;
+        window.location.href = url;
+      });
+
+      // Init
+      setChosenUI(getSelected());
+    })();
+  </script>
+</body>
 </html>
