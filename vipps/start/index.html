@@ -1,0 +1,12 @@
+<!doctype html>
+<html lang="no">
+<head><meta charset="utf-8"><title>Vipps start</title></head>
+<body>
+  <h1>Vipps start OK</h1>
+  <p>Plan: <span id="p"></span></p>
+  <script>
+    const q = new URLSearchParams(location.search);
+    document.getElementById('p').textContent = q.get('plan') || '(mangler)';
+  </script>
+</body>
+</html>
