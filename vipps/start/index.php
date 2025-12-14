@@ -56,7 +56,10 @@ try {
   $payload = [
     'currency' => 'NOK',
     'price' => $prices[$plan],
-    'interval' => 'MONTH',
+    'interval' => [
+      'unit' => 'MONTH',
+      'count' => 1
+    ],
     'merchantAgreementId' => $merchantAgreementId,
     'productName' => 'Fjolsenbanden ' . $plan,
     'merchantRedirectUrl' => $config['merchant_redirect_url'],
