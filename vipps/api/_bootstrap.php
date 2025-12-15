@@ -10,7 +10,10 @@ $secretsPath = $_SERVER['DOCUMENT_ROOT'] . "/P/fjolsen_secret.php";
 
 if (!file_exists($secretsPath)) {
   http_response_code(500);
-  echo json_encode(["error" => "Secrets file not found", "path" => $secretsPath]);
+  echo json_encode([
+    "error" => "Secrets file not found",
+    "path" => $secretsPath
+  ]);
   exit;
 }
 
@@ -31,12 +34,16 @@ define("VIPPS_CLIENT_SECRET", must($secrets, "VIPPS_CLIENT_SECRET"));
 define("VIPPS_SUBSCRIPTION_KEY", must($secrets, "VIPPS_SUBSCRIPTION_KEY"));
 define("VIPPS_MSN", must($secrets, "VIPPS_MSN"));
 
-define("VIPPS_TOKEN_URL", VIPPS_ENV === "test"
-  ? "https://apitest.vipps.no/access-token-service/oauth/token"
-  : "https://api.vipps.no/access-token-service/oauth/token"
+define(
+  "VIPPS_TOKEN_URL",
+  VIPPS_ENV === "test"
+    ? "https://apitest.vipps.no/access-token-service/oauth/token"
+    : "https://api.vipps.no/access-token-service/oauth/token"
 );
 
-define("VIPPS_RECURRING_BASE", VIPPS_ENV === "test"
-  ? "https://apitest.vipps.no/recurring/v3"
-  : "https://api.vipps.no/recurring/v3"
+define(
+  "VIPPS_RECURRING_BASE",
+  VIPPS_ENV === "test"
+    ? "https://apitest.vipps.no/recurring/v3"
+    : "https://api.vipps.no/recurring/v3"
 );
