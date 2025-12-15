@@ -1,6 +1,6 @@
 <?php
-// vipps/api/_vipps_http.php
 require_once __DIR__ . "/_bootstrap.php";
+// vipps/api/_vipps_http.php
 
 /**
  * Minimal Vipps HTTP helper for shared hosting (cURL only).
