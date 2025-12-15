@@ -34,12 +34,12 @@ define("VIPPS_CLIENT_SECRET", must($secrets, "VIPPS_CLIENT_SECRET"));
 define("VIPPS_SUBSCRIPTION_KEY", must($secrets, "VIPPS_SUBSCRIPTION_KEY"));
 define("VIPPS_MSN", must($secrets, "VIPPS_MSN"));
 
-// Riktig Access Token endpoint (ikke oauth/token)
+// Riktig Access Token endpoint
 define(
   "VIPPS_TOKEN_URL",
   VIPPS_ENV === "test"
-    ? "https://apitest.vipps.no/accesstoken/get"
-    : "https://api.vipps.no/accesstoken/get"
+    ? "https://apitest.vipps.no/access-token-service/oauth/token"
+    : "https://api.vipps.no/access-token-service/oauth/token"
 );
 
 // Recurring base
