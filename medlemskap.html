@@ -550,7 +550,6 @@
   </footer>
 
   <script>
-    // Vipps-modul (robust, viser feilmeldinger pent i samme design)
     async function startVipps(plan) {
       const box = document.getElementById("vippsStatus");
       box.style.display = "block";
@@ -563,27 +562,30 @@
           body: JSON.stringify({ plan })
         });
 
+        const raw = await res.text(); // les alltid tekst først
         let data = null;
-        try { data = await res.json(); } catch (_) {}
+        try { data = JSON.parse(raw); } catch (_) {}
 
-        // Hvis backend returnerer felt vi kan bruke til redirect:
-        const url =
-          (data && (data.vippsConfirmationUrl || data.redirectUrl || data.url || data.checkoutFrontendUrl || data.loginUrl)) || null;
+        // Prøv å finne redirect-url i flere mulige felter
+        const url = data && (
+          data.vippsConfirmationUrl ||
+          data.redirectUrl ||
+          data.url ||
+          data.checkoutFrontendUrl ||
+          data.loginUrl ||
+          (data.agreement && data.agreement.vippsConfirmationUrl)
+        );
 
         if (url) {
           window.location.href = url;
           return;
         }
 
-        // Hvis backend returnerer en feilmelding:
-        const msg =
-          (data && (data.error || data.message || data.detail)) ||
-          ("Ukjent feil. Backend returnerte ikke redirect-url.");
-
-        box.textContent = "Feil: " + msg;
+        // Vis eksakt hva som kom tilbake fra backend
+        box.textContent = `Feil: Ingen redirect-url.\nHTTP ${res.status}\n${raw}`;
 
       } catch (e) {
-        box.textContent = "Feil: " + (e && e.message ? e.message : "Kunne ikke kontakte server.");
+        box.textContent = "Feil: " + (e?.message || "Kunne ikke kontakte server.");
       }
     }
   </script>
