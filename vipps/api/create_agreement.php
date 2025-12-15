@@ -20,7 +20,7 @@ $payload = [
   "interval" => ["unit" => "MONTH", "count" => 1],
   "pricing" => ["amount" => $prices[$plan] * 100, "currency" => "NOK"],
   "merchantSerialNumber" => VIPPS_MSN,
-  "returnUrl" => "https://fjolsenbanden.no/vipps/return.html",
+  "merchantRedirectUrl" => "https://fjolsenbanden.no/vipps/return.html",
   "callbackUrl" => "https://fjolsenbanden.no/vipps/callback.php"
 ];
 
