@@ -24,7 +24,7 @@ $payload = [
   "callbackUrl" => "https://fjolsenbanden.no/vipps/callback.php"
 ];
 
-$url = VIPPS_RECURRING_BASE . "/agreements";
+$url = VIPPS_RECURRING_BASE;
 $result = vipps_post_json($url, $payload);
 
 echo json_encode([
