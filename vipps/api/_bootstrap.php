@@ -6,7 +6,7 @@ error_reporting(E_ALL);
 header("Content-Type: application/json; charset=utf-8");
 
 // 1) Les secrets fra fil (utenfor webroot)
-$secrets = require "/P/fjolsen_secret.php";
+$secrets = require "https://www.fjolsenbanden.no/P/fjolsen_secret.php";
 
 function must(array $arr, string $key): string {
   if (!isset($arr[$key]) || trim((string)$arr[$key]) === "") {
