@@ -4,123 +4,23 @@
   <meta charset="utf-8" />
   <title>Vipps abonnement – FjOlsenbanden</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="refresh" content="0;url=/medlemskap.html#nivaaer" />
   <link rel="stylesheet" href="/styles.css" />
 </head>
 
 <body>
-  <header class="top-nav">
-    <div class="container nav-inner">
-      <div class="logo">
-        <a href="/"><img src="/img/logo/Liggende-M.png" alt="FjOlsenbanden logo" /></a>
-      </div>
-      <nav class="nav-links">
-        <a href="/#about">Om</a>
-        <a href="/#community">Community</a>
-        <a href="/#kontakt">Kontakt</a>
-      </nav>
-      <div class="nav-actions">
-        <a href="/#membership" class="btn btn-primary small">Bli medlem</a>
-      </div>
+  <main class="section" style="min-height:50vh; display:flex; align-items:center;">
+    <div class="container" style="text-align:center;">
+      <h1>Vipps flyttet hit</h1>
+      <p class="subtitle" style="max-width:640px; text-align:center; margin: 0 auto 1.5rem;">
+        Vipps-innmelding ligger nå på medlemskapssiden slik at vi bare trenger å oppdatere ett sted.
+      </p>
+      <a class="btn btn-primary" href="/medlemskap.html#nivaaer">Gå til medlemskap</a>
     </div>
-  </header>
-
-  <main>
-    <section class="section">
-      <div class="container">
-        <h2>Velg <span class="highlight">pakke</span></h2>
-        <p class="subtitle">
-          Abonnement via Vipps faste betalinger. Ingen bindingstid – du kan avslutte når som helst i Vipps.
-        </p>
-
-        <div class="services-grid">
-          <div class="card service">
-            <h3>Starter</h3>
-            <p>49 kr / mnd</p>
-            <ul style="margin:0; padding-left:18px;">
-              <li>Tilgang til medlemssone</li>
-              <li>Basisrolle + perks</li>
-              <li>Støtter communityet</li>
-            </ul>
-            <div style="margin-top: 1rem;">
-              <button class="btn btn-primary" onclick="startPlan('starter')">Fortsett med Vipps</button>
-            </div>
-            <p class="vipps-front-status" id="s_starter"></p>
-          </div>
-
-          <div class="card service">
-            <h3>Pro</h3>
-            <p>99 kr / mnd</p>
-            <ul style="margin:0; padding-left:18px;">
-              <li>Alt i Starter</li>
-              <li>Ekstra perks + badge</li>
-              <li>Prioritert tilgang til events</li>
-            </ul>
-            <div style="margin-top: 1rem;">
-              <button class="btn btn-primary" onclick="startPlan('pro')">Fortsett med Vipps</button>
-            </div>
-            <p class="vipps-front-status" id="s_pro"></p>
-          </div>
-
-          <div class="card service">
-            <h3>Legend</h3>
-            <p>149 kr / mnd</p>
-            <ul style="margin:0; padding-left:18px;">
-              <li>Alt i Pro</li>
-              <li>Eksklusive perks + rolle</li>
-              <li>Navn på “supporter wall”</li>
-            </ul>
-            <div style="margin-top: 1rem; display:flex; gap: 0.75rem; flex-wrap:wrap;">
-              <button class="btn btn-primary" onclick="startPlan('legend')">Fortsett med Vipps</button>
-              <a class="btn btn-ghost" href="/vilkar.html">Vilkår</a>
-            </div>
-            <p class="vipps-front-status" id="s_legend"></p>
-          </div>
-        </div>
-      </div>
-    </section>
   </main>
 
-  <footer class="site-footer">
-    <div class="container footer-bottom">
-      <p>© 2025 Fjolsenbanden v/Fair Share Invest AS – Org.nr. 926 963 023</p>
-      <a href="/personvernerklaering.html" class="footer-bottom-link">Personvern</a>
-    </div>
-  </footer>
-
   <script>
-    async function postJSON(url, body) {
-      const res = await fetch(url, {
-        method: "POST",
-        headers: { "Content-Type": "application/json", "Accept": "application/json" },
-        body: JSON.stringify(body || {})
-      });
-
-      const txt = await res.text();
-      let data = null;
-      try { data = txt ? JSON.parse(txt) : null; } catch(e) {}
-
-      if (!res.ok) {
-        throw new Error(data?.error || data?.message || txt || ("HTTP " + res.status));
-      }
-      return data;
-    }
-
-    function setStatus(plan, msg){
-      const el = document.getElementById("s_" + plan);
-      if (el) el.textContent = msg || "";
-    }
-
-    async function startPlan(plan){
-      setStatus(plan, "Oppretter avtale...");
-      try {
-        const data = await postJSON("/vipps/api/create_agreement.php", { plan });
-        const url = data?.vippsConfirmationUrl || data?.redirectUrl;
-        if (!url) throw new Error("Mangler vippsConfirmationUrl/redirectUrl fra server.");
-        window.location.href = url;
-      } catch (e) {
-        setStatus(plan, "Feil: " + e.message);
-      }
-    }
+    window.location.href = "/medlemskap.html#nivaaer";
   </script>
 </body>
 </html>
