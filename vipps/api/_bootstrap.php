@@ -28,30 +28,32 @@ function must(array $arr, string $key): string {
   return (string)$arr[$key];
 }
 
-define("VIPPS_ENV", must($secrets, "VIPPS_ENV")); // "test" eller "prod"
-define("VIPPS_CLIENT_ID", must($secrets, "VIPPS_CLIENT_ID"));
-define("VIPPS_CLIENT_SECRET", must($secrets, "VIPPS_CLIENT_SECRET"));
-define("VIPPS_SUBSCRIPTION_KEY", must($secrets, "VIPPS_SUBSCRIPTION_KEY"));
-define("VIPPS_MSN", must($secrets, "VIPPS_MSN"));
+if (!defined('VIPPS_ENV')) define('VIPPS_ENV', must($secrets, 'VIPPS_ENV')); // "test" eller "prod"
+if (!defined('VIPPS_CLIENT_ID')) define('VIPPS_CLIENT_ID', must($secrets, 'VIPPS_CLIENT_ID'));
+if (!defined('VIPPS_CLIENT_SECRET')) define('VIPPS_CLIENT_SECRET', must($secrets, 'VIPPS_CLIENT_SECRET'));
+if (!defined('VIPPS_SUBSCRIPTION_KEY')) define('VIPPS_SUBSCRIPTION_KEY', must($secrets, 'VIPPS_SUBSCRIPTION_KEY'));
+if (!defined('VIPPS_MSN')) define('VIPPS_MSN', must($secrets, 'VIPPS_MSN'));
 
-// Riktig Access Token endpoint
-define(
-  "VIPPS_RECURRING_BASE",
-  VIPPS_ENV === "test"
-    ? "https://apitest.vipps.no/recurring/v3/agreements"
-    : "https://api.vipps.no/recurring/v3/agreements"
-);
+if (!defined('VIPPS_TOKEN_URL')) {
+  define(
+    'VIPPS_TOKEN_URL',
+    VIPPS_ENV === 'test'
+      ? 'https://apitest.vipps.no/access-token-service/oauth/token'
+      : 'https://api.vipps.no/access-token-service/oauth/token'
+  );
+}
 
-// Recurring base
-define(
-  "VIPPS_RECURRING_BASE",
-  VIPPS_ENV === "test"
-    ? "https://apitest.vipps.no/recurring/v3"
-    : "https://api.vipps.no/recurring/v3"
-);
+if (!defined('VIPPS_RECURRING_BASE')) {
+  define(
+    'VIPPS_RECURRING_BASE',
+    VIPPS_ENV === 'test'
+      ? 'https://apitest.vipps.no/recurring/v3'
+      : 'https://api.vipps.no/recurring/v3'
+  );
+}
 
 // (Valgfritt, men fint å ha)
-define("VIPPS_SYSTEM_NAME", "Fjolsenbanden");
-define("VIPPS_SYSTEM_VERSION", "1.0.0");
-define("VIPPS_PLUGIN_NAME", "custom-php");
-define("VIPPS_PLUGIN_VERSION", "1.0.0");
+if (!defined('VIPPS_SYSTEM_NAME')) define('VIPPS_SYSTEM_NAME', 'Fjolsenbanden');
+if (!defined('VIPPS_SYSTEM_VERSION')) define('VIPPS_SYSTEM_VERSION', '1.0.0');
+if (!defined('VIPPS_PLUGIN_NAME')) define('VIPPS_PLUGIN_NAME', 'custom-php');
+if (!defined('VIPPS_PLUGIN_VERSION')) define('VIPPS_PLUGIN_VERSION', '1.0.0');
