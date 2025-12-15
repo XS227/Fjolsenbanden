@@ -1,0 +1,589 @@
+<!doctype html>
+<html lang="nb">
+<head>
+  <meta charset="utf-8" />
+  <title>Medlemskap – FjOlsenbanden</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta
+    name="description"
+    content="Medlemskap i FjOlsenbanden – trygt, valgfritt og oversiktlig. Alltid gratis å være med. Medlemskap gjelder kun premier."
+  />
+
+  <!-- Bruk samme stil som index.html -->
+  <link rel="stylesheet" href="styles.css" />
+
+  <style>
+    /* Side-spesifikke tillegg (holder seg innenfor samme design-system) */
+
+    .hero.slim {
+      padding-top: 5.5rem;
+      padding-bottom: 3.5rem;
+    }
+
+    .hero-compact {
+      max-width: 820px;
+    }
+
+    .hero-compact h1 {
+      font-size: clamp(2.2rem, 3.4vw, 3rem);
+      margin: 0.8rem 0 1rem;
+    }
+
+    .hero-compact p {
+      color: var(--muted);
+      margin: 0;
+      line-height: 1.65;
+    }
+
+    .badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-top: 1.2rem;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1.25rem;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1.25rem;
+    }
+
+    @media (max-width: 940px) {
+      .grid-3 { grid-template-columns: 1fr; }
+      .grid-2 { grid-template-columns: 1fr; }
+    }
+
+    .muted {
+      color: var(--muted);
+    }
+
+    .small {
+      font-size: 0.92rem;
+      line-height: 1.55;
+    }
+
+    .list {
+      margin: 0.9rem 0 0;
+      padding-left: 1.1rem;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .list li { margin: 0.25rem 0; }
+
+    .split-card {
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+
+    .split-card h3 {
+      margin: 0;
+      font-size: 1.15rem;
+    }
+
+    .pricing-wrap {
+      margin-top: 1.5rem;
+    }
+
+    .plan {
+      position: relative;
+      overflow: hidden;
+      border-radius: 28px;
+      padding: 1.6rem 1.7rem;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      box-shadow: var(--shadow-soft);
+      background: radial-gradient(circle at top left, #192554, #0b1433);
+      transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    .plan:hover {
+      transform: translateY(-4px);
+      border-color: rgba(255, 255, 255, 0.14);
+      box-shadow: 0 18px 45px rgba(0,0,0,.55), 0 0 24px rgba(0, 166, 255, 0.12);
+    }
+
+    .plan .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      padding: .35rem .9rem;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(10, 20, 80, 0.88);
+      color: var(--muted);
+      font-size: 0.82rem;
+      margin-bottom: 0.9rem;
+    }
+
+    .plan h3 {
+      margin: 0;
+      font-size: 1.35rem;
+      letter-spacing: 0.02em;
+    }
+
+    .price {
+      margin-top: 0.6rem;
+      font-size: 1.7rem;
+      font-weight: 750;
+    }
+    .price span {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--muted);
+      margin-left: 0.4rem;
+    }
+
+    .plan .divider {
+      height: 1px;
+      background: rgba(255,255,255,.08);
+      margin: 1.1rem 0;
+    }
+
+    .plan ul {
+      margin: 0;
+      padding-left: 1.1rem;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .plan .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-top: 1.1rem;
+      align-items: center;
+    }
+
+    .btn-wide {
+      width: 100%;
+      justify-content: center;
+    }
+
+    .plan.free {
+      background: radial-gradient(circle at top left, #101a3e, #0d1636);
+    }
+
+    .plan.featured {
+      background: radial-gradient(circle at top left, #25105a, #0d1636);
+      border-color: rgba(255, 45, 164, 0.22);
+    }
+
+    .plan.featured::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 30% 20%, rgba(255, 45, 164, 0.10), transparent 45%),
+                  radial-gradient(circle at 85% 5%, rgba(0, 166, 255, 0.10), transparent 35%);
+      pointer-events: none;
+    }
+
+    .vipps-status {
+      margin-top: 1rem;
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(10, 20, 80, 0.35);
+      padding: 0.9rem 1rem;
+      color: var(--muted);
+      font-size: 0.92rem;
+      display: none;
+    }
+
+    details.faq {
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(255,255,255,.08);
+      background: radial-gradient(circle at top left, var(--card-alt), var(--card));
+      box-shadow: var(--shadow-soft);
+      padding: 1.1rem 1.2rem;
+    }
+
+    details.faq + details.faq { margin-top: 1rem; }
+
+    details.faq summary {
+      cursor: pointer;
+      font-weight: 700;
+      list-style: none;
+    }
+
+    details.faq summary::-webkit-details-marker { display: none; }
+
+    details.faq p {
+      margin: 0.8rem 0 0;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    .footer {
+      padding: 2.5rem 0 3.5rem;
+      background: #020317;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .footer a { color: var(--muted); }
+    .footer a:hover { color: var(--primary); }
+  </style>
+</head>
+
+<body>
+
+  <!-- Top nav (samme stil som index) -->
+  <header class="top-nav">
+    <div class="nav-inner container">
+      <a class="logo" href="index.html" aria-label="Til forsiden">
+        <!-- bruker samme logooppsett som index (tilpass filnavn om du bruker annet) -->
+        <img src="img/logo.png" alt="FjOlsenbanden" onerror="this.style.display='none'">
+        <strong style="letter-spacing:.04em;">FJOLSENBANDEN</strong>
+      </a>
+
+      <nav class="nav-links" aria-label="Hovedmeny">
+        <a href="index.html#om">Om</a>
+        <a href="index.html#community">Community</a>
+        <a href="index.html#kontakt">Kontakt</a>
+      </nav>
+
+      <div class="nav-actions">
+        <a class="btn btn-primary small" href="medlemskap.html">Bli medlem</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- 1) Hero / overskrift (trygghet først) -->
+  <section class="section hero slim">
+    <div class="container hero-compact">
+      <div class="pill">TRYGGHET FØRST • <span class="highlight">valgfritt</span> • oversiktlig</div>
+      <h1>Medlemskap i FjOlsenbanden</h1>
+      <p class="lead">
+        Trygt, valgfritt og oversiktlig – <strong>alltid gratis å være med</strong>.
+        Medlemskap er kun for de som ønsker å kunne motta premie dersom de vinner.
+      </p>
+
+      <div class="badge-row">
+        <span class="pill">✅ Ingen binding</span>
+        <span class="pill">✅ Tydelige priser</span>
+        <span class="pill">✅ Moderert community</span>
+        <span class="pill">✅ Åpent på stream</span>
+      </div>
+
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#nivaaer">Se medlemsnivåer</a>
+        <a class="btn btn-ghost" href="#faq">Les FAQ</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2) Kort forklaring: hvorfor medlemskap -->
+  <section class="section" id="hvorfor">
+    <div class="container">
+      <h2>Hvorfor innfører vi medlemskap?</h2>
+      <p class="subtitle">
+        FjOlsenbanden har vokst enormt – og medlemskap gjør at vi kan fortsette med premier, kvalitet og trygg moderering over tid.
+      </p>
+
+      <div class="grid-2">
+        <div class="card split-card">
+          <h3>Det har blitt stort</h3>
+          <p class="small muted">
+            Det som startet som en liten Fortnite-stream, er i dag et trygt og aktivt gaming-fellesskap med tusenvis av medlemmer,
+            jevnlige konkurranser, events og åpne giveaways.
+          </p>
+          <ul class="list">
+            <li>Tusenvis av medlemmer</li>
+            <li>Jevnlige konkurranser og events</li>
+            <li>Åpne giveaways på stream</li>
+          </ul>
+        </div>
+
+        <div class="card split-card">
+          <h3>Premier krever bærekraft</h3>
+          <p class="small muted">
+            For å kunne fortsette med premier og giveaways på en ryddig og trygg måte, trenger vi en bærekraftig modell.
+          </p>
+          <ul class="list">
+            <li>Fortsette med premier og giveaways</li>
+            <li>Sikre rettferdighet for vinnere</li>
+            <li>Holde høy kvalitet på streams og events</li>
+            <li>Dekke kostnader til premier, systemer og moderering</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top: 1.25rem;">
+        <p class="small muted" style="margin:0;">
+          Bare det siste året har vi delt ut store verdier gjennom giveaways og konkurranser. Medlemskap gjør at dette kan fortsette – uten skjulte kostnader.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3) Tydelig: gratis vs betalt -->
+  <section class="section" id="gratis-vs-betalt">
+    <div class="container">
+      <h2>Gratis vs betalt</h2>
+      <p class="subtitle">Tydelig skille – ingen forvirring.</p>
+
+      <div class="grid-2">
+        <div class="card split-card">
+          <h3>✅ Gratis (alltid)</h3>
+          <p class="small muted">
+            Alle kan være med gratis i FjOlsenbanden. Du kan delta i streams, events, konkurranser og trekninger.
+          </p>
+          <ul class="list">
+            <li>Full tilgang til community</li>
+            <li>Delta i events og konkurranser</li>
+            <li>Delta i trekninger</li>
+          </ul>
+        </div>
+
+        <div class="card split-card">
+          <h3>⭐ Medlemskap (valgfritt)</h3>
+          <p class="small muted">
+            Medlemskap gir <strong>ikke</strong> bedre vinnersjanse. Det gjelder kun retten til å motta premie dersom du vinner.
+          </p>
+          <ul class="list">
+            <li>Gir ikke bedre vinnersjanser</li>
+            <li>Gjelder kun premier ved gevinst</li>
+            <li>Ingen binding – avslutt når som helst</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top: 1.25rem;">
+        <p class="small muted" style="margin:0;">
+          Kort sagt: <strong>FjOlsenbanden er fortsatt 100 % gratis</strong>. Medlemskap er for de som ønsker premie-utbetaling ved gevinst og vil støtte litt ekstra.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4) Medlemsnivåer (Vipps-modul) -->
+  <section class="section" id="nivaaer">
+    <div class="container">
+      <h2>Medlemsnivåer</h2>
+      <p class="subtitle">
+        Velg nivået som passer. Bronze er gratis – Elite og Unreal er valgfritt medlemskap via Vipps.
+      </p>
+
+      <div class="pricing-wrap grid-3">
+        <!-- Bronze -->
+        <article class="plan free">
+          <div class="tag">🟤 Bronze • Gratis</div>
+          <h3>Bronze</h3>
+          <div class="price">0 kr <span>/ mnd</span></div>
+          <div class="divider"></div>
+          <ul>
+            <li>Full tilgang til communityet</li>
+            <li>Delta i streams, events og konkurranser</li>
+            <li>Delta i trekninger</li>
+            <li>❌ Ingen premie utbetales dersom man vinner</li>
+          </ul>
+          <div class="actions">
+            <a class="btn btn-ghost btn-wide" href="index.html#community">Bli med gratis</a>
+          </div>
+        </article>
+
+        <!-- Elite -->
+        <article class="plan featured">
+          <div class="tag">🥈 Elite • Mest valgt</div>
+          <h3>Elite</h3>
+          <div class="price">79 kr <span>/ mnd</span></div>
+          <div class="divider"></div>
+          <ul>
+            <li>Alt fra Bronze</li>
+            <li>✅ Premier utbetales dersom du vinner</li>
+            <li>Delta i alle giveaways</li>
+            <li>Eksklusive Elite-trekninger</li>
+          </ul>
+          <div class="actions">
+            <button class="btn btn-primary btn-wide" type="button" onclick="startVipps('pro')">
+              Fortsett med Vipps
+            </button>
+            <a class="btn btn-ghost small" href="vilkar.html">Vilkår</a>
+          </div>
+        </article>
+
+        <!-- Unreal -->
+        <article class="plan">
+          <div class="tag">🟣 Unreal • Supporter</div>
+          <h3>Unreal</h3>
+          <div class="price">149 kr <span>/ mnd</span></div>
+          <div class="divider"></div>
+          <ul>
+            <li>Alt fra Elite</li>
+            <li>🔥 150 % premie ved gevinst</li>
+            <li>Eksklusive events og konkurranser</li>
+            <li>Støtter FjOlsenbanden litt ekstra</li>
+          </ul>
+          <div class="actions">
+            <button class="btn btn-secondary btn-wide" type="button" onclick="startVipps('legend')">
+              Fortsett med Vipps
+            </button>
+            <a class="btn btn-ghost small" href="vilkar.html">Vilkår</a>
+          </div>
+        </article>
+      </div>
+
+      <div id="vippsStatus" class="vipps-status"></div>
+
+      <div class="card" style="margin-top: 1.25rem;">
+        <p class="small muted" style="margin:0;">
+          Medlemskap gir ikke bedre vinnersjanse. Vinnere trekkes åpent og rettferdig – direkte på stream.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5) Viktig for foreldre -->
+  <section class="section" id="foreldre">
+    <div class="container">
+      <h2>Viktig for foreldre</h2>
+      <p class="subtitle">Trygghet, åpenhet og kontroll.</p>
+
+      <div class="card">
+        <ul class="list" style="margin-top:0;">
+          <li>Tydelige priser og faste medlemsnivåer</li>
+          <li>Ingen skjulte kostnader</li>
+          <li>Ingen lootbokser eller tilfeldige kjøp</li>
+          <li>Ingen bindingstid – avslutt når som helst</li>
+          <li>Moderert community med voksne moderatorer</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6) FAQ -->
+  <section class="section" id="faq">
+    <div class="container">
+      <h2>FAQ – ofte stilte spørsmål</h2>
+      <p class="subtitle">Korte, tydelige svar.</p>
+
+      <details class="faq">
+        <summary>Er det gratis å være med?</summary>
+        <p>Ja. FjOlsenbanden er gratis for alle. Medlemskap gjelder kun rett til premie-utbetaling dersom man vinner.</p>
+      </details>
+
+      <details class="faq">
+        <summary>Er dette pay-to-win?</summary>
+        <p>Nei. Medlemskap gir ikke bedre sjanser til å vinne. Trekninger og vinnere håndteres åpent og rettferdig på stream.</p>
+      </details>
+
+      <details class="faq">
+        <summary>Kan barnet bruke mer penger enn avtalt?</summary>
+        <p>Nei. Medlemskap er en fast månedlig pris. Ingen tilleggskjøp og ingen skjulte kostnader.</p>
+      </details>
+
+      <details class="faq">
+        <summary>Hvordan trekkes vinnere?</summary>
+        <p>Åpent og rettferdig – direkte på stream, med tydelige regler og struktur.</p>
+      </details>
+    </div>
+  </section>
+
+  <!-- 7) Kontakt / åpenhet -->
+  <section class="section" id="kontakt">
+    <div class="container">
+      <h2>Kontakt og åpenhet</h2>
+      <p class="subtitle">Foreldre er alltid velkommen til å ta kontakt.</p>
+
+      <div class="grid-2">
+        <div class="card split-card">
+          <h3>Hvem står bak?</h3>
+          <p class="small muted">
+            FjOlsenbanden drives av Tor Martin Olsen (43), med voksent moderator-team, tydelige regler og struktur.
+          </p>
+          <p class="small muted" style="margin:0;">
+            Åpenhet og trygghet er viktig for oss – spør gjerne hvis du lurer på noe.
+          </p>
+        </div>
+
+        <div class="card split-card">
+          <h3>Kontakt</h3>
+          <p class="small muted" style="margin:0;">
+            Ta kontakt via e-post, telefon eller Discord. (Legg inn dine faktiske detaljer under.)
+          </p>
+          <ul class="list">
+            <li>E-post: <a href="mailto:fjolsenfn@gmail.com">fjolsenfn@gmail.com</a></li>
+            <li>Discord: <span class="muted">FjOlsenbanden</span></li>
+            <li>Nettside: <a href="index.html">fjolsenbanden.no</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top: 1.25rem;">
+        <h3 style="margin:0 0 .5rem;">Kort oppsummert</h3>
+        <ul class="list" style="margin-top:0;">
+          <li>FjOlsenbanden er gratis</li>
+          <li>Medlemskap er frivillig</li>
+          <li>Gjelder kun premier</li>
+          <li>Ingen binding</li>
+          <li>Trygt og oversiktlig</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div>© 2025 FjOlsenbanden v/Fair Share Invest AS • Org.nr. 926 963 023</div>
+      <div style="display:flex; gap:1rem; flex-wrap:wrap;">
+        <a href="personvernerklaering.html">Personvern</a>
+        <a href="vilkar.html">Vilkår</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Vipps-modul (robust, viser feilmeldinger pent i samme design)
+    async function startVipps(plan) {
+      const box = document.getElementById("vippsStatus");
+      box.style.display = "block";
+      box.textContent = "Starter Vipps …";
+
+      try {
+        const res = await fetch("/vipps/api/create_agreement.php", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ plan })
+        });
+
+        let data = null;
+        try { data = await res.json(); } catch (_) {}
+
+        // Hvis backend returnerer felt vi kan bruke til redirect:
+        const url =
+          (data && (data.vippsConfirmationUrl || data.redirectUrl || data.url || data.checkoutFrontendUrl || data.loginUrl)) || null;
+
+        if (url) {
+          window.location.href = url;
+          return;
+        }
+
+        // Hvis backend returnerer en feilmelding:
+        const msg =
+          (data && (data.error || data.message || data.detail)) ||
+          ("Ukjent feil. Backend returnerte ikke redirect-url.");
+
+        box.textContent = "Feil: " + msg;
+
+      } catch (e) {
+        box.textContent = "Feil: " + (e && e.message ? e.message : "Kunne ikke kontakte server.");
+      }
+    }
+  </script>
+</body>
+</html>
