@@ -555,11 +555,13 @@
       box.style.display = "block";
       box.textContent = "Starter Vipps …";
 
+      const selectedPlan = plan === "legend" ? "legend" : "pro";
+
       try {
         const res = await fetch("/vipps/api/create_agreement.php", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ plan })
+          body: JSON.stringify({ plan: selectedPlan })
         });
 
         const raw = await res.text(); // les alltid tekst først
