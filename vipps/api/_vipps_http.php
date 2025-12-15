@@ -6,7 +6,7 @@ function vipps_get_access_token(): string {
   $ch = curl_init(VIPPS_TOKEN_URL);
   $body = http_build_query([
     "grant_type" => "client_credentials",
-    "scope" => "recurring"
+    "scope" => "recurring payments"
   ]);
 
   $auth = base64_encode(VIPPS_CLIENT_ID . ":" . VIPPS_CLIENT_SECRET);
