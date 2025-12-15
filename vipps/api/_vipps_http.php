@@ -4,32 +4,42 @@ require_once __DIR__ . "/_bootstrap.php";
 
 function vipps_get_access_token(): string {
   $ch = curl_init(VIPPS_TOKEN_URL);
+  $body = http_build_query([
+    "grant_type" => "client_credentials",
+    "scope" => "recurring"
+  ]);
+
+  $auth = base64_encode(VIPPS_CLIENT_ID . ":" . VIPPS_CLIENT_SECRET);
   curl_setopt_array($ch, [
     CURLOPT_RETURNTRANSFER => true,
     CURLOPT_POST => true,
-    CURLOPT_POSTFIELDS => http_build_query(["grant_type" => "client_credentials"]),
+    CURLOPT_POSTFIELDS => $body,
     CURLOPT_HTTPHEADER => [
       "Content-Type: application/x-www-form-urlencoded",
       "Ocp-Apim-Subscription-Key: " . VIPPS_SUBSCRIPTION_KEY,
-      "Authorization: Basic " . base64_encode(VIPPS_CLIENT_ID . ":" . VIPPS_CLIENT_SECRET),
+      "Authorization: Basic $auth",
     ],
   ]);
 
-  $raw = curl_exec($ch);
-  $code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-  if ($raw === false) {
+  $response = curl_exec($ch);
+  $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+  if ($response === false) {
     http_response_code(500);
     echo json_encode(["error" => "Curl error: " . curl_error($ch)]);
     exit;
   }
   curl_close($ch);
 
-  $data = json_decode($raw, true);
-  if ($code < 200 || $code >= 300) {
-    http_response_code($code);
-    echo json_encode(["error" => "Token error", "details" => $data ?: $raw]);
+  if ($httpCode !== 200) {
+    http_response_code(500);
+    echo json_encode([
+      "token_error" => true,
+      "status" => $httpCode,
+      "response" => $response
+    ]);
     exit;
   }
+  $data = json_decode($response, true);
   if (!isset($data["access_token"])) {
     http_response_code(500);
     echo json_encode(["error" => "No access_token in response", "details" => $data]);
