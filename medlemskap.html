@@ -555,13 +555,7 @@
       box.style.display = "block";
       box.textContent = "Starter Vipps …";
 
-      const allowedPlans = ["pro", "legend"];
-      const selectedPlan = allowedPlans.includes(plan) ? plan : null;
-
-      if (!selectedPlan) {
-        box.textContent = "Feil: Ugyldig medlemskap.";
-        return;
-      }
+      const selectedPlan = plan === "legend" ? "legend" : "pro";
 
       try {
         const res = await fetch("/vipps/api/create_agreement.php", {
