@@ -66,6 +66,9 @@ function vipps_get_access_token(): string {
         "Content-Type: application/x-www-form-urlencoded",
         "Ocp-Apim-Subscription-Key: " . $subKey,
         "Authorization: Basic " . $auth,
+        // Vipps krever fortsatt eksplisitte client_id/client_secret headers noen steder
+        "client_id: " . $clientId,
+        "client_secret: " . $clientSecret,
       ], vipps_system_headers()),
       CURLOPT_TIMEOUT => 30,
     ]);
