@@ -46,50 +46,67 @@ function vipps_get_access_token(): string {
 
   $auth = base64_encode($clientId . ":" . $clientSecret);
 
-  $ch = curl_init($tokenUrl);
-  curl_setopt_array($ch, [
-    CURLOPT_RETURNTRANSFER => true,
-    CURLOPT_POST => true,
-    CURLOPT_POSTFIELDS => $body,
-    CURLOPT_HTTPHEADER => array_merge([
-      "Content-Type: application/x-www-form-urlencoded",
-      "Ocp-Apim-Subscription-Key: " . $subKey,
-      "Authorization: Basic " . $auth,
-    ], vipps_system_headers()),
-    CURLOPT_TIMEOUT => 30,
-  ]);
-
-  $resp = curl_exec($ch);
-  $code = (int)curl_getinfo($ch, CURLINFO_HTTP_CODE);
-  $err  = curl_error($ch);
-  curl_close($ch);
-
-  if ($resp === false) {
-    http_response_code(500);
-    echo json_encode(["error" => "Curl error", "details" => $err]);
-    exit;
-  }
-
-  $data = json_decode($resp, true);
-  if ($code < 200 || $code >= 300) {
-    http_response_code(500);
-    echo json_encode(["error" => "Vipps token error", "status" => $code, "response" => $data ?: $resp]);
-    exit;
-  }
-
-  if (empty($data["access_token"]) || empty($data["expires_in"])) {
-    http_response_code(500);
-    echo json_encode(["error" => "Vipps token missing fields", "response" => $data ?: $resp]);
-    exit;
-  }
-
-  $expiresAt = time() + (int)$data["expires_in"];
-  @file_put_contents($cacheFile, json_encode([
-    "access_token" => $data["access_token"],
-    "expires_at" => $expiresAt
+  // Vipps har hatt både /accessToken/get (legacy) og /access-token/get (ny).
+  // Prøv begge automatisk dersom første returnerer 404.
+  $tokenUrls = array_values(array_unique([
+    $tokenUrl,
+    str_replace("access-token", "accessToken", $tokenUrl),
+    str_replace("accessToken", "access-token", $tokenUrl),
   ]));
 
-  return (string)$data["access_token"];
+  $lastError = null;
+
+  foreach ($tokenUrls as $url) {
+    $ch = curl_init($url);
+    curl_setopt_array($ch, [
+      CURLOPT_RETURNTRANSFER => true,
+      CURLOPT_POST => true,
+      CURLOPT_POSTFIELDS => $body,
+      CURLOPT_HTTPHEADER => array_merge([
+        "Content-Type: application/x-www-form-urlencoded",
+        "Ocp-Apim-Subscription-Key: " . $subKey,
+        "Authorization: Basic " . $auth,
+        // Vipps krever fortsatt eksplisitte client_id/client_secret headers noen steder
+        "client_id: " . $clientId,
+        "client_secret: " . $clientSecret,
+      ], vipps_system_headers()),
+      CURLOPT_TIMEOUT => 30,
+    ]);
+
+    $resp = curl_exec($ch);
+    $code = (int)curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    $err  = curl_error($ch);
+    curl_close($ch);
+
+    if ($resp === false) {
+      $lastError = ["error" => "Curl error", "details" => $err];
+      continue;
+    }
+
+    $data = json_decode($resp, true);
+
+    if ($code >= 200 && $code < 300 && !empty($data["access_token"]) && !empty($data["expires_in"])) {
+      $expiresAt = time() + (int)$data["expires_in"];
+      @file_put_contents($cacheFile, json_encode([
+        "access_token" => $data["access_token"],
+        "expires_at" => $expiresAt
+      ]));
+      return (string)$data["access_token"];
+    }
+
+    // Lagre siste feilen, men prøv fallback-URL hvis 404/no route
+    $lastError = ["error" => "Vipps token error", "status" => $code, "response" => $data ?: $resp];
+    if ($code >= 400 && $code < 500) {
+      // fortsetter til neste URL i listen
+      continue;
+    } else {
+      break;
+    }
+  }
+
+  http_response_code(500);
+  echo json_encode($lastError ?: ["error" => "Vipps token error", "response" => "Unknown"]);
+  exit;
 }
 
 function vipps_request(string $method, string $url, ?array $jsonBody = null, array $extraHeaders = []): array {
