@@ -38,8 +38,8 @@ if (!defined('VIPPS_TOKEN_URL')) {
   define(
     'VIPPS_TOKEN_URL',
     VIPPS_ENV === 'test'
-      ? 'https://apitest.vipps.no/accessToken/get'
-      : 'https://api.vipps.no/accessToken/get'
+      ? 'https://apitest.vipps.no/access-token/get'
+      : 'https://api.vipps.no/access-token/get'
   );
 }
 

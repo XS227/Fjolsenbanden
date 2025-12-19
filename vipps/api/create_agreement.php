@@ -25,7 +25,27 @@ $payload = [
 ];
 
 $url = VIPPS_RECURRING_BASE . "/agreements";
-$result = vipps_post_json($url, $payload);
+
+try {
+  $result = vipps_post_json($url, $payload);
+} catch (VippsApiException $e) {
+  $status = $e->status ?: 500;
+  http_response_code($status >= 400 && $status < 600 ? $status : 500);
+
+  $response = $e->response;
+  $friendlyMessage = null;
+  if (is_array($response) && isset($response["detail"]) && str_contains((string)$response["detail"], "Recurring API")) {
+    $friendlyMessage = "Vipps Recurring er ikke aktivert for denne butikken. Ta kontakt med Vipps for å åpne produktet, eller bruk engangsbetaling.";
+  }
+
+  echo json_encode([
+    "error" => $e->getMessage(),
+    "status" => $e->status,
+    "response" => $e->response,
+    "friendlyMessage" => $friendlyMessage
+  ]);
+  exit;
+}
 
 echo json_encode([
   "agreementId" => $agreementId,
