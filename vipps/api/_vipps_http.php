@@ -2,6 +2,16 @@
 // vipps/api/_vipps_http.php
 require_once __DIR__ . "/_bootstrap.php";
 
+class VippsApiException extends Exception {
+  public int $status;
+  public $response;
+  public function __construct(string $message, int $status = 0, $response = null) {
+    parent::__construct($message, $status);
+    $this->status = $status;
+    $this->response = $response;
+  }
+}
+
 function vipps_required(string $name): string {
   if (!defined($name) || trim((string)constant($name)) === "") {
     http_response_code(500);
@@ -155,14 +165,10 @@ function vipps_request(string $method, string $url, ?array $jsonBody = null, arr
 function vipps_post_json(string $url, array $payload, array $headers = []): array {
   $res = vipps_request("POST", $url, $payload, $headers);
   if (!empty($res["_curl_error"])) {
-    http_response_code(500);
-    echo json_encode(["error" => "Curl error", "details" => $res["response"]]);
-    exit;
+    throw new VippsApiException("Curl error", 0, $res["response"]);
   }
   if ((int)$res["status"] < 200 || (int)$res["status"] >= 300) {
-    http_response_code(500);
-    echo json_encode(["error" => "Vipps API error", "status" => $res["status"], "response" => $res["response"]]);
-    exit;
+    throw new VippsApiException("Vipps API error", (int)$res["status"], $res["response"]);
   }
   return (array)$res["response"];
 }
@@ -170,14 +176,10 @@ function vipps_post_json(string $url, array $payload, array $headers = []): arra
 function vipps_get_json(string $url, array $headers = []): array {
   $res = vipps_request("GET", $url, null, $headers);
   if (!empty($res["_curl_error"])) {
-    http_response_code(500);
-    echo json_encode(["error" => "Curl error", "details" => $res["response"]]);
-    exit;
+    throw new VippsApiException("Curl error", 0, $res["response"]);
   }
   if ((int)$res["status"] < 200 || (int)$res["status"] >= 300) {
-    http_response_code(500);
-    echo json_encode(["error" => "Vipps API error", "status" => $res["status"], "response" => $res["response"]]);
-    exit;
+    throw new VippsApiException("Vipps API error", (int)$res["status"], $res["response"]);
   }
   return (array)$res["response"];
 }

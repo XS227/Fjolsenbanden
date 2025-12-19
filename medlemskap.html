@@ -583,8 +583,15 @@
           return;
         }
 
-        // Vis eksakt hva som kom tilbake fra backend
-        box.textContent = `Feil: Ingen redirect-url.\nHTTP ${res.status}\n${raw}`;
+        // Vis eksakt hva som kom tilbake fra backend, men prøv en vennlig melding først
+        const friendly = data?.friendlyMessage;
+        if (friendly) {
+          box.textContent = friendly;
+        } else if (data?.status === 403 && typeof data?.response === "object") {
+          box.textContent = "Vipps-abonnement er ikke aktivert for denne kontoen. Ta kontakt med Vipps eller bruk et annet betalingsvalg.";
+        } else {
+          box.textContent = `Feil: Ingen redirect-url.\nHTTP ${res.status}\n${raw}`;
+        }
 
       } catch (e) {
         box.textContent = "Feil: " + (e?.message || "Kunne ikke kontakte server.");
