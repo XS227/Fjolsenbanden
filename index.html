@@ -505,29 +505,43 @@ a {
   justify-content: center;
 }
 
-.badge {
-  display: inline-block;
-  padding: 0.25rem 0.9rem;
+.membership-plan .tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.9rem;
   border-radius: var(--radius-pill);
-  background: rgba(255, 255, 255, 0.05);
-  font-size: 0.8rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(10, 20, 80, 0.88);
   color: var(--muted);
+  font-size: 0.82rem;
+  margin-bottom: 0.9rem;
 }
 
-.price {
-  font-size: 2.2rem;
-  margin: 0.8rem 0 1.5rem;
+.membership-plan h3 {
+  margin: 0;
+  font-size: 1.35rem;
+  letter-spacing: 0.02em;
 }
 
-.checklist {
-  list-style: none;
-  padding-left: 0;
-  margin: 0 0 2rem;
+.membership-price {
+  margin-top: 0.6rem;
+  font-size: 1.7rem;
+  font-weight: 750;
+}
+
+.membership-price span {
+  font-size: 0.95rem;
+  font-weight: 600;
   color: var(--muted);
+  margin-left: 0.4rem;
 }
 
-.checklist li {
-  margin-bottom: 0.4rem;
+.membership-plan ul {
+  margin: 0.8rem 0 0;
+  padding-left: 1.1rem;
+  color: var(--muted);
+  line-height: 1.7;
 }
 
 .membership-info {
