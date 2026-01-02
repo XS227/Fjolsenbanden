@@ -184,17 +184,6 @@
       pointer-events: none;
     }
 
-    .vipps-status {
-      margin-top: 1rem;
-      border-radius: var(--radius-md);
-      border: 1px solid rgba(255,255,255,.10);
-      background: rgba(10, 20, 80, 0.35);
-      padding: 0.9rem 1rem;
-      color: var(--muted);
-      font-size: 0.92rem;
-      display: none;
-    }
-
     details.faq {
       border-radius: var(--radius-lg);
       border: 1px solid rgba(255,255,255,.08);
@@ -398,7 +387,7 @@
             <li>Ingen garanti hvis fullt med UNREAL-medlemmer</li>
           </ul>
           <div class="actions">
-            <a class="btn btn-ghost btn-wide" href="index.html#community">Bli med gratis</a>
+            <p class="small muted" style="margin:0;">Gratis – ingen betaling nødvendig.</p>
           </div>
         </article>
 
@@ -445,12 +434,11 @@
         </article>
       </div>
 
-      <div id="vippsStatus" class="vipps-status"></div>
-
       <div class="card" style="margin-top: 1.25rem;">
-        <p class="small muted" style="margin:0;">
-          👉 Send Vipps til FjOlsenFN. Merk betalingen med «UNREAL &amp; DITT EPIC NAVN». Er du under 18 år, må betaling sendes av forelder/foresatt. (VIPPS: 942 911 69)
-        </p>
+        <p class="small" style="margin: 0 0 .35rem;">👉 Send Vipps til FjOlsenFN</p>
+        <p class="small" style="margin: 0 0 .35rem;">Merk betalingen med «MEDLEMSKAP &amp; DITT EPIC-NAVN»</p>
+        <p class="small" style="margin: 0 0 .35rem;">Er du under 18 år, må betalingen sendes av foresatt.</p>
+        <p class="small" style="margin:0; font-weight:700;">Vipps: 942 91 169</p>
       </div>
     </div>
   </section>
@@ -553,55 +541,5 @@
       </div>
     </div>
   </footer>
-
-  <script>
-    async function startVipps(plan) {
-      const box = document.getElementById("vippsStatus");
-      box.style.display = "block";
-      box.textContent = "Starter Vipps …";
-
-      const selectedPlan = plan === "legend" ? "legend" : "pro";
-
-      try {
-        const res = await fetch("/vipps/api/create_agreement.php", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ plan: selectedPlan })
-        });
-
-        const raw = await res.text(); // les alltid tekst først
-        let data = null;
-        try { data = JSON.parse(raw); } catch (_) {}
-
-        // Prøv å finne redirect-url i flere mulige felter
-        const url = data && (
-          data.vippsConfirmationUrl ||
-          data.redirectUrl ||
-          data.url ||
-          data.checkoutFrontendUrl ||
-          data.loginUrl ||
-          (data.agreement && data.agreement.vippsConfirmationUrl)
-        );
-
-        if (url) {
-          window.location.href = url;
-          return;
-        }
-
-        // Vis eksakt hva som kom tilbake fra backend, men prøv en vennlig melding først
-        const friendly = data?.friendlyMessage;
-        if (friendly) {
-          box.textContent = friendly;
-        } else if (data?.status === 403 && typeof data?.response === "object") {
-          box.textContent = "Vipps-abonnement er ikke aktivert for denne kontoen. Ta kontakt med Vipps eller bruk et annet betalingsvalg.";
-        } else {
-          box.textContent = `Feil: Ingen redirect-url.\nHTTP ${res.status}\n${raw}`;
-        }
-
-      } catch (e) {
-        box.textContent = "Feil: " + (e?.message || "Kunne ikke kontakte server.");
-      }
-    }
-  </script>
 </body>
 </html>

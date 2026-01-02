@@ -463,8 +463,37 @@ a {
 
 /* Membership */
 
+.membership-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
 .membership-card {
-  max-width: 380px;
+  max-width: none;
+}
+
+.membership-card .membership-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.3rem 0.85rem;
+  border-radius: var(--radius-pill);
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.membership-card .divider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.08);
+  margin: 1.1rem 0;
+}
+
+.membership-card.highlight {
+  border-color: rgba(255, 45, 164, 0.18);
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.55), 0 0 24px rgba(255, 45, 164, 0.16);
 }
 
 .badge {
@@ -1421,15 +1450,43 @@ body.is-admin .fb-block-edit-btn:hover {
         </p>
       </div>
 
-      <div class="center">
-        <div class="card membership-card fb-edit-block" data-block-id="membership-card" data-edit-type="richtext">
-          <span class="badge">Gratis</span>
-          <p class="price">0 kr/mnd</p>
-
+      <div class="membership-grid">
+        <div class="card membership-card fb-edit-block" data-block-id="membership-card-bronze" data-edit-type="richtext">
+          <span class="membership-tag">🟤 Bronze • Gratis</span>
+          <h3>Bronze</h3>
+          <p class="price">0 kr <span>/ mnd</span></p>
+          <div class="divider"></div>
           <ul class="checklist membership-features">
-            <li>Få medlemsrolle i Discord</li>
-            <li>Vinne premier i customs &amp; giveaways</li>
-            <li>Prioritet i kø til konkurranser foran ikke-medlemmer</li>
+            <li>Full tilgang til communityet</li>
+            <li>Delta i streams, events og konkurranser</li>
+            <li>Delta i trekninger</li>
+            <li>❌ Ingen premie utbetales dersom man vinner</li>
+          </ul>
+        </div>
+
+        <div class="card membership-card highlight fb-edit-block" data-block-id="membership-card-elite" data-edit-type="richtext">
+          <span class="membership-tag">🥈 Elite • Mest valgt</span>
+          <h3>Elite</h3>
+          <p class="price">79 kr <span>/ mnd</span></p>
+          <div class="divider"></div>
+          <ul class="checklist membership-features">
+            <li>Alt fra Bronze</li>
+            <li>✅ Premier utbetales dersom du vinner</li>
+            <li>Delta i alle giveaways</li>
+            <li>Eksklusive Elite-trekninger</li>
+          </ul>
+        </div>
+
+        <div class="card membership-card fb-edit-block" data-block-id="membership-card-unreal" data-edit-type="richtext">
+          <span class="membership-tag">🟣 Unreal • Supporter</span>
+          <h3>Unreal</h3>
+          <p class="price">149 kr <span>/ mnd</span></p>
+          <div class="divider"></div>
+          <ul class="checklist membership-features">
+            <li>Alt fra Elite</li>
+            <li>🔥 150 % premie ved gevinst</li>
+            <li>Eksklusive events og konkurranser</li>
+            <li>Støtter FjOlsenbanden litt ekstra</li>
           </ul>
         </div>
       </div>
