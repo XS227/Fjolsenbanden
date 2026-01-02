@@ -1510,200 +1510,396 @@ body.is-admin .fb-block-edit-btn:hover {
   </section>
 
 
-  <section id="membership" class="section" data-sortable-section="membership" data-section-label="Medlemskap">
-    <div class="container">
-      <div class="fb-edit-block" data-block-id="membership-intro" data-edit-type="richtext">
-        <h2>Bli <span class="highlight">medlem</span> i dag.</h2>
-        <p class="subtitle">
-          Det er helt gratis å bli medlem i FjOlsenbanden.<br />
-          Ved å bli medlem kan du vinne premier og delta i giveaways.
-        </p>
+<section id="membership" class="section membership-journey" data-sortable-section="membership" data-section-label="Medlemskap">
+  <div class="container">
+    <header class="membership-journey__header">
+      <h2>Bli <span class="highlight">medlem</span> i dag.</h2>
+      <p class="subtitle">
+        Start gratis – oppgrader når du vil. UNREAL gir full tilgang og de største premiene.
+      </p>
+    </header>
+
+    <!-- REISE / OVERVIEW -->
+    <div class="journey">
+      <div class="journey__rail" aria-hidden="true">
+        <span class="journey__dot journey__dot--left"></span>
+        <span class="journey__dot journey__dot--mid"></span>
+        <span class="journey__dot journey__dot--right"></span>
       </div>
 
-      <div class="fb-edit-block" data-block-id="membership-info" data-edit-type="richtext">
-        <h3>💛 Medlemskap i FjOlsenbanden</h3>
-        <p>
-          Alle customs i FjOlsenbanden er 100% gratis å delta på. Du kan spille så mange customs du vil uten å være medlem, men da kan du ikke vinne premier.
-        </p>
-      </div>
+      <div class="journey__grid" role="tablist" aria-label="Medlemsreise">
+        <!-- IKKE-MEDLEM -->
+        <article class="card journey-card journey-card--side" data-plan="none">
+          <div class="journey-card__top">
+            <span class="membership-tag">🔓 Ikke-medlem</span>
+            <h3>Ikke-medlem</h3>
+            <p class="muted">For deg som vil spille for gøy.</p>
+          </div>
 
-      <div class="two-column">
-        <div class="card fb-edit-block" data-block-id="membership-info-left" data-edit-type="richtext">
-          <h3>Slik fungerer det – enkelt forklart</h3>
-          <p class="muted">🎮 Customs</p>
-          <p><strong>Gratis for alle</strong></p>
-          <ul class="checklist">
-            <li>Ingen deltakeravgift i customs</li>
-            <li>Medlemmer/UNREAL kan vinne V-Bucks</li>
-            <li>Medlemmer/UNREAL kommer først inn i customs</li>
+          <ul class="journey-card__bullets">
+            <li>🎮 Gratis customs</li>
+            <li>❌ Ingen premier</li>
+            <li>⚠️ Lavest prioritet hvis fullt</li>
           </ul>
-        </div>
 
-        <div class="card fb-edit-block" data-block-id="membership-info-right" data-edit-type="richtext">
-          <h3>🏆 Cash Cups/Giveaways</h3>
-          <p class="muted">Turneringer med cash premier</p>
-          <ul class="checklist">
-            <li>UNREAL-medlemmer deltar gratis og kan vinne cash premie</li>
-            <li>Deltakeravgift for å vinne cash premie for ikke-UNREAL (25-50kr)</li>
-            <li>Gratis-medlemmer kan vinne V-Bucks i Cash Cups (25-50% av cash premie)</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="membership-grid">
+          <button class="btn btn-ghost journey-card__btn" type="button" data-open="none" aria-controls="plan-panel-none">
+            Se hva dette betyr
+          </button>
+        </article>
 
         <!-- GRATIS MEDLEM -->
-        <div class="card membership-card fb-edit-block" data-block-id="membership-free" data-edit-type="richtext">
-          <span class="membership-tag">🟦 Gratis medlem</span>
-          <h3>Gratis medlem</h3>
+        <article class="card journey-card journey-card--side" data-plan="free">
+          <div class="journey-card__top">
+            <span class="membership-tag">🟦 Gratis medlem</span>
+            <h3>Gratis medlem</h3>
+            <p class="muted">For deg som spiller av og til og vil vinne premier.</p>
+          </div>
 
-          <p class="muted">
-            For deg som spiller av og til og vil vinne premier.
-          </p>
-
-          <div class="divider"></div>
-
-          <ul class="checklist">
-            <li>
-              <span class="feature-icon positive" aria-hidden="true">✅</span>
-              <span>Du får medlemsrolle og chat-tilgang i Discord</span>
-            </li>
-            <li>
-              <span class="feature-icon positive" aria-hidden="true">✅</span>
-              <span>Du kan legge til FjOlsenFN på Fortnite</span>
-            </li>
-            <li>
-              <span class="feature-icon positive" aria-hidden="true">✅</span>
-              <span>Kan vinne V-Bucks-premier</span>
-            </li>
-            <li>
-              <span class="feature-icon positive" aria-hidden="true">✅</span>
-              <span>Prioritet over ikke-medlemmer i customs-kø</span>
-            </li>
-            <li>
-              <span class="feature-icon negative" aria-hidden="true">✖️</span>
-              <span>Kan ikke vinne cash-premie (uten deltakeravgift)</span>
-            </li>
-            <li>
-              <span class="feature-icon warning" aria-hidden="true">⚠️</span>
-              <span>Ingen garanti om plass hvis customs er fulle med UNREAL-medlemmer</span>
-            </li>
-            <li>
-              <span class="feature-icon coin" aria-hidden="true">🪙</span>
-              <span>Cashout på 5000 V-Bucks</span>
-            </li>
+          <ul class="journey-card__bullets">
+            <li>🟦 Medlemsrolle i Discord</li>
+            <li>💎 Kan vinne V-Bucks</li>
+            <li>⏫ Prioritet over ikke-medlemmer</li>
           </ul>
 
-          <div class="membership-actions">
-            <a href="#membership" class="btn btn-ghost">Bli medlem</a>
-          </div>
-        </div>
+          <button class="btn btn-ghost journey-card__btn" type="button" data-open="free" aria-controls="plan-panel-free">
+            Se detaljer
+          </button>
+        </article>
 
         <!-- UNREAL -->
-        <div class="card membership-card highlight fb-edit-block" data-block-id="membership-unreal" data-edit-type="richtext">
-          <span class="membership-tag">👑 UNREAL · Mest populær</span>
+        <article class="card journey-card journey-card--unreal" data-plan="unreal">
+          <div class="journey-card__badge">👑 Mest populær</div>
 
-          <!-- HER kan du legge inn bilde av ape med krone -->
-          <!-- <img src="/img/ape-krone.png" alt="UNREAL ape" class="membership-mascot"> -->
+          <div class="journey-card__top">
+            <span class="membership-tag">👑 UNREAL</span>
+            <h3>UNREAL</h3>
+            <p class="membership-price">
+              75 kr <span>/ måned</span>
+            </p>
+            <p class="muted">Du er en ekte støttespiller av FjOlsenbanden ❤️</p>
+          </div>
 
-          <h3>UNREAL</h3>
-          <p class="price">75 kr <span>/ måned</span></p>
-
-          <p class="muted">
-            Du er en ekte støttespiller av FjOlsenbanden ❤️
-          </p>
-
-          <div class="divider"></div>
-
-          <ul class="checklist">
-            <li>
-              <span class="feature-icon positive" aria-hidden="true">👑</span>
-              <span>UNREAL-rolle i Discord</span>
-            </li>
-            <li>
-              <span class="feature-icon positive" aria-hidden="true">💸</span>
-              <span>Kan vinne V-Bucks og cash-premier</span>
-            </li>
-            <li>
-              <span class="feature-icon positive" aria-hidden="true">💰</span>
-              <span>Gratis deltakelse i alle Cash Cups</span>
-            </li>
-            <li>
-              <span class="feature-icon positive" aria-hidden="true">🚀</span>
-              <span>Førsteprioritet i alle customs</span>
-            </li>
-            <li>
-              <span class="feature-icon positive" aria-hidden="true">🏆</span>
-              <span>Tilgang til alle premier inkludert giveaways</span>
-            </li>
-            <li>
-              <span class="feature-icon positive" aria-hidden="true">➕</span>
-              <span>50% ekstra på alle V-Bucks-premier</span>
-            </li>
-            <li>
-              <span class="feature-icon coin" aria-hidden="true">🪙</span>
-              <span>Cashout på 2800 V-Bucks</span>
-            </li>
+          <ul class="journey-card__bullets">
+            <li>👑 UNREAL-rolle i Discord</li>
+            <li>💰 Cash + V-Bucks</li>
+            <li>🚀 Førsteprioritet</li>
+            <li>🏆 Alle giveaways</li>
           </ul>
 
-          <div class="membership-actions">
-            <a href="#membership" class="btn btn-primary">Bli medlem</a>
-          </div>
-        </div>
-
-        <!-- IKKE-MEDLEM -->
-        <div class="card membership-card fb-edit-block" data-block-id="membership-none" data-edit-type="richtext">
-          <span class="membership-tag">🔓 Ikke-medlem</span>
-
-          <!-- HER kan du legge inn trist ape -->
-          <!-- <img src="/img/ape-trist.png" alt="Trist ape" class="membership-mascot"> -->
-
-          <h3>Ikke-medlem</h3>
-
-          <p class="muted">
-            For deg som vil spille for gøy.
-          </p>
-
-          <div class="divider"></div>
-
-          <ul class="checklist">
-            <li>
-              <span class="feature-icon positive" aria-hidden="true">🎮</span>
-              <span>Gratis deltakelse i alle customs</span>
-            </li>
-            <li>
-              <span class="feature-icon negative" aria-hidden="true">✖️</span>
-              <span>Kan ikke vinne V-Bucks</span>
-            </li>
-            <li>
-              <span class="feature-icon negative" aria-hidden="true">✖️</span>
-              <span>Kan ikke vinne cash-premier</span>
-            </li>
-            <li>
-              <span class="feature-icon negative" aria-hidden="true">✖️</span>
-              <span>Kan ikke vinne i giveaways</span>
-            </li>
-            <li>
-              <span class="feature-icon warning" aria-hidden="true">⚠️</span>
-              <span>Lavest prioritet hvis fullt</span>
-            </li>
-          </ul>
-
-          <div class="membership-actions">
-            <a href="#membership" class="btn btn-ghost">Bli medlem</a>
-          </div>
-        </div>
-
-      </div>
-
-      <div class="membership-info card hover-lift">
-        <p class="lead-line">Send Vipps til FjOlsenFN.</p>
-        <p>Merk betalingen med «UNREAL + DITT DISCORD NAVN».</p>
-        <p>Er du under 18 år, må betaling sendes av forelder/foresatt.</p>
-        <p class="vipps-number">VIPPS til: 942 911 69</p>
+          <!-- Ingen "Bli medlem" knapp her -->
+          <button class="journey-card__ctaLink" type="button" data-open="unreal" aria-controls="plan-panel-unreal">
+            Se alt du får som UNREAL <span aria-hidden="true">↓</span>
+          </button>
+        </article>
       </div>
     </div>
-  </section>
+
+    <!-- DETALJER (accordion under reisen) -->
+    <div class="journey-panels" aria-live="polite">
+      <!-- IKKE-MEDLEM PANEL -->
+      <section id="plan-panel-none" class="card journey-panel" data-panel="none" hidden>
+        <div class="journey-panel__head">
+          <h3>🔓 Ikke-medlem – detaljer</h3>
+          <button class="journey-panel__close" type="button" data-close aria-label="Lukk">×</button>
+        </div>
+
+        <div class="divider"></div>
+
+        <ul class="checklist">
+          <li><span class="feature-icon positive" aria-hidden="true">🎮</span><span>Gratis deltakelse i alle customs</span></li>
+          <li><span class="feature-icon negative" aria-hidden="true">✖️</span><span>Kan ikke vinne V-Bucks</span></li>
+          <li><span class="feature-icon negative" aria-hidden="true">✖️</span><span>Kan ikke vinne cash-premier</span></li>
+          <li><span class="feature-icon negative" aria-hidden="true">✖️</span><span>Kan ikke vinne i giveaways</span></li>
+          <li><span class="feature-icon warning" aria-hidden="true">⚠️</span><span>Lavest prioritet hvis fullt</span></li>
+        </ul>
+      </section>
+
+      <!-- GRATIS PANEL -->
+      <section id="plan-panel-free" class="card journey-panel" data-panel="free" hidden>
+        <div class="journey-panel__head">
+          <h3>🟦 Gratis medlem – detaljer</h3>
+          <button class="journey-panel__close" type="button" data-close aria-label="Lukk">×</button>
+        </div>
+
+        <p class="muted">For deg som spiller av og til og vil vinne premier.</p>
+
+        <div class="divider"></div>
+
+        <ul class="checklist">
+          <li><span class="feature-icon positive" aria-hidden="true">✅</span><span>Du får medlemsrolle og chat-tilgang i Discord</span></li>
+          <li><span class="feature-icon positive" aria-hidden="true">✅</span><span>Du kan legge til FjOlsenFN på Fortnite</span></li>
+          <li><span class="feature-icon positive" aria-hidden="true">✅</span><span>Kan vinne V-Bucks-premier</span></li>
+          <li><span class="feature-icon positive" aria-hidden="true">✅</span><span>Prioritet over ikke-medlemmer i customs-kø</span></li>
+          <li><span class="feature-icon negative" aria-hidden="true">✖️</span><span>Kan ikke vinne cash-premie (uten deltakeravgift)</span></li>
+          <li><span class="feature-icon warning" aria-hidden="true">⚠️</span><span>Ingen garanti om plass hvis customs er fulle med UNREAL-medlemmer</span></li>
+          <li><span class="feature-icon coin" aria-hidden="true">🪙</span><span>Cashout på 5000 V-Bucks</span></li>
+        </ul>
+
+        <div class="journey-panel__actions">
+          <a href="#membership" class="btn btn-ghost">Bli gratis medlem</a>
+        </div>
+      </section>
+
+      <!-- UNREAL PANEL -->
+      <section id="plan-panel-unreal" class="card journey-panel journey-panel--unreal" data-panel="unreal" hidden>
+        <div class="journey-panel__head">
+          <h3>👑 UNREAL – alt du får</h3>
+          <button class="journey-panel__close" type="button" data-close aria-label="Lukk">×</button>
+        </div>
+
+        <p class="muted">
+          75 kr / måned · Du er en ekte støttespiller av FjOlsenbanden ❤️
+        </p>
+
+        <div class="divider"></div>
+
+        <ul class="checklist">
+          <li><span class="feature-icon positive" aria-hidden="true">👑</span><span>UNREAL-rolle i Discord</span></li>
+          <li><span class="feature-icon positive" aria-hidden="true">💸</span><span>Kan vinne V-Bucks og cash-premier</span></li>
+          <li><span class="feature-icon positive" aria-hidden="true">💰</span><span>Gratis deltakelse i alle Cash Cups</span></li>
+          <li><span class="feature-icon positive" aria-hidden="true">🚀</span><span>Førsteprioritet i alle customs</span></li>
+          <li><span class="feature-icon positive" aria-hidden="true">🏆</span><span>Tilgang til alle premier inkludert giveaways</span></li>
+          <li><span class="feature-icon positive" aria-hidden="true">➕</span><span>50% ekstra på alle V-Bucks-premier</span></li>
+          <li><span class="feature-icon coin" aria-hidden="true">🪙</span><span>Cashout på 2800 V-Bucks</span></li>
+        </ul>
+
+        <!-- VIPPS TEKST KUN UNDER UNREAL -->
+        <div class="journey-vipps card">
+          <p class="lead-line">Slik blir du UNREAL</p>
+          <p>Send Vipps til FjOlsenFN.</p>
+          <p>Merk betalingen med «UNREAL + DITT DISCORD NAVN».</p>
+          <p>Er du under 18 år, må betaling sendes av forelder/foresatt.</p>
+          <p class="vipps-number">VIPPS til: 942 911 69</p>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <style>
+    /* ===== Membership Journey (scoped) ===== */
+    .membership-journey .membership-journey__header {
+      text-align: center;
+      margin-bottom: 2.25rem;
+    }
+
+    .membership-journey .journey {
+      position: relative;
+      margin-top: 1.5rem;
+    }
+
+    .membership-journey .journey__rail {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      top: 78px;
+      width: min(900px, 92%);
+      height: 4px;
+      background: linear-gradient(90deg, rgba(84, 98, 135, 0.5), rgba(19, 160, 249, 0.55), rgba(84, 98, 135, 0.5));
+      border-radius: 999px;
+      opacity: 0.9;
+      z-index: 0;
+    }
+
+    .membership-journey .journey__dot {
+      position: absolute;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 14px;
+      height: 14px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.85);
+      box-shadow: 0 0 18px rgba(0, 166, 255, 0.35);
+    }
+    .membership-journey .journey__dot--left { left: 16%; }
+    .membership-journey .journey__dot--mid { left: 50%; width: 18px; height: 18px; background: rgba(19,160,249,0.95); }
+    .membership-journey .journey__dot--right { left: 84%; }
+
+    .membership-journey .journey__grid {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1.15fr;
+      gap: 1rem;
+      align-items: stretch;
+    }
+
+    .membership-journey .journey-card {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 330px;
+    }
+
+    .membership-journey .journey-card__top h3 {
+      margin: 0.4rem 0 0.35rem;
+      font-size: 1.35rem;
+      letter-spacing: 0.02em;
+    }
+
+    .membership-journey .journey-card__bullets {
+      margin: 0.8rem 0 1.25rem;
+      padding: 0;
+      list-style: none;
+      color: var(--muted);
+      display: grid;
+      gap: 0.55rem;
+      line-height: 1.45;
+    }
+
+    .membership-journey .journey-card__btn {
+      width: 100%;
+    }
+
+    .membership-journey .journey-card--unreal {
+      border-color: rgba(255, 45, 164, 0.18);
+      box-shadow: 0 18px 45px rgba(0, 0, 0, 0.55), 0 0 24px rgba(255, 45, 164, 0.16);
+      transform: translateY(-10px);
+    }
+
+    .membership-journey .journey-card__badge {
+      display: inline-flex;
+      align-self: flex-start;
+      padding: 0.3rem 0.85rem;
+      border-radius: var(--radius-pill);
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--muted);
+      font-size: 0.9rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .membership-journey .journey-card__ctaLink {
+      border: none;
+      background: transparent;
+      color: var(--primary);
+      font-weight: 800;
+      cursor: pointer;
+      padding: 0.65rem 0;
+      text-align: left;
+    }
+    .membership-journey .journey-card__ctaLink:hover {
+      text-decoration: underline;
+    }
+
+    .membership-journey .journey-panels {
+      margin-top: 1rem;
+      display: grid;
+      gap: 1rem;
+    }
+
+    .membership-journey .journey-panel {
+      padding: 1.6rem 1.8rem;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      background: radial-gradient(circle at top left, #192554, #0b1433);
+      border-radius: 26px;
+    }
+
+    .membership-journey .journey-panel__head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .membership-journey .journey-panel__head h3 {
+      margin: 0;
+      font-size: 1.15rem;
+    }
+
+    .membership-journey .journey-panel__close {
+      width: 36px;
+      height: 36px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.16);
+      background: rgba(255,255,255,0.06);
+      color: #fff;
+      cursor: pointer;
+      font-size: 20px;
+      line-height: 1;
+    }
+    .membership-journey .journey-panel__close:hover {
+      background: rgba(255,255,255,0.1);
+    }
+
+    .membership-journey .journey-panel__actions {
+      margin-top: 1.2rem;
+    }
+
+    .membership-journey .journey-vipps {
+      margin-top: 1.4rem;
+      background: linear-gradient(135deg, rgba(0, 166, 255, 0.16), rgba(255, 45, 164, 0.12));
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: var(--radius-lg);
+      padding: 1.25rem 1.35rem;
+      box-shadow: 0 14px 32px rgba(0, 0, 0, 0.35);
+    }
+    .membership-journey .journey-vipps p {
+      margin: 0.35rem 0;
+      color: #e9ecff;
+    }
+    .membership-journey .journey-vipps .lead-line {
+      font-weight: 900;
+      font-size: 1.05rem;
+      letter-spacing: 0.02em;
+    }
+    .membership-journey .journey-vipps .vipps-number {
+      font-size: 1.2rem;
+      font-weight: 900;
+      color: var(--primary);
+      letter-spacing: 0.04em;
+    }
+
+    /* Mobil */
+    @media (max-width: 900px) {
+      .membership-journey .journey__rail {
+        display: none;
+      }
+      .membership-journey .journey__grid {
+        grid-template-columns: 1fr;
+      }
+      .membership-journey .journey-card--unreal {
+        transform: none;
+      }
+    }
+  </style>
+
+  <script>
+    (function () {
+      const root = document.querySelector(".membership-journey");
+      if (!root) return;
+
+      const openBtns = root.querySelectorAll("[data-open]");
+      const panels = root.querySelectorAll(".journey-panel[data-panel]");
+      const closeBtns = root.querySelectorAll("[data-close]");
+
+      function closeAll() {
+        panels.forEach(p => p.hidden = true);
+        openBtns.forEach(b => b.setAttribute("aria-expanded", "false"));
+      }
+
+      function openPanel(key) {
+        closeAll();
+        const panel = root.querySelector('.journey-panel[data-panel="' + key + '"]');
+        const btns = root.querySelectorAll('[data-open="' + key + '"]');
+        if (!panel) return;
+        panel.hidden = false;
+        btns.forEach(b => b.setAttribute("aria-expanded", "true"));
+        panel.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+
+      openBtns.forEach(btn => {
+        btn.addEventListener("click", () => openPanel(btn.dataset.open));
+      });
+
+      closeBtns.forEach(btn => {
+        btn.addEventListener("click", closeAll);
+      });
+
+      // Valgfritt: åpne UNREAL som standard når man kommer til seksjonen
+      // (Kommenter inn om du vil)
+      // openPanel("unreal");
+    })();
+  </script>
+</section>
 
   <section id="feedback" class="section" data-sortable-section="feedback" data-section-label="Tilbakemeldinger">
     <div class="container">
