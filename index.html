@@ -465,20 +465,44 @@ a {
 
 .membership-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 1.2rem;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
+  margin-top: 2rem;
 }
 
-.membership-plan {
-  position: relative;
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  background: radial-gradient(circle at top left, #101a3e, #0d1636);
+.membership-card {
+  max-width: none;
 }
 
-.membership-plan.featured {
-  border-color: rgba(255, 45, 164, 0.22);
-  background: radial-gradient(circle at top left, #25105a, #0d1636);
-  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.55), 0 0 24px rgba(0, 166, 255, 0.12);
+.membership-card .membership-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.3rem 0.85rem;
+  border-radius: var(--radius-pill);
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.membership-card .divider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.08);
+  margin: 1.1rem 0;
+}
+
+.membership-card.highlight {
+  border-color: rgba(255, 45, 164, 0.18);
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.55), 0 0 24px rgba(255, 45, 164, 0.16);
+}
+
+.membership-actions {
+  margin-top: 1.2rem;
+}
+
+.membership-actions .btn {
+  width: 100%;
+  justify-content: center;
 }
 
 .membership-plan .tag {
@@ -520,21 +544,33 @@ a {
   line-height: 1.7;
 }
 
-.membership-plan li {
-  margin-bottom: 0.35rem;
+.membership-info {
+  margin: 2rem auto 0;
+  max-width: 720px;
+  text-align: center;
+  background: linear-gradient(135deg, rgba(0, 166, 255, 0.16), rgba(255, 45, 164, 0.12));
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem 1.6rem;
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.45);
 }
 
-.membership-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.65rem;
-  margin-top: 1.1rem;
+.membership-info p {
+  margin: 0.35rem 0;
+  color: #e9ecff;
 }
 
-.membership-note {
-  margin-top: 1.25rem;
-  color: var(--muted);
-  font-size: 0.95rem;
+.membership-info .lead-line {
+  font-weight: 800;
+  font-size: 1.05rem;
+  letter-spacing: 0.02em;
+}
+
+.membership-info .vipps-number {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: var(--primary);
+  letter-spacing: 0.04em;
 }
 
 /* Socials */
@@ -1327,34 +1363,6 @@ body.is-admin .fb-block-edit-btn:hover {
     </div>
   </section>
 
-  <section
-    id="julekalender"
-    class="section section--hero section--julekal section--active"
-    data-sortable-section="julekalender"
-    data-section-label="Julekalender"
-  >
-    <div class="container hero-grid">
-      <div class="hero-media">
-        <div class="hero-card hero-card--calendar hover-lift">
-          <img src="/img/annet/julekal.png" alt="Julekalender" />
-        </div>
-      </div>
-
-      <div class="hero-text">
-        <p class="pill">ÅRETS JULEKALENDER</p>
-        <h2 class="hero-title">Vinn premier til verdi av over 10 000 kroner!</h2>
-        <p class="hero-ingress">
-          Meld deg på årets julekalender før 1. desember og få 10 lodd ekstra i den store giveaway 25. desember!
-        </p>
-
-        <a href="https://fjolsenbanden.julekalender.no/" class="btn btn-primary">
-          Meld deg på julekalenderen
-        </a>
-      </div>
-
-    </div>
-  </section>
-
   <section id="about" class="section" data-sortable-section="about" data-section-label="Om FjOlsenbanden">
     <div class="container">
       <div class="fb-edit-block" data-block-id="about-intro" data-edit-type="richtext">
@@ -1455,6 +1463,111 @@ body.is-admin .fb-block-edit-btn:hover {
   </section>
 
 
+  <section id="membership" class="section" data-sortable-section="membership" data-section-label="Medlemskap">
+    <div class="container">
+      <div class="fb-edit-block" data-block-id="membership-intro" data-edit-type="richtext">
+        <h2>Bli <span class="highlight">medlem</span> i dag.</h2>
+        <p class="subtitle">
+          Det er helt gratis å bli medlem i FjOlsenbanden.<br />
+          Ved å bli medlem kan du vinne premier og delta i giveaways.
+        </p>
+      </div>
+
+      <div class="membership-grid">
+
+        <!-- GRATIS MEDLEM -->
+        <div class="card membership-card fb-edit-block" data-block-id="membership-free" data-edit-type="richtext">
+          <span class="membership-tag">🟦 Gratis medlem</span>
+          <h3>Gratis medlem</h3>
+
+          <p class="muted">
+            For deg som spiller av og til og vil vinne premier.
+          </p>
+
+          <div class="divider"></div>
+
+          <ul class="checklist">
+            <li>Medlemsrolle og chat-tilgang i Discord</li>
+            <li>Kan legge til FjOlsenFN på Fortnite</li>
+            <li>🟦 Kan vinne V-Bucks-premier</li>
+            <li>❌ Kan ikke vinne cash-premier (uten deltakeravgift)</li>
+            <li>Prioritet over ikke-medlemmer i customs-kø</li>
+            <li>Ingen garanti hvis customs er fulle med UNREAL-medlemmer</li>
+          </ul>
+
+          <div class="membership-actions">
+            <a class="btn btn-ghost">Bli medlem</a>
+          </div>
+        </div>
+
+        <!-- UNREAL -->
+        <div class="card membership-card highlight fb-edit-block" data-block-id="membership-unreal" data-edit-type="richtext">
+          <span class="membership-tag">👑 UNREAL · Mest populær</span>
+
+          <!-- HER kan du legge inn bilde av ape med krone -->
+          <!-- <img src="/img/ape-krone.png" alt="UNREAL ape" class="membership-mascot"> -->
+
+          <h3>UNREAL</h3>
+          <p class="price">75 kr <span>/ måned</span></p>
+
+          <p class="muted">
+            Du er en ekte støttespiller av FjOlsenbanden ❤️
+          </p>
+
+          <div class="divider"></div>
+
+          <ul class="checklist">
+            <li>🟡 UNREAL-rolle i Discord</li>
+            <li>🟡 Kan vinne V-Bucks <strong>og</strong> cash-premier</li>
+            <li>💰 Gratis deltakelse i alle Cash Cups</li>
+            <li>🚀 Førsteprioritet i alle customs</li>
+            <li>🏆 Tilgang til alle premier og giveaways</li>
+          </ul>
+
+          <div class="membership-actions">
+            <a class="btn btn-primary">Bli medlem</a>
+          </div>
+        </div>
+
+        <!-- IKKE-MEDLEM -->
+        <div class="card membership-card fb-edit-block" data-block-id="membership-none" data-edit-type="richtext">
+          <span class="membership-tag">🔓 Ikke-medlem</span>
+
+          <!-- HER kan du legge inn trist ape -->
+          <!-- <img src="/img/ape-trist.png" alt="Trist ape" class="membership-mascot"> -->
+
+          <h3>Ikke-medlem</h3>
+
+          <p class="muted">
+            For deg som vil spille for gøy.
+          </p>
+
+          <div class="divider"></div>
+
+          <ul class="checklist">
+            <li>Gratis deltakelse i customs</li>
+            <li>❌ Kan ikke vinne V-Bucks</li>
+            <li>❌ Kan ikke vinne cash-premier</li>
+            <li>❌ Kan ikke vinne i giveaways</li>
+            <li>Lavest prioritet hvis fullt</li>
+          </ul>
+
+          <div class="membership-actions">
+            <a class="btn btn-ghost">Bli medlem</a>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="membership-info card hover-lift">
+        <p class="lead-line">👉 Send Vipps til FjOlsenFN</p>
+        <p>Merk betalingen med «MEDLEMSKAP &amp; DITT EPIC-NAVN»</p>
+        <p>Er du under 18 år, må betalingen sendes av foresatt.</p>
+        <p class="vipps-number">Vipps: 942 91 169</p>
+      </div>
+    </div>
+  </section>
+
   <section id="feedback" class="section" data-sortable-section="feedback" data-section-label="Tilbakemeldinger">
     <div class="container">
       <div class="fb-edit-block" data-block-id="feedback-intro" data-edit-type="richtext">
@@ -1508,78 +1621,6 @@ body.is-admin .fb-block-edit-btn:hover {
 
       <div class="center">
         <a href="#membership" class="btn btn-primary">Bli med i communityet</a>
-      </div>
-    </div>
-  </section>
-
-  <section id="membership" class="section" data-sortable-section="membership" data-section-label="Medlemskap">
-    <div class="container">
-      <div class="fb-edit-block" data-block-id="membership-intro" data-edit-type="richtext">
-        <h2>Bli <span class="highlight">medlem</span> i dag.</h2>
-        <p class="subtitle">
-          Velg pakken som passer deg. UNREAL tegnes enkelt via Vipps.
-        </p>
-      </div>
-
-      <div class="membership-grid">
-        <article class="card membership-plan">
-          <div class="tag">🆓 Gratis medlem</div>
-          <h3>Gratis medlem</h3>
-          <div class="membership-price">0 kr <span>/ mnd</span></div>
-          <ul>
-            <li>For deg som spiller av og til og vil vinne premier.</li>
-            <li>Medlemsrolle og chat tilgang i Discord</li>
-            <li>Du kan legge til FjOlsenFN</li>
-            <li>🟦 Kan vinne vbucks-premier</li>
-            <li>❌ Kan ikke vinne cash prizes</li>
-            <li>Prioritet over ikke-medlemmer</li>
-            <li>Ingen garanti hvis fullt med UNREAL-medlemmer</li>
-          </ul>
-          <div class="membership-actions">
-            <a href="https://forms.gle/sq4mUf7s6e6UY7R58" class="btn btn-primary small">Under 18 år</a>
-            <a href="https://forms.gle/ZrbXCggnUY8FTT7t9" class="btn btn-secondary small">Over 18 år</a>
-          </div>
-        </article>
-
-        <article class="card membership-plan featured">
-          <div class="tag">👑 UNREAL • Mest populær</div>
-          <h3>UNREAL</h3>
-          <div class="membership-price">99 kr <span>/ mnd</span></div>
-          <ul>
-            <li>For deg som vil ha full tilgang og spille om de største premiene!</li>
-            <li>Gratis deltakelse i alle customs</li>
-            <li>🟡 Kan vinne vbucks OG cash premier</li>
-            <li>💰 Gratis deltakelse i alle Cash Cups</li>
-            <li>🚀 Førsteprioritet i alle customs</li>
-            <li>🏆 Tilgang til alle premier + giveaways</li>
-            <li>🟡 UNREAL-rolle i Discord &amp; VIP på Twitch.</li>
-          </ul>
-          <div class="membership-actions">
-            <a class="btn btn-primary" href="/medlemskap.html#nivaaer">Fortsett med Vipps</a>
-            <a class="btn btn-ghost small" href="vilkar.html">Vilkår</a>
-          </div>
-        </article>
-
-        <article class="card membership-plan">
-          <div class="tag">🔓 Ikke-medlem</div>
-          <h3>Ikke-medlem</h3>
-          <div class="membership-price">0 kr <span>/ mnd</span></div>
-          <ul>
-            <li>For deg som vil spille for gøy.</li>
-            <li>Gratis deltakelse i alle customs</li>
-            <li>❌ Kan ikke vinne vbucks</li>
-            <li>❌ Kan ikke vinne cash premier</li>
-            <li>❌ Kan ikke vinne i giveaways</li>
-            <li>Lavest prioritet hvis fullt</li>
-          </ul>
-          <div class="membership-actions">
-            <a class="btn btn-ghost" href="#community">Bli med å spille</a>
-          </div>
-        </article>
-      </div>
-
-      <div class="card membership-note">
-        👉 Send Vipps til FjOlsenFN. Merk betalingen med «UNREAL &amp; DITT EPIC NAVN». Er du under 18 år, må betaling sendes av forelder/foresatt. (VIPPS: 942 911 69)
       </div>
     </div>
   </section>
