@@ -496,6 +496,15 @@ a {
   box-shadow: 0 18px 45px rgba(0, 0, 0, 0.55), 0 0 24px rgba(255, 45, 164, 0.16);
 }
 
+.membership-actions {
+  margin-top: 1.2rem;
+}
+
+.membership-actions .btn {
+  width: 100%;
+  justify-content: center;
+}
+
 .badge {
   display: inline-block;
   padding: 0.25rem 0.9rem;
@@ -1451,44 +1460,89 @@ body.is-admin .fb-block-edit-btn:hover {
       </div>
 
       <div class="membership-grid">
-        <div class="card membership-card fb-edit-block" data-block-id="membership-card-bronze" data-edit-type="richtext">
-          <span class="membership-tag">🟤 Bronze • Gratis</span>
-          <h3>Bronze</h3>
-          <p class="price">0 kr <span>/ mnd</span></p>
+
+        <!-- GRATIS MEDLEM -->
+        <div class="card membership-card fb-edit-block" data-block-id="membership-free" data-edit-type="richtext">
+          <span class="membership-tag">🟦 Gratis medlem</span>
+          <h3>Gratis medlem</h3>
+
+          <p class="muted">
+            For deg som spiller av og til og vil vinne premier.
+          </p>
+
           <div class="divider"></div>
-          <ul class="checklist membership-features">
-            <li>Full tilgang til communityet</li>
-            <li>Delta i streams, events og konkurranser</li>
-            <li>Delta i trekninger</li>
-            <li>❌ Ingen premie utbetales dersom man vinner</li>
+
+          <ul class="checklist">
+            <li>Medlemsrolle og chat-tilgang i Discord</li>
+            <li>Kan legge til FjOlsenFN på Fortnite</li>
+            <li>🟦 Kan vinne V-Bucks-premier</li>
+            <li>❌ Kan ikke vinne cash-premier (uten deltakeravgift)</li>
+            <li>Prioritet over ikke-medlemmer i customs-kø</li>
+            <li>Ingen garanti hvis customs er fulle med UNREAL-medlemmer</li>
           </ul>
+
+          <div class="membership-actions">
+            <a class="btn btn-ghost">Bli medlem</a>
+          </div>
         </div>
 
-        <div class="card membership-card highlight fb-edit-block" data-block-id="membership-card-elite" data-edit-type="richtext">
-          <span class="membership-tag">🥈 Elite • Mest valgt</span>
-          <h3>Elite</h3>
-          <p class="price">79 kr <span>/ mnd</span></p>
+        <!-- UNREAL -->
+        <div class="card membership-card highlight fb-edit-block" data-block-id="membership-unreal" data-edit-type="richtext">
+          <span class="membership-tag">👑 UNREAL · Mest populær</span>
+
+          <!-- HER kan du legge inn bilde av ape med krone -->
+          <!-- <img src="/img/ape-krone.png" alt="UNREAL ape" class="membership-mascot"> -->
+
+          <h3>UNREAL</h3>
+          <p class="price">75 kr <span>/ måned</span></p>
+
+          <p class="muted">
+            Du er en ekte støttespiller av FjOlsenbanden ❤️
+          </p>
+
           <div class="divider"></div>
-          <ul class="checklist membership-features">
-            <li>Alt fra Bronze</li>
-            <li>✅ Premier utbetales dersom du vinner</li>
-            <li>Delta i alle giveaways</li>
-            <li>Eksklusive Elite-trekninger</li>
+
+          <ul class="checklist">
+            <li>🟡 UNREAL-rolle i Discord</li>
+            <li>🟡 Kan vinne V-Bucks <strong>og</strong> cash-premier</li>
+            <li>💰 Gratis deltakelse i alle Cash Cups</li>
+            <li>🚀 Førsteprioritet i alle customs</li>
+            <li>🏆 Tilgang til alle premier og giveaways</li>
           </ul>
+
+          <div class="membership-actions">
+            <a class="btn btn-primary">Bli medlem</a>
+          </div>
         </div>
 
-        <div class="card membership-card fb-edit-block" data-block-id="membership-card-unreal" data-edit-type="richtext">
-          <span class="membership-tag">🟣 Unreal • Supporter</span>
-          <h3>Unreal</h3>
-          <p class="price">149 kr <span>/ mnd</span></p>
+        <!-- IKKE-MEDLEM -->
+        <div class="card membership-card fb-edit-block" data-block-id="membership-none" data-edit-type="richtext">
+          <span class="membership-tag">🔓 Ikke-medlem</span>
+
+          <!-- HER kan du legge inn trist ape -->
+          <!-- <img src="/img/ape-trist.png" alt="Trist ape" class="membership-mascot"> -->
+
+          <h3>Ikke-medlem</h3>
+
+          <p class="muted">
+            For deg som vil spille for gøy.
+          </p>
+
           <div class="divider"></div>
-          <ul class="checklist membership-features">
-            <li>Alt fra Elite</li>
-            <li>🔥 150 % premie ved gevinst</li>
-            <li>Eksklusive events og konkurranser</li>
-            <li>Støtter FjOlsenbanden litt ekstra</li>
+
+          <ul class="checklist">
+            <li>Gratis deltakelse i customs</li>
+            <li>❌ Kan ikke vinne V-Bucks</li>
+            <li>❌ Kan ikke vinne cash-premier</li>
+            <li>❌ Kan ikke vinne i giveaways</li>
+            <li>Lavest prioritet hvis fullt</li>
           </ul>
+
+          <div class="membership-actions">
+            <a class="btn btn-ghost">Bli medlem</a>
+          </div>
         </div>
+
       </div>
 
       <div class="membership-info card hover-lift">
