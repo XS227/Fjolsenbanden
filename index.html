@@ -496,7 +496,7 @@ a {
 .featured-badge {
   position: absolute;
   top: 16px;
-  right: 16px;
+  left: 16px;
   padding: 0.35rem 0.75rem;
   border-radius: 999px;
   border: 1px solid rgba(255, 255, 255, 0.16);
@@ -505,20 +505,21 @@ a {
   font-size: 0.78rem;
   font-weight: 800;
   letter-spacing: 0.04em;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  z-index: 2;
 }
 
-/* Mascot plassholder (ape med krone) */
-.membership-mascot {
-  width: 86px;
-  height: 86px;
-  border-radius: 22px;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.10);
-  display: grid;
-  place-items: center;
-  font-size: 34px;
-  margin: 0.75rem 0 0.65rem;
-  position: relative;
+.unreal-corner-mascot {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 88px;
+  height: 88px;
+  object-fit: contain;
+  filter: drop-shadow(0 16px 36px rgba(0, 0, 0, 0.45));
+  pointer-events: none;
   z-index: 1;
 }
 
@@ -1578,12 +1579,16 @@ body:not(.is-admin) #visual-editor {
 
         <!-- UNREAL (featured, midten, ingen knapp) -->
         <div class="card membership-card membership-card--featured fb-edit-block" data-block-id="membership-unreal" data-edit-type="richtext">
-          <span class="featured-badge">Mest populær</span>
-          <span class="membership-tag">👑 UNREAL</span>
+          <span class="featured-badge">👑 Mest populær</span>
 
-          <!-- Sett inn ape med krone her om du vil:
-               bytt ut innholdet i denne div-en med <img ...> når du har bilde -->
-          <div class="membership-mascot" aria-hidden="true">🐵</div>
+          <img
+            class="unreal-corner-mascot"
+            src="/img/ikoner/Love.png"
+            alt=""
+            aria-hidden="true"
+          />
+
+          <span class="membership-tag">UNREAL</span>
 
           <h3>UNREAL</h3>
           <p class="membership-price">75 kr <span>/ måned</span></p>
