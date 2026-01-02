@@ -43,10 +43,6 @@ body {
   min-height: 100vh;
 }
 
-body {
-  min-height: 100vh;
-}
-
 a {
   color: inherit;
   text-decoration: none;
@@ -337,7 +333,7 @@ a {
   min-height: 260px;
 }
 
-    /* Feedback */
+/* Feedback */
 
 .feedback-title {
   text-align: center;
@@ -428,21 +424,10 @@ a {
   text-align: right;
 }
 
-.feedback-name--orange {
-  color: #ffb566;
-}
-
-.feedback-name--blue {
-  color: #4cb4ff;
-}
-
-.feedback-name--teal {
-  color: #3ad1b0;
-}
-
-.feedback-name--pink {
-  color: #ff6aa8;
-}
+.feedback-name--orange { color: #ffb566; }
+.feedback-name--blue { color: #4cb4ff; }
+.feedback-name--teal { color: #3ad1b0; }
+.feedback-name--pink { color: #ff6aa8; }
 
 .feedback-name-accent {
   color: var(--accent);
@@ -465,13 +450,76 @@ a {
 
 .membership-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 1rem;
-  margin-top: 2rem;
+  gap: 1.2rem;
+  margin-top: 2.25rem;
+  align-items: start;
 }
 
-.membership-card {
-  max-width: none;
+/* 3-kolonne med featured midtkort på desktop */
+@media (min-width: 980px) {
+  .membership-grid {
+    grid-template-columns: 1fr 1.18fr 1fr;
+    gap: 1.4rem;
+  }
+}
+
+/* Midtkortet skal være tydelig premium */
+.membership-card--featured {
+  position: relative;
+  border-color: rgba(255, 45, 164, 0.22);
+  box-shadow:
+    0 22px 60px rgba(0, 0, 0, 0.65),
+    0 0 36px rgba(255, 45, 164, 0.14),
+    0 0 28px rgba(0, 166, 255, 0.12);
+  overflow: hidden;
+}
+
+.membership-card--featured::before {
+  content: "";
+  position: absolute;
+  inset: -40%;
+  background:
+    radial-gradient(circle at 30% 20%, rgba(255, 45, 164, 0.16), transparent 45%),
+    radial-gradient(circle at 70% 10%, rgba(0, 166, 255, 0.16), transparent 45%),
+    radial-gradient(circle at 50% 70%, rgba(255, 214, 102, 0.10), transparent 55%);
+  transform: rotate(8deg);
+  pointer-events: none;
+}
+
+@media (min-width: 980px) {
+  .membership-card--featured {
+    transform: translateY(-14px) scale(1.03);
+  }
+}
+
+/* Liten "badge" oppe til høyre for midtkort */
+.featured-badge {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: rgba(10, 20, 80, 0.85);
+  color: #fff;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+}
+
+/* Mascot plassholder (ape med krone) */
+.membership-mascot {
+  width: 86px;
+  height: 86px;
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  display: grid;
+  place-items: center;
+  font-size: 34px;
+  margin: 0.75rem 0 0.65rem;
+  position: relative;
+  z-index: 1;
 }
 
 .membership-card .membership-tag {
@@ -483,26 +531,16 @@ a {
   background: rgba(255, 255, 255, 0.06);
   color: var(--muted);
   font-size: 0.9rem;
+  position: relative;
+  z-index: 1;
 }
 
 .membership-card .divider {
   height: 1px;
   background: rgba(255, 255, 255, 0.08);
   margin: 1.1rem 0;
-}
-
-.membership-card.highlight {
-  border-color: rgba(255, 45, 164, 0.18);
-  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.55), 0 0 24px rgba(255, 45, 164, 0.16);
-}
-
-.membership-actions {
-  margin-top: 1.2rem;
-}
-
-.membership-actions .btn {
-  width: 100%;
-  justify-content: center;
+  position: relative;
+  z-index: 1;
 }
 
 .checklist {
@@ -512,6 +550,8 @@ a {
   display: grid;
   gap: 0.75rem;
   color: var(--muted);
+  position: relative;
+  z-index: 1;
 }
 
 .checklist li {
@@ -552,72 +592,51 @@ a {
   color: #ffd666;
 }
 
-.membership-plan .tag {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.35rem 0.9rem;
-  border-radius: var(--radius-pill);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  background: rgba(10, 20, 80, 0.88);
-  color: var(--muted);
-  font-size: 0.82rem;
-  margin-bottom: 0.9rem;
-}
-
-.membership-plan h3 {
-  margin: 0;
-  font-size: 1.35rem;
-  letter-spacing: 0.02em;
-}
-
+/* UNREAL pris */
 .membership-price {
   margin-top: 0.6rem;
   font-size: 1.7rem;
-  font-weight: 750;
+  font-weight: 800;
+  position: relative;
+  z-index: 1;
 }
-
 .membership-price span {
   font-size: 0.95rem;
-  font-weight: 600;
+  font-weight: 650;
   color: var(--muted);
   margin-left: 0.4rem;
 }
 
-.membership-plan ul {
-  margin: 0.8rem 0 0;
-  padding-left: 1.1rem;
-  color: var(--muted);
-  line-height: 1.7;
-}
-
-.membership-info {
-  margin: 2rem auto 0;
-  max-width: 720px;
-  text-align: center;
+/* Vipps-boks KUN inne i UNREAL */
+.unreal-vipps {
+  margin-top: 1.1rem;
+  padding: 1.1rem 1.1rem;
+  border-radius: 18px;
   background: linear-gradient(135deg, rgba(0, 166, 255, 0.16), rgba(255, 45, 164, 0.12));
   border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: var(--radius-lg);
-  padding: 1.5rem 1.6rem;
   box-shadow: 0 14px 32px rgba(0, 0, 0, 0.45);
+  position: relative;
+  z-index: 1;
 }
 
-.membership-info p {
+.unreal-vipps p {
   margin: 0.35rem 0;
   color: #e9ecff;
+  line-height: 1.45;
 }
 
-.membership-info .lead-line {
-  font-weight: 800;
-  font-size: 1.05rem;
+.unreal-vipps .lead-line {
+  font-weight: 900;
+  font-size: 1.02rem;
   letter-spacing: 0.02em;
 }
 
-.membership-info .vipps-number {
-  font-size: 1.2rem;
-  font-weight: 800;
+.unreal-vipps .vipps-number {
+  font-size: 1.15rem;
+  font-weight: 900;
   color: var(--primary);
   letter-spacing: 0.04em;
+  margin-top: 0.55rem;
 }
 
 /* Socials */
@@ -714,7 +733,6 @@ a {
   font-weight: 600;
   color: #f2f3ff;
 }
-
 
 /* 3 kolonner på mellomstore skjermer, 2 kolonner på mobil */
 @media (max-width: 900px) {
@@ -1014,274 +1032,270 @@ body.is-admin .fb-block-edit-btn:hover {
   background: linear-gradient(120deg, #29b8ff, #6ee0ff);
 }
 
-  /* VISUAL EDITOR – KUN SEKSJONER */
-  .visual-editor {
-    position: fixed;
-    top: 80px;
-    right: 0;
-    z-index: 999;
-    pointer-events: none;
-  }
+/* VISUAL EDITOR – KUN SEKSJONER */
+.visual-editor {
+  position: fixed;
+  top: 80px;
+  right: 0;
+  z-index: 999;
+  pointer-events: none;
+}
 
-  .visual-editor-panel {
-    width: 320px;
-    max-height: calc(100vh - 100px);
-    background: rgba(6, 15, 55, 0.95);
-    border-radius: 24px 0 0 24px;
-    box-shadow: 0 0 40px rgba(0, 0, 0, 0.6);
-    overflow: hidden;
-    backdrop-filter: blur(16px);
-    transform: translateX(0);
-    transition: transform 0.25s ease-out;
-    pointer-events: auto;
-  }
+.visual-editor-panel {
+  width: 320px;
+  max-height: calc(100vh - 100px);
+  background: rgba(6, 15, 55, 0.95);
+  border-radius: 24px 0 0 24px;
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.6);
+  overflow: hidden;
+  backdrop-filter: blur(16px);
+  transform: translateX(0);
+  transition: transform 0.25s ease-out;
+  pointer-events: auto;
+}
 
-  .visual-editor.collapsed .visual-editor-panel {
-    transform: translateX(100%);
-    pointer-events: none;
-  }
+.visual-editor.collapsed .visual-editor-panel {
+  transform: translateX(100%);
+  pointer-events: none;
+}
 
-  .visual-editor-toggle {
-    position: absolute;
-    top: 50%;
-    right: 0;
-    transform: translate(40%, -50%);
-    width: 40px;
-    height: 40px;
-    border-radius: 999px;
-    border: none;
-    background: #13a0f9;
-    color: #041149;
-    font-size: 20px;
-    cursor: pointer;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
-    pointer-events: auto;
-  }
+.visual-editor-toggle {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translate(40%, -50%);
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  border: none;
+  background: #13a0f9;
+  color: #041149;
+  font-size: 20px;
+  cursor: pointer;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
+  pointer-events: auto;
+}
 
-  .visual-editor:not(.collapsed) .visual-editor-toggle {
-    display: none;
-  }
+.visual-editor:not(.collapsed) .visual-editor-toggle {
+  display: none;
+}
 
-  .visual-editor-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 12px 16px;
-    font-weight: 600;
-    font-size: 14px;
-    color: #fff;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-  }
+.visual-editor-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  font-weight: 600;
+  font-size: 14px;
+  color: #fff;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
 
-  .visual-editor-close {
-    border: none;
-    background: none;
-    color: #fff;
-    font-size: 20px;
-    cursor: pointer;
-  }
+.visual-editor-close {
+  border: none;
+  background: none;
+  color: #fff;
+  font-size: 20px;
+  cursor: pointer;
+}
 
-  .visual-editor-body {
-    padding: 8px 12px 12px;
-  }
+.visual-editor-body {
+  padding: 8px 12px 12px;
+}
 
-  .section-list {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
+.section-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
 
-  .section-item {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 8px;
-    padding: 8px 10px;
-    margin-bottom: 6px;
-    border-radius: 12px;
-    background: rgba(20, 35, 90, 0.9);
-    cursor: grab;
-  }
+.section-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 8px 10px;
+  margin-bottom: 6px;
+  border-radius: 12px;
+  background: rgba(20, 35, 90, 0.9);
+  cursor: grab;
+}
 
-  .section-item .handle {
-    cursor: grab;
-    font-size: 18px;
-    opacity: 0.7;
-  }
+.section-item .handle {
+  cursor: grab;
+  font-size: 18px;
+  opacity: 0.7;
+}
 
-  .section-item .name {
-    flex: 1;
-    font-size: 13px;
-    color: #fff;
-  }
+.section-item .name {
+  flex: 1;
+  font-size: 13px;
+  color: #fff;
+}
 
-  .section-item .toggle input {
-    display: none;
-  }
+.section-item .toggle input {
+  display: none;
+}
 
-  .section-item .toggle span {
-    display: inline-block;
-    width: 30px;
-    height: 16px;
-    border-radius: 999px;
-    background: #546287;
-    position: relative;
-    transition: background 0.2s ease;
-  }
+.section-item .toggle span {
+  display: inline-block;
+  width: 30px;
+  height: 16px;
+  border-radius: 999px;
+  background: #546287;
+  position: relative;
+  transition: background 0.2s ease;
+}
 
-  .section-item .toggle span::before {
-    content: '';
-    position: absolute;
-    top: 2px;
-    left: 2px;
-    width: 12px;
-    height: 12px;
-    border-radius: 999px;
-    background: #fff;
-    transition: transform 0.2s ease;
-  }
+.section-item .toggle span::before {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 12px;
+  height: 12px;
+  border-radius: 999px;
+  background: #fff;
+  transition: transform 0.2s ease;
+}
 
-  .section-item .toggle input:checked + span {
-    background: #13a0f9;
-  }
+.section-item .toggle input:checked + span {
+  background: #13a0f9;
+}
 
-  .section-item .toggle input:checked + span::before {
-    transform: translateX(14px);
-  }
+.section-item .toggle input:checked + span::before {
+  transform: translateX(14px);
+}
 
-  body:not(.is-admin) #visual-editor {
-    display: none;
-  }
-
-  body.is-admin [data-sortable-section].is-visual-hidden {
-    display: none !important;
-  }
+body:not(.is-admin) #visual-editor {
+  display: none;
+}
 
 /* Footer */
 
-  .site-footer {
-    background: #020318;
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
-    padding: 2rem 0 1.75rem;
-    font-size: 0.9rem;
-  }
+.site-footer {
+  background: #020318;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 2rem 0 1.75rem;
+  font-size: 0.9rem;
+}
 
-  .footer-main {
-    display: flex;
-    justify-content: center;
-  }
+.footer-main {
+  display: flex;
+  justify-content: center;
+}
 
+.footer-menu {
+  width: 100%;
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.footer-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem 2rem;
+}
+
+.footer-links a {
+  color: var(--muted);
+}
+
+.footer-links a:hover {
+  color: var(--primary);
+}
+
+.footer-bottom {
+  margin-top: 1.8rem;
+  padding-top: 1.2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+
+.footer-bottom-link {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.footer-bottom-link:hover {
+  color: var(--primary);
+}
+
+/* Contact modal (popup) */
+.fj-modal {
+  position: fixed;
+  inset: 0;
+  display: none;
+  z-index: 2000;
+}
+
+.fj-modal.is-open {
+  display: block;
+}
+
+.fj-modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(6px);
+}
+
+.fj-modal__dialog {
+  position: relative;
+  max-width: 520px;
+  margin: 12vh auto 0;
+  padding: 1.6rem 1.8rem;
+  border-radius: var(--radius-lg);
+  background: radial-gradient(circle at top left, var(--card-alt), var(--card));
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: var(--shadow-soft);
+}
+
+.fj-modal__title {
+  margin: 0 0 0.5rem;
+  font-size: 1.25rem;
+}
+
+.fj-modal__text {
+  margin: 0 0 1.25rem;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.fj-modal__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+}
+
+/* Mobil */
+
+@media (max-width: 700px) {
+  .footer-bottom {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+@media (min-width: 900px) {
   .footer-menu {
-    width: 100%;
-    max-width: 640px;
-    margin: 0 auto;
+    max-width: 760px;
   }
 
   .footer-links {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 0.75rem 2rem;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem 3rem;
   }
-
-  .footer-links a {
-    color: var(--muted);
-  }
-
-  .footer-links a:hover {
-    color: var(--primary);
-  }
-
-  .footer-bottom {
-    margin-top: 1.8rem;
-    padding-top: 1.2rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 0.75rem;
-    color: var(--muted);
-    font-size: 0.8rem;
-  }
-
-  .footer-bottom-link {
-    color: var(--text);
-    font-weight: 600;
-  }
-
-  .footer-bottom-link:hover {
-    color: var(--primary);
-  }
-
-  /* Contact modal (popup) */
-  .fj-modal {
-    position: fixed;
-    inset: 0;
-    display: none;
-    z-index: 2000;
-  }
-
-  .fj-modal.is-open {
-    display: block;
-  }
-
-  .fj-modal__backdrop {
-    position: absolute;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.65);
-    backdrop-filter: blur(6px);
-  }
-
-  .fj-modal__dialog {
-    position: relative;
-    max-width: 520px;
-    margin: 12vh auto 0;
-    padding: 1.6rem 1.8rem;
-    border-radius: var(--radius-lg);
-    background: radial-gradient(circle at top left, var(--card-alt), var(--card));
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    box-shadow: var(--shadow-soft);
-  }
-
-  .fj-modal__title {
-    margin: 0 0 0.5rem;
-    font-size: 1.25rem;
-  }
-
-  .fj-modal__text {
-    margin: 0 0 1.25rem;
-    color: var(--muted);
-    line-height: 1.5;
-  }
-
-  .fj-modal__actions {
-    display: flex;
-    justify-content: flex-end;
-    gap: 0.75rem;
-  }
-
-  /* Mobil */
-
-  @media (max-width: 700px) {
-    .footer-bottom {
-      flex-direction: column;
-      align-items: flex-start;
-    }
-  }
-
-  @media (min-width: 900px) {
-    .footer-menu {
-      max-width: 760px;
-    }
-
-    .footer-links {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 1rem 3rem;
-    }
-  }
+}
 
 /* Responsive */
 
@@ -1300,9 +1314,7 @@ body.is-admin .fb-block-edit-btn:hover {
   .nav-links {
     display: none;
   }
-
 }
-
   </style>
 </head>
 <body>
@@ -1342,7 +1354,7 @@ body.is-admin .fb-block-edit-btn:hover {
         </div>
       <div class="hero-actions">
         <a href="#membership" class="btn btn-primary">Bli medlem</a>
-        <a href="#about" class="btn btn-ghost">Les mer</a>
+        <a href="#about" class="btn btn-ghost">Se mer</a>
       </div>
     </div>
       <div class="hero-card screen-effects hover-lift">
@@ -1509,397 +1521,158 @@ body.is-admin .fb-block-edit-btn:hover {
 
   </section>
 
-
-<section id="membership" class="section membership-journey" data-sortable-section="membership" data-section-label="Medlemskap">
-  <div class="container">
-    <header class="membership-journey__header">
-      <h2>Bli <span class="highlight">medlem</span> i dag.</h2>
-      <p class="subtitle">
-        Start gratis – oppgrader når du vil. UNREAL gir full tilgang og de største premiene.
-      </p>
-    </header>
-
-    <!-- REISE / OVERVIEW -->
-    <div class="journey">
-      <div class="journey__rail" aria-hidden="true">
-        <span class="journey__dot journey__dot--left"></span>
-        <span class="journey__dot journey__dot--mid"></span>
-        <span class="journey__dot journey__dot--right"></span>
+  <!-- MEMBERSHIP (forenklet – uten info-bokser over pakkene) -->
+  <section id="membership" class="section" data-sortable-section="membership" data-section-label="Medlemskap">
+    <div class="container">
+      <div class="fb-edit-block" data-block-id="membership-intro" data-edit-type="richtext">
+        <h2>Bli <span class="highlight">medlem</span> i dag.</h2>
+        <p class="subtitle">
+          Velg nivået som passer deg – <strong>UNREAL</strong> gir full tilgang og de største premiene.
+        </p>
       </div>
 
-      <div class="journey__grid" role="tablist" aria-label="Medlemsreise">
-        <!-- IKKE-MEDLEM -->
-        <article class="card journey-card journey-card--side" data-plan="none">
-          <div class="journey-card__top">
-            <span class="membership-tag">🔓 Ikke-medlem</span>
-            <h3>Ikke-medlem</h3>
-            <p class="muted">For deg som vil spille for gøy.</p>
-          </div>
-
-          <ul class="journey-card__bullets">
-            <li>🎮 Gratis customs</li>
-            <li>❌ Ingen premier</li>
-            <li>⚠️ Lavest prioritet hvis fullt</li>
-          </ul>
-
-          <button class="btn btn-ghost journey-card__btn" type="button" data-open="none" aria-controls="plan-panel-none">
-            Se hva dette betyr
-          </button>
-        </article>
+      <div class="membership-grid">
 
         <!-- GRATIS MEDLEM -->
-        <article class="card journey-card journey-card--side" data-plan="free">
-          <div class="journey-card__top">
-            <span class="membership-tag">🟦 Gratis medlem</span>
-            <h3>Gratis medlem</h3>
-            <p class="muted">For deg som spiller av og til og vil vinne premier.</p>
-          </div>
+        <div class="card membership-card fb-edit-block" data-block-id="membership-free" data-edit-type="richtext">
+          <span class="membership-tag">🟦 Gratis medlem</span>
+          <h3>Gratis medlem</h3>
 
-          <ul class="journey-card__bullets">
-            <li>🟦 Medlemsrolle i Discord</li>
-            <li>💎 Kan vinne V-Bucks</li>
-            <li>⏫ Prioritet over ikke-medlemmer</li>
+          <p class="muted">
+            For deg som spiller av og til og vil vinne premier.
+          </p>
+
+          <div class="divider"></div>
+
+          <ul class="checklist">
+            <li>
+              <span class="feature-icon positive" aria-hidden="true">✅</span>
+              <span>Du får medlemsrolle og chat-tilgang i Discord</span>
+            </li>
+            <li>
+              <span class="feature-icon positive" aria-hidden="true">✅</span>
+              <span>Du kan legge til FjOlsenFN på Fortnite</span>
+            </li>
+            <li>
+              <span class="feature-icon positive" aria-hidden="true">✅</span>
+              <span>Kan vinne V-Bucks-premier</span>
+            </li>
+            <li>
+              <span class="feature-icon positive" aria-hidden="true">✅</span>
+              <span>Prioritet over ikke-medlemmer i customs-kø</span>
+            </li>
+            <li>
+              <span class="feature-icon negative" aria-hidden="true">✖️</span>
+              <span>Kan ikke vinne cash-premie (uten deltakeravgift)</span>
+            </li>
+            <li>
+              <span class="feature-icon warning" aria-hidden="true">⚠️</span>
+              <span>Ingen garanti om plass hvis customs er fulle med UNREAL-medlemmer</span>
+            </li>
+            <li>
+              <span class="feature-icon coin" aria-hidden="true">🪙</span>
+              <span>Cashout på 5000 V-Bucks</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- UNREAL (featured, midten, ingen knapp) -->
+        <div class="card membership-card membership-card--featured fb-edit-block" data-block-id="membership-unreal" data-edit-type="richtext">
+          <span class="featured-badge">Mest populær</span>
+          <span class="membership-tag">👑 UNREAL</span>
+
+          <!-- Sett inn ape med krone her om du vil:
+               bytt ut innholdet i denne div-en med <img ...> når du har bilde -->
+          <div class="membership-mascot" aria-hidden="true">🐵</div>
+
+          <h3>UNREAL</h3>
+          <p class="membership-price">75 kr <span>/ måned</span></p>
+
+          <p class="muted">
+            Du er en ekte støttespiller av FjOlsenbanden ❤️
+          </p>
+
+          <div class="divider"></div>
+
+          <!-- IKKE KUTTET – hele listen beholdt -->
+          <ul class="checklist">
+            <li>
+              <span class="feature-icon positive" aria-hidden="true">👑</span>
+              <span>UNREAL-rolle i Discord</span>
+            </li>
+            <li>
+              <span class="feature-icon positive" aria-hidden="true">💸</span>
+              <span>Kan vinne V-Bucks og cash-premier</span>
+            </li>
+            <li>
+              <span class="feature-icon positive" aria-hidden="true">💰</span>
+              <span>Gratis deltakelse i alle Cash Cups</span>
+            </li>
+            <li>
+              <span class="feature-icon positive" aria-hidden="true">🚀</span>
+              <span>Førsteprioritet i alle customs</span>
+            </li>
+            <li>
+              <span class="feature-icon positive" aria-hidden="true">🏆</span>
+              <span>Tilgang til alle premier inkludert giveaways</span>
+            </li>
+            <li>
+              <span class="feature-icon positive" aria-hidden="true">➕</span>
+              <span>50% ekstra på alle V-Bucks-premier</span>
+            </li>
+            <li>
+              <span class="feature-icon coin" aria-hidden="true">🪙</span>
+              <span>Cashout på 2800 V-Bucks</span>
+            </li>
           </ul>
 
-          <button class="btn btn-ghost journey-card__btn" type="button" data-open="free" aria-controls="plan-panel-free">
-            Se detaljer
-          </button>
-        </article>
-
-        <!-- UNREAL -->
-        <article class="card journey-card journey-card--unreal" data-plan="unreal">
-          <div class="journey-card__badge">👑 Mest populær</div>
-
-          <div class="journey-card__top">
-            <span class="membership-tag">👑 UNREAL</span>
-            <h3>UNREAL</h3>
-            <p class="membership-price">
-              75 kr <span>/ måned</span>
-            </p>
-            <p class="muted">Du er en ekte støttespiller av FjOlsenbanden ❤️</p>
+          <!-- Vipps-info kun her -->
+          <div class="unreal-vipps">
+            <p class="lead-line">Send Vipps til FjOlsenFN.</p>
+            <p>Merk betalingen med «UNREAL + DITT DISCORD NAVN».</p>
+            <p>Er du under 18 år, må betaling sendes av forelder/foresatt.</p>
+            <p class="vipps-number">VIPPS til: 942 911 69</p>
           </div>
+        </div>
 
-          <ul class="journey-card__bullets">
-            <li>👑 UNREAL-rolle i Discord</li>
-            <li>💰 Cash + V-Bucks</li>
-            <li>🚀 Førsteprioritet</li>
-            <li>🏆 Alle giveaways</li>
+        <!-- IKKE-MEDLEM -->
+        <div class="card membership-card fb-edit-block" data-block-id="membership-none" data-edit-type="richtext">
+          <span class="membership-tag">🔓 Ikke-medlem</span>
+          <h3>Ikke-medlem</h3>
+
+          <p class="muted">
+            For deg som vil spille for gøy.
+          </p>
+
+          <div class="divider"></div>
+
+          <ul class="checklist">
+            <li>
+              <span class="feature-icon positive" aria-hidden="true">🎮</span>
+              <span>Gratis deltakelse i alle customs</span>
+            </li>
+            <li>
+              <span class="feature-icon negative" aria-hidden="true">✖️</span>
+              <span>Kan ikke vinne V-Bucks</span>
+            </li>
+            <li>
+              <span class="feature-icon negative" aria-hidden="true">✖️</span>
+              <span>Kan ikke vinne cash-premier</span>
+            </li>
+            <li>
+              <span class="feature-icon negative" aria-hidden="true">✖️</span>
+              <span>Kan ikke vinne i giveaways</span>
+            </li>
+            <li>
+              <span class="feature-icon warning" aria-hidden="true">⚠️</span>
+              <span>Lavest prioritet hvis fullt</span>
+            </li>
           </ul>
+        </div>
 
-          <!-- Ingen "Bli medlem" knapp her -->
-          <button class="journey-card__ctaLink" type="button" data-open="unreal" aria-controls="plan-panel-unreal">
-            Se alt du får som UNREAL <span aria-hidden="true">↓</span>
-          </button>
-        </article>
       </div>
     </div>
-
-    <!-- DETALJER (accordion under reisen) -->
-    <div class="journey-panels" aria-live="polite">
-      <!-- IKKE-MEDLEM PANEL -->
-      <section id="plan-panel-none" class="card journey-panel" data-panel="none" hidden>
-        <div class="journey-panel__head">
-          <h3>🔓 Ikke-medlem – detaljer</h3>
-          <button class="journey-panel__close" type="button" data-close aria-label="Lukk">×</button>
-        </div>
-
-        <div class="divider"></div>
-
-        <ul class="checklist">
-          <li><span class="feature-icon positive" aria-hidden="true">🎮</span><span>Gratis deltakelse i alle customs</span></li>
-          <li><span class="feature-icon negative" aria-hidden="true">✖️</span><span>Kan ikke vinne V-Bucks</span></li>
-          <li><span class="feature-icon negative" aria-hidden="true">✖️</span><span>Kan ikke vinne cash-premier</span></li>
-          <li><span class="feature-icon negative" aria-hidden="true">✖️</span><span>Kan ikke vinne i giveaways</span></li>
-          <li><span class="feature-icon warning" aria-hidden="true">⚠️</span><span>Lavest prioritet hvis fullt</span></li>
-        </ul>
-      </section>
-
-      <!-- GRATIS PANEL -->
-      <section id="plan-panel-free" class="card journey-panel" data-panel="free" hidden>
-        <div class="journey-panel__head">
-          <h3>🟦 Gratis medlem – detaljer</h3>
-          <button class="journey-panel__close" type="button" data-close aria-label="Lukk">×</button>
-        </div>
-
-        <p class="muted">For deg som spiller av og til og vil vinne premier.</p>
-
-        <div class="divider"></div>
-
-        <ul class="checklist">
-          <li><span class="feature-icon positive" aria-hidden="true">✅</span><span>Du får medlemsrolle og chat-tilgang i Discord</span></li>
-          <li><span class="feature-icon positive" aria-hidden="true">✅</span><span>Du kan legge til FjOlsenFN på Fortnite</span></li>
-          <li><span class="feature-icon positive" aria-hidden="true">✅</span><span>Kan vinne V-Bucks-premier</span></li>
-          <li><span class="feature-icon positive" aria-hidden="true">✅</span><span>Prioritet over ikke-medlemmer i customs-kø</span></li>
-          <li><span class="feature-icon negative" aria-hidden="true">✖️</span><span>Kan ikke vinne cash-premie (uten deltakeravgift)</span></li>
-          <li><span class="feature-icon warning" aria-hidden="true">⚠️</span><span>Ingen garanti om plass hvis customs er fulle med UNREAL-medlemmer</span></li>
-          <li><span class="feature-icon coin" aria-hidden="true">🪙</span><span>Cashout på 5000 V-Bucks</span></li>
-        </ul>
-
-        <div class="journey-panel__actions">
-          <a href="#membership" class="btn btn-ghost">Bli gratis medlem</a>
-        </div>
-      </section>
-
-      <!-- UNREAL PANEL -->
-      <section id="plan-panel-unreal" class="card journey-panel journey-panel--unreal" data-panel="unreal" hidden>
-        <div class="journey-panel__head">
-          <h3>👑 UNREAL – alt du får</h3>
-          <button class="journey-panel__close" type="button" data-close aria-label="Lukk">×</button>
-        </div>
-
-        <p class="muted">
-          75 kr / måned · Du er en ekte støttespiller av FjOlsenbanden ❤️
-        </p>
-
-        <div class="divider"></div>
-
-        <ul class="checklist">
-          <li><span class="feature-icon positive" aria-hidden="true">👑</span><span>UNREAL-rolle i Discord</span></li>
-          <li><span class="feature-icon positive" aria-hidden="true">💸</span><span>Kan vinne V-Bucks og cash-premier</span></li>
-          <li><span class="feature-icon positive" aria-hidden="true">💰</span><span>Gratis deltakelse i alle Cash Cups</span></li>
-          <li><span class="feature-icon positive" aria-hidden="true">🚀</span><span>Førsteprioritet i alle customs</span></li>
-          <li><span class="feature-icon positive" aria-hidden="true">🏆</span><span>Tilgang til alle premier inkludert giveaways</span></li>
-          <li><span class="feature-icon positive" aria-hidden="true">➕</span><span>50% ekstra på alle V-Bucks-premier</span></li>
-          <li><span class="feature-icon coin" aria-hidden="true">🪙</span><span>Cashout på 2800 V-Bucks</span></li>
-        </ul>
-
-        <!-- VIPPS TEKST KUN UNDER UNREAL -->
-        <div class="journey-vipps card">
-          <p class="lead-line">Slik blir du UNREAL</p>
-          <p>Send Vipps til FjOlsenFN.</p>
-          <p>Merk betalingen med «UNREAL + DITT DISCORD NAVN».</p>
-          <p>Er du under 18 år, må betaling sendes av forelder/foresatt.</p>
-          <p class="vipps-number">VIPPS til: 942 911 69</p>
-        </div>
-      </section>
-    </div>
-  </div>
-
-  <style>
-    /* ===== Membership Journey (scoped) ===== */
-    .membership-journey .membership-journey__header {
-      text-align: center;
-      margin-bottom: 2.25rem;
-    }
-
-    .membership-journey .journey {
-      position: relative;
-      margin-top: 1.5rem;
-    }
-
-    .membership-journey .journey__rail {
-      position: absolute;
-      left: 50%;
-      transform: translateX(-50%);
-      top: 78px;
-      width: min(900px, 92%);
-      height: 4px;
-      background: linear-gradient(90deg, rgba(84, 98, 135, 0.5), rgba(19, 160, 249, 0.55), rgba(84, 98, 135, 0.5));
-      border-radius: 999px;
-      opacity: 0.9;
-      z-index: 0;
-    }
-
-    .membership-journey .journey__dot {
-      position: absolute;
-      top: 50%;
-      transform: translate(-50%, -50%);
-      width: 14px;
-      height: 14px;
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.85);
-      box-shadow: 0 0 18px rgba(0, 166, 255, 0.35);
-    }
-    .membership-journey .journey__dot--left { left: 16%; }
-    .membership-journey .journey__dot--mid { left: 50%; width: 18px; height: 18px; background: rgba(19,160,249,0.95); }
-    .membership-journey .journey__dot--right { left: 84%; }
-
-    .membership-journey .journey__grid {
-      position: relative;
-      z-index: 1;
-      display: grid;
-      grid-template-columns: 1fr 1fr 1.15fr;
-      gap: 1rem;
-      align-items: stretch;
-    }
-
-    .membership-journey .journey-card {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      min-height: 330px;
-    }
-
-    .membership-journey .journey-card__top h3 {
-      margin: 0.4rem 0 0.35rem;
-      font-size: 1.35rem;
-      letter-spacing: 0.02em;
-    }
-
-    .membership-journey .journey-card__bullets {
-      margin: 0.8rem 0 1.25rem;
-      padding: 0;
-      list-style: none;
-      color: var(--muted);
-      display: grid;
-      gap: 0.55rem;
-      line-height: 1.45;
-    }
-
-    .membership-journey .journey-card__btn {
-      width: 100%;
-    }
-
-    .membership-journey .journey-card--unreal {
-      border-color: rgba(255, 45, 164, 0.18);
-      box-shadow: 0 18px 45px rgba(0, 0, 0, 0.55), 0 0 24px rgba(255, 45, 164, 0.16);
-      transform: translateY(-10px);
-    }
-
-    .membership-journey .journey-card__badge {
-      display: inline-flex;
-      align-self: flex-start;
-      padding: 0.3rem 0.85rem;
-      border-radius: var(--radius-pill);
-      background: rgba(255, 255, 255, 0.06);
-      color: var(--muted);
-      font-size: 0.9rem;
-      margin-bottom: 0.8rem;
-    }
-
-    .membership-journey .journey-card__ctaLink {
-      border: none;
-      background: transparent;
-      color: var(--primary);
-      font-weight: 800;
-      cursor: pointer;
-      padding: 0.65rem 0;
-      text-align: left;
-    }
-    .membership-journey .journey-card__ctaLink:hover {
-      text-decoration: underline;
-    }
-
-    .membership-journey .journey-panels {
-      margin-top: 1rem;
-      display: grid;
-      gap: 1rem;
-    }
-
-    .membership-journey .journey-panel {
-      padding: 1.6rem 1.8rem;
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      background: radial-gradient(circle at top left, #192554, #0b1433);
-      border-radius: 26px;
-    }
-
-    .membership-journey .journey-panel__head {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-    }
-
-    .membership-journey .journey-panel__head h3 {
-      margin: 0;
-      font-size: 1.15rem;
-    }
-
-    .membership-journey .journey-panel__close {
-      width: 36px;
-      height: 36px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,0.16);
-      background: rgba(255,255,255,0.06);
-      color: #fff;
-      cursor: pointer;
-      font-size: 20px;
-      line-height: 1;
-    }
-    .membership-journey .journey-panel__close:hover {
-      background: rgba(255,255,255,0.1);
-    }
-
-    .membership-journey .journey-panel__actions {
-      margin-top: 1.2rem;
-    }
-
-    .membership-journey .journey-vipps {
-      margin-top: 1.4rem;
-      background: linear-gradient(135deg, rgba(0, 166, 255, 0.16), rgba(255, 45, 164, 0.12));
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      border-radius: var(--radius-lg);
-      padding: 1.25rem 1.35rem;
-      box-shadow: 0 14px 32px rgba(0, 0, 0, 0.35);
-    }
-    .membership-journey .journey-vipps p {
-      margin: 0.35rem 0;
-      color: #e9ecff;
-    }
-    .membership-journey .journey-vipps .lead-line {
-      font-weight: 900;
-      font-size: 1.05rem;
-      letter-spacing: 0.02em;
-    }
-    .membership-journey .journey-vipps .vipps-number {
-      font-size: 1.2rem;
-      font-weight: 900;
-      color: var(--primary);
-      letter-spacing: 0.04em;
-    }
-
-    /* Mobil */
-    @media (max-width: 900px) {
-      .membership-journey .journey__rail {
-        display: none;
-      }
-      .membership-journey .journey__grid {
-        grid-template-columns: 1fr;
-      }
-      .membership-journey .journey-card--unreal {
-        transform: none;
-      }
-    }
-  </style>
-
-  <script>
-    (function () {
-      const root = document.querySelector(".membership-journey");
-      if (!root) return;
-
-      const openBtns = root.querySelectorAll("[data-open]");
-      const panels = root.querySelectorAll(".journey-panel[data-panel]");
-      const closeBtns = root.querySelectorAll("[data-close]");
-
-      function closeAll() {
-        panels.forEach(p => p.hidden = true);
-        openBtns.forEach(b => b.setAttribute("aria-expanded", "false"));
-      }
-
-      function openPanel(key) {
-        closeAll();
-        const panel = root.querySelector('.journey-panel[data-panel="' + key + '"]');
-        const btns = root.querySelectorAll('[data-open="' + key + '"]');
-        if (!panel) return;
-        panel.hidden = false;
-        btns.forEach(b => b.setAttribute("aria-expanded", "true"));
-        panel.scrollIntoView({ behavior: "smooth", block: "start" });
-      }
-
-      openBtns.forEach(btn => {
-        btn.addEventListener("click", () => openPanel(btn.dataset.open));
-      });
-
-      closeBtns.forEach(btn => {
-        btn.addEventListener("click", closeAll);
-      });
-
-      // Valgfritt: åpne UNREAL som standard når man kommer til seksjonen
-      // (Kommenter inn om du vil)
-      // openPanel("unreal");
-    })();
-  </script>
-</section>
+  </section>
 
   <section id="feedback" class="section" data-sortable-section="feedback" data-section-label="Tilbakemeldinger">
     <div class="container">
@@ -2246,6 +2019,7 @@ body.is-admin .fb-block-edit-btn:hover {
     </div>
   </section>
   </main>
+
   <!-- VISUAL EDITOR – KUN SEKSJONER -->
   <div id="visual-editor" class="visual-editor collapsed">
     <button class="visual-editor-toggle" aria-label="Åpne seksjonsmeny">
@@ -2263,6 +2037,7 @@ body.is-admin .fb-block-edit-btn:hover {
       </div>
     </div>
   </div>
+
   <footer class="site-footer">
     <div class="container footer-main">
       <nav class="footer-menu">
@@ -2286,734 +2061,724 @@ body.is-admin .fb-block-edit-btn:hover {
       <a href="/regler.html" class="footer-bottom-link">Les reglene våre</a>
     </div>
   </footer>
+
+  <!-- Script-delene er beholdt fra originalfilen din (uendret) -->
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       if (!document.body.classList.contains('is-admin')) return;
 
-    const editor = document.getElementById('visual-editor');
-    const sectionsContainer = document.querySelector('[data-sections-container]');
-    if (!editor || !sectionsContainer) return;
+      const editor = document.getElementById('visual-editor');
+      const sectionsContainer = document.querySelector('[data-sections-container]');
+      if (!editor || !sectionsContainer) return;
 
-    const toggleBtn = editor.querySelector('.visual-editor-toggle');
-    const closeBtn = editor.querySelector('.visual-editor-close');
-    const sectionList = editor.querySelector('#section-list');
+      const toggleBtn = editor.querySelector('.visual-editor-toggle');
+      const closeBtn = editor.querySelector('.visual-editor-close');
+      const sectionList = editor.querySelector('#section-list');
 
-    if (!toggleBtn || !closeBtn || !sectionList) return;
+      if (!toggleBtn || !closeBtn || !sectionList) return;
 
-    const OPEN_KEY = 'fj_visual_editor_open';
-    const HIDDEN_KEY = 'fj_visual_hidden_sections';
+      const OPEN_KEY = 'fj_visual_editor_open';
+      const HIDDEN_KEY = 'fj_visual_hidden_sections';
 
-    let hiddenSections;
-    try {
-      hiddenSections = new Set(JSON.parse(localStorage.getItem(HIDDEN_KEY) || '[]'));
-    } catch (error) {
-      hiddenSections = new Set();
-    }
+      let hiddenSections;
+      try {
+        hiddenSections = new Set(JSON.parse(localStorage.getItem(HIDDEN_KEY) || '[]'));
+      } catch (error) {
+        hiddenSections = new Set();
+      }
 
-    const isOpen = localStorage.getItem(OPEN_KEY) === '1';
-    editor.classList.toggle('collapsed', !isOpen);
+      const isOpen = localStorage.getItem(OPEN_KEY) === '1';
+      editor.classList.toggle('collapsed', !isOpen);
 
-    toggleBtn.addEventListener('click', () => {
-      editor.classList.remove('collapsed');
-      localStorage.setItem(OPEN_KEY, '1');
-    });
+      toggleBtn.addEventListener('click', () => {
+        editor.classList.remove('collapsed');
+        localStorage.setItem(OPEN_KEY, '1');
+      });
 
-    closeBtn.addEventListener('click', () => {
-      editor.classList.add('collapsed');
-      localStorage.setItem(OPEN_KEY, '0');
-    });
+      closeBtn.addEventListener('click', () => {
+        editor.classList.add('collapsed');
+        localStorage.setItem(OPEN_KEY, '0');
+      });
 
-    function getSections() {
-      return Array.from(sectionsContainer.querySelectorAll('[data-sortable-section]'));
-    }
+      function getSections() {
+        return Array.from(sectionsContainer.querySelectorAll('[data-sortable-section]'));
+      }
 
-    function saveHiddenSections() {
-      localStorage.setItem(HIDDEN_KEY, JSON.stringify(Array.from(hiddenSections)));
-    }
+      function saveHiddenSections() {
+        localStorage.setItem(HIDDEN_KEY, JSON.stringify(Array.from(hiddenSections)));
+      }
 
-    function applyVisibility() {
-      getSections().forEach((section) => {
+      function applyVisibility() {
+        getSections().forEach((section) => {
+          const id = section.dataset.sortableSection;
+          const isHidden = hiddenSections.has(id);
+          section.classList.toggle('is-visual-hidden', isHidden);
+        });
+      }
+
+      function createSectionItem(section) {
         const id = section.dataset.sortableSection;
-        const isHidden = hiddenSections.has(id);
-        section.classList.toggle('is-visual-hidden', isHidden);
-      });
-    }
+        const label = section.dataset.sectionLabel || id || 'Seksjon';
+        const isVisible = !hiddenSections.has(id);
 
-    function createSectionItem(section) {
-      const id = section.dataset.sortableSection;
-      const label = section.dataset.sectionLabel || id || 'Seksjon';
-      const isVisible = !hiddenSections.has(id);
+        const li = document.createElement('li');
+        li.className = 'section-item';
+        li.dataset.sectionId = id;
+        li.draggable = true;
 
-      const li = document.createElement('li');
-      li.className = 'section-item';
-      li.dataset.sectionId = id;
-      li.draggable = true;
+        const handle = document.createElement('span');
+        handle.className = 'handle';
+        handle.textContent = '⋮⋮';
 
-      const handle = document.createElement('span');
-      handle.className = 'handle';
-      handle.textContent = '⋮⋮';
+        const name = document.createElement('span');
+        name.className = 'name';
+        name.textContent = label;
 
-      const name = document.createElement('span');
-      name.className = 'name';
-      name.textContent = label;
+        const toggle = document.createElement('label');
+        toggle.className = 'toggle';
 
-      const toggle = document.createElement('label');
-      toggle.className = 'toggle';
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.checked = isVisible;
 
-      const checkbox = document.createElement('input');
-      checkbox.type = 'checkbox';
-      checkbox.checked = isVisible;
+        const slider = document.createElement('span');
 
-      const slider = document.createElement('span');
+        toggle.append(checkbox, slider);
+        li.append(handle, name, toggle);
 
-      toggle.append(checkbox, slider);
-      li.append(handle, name, toggle);
+        checkbox.addEventListener('change', () => {
+          if (checkbox.checked) {
+            hiddenSections.delete(id);
+          } else {
+            hiddenSections.add(id);
+          }
+          applyVisibility();
+          saveHiddenSections();
+        });
 
-      checkbox.addEventListener('change', () => {
-        if (checkbox.checked) {
-          hiddenSections.delete(id);
-        } else {
-          hiddenSections.add(id);
-        }
+        return li;
+      }
+
+      function buildSectionList() {
+        sectionList.innerHTML = '';
+        getSections().forEach((section) => {
+          sectionList.appendChild(createSectionItem(section));
+        });
         applyVisibility();
-        saveHiddenSections();
+      }
+
+      function applyOrderToSections() {
+        const orderedIds = Array.from(sectionList.querySelectorAll('.section-item')).map(
+          (li) => li.dataset.sectionId
+        );
+
+        orderedIds.forEach((id) => {
+          const section = sectionsContainer.querySelector(`[data-sortable-section="${id}"]`);
+          if (section) {
+            sectionsContainer.appendChild(section);
+          }
+        });
+      }
+
+      let draggedItem = null;
+
+      sectionList.addEventListener('dragstart', (e) => {
+        const li = e.target.closest('.section-item');
+        if (!li) return;
+        draggedItem = li;
+        li.classList.add('dragging');
+        e.dataTransfer.effectAllowed = 'move';
       });
 
-      return li;
-    }
+      sectionList.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        const li = e.target.closest('.section-item');
+        if (!li || li === draggedItem) return;
 
-    function buildSectionList() {
-      sectionList.innerHTML = '';
-      getSections().forEach((section) => {
-        sectionList.appendChild(createSectionItem(section));
-      });
-      applyVisibility();
-    }
-
-    function applyOrderToSections() {
-      const orderedIds = Array.from(sectionList.querySelectorAll('.section-item')).map(
-        (li) => li.dataset.sectionId
-      );
-
-      orderedIds.forEach((id) => {
-        const section = sectionsContainer.querySelector(`[data-sortable-section="${id}"]`);
-        if (section) {
-          sectionsContainer.appendChild(section);
+        const rect = li.getBoundingClientRect();
+        const before = e.clientY < rect.top + rect.height / 2;
+        if (before) {
+          sectionList.insertBefore(draggedItem, li);
+        } else {
+          sectionList.insertBefore(draggedItem, li.nextSibling);
         }
       });
-    }
 
-    let draggedItem = null;
+      sectionList.addEventListener('drop', (e) => {
+        e.preventDefault();
+        if (draggedItem) {
+          applyOrderToSections();
+        }
+      });
 
-    sectionList.addEventListener('dragstart', (e) => {
-      const li = e.target.closest('.section-item');
-      if (!li) return;
-      draggedItem = li;
-      li.classList.add('dragging');
-      e.dataTransfer.effectAllowed = 'move';
-    });
-
-    sectionList.addEventListener('dragover', (e) => {
-      e.preventDefault();
-      const li = e.target.closest('.section-item');
-      if (!li || li === draggedItem) return;
-
-      const rect = li.getBoundingClientRect();
-      const before = e.clientY < rect.top + rect.height / 2;
-      if (before) {
-        sectionList.insertBefore(draggedItem, li);
-      } else {
-        sectionList.insertBefore(draggedItem, li.nextSibling);
-      }
-    });
-
-    sectionList.addEventListener('drop', (e) => {
-      e.preventDefault();
-      if (draggedItem) {
+      sectionList.addEventListener('dragend', () => {
+        if (draggedItem) {
+          draggedItem.classList.remove('dragging');
+        }
+        draggedItem = null;
         applyOrderToSections();
-      }
+      });
+
+      buildSectionList();
     });
+  </script>
 
-    sectionList.addEventListener('dragend', () => {
-      if (draggedItem) {
-        draggedItem.classList.remove('dragging');
-      }
-      draggedItem = null;
-      applyOrderToSections();
-    });
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const faqSection = document.getElementById('faq');
 
-    buildSectionList();
-  });
-</script>
-<script>
-  document.addEventListener('DOMContentLoaded', function () {
-    const faqSection = document.getElementById('faq');
+      if (faqSection) {
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                faqSection.classList.add('faq-visible');
+                observer.disconnect();
+              }
+            });
+          },
+          { threshold: 0.4 }
+        );
 
-    if (faqSection) {
-      // Gardin-effekt: når FAQ blir synlig, dras "gardinen" opp
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              faqSection.classList.add('faq-visible');
-              observer.disconnect(); // bare trigge én gang
+        observer.observe(faqSection);
+
+        const details = faqSection.querySelectorAll('details.faq-item');
+        details.forEach((el) => {
+          el.addEventListener('toggle', () => {
+            if (el.open) {
+              details.forEach((other) => {
+                if (other !== el) other.open = false;
+              });
             }
           });
-        },
-        { threshold: 0.4 }
-      );
+        })
+      }
+    });
 
-      observer.observe(faqSection);
+    const faqSection = document.querySelector('.section-faq');
+    if (faqSection) {
+      const activateFaq = () => faqSection.classList.add('faq-visible');
 
-      // Bare ett FAQ-punkt åpent om gangen
-      const details = faqSection.querySelectorAll('details.faq-item');
-      details.forEach((el) => {
-        el.addEventListener('toggle', () => {
-          if (el.open) {
-            details.forEach((other) => {
-              if (other !== el) other.open = false;
+      if ('IntersectionObserver' in window) {
+        const observer = new IntersectionObserver(
+          (entries, obs) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                activateFaq();
+                obs.disconnect();
+              }
             });
+          },
+          { threshold: 0.35 }
+        );
+
+        observer.observe(faqSection);
+      } else {
+        activateFaq();
+      }
+    }
+
+    (function () {
+      const raw = localStorage.getItem('fjAdminConfig');
+      if (!raw) return;
+
+      let cfg;
+      try {
+        cfg = JSON.parse(raw);
+      } catch (e) {
+        console.warn('Kunne ikke parse fjAdminConfig:', e);
+        return;
+      }
+
+      const sectionsContainer = document.querySelector('[data-sections-container]');
+      if (sectionsContainer && Array.isArray(cfg.sectionsOrder) && cfg.sectionsOrder.length) {
+        cfg.sectionsOrder.forEach((id) => {
+          const sectionEl =
+            sectionsContainer.querySelector(`[data-sortable-section="${id}"]`) || document.getElementById(id);
+          if (sectionEl) {
+            sectionsContainer.appendChild(sectionEl);
+          }
+        });
+      }
+
+      const sections = cfg.sections || {};
+      Object.entries(sections).forEach(([id, settings]) => {
+        const section = document.getElementById(id);
+        if (!section) return;
+
+        if (settings.enabled === false) {
+          section.style.display = 'none';
+          return;
+        }
+
+        if (id === 'hero') {
+          applyHeroSettings(section, settings);
+          return;
+        }
+
+        if (id === 'julekalender') {
+          applyJulekalenderSettings(section, settings);
+          return;
+        }
+
+        if (settings.title) {
+          const h2 = section.querySelector('h2');
+          if (h2) {
+            h2.textContent = settings.title;
+          }
+        }
+
+        if (settings.subtitle) {
+          const sub = section.querySelector('.subtitle');
+          if (sub) {
+            sub.textContent = settings.subtitle;
+          }
+        }
+      });
+
+      const global = cfg.global || {};
+
+      if (global.logoUrl) {
+        document.querySelectorAll('.logo img, .footer-logo').forEach((img) => {
+          img.src = global.logoUrl;
+        });
+      }
+
+      if (global.youtubeUrl) {
+        const iframe = document.querySelector('#video iframe');
+        if (iframe) {
+          iframe.src = normalizeYoutube(global.youtubeUrl);
+        }
+      }
+
+      if (global.socials) {
+        const cards = document.querySelectorAll('.social-card');
+        cards.forEach((card) => {
+          const key = card.dataset.social;
+          if (!key) return;
+          const url = global.socials[key];
+          if (url) {
+            card.href = url;
+          }
+        });
+      }
+
+      function normalizeYoutube(url) {
+        if (!url) return url;
+
+        if (url.includes('/embed/')) return url;
+
+        const shortMatch = url.match(/youtu\.be\/([^?&]+)/);
+        if (shortMatch) {
+          return 'https://www.youtube.com/embed/' + shortMatch[1];
+        }
+
+        const longMatch = url.match(/[?&]v=([^&]+)/);
+        if (longMatch) {
+          return 'https://www.youtube.com/embed/' + longMatch[1];
+        }
+
+        return url;
+      }
+
+      function applyHeroSettings(section, settings) {
+        const pill = section.querySelector('.pill');
+        if (settings.pillText && pill) {
+          pill.textContent = settings.pillText;
+        }
+
+        const lead = section.querySelector('.lead');
+        if (settings.sectionText && lead) {
+          lead.textContent = settings.sectionText;
+        }
+
+        const h1 = section.querySelector('h1');
+        if (settings.title && h1) {
+          h1.innerHTML = settings.title;
+        }
+
+        const heroImg = section.querySelector('.hero-card img');
+        if (settings.heroImageUrl && heroImg) {
+          heroImg.src = settings.heroImageUrl;
+        }
+
+        const caption = section.querySelector('.hero-card-caption');
+        if (settings.heroImageCaption && caption) {
+          caption.textContent = settings.heroImageCaption;
+        }
+
+        const buttons = section.querySelectorAll('.hero-actions a');
+        const [btn1, btn2] = buttons;
+        if (btn1) {
+          if (settings.button1Label) btn1.textContent = settings.button1Label;
+          if (settings.button1Href) btn1.href = settings.button1Href;
+        }
+        if (btn2) {
+          if (settings.button2Label) btn2.textContent = settings.button2Label;
+          if (settings.button2Href) btn2.href = settings.button2Href;
+        }
+      }
+
+      function applyJulekalenderSettings(section, settings) {
+        const pill = section.querySelector('.pill');
+        if (settings.pillText && pill) {
+          pill.textContent = settings.pillText;
+        }
+
+        const title = section.querySelector('h2');
+        if (settings.title && title) {
+          title.textContent = settings.title;
+        }
+
+        const ingress = section.querySelector('.hero-ingress');
+        if (settings.subtitle && ingress) {
+          ingress.textContent = settings.subtitle;
+        }
+
+        const btn = section.querySelector('a.btn');
+        if (btn) {
+          if (settings.button && settings.button.label) btn.textContent = settings.button.label;
+          if (settings.button && settings.button.href) btn.href = settings.button.href;
+        }
+
+        const image = section.querySelector('img');
+        if (image && settings.imageUrl) {
+          image.src = settings.imageUrl;
+        }
+      }
+    })();
+  </script>
+
+  <script>
+    (function () {
+      if (!document.body.classList.contains('is-admin')) return;
+
+      const blocks = Array.from(document.querySelectorAll('.fb-edit-block'));
+
+      blocks.forEach(block => {
+        const type = block.dataset.editType || 'richtext';
+        const blockId = block.dataset.blockId || '';
+
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'fb-block-edit-btn';
+        btn.innerHTML = '✏️';
+        btn.title = 'Rediger';
+        block.prepend(btn);
+
+        if (type === 'richtext') {
+          setupRichtextBlock(block, blockId, btn);
+        } else if (type === 'youtube') {
+          setupYoutubeBlock(block, blockId, btn);
+        }
+      });
+
+      function setupRichtextBlock(block, blockId, btn) {
+        let originalHtml = '';
+        let isEditing = false;
+
+        btn.addEventListener('click', () => {
+          if (isEditing) return;
+          const contentEl = block;
+          originalHtml = contentEl.innerHTML.replace(/<button[^>]*class="fb-block-edit-btn"[^>]*>.*?<\/button>/, '');
+          isEditing = true;
+
+          block.classList.add('fb-editing-richtext');
+          contentEl.setAttribute('contenteditable', 'true');
+          contentEl.focus();
+
+          contentEl.addEventListener('keydown', onKeydown);
+
+          function onKeydown(e) {
+            if (e.key === 'Escape') {
+              e.preventDefault();
+              cancel();
+            }
+            if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 's') {
+              e.preventDefault();
+              save();
+            }
+          }
+
+          function cleanup() {
+            contentEl.removeAttribute('contenteditable');
+            block.classList.remove('fb-editing-richtext');
+            contentEl.removeEventListener('keydown', onKeydown);
+            isEditing = false;
+          }
+
+          function cancel() {
+            contentEl.innerHTML = originalHtml;
+            cleanup();
+          }
+
+          async function save() {
+            const htmlToSave = contentEl.innerHTML.replace(/<button[^>]*class="fb-block-edit-btn"[^>]*>.*?<\/button>/, '');
+
+            try {
+              const res = await fetch('/api/admin/blocks/' + encodeURIComponent(blockId), {
+                method: 'PUT',
+                headers: {
+                  'Content-Type': 'application/json',
+                  'X-CSRFToken': window.csrfToken || ''
+                },
+                body: JSON.stringify({ type: 'richtext', content: htmlToSave })
+              });
+              if (!res.ok) throw new Error('Feil ved lagring');
+              cleanup();
+              console.log('Blokk lagret:', blockId);
+            } catch (err) {
+              console.error(err);
+              alert('Klarte ikke å lagre. Endringene er fortsatt i nettleseren.');
+            }
+          }
+
+          btn.onclick = () => {
+            if (!isEditing) return;
+            const wantSave = confirm('Vil du lagre endringene?');
+            if (wantSave) {
+              save();
+            } else {
+              cancel();
+            }
+          };
+        });
+      }
+
+      function setupYoutubeBlock(block, blockId, btn) {
+        let editorEl = null;
+
+        btn.addEventListener('click', () => {
+          if (editorEl) {
+            editorEl.remove();
+            editorEl = null;
+            return;
+          }
+
+          const iframe = block.querySelector('iframe');
+          const currentSrc = iframe ? iframe.src || '' : '';
+          const currentUrl = currentSrc || '';
+
+          editorEl = document.createElement('div');
+          editorEl.className = 'fb-youtube-editor';
+          editorEl.innerHTML = `
+            <label for="yt-input-${blockId}">YouTube-lenke eller video-ID</label>
+            <input id="yt-input-${blockId}"
+                   type="text"
+                   placeholder="f.eks. https://youtu.be/VIDEOID"
+                   value="${currentUrl}">
+            <div class="fb-youtube-editor__actions">
+              <button type="button" class="fb-btn-small fb-btn-small--ghost">Avbryt</button>
+              <button type="button" class="fb-btn-small fb-btn-small--primary">Lagre</button>
+            </div>
+          `;
+          block.appendChild(editorEl);
+
+          const input = editorEl.querySelector('input');
+          const cancelBtn = editorEl.querySelector('.fb-btn-small--ghost');
+          const saveBtn = editorEl.querySelector('.fb-btn-small--primary');
+
+          input.focus();
+          input.select();
+
+          cancelBtn.addEventListener('click', () => {
+            editorEl.remove();
+            editorEl = null;
+          });
+
+          saveBtn.addEventListener('click', async () => {
+            const raw = input.value.trim();
+            if (!raw) {
+              alert('Skriv inn en YouTube-lenke eller ID');
+              return;
+            }
+
+            const videoId = extractYoutubeId(raw);
+            if (!videoId) {
+              alert('Fant ikke en gyldig YouTube-ID i lenken.');
+              return;
+            }
+
+            const newSrc = 'https://www.youtube.com/embed/' + videoId;
+
+            if (iframe) {
+              iframe.src = newSrc;
+            }
+
+            try {
+              const res = await fetch('/api/admin/blocks/' + encodeURIComponent(blockId), {
+                method: 'PUT',
+                headers: {
+                  'Content-Type': 'application/json',
+                  'X-CSRFToken': window.csrfToken || ''
+                },
+                body: JSON.stringify({ type: 'youtube', videoId, src: newSrc })
+              });
+              if (!res.ok) throw new Error('Feil ved lagring');
+              console.log('YouTube-blokk lagret:', blockId, videoId);
+              editorEl.remove();
+              editorEl = null;
+            } catch (err) {
+              console.error(err);
+              alert('Klarte ikke å lagre videolenken. Men videoen er oppdatert i nettleseren.');
+            }
+          });
+        });
+      }
+
+      function extractYoutubeId(url) {
+        if (/^[a-zA-Z0-9_-]{11}$/.test(url)) return url;
+
+        const regExp =
+          /(?:youtube\.com\/(?:watch\?v=|embed\/|v\/|shorts\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
+        const match = url.match(regExp);
+        return match ? match[1] : null;
+      }
+    })();
+  </script>
+
+  <script>
+    (function () {
+      const VIPPS_STORAGE_KEY = "fjolsen_vipps_settings";
+      try {
+        const raw = localStorage.getItem(VIPPS_STORAGE_KEY);
+        const data = raw ? JSON.parse(raw) : null;
+        const enabled = data?.enabled === true;
+        const sandbox = data?.sandbox === true;
+        document.documentElement.dataset.vippsEnabled = enabled ? "1" : "0";
+        document.documentElement.dataset.vippsSandbox = sandbox ? "1" : "0";
+      } catch (error) {
+        console.warn("Kunne ikke lese Vipps-testoppsett:", error);
+        document.documentElement.dataset.vippsEnabled = "0";
+        document.documentElement.dataset.vippsSandbox = "0";
+      }
+    })();
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const vippsSection = document.querySelector("[data-front-module='vipps']");
+      if (!vippsSection) return;
+
+      const enabled = document.documentElement.dataset.vippsEnabled === "1";
+
+      if (!enabled) {
+        vippsSection.style.display = "none";
+        return;
+      }
+
+      const frontStatus = document.getElementById("vipps-front-status");
+      const sandbox = document.documentElement.dataset.vippsSandbox === "1";
+
+      if (frontStatus) {
+        frontStatus.textContent = sandbox
+          ? "Vipps er satt opp i TEST (sandbox)."
+          : "Vipps er satt opp mot PRODUKSJON (vær forsiktig!).";
+      }
+
+      const btn = document.getElementById("vipps-test-button");
+      if (btn) {
+        btn.addEventListener("click", () => {
+          if (frontStatus) {
+            frontStatus.textContent =
+              "Dette er bare en front-end test. Selve API-kallene må gjøres fra server (PHP/Node).";
           }
         });
       }
     });
-  });
+  </script>
 
-  const faqSection = document.querySelector('.section-faq');
-  if (faqSection) {
-    const activateFaq = () => faqSection.classList.add('faq-visible');
+  <script>
+    (function () {
+      const form = document.getElementById('contact-form');
+      if (!form) return;
 
-    if ('IntersectionObserver' in window) {
-      const observer = new IntersectionObserver(
-        (entries, obs) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              activateFaq();
-              obs.disconnect();
-            }
-          });
-        },
-        { threshold: 0.35 }
-      );
+      const submitBtn = document.getElementById('contact-submit');
 
-      observer.observe(faqSection);
-    } else {
-      activateFaq();
-    }
-  }
+      const modal = document.getElementById('contact-modal');
+      const modalMsg = document.getElementById('fj-modal-message');
 
-  // Les admin-konfig fra localStorage og bruk på forsiden
-  (function () {
-    const raw = localStorage.getItem('fjAdminConfig');
-    if (!raw) return;
-
-    let cfg;
-    try {
-      cfg = JSON.parse(raw);
-    } catch (e) {
-      console.warn('Kunne ikke parse fjAdminConfig:', e);
-      return;
-    }
-
-    const sectionsContainer = document.querySelector('[data-sections-container]');
-    if (sectionsContainer && Array.isArray(cfg.sectionsOrder) && cfg.sectionsOrder.length) {
-      cfg.sectionsOrder.forEach((id) => {
-        const sectionEl =
-          sectionsContainer.querySelector(`[data-sortable-section="${id}"]`) || document.getElementById(id);
-        if (sectionEl) {
-          sectionsContainer.appendChild(sectionEl);
-        }
-      });
-    }
-
-    const sections = cfg.sections || {};
-    Object.entries(sections).forEach(([id, settings]) => {
-      const section = document.getElementById(id);
-      if (!section) return;
-
-      if (settings.enabled === false) {
-        section.style.display = 'none';
-        return;
+      function openModal(message) {
+        if (message && modalMsg) modalMsg.textContent = message;
+        modal.classList.add('is-open');
+        modal.setAttribute('aria-hidden', 'false');
+        const closeBtn = modal.querySelector('[data-close="1"]');
+        if (closeBtn) closeBtn.focus();
       }
 
-      if (id === 'hero') {
-        applyHeroSettings(section, settings);
-        return;
+      function closeModal() {
+        modal.classList.remove('is-open');
+        modal.setAttribute('aria-hidden', 'true');
+        if (submitBtn) submitBtn.focus();
       }
 
-      if (id === 'julekalender') {
-        applyJulekalenderSettings(section, settings);
-        return;
-      }
-
-      if (settings.title) {
-        const h2 = section.querySelector('h2');
-        if (h2) {
-          h2.textContent = settings.title;
-        }
-      }
-
-      if (settings.subtitle) {
-        const sub = section.querySelector('.subtitle');
-        if (sub) {
-          sub.textContent = settings.subtitle;
-        }
-      }
-    });
-
-    const global = cfg.global || {};
-
-    if (global.logoUrl) {
-      document.querySelectorAll('.logo img, .footer-logo').forEach((img) => {
-        img.src = global.logoUrl;
-      });
-    }
-
-    if (global.youtubeUrl) {
-      const iframe = document.querySelector('#video iframe');
-      if (iframe) {
-        iframe.src = normalizeYoutube(global.youtubeUrl);
-      }
-    }
-
-    if (global.socials) {
-      const cards = document.querySelectorAll('.social-card');
-      cards.forEach((card) => {
-        const key = card.dataset.social;
-        if (!key) return;
-        const url = global.socials[key];
-        if (url) {
-          card.href = url;
-        }
-      });
-    }
-
-    function normalizeYoutube(url) {
-      if (!url) return url;
-
-      if (url.includes('/embed/')) return url;
-
-      const shortMatch = url.match(/youtu\.be\/([^?&]+)/);
-      if (shortMatch) {
-        return 'https://www.youtube.com/embed/' + shortMatch[1];
-      }
-
-      const longMatch = url.match(/[?&]v=([^&]+)/);
-      if (longMatch) {
-        return 'https://www.youtube.com/embed/' + longMatch[1];
-      }
-
-      return url;
-    }
-
-    function applyHeroSettings(section, settings) {
-      const pill = section.querySelector('.pill');
-      if (settings.pillText && pill) {
-        pill.textContent = settings.pillText;
-      }
-
-      const lead = section.querySelector('.lead');
-      if (settings.sectionText && lead) {
-        lead.textContent = settings.sectionText;
-      }
-
-      const h1 = section.querySelector('h1');
-      if (settings.title && h1) {
-        h1.innerHTML = settings.title;
-      }
-
-      const heroImg = section.querySelector('.hero-card img');
-      if (settings.heroImageUrl && heroImg) {
-        heroImg.src = settings.heroImageUrl;
-      }
-
-      const caption = section.querySelector('.hero-card-caption');
-      if (settings.heroImageCaption && caption) {
-        caption.textContent = settings.heroImageCaption;
-      }
-
-      const buttons = section.querySelectorAll('.hero-actions a');
-      const [btn1, btn2] = buttons;
-      if (btn1) {
-        if (settings.button1Label) btn1.textContent = settings.button1Label;
-        if (settings.button1Href) btn1.href = settings.button1Href;
-      }
-      if (btn2) {
-        if (settings.button2Label) btn2.textContent = settings.button2Label;
-        if (settings.button2Href) btn2.href = settings.button2Href;
-      }
-    }
-
-    function applyJulekalenderSettings(section, settings) {
-      const pill = section.querySelector('.pill');
-      if (settings.pillText && pill) {
-        pill.textContent = settings.pillText;
-      }
-
-      const title = section.querySelector('h2');
-      if (settings.title && title) {
-        title.textContent = settings.title;
-      }
-
-      const ingress = section.querySelector('.hero-ingress');
-      if (settings.subtitle && ingress) {
-        ingress.textContent = settings.subtitle;
-      }
-
-      const btn = section.querySelector('a.btn');
-      if (btn) {
-        if (settings.button && settings.button.label) btn.textContent = settings.button.label;
-        if (settings.button && settings.button.href) btn.href = settings.button.href;
-      }
-
-      const image = section.querySelector('img');
-      if (image && settings.imageUrl) {
-        image.src = settings.imageUrl;
-      }
-    }
-  })();
-  });
-</script>
-<script>
-(function () {
-  if (!document.body.classList.contains('is-admin')) return;
-
-  const blocks = Array.from(document.querySelectorAll('.fb-edit-block'));
-
-  blocks.forEach(block => {
-    const type = block.dataset.editType || 'richtext';
-    const blockId = block.dataset.blockId || '';
-
-    // Lag liten blyant-knapp
-    const btn = document.createElement('button');
-    btn.type = 'button';
-    btn.className = 'fb-block-edit-btn';
-    btn.innerHTML = '✏️'; // kan byttes til SVG senere
-    btn.title = 'Rediger';
-    block.prepend(btn);
-
-    if (type === 'richtext') {
-      setupRichtextBlock(block, blockId, btn);
-    } else if (type === 'youtube') {
-      setupYoutubeBlock(block, blockId, btn);
-    }
-  });
-
-  /* ---- RICHTEXT ---- */
-  function setupRichtextBlock(block, blockId, btn) {
-    let originalHtml = '';
-    let isEditing = false;
-
-    btn.addEventListener('click', () => {
-      if (isEditing) return;
-      const contentEl = block; // hele blocken kan skrives i
-      originalHtml = contentEl.innerHTML.replace(/<button[^>]*class="fb-block-edit-btn"[^>]*>.*?<\/button>/, '');
-      isEditing = true;
-
-      block.classList.add('fb-editing-richtext');
-      contentEl.setAttribute('contenteditable', 'true');
-      contentEl.focus();
-
-      // Lag liten “hint” nederst: Enter = vanlig, Ctrl+S = lagre (kan bygges senere)
-      // For nå bruker vi bare blur/save via confirm
-      contentEl.addEventListener('keydown', onKeydown);
-
-      function onKeydown(e) {
-        if (e.key === 'Escape') {
-          e.preventDefault();
-          cancel();
-        }
-        if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 's') {
-          e.preventDefault();
-          save();
-        }
-      }
-
-      function cleanup() {
-        contentEl.removeAttribute('contenteditable');
-        block.classList.remove('fb-editing-richtext');
-        contentEl.removeEventListener('keydown', onKeydown);
-        isEditing = false;
-      }
-
-      function cancel() {
-        contentEl.innerHTML = originalHtml;
-        cleanup();
-      }
-
-      async function save() {
-        const htmlToSave = contentEl.innerHTML.replace(/<button[^>]*class="fb-block-edit-btn"[^>]*>.*?<\/button>/, '');
-
-        try {
-          const res = await fetch('/api/admin/blocks/' + encodeURIComponent(blockId), {
-            method: 'PUT',
-            headers: {
-              'Content-Type': 'application/json',
-              'X-CSRFToken': window.csrfToken || ''
-            },
-            body: JSON.stringify({ type: 'richtext', content: htmlToSave })
-          });
-          if (!res.ok) throw new Error('Feil ved lagring');
-          cleanup();
-          console.log('Blokk lagret:', blockId);
-        } catch (err) {
-          console.error(err);
-          alert('Klarte ikke å lagre. Endringene er fortsatt i nettleseren.');
-        }
-      }
-
-      // enkel dialog for nå: spør om lagring når man klikker på blyanten igjen
-      btn.onclick = () => {
-        if (!isEditing) return;
-        const wantSave = confirm('Vil du lagre endringene?');
-        if (wantSave) {
-          save();
-        } else {
-          cancel();
-        }
-      };
-    });
-  }
-
-  /* ---- YOUTUBE ---- */
-  function setupYoutubeBlock(block, blockId, btn) {
-    let editorEl = null;
-
-    btn.addEventListener('click', () => {
-      // hvis editor allerede er åpen → lukk
-      if (editorEl) {
-        editorEl.remove();
-        editorEl = null;
-        return;
-      }
-
-      const iframe = block.querySelector('iframe');
-      const currentSrc = iframe ? iframe.src || '' : '';
-      const currentUrl = currentSrc || '';
-
-      editorEl = document.createElement('div');
-      editorEl.className = 'fb-youtube-editor';
-      editorEl.innerHTML = `
-        <label for="yt-input-${blockId}">YouTube-lenke eller video-ID</label>
-        <input id="yt-input-${blockId}"
-               type="text"
-               placeholder="f.eks. https://youtu.be/VIDEOID"
-               value="${currentUrl}">
-        <div class="fb-youtube-editor__actions">
-          <button type="button" class="fb-btn-small fb-btn-small--ghost">Avbryt</button>
-          <button type="button" class="fb-btn-small fb-btn-small--primary">Lagre</button>
-        </div>
-      `;
-      block.appendChild(editorEl);
-
-      const input = editorEl.querySelector('input');
-      const cancelBtn = editorEl.querySelector('.fb-btn-small--ghost');
-      const saveBtn = editorEl.querySelector('.fb-btn-small--primary');
-
-      input.focus();
-      input.select();
-
-      cancelBtn.addEventListener('click', () => {
-        editorEl.remove();
-        editorEl = null;
-      });
-
-      saveBtn.addEventListener('click', async () => {
-        const raw = input.value.trim();
-        if (!raw) {
-          alert('Skriv inn en YouTube-lenke eller ID');
-          return;
-        }
-
-        const videoId = extractYoutubeId(raw);
-        if (!videoId) {
-          alert('Fant ikke en gyldig YouTube-ID i lenken.');
-          return;
-        }
-
-        const newSrc = 'https://www.youtube.com/embed/' + videoId;
-
-        if (iframe) {
-          iframe.src = newSrc;
-        }
-
-        try {
-          const res = await fetch('/api/admin/blocks/' + encodeURIComponent(blockId), {
-            method: 'PUT',
-            headers: {
-              'Content-Type': 'application/json',
-              'X-CSRFToken': window.csrfToken || ''
-            },
-            body: JSON.stringify({ type: 'youtube', videoId, src: newSrc })
-          });
-          if (!res.ok) throw new Error('Feil ved lagring');
-          console.log('YouTube-blokk lagret:', blockId, videoId);
-          editorEl.remove();
-          editorEl = null;
-        } catch (err) {
-          console.error(err);
-          alert('Klarte ikke å lagre videolenken. Men videoen er oppdatert i nettleseren.');
-        }
-      });
-    });
-  }
-
-  function extractYoutubeId(url) {
-    // aksepter ren ID
-    if (/^[a-zA-Z0-9_-]{11}$/.test(url)) return url;
-
-    // typiske url-formater
-    const regExp =
-      /(?:youtube\.com\/(?:watch\?v=|embed\/|v\/|shorts\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
-    const match = url.match(regExp);
-    return match ? match[1] : null;
-  }
-})();
-</script>
-
-<script>
-  (function () {
-    const VIPPS_STORAGE_KEY = "fjolsen_vipps_settings";
-    try {
-      const raw = localStorage.getItem(VIPPS_STORAGE_KEY);
-      const data = raw ? JSON.parse(raw) : null;
-      const enabled = data?.enabled === true;
-      const sandbox = data?.sandbox === true;
-      document.documentElement.dataset.vippsEnabled = enabled ? "1" : "0";
-      document.documentElement.dataset.vippsSandbox = sandbox ? "1" : "0";
-    } catch (error) {
-      console.warn("Kunne ikke lese Vipps-testoppsett:", error);
-      document.documentElement.dataset.vippsEnabled = "0";
-      document.documentElement.dataset.vippsSandbox = "0";
-    }
-  })();
-
-  document.addEventListener("DOMContentLoaded", () => {
-    const vippsSection = document.querySelector("[data-front-module='vipps']");
-    if (!vippsSection) return;
-
-    const enabled = document.documentElement.dataset.vippsEnabled === "1";
-
-    if (!enabled) {
-      vippsSection.style.display = "none";
-      return;
-    }
-
-    const frontStatus = document.getElementById("vipps-front-status");
-    const sandbox = document.documentElement.dataset.vippsSandbox === "1";
-
-    if (frontStatus) {
-      frontStatus.textContent = sandbox
-        ? "Vipps er satt opp i TEST (sandbox)."
-        : "Vipps er satt opp mot PRODUKSJON (vær forsiktig!).";
-    }
-
-    const btn = document.getElementById("vipps-test-button");
-    if (btn) {
-      btn.addEventListener("click", () => {
-        if (frontStatus) {
-          frontStatus.textContent =
-            "Dette er bare en front-end test. Selve API-kallene må gjøres fra server (PHP/Node).";
-        }
-      });
-    }
-  });
-</script>
-<script>
-  (function () {
-    const form = document.getElementById('contact-form');
-    if (!form) return;
-
-    const submitBtn = document.getElementById('contact-submit');
-
-    const modal = document.getElementById('contact-modal');
-    const modalMsg = document.getElementById('fj-modal-message');
-
-    function openModal(message) {
-      if (message && modalMsg) modalMsg.textContent = message;
-      modal.classList.add('is-open');
-      modal.setAttribute('aria-hidden', 'false');
-      // fokus på lukk-knapp
-      const closeBtn = modal.querySelector('[data-close="1"]');
-      if (closeBtn) closeBtn.focus();
-    }
-
-    function closeModal() {
-      modal.classList.remove('is-open');
-      modal.setAttribute('aria-hidden', 'true');
-      if (submitBtn) submitBtn.focus();
-    }
-
-    if (modal) {
-      modal.addEventListener('click', (e) => {
-        const target = e.target;
-        if (target && target.getAttribute && target.getAttribute('data-close') === '1') {
-          closeModal();
-        }
-      });
-
-      document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && modal.classList.contains('is-open')) {
-          closeModal();
-        }
-      });
-    }
-
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-
-      // honeypot: hvis fylt ut -> avbryt stille
-      const honey = form.querySelector('input[name="_honey"]');
-      if (honey && honey.value) return;
-
-      const originalText = submitBtn ? submitBtn.textContent : '';
-      if (submitBtn) {
-        submitBtn.disabled = true;
-        submitBtn.textContent = 'Sender...';
-      }
-
-      try {
-        const fd = new FormData(form);
-        const payload = Object.fromEntries(fd.entries());
-
-        // FormSubmit AJAX-endepunkt
-        const endpoint = 'https://formsubmit.co/ajax/Fjolsenfn@gmail.com';
-
-        const res = await fetch(endpoint, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-          },
-          body: JSON.stringify(payload)
+      if (modal) {
+        modal.addEventListener('click', (e) => {
+          const target = e.target;
+          if (target && target.getAttribute && target.getAttribute('data-close') === '1') {
+            closeModal();
+          }
         });
 
-        if (!res.ok) throw new Error('Request failed');
-
-        form.reset();
-        openModal('Meldingen din er sendt. Vi tar kontakt så snart vi kan.');
-      } catch (err) {
-        openModal('Beklager – vi klarte ikke å sende meldingen nå. Prøv igjen om litt.');
-      } finally {
-        if (submitBtn) {
-          submitBtn.disabled = false;
-          submitBtn.textContent = originalText || 'Send melding';
-        }
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape' && modal.classList.contains('is-open')) {
+            closeModal();
+          }
+        });
       }
-    });
-  })();
-</script>
-<div id="contact-modal" class="fj-modal" aria-hidden="true">
-  <div class="fj-modal__backdrop" data-close="1"></div>
-  <div class="fj-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="fj-modal-title">
-    <h3 id="fj-modal-title" class="fj-modal__title">Takk!</h3>
-    <p id="fj-modal-message" class="fj-modal__text">
-      Meldingen din er sendt. Vi tar kontakt så snart vi kan.
-    </p>
-    <div class="fj-modal__actions">
-      <button type="button" class="btn btn-primary" data-close="1">Lukk</button>
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const honey = form.querySelector('input[name="_honey"]');
+        if (honey && honey.value) return;
+
+        const originalText = submitBtn ? submitBtn.textContent : '';
+        if (submitBtn) {
+          submitBtn.disabled = true;
+          submitBtn.textContent = 'Sender...';
+        }
+
+        try {
+          const fd = new FormData(form);
+          const payload = Object.fromEntries(fd.entries());
+
+          const endpoint = 'https://formsubmit.co/ajax/Fjolsenfn@gmail.com';
+
+          const res = await fetch(endpoint, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json'
+            },
+            body: JSON.stringify(payload)
+          });
+
+          if (!res.ok) throw new Error('Request failed');
+
+          form.reset();
+          openModal('Meldingen din er sendt. Vi tar kontakt så snart vi kan.');
+        } catch (err) {
+          openModal('Beklager – vi klarte ikke å sende meldingen nå. Prøv igjen om litt.');
+        } finally {
+          if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.textContent = originalText || 'Send melding';
+          }
+        }
+      });
+    })();
+  </script>
+
+  <div id="contact-modal" class="fj-modal" aria-hidden="true">
+    <div class="fj-modal__backdrop" data-close="1"></div>
+    <div class="fj-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="fj-modal-title">
+      <h3 id="fj-modal-title" class="fj-modal__title">Takk!</h3>
+      <p id="fj-modal-message" class="fj-modal__text">
+        Meldingen din er sendt. Vi tar kontakt så snart vi kan.
+      </p>
+      <div class="fj-modal__actions">
+        <button type="button" class="btn btn-primary" data-close="1">Lukk</button>
+      </div>
     </div>
   </div>
-</div>
 </body>
-</html>
+  </html>
