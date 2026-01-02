@@ -505,6 +505,53 @@ a {
   justify-content: center;
 }
 
+.checklist {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1.5rem;
+  display: grid;
+  gap: 0.75rem;
+  color: var(--muted);
+}
+
+.checklist li {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.6rem;
+  align-items: start;
+}
+
+.feature-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.95rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+}
+
+.feature-icon.positive {
+  background: rgba(0, 166, 255, 0.16);
+  color: #7bddff;
+}
+
+.feature-icon.negative {
+  background: rgba(255, 45, 164, 0.18);
+  color: #ff8cc5;
+}
+
+.feature-icon.warning {
+  background: rgba(255, 181, 102, 0.18);
+  color: #ffdda6;
+}
+
+.feature-icon.coin {
+  background: rgba(255, 214, 102, 0.2);
+  color: #ffd666;
+}
+
 .membership-plan .tag {
   display: inline-flex;
   align-items: center;
@@ -1274,7 +1321,7 @@ body.is-admin .fb-block-edit-btn:hover {
         <a href="/#faq">FAQ</a>
       </nav>
       <div class="nav-actions">
-        <a href="#membership" class="btn btn-primary small">Bli medlem</a>
+        <a href="/index.html#membership" class="btn btn-primary small">Bli medlem</a>
       </div>
     </div>
   </header>
@@ -1487,13 +1534,34 @@ body.is-admin .fb-block-edit-btn:hover {
           <div class="divider"></div>
 
           <ul class="checklist">
-            <li>✅ Du får medlemsrolle og chat-tilgang i Discord</li>
-            <li>✅ Du kan legge til FjOlsenFN på Fortnite</li>
-            <li>✅ Kan vinne V-Bucks-premier</li>
-            <li>✅ Prioritet over ikke-medlemmer i customs-kø</li>
-            <li>❌ Kan ikke vinne cash-premie (uten deltakeravgift)</li>
-            <li>⛔️ Ingen garanti om plass hvis customs er fulle med UNREAL-medlemmer</li>
-            <li>🪙 Cashout på 5000 V-Bucks</li>
+            <li>
+              <span class="feature-icon positive" aria-hidden="true">✅</span>
+              <span>Du får medlemsrolle og chat-tilgang i Discord</span>
+            </li>
+            <li>
+              <span class="feature-icon positive" aria-hidden="true">✅</span>
+              <span>Du kan legge til FjOlsenFN på Fortnite</span>
+            </li>
+            <li>
+              <span class="feature-icon positive" aria-hidden="true">✅</span>
+              <span>Kan vinne V-Bucks-premier</span>
+            </li>
+            <li>
+              <span class="feature-icon positive" aria-hidden="true">✅</span>
+              <span>Prioritet over ikke-medlemmer i customs-kø</span>
+            </li>
+            <li>
+              <span class="feature-icon negative" aria-hidden="true">✖️</span>
+              <span>Kan ikke vinne cash-premie (uten deltakeravgift)</span>
+            </li>
+            <li>
+              <span class="feature-icon warning" aria-hidden="true">⚠️</span>
+              <span>Ingen garanti om plass hvis customs er fulle med UNREAL-medlemmer</span>
+            </li>
+            <li>
+              <span class="feature-icon coin" aria-hidden="true">🪙</span>
+              <span>Cashout på 5000 V-Bucks</span>
+            </li>
           </ul>
 
           <div class="membership-actions">
@@ -1518,13 +1586,34 @@ body.is-admin .fb-block-edit-btn:hover {
           <div class="divider"></div>
 
           <ul class="checklist">
-            <li>🟡 UNREAL-rolle i Discord</li>
-            <li>💸 Kan vinne V-Bucks og cash-premier</li>
-            <li>💰 Gratis deltakelse i alle Cash Cups</li>
-            <li>🚀 Førsteprioritet i alle customs</li>
-            <li>🏆 Tilgang til alle premier inkludert giveaways</li>
-            <li>➕ 50% ekstra på alle V-Bucks-premier</li>
-            <li>🪙 Cashout på 2800 V-Bucks</li>
+            <li>
+              <span class="feature-icon positive" aria-hidden="true">👑</span>
+              <span>UNREAL-rolle i Discord</span>
+            </li>
+            <li>
+              <span class="feature-icon positive" aria-hidden="true">💸</span>
+              <span>Kan vinne V-Bucks og cash-premier</span>
+            </li>
+            <li>
+              <span class="feature-icon positive" aria-hidden="true">💰</span>
+              <span>Gratis deltakelse i alle Cash Cups</span>
+            </li>
+            <li>
+              <span class="feature-icon positive" aria-hidden="true">🚀</span>
+              <span>Førsteprioritet i alle customs</span>
+            </li>
+            <li>
+              <span class="feature-icon positive" aria-hidden="true">🏆</span>
+              <span>Tilgang til alle premier inkludert giveaways</span>
+            </li>
+            <li>
+              <span class="feature-icon positive" aria-hidden="true">➕</span>
+              <span>50% ekstra på alle V-Bucks-premier</span>
+            </li>
+            <li>
+              <span class="feature-icon coin" aria-hidden="true">🪙</span>
+              <span>Cashout på 2800 V-Bucks</span>
+            </li>
           </ul>
 
           <div class="membership-actions">
@@ -1548,11 +1637,26 @@ body.is-admin .fb-block-edit-btn:hover {
           <div class="divider"></div>
 
           <ul class="checklist">
-            <li>Gratis deltakelse i alle customs</li>
-            <li>❌ Kan ikke vinne V-Bucks</li>
-            <li>❌ Kan ikke vinne cash-premier</li>
-            <li>❌ Kan ikke vinne i giveaways</li>
-            <li>Lavest prioritet hvis fullt</li>
+            <li>
+              <span class="feature-icon positive" aria-hidden="true">🎮</span>
+              <span>Gratis deltakelse i alle customs</span>
+            </li>
+            <li>
+              <span class="feature-icon negative" aria-hidden="true">✖️</span>
+              <span>Kan ikke vinne V-Bucks</span>
+            </li>
+            <li>
+              <span class="feature-icon negative" aria-hidden="true">✖️</span>
+              <span>Kan ikke vinne cash-premier</span>
+            </li>
+            <li>
+              <span class="feature-icon negative" aria-hidden="true">✖️</span>
+              <span>Kan ikke vinne i giveaways</span>
+            </li>
+            <li>
+              <span class="feature-icon warning" aria-hidden="true">⚠️</span>
+              <span>Lavest prioritet hvis fullt</span>
+            </li>
           </ul>
 
           <div class="membership-actions">
