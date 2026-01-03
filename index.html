@@ -466,6 +466,7 @@ a {
 /* Midtkortet skal være tydelig premium */
 .membership-card--featured {
   position: relative;
+  padding-top: 3.2rem;
   border-color: rgba(255, 45, 164, 0.22);
   box-shadow:
     0 22px 60px rgba(0, 0, 0, 0.65),
@@ -497,30 +498,27 @@ a {
   position: absolute;
   top: 16px;
   left: 16px;
-  padding: 0.35rem 0.75rem;
+  padding: 0.35rem 0.8rem;
   border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  background: rgba(10, 20, 80, 0.85);
-  color: #fff;
-  font-size: 0.78rem;
+  background: rgba(10, 20, 80, 0.9);
+  border: 1px solid rgba(255,255,255,0.15);
+  font-size: 0.75rem;
   font-weight: 800;
-  letter-spacing: 0.04em;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
-  z-index: 2;
+  z-index: 3;
 }
 
 .unreal-corner-mascot {
   position: absolute;
-  top: 12px;
-  right: 12px;
-  width: 88px;
-  height: 88px;
+  top: 14px;
+  right: 14px;
+  width: 70px;
+  height: 70px;
   object-fit: contain;
-  filter: drop-shadow(0 16px 36px rgba(0, 0, 0, 0.45));
-  pointer-events: none;
-  z-index: 1;
+  background: none;
+  border: none;
+  padding: 0;
+  box-shadow: none;
+  animation: fj-bob 2.8s ease-in-out infinite;
 }
 
 .membership-card .membership-tag {
@@ -594,18 +592,27 @@ a {
 }
 
 /* UNREAL pris */
-.membership-price {
+.unreal-title {
   margin-top: 0.6rem;
-  font-size: 1.7rem;
+}
+
+.membership-price {
+  font-size: 1.8rem;
   font-weight: 800;
-  position: relative;
-  z-index: 1;
+  margin-bottom: 0.2rem;
 }
 .membership-price span {
   font-size: 0.95rem;
-  font-weight: 650;
   color: var(--muted);
-  margin-left: 0.4rem;
+}
+
+/* Lyseblå parentes-tekst */
+.price-note {
+  display: inline-block;
+  margin-top: 0.35rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #4cb4ff;
 }
 
 /* Vipps-boks KUN inne i UNREAL */
@@ -1579,29 +1586,26 @@ body:not(.is-admin) #visual-editor {
         }
 
         /* UNREAL ape/ikon i hjørnet + “litt liv” (samme type som resten av siden) */
+        .membership-card--featured {
+          padding-top: 3.2rem;
+        }
+
         .unreal-corner-mascot {
           position: absolute;
           top: 14px;
           right: 14px;
-          width: 64px;
-          height: 64px;
+          width: 70px;
+          height: 70px;
           object-fit: contain;
-          border-radius: 18px;
-          background: rgba(255, 255, 255, 0.06);
-          border: 1px solid rgba(255, 255, 255, 0.10);
-          padding: 10px;
-          z-index: 2;
-          box-shadow: 0 14px 34px rgba(0, 0, 0, 0.45);
+          background: none;
+          border: none;
+          padding: 0;
+          box-shadow: none;
           animation: fj-bob 2.8s ease-in-out infinite;
-          will-change: transform;
-        }
-        .membership-card--featured:hover .unreal-corner-mascot {
-          animation-duration: 1.9s;
-          transform: translateY(-2px) rotate(-2deg);
         }
         @keyframes fj-bob {
-          0%, 100% { transform: translateY(0) rotate(0deg); }
-          50% { transform: translateY(-6px) rotate(2deg); }
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-6px); }
         }
 
         /* “Mest populær” til venstre (krone), mindre repetisjon */
@@ -1609,15 +1613,13 @@ body:not(.is-admin) #visual-editor {
           position: absolute;
           top: 16px;
           left: 16px;
-          padding: 0.35rem 0.75rem;
+          padding: 0.35rem 0.8rem;
           border-radius: 999px;
-          border: 1px solid rgba(255, 255, 255, 0.16);
-          background: rgba(10, 20, 80, 0.85);
-          color: #fff;
-          font-size: 0.78rem;
-          font-weight: 900;
-          letter-spacing: 0.04em;
-          z-index: 2;
+          background: rgba(10, 20, 80, 0.9);
+          border: 1px solid rgba(255,255,255,0.15);
+          font-size: 0.75rem;
+          font-weight: 800;
+          z-index: 3;
         }
       </style>
 
@@ -1657,35 +1659,50 @@ body:not(.is-admin) #visual-editor {
 
         <!-- UNREAL (featured – midten, uten knapp) -->
         <div class="card membership-card membership-card--featured fb-edit-block" data-block-id="membership-unreal" data-edit-type="richtext">
-          <span class="featured-badge">👑 Mest populær</span>
+          <span class="featured-badge">
+            👑 Mest populær
+          </span>
 
-          <!-- Ape/ikon oppe til høyre -->
-          <img class="unreal-corner-mascot" src="/img/ikoner/Love.png" alt="" aria-hidden="true" />
+          <!-- Ape ikon (uten boks) -->
+          <img
+            class="unreal-corner-mascot"
+            src="/img/ikoner/Love.png"
+            alt=""
+            aria-hidden="true"
+          />
 
           <span class="membership-tag">UNREAL</span>
-          <h3>UNREAL</h3>
-          <p class="membership-price">75 kr <span>/ måned</span></p>
+          <h3 class="unreal-title">UNREAL</h3>
 
-          <!-- Oppdatert tekst (krav før UNREAL) -->
-          <p class="muted">UNREAL-medlemskap er en oppgradering – du må derfor først være gratis medlem og ha medlemsrolle i Discord.</p>
+          <p class="membership-price">
+            75 kr <span>/ måned</span><br />
+            <span class="price-note">
+              (Vipps årsavgift kr 550 og spar 40%)
+            </span>
+          </p>
+
+          <p class="muted">
+            UNREAL-medlemskap er en oppgradering – du må derfor først være gratis medlem
+            og ha medlemsrolle i Discord.
+          </p>
 
           <div class="divider"></div>
 
           <ul class="checklist">
-            <li><span class="feature-icon positive" aria-hidden="true">👑</span><span>UNREAL-rolle i Discord</span></li>
-            <li><span class="feature-icon positive" aria-hidden="true">💸</span><span>Kan vinne V-Bucks og cash-premier</span></li>
-            <li><span class="feature-icon positive" aria-hidden="true">💰</span><span>Gratis deltakelse i alle Cash Cups</span></li>
-            <li><span class="feature-icon positive" aria-hidden="true">🚀</span><span>Førsteprioritet i alle customs</span></li>
-            <li><span class="feature-icon positive" aria-hidden="true">🏆</span><span>Tilgang til alle premier inkludert giveaways</span></li>
-            <li><span class="feature-icon positive" aria-hidden="true">➕</span><span>50% ekstra på alle V-Bucks-premier</span></li>
-            <li><span class="feature-icon coin" aria-hidden="true">🪙</span><span>Cashout på 2800 V-Bucks</span></li>
+            <li><span class="feature-icon positive">👑</span><span>UNREAL-rolle i Discord</span></li>
+            <li><span class="feature-icon positive">💸</span><span>Kan vinne V-Bucks og cash-premier</span></li>
+            <li><span class="feature-icon positive">💰</span><span>Gratis deltakelse i alle Cash Cups</span></li>
+            <li><span class="feature-icon positive">🚀</span><span>Førsteprioritet i alle customs</span></li>
+            <li><span class="feature-icon positive">🏆</span><span>Tilgang til alle premier inkl. giveaways</span></li>
+            <li><span class="feature-icon positive">➕</span><span>50% ekstra på alle V-Bucks-premier</span></li>
+            <li><span class="feature-icon coin">🪙</span><span>Cashout på 2800 V-Bucks</span></li>
           </ul>
 
           <div class="unreal-vipps">
-            <p class="lead-line">Send Vipps til FjOlsenFN.</p>
-            <p>Merk betalingen med «UNREAL + DITT DISCORD NAVN».</p>
-            <p>Er du under 18 år, må betaling sendes av forelder/foresatt.</p>
-            <p class="vipps-number">VIPPS til: 942 911 69</p>
+            <p class="lead-line">Send Vipps til FjOlsenFN</p>
+            <p>Merk betalingen med «UNREAL + DITT DISCORD NAVN»</p>
+            <p>Under 18 år → betaling fra forelder/foresatt</p>
+            <p class="vipps-number">VIPPS: 942 911 69</p>
           </div>
         </div>
 
