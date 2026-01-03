@@ -1522,7 +1522,7 @@ body:not(.is-admin) #visual-editor {
 
   </section>
 
-  <!-- MEMBERSHIP (forenklet – uten info-bokser over pakkene) -->
+  <!-- MEMBERSHIP SECTION (oppdatert: 2 knapper på Gratis, ny tekst, animert ape-ikon) -->
   <section id="membership" class="section" data-sortable-section="membership" data-section-label="Medlemskap">
     <div class="container">
       <div class="fb-edit-block" data-block-id="membership-intro" data-edit-type="richtext">
@@ -1532,6 +1532,95 @@ body:not(.is-admin) #visual-editor {
         </p>
       </div>
 
+      <!-- CSS kun for denne seksjonen -->
+      <style>
+        .membership-card { position: relative; }
+
+        /* Knapper i GRATIS-kortet (Under/Over 18) */
+        .free-cta {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 0.75rem;
+          margin-top: 1rem;
+        }
+        @media (max-width: 420px) {
+          .free-cta { grid-template-columns: 1fr; }
+        }
+        .btn-cta {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          padding: 0.85rem 1rem;
+          border-radius: 999px;
+          border: 1px solid rgba(255, 255, 255, 0.14);
+          background: rgba(255, 255, 255, 0.06);
+          color: #fff;
+          font-weight: 800;
+          font-size: 0.92rem;
+          letter-spacing: 0.01em;
+          transition: transform 0.12s ease, filter 0.12s ease, box-shadow 0.12s ease, background 0.12s ease;
+          cursor: pointer;
+          text-align: center;
+          user-select: none;
+        }
+        .btn-cta:hover {
+          transform: translateY(-2px);
+          filter: brightness(1.05);
+          box-shadow: 0 14px 30px rgba(0, 0, 0, 0.35);
+          background: rgba(255, 255, 255, 0.09);
+        }
+        .btn-cta.primary {
+          background: rgba(0, 166, 255, 0.18);
+          border-color: rgba(0, 166, 255, 0.35);
+          box-shadow: 0 0 18px rgba(0, 166, 255, 0.18);
+        }
+        .btn-cta.primary:hover {
+          box-shadow: 0 0 26px rgba(0, 166, 255, 0.24), 0 18px 40px rgba(0, 0, 0, 0.35);
+        }
+
+        /* UNREAL ape/ikon i hjørnet + “litt liv” (samme type som resten av siden) */
+        .unreal-corner-mascot {
+          position: absolute;
+          top: 14px;
+          right: 14px;
+          width: 64px;
+          height: 64px;
+          object-fit: contain;
+          border-radius: 18px;
+          background: rgba(255, 255, 255, 0.06);
+          border: 1px solid rgba(255, 255, 255, 0.10);
+          padding: 10px;
+          z-index: 2;
+          box-shadow: 0 14px 34px rgba(0, 0, 0, 0.45);
+          animation: fj-bob 2.8s ease-in-out infinite;
+          will-change: transform;
+        }
+        .membership-card--featured:hover .unreal-corner-mascot {
+          animation-duration: 1.9s;
+          transform: translateY(-2px) rotate(-2deg);
+        }
+        @keyframes fj-bob {
+          0%, 100% { transform: translateY(0) rotate(0deg); }
+          50% { transform: translateY(-6px) rotate(2deg); }
+        }
+
+        /* “Mest populær” til venstre (krone), mindre repetisjon */
+        .featured-badge {
+          position: absolute;
+          top: 16px;
+          left: 16px;
+          padding: 0.35rem 0.75rem;
+          border-radius: 999px;
+          border: 1px solid rgba(255, 255, 255, 0.16);
+          background: rgba(10, 20, 80, 0.85);
+          color: #fff;
+          font-size: 0.78rem;
+          font-weight: 900;
+          letter-spacing: 0.04em;
+          z-index: 2;
+        }
+      </style>
+
       <div class="membership-grid">
 
         <!-- GRATIS MEDLEM -->
@@ -1539,99 +1628,59 @@ body:not(.is-admin) #visual-editor {
           <span class="membership-tag">🟦 Gratis medlem</span>
           <h3>Gratis medlem</h3>
 
-          <p class="muted">
-            For deg som spiller av og til og vil vinne premier.
-          </p>
+          <!-- Oppdatert tekst -->
+          <p class="muted">For deg som ønsker å vinne vbucks og spille med FjOlsenFN på stream</p>
 
           <div class="divider"></div>
 
           <ul class="checklist">
-            <li>
-              <span class="feature-icon positive" aria-hidden="true">✅</span>
-              <span>Du får medlemsrolle og chat-tilgang i Discord</span>
-            </li>
-            <li>
-              <span class="feature-icon positive" aria-hidden="true">✅</span>
-              <span>Du kan legge til FjOlsenFN på Fortnite</span>
-            </li>
-            <li>
-              <span class="feature-icon positive" aria-hidden="true">✅</span>
-              <span>Kan vinne V-Bucks-premier</span>
-            </li>
-            <li>
-              <span class="feature-icon positive" aria-hidden="true">✅</span>
-              <span>Prioritet over ikke-medlemmer i customs-kø</span>
-            </li>
-            <li>
-              <span class="feature-icon negative" aria-hidden="true">✖️</span>
-              <span>Kan ikke vinne cash-premie (uten deltakeravgift)</span>
-            </li>
-            <li>
-              <span class="feature-icon warning" aria-hidden="true">⚠️</span>
-              <span>Ingen garanti om plass hvis customs er fulle med UNREAL-medlemmer</span>
-            </li>
-            <li>
-              <span class="feature-icon coin" aria-hidden="true">🪙</span>
-              <span>Cashout på 5000 V-Bucks</span>
-            </li>
+            <li><span class="feature-icon positive" aria-hidden="true">✅</span><span>Du får medlemsrolle og chat-tilgang i Discord</span></li>
+            <li><span class="feature-icon positive" aria-hidden="true">✅</span><span>Du kan legge til FjOlsenFN på Fortnite</span></li>
+            <li><span class="feature-icon positive" aria-hidden="true">✅</span><span>Kan vinne V-Bucks-premier</span></li>
+            <li><span class="feature-icon positive" aria-hidden="true">✅</span><span>Prioritet over ikke-medlemmer i customs-kø</span></li>
+            <li><span class="feature-icon negative" aria-hidden="true">✖️</span><span>Kan ikke vinne cash-premie (uten deltakeravgift)</span></li>
+            <li><span class="feature-icon warning" aria-hidden="true">⚠️</span><span>Ingen garanti om plass hvis customs er fulle med UNREAL-medlemmer</span></li>
+            <li><span class="feature-icon coin" aria-hidden="true">🪙</span><span>Cashout på 5000 V-Bucks</span></li>
           </ul>
+
+          <!-- TO KNAPPER (link til Google-skjema) -->
+          <div class="free-cta">
+            <!-- Bytt href til de eksakte Google Form-linkene dere brukte før -->
+            <a class="btn-cta primary" href="https://forms.gle/sq4mUf7s6e6UY7R58" target="_blank" rel="noopener">
+              Under 18 år
+            </a>
+            <a class="btn-cta" href="https://forms.gle/ZrbXCggnUY8FTT7t9" target="_blank" rel="noopener">
+              Over 18 år
+            </a>
+          </div>
         </div>
 
-        <!-- UNREAL (featured, midten, ingen knapp) -->
+        <!-- UNREAL (featured – midten, uten knapp) -->
         <div class="card membership-card membership-card--featured fb-edit-block" data-block-id="membership-unreal" data-edit-type="richtext">
           <span class="featured-badge">👑 Mest populær</span>
 
-          <img
-            class="unreal-corner-mascot"
-            src="/img/ikoner/Love.png"
-            alt=""
-            aria-hidden="true"
-          />
+          <!-- Ape/ikon oppe til høyre -->
+          <img class="unreal-corner-mascot" src="/img/ikoner/Love.png" alt="" aria-hidden="true" />
 
           <span class="membership-tag">UNREAL</span>
-
           <h3>UNREAL</h3>
           <p class="membership-price">75 kr <span>/ måned</span></p>
 
-          <p class="muted">
-            Du er en ekte støttespiller av FjOlsenbanden ❤️
-          </p>
+          <!-- Oppdatert tekst (krav før UNREAL) -->
+          <p class="muted">Du må registrere deg som gratis medlem før du kan bli UNREAL medlem.</p>
 
           <div class="divider"></div>
 
-          <!-- IKKE KUTTET – hele listen beholdt -->
           <ul class="checklist">
-            <li>
-              <span class="feature-icon positive" aria-hidden="true">👑</span>
-              <span>UNREAL-rolle i Discord</span>
-            </li>
-            <li>
-              <span class="feature-icon positive" aria-hidden="true">💸</span>
-              <span>Kan vinne V-Bucks og cash-premier</span>
-            </li>
-            <li>
-              <span class="feature-icon positive" aria-hidden="true">💰</span>
-              <span>Gratis deltakelse i alle Cash Cups</span>
-            </li>
-            <li>
-              <span class="feature-icon positive" aria-hidden="true">🚀</span>
-              <span>Førsteprioritet i alle customs</span>
-            </li>
-            <li>
-              <span class="feature-icon positive" aria-hidden="true">🏆</span>
-              <span>Tilgang til alle premier inkludert giveaways</span>
-            </li>
-            <li>
-              <span class="feature-icon positive" aria-hidden="true">➕</span>
-              <span>50% ekstra på alle V-Bucks-premier</span>
-            </li>
-            <li>
-              <span class="feature-icon coin" aria-hidden="true">🪙</span>
-              <span>Cashout på 2800 V-Bucks</span>
-            </li>
+            <li><span class="feature-icon positive" aria-hidden="true">👑</span><span>UNREAL-rolle i Discord</span></li>
+            <li><span class="feature-icon positive" aria-hidden="true">💸</span><span>Kan vinne V-Bucks og cash-premier</span></li>
+            <li><span class="feature-icon positive" aria-hidden="true">💰</span><span>Gratis deltakelse i alle Cash Cups</span></li>
+            <li><span class="feature-icon positive" aria-hidden="true">🚀</span><span>Førsteprioritet i alle customs</span></li>
+            <li><span class="feature-icon positive" aria-hidden="true">🏆</span><span>Tilgang til alle premier inkludert giveaways</span></li>
+            <li><span class="feature-icon positive" aria-hidden="true">➕</span><span>50% ekstra på alle V-Bucks-premier</span></li>
+            <li><span class="feature-icon coin" aria-hidden="true">🪙</span><span>Cashout på 2800 V-Bucks</span></li>
           </ul>
 
-          <!-- Vipps-info kun her -->
           <div class="unreal-vipps">
             <p class="lead-line">Send Vipps til FjOlsenFN.</p>
             <p>Merk betalingen med «UNREAL + DITT DISCORD NAVN».</p>
@@ -1645,37 +1694,103 @@ body:not(.is-admin) #visual-editor {
           <span class="membership-tag">🔓 Ikke-medlem</span>
           <h3>Ikke-medlem</h3>
 
-          <p class="muted">
-            For deg som vil spille for gøy.
-          </p>
+          <p class="muted">For deg som vil spille for gøy.</p>
 
           <div class="divider"></div>
 
           <ul class="checklist">
-            <li>
-              <span class="feature-icon positive" aria-hidden="true">🎮</span>
-              <span>Gratis deltakelse i alle customs</span>
-            </li>
-            <li>
-              <span class="feature-icon negative" aria-hidden="true">✖️</span>
-              <span>Kan ikke vinne V-Bucks</span>
-            </li>
-            <li>
-              <span class="feature-icon negative" aria-hidden="true">✖️</span>
-              <span>Kan ikke vinne cash-premier</span>
-            </li>
-            <li>
-              <span class="feature-icon negative" aria-hidden="true">✖️</span>
-              <span>Kan ikke vinne i giveaways</span>
-            </li>
-            <li>
-              <span class="feature-icon warning" aria-hidden="true">⚠️</span>
-              <span>Lavest prioritet hvis fullt</span>
-            </li>
+            <li><span class="feature-icon positive" aria-hidden="true">🎮</span><span>Gratis deltakelse i alle customs</span></li>
+            <li><span class="feature-icon negative" aria-hidden="true">✖️</span><span>Kan ikke vinne V-Bucks</span></li>
+            <li><span class="feature-icon negative" aria-hidden="true">✖️</span><span>Kan ikke vinne cash-premier</span></li>
+            <li><span class="feature-icon negative" aria-hidden="true">✖️</span><span>Kan ikke vinne i giveaways</span></li>
+            <li><span class="feature-icon warning" aria-hidden="true">⚠️</span><span>Lavest prioritet hvis fullt</span></li>
           </ul>
         </div>
 
       </div>
+    </div>
+  </section>
+
+  <section id="faq" class="section section-faq" data-sortable-section="faq" data-section-label="FAQ">
+    <div class="container faq-inner">
+      <div class="fb-edit-block" data-block-id="faq-intro" data-edit-type="richtext">
+        <h2>Ofte stilte spørsmål</h2>
+        <p class="subtitle">
+          Her finner du svar på de vanligste spørsmålene om FjOlsenbanden.
+        </p>
+      </div>
+
+      <div class="faq-list">
+        <details class="faq-item fb-edit-block" data-block-id="faq-1" data-edit-type="faq" open>
+          <summary>Er customs virkelig tilgjengelig for alle?</summary>
+          <p>Ja. Alle kan delta gratis i customs i FjOlsenbanden – både med og uten medlemskap.</p>
+        </details>
+
+        <details class="faq-item fb-edit-block" data-block-id="faq-2" data-edit-type="faq">
+          <summary>Hva kan jeg vinne uten medlemskap?</summary>
+          <p>Du kan spille customs, men du kan ikke vinne premier uten å være gratis-medlem eller UNREAL medlem.</p>
+        </details>
+
+        <details class="faq-item fb-edit-block" data-block-id="faq-3" data-edit-type="faq">
+          <summary>Hva kan jeg vinne som gratis medlem?</summary>
+          <p>Du kan vinne vbucks-premier, men ikke cash premier eller i sponsede giveaways.</p>
+        </details>
+
+        <details class="faq-item fb-edit-block" data-block-id="faq-4" data-edit-type="faq">
+          <summary>Hva kan jeg vinne som UNREAL?</summary>
+          <p>Du kan vinne både vbucks og cash premier, og delta gratis i alle Cash Cups. I tillegg kan du vinne hovedpremier fra sponsorer i sponsede giveaways.</p>
+        </details>
+
+        <details class="faq-item fb-edit-block" data-block-id="faq-5" data-edit-type="faq">
+          <summary>Hva koster UNREAL medlemskap?</summary>
+          <p>75 kr per måned. I tillegg til alle fordelene du får i FjOlsenbanden, er alle som betaler medlemskap med å støtte FjOlsenbandens arbeid for vårt community. Takk til alle som støtter!</p>
+        </details>
+
+        <details class="faq-item fb-edit-block" data-block-id="faq-6" data-edit-type="faq">
+          <summary>Hvordan betaler jeg for UNREAL?</summary>
+          <p>Send Vipps til FjOlsenFN. Merk betalingen med «UNREAL + DITT DISCORD NAVN». Er du under 18 år, må betaling sendes av forelder/foresatt. VIPPS til: 942 911 69.</p>
+        </details>
+
+        <details class="faq-item fb-edit-block" data-block-id="faq-7" data-edit-type="faq">
+          <summary>Når får jeg UNREAL-rollen?</summary>
+          <p>Så snart betalingen er registrert mottatt, får du UNREAL-rollen i Discord!</p>
+        </details>
+
+        <details class="faq-item fb-edit-block" data-block-id="faq-8" data-edit-type="faq">
+          <summary>Kan jeg avslutte når jeg vil?</summary>
+          <p>Ja. UNREAL er et månedlig medlemskap uten binding.</p>
+        </details>
+
+        <details class="faq-item fb-edit-block" data-block-id="faq-9" data-edit-type="faq">
+          <summary>Kan jeg delta i Cash Cups uten deltakeravgift?</summary>
+          <p>Ja alle kan delta i Cash Cups uten deltakeravgift. Er du gratis medlem vil det være egne vbucks premier, er du ikke medlem får du ingen premier uten deltakeravgift.</p>
+        </details>
+
+        <details class="faq-item fb-edit-block" data-block-id="faq-10" data-edit-type="faq">
+          <summary>Hvorfor finnes deltakeravgift?</summary>
+          <p>Deltakeravgift brukes til:</p>
+          <ul>
+            <li>Premier i Cash cups</li>
+            <li>Giveaway premier med mer</li>
+            <li>Drift av customs/stream</li>
+          </ul>
+          <p>UNREAL-medlemmers abonnement støtter dette fast – og de slipper å betale deltakeravgift.</p>
+        </details>
+
+        <details class="faq-item fb-edit-block" data-block-id="faq-11" data-edit-type="faq">
+          <summary>Hva skjer når jeg betaler deltakeravgift for en cash cup?</summary>
+          <p>Når du har vippset deltakeravgift og merket betalingen med (CUP + DITT DISCORD NAVN) vil du få tildelt en rolle i Discord (Cash cup deltager). Denne rollen gir deg prioritet i kø etter Unreal, men foran gratis medlemmer og ikke-medlemmer. Er du under 16 år, må deltakeravgiften sendes av en forelder/foresatt. VIPPS til: 942 911 69.</p>
+        </details>
+      </div>
+
+      <a
+        href="#kontakt"
+        id="add-faq-question-btn"
+        data-visual-only
+        class="hidden mt-6 inline-flex items-center justify-center px-6 py-3 rounded-full bg-[#04B2FF] text-sm font-semibold text-slate-900 shadow-lg shadow-cyan-500/30 hover:-translate-y-0.5 hover:shadow-cyan-400/50 transition"
+      >
+        + Legg til spørsmål
+      </a>
     </div>
   </section>
 
@@ -1941,88 +2056,6 @@ body:not(.is-admin) #visual-editor {
     </div>
   </section>
 
-  <section id="faq" class="section section-faq" data-sortable-section="faq" data-section-label="FAQ">
-    <div class="container faq-inner">
-      <div class="fb-edit-block" data-block-id="faq-intro" data-edit-type="richtext">
-        <h2>Ofte stilte spørsmål</h2>
-        <p class="subtitle">
-          Her finner du svar på de vanligste spørsmålene om FjOlsenbanden.
-        </p>
-      </div>
-
-      <div class="faq-list">
-        <details class="faq-item fb-edit-block" data-block-id="faq-1" data-edit-type="faq" open>
-          <summary>Er customs virkelig tilgjengelig for alle?</summary>
-          <p>Ja. Alle kan delta gratis i customs i FjOlsenbanden – både med og uten medlemskap.</p>
-        </details>
-
-        <details class="faq-item fb-edit-block" data-block-id="faq-2" data-edit-type="faq">
-          <summary>Hva kan jeg vinne uten medlemskap?</summary>
-          <p>Du kan spille customs, men du kan ikke vinne premier uten å være gratis-medlem eller UNREAL medlem.</p>
-        </details>
-
-        <details class="faq-item fb-edit-block" data-block-id="faq-3" data-edit-type="faq">
-          <summary>Hva kan jeg vinne som gratis medlem?</summary>
-          <p>Du kan vinne vbucks-premier, men ikke cash premier eller i sponsede giveaways.</p>
-        </details>
-
-        <details class="faq-item fb-edit-block" data-block-id="faq-4" data-edit-type="faq">
-          <summary>Hva kan jeg vinne som UNREAL?</summary>
-          <p>Du kan vinne både vbucks og cash premier, og delta gratis i alle Cash Cups. I tillegg kan du vinne hovedpremier fra sponsorer i sponsede giveaways.</p>
-        </details>
-
-        <details class="faq-item fb-edit-block" data-block-id="faq-5" data-edit-type="faq">
-          <summary>Hva koster UNREAL medlemskap?</summary>
-          <p>75 kr per måned. I tillegg til alle fordelene du får i FjOlsenbanden, er alle som betaler medlemskap med å støtte FjOlsenbandens arbeid for vårt community. Takk til alle som støtter!</p>
-        </details>
-
-        <details class="faq-item fb-edit-block" data-block-id="faq-6" data-edit-type="faq">
-          <summary>Hvordan betaler jeg for UNREAL?</summary>
-          <p>Send Vipps til FjOlsenFN. Merk betalingen med «UNREAL + DITT DISCORD NAVN». Er du under 18 år, må betaling sendes av forelder/foresatt. VIPPS til: 942 911 69.</p>
-        </details>
-
-        <details class="faq-item fb-edit-block" data-block-id="faq-7" data-edit-type="faq">
-          <summary>Når får jeg UNREAL-rollen?</summary>
-          <p>Så snart betalingen er registrert mottatt, får du UNREAL-rollen i Discord!</p>
-        </details>
-
-        <details class="faq-item fb-edit-block" data-block-id="faq-8" data-edit-type="faq">
-          <summary>Kan jeg avslutte når jeg vil?</summary>
-          <p>Ja. UNREAL er et månedlig medlemskap uten binding.</p>
-        </details>
-
-        <details class="faq-item fb-edit-block" data-block-id="faq-9" data-edit-type="faq">
-          <summary>Kan jeg delta i Cash Cups uten deltakeravgift?</summary>
-          <p>Ja alle kan delta i Cash Cups uten deltakeravgift. Er du gratis medlem vil det være egne vbucks premier, er du ikke medlem får du ingen premier uten deltakeravgift.</p>
-        </details>
-
-        <details class="faq-item fb-edit-block" data-block-id="faq-10" data-edit-type="faq">
-          <summary>Hvorfor finnes deltakeravgift?</summary>
-          <p>Deltakeravgift brukes til:</p>
-          <ul>
-            <li>Premier i Cash cups</li>
-            <li>Giveaway premier med mer</li>
-            <li>Drift av customs/stream</li>
-          </ul>
-          <p>UNREAL-medlemmers abonnement støtter dette fast – og de slipper å betale deltakeravgift.</p>
-        </details>
-
-        <details class="faq-item fb-edit-block" data-block-id="faq-11" data-edit-type="faq">
-          <summary>Hva skjer når jeg betaler deltakeravgift for en cash cup?</summary>
-          <p>Når du har vippset deltakeravgift og merket betalingen med (CUP + DITT DISCORD NAVN) vil du få tildelt en rolle i Discord (Cash cup deltager). Denne rollen gir deg prioritet i kø etter Unreal, men foran gratis medlemmer og ikke-medlemmer. Er du under 16 år, må deltakeravgiften sendes av en forelder/foresatt. VIPPS til: 942 911 69.</p>
-        </details>
-      </div>
-
-      <a
-        href="#kontakt"
-        id="add-faq-question-btn"
-        data-visual-only
-        class="hidden mt-6 inline-flex items-center justify-center px-6 py-3 rounded-full bg-[#04B2FF] text-sm font-semibold text-slate-900 shadow-lg shadow-cyan-500/30 hover:-translate-y-0.5 hover:shadow-cyan-400/50 transition"
-      >
-        + Legg til spørsmål
-      </a>
-    </div>
-  </section>
   </main>
 
   <!-- VISUAL EDITOR – KUN SEKSJONER -->
