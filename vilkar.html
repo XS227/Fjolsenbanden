@@ -3,135 +3,230 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Salgs- og abonnementsvilkår – Fjolsenbanden</title>
+  <title>Vilkår for kjøp og bruk av medlemskap i FjOlsenbanden</title>
+  <meta name="description" content="Vilkår for kjøp og bruk av medlemskap og digitale tjenester i FjOlsenbanden.">
   <style>
+    :root { color-scheme: dark; }
     body {
       font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
       line-height: 1.65;
       margin: 0;
-      padding: 0;
-      background: #0b1433;
-      color: #ffffff;
+      background: #050b24;
+      color: #e9eef9;
     }
-    .wrap {
-      max-width: 900px;
+    header, footer {
+      background: rgba(5,11,36,.92);
+      border-bottom: 1px solid rgba(255,255,255,.12);
+    }
+    header nav, footer div {
+      max-width: 960px;
       margin: 0 auto;
-      padding: 40px 18px 80px;
+      padding: 1rem 1.25rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: .75rem;
     }
-    h1, h2 {
-      line-height: 1.25;
+    header nav a, footer a { font-weight: 600; color: #e9eef9; text-decoration: none; }
+    header nav a:hover, footer a:hover { color: #fff; text-decoration: underline; }
+    main {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 2.5rem 1.25rem 4rem;
     }
-    h1 {
-      font-size: 2rem;
-      margin-bottom: 1rem;
+    h1, h2, h3 { line-height: 1.2; margin: 1.2rem 0 .5rem; }
+    p { margin: 0 0 1rem; }
+    ul { margin: .25rem 0 1rem; padding-left: 1.2rem; }
+    li { margin: .35rem 0; }
+    .card {
+      background: rgba(16,24,52,.9);
+      border: 1px solid rgba(30,44,88,.8);
+      border-radius: 18px;
+      padding: 1.5rem;
+      margin: 1.25rem 0;
     }
-    h2 {
-      font-size: 1.25rem;
-      margin-top: 2.5rem;
-    }
-    p, li {
-      color: rgba(255,255,255,0.9);
-    }
-    ul {
-      padding-left: 20px;
-    }
-    .muted {
-      color: rgba(255,255,255,0.7);
-      font-size: 0.95rem;
-    }
-    .box {
-      margin-top: 2rem;
-      padding: 16px;
-      border-radius: 12px;
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.15);
-    }
-    a {
-      color: #13A0F9;
-      text-decoration: none;
-      font-weight: 600;
-    }
-    a:hover {
-      text-decoration: underline;
+    .muted { opacity: .75; font-size: .95rem; }
+    @media (max-width: 640px) {
+      header nav, footer div { justify-content: center; text-align: center; }
     }
   </style>
 </head>
-
 <body>
-  <main class="wrap">
-    <h1>Salgs- og abonnementsvilkår</h1>
-    <p class="muted">Sist oppdatert: 2025</p>
-
-    <div class="box">
-      <p>
-        Disse vilkårene gjelder for kjøp av digitale tjenester og abonnement
-        levert av <strong>Fjolsenbanden</strong> via nettstedet
-        <a href="https://www.fjolsenbanden.no">www.fjolsenbanden.no</a>.
-      </p>
+<header>
+  <nav>
+    <a href="/" aria-label="FjOlsenbanden forside">FjOlsenbanden</a>
+    <div style="display:flex;gap:.75rem;flex-wrap:wrap;justify-content:flex-end">
+      <a href="/regler.html">Regler</a>
+      <a href="/personvernerklaering.html">Personvernerklæring</a>
+      <a href="/vilkar.html" aria-current="page">Vilkår</a>
     </div>
+  </nav>
+</header>
 
-    <h2>1. Om tjenesten</h2>
-    <p>
-      Fjolsenbanden tilbyr digitale medlemskap og abonnementer som gir tilgang
-      til innhold, funksjoner og fordeler som beskrevet på nettsiden.
-    </p>
+<main>
+  <h1>Vilkår for kjøp og bruk av medlemskap i FjOlsenbanden</h1>
 
-    <h2>2. Avtaleinngåelse</h2>
-    <p>
-      Avtalen inngås når kunden bekrefter betaling i Vipps. Ved å gjennomføre
-      betalingen aksepterer kunden disse vilkårene.
-    </p>
+  <div class="card">
+    <h2>1. Innledning</h2>
+    <p>Disse vilkårene regulerer kjøp og bruk av medlemskap og tilhørende tjenester levert av FjOlsenbanden via nettsiden FjOlsenbanden.no.</p>
+    <p>Ved å opprette konto eller kjøpe medlemskap bekrefter du at du har lest, forstått og akseptert disse vilkårene.</p>
+    <p>Avtalepart er:<br>FjOlsenbanden<br>(Nettside: FjOlsenbanden.no)<br>(E-post: support@fjolsenbanden.no)</p>
+  </div>
 
-    <h2>3. Priser og betaling</h2>
+  <div class="card">
+    <h2>2. Generelle vilkår</h2>
+    <p>Tjenestene leveres digitalt og krever tilgang til internett og kompatibel enhet. Du er selv ansvarlig for teknisk utstyr, programvare og nettilgang.</p>
+    <p>FjOlsenbanden forbeholder seg retten til å videreutvikle, endre eller avslutte tjenester.</p>
+    <p>Det kan samles inn anonymisert data om bruksmønster for å forbedre tjenestene.</p>
+  </div>
+
+  <div class="card">
+    <h2>3. Brukerkonto</h2>
     <ul>
-      <li>Alle priser er oppgitt i norske kroner (NOK).</li>
-      <li>Betaling skjer via Vipps faste betalinger (abonnement).</li>
-      <li>Abonnementet trekkes automatisk per måned til det sies opp.</li>
+      <li>Kontoen er personlig og skal ikke deles</li>
+      <li>Du er ansvarlig for all aktivitet på din konto</li>
+      <li>Du må oppgi korrekt og gyldig e-postadresse</li>
+      <li>Misbruk eller brudd på vilkår kan føre til utestengelse</li>
     </ul>
+  </div>
 
-    <h2>4. Abonnement og binding</h2>
+  <div class="card">
+    <h2>4. Personopplysninger</h2>
+    <p>For å bruke tjenestene må du registrere en konto. Vi behandler personopplysninger i samsvar med norsk personvernlovgivning (GDPR).</p>
+    <p>Vi kan lagre:</p>
     <ul>
-      <li>Abonnementet har ingen bindingstid.</li>
-      <li>Du kan når som helst avslutte abonnementet i Vipps-appen.</li>
-      <li>Oppsigelse gjelder fra neste betalingsperiode.</li>
+      <li>Kontoinformasjon</li>
+      <li>Aktivitetshistorikk (f.eks. deltakelse i events/turneringer)</li>
+      <li>Betalingshistorikk</li>
     </ul>
+    <p>Opplysningene brukes kun for å levere og forbedre tjenesten.</p>
+  </div>
 
-    <h2>5. Angrerett</h2>
-    <p>
-      Ved kjøp av digitale tjenester som leveres umiddelbart, samtykker kunden
-      til at angreretten bortfaller når leveringen starter, jf. angrerettloven §22.
-    </p>
+  <div class="card">
+    <h2>5. Kjøp av medlemskap og digitale tjenester</h2>
+    <h3>5.1 Betaling</h3>
+    <p>Betaling skjer via sikre betalingsløsninger (f.eks. Stripe og Vipps).</p>
+    <p>All betalingsinformasjon håndteres kryptert av våre betalingsleverandører.</p>
+    <p>Ved gjennomført kjøp godtar du også betalingsleverandørens vilkår.</p>
 
-    <h2>6. Endringer i tjenesten</h2>
-    <p>
-      Fjolsenbanden forbeholder seg retten til å endre innhold, funksjoner og
-      priser. Vesentlige endringer varsles på forhånd.
-    </p>
+    <h3>5.2 Levering</h3>
+    <p>Medlemskap og digitale tjenester aktiveres normalt umiddelbart etter godkjent betaling, med mindre annet er oppgitt.</p>
 
-    <h2>7. Ansvarsbegrensning</h2>
-    <p>
-      Tjenesten leveres «som den er». Fjolsenbanden er ikke ansvarlig for indirekte
-      tap, datatap eller tap som skyldes forhold utenfor vår kontroll.
-    </p>
+    <h3>5.3 Angrerett</h3>
+    <p>Du har 14 dagers angrerett etter kjøp, i henhold til angrerettloven, forutsatt at tjenesten ikke er tatt i bruk.</p>
+    <p>Dersom medlemskapet tas i bruk (f.eks. tilgang til eksklusivt innhold, deltakelse i events), bortfaller angreretten.</p>
+    <p>For å benytte angreretten må du kontakte: support@fjolsenbanden.no</p>
+  </div>
 
-    <h2>8. Personvern</h2>
-    <p>
-      Behandling av personopplysninger skjer i samsvar med vår
-      <a href="/personvernerklaering.html">personvernerklæring</a>.
-    </p>
+  <div class="card">
+    <h2>6. Feil og mangler</h2>
+    <p>Dersom det oppstår feil ved tjenesten, må dette meldes innen rimelig tid og senest innen 2 måneder etter at feilen ble oppdaget.</p>
+    <p>Ved bekreftet feil vil FjOlsenbanden forsøke å:</p>
+    <ul>
+      <li>rette feilen, eller</li>
+      <li>kompensere med forlenget tilgang</li>
+    </ul>
+    <p>Force majeure (forhold utenfor vår kontroll) gir ikke rett til kompensasjon.</p>
+  </div>
 
-    <h2>9. Kundeservice</h2>
-    <p>
-      Spørsmål om abonnement eller betaling kan rettes til:
-      <br>
-      <strong>E-post:</strong> kontakt@fjolsenbanden.no
-    </p>
+  <div class="card">
+    <h2>7. Abonnement og oppsigelse</h2>
+    <h3>7.1 Løpende abonnement</h3>
+    <p>Medlemskap kan være løpende og fornyes automatisk for ny periode dersom det ikke sies opp.</p>
 
-    <h2>10. Lovvalg og tvister</h2>
-    <p>
-      Avtalen er underlagt norsk lov. Tvister skal søkes løst i minnelighet,
-      og kan bringes inn for norske domstoler ved behov.
-    </p>
-  </main>
+    <h3>7.2 Oppsigelse</h3>
+    <p>Du kan når som helst si opp abonnementet via din konto eller ved å kontakte kundeservice.</p>
+    <p>Oppsigelsen gjelder fra neste betalingsperiode. Allerede betalte perioder refunderes normalt ikke.</p>
+
+    <h3>7.3 Prisendringer</h3>
+    <p>Prisendringer varsles minst 14 dager før de trer i kraft.</p>
+    <p>Du har rett til å si opp abonnementet før endringen gjelder.</p>
+
+    <h3>7.4 Manglende betaling</h3>
+    <p>Ved manglende betaling kan tilgangen stenges midlertidig eller permanent.</p>
+
+    <h3>7.5 Misbruk</h3>
+    <p>Ved brudd på vilkår eller mistanke om misbruk kan kontoen suspenderes eller avsluttes uten refusjon.</p>
+  </div>
+
+  <div class="card">
+    <h2>8. Turneringer og arrangementer</h2>
+    <p>FjOlsenbanden tilbyr digitale events og turneringer.</p>
+    <ul>
+      <li>Egne regler gjelder for hver turnering</li>
+      <li>Enkelte arrangementer kan kreve aktivt medlemskap</li>
+      <li>Diskvalifikasjon eller frivillig uttrekning gir ikke rett til refusjon</li>
+    </ul>
+    <p>Ved deltakelse kan det kreves opplysninger som navn og fødselsdato.</p>
+  </div>
+
+  <div class="card">
+    <h2>9. Brukergenerert innhold</h2>
+    <p>Brukere kan laste opp innhold (f.eks. profilbilder, logoer, media).</p>
+    <p>Du er selv ansvarlig for at:</p>
+    <ul>
+      <li>du har rettigheter til innholdet</li>
+      <li>innholdet ikke bryter norsk lov</li>
+    </ul>
+    <p>FjOlsenbanden kan fjerne innhold uten varsel ved brudd på regler.</p>
+  </div>
+
+  <div class="card">
+    <h2>10. Cookies</h2>
+    <p>Tjenesten benytter cookies for funksjonalitet og brukeropplevelse. Deler av tjenesten kan ikke fungere uten dette.</p>
+  </div>
+
+  <div class="card">
+    <h2>11. Ansvarsbegrensning</h2>
+    <p>FjOlsenbanden er ikke ansvarlig for:</p>
+    <ul>
+      <li>indirekte tap</li>
+      <li>tap som skyldes brukerens eget utstyr eller internettforbindelse</li>
+    </ul>
+    <p>Ansvar begrenses til det som følger av ufravikelig norsk lov.</p>
+  </div>
+
+  <div class="card">
+    <h2>12. Endringer i vilkår</h2>
+    <p>Vilkårene kan oppdateres ved behov. Vesentlige endringer vil bli varslet.</p>
+  </div>
+
+  <div class="card">
+    <h2>13. Konfliktløsning</h2>
+    <p>Tvister forsøkes løst i minnelighet.</p>
+    <p>Dersom dette ikke lykkes, kan saken bringes inn for:</p>
+    <ul>
+      <li>Forbrukertilsynet</li>
+      <li>eller behandles av norske domstoler.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>14. Verneting</h2>
+    <p>Avtalen er underlagt norsk lov.</p>
+    <p>Eventuelle tvister behandles av norsk domstol med verneting der FjOlsenbanden har sitt forretningssted.</p>
+  </div>
+
+  <div class="card">
+    <h2>15. Kundeservice</h2>
+    <p>Kontakt oss på: support@fjolsenbanden.no</p>
+    <p>Firmainformasjon<br>Fair Share Invest AS<br>Fridtjof Nansens vei 19,<br>0369 Oslo<br>Org nummer 926 963 023</p>
+  </div>
+
+  <p class="muted">Denne siden beskriver vilkår for kjøp og bruk av medlemskap i FjOlsenbanden.</p>
+</main>
+
+<footer>
+  <div>
+    <span>&copy; 2026 FjOlsenbanden</span>
+    <div style="display:flex;gap:.75rem;flex-wrap:wrap;justify-content:flex-end">
+      <a href="/">Forside</a>
+      <a href="/regler.html">Regler</a>
+      <a href="/personvernerklaering.html">Personvernerklæring</a>
+      <a href="/vilkar.html" aria-current="page">Vilkår</a>
+    </div>
+  </div>
+</footer>
 </body>
 </html>
