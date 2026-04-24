@@ -19,7 +19,7 @@ const navLinks = [
     { name: "Kontakt", href: "#kontakt" },
     { name: "Feedback", href: "#tilbakemeldinger" },
     { name: "For sponsorer", href: `${SITE_BASE_URL}/partners/` },
-    { name: "Personvernerklæring", href: `${SITE_BASE_URL}/personvernerklaering.html` },
+    { name: "Personvernerklæring", href: `${SITE_BASE_URL}/personvern.html` },
     { name: "Regler", href: `${SITE_BASE_URL}/regler.html` },
 ];
 const socialLinks = [
@@ -1457,7 +1457,7 @@ export default function FjolsenbandenHome() {
                                     React.createElement("input", { type: "checkbox", name: "profile-privacy", required: true, checked: profileDraft.acceptPrivacy, onChange: (event) => handleProfileCheckboxChange(event, "acceptPrivacy"), className: "mt-1 h-4 w-4 rounded border-white/30 bg-white/10 text-[#13A0F9] focus:outline-none focus:ring-2 focus:ring-[#13A0F9]" }),
                                     React.createElement("span", null,
                                         "Jeg samtykker til behandling av data iht. ",
-                                        React.createElement("a", { className: "text-[#13A0F9] underline", href: `${SITE_BASE_URL}/personvernerklaering.html`, target: "_blank", rel: "noopener noreferrer" }, "personvernerkl\u00E6ringen"))),
+                                        React.createElement("a", { className: "text-[#13A0F9] underline", href: `${SITE_BASE_URL}/personvern.html`, target: "_blank", rel: "noopener noreferrer" }, "personvernerkl\u00E6ringen"))),
                                 React.createElement("label", { className: "flex items-start gap-3" },
                                     React.createElement("input", { type: "checkbox", name: "profile-rules", required: true, checked: profileDraft.acceptRules, onChange: (event) => handleProfileCheckboxChange(event, "acceptRules"), className: "mt-1 h-4 w-4 rounded border-white/30 bg-white/10 text-[#13A0F9] focus:outline-none focus:ring-2 focus:ring-[#13A0F9]" }),
                                     React.createElement("span", null,
